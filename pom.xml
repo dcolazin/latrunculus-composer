@@ -51,6 +51,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<version>0.1.0-MAVEN</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- TODO https://developer-archive.leapmotion.com/documentation/java/devguide/Project_Setup.html -->
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
 		    <artifactId>LeapJava</artifactId>
