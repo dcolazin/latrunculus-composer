@@ -41,9 +41,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<version>2.2.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.rubato.jars</groupId>
+		    <groupId>com.github.philburk</groupId>
 		    <artifactId>jsyn</artifactId>
-			<version>0.1.0-MAVEN</version>
+			<version>17.1.0</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
@@ -140,6 +140,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		      </plugin>
 		</plugins>	
 	</build>
+
+	<repositories>
+		<repository>
+			<!-- TODO for jsyn -->
+			<id>jitpack</id>
+			<name>jitpack</name>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<!-- More Project Information -->
 	<name>Latrunculus Composer</name>
