@@ -1,0 +1,212 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vetronauta</groupId>
+	<artifactId>latrunculus-composer</artifactId>
+	<version>0.1.0-MAVEN</version>
+	<packaging>jar</packaging>
+	<dependencies>
+		    <dependency>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.0</version>
+				<type>maven-plugin</type>
+				<scope>provided</scope>
+		    </dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>collections-generic</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>commons-math3</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>core</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>GlulogicMT</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jportaudio</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jsyn</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jung-algorithms</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jung-api</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jung-graph-impl</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>jung-visualization</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>junit</artifactId>
+			<version>0.1.0-MAVEN</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>LeapJava</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>mt4j</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.rubato.jars</groupId>
+		    <artifactId>xercesImpl</artifactId>
+			<version>0.1.0-MAVEN</version>
+		</dependency>
+	</dependencies>
+	<dependencyManagement><!-- TODO --></dependencyManagement>
+	<modules><!-- TODO --></modules>
+	<properties>
+	    <maven.compiler.source>1.6</maven.compiler.source>
+	    <maven.compiler.target>1.6</maven.compiler.target>
+		<project.encoding>utf-8</project.encoding>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+	</properties>
+
+
+	<!-- Build Settings -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.0</version>
+				<configuration>
+					<source>1.6</source>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+						    <addClasspath>true</addClasspath>
+						    <mainClass>org.rubato.composer.Composer</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+				    <encoding>${project.encoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+				  <execution>
+				    <phase>package</phase>
+				    <goals>
+				      <goal>shade</goal>
+				    </goals>
+					<configuration>
+                        <filters>
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+					</configuration>
+				  </execution>
+				</executions>
+		      </plugin>
+		</plugins>	
+	</build>
+
+	<!-- More Project Information -->
+	<name>Latrunculus Composer</name>
+	<description>Latrunculus Composer is a music software based on the concepts and models of mathematical music theory, forked from Rubato Composer</description>
+	<url>https://github.com/dcolazin/latrunculus-composer</url>
+	<inceptionYear>2023</inceptionYear>
+	<licenses>
+		<license>
+			<name>GNU GPL2</name>
+			<url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Davide Colazingari</name>
+			<roles>
+				<role>current maintainer</role>
+			</roles>
+			<properties>
+				<gtalk>dcolazin@gmail.com</gtalk>
+			</properties>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Gérard Milmeister</name>
+			<roles>
+				<role>Rubato developer</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Florian Thalmann</name>
+			<roles>
+				<role>Rubato developer</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Stefan Müller</name>
+			<roles>
+				<role>Rubato developer</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Stefan Göller</name>
+			<roles>
+				<role>Rubato developer</role>
+			</roles>
+		</contributor>
+	</contributors>
+
+	<!-- Environment Settings -->
+</project>

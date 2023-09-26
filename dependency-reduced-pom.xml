@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.rubato</groupId>
+  <artifactId>rubato</artifactId>
+  <name>Rubato Composer</name>
+  <version>0.1.0-MAVEN</version>
+  <description>Rubato Composer is a music software based on the concepts and models of mathematical music theory.</description>
+  <url>https://github.com/rubato-composer/rubato-composer</url>
+  <inceptionYear>1992</inceptionYear>
+  <developers>
+    <developer>
+      <id>Milmeister</id>
+      <name>Gérard Milmeister</name>
+      <email>milmei@ifi.unizh.ch</email>
+      <roles>
+        <role>main developer</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>Thalmann</id>
+      <name>Florian Thalmann</name>
+      <roles>
+        <role>contributing developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>Müller</id>
+      <name>Stefan Müller</name>
+      <roles>
+        <role>contributing developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>Göller</id>
+      <name>Stefan Göller</name>
+      <roles>
+        <role>contributing developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Davide Colazingari</name>
+      <roles>
+        <role>mantainer</role>
+      </roles>
+      <properties>
+        <gtalk>dcolazin@gmail.com</gtalk>
+      </properties>
+    </contributor>
+  </contributors>
+  <licenses>
+    <license>
+      <name>GNU GPL2</name>
+      <url>https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <source>1.6</source>
+          <encoding>utf-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>org.rubato.composer.Composer</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <encoding>${project.encoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-resources-plugin</artifactId>
+      <version>3.2.0</version>
+      <type>maven-plugin</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.rubato.jars</groupId>
+      <artifactId>junit</artifactId>
+      <version>0.1.0-MAVEN</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <dependencyManagement />
+  <properties>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <project.encoding>utf-8</project.encoding>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+  </properties>
+</project>
