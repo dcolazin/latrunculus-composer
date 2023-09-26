@@ -62,11 +62,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <artifactId>mt4j</artifactId>
 			<version>0.1.0-MAVEN</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>xercesImpl</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
 	</dependencies>
 	<dependencyManagement><!-- TODO --></dependencyManagement>
 	<modules><!-- TODO --></modules>
