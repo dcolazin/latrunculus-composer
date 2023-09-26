@@ -42,11 +42,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>jportaudio</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
 		    <artifactId>jsyn</artifactId>
 			<version>0.1.0-MAVEN</version>
 		</dependency>
