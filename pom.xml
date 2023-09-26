@@ -89,8 +89,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	<dependencyManagement><!-- TODO --></dependencyManagement>
 	<modules><!-- TODO --></modules>
 	<properties>
-	    <maven.compiler.source>1.6</maven.compiler.source>
-	    <maven.compiler.target>1.6</maven.compiler.target>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+	    <maven.compiler.target>1.8</maven.compiler.target>
 		<project.encoding>utf-8</project.encoding>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
