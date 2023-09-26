@@ -15,14 +15,13 @@ import org.rubato.rubettes.bigbang.view.subview.DisplayObjects;
 import org.rubato.rubettes.util.Point;
 
 public class MTBigBangApp extends MTApplication implements View {
-	
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final int REPAINTS_TO_SKIP = 50;
+
 	private ViewController controller;
 	private DisplayContents contents;
 	private BigBangScene scene;
 	private MTPainter painter;
-	private final int REPAINTS_TO_SKIP = 50;
 	private int repaintNumber;
 	private MTDisplayModeAdapter modeAdapter;
 	
@@ -46,7 +45,7 @@ public class MTBigBangApp extends MTApplication implements View {
 			this.repaintAxesAndTool();
 			this.repaintNotes();
 		}
-		this.repaintNumber = (this.repaintNumber+1)%this.REPAINTS_TO_SKIP;
+		this.repaintNumber = (this.repaintNumber+1) % REPAINTS_TO_SKIP;
     }
 	
 	private void repaintNotes() {

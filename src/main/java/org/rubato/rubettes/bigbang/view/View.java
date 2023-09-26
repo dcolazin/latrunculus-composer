@@ -8,8 +8,8 @@ public interface View {
      * Called by the controller when it needs to pass along a property change 
      * from a model.
      *
-     * @param evt The property change event from the model
+     * @param event The property change event from the model
      */
-    public void modelPropertyChange(PropertyChangeEvent event);
+    void modelPropertyChange(PropertyChangeEvent event);
     
 }

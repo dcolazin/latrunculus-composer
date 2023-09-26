@@ -1,26 +1,22 @@
 package org.rubato.rubettes.bigbang.view.subview.multitouch;
 
-import java.net.URL;
-
 import org.mt4j.MTApplication;
 import org.mt4j.components.MTComponent;
-import org.mt4j.components.clipping.Clip;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
 import org.mt4j.input.inputProcessors.componentProcessors.lassoProcessor.LassoProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.camera.MTCamera;
-import org.mt4j.util.camera.Frustum;
 import org.mt4j.util.math.Vector3D;
-
 import org.rubato.rubettes.bigbang.BigBangRubette;
 import org.rubato.rubettes.bigbang.view.controller.ViewController;
 import org.rubato.rubettes.bigbang.view.controller.mode.DisplayModeAction;
 import org.rubato.rubettes.bigbang.view.controller.mode.multitouch.MTNavigationModeAdapter;
 import org.rubato.rubettes.bigbang.view.controller.mode.multitouch.MTTransformationModeAdapter;
-
 import processing.core.PImage;
+
+import java.net.URL;
 
 public class BigBangScene extends AbstractScene {
 	
