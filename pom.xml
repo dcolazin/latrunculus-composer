@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 
 	<groupId>org.vetronauta</groupId>
 	<artifactId>latrunculus-composer</artifactId>
-	<version>0.1.0-MAVEN</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -21,6 +21,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<version>4.4</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+		<dependency>
 			<groupId>net.sf.jung</groupId>
 			<artifactId>jung-visualization</artifactId>
 			<version>${jung-version}</version>
@@ -29,11 +34,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<groupId>net.sf.jung</groupId>
 			<artifactId>jung-graph-impl</artifactId>
 			<version>${jung-version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>commons-math3</artifactId>
-			<version>0.1.0-MAVEN</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>

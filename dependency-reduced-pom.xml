@@ -4,7 +4,7 @@
   <groupId>org.vetronauta</groupId>
   <artifactId>latrunculus-composer</artifactId>
   <name>Latrunculus Composer</name>
-  <version>0.1.0-MAVEN</version>
+  <version>0.1.0-SNAPSHOT</version>
   <description>Latrunculus Composer is a music software based on the concepts and models of mathematical music theory, forked from Rubato Composer</description>
   <url>https://github.com/dcolazin/latrunculus-composer</url>
   <inceptionYear>2023</inceptionYear>

@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunctionLagrangeForm;
 
 public class GeometryTools {
+
+	private GeometryTools() {}
 	
 	public static Point2D subtractPoint(Point2D p1, Point2D p2) {
 		return new Point2D(p1.getX() - p2.getX(), p1.getY() - p2.getY());
@@ -73,7 +75,7 @@ public class GeometryTools {
 		double range = max-min;
 		PolynomialFunctionLagrangeForm function = new PolynomialFunctionLagrangeForm(x, y);
 		//calculate additional values
-		List<Double> predictedValues = new ArrayList<Double>();
+		List<Double> predictedValues = new ArrayList<>();
 		for (int i = 0; i < numberOfValues; i++) {
 			double currentValue = function.value(values.size()+i);
 			//normalize a little
