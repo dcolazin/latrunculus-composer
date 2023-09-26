@@ -1,5 +1,3 @@
-mvn install:install-file -Dfile=third_party_libraries/jar/GlulogicMT.jar -DgroupId=org.rubato.jars -DartifactId=GlulogicMT -Dversion=0.1.0-MAVEN -Dpackaging=jar
-
 mvn install:install-file -Dfile=third_party_libraries/jar/jportaudio.jar -DgroupId=org.rubato.jars -DartifactId=jportaudio -Dversion=0.1.0-MAVEN -Dpackaging=jar
 
 mvn install:install-file -Dfile=third_party_libraries/jar/jsyn_16_7_1.jar -DgroupId=org.rubato.jars -DartifactId=jsyn -Dversion=0.1.0-MAVEN -Dpackaging=jar
