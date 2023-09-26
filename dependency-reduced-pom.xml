@@ -1,60 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.rubato</groupId>
-  <artifactId>rubato</artifactId>
-  <name>Rubato Composer</name>
+  <groupId>org.vetronauta</groupId>
+  <artifactId>latrunculus-composer</artifactId>
+  <name>Latrunculus Composer</name>
   <version>0.1.0-MAVEN</version>
-  <description>Rubato Composer is a music software based on the concepts and models of mathematical music theory.</description>
-  <url>https://github.com/rubato-composer/rubato-composer</url>
-  <inceptionYear>1992</inceptionYear>
+  <description>Latrunculus Composer is a music software based on the concepts and models of mathematical music theory, forked from Rubato Composer</description>
+  <url>https://github.com/dcolazin/latrunculus-composer</url>
+  <inceptionYear>2023</inceptionYear>
   <developers>
     <developer>
-      <id>Milmeister</id>
-      <name>Gérard Milmeister</name>
-      <email>milmei@ifi.unizh.ch</email>
-      <roles>
-        <role>main developer</role>
-        <role>developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>Thalmann</id>
-      <name>Florian Thalmann</name>
-      <roles>
-        <role>contributing developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>Müller</id>
-      <name>Stefan Müller</name>
-      <roles>
-        <role>contributing developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>Göller</id>
-      <name>Stefan Göller</name>
-      <roles>
-        <role>contributing developer</role>
-      </roles>
-    </developer>
-  </developers>
-  <contributors>
-    <contributor>
       <name>Davide Colazingari</name>
       <roles>
-        <role>mantainer</role>
+        <role>current maintainer</role>
       </roles>
       <properties>
         <gtalk>dcolazin@gmail.com</gtalk>
       </properties>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Gérard Milmeister</name>
+      <roles>
+        <role>Rubato developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Florian Thalmann</name>
+      <roles>
+        <role>Rubato developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Stefan Müller</name>
+      <roles>
+        <role>Rubato developer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Stefan Göller</name>
+      <roles>
+        <role>Rubato developer</role>
+      </roles>
     </contributor>
   </contributors>
   <licenses>
     <license>
       <name>GNU GPL2</name>
-      <url>https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html</url>
+      <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -117,7 +111,7 @@
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-resources-plugin</artifactId>
-      <version>3.2.0</version>
+      <version>3.3.0</version>
       <type>maven-plugin</type>
       <scope>provided</scope>
     </dependency>
@@ -130,10 +124,11 @@
   </dependencies>
   <dependencyManagement />
   <properties>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <project.encoding>utf-8</project.encoding>
-    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+    <jung-version>2.1.1</jung-version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
   </properties>
 </project>

@@ -101,8 +101,8 @@ public class JGraphPanel extends JPanel implements View, ActionListener {
 			Relaxer relaxer = new VisRunner(this.layout);
 			relaxer.stop();
 			relaxer.prerelax();
-			StaticLayout<CompositionState,AbstractOperation> staticLayout = new StaticLayout<CompositionState,AbstractOperation>(graph, this.layout);
-			LayoutTransition<CompositionState,AbstractOperation> transition = new LayoutTransition<CompositionState,AbstractOperation>(this.graphViewer, this.graphViewer.getGraphLayout(), staticLayout);
+			StaticLayout<CompositionState,AbstractOperation> staticLayout = new StaticLayout<>(graph, this.layout);
+			LayoutTransition<CompositionState,AbstractOperation> transition = new LayoutTransition<>(this.graphViewer, this.graphViewer.getGraphLayout(), staticLayout);
 			Animator animator = new Animator(transition);
 			animator.start();
 			this.graphViewer.getRenderContext().getMultiLayerTransformer().setToIdentity();
@@ -112,7 +112,7 @@ public class JGraphPanel extends JPanel implements View, ActionListener {
 	
 	private void initLayoutAndViewer() {
 		//init layout and viewer
-		this.layout = new FRLayout2<CompositionState,AbstractOperation>(new DirectedSparseGraph<CompositionState,AbstractOperation>());
+		this.layout = new FRLayout2<>(new DirectedSparseGraph<>());
 		this.layout.setSize(new Dimension(300,JBigBangPanel.CENTER_PANEL_HEIGHT-this.NORTHPANEL_HEIGHT));
 		//this.layout.setForceMultiplier(.02);
 		//this.layout.setRepulsionRange(30);
@@ -121,19 +121,19 @@ public class JGraphPanel extends JPanel implements View, ActionListener {
 		relaxer.stop();
 		relaxer.prerelax();
 		//Layout<Integer,AbstractOperationEdit> staticLayout = new StaticLayout<Integer,AbstractOperationEdit>(g, this.layout);
-		this.graphViewer = new VisualizationViewer<CompositionState,AbstractOperation>(this.layout);
+		this.graphViewer = new VisualizationViewer<>(this.layout);
 		this.graphViewer.setMinimumSize(new Dimension(300,JBigBangPanel.CENTER_PANEL_HEIGHT-this.NORTHPANEL_HEIGHT));
 		//this.graphViewer.getModel().getRelaxer().setSleepTime(10);
 		
 		//init labels
-		this.graphViewer.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<CompositionState>());
-		this.graphViewer.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<AbstractOperation>());
+		this.graphViewer.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+		this.graphViewer.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
 		this.graphViewer.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 		
 		//init mouse commands
 		VertexFactory vf = new VertexFactory(this.layout);
 		EdgeFactory ef = new EdgeFactory(this.layout);
-		this.graphMouse = new EditingModalGraphMouse<CompositionState,AbstractOperation>(this.graphViewer.getRenderContext(), vf, ef);
+		this.graphMouse = new EditingModalGraphMouse<>(this.graphViewer.getRenderContext(), vf::create, ef::create);
 		//this.setMode(Mode.PICKING);
 		
 		PopupVertexEdgeMenuMousePlugin myPlugin = new PopupVertexEdgeMenuMousePlugin(this.bbController);

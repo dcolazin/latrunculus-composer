@@ -6,6 +6,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	<artifactId>latrunculus-composer</artifactId>
 	<version>0.1.0-MAVEN</version>
 	<packaging>jar</packaging>
+
 	<dependencies>
 		    <dependency>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -18,6 +19,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-visualization</artifactId>
+			<version>${jung-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-graph-impl</artifactId>
+			<version>${jung-version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
@@ -46,26 +57,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>jung-algorithms</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>jung-api</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>jung-graph-impl</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>jung-visualization</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
 		    <artifactId>junit</artifactId>
 			<version>0.1.0-MAVEN</version>
 			<scope>test</scope>
@@ -88,12 +79,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	</dependencies>
 	<dependencyManagement><!-- TODO --></dependencyManagement>
 	<modules><!-- TODO --></modules>
+
 	<properties>
 	    <maven.compiler.source>1.8</maven.compiler.source>
 	    <maven.compiler.target>1.8</maven.compiler.target>
 		<project.encoding>utf-8</project.encoding>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+		<jung-version>2.1.1</jung-version>
 	</properties>
 
 

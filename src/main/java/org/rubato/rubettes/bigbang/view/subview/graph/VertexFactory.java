@@ -14,6 +14,7 @@ public class VertexFactory implements Factory<CompositionState> {
 		this.layout = layout;
 	}
 
+	@Override
 	public CompositionState create() {
 		return new CompositionState(this.layout.getGraph().getEdgeCount());
 	}

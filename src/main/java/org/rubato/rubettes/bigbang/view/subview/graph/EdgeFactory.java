@@ -14,6 +14,7 @@ public class EdgeFactory implements Factory<AbstractOperation> {
 		this.layout = layout;
 	}
 
+	@Override
 	public AbstractOperation create() {
 		return this.layout.getGraph().getEdges().iterator().next(); //TODO makeCopy!!
 	}
