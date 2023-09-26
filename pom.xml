@@ -15,9 +15,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 				<scope>provided</scope>
 		    </dependency>
 		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>collections-generic</artifactId>
-			<version>0.1.0-MAVEN</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.4</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>

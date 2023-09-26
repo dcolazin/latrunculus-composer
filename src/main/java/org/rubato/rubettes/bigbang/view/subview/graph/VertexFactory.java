@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.view.subview.graph;
 
-import org.apache.commons.collections15.Factory;
+import org.apache.commons.collections4.Factory;
 import org.rubato.rubettes.bigbang.model.graph.CompositionState;
 import org.rubato.rubettes.bigbang.model.operations.AbstractOperation;
 

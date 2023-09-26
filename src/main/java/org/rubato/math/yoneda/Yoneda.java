@@ -32,11 +32,11 @@ import java.io.Serializable;
  */
 public interface Yoneda extends Cloneable, Serializable {
 
-    static final int SIMPLE  = 0;
-    static final int LIMIT   = 1;
-    static final int COLIMIT = 2;
-    static final int POWER   = 3;
-    static final int LIST    = 4;
+    int SIMPLE  = 0;
+    int LIMIT   = 1;
+    int COLIMIT = 2;
+    int POWER   = 3;
+    int LIST    = 4;
                                            
     /**
      * Clone object. All yoneda classes must support cloning, thus clone() is
@@ -44,5 +44,5 @@ public interface Yoneda extends Cloneable, Serializable {
      * The clone operation has different semantics for different yoneda 
      * subclasses.
      */
-    public Object clone();
+    Object clone();
 }

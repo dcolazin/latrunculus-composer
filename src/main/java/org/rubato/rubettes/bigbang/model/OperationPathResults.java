@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.collections15.BidiMap;
-import org.apache.commons.collections15.bidimap.TreeBidiMap;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.rubato.rubettes.util.DenotatorPath;
 
 public class OperationPathResults {
@@ -19,10 +19,10 @@ public class OperationPathResults {
 	private Set<DenotatorPath> pathsToBeSelected;
 	
 	public OperationPathResults() {
-		this.newPaths = new TreeSet<DenotatorPath>();
-		this.removedPaths = new TreeSet<DenotatorPath>();
-		this.changedPaths = new TreeBidiMap<DenotatorPath,DenotatorPath>();
-		this.pathsToBeSelected = new TreeSet<DenotatorPath>();
+		this.newPaths = new TreeSet<>();
+		this.removedPaths = new TreeSet<>();
+		this.changedPaths = new TreeBidiMap<>();
+		this.pathsToBeSelected = new TreeSet<>();
 	}
 	
 	public OperationPathResults(Set<DenotatorPath> pathsToBeSelected) {
@@ -39,7 +39,7 @@ public class OperationPathResults {
 	
 	public OperationPathResults(Map<DenotatorPath, DenotatorPath> changedPaths) {
 		this();
-		this.changedPaths = new TreeBidiMap<DenotatorPath,DenotatorPath>(changedPaths);
+		this.changedPaths = new TreeBidiMap<>(changedPaths);
 	}
 	
 	public OperationPathResults(Set<DenotatorPath> newPaths, Set<DenotatorPath> removedPaths, Map<DenotatorPath, DenotatorPath> changedPaths) {
@@ -63,8 +63,8 @@ public class OperationPathResults {
 	}
 	
 	public void updatePaths(List<DenotatorPath> previousPaths, List<DenotatorPath> currentPaths, Collection<DenotatorPath> newPaths) {
-		Map<DenotatorPath,DenotatorPath> changedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
-		Set<DenotatorPath> removedPaths = new TreeSet<DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> changedPaths = new TreeMap<>();
+		Set<DenotatorPath> removedPaths = new TreeSet<>();
 		for (int i = previousPaths.size()-1; i >= 0; i--) {
 			DenotatorPath keyPath = previousPaths.get(i);
 			DenotatorPath valuePath = currentPaths.get(i);
@@ -80,12 +80,12 @@ public class OperationPathResults {
 	private void updatePaths(Map<DenotatorPath,DenotatorPath> changedPaths, Collection<DenotatorPath> newPaths, Set<DenotatorPath> removedPaths) {
 		//need to build new sets and maps separately so that no values are changed back and forth,
 		//e.g. in cases of two paths being switched
-		Set<DenotatorPath> newNewPaths = new TreeSet<DenotatorPath>();
-		BidiMap<DenotatorPath,DenotatorPath> newChangedPaths = new TreeBidiMap<DenotatorPath,DenotatorPath>(this.changedPaths);
+		Set<DenotatorPath> newNewPaths = new TreeSet<>();
+		BidiMap<DenotatorPath,DenotatorPath> newChangedPaths = new TreeBidiMap<>(this.changedPaths);
 		
 		//go through all newPaths and see if they or any of their anchors are in the given changedPaths
 		//replace them or their anchor path and add to newNewPath
-		Set<DenotatorPath> newPathsToRemove = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> newPathsToRemove = new TreeSet<>();
 		for (DenotatorPath currentNewPath : this.newPaths) {
 			DenotatorPath currentAnchorPath = currentNewPath;
 			while (currentAnchorPath != null) {
@@ -141,8 +141,8 @@ public class OperationPathResults {
 	}
 	
 	public void resetChangedAndRemovedPaths() {
-		this.changedPaths = new TreeBidiMap<DenotatorPath,DenotatorPath>();
-		this.removedPaths = new TreeSet<DenotatorPath>();
+		this.changedPaths = new TreeBidiMap<>();
+		this.removedPaths = new TreeSet<>();
 	}
 	
 	public void setNewPaths(Set<DenotatorPath> newPaths) {
