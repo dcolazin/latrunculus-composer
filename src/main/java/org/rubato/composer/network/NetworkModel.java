@@ -290,7 +290,7 @@ public class NetworkModel {
     
     
     public NetworkModel newInstance() {
-        ArrayList<RubetteModel> newRubettes = new ArrayList<RubetteModel>(rubettes.size());
+        ArrayList<RubetteModel> newRubettes = new ArrayList<>(rubettes.size());
         for (int i = 0; i < rubettes.size(); i++) {
             RubetteModel rmodel = rubettes.get(i);
             rmodel.setSerial(i);

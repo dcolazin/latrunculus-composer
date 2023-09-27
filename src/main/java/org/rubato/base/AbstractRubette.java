@@ -19,20 +19,14 @@
 
 package org.rubato.base;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-
-import org.rubato.composer.RunInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.rubato.composer.rubette.Link;
 import org.rubato.composer.rubette.RubetteModel;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.util.TextUtils;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract base class for Rubettes.
@@ -47,172 +41,17 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
-
+@Slf4j
 public abstract class AbstractRubette implements Rubette {
-    
-    // These methods must be implemented by a concrete Rubette. 
 
-    /**
-     * Runs the Rubette.
-     * This is the heart of the Rubette and implements the
-     * actual computation. Input values are retrieved with the
-     * getInput method and output values are stored using the
-     * setOutput method. The runInfo parameter object has a method
-     * stopped() which should be called regularly, and, in the case
-     * it returns false, the run() method should exit gracefully.
-     * @param runInfo contains information about the Runner that executes
-     *        the network
-     */
-    public abstract void run(RunInfo runInfo);
-    
+    private RubetteModel model;
+    private Denotator[] output;
+    private int inCount = 1;
+    private int outCount = 1;
+    private final List<String> errors = new LinkedList<>();
 
-    /**
-     * Returns the name of the rubette.
-     */
-    public abstract String getName();
-    
-
-    /**
-     * Creates a rubette from an XML description starting with <code>element</code>.
-     */
-    public abstract Rubette fromXML(XMLReader reader, Element element);
-    
-
-    /**
-     * Writes an XML description of this rubette.
-     * This method should write XML for the configuration of this
-     * Rubette.
-     */
-    public abstract void toXML(XMLWriter writer);
-    
-    
     // These methods can be overridden by a concrete Rubette
 
-    /**
-     * Initializes Rubette.
-     * This method is called when a Rubette is instantiated
-     * as a prototype. It does nothing by default.
-     */
-    public void init() { /* default does nothing */ }
-    
-    
-    /**
-     * Creates a duplicate from this rubette instance.
-     * All properties are copied if possible.
-     * This must be correctly implemented in order that many functions
-     * work as expected.
-     */
-    public abstract Rubette duplicate();;
-    
-    
-    /**
-     * Returns the group this Rubette belongs to.
-     * The default group is "Other".
-     */
-    public String getGroup() {
-        return RubatoConstants.OTHER_GROUP;
-    }
-
-    
-    /**
-     * Returns an icon for this Rubette.
-     */
-    public ImageIcon getIcon() {
-        return null;
-    }
-
-
-    /**
-     * Returns true iff this rubette has a properties dialog.
-     * Properties reflect the configuration of this Rubette,
-     * any changes in the properties dialog may affect the
-     * computation.
-     */
-    public boolean hasProperties() {
-        return false;
-    }
-    
-
-    /**
-     * Returns the Swing component for the properties dialog.
-     * If this rubette has no properties dialog, simply return null.
-     */
-    public JComponent getProperties() {
-        return null;
-    }
-    
-    
-    /**
-     * Makes changes in the properties dialog permanent.
-     * @return true iff the values in the properties dialog are correct
-     */
-    public boolean applyProperties() {
-        return true;
-    }
-    
-    
-    /**
-     * Reverts values in the properties dialog to the values in the Rubette.
-     */
-    public void revertProperties() { /* default does nothing */ }
-
-    
-    /**
-     * Returns true iff this Rubette has a view.
-     * A view should provide a visual (or aural) representation of the
-     * configuration (resp. values) of the Rubette, but must never
-     * affect the computation.
-     */
-    public boolean hasView() {
-        return false;
-    }
-
-    
-    /**
-     * Returns the Swing component for the view.
-     * If this Rubette has no view, this simply returns null.
-     */
-    public JComponent getView() {
-        return null;
-    }
-    
-    
-    /**
-     * Updates the view reflecting the changes of the values in the Rubette.
-     * If there is no view, do nothing.
-     */
-    public void updateView() { /* default does nothing */ }
-
-    
-    /**
-     * Returns true iff this Rubette has an info label.
-     * The info label is a short string that is displayed
-     * in the JRubette.
-     */
-    public boolean hasInfo() {
-        return false;
-    }
-
-    
-    /**
-     * Returns the info string for the info label.
-     * If this Rubette has no info label, this simply returns null.
-     */
-    public String getInfo() {
-        return null;
-    }
-    
-
-    /**
-     * Returns a short description.
-     * The short description is shown as a tooltip over the JRubette.
-     * The default text is the name of the rubette.
-     */
-    public String getShortDescription() {
-        return getName();
-    }
-    
-    
     /**
      * Returns a long description.
      * The long description is shown in the text area below the
@@ -221,30 +60,13 @@ public abstract class AbstractRubette implements Rubette {
     public String getLongDescription() {
         return Messages.getString("AbstractRubette.nodescription")+getName()+"."; //$NON-NLS-1$//$NON-NLS-2$
     }
-    
-    
-    /**
-     * Returns the tooltip for the input connector number <code>i</code>. 
-     */
-    public String getInTip(int i) {
-        return "Input #"+i; //$NON-NLS-1$
-    }
 
-
-    /**
-     * Returns the tooltip for the output connector number <code>i</code>. 
-     */
-    public String getOutTip(int i) {
-        return "Output #"+i; //$NON-NLS-1$
-    }
-
-    
     /**
      * The default constructor must/should perform initializations specfic to
      * each rubette instance, for example set the number of inputs and outputs, or
      * initializing the rubette state. 
      */
-    public AbstractRubette() { /* default does nothing */ }
+    protected AbstractRubette() { /* default does nothing */ }
     
     
     // These methods cannot be overridden but can be used by a concrete rubette. 
@@ -252,17 +74,14 @@ public abstract class AbstractRubette implements Rubette {
     /**
      * Creates a new instance from a protoype.
      */
+    //TODO this should be final
     public Rubette newInstance() {
         try {
             return getClass().newInstance();
         }
-        catch (InstantiationException e) {
-            System.out.println(e.getStackTrace());
-            throw new Error("Unexpected internal error: consult the console log"); //$NON-NLS-1$
-        }
-        catch (IllegalAccessException e) {
-            System.out.println(e.getStackTrace());
-            throw new Error("Unexpected internal error: consult the console log"); //$NON-NLS-1$
+        catch (InstantiationException | IllegalAccessException e) {
+            log.error(e.getMessage());
+            throw new LatrunculusError(e, "Unexpected internal error: consult the console log");
         }
     }
 
@@ -411,14 +230,9 @@ public abstract class AbstractRubette implements Rubette {
      * This is called by the Composer, and should, in general,
      * never be used by a Rubette implementation.
      */
+    //TODO is there a way to not have this public method?
     public final void setModel(RubetteModel model) {
         this.model = model;
     }
-    
-    
-    private RubetteModel model    = null;
-    private Denotator[]  output;
-    private List<String> errors   = new LinkedList<String>();
-    private int          inCount  = 1;
-    private int          outCount = 1;
+
 }

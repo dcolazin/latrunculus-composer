@@ -26,36 +26,40 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.rubato.base.Rubette;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.rubato.xml.XMLWriter;
 
+@Getter
+@Setter
 public class RubetteModel {
 
-    public RubetteModel(Rubette rubette, String name) {
-        assert(rubette != null);
+    private JRubette jRubette;
+    private String name;
+    private int serial;
+    private Point location;
+    private boolean passThrough;
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Link[] inputs;
+
+    private final Rubette rubette;
+    private final List<Link> inLinks = new ArrayList<>();
+    private final List<Link> outLinks = new ArrayList<>();
+    private final LinkedList<RubetteModel> dependencies = new LinkedList<>();
+    private final LinkedList<RubetteModel> dependents = new LinkedList<>();
+
+    public RubetteModel(@NonNull Rubette rubette, String name) {
         rubette.setModel(this);
-        this.jrubette = null;
         this.rubette = rubette;
         this.name = name;
-        inputs = new Link[rubette.getInCount()];
+        this.inputs = new Link[rubette.getInCount()];
     }
-
-    
-    public Rubette getRubette() {
-        return rubette;
-    }
-    
-    
-    public JRubette getJRubette() {
-        return jrubette;
-    }
-    
-    
-    public void setJRubette(JRubette jrubette) {
-        this.jrubette = jrubette;
-    }
-    
     
     public ImageIcon getIcon() {
         return rubette.getIcon();
@@ -88,6 +92,8 @@ public class RubetteModel {
             newInputs[i] = inputs[i];            
         }
         inputs = newInputs;
+        //TODO test before change
+        //inputs = Arrays.copyOf(inputs, Math.min(inputs.length, rubette.getInCount()));
     }
 
     
@@ -110,16 +116,6 @@ public class RubetteModel {
     }
 
     
-    public ArrayList<Link> getInLinks() {
-        return inLinks;
-    }
-    
-    
-    public ArrayList<Link> getOutLinks() {
-        return outLinks;
-    }
-
-    
     public void addOutLink(Link link) {
         outLinks.add(link);        
     }
@@ -138,20 +134,14 @@ public class RubetteModel {
     
     public String getInTip(int i) {
         String s = rubette.getInTip(i);
-        return (s != null)?s:"Input #"+i; //$NON-NLS-1$
+        return (s != null) ? s : Rubette.defaultInTip(i);
     }
     
     
     public String getOutTip(int i) {
         String s = rubette.getOutTip(i);
-        return (s != null)?s:"Output #"+i; //$NON-NLS-1$
+        return (s != null) ? s : Rubette.defaultOutTip(i);
     }
-
-    
-    public String getName() {
-        return name;
-    }
-
     
     public String getShortDescription() {
         return rubette.getShortDescription();
@@ -179,15 +169,9 @@ public class RubetteModel {
     public int getOutLinkCount() {
         return outLinks.size();
     }
-
-    
-    public List<RubetteModel> getDependents() {
-        return dependents;
-    }
-    
     
     public List<RubetteModel> getFirstDependents() {
-        List<RubetteModel> alldependents = new LinkedList<RubetteModel>();
+        List<RubetteModel> alldependents = new LinkedList<>();
         for (Link link : outLinks) {
             alldependents.add(link.getDestModel());
         }
@@ -201,7 +185,7 @@ public class RubetteModel {
     
     
     public List<RubetteModel> getFirstDependencies() {
-        List<RubetteModel> alldependencies = new LinkedList<RubetteModel>();
+        List<RubetteModel> alldependencies = new LinkedList<>();
         for (Link link : inLinks) {
             alldependencies.add(link.getSrcModel());
         }
@@ -247,45 +231,19 @@ public class RubetteModel {
     public void toXML(XMLWriter writer) {
         rubette.toXML(writer);
     }
-    
-    
-    public int getSerial() {
-        return serial;
-    }
-    
-    
-    public void setSerial(int i) {
-        serial = i;
-    }
 
     
     public Point getLocation() {
-        if (jrubette != null) {
-            location = jrubette.getLocation();
+        if (jRubette != null) {
+            location = jRubette.getLocation();
         }
         return location;
     }
-
-    
-    public void setLocation(Point pt) {
-        location = pt;
-    }
-    
     
     public void togglePassThrough() {
-        passthrough = !passthrough;
+        passThrough = !passThrough;
     }
-    
-    
-    public void setPassThrough(boolean p) {
-        passthrough = p;
-    }
-    
-    
-    public boolean isPassThrough() {
-        return passthrough;
-    }
-    
+
     
     public boolean canPassThrough() {
         return getInCount() > 0 && getOutCount() > 0;
@@ -293,27 +251,12 @@ public class RubetteModel {
     
     
     public RubetteModel newInstance() {
-        RubetteModel newModel = new RubetteModel(rubette.duplicate(), name);
-        newModel.setLocation(getLocation());
-        return newModel;
+        return duplicate();
     }
     
     
     public String toString() {
         return "RubetteModel["+getName()+"]"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
-    
-    private JRubette   jrubette;
-    private String     name;
-    private ArrayList<Link> inLinks = new ArrayList<Link>();
-    private ArrayList<Link> outLinks = new ArrayList<Link>();
-    private Link[]     inputs;
-    private Rubette    rubette;
-    private int        serial;
-    private Point      location;
-    private boolean    passthrough = false;
-    
-    private LinkedList<RubetteModel> dependencies = new LinkedList<RubetteModel>();
-    private LinkedList<RubetteModel> dependents = new LinkedList<RubetteModel>();
+
 }
