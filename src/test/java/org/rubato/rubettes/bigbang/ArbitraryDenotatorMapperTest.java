@@ -3,6 +3,8 @@ package org.rubato.rubettes.bigbang;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.math.matrix.RMatrix;
 import org.rubato.math.module.morphism.ModuleMorphism;
@@ -14,20 +16,20 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 
-import junit.framework.TestCase;
-
-public class ArbitraryDenotatorMapperTest  extends TestCase {
+class ArbitraryDenotatorMapperTest {
 	
 	private TestObjects objects;
 	private ModuleMorphism translation;
-	
-	protected void setUp() throws Exception {
+
+	@BeforeEach
+	void setUp() throws Exception {
 		this.objects = new TestObjects();
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
 		this.translation = RFreeAffineMorphism.make(identity, new double[]{-1,-2});
 	}
-	
-	public void testMappingOfNodeDenotators() throws RubatoException {
+
+	@Test
+	void testMappingOfNodeDenotators() throws RubatoException {
 		//create paths to map onset x pitch -> onset x pitch
 		TransformationPaths paths = this.objects.createStandardTransformationPaths(
 				this.objects.SOUND_NODE_FORM, new int[][]{{0,0},{0,1}});
@@ -41,8 +43,9 @@ public class ArbitraryDenotatorMapperTest  extends TestCase {
 		LimitDenotator expectedNode = this.objects.createMultilevelNode(new double[][]{{-1,58,120,1,0},{1,3,-4,0,0},{1,-3,5,0,1}});
 		this.objects.assertEqualNonPowerDenotators(mappedNode, expectedNode);
 	}
-	
-	public void testMappingOfColimitDenotators() throws RubatoException {
+
+	@Test
+	void testMappingOfColimitDenotators() throws RubatoException {
 		//create paths to map int x real -> int x real
 		TransformationPaths paths = this.objects.createStandardTransformationPaths(
 				this.objects.INTEGER_OR_REAL_FORM, new int[][]{{0},{1}});
@@ -70,8 +73,9 @@ public class ArbitraryDenotatorMapperTest  extends TestCase {
 		expectedColimit = this.objects.createIntegerOrReal(false, 1.5);
 		this.objects.assertEqualNonPowerDenotators(expectedColimit, mappedPowerset.get(new int[]{3}));
 	}
-	
-	public void testMappingOfColimitDenotators2() throws RubatoException {
+
+	@Test
+	void testMappingOfColimitDenotators2() throws RubatoException {
 		TransformationPaths paths = new TransformationPaths();
 		//add Duration paths for both types of configurations: note and rest
 		DenotatorPath noteDurationPath = new DenotatorPath(this.objects.GENERAL_NOTE_FORM, new int[]{0,3});

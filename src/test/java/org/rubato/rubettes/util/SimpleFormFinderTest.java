@@ -19,72 +19,80 @@
 
 package org.rubato.rubettes.util;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Defines tests for the SimpleFormFinder class.
  * 
  * @author Florian Thalmann
  */
-public class SimpleFormFinderTest extends TestCase {
+public class SimpleFormFinderTest {
 	
 	//private PowerForm macroScoreForm = (PowerForm)Repository.systemRepository().getForm("MacroScore");
 	
 	private NoteGenerator generator;
 	private SimpleFormFinder finder;
-	
-	public void setUp() {
+
+	@BeforeEach
+	void setUp() {
 		this.generator = new MacroNoteGenerator();
 	}
-	
-	public void testWithScoreForm() {
+
+	@Test
+	void testWithScoreForm() {
 		this.finder = new SimpleFormFinder(generator.getScoreForm());
 		
 		//test with different recursion levels
 		this.finder.setMaxRecursion(0);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 0);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 0);
+		assertTrue(this.finder.getSimpleForms().size() == 0);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 0);
 		this.finder.setMaxRecursion(1);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 5);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 5);
+		assertTrue(this.finder.getSimpleForms().size() == 5);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 5);
 		this.finder.setMaxRecursion(10);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 5);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 5);
+		assertTrue(this.finder.getSimpleForms().size() == 5);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 5);
 		
 		//test getPath()
 		int[] path = this.finder.getPath(generator.getLoudnessForm());
-		TestCase.assertTrue(Arrays.equals(path, new int[]{2}));
+		assertTrue(Arrays.equals(path, new int[]{2}));
 		path = this.finder.getPathForElement(generator.getDurationForm());
-		TestCase.assertTrue(Arrays.equals(path, new int[]{3,0}));
+		assertTrue(Arrays.equals(path, new int[]{3,0}));
 	}
-	
-	public void testWithMacroScoreForm() {
-		/* First we need the MacroScore form to be built-in...
+
+	/*
+	@Test
+	void testWithMacroScoreForm() {
+		// First we need the MacroScore form to be built-in...
 		 
 		this.finder = new SimpleFormFinder(this.macroScoreForm);
 		
 		//test with different recursion levels
 		this.finder.setMaxRecursion(0);
 		System.out.println(this.finder.getSimpleForms());
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 0);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 0);
+		assertTrue(this.finder.getSimpleForms().size() == 0);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 0);
 		this.finder.setMaxRecursion(1);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 0);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 0);
+		assertTrue(this.finder.getSimpleForms().size() == 0);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 0);
 		this.finder.setMaxRecursion(2);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 5);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 5);
+		assertTrue(this.finder.getSimpleForms().size() == 5);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 5);
 		this.finder.setMaxRecursion(10);
-		TestCase.assertTrue(this.finder.getSimpleForms().size() == 5);
-		TestCase.assertTrue(this.finder.getSimpleFormPaths().size() == 5);
+		assertTrue(this.finder.getSimpleForms().size() == 5);
+		assertTrue(this.finder.getSimpleFormPaths().size() == 5);
 		
 		//test getPath()
 		int[] path = this.finder.getPath(generator.getLoudnessForm());
-		TestCase.assertTrue(Arrays.equals(path, new int[]{0,2}));
+		assertTrue(Arrays.equals(path, new int[]{0,2}));
 		path = this.finder.getPathForElement(generator.getDurationForm());
-		TestCase.assertTrue(Arrays.equals(path, new int[]{0,3,0}));*/
+		assertTrue(Arrays.equals(path, new int[]{0,3,0}));
 	}
+	 */
 
 }

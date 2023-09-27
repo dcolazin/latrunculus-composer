@@ -1,84 +1,92 @@
 package org.rubato.rubettes.bigbang;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.bigbang.model.BigBangObjects;
 import org.rubato.rubettes.bigbang.model.DenotatorValueExtractor;
 
-public class DenotatorValueExtractorTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+class DenotatorValueExtractorTest {
 	
 	private BigBangModel model;
 	private TestObjects objects;
 	
-	protected void setUp() {
+	@BeforeEach
+	void setUp() {
 		this.objects = new TestObjects();
 		this.model = new BigBangModel();
 	}
 	
-	public void testExtractDisplayObjectsWithMultilevelSoundScore() {
+	@Test
+	void testExtractDisplayObjectsWithMultilevelSoundScore() {
 		//TODO reabilitate
 		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
 		/*
 		this.model.setOrAddComposition(this.objects.multiLevelSoundScore);
 		new DenotatorValueExtractor(this.model.getObjects(), this.model.getComposition());
 		BigBangObjects nodes = this.model.getObjects();
-		TestCase.assertEquals(3, nodes.getAllObjects().size());
+		assertEquals(3, nodes.getAllObjects().size());
 		BigBangObject lastNode = nodes.getAllObjects().last();
-		TestCase.assertEquals(2.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(0), 0));
-		TestCase.assertEquals(60.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(1), 0));
-		TestCase.assertEquals(121.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(2), 0));
-		TestCase.assertEquals(1.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(3), 0));
-		TestCase.assertEquals(1.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(4), 0));
-		TestCase.assertEquals(2.0, lastNode.getNthValue(DenotatorValueExtractor.SATELLITE_LEVEL, 0));
-		TestCase.assertEquals(0.0, lastNode.getNthValue(DenotatorValueExtractor.SIBLING_NUMBER, 0));
+		assertEquals(2.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(0), 0));
+		assertEquals(60.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(1), 0));
+		assertEquals(121.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(2), 0));
+		assertEquals(1.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(3), 0));
+		assertEquals(1.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(4), 0));
+		assertEquals(2.0, lastNode.getNthValue(DenotatorValueExtractor.SATELLITE_LEVEL, 0));
+		assertEquals(0.0, lastNode.getNthValue(DenotatorValueExtractor.SIBLING_NUMBER, 0));
 	*/
 	}
 
-	public void testExtractDisplayObjectsWithQ3() {
+	@Test
+	void testExtractDisplayObjectsWithQ3() {
 		this.model.setOrAddComposition(this.objects.rationalTriples);
 		new DenotatorValueExtractor(this.model.getObjects(), this.model.getComposition());
 		BigBangObjects triples = this.model.getObjects();
-		TestCase.assertEquals(4, triples.getAllObjects().size());
+		assertEquals(4, triples.getAllObjects().size());
 		BigBangObject lastTriple = triples.getAllObjects().last();
-		TestCase.assertEquals(4.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(0), 0));
-		TestCase.assertEquals(3.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(1), 0));
-		TestCase.assertEquals(1.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(2), 0));
+		assertEquals(4.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(0), 0));
+		assertEquals(3.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(1), 0));
+		assertEquals(1.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(2), 0));
 	}
-	
-	public void testExtractDisplayObjectsWithProductRing() {
+
+	@Test
+	void testExtractDisplayObjectsWithProductRing() {
 		this.model.setOrAddComposition(this.objects.realTriples);
 		new DenotatorValueExtractor(this.model.getObjects(), this.model.getComposition());
 		BigBangObjects triples = this.model.getObjects();
-		TestCase.assertEquals(3, triples.getAllObjects().size());
+		assertEquals(3, triples.getAllObjects().size());
 		BigBangObject lastTriple = triples.getAllObjects().last();
-		TestCase.assertEquals(4.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(0), 0));
-		TestCase.assertEquals(3.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(1), 0));
-		TestCase.assertEquals(1.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(2), 0));
+		assertEquals(4.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(0), 0));
+		assertEquals(3.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(1), 0));
+		assertEquals(1.0, lastTriple.getNthValue(triples.getCoordinateSystemValueNames().get(2), 0));
 	}
-	
-	public void testExtractDisplayObjectsWithColimit() {
+
+	@Test
+	void testExtractDisplayObjectsWithColimit() {
 		this.model.setOrAddComposition(this.objects.integerOrReals);
 		new DenotatorValueExtractor(this.model.getObjects(), this.model.getComposition());
 		BigBangObjects integerOrReals = this.model.getObjects();
-		TestCase.assertEquals(4, integerOrReals.getAllObjects().size());
-		TestCase.assertEquals("Integer Z", integerOrReals.getCoordinateSystemValueNames().get(0));
-		TestCase.assertEquals("Real R", integerOrReals.getCoordinateSystemValueNames().get(1));
+		assertEquals(4, integerOrReals.getAllObjects().size());
+		assertEquals("Integer Z", integerOrReals.getCoordinateSystemValueNames().get(0));
+		assertEquals("Real R", integerOrReals.getCoordinateSystemValueNames().get(1));
 		
 		//check first element
 		BigBangObject first = integerOrReals.getAllObjects().first();
-		TestCase.assertEquals(4.0, first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(0), 0));
-		TestCase.assertNull(first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(1), 0));
+		assertEquals(4.0, first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(0), 0));
+		assertNull(first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(1), 0));
 		//colimit index
-		TestCase.assertEquals(0.0, first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(2), 0));
+		assertEquals(0.0, first.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(2), 0));
 		
 		//check last element
 		BigBangObject last = integerOrReals.getAllObjects().last();
-		TestCase.assertNull(last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(0), 0));
-		TestCase.assertEquals(3.5, last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(1), 0));
+		assertNull(last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(0), 0));
+		assertEquals(3.5, last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(1), 0));
 		//colimit index
-		TestCase.assertEquals(1.0, last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(2), 0));
+		assertEquals(1.0, last.getNthValue(integerOrReals.getCoordinateSystemValueNames().get(2), 0));
 	}
 
 }

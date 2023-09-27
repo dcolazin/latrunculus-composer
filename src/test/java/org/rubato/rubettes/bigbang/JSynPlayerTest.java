@@ -1,5 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.DenotatorValueExtractor;
@@ -11,18 +13,19 @@ import org.rubato.rubettes.util.SoundNoteGenerator;
 
 import com.jsyn.unitgen.LineOut;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class JSynPlayerTest extends TestCase {
+class JSynPlayerTest {
 	
-	TestObjects objects;
+	private TestObjects objects;
 	
-	protected void setUp() {
+	@BeforeEach
+	void setUp() {
 		this.objects = new TestObjects();
 	}
 	
-	public void testSmoothOscillatorOffline() {
+	@Test
+	void testSmoothOscillatorOffline() {
 		//create player and line out
 		BigBangPlayer player = new BigBangPlayer();
 		player.startSynth();
@@ -37,25 +40,26 @@ public class JSynPlayerTest extends TestCase {
 		//test with additive synthesis
 		carrier.addSatellite(JSynObject.ADDITIVE);
 		carrier.addSatellite(JSynObject.ADDITIVE);
-		TestCase.assertEquals(2, carrier.getSatellites().size());
+		assertEquals(2, carrier.getSatellites().size());
 		
 		//test with frequency modulation
 		carrier.setSatelliteType(1, JSynObject.FREQUENCY_MODULATION);
 		carrier.addSatellite(JSynObject.FREQUENCY_MODULATION);
-		TestCase.assertEquals(3, carrier.getSatellites().size());
+		assertEquals(3, carrier.getSatellites().size());
 		
 		//test with ring modulation
 		carrier.setSatelliteType(2, JSynObject.RING_MODULATION);
-		TestCase.assertEquals(3, carrier.getSatellites().size());
+		assertEquals(3, carrier.getSatellites().size());
 		carrier.removeLastSatellite();
 		carrier.removeLastSatellite();
 		carrier.removeLastSatellite();
-		TestCase.assertEquals(0, carrier.getSatellites().size());
+		assertEquals(0, carrier.getSatellites().size());
 		
 		//lineOut.stop();
 	}
-	
-	public void testPlayerWithSoundScore() throws InterruptedException {
+
+	@Test
+	void testPlayerWithSoundScore() throws InterruptedException {
 		//TODO test with both modulators and normal satellites
 		BigBangPlayer player = new BigBangPlayer();
 		player.startSynth();
@@ -66,9 +70,9 @@ public class JSynPlayerTest extends TestCase {
 		
 		//create and verify score
 		JSynScore testScore = this.extractJSynScore(generator.createMultiLevelSoundScore(new double[][]{{0,60,120,1,0,0},{0,1,-4,0,0,0}}));
-		TestCase.assertEquals(1, testScore.getObjects().size());
-		TestCase.assertEquals(1, testScore.getObjects().iterator().next().getSatellites().size());
-		TestCase.assertEquals(JSynObject.ADDITIVE, testScore.getObjects().iterator().next().getSatellites().get(0).getSatelliteType());
+		assertEquals(1, testScore.getObjects().size());
+		assertEquals(1, testScore.getObjects().iterator().next().getSatellites().size());
+		assertEquals(JSynObject.ADDITIVE, testScore.getObjects().iterator().next().getSatellites().get(0).getSatelliteType());
 		
 		//System.out.println(testScore);
 		player.setScore(testScore);
@@ -102,13 +106,13 @@ public class JSynPlayerTest extends TestCase {
 		modulator.setFrequency(5);
 		modulator.setAmplitude(1000);
 		modulator.queueEnvelope(2, player.getCurrentSynthTime(), true);
-		TestCase.assertEquals(1, carrier.getSatellites().size());
+		assertEquals(1, carrier.getSatellites().size());
 		synth.sleepFor(1);
 		modulator.setFrequency(10);
 		synth.sleepFor(1);
 		
 		carrier.removeLastSatellite();
-		TestCase.assertEquals(0, carrier.getSatellites().size());
+		assertEquals(0, carrier.getSatellites().size());
 		synth.sleepFor(1);
 		
 		carrier.addSatellite(JSynObject.RING_MODULATION);
@@ -120,7 +124,7 @@ public class JSynPlayerTest extends TestCase {
 		carrier.setSatelliteType(0, JSynObject.FREQUENCY_MODULATION);
 		System.out.println(carrier);
 		modulator.setAmplitude(1000);
-		TestCase.assertEquals(1, carrier.getSatellites().size());
+		assertEquals(1, carrier.getSatellites().size());
 		synth.sleepFor(.3);
 		modulator.setAmplitude(1);
 		carrier.setSatelliteType(0, JSynObject.RING_MODULATION);
@@ -132,11 +136,11 @@ public class JSynPlayerTest extends TestCase {
 		modulator.setAmplitude(1);
 		synth.sleepFor(.3);
 		modulator.setFrequency(20);
-		//TestCase.assertEquals(2000.0, carrier.getFrequency());
-		TestCase.assertEquals(1, carrier.getSatellites().size());
+		//assertEquals(2000.0, carrier.getFrequency());
+		assertEquals(1, carrier.getSatellites().size());
 		modulator.queueEnvelope(2, player.getCurrentSynthTime(), true);
-		TestCase.assertEquals(1, carrier.getSatellites().size());
-		//TestCase.assertEquals(1, carrier.getModulators().get(0).getModulators().size());
+		assertEquals(1, carrier.getSatellites().size());
+		//assertEquals(1, carrier.getModulators().get(0).getModulators().size());
 		
 		synth.sleepFor(1);
 		lineOut.stop();

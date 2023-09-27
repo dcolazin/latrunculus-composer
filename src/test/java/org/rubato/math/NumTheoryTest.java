@@ -19,18 +19,17 @@
 
 package org.rubato.math;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.rubato.math.arith.NumberTheory;
 import org.rubato.math.arith.ZeroDivisorException;
 
-public class NumTheoryTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-    public NumTheoryTest(String name) {
-        super(name);
-    }
+class NumTheoryTest {
 
-    public void testNumTheoryGcd() {
+    @Test
+    void testNumTheoryGcd() {
         int g;
         g = NumberTheory.gcd(10, 5);
         assertEquals(5, g);
@@ -58,9 +57,10 @@ public class NumTheoryTest extends TestCase {
         assertEquals(35, g);
     }
 
-    public void testNumTheoryExgcd() {
+    @Test
+    void testNumTheoryExgcd() {
         int g;
-        int res[] = new int[2];
+        int[] res = new int[2];
         g = NumberTheory.exgcd(30, 18, res);
         assertEquals(6, g);
         assertEquals(-1, res[0]);
@@ -95,7 +95,8 @@ public class NumTheoryTest extends TestCase {
         assertEquals(567, res[1]);
     }
 
-    public void testNumTheoryInverseMod() {
+    @Test
+    void testNumTheoryInverseMod() {
         int q;
         q = NumberTheory.inverseMod(3, 7);
         assertEquals(5, q);
@@ -115,7 +116,8 @@ public class NumTheoryTest extends TestCase {
         } catch (ZeroDivisorException e) { /* continue */ }
     }
 
-    public void testNumTheoryDivideMod() {
+    @Test
+    void testNumTheoryDivideMod() {
         int q;
         q = NumberTheory.divideMod(3, 5, 7);
         assertEquals(2, q);
@@ -137,7 +139,8 @@ public class NumTheoryTest extends TestCase {
         } catch (ZeroDivisorException e) { /* continue */ }	 
     }
 
-    public void testNumTheoryPowMod() {
+    @Test
+    void testNumTheoryPowMod() {
         int y;
         y = NumberTheory.powerMod(2, 7, 13);
         assertEquals(11, y);
@@ -159,7 +162,4 @@ public class NumTheoryTest extends TestCase {
         } catch (ZeroDivisorException e) { /* continue */ }
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(NumTheoryTest.class);
-    }
 }

@@ -3,22 +3,24 @@ package org.rubato.rubettes.bigbang;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.LimitDenotator;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.ObjectGenerator;
 
-import junit.framework.TestCase;
+class ObjectGeneratorTest {
+	
+	private TestObjects objects;
 
-public class ObjectGeneratorTest extends TestCase {
-	
-	TestObjects objects;
-	
-	protected void setUp() {
+	@BeforeEach
+	void setUp() {
 		this.objects = new TestObjects();
 	}
-	
-	public void testCreateObject() {
+
+	@Test
+	void testCreateObject() {
 		double[] noteValues = new double[]{0.0, 60.0, 120.0, 1.0, 0.0, 0.0};
 		Map<DenotatorPath,Double> pathsWithValues = new TreeMap<DenotatorPath,Double>();
 		//only set middle three values, others will be left zero

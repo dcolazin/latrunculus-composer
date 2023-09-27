@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.math.module.QElement;
 import org.rubato.math.module.RElement;
@@ -30,19 +32,20 @@ import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Defines tests for the MorphingRubette class.
  * 
  * @author Florian Thalmann
  */
-public class MorphingRubetteTest extends TestCase {
+class MorphingRubetteTest {
 	
 	private MacroNoteGenerator noteGenerator;
 	private MorphingRubette rubette;
 	private PowerDenotator score1, score2, score3;
 	
+	@BeforeEach
 	protected void setUp() {
 		this.noteGenerator = new MacroNoteGenerator();
 		this.rubette = new MorphingRubette();
@@ -51,57 +54,61 @@ public class MorphingRubetteTest extends TestCase {
 		this.score3 = this.noteGenerator.createSimpleMelody(1, 69, 74, 73, 82);
 	}
 	
-	public void testGetTimeInfo() {
+	@Test
+	void testGetTimeInfo() {
 		try {
 			double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 			double[] timeInfo2 = this.rubette.getTimeInfo(score2);
-			TestCase.assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 5);
-			TestCase.assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 3);
+			assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 5);
+			assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 3);
 		} catch (RubatoException e) { }
 	}
-	
-	public void testMakeTimeCorrection() throws RubatoException {
+
+	@Test
+	void testMakeTimeCorrection() throws RubatoException {
 		this.rubette.makeTimeCorrection(score1, score2);
 		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
 		//check onsets
-		TestCase.assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 4);
-		TestCase.assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 4);
+		assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 4);
+		assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 4);
 		//check durations
 		//System.out.println("l"+this.getDuration(score2.getFactor(0)));
-		TestCase.assertTrue(this.getDuration(score1.getFactor(0)) < 1);
-		TestCase.assertTrue(this.getDuration(score1.getFactor(4)) < 84.0/125);
-		TestCase.assertTrue(this.getDuration(score1.getFactor(5)) < Math.pow(4.0/5,2));
-		TestCase.assertTrue(this.getDuration(score2.getFactor(0)) > 1);
-		TestCase.assertTrue(this.getDuration(score2.getFactor(3)) < 1);
+		assertTrue(this.getDuration(score1.getFactor(0)) < 1);
+		assertTrue(this.getDuration(score1.getFactor(4)) < 84.0/125);
+		assertTrue(this.getDuration(score1.getFactor(5)) < Math.pow(4.0/5,2));
+		assertTrue(this.getDuration(score2.getFactor(0)) > 1);
+		assertTrue(this.getDuration(score2.getFactor(3)) < 1);
 	}
-	
-	public void testMakeTimeCorrection2() throws RubatoException {
+
+	@Test
+	void testMakeTimeCorrection2() throws RubatoException {
 		this.rubette.makeTimeCorrection(score2, score1);
 		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
 		//check onsets
-		TestCase.assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 4);
-		TestCase.assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 4);
+		assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 4);
+		assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 4);
 		//check durations
 		//System.out.println("l"+this.getDuration(score1.getFactor(0)));
-		TestCase.assertTrue(this.getDuration(score1.getFactor(0)) == 0.6400000000000001); //12/25
-		TestCase.assertTrue(this.getDuration(score1.getFactor(4)) < 1);
-		TestCase.assertTrue(this.getDuration(score1.getFactor(5)) > 1);
-		TestCase.assertTrue(this.getDuration(score2.getFactor(0)) > 1);
-		TestCase.assertTrue(this.getDuration(score2.getFactor(3)) > 4.0/3);
+		assertTrue(this.getDuration(score1.getFactor(0)) == 0.6400000000000001); //12/25
+		assertTrue(this.getDuration(score1.getFactor(4)) < 1);
+		assertTrue(this.getDuration(score1.getFactor(5)) > 1);
+		assertTrue(this.getDuration(score2.getFactor(0)) > 1);
+		assertTrue(this.getDuration(score2.getFactor(3)) > 4.0/3);
 	}
-	
-	public void testGetMorph() throws RubatoException {
+
+	@Test
+	void testGetMorph() throws RubatoException {
 		this.rubette.setInput(score2,score3);
 		this.rubette.makeTimeCorrection(score2, score3);
 		PowerDenotator morph = this.rubette.getMorph();
 		List<Denotator> factors = morph.getFactors();
 		int size = factors.size();
-		TestCase.assertTrue(size <= 8);
+		assertTrue(size <= 8);
 		
-		TestCase.assertTrue(this.getPitch(factors.get(0)) == 67);
-		TestCase.assertTrue(this.getPitch(factors.get(size-1)) == 82);
+		assertTrue(this.getPitch(factors.get(0)) == 67);
+		assertTrue(this.getPitch(factors.get(size-1)) == 82);
 		
 		Set<Double> possiblePitches = new HashSet<Double>();
 		possiblePitches.add(new Double(67));
@@ -110,7 +117,7 @@ public class MorphingRubetteTest extends TestCase {
 		
 		for (int i = 0; i < factors.size(); i++) {
 			//System.out.println(new Double(this.getPitch(factors.get(i))));
-			//TestCase.assertTrue(possiblePitches.contains(new Double(this.getPitch(factors.get(i)))));
+			//assertTrue(possiblePitches.contains(new Double(this.getPitch(factors.get(i)))));
 		}
 	}
 	

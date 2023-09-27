@@ -1,23 +1,22 @@
 package org.rubato.rubettes.bigbang;
 
+import org.junit.jupiter.api.Test;
 import org.rubato.rubettes.bigbang.view.model.ViewParameter;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class ViewParameterTest extends TestCase {
+class ViewParameterTest {
 	
-	protected void setUp() {
-	}
-	
-	public void testGetLimitedValue() {
+	@Test
+	void testGetLimitedValue() {
 		ViewParameter relative = new ViewParameter("Test", false, 0, 0, 1, true);
-		TestCase.assertTrue(relative.getLimitedValue(2,0,5) == 2);
-		TestCase.assertTrue(relative.getLimitedValue(6,0,5) == 1);
-		TestCase.assertTrue(relative.getLimitedValue(-7,0,5) == 3);
+		assertTrue(relative.getLimitedValue(2,0,5) == 2);
+		assertTrue(relative.getLimitedValue(6,0,5) == 1);
+		assertTrue(relative.getLimitedValue(-7,0,5) == 3);
 		relative = new ViewParameter("Test", false, 0, 0, 1, false);
-		TestCase.assertTrue(relative.getLimitedValue(2,0,5) == 2);
-		TestCase.assertTrue(relative.getLimitedValue(6,0,5) == 5);
-		TestCase.assertTrue(relative.getLimitedValue(-2,0,5) == 0);
+		assertTrue(relative.getLimitedValue(2,0,5) == 2);
+		assertTrue(relative.getLimitedValue(6,0,5) == 5);
+		assertTrue(relative.getLimitedValue(-2,0,5) == 0);
 	}
 }

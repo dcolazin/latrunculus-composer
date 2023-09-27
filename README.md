@@ -25,16 +25,16 @@ $ mvn javadoc:javadoc
 ## 1.0.0 roadmap
 * [x] Build with Maven
 * [x] Update to Java 8
+* [ ] Move the BigBang rubette to a different jar, as many dependencies are required for this rubette and not for the core composer?
 * [ ] Handle all the dependencies in the pom, without having a separate script to install the libraries
 * [ ] Review the rubette loading
-* [ ] Move the BigBang rubette to a different jar, as many dependencies are required for this rubette and not for the core composer?
-* [ ] Test coverage >70%
+* [ ] Test coverage >70% and review current tests
 * [ ] OSC support
-* [ ] Linting and improve maintenability
+* [ ] Linting and improve maintainability
+* [ ] Review i18n
 * [ ] Be ready to be able to update to Java 11 when needed
 * [ ] Move package org.rubato to org.vetronauta.latrunculus
 * [ ] Initial splash art
-* [ ] Review i18n
 
 ## List of known Rubato bugs
 

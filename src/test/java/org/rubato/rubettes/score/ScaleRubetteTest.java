@@ -28,6 +28,8 @@ import java.util.Iterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.math.module.QElement;
 import org.rubato.math.yoneda.Denotator;
@@ -38,30 +40,32 @@ import org.rubato.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Defines tests for the ScaleRubette class.
  * 
  * @author Florian Thalmann
  */
-public class ScaleRubetteTest extends TestCase {
+class ScaleRubetteTest {
 	
 	private ScaleRubette rubette;
 
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		this.rubette = new ScaleRubette();
 	}
 	
-	public void testScaleRubette() throws RubatoException {
+	@Test
+	void testScaleRubette() throws RubatoException {
 		this.rubette.getProperties();
-		TestCase.assertTrue(this.rubette.applyProperties());
+		assertTrue(this.rubette.applyProperties());
 		PowerDenotator scale = this.rubette.generateScale();
-		TestCase.assertTrue(scale.getFactorCount() == 75);
+		assertTrue(scale.getFactorCount() == 75);
 		this.rubette.setTempRootNote(59);
 		this.rubette.applyProperties();
 		scale = this.rubette.generateScale();
-		TestCase.assertTrue(scale.getFactorCount() == 74);
+		assertTrue(scale.getFactorCount() == 74);
 		
 		//compare steps for the ionian scale
 		double[] ionian = this.rubette.getScaleMap().get("ionian");
@@ -73,16 +77,17 @@ public class ScaleRubetteTest extends TestCase {
 		int currentStep = 1;
 		while (steps.hasNext()) {
 			currentPitch = ((QElement)steps.next().getElement(path)).getValue().doubleValue();
-			TestCase.assertTrue(currentPitch-previousPitch == ionian[currentStep%7]);
+			assertTrue(currentPitch-previousPitch == ionian[currentStep%7]);
 			previousPitch = currentPitch;
 			currentStep++;
 		}
 		
 		//test getInfo()
-		TestCase.assertTrue(this.rubette.getInfo().equals("ionian"));
+		assertTrue(this.rubette.getInfo().equals("ionian"));
 	}
-	
-	public void testToAndFromXML() throws Exception {
+
+	@Test
+	void testToAndFromXML() throws Exception {
 		//make file, writer and reader
 		File testFile = new File("./srTest");
 		if (!testFile.exists()) {
@@ -103,7 +108,7 @@ public class ScaleRubetteTest extends TestCase {
 		Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 		reader.parse();
 		this.rubette = (ScaleRubette)this.rubette.fromXML(reader, element);
-		TestCase.assertTrue(this.rubette.getInfo().equals("dorian"));
+		assertTrue(this.rubette.getInfo().equals("dorian"));
 		
 		testFile.createNewFile();
 		writer = new XMLWriter(testFile);
@@ -118,14 +123,15 @@ public class ScaleRubetteTest extends TestCase {
 		reader.parse();
 		element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 		this.rubette = (ScaleRubette)this.rubette.fromXML(reader, element);
-		TestCase.assertTrue(this.rubette.getInfo().equals("custom"));
+		assertTrue(this.rubette.getInfo().equals("custom"));
 		
 		testFile.delete();
 	}
-	
-	public void testScaleMap() {
+
+	@Test
+	void testScaleMap() {
 		ScaleMap map = new ScaleMap();
-		TestCase.assertTrue(map.size() == 13);
+		assertTrue(map.size() == 13);
 	}
 	
 }

@@ -6,30 +6,33 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
 import org.rubato.rubettes.bigbang.model.graph.CompositionState;
-import org.rubato.rubettes.bigbang.model.operations.AbstractOperation;
 
-public class UndoRedoTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class UndoRedoTest {
 	
 	private BigBangModel model;
 	private TestObjects objects;
 	private TransformationPaths nodePaths;
 	
-	protected void setUp() {
+	@BeforeEach
+	void setUp() {
 		this.objects = new TestObjects();
 		this.model = new BigBangModel();
 		this.nodePaths = this.objects.createStandardTransformationPaths(
 				this.objects.SOUND_NODE_FORM, new int[][]{{0,0},{0,1}});
 	}
 	
-	public void testUndoRedoAddOperation() {
+	@Test
+	void testUndoRedoAddOperation() {
 		//add score
 		this.model.setOrAddComposition(this.objects.flatSoundScore);
 		this.checkGraphAndResult(2, 1, new double[][]{{0,60,120,1,0},{1,63,116,1,0},{2,60,121,1,1}});
@@ -55,7 +58,8 @@ public class UndoRedoTest extends TestCase {
 		this.checkGraphAndResult(3, 2, new double[][]{{-1,62,120,1,0},{0,65,116,1,0},{2,60,121,1,1}});
 	}
 	
-	public void testUndoRedoAddAlternativeOperation() {
+	@Test
+	void testUndoRedoAddAlternativeOperation() {
 		//add score
 		this.model.setOrAddComposition(this.objects.flatSoundScore);
 		this.checkGraphAndResult(2, 1, new double[][]{{0,60,120,1,0},{1,63,116,1,0},{2,60,121,1,1}});
@@ -90,7 +94,8 @@ public class UndoRedoTest extends TestCase {
 		this.checkGraphAndResult(5, 4, new double[][]{{2,59,120,1,0},{3,62,116,1,0},{2,60,121,1,1}});
 	}
 	
-	public void testUndoRedoParallelTransformation() {
+	@Test
+	void testUndoRedoParallelTransformation() {
 		//add score
 		this.model.setOrAddComposition(this.objects.flatSoundScore);
 		this.checkGraphAndResult(2, 1, new double[][]{{0,60,120,1,0},{1,63,116,1,0},{2,60,121,1,1}});
@@ -126,7 +131,8 @@ public class UndoRedoTest extends TestCase {
 		this.checkGraphAndResult(4, 4, new double[][]{{0,63,120,1,0},{1,66,116,1,0},{2,60,121,1,1}});
 	}
 	
-	public void testUndoRedoInsertOperation() {
+	@Test
+	void testUndoRedoInsertOperation() {
 		//TODO reabilitate
 		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
 		/*
@@ -166,7 +172,8 @@ public class UndoRedoTest extends TestCase {
 	*/
 	}
 
-	public void testUndoRedoRemoveOperation() {
+	@Test
+	void testUndoRedoRemoveOperation() {
 		//TODO reabilitate
 		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
 		/*
@@ -217,10 +224,10 @@ public class UndoRedoTest extends TestCase {
 	}
 	
 	private void checkGraphAndResult(int expectedStates, int expectedOperations, double[][] expectedValues) {
-		TestCase.assertEquals(expectedStates, this.model.getTransformationGraph().getVertexCount());
-		TestCase.assertEquals(expectedOperations, this.model.getTransformationGraph().getEdgeCount());
+		assertEquals(expectedStates, this.model.getTransformationGraph().getVertexCount());
+		assertEquals(expectedOperations, this.model.getTransformationGraph().getEdgeCount());
 		Denotator expectedResult = this.objects.generator.createFlatSoundScore(expectedValues);
-		TestCase.assertEquals(expectedResult, this.model.getComposition());
+		assertEquals(expectedResult, this.model.getComposition());
 	}
 	
 	//adds a translation to first two objects

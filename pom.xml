@@ -45,12 +45,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <artifactId>jsyn</artifactId>
 			<version>17.1.0</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>junit</artifactId>
-			<version>0.1.0-MAVEN</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- TODO https://developer-archive.leapmotion.com/documentation/java/devguide/Project_Setup.html -->
 		<dependency>
 		    <groupId>org.rubato.jars</groupId>
@@ -61,6 +55,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		    <groupId>org.rubato.jars</groupId>
 		    <artifactId>mt4j</artifactId>
 			<version>0.1.0-MAVEN</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement><!-- TODO --></dependencyManagement>

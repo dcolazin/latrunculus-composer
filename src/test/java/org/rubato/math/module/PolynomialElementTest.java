@@ -1,7 +1,15 @@
 package org.rubato.math.module;
 
-import junit.framework.TestCase;
-public class PolynomialElementTest extends TestCase {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+class PolynomialElementTest {
 
     private PolynomialRing intPolRing;
     private PolynomialRing realPolRing;
@@ -15,11 +23,8 @@ public class PolynomialElementTest extends TestCase {
     private PolynomialElement ra, rb, rc, rd;
     private PolynomialElement qa, qb, qc, qd;
 
-    public PolynomialElementTest(String name) {
-        super(name);
-    }
-
-    protected void setUp() throws Exception {
+    @BeforeEach
+    void setUp() {
         intPolRing  = PolynomialRing.make(ZRing.ring, "X");
         realPolRing = PolynomialRing.make(RRing.ring, "Y");
         ratPolRing  = PolynomialRing.make(QRing.ring, "Z");
@@ -47,7 +52,8 @@ public class PolynomialElementTest extends TestCase {
         qd = ratPolRing.parseString("3/2");
     }
 
-    public final void testIsOne() {
+    @Test
+    void testIsOne() {
         assertFalse(i0.isOne());
         assertTrue(i1.isOne());
         assertFalse(r0.isOne());
@@ -56,7 +62,8 @@ public class PolynomialElementTest extends TestCase {
         assertTrue(q1.isOne());
     }
 
-    public final void testIsZero() {
+    @Test
+    void testIsZero() {
         assertTrue(i0.isZero());
         assertFalse(i1.isZero());
         assertTrue(r0.isZero());
@@ -65,7 +72,8 @@ public class PolynomialElementTest extends TestCase {
         assertFalse(q1.isZero());
     }
 
-    public final void testProductRingElement() {
+    @Test
+    void testProductRingElement() {
         try {
             assertEquals(ia.product(ib), ic);
             assertEquals(ia.product(i0), i0);
@@ -100,7 +108,8 @@ public class PolynomialElementTest extends TestCase {
         }
     }
 
-    public final void testMultiplyRingElement() {
+    @Test
+    void testMultiplyRingElement() {
         try {
             ia.multiply(ib);
             assertEquals(ia, ic);
@@ -145,7 +154,8 @@ public class PolynomialElementTest extends TestCase {
         }
     }
 
-    public final void testIsInvertible() {
+    @Test
+    void testIsInvertible() {
         assertTrue(i1.isInvertible());
         assertFalse(i0.isInvertible());
         assertFalse(ia.isInvertible());
@@ -168,15 +178,16 @@ public class PolynomialElementTest extends TestCase {
         assertTrue(qd.isInvertible());
     }
 
-    public final void testInverse() {
+    @Test
+    void testInverse() {
         assertEquals(i1.inverse(), i1);
         assertEquals(r1.inverse(), r1);
         assertEquals(q1.inverse(), q1);
         assertEquals(qd.inverse(), new PolynomialElement(ratPolRing, new QElement(2, 3)));
     }
 
-    
-    public final void testInvert() {
+    @Test
+    void testInvert() {
         i1.invert();
         assertEquals(i1, new PolynomialElement(intPolRing, new ZElement(1)));
         r1.invert();
@@ -187,7 +198,8 @@ public class PolynomialElementTest extends TestCase {
         assertEquals(qd, new PolynomialElement(ratPolRing, new QElement(2, 3)));
     }
 
-    public final void testClone() {
+    @Test
+    void testClone() {
         assertEquals(i0, i0.clone());
         assertEquals(i1, i1.clone());
         assertEquals(ia, ia.clone());
@@ -210,7 +222,8 @@ public class PolynomialElementTest extends TestCase {
         assertEquals(qd, qd.clone());
     }
 
-    public final void testScaled() {
+    @Test
+    void testScaled() {
         try {
             assertEquals(i0.scaled(new ZElement(12)), i0);
             assertEquals(i1.scaled(new ZElement(12)), new PolynomialElement(intPolRing, new ZElement(12)));
@@ -245,7 +258,8 @@ public class PolynomialElementTest extends TestCase {
         }
     }
 
-    public final void testScale() {
+    @Test
+    void testScale() {
         try {
             ib.scale(new ZElement(3));
             assertEquals(ib, new PolynomialElement(intPolRing, new ZElement(-6), new ZElement(0), new ZElement(-24), new ZElement(9)));
@@ -276,8 +290,9 @@ public class PolynomialElementTest extends TestCase {
             fail(e.getMessage());
         }
     }
-    
-    public final void testEvaluate() {
+
+    @Test
+    void testEvaluate() {
         try {
             assertEquals(i0.evaluate(new ZElement(23)), new ZElement(0));
             assertEquals(i1.evaluate(new ZElement(-12)), new ZElement(1));
@@ -296,7 +311,8 @@ public class PolynomialElementTest extends TestCase {
         }
     }
 
-    public final void testGetModule() {
+    @Test
+    void testGetModule() {
         assertEquals(i0.getModule(), intPolRing);
         assertEquals(i1.getModule(), intPolRing);
         assertEquals(ia.getModule(), intPolRing);
@@ -322,7 +338,8 @@ public class PolynomialElementTest extends TestCase {
         assertNotSame(qa.getModule(), intPolRing);
     }
 
-    public final void testGetPolynomialRing() {
+    @Test
+    void testGetPolynomialRing() {
         assertEquals(i0.getRing(), intPolRing);
         assertEquals(i1.getRing(), intPolRing);
         assertEquals(ia.getRing(), intPolRing);
@@ -348,7 +365,8 @@ public class PolynomialElementTest extends TestCase {
         assertNotSame(qa.getRing(), intPolRing);
     }
 
-    public final void testGetCoefficient() {
+    @Test
+    void testGetCoefficient() {
         assertEquals(ia.getCoefficient(3), new ZElement(2));
         assertEquals(ic.getCoefficient(4), new ZElement(0));
         
@@ -359,7 +377,8 @@ public class PolynomialElementTest extends TestCase {
         assertEquals(qc.getCoefficient(4), new QElement(0));
     }
 
-    public final void testGetLeadingCoefficient() {
+    @Test
+    void testGetLeadingCoefficient() {
         assertEquals(i0.getLeadingCoefficient(), new ZElement(0));
         assertEquals(i1.getLeadingCoefficient(), new ZElement(1));
         assertEquals(ia.getLeadingCoefficient(), new ZElement(8));
@@ -382,30 +401,32 @@ public class PolynomialElementTest extends TestCase {
         assertEquals(qd.getLeadingCoefficient(), new QElement(3, 2));
     }
 
-    public final void testGetDegree() {
-        assertEquals(i0.getDegree(), Integer.MIN_VALUE);
-        assertEquals(i1.getDegree(), 0);
-        assertEquals(ia.getDegree(), 5);
-        assertEquals(ib.getDegree(), 3);
-        assertEquals(ic.getDegree(), 8);
-        assertEquals(id.getDegree(), 0);
+    @Test
+    void testGetDegree() {
+        assertEquals(Integer.MIN_VALUE, i0.getDegree());
+        assertEquals(0, i1.getDegree());
+        assertEquals(5, ia.getDegree());
+        assertEquals(3, ib.getDegree());
+        assertEquals(8, ic.getDegree());
+        assertEquals(0, id.getDegree());
 
-        assertEquals(r0.getDegree(), Integer.MIN_VALUE);
-        assertEquals(r1.getDegree(), 0);
-        assertEquals(ra.getDegree(), 5);
-        assertEquals(rb.getDegree(), 3);
-        assertEquals(rc.getDegree(), 8);
-        assertEquals(rd.getDegree(), 0);
+        assertEquals(Integer.MIN_VALUE, r0.getDegree());
+        assertEquals(0, r1.getDegree());
+        assertEquals(5, ra.getDegree());
+        assertEquals(3, rb.getDegree());
+        assertEquals(8, rc.getDegree());
+        assertEquals(0, rd.getDegree());
 
-        assertEquals(q0.getDegree(), Integer.MIN_VALUE);
-        assertEquals(q1.getDegree(), 0);
-        assertEquals(qa.getDegree(), 5);
-        assertEquals(qb.getDegree(), 3);
-        assertEquals(qc.getDegree(), 8);
-        assertEquals(qd.getDegree(), 0);
+        assertEquals(Integer.MIN_VALUE, q0.getDegree());
+        assertEquals(0, q1.getDegree());
+        assertEquals(5, qa.getDegree());
+        assertEquals(3, qb.getDegree());
+        assertEquals(8, qc.getDegree());
+        assertEquals(0, qd.getDegree());
     }
 
-    public final void testCast() {
+    @Test
+    void testCast() {
         assertEquals(ia.cast(intPolRing), ia);
         assertEquals(ia.cast(realPolRing), ra);
         assertEquals(ia.cast(ratPolRing), qa);
@@ -419,7 +440,8 @@ public class PolynomialElementTest extends TestCase {
         assertEquals(qa.cast(ratPolRing), qa);
     }
 
-    public final void testPower() {
+    @Test
+    void testPower() {
         try {
             assertEquals(i0.power(10), i0);
             assertEquals(i1.power(10), i1);
@@ -441,7 +463,8 @@ public class PolynomialElementTest extends TestCase {
         }
     }
 
-    public final void testGetRing() {
+    @Test
+    void testGetRing() {
         assertEquals(i0.getRing(), intPolRing);
         assertEquals(i1.getRing(), intPolRing);
         assertEquals(ia.getRing(), intPolRing);
@@ -467,7 +490,4 @@ public class PolynomialElementTest extends TestCase {
         assertNotSame(qa.getRing(), intPolRing);
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(PolynomialElementTest.class);
-    }
 }

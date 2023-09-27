@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
-
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.rubato.math.matrix.RMatrix;
@@ -35,6 +33,8 @@ import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.DenotatorValueFinder;
 import org.rubato.rubettes.util.ObjectGenerator;
 import org.rubato.rubettes.util.SoundNoteGenerator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestObjects {
 	
@@ -258,18 +258,18 @@ public class TestObjects {
 	}
 	
 	public void assertEqualPowerDenotators(PowerDenotator d1, PowerDenotator d2) {
-		TestCase.assertEquals(d1.getFactorCount(), d2.getFactorCount());
+		assertEquals(d1.getFactorCount(), d2.getFactorCount());
 		for (int i = 0; i < d1.getFactorCount(); i++) {
 			this.assertEqualNonPowerDenotators(d1.getFactor(i), d2.getFactor(i));
 		}
 	}
 	
 	public void assertEqualNonPowerDenotators(Denotator d1, Denotator d2) {
-		TestCase.assertEquals(d1.getForm(), d2.getForm());
+		assertEquals(d1.getForm(), d2.getForm());
 		Set<DenotatorPath> allValuePaths = new TreeSet<DenotatorPath>(new DenotatorValueFinder(d1, true).getValuePaths());
 		allValuePaths.addAll(new DenotatorValueFinder(d2, true).getValuePaths());
 		for (DenotatorPath currentPath : allValuePaths) {
-			TestCase.assertEquals(this.objectGenerator.getDoubleValue(d1, currentPath), this.objectGenerator.getDoubleValue(d2, currentPath));
+			assertEquals(this.objectGenerator.getDoubleValue(d1, currentPath), this.objectGenerator.getDoubleValue(d2, currentPath));
 		}
 	}
 
