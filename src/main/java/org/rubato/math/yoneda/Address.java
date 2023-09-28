@@ -21,9 +21,16 @@ package org.rubato.math.yoneda;
 
 import java.util.*;
 
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.util.Pair;
+import org.vetronauta.latrunculus.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 
 /**
  * Utilities for address management.

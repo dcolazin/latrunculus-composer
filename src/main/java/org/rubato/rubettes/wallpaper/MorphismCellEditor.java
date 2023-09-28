@@ -30,7 +30,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 import org.rubato.composer.dialogs.morphisms.JMorphismDialog;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 
 /**
  * A cell editor used for table cells containg morphisms. The morphism string is visible and the

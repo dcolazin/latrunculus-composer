@@ -50,7 +50,7 @@ public final class ZnString extends RingString {
 
     public ZnString(String[] words, int[] factors, int modulus) {
         this.modulus = modulus;
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
             int f = NumberTheory.mod(factors[i], modulus);
@@ -63,7 +63,7 @@ public final class ZnString extends RingString {
     
     public ZnString(List<String> words, List<Integer> factors, int modulus) {
         this.modulus = modulus;
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = Math.min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
         Iterator<Integer> fiter = factors.iterator();
@@ -119,28 +119,28 @@ public final class ZnString extends RingString {
     public ZnString(Complex c, int modulus) {
         this("", c.intValue(), modulus);
     }
-    
-    
-    static public ZnString getZero(int modulus) {
+
+
+    public static ZnString getZero(int modulus) {
         ZnString res = new ZnString(modulus);
         res.dict = new HashMap<String,Object>();
         return res;
     }
 
-    
-    static public ZnString getOne(int modulus) {
+
+    public static ZnString getOne(int modulus) {
         return new ZnString("", modulus);
     }
 
-    
-    static public ZnString parseZnString(String string, int modulus) {
+
+    public static ZnString parseZnString(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne(modulus);
         }
         
-        LinkedList<String> words = new LinkedList<String>();
-        LinkedList<Integer> factors = new LinkedList<Integer>();
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Integer> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -156,64 +156,64 @@ public final class ZnString extends RingString {
     }
     
 
-    protected ZnString(int modulus) {
+    private ZnString(int modulus) {
         this.modulus = modulus;
     }
 
     
     protected Object sum(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(NumberTheory.mod(ix + iy, modulus));
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return NumberTheory.mod(ix + iy, modulus);
     }
 
     
     protected Object difference(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(NumberTheory.mod(ix - iy, modulus));
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return NumberTheory.mod(ix - iy, modulus);
     }
 
     
     protected Object product(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(NumberTheory.mod(ix * iy, modulus));
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return NumberTheory.mod(ix * iy, modulus);
     }
 
     
     protected Object neg(Object x) {
-        int ix = ((Integer)x).intValue();
-        return Integer.valueOf(NumberTheory.mod(-ix, modulus));
+        int ix = (Integer) x;
+        return NumberTheory.mod(-ix, modulus);
     }
 
     
     protected boolean equals(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
+        int ix = (Integer) x;
+        int iy = (Integer) y;
         return ix == iy;
     }
 
     
     protected int compare(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
+        int ix = (Integer) x;
+        int iy = (Integer) y;
         return ix-iy;
     }
 
     
     protected Object getObjectOne() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     
     protected Object getObjectZero() {
-        return Integer.valueOf(0);
+        return 0;
     }
 
     
     protected boolean isObjectZero(Object x) {
-        int ix = ((Integer)x).intValue();
+        int ix = (Integer) x;
         return ix == 0;
     }
 
@@ -223,18 +223,18 @@ public final class ZnString extends RingString {
     }
 
     
-    public Object clone() {
-        ZnString res = new ZnString(modulus);
-        res.modulus = modulus;
-        res.dict = new HashMap<String,Object>(dict);
-        return res;
-    }
-
-    
     public int getModulus() {
         return modulus;
     }
 
     
     private int modulus;
+
+    @Override
+    public RingString deepCopy() {
+        ZnString res = new ZnString(modulus);
+        res.modulus = modulus;
+        res.dict = new HashMap<>(dict);
+        return res;
+    }
 }

@@ -32,7 +32,7 @@ import java.util.List;
 import javax.swing.*;
 
 import org.rubato.base.Repository;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 
 
 /**

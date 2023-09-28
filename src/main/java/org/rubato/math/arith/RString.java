@@ -117,28 +117,28 @@ public final class RString extends RingString {
     public RString(Complex c) {
         this("", c.doubleValue());
     }
-    
-    
-    static public RString getZero() {
+
+
+    public static RString getZero() {
         RString res = new RString();
-        res.dict = new HashMap<String,Object>();
+        res.dict = new HashMap<>();
         return res;
     }
 
-    
-    static public RString getOne() {
+
+    public static RString getOne() {
         return new RString("");
     }
 
-    
-    static public RString parseRString(String string) {
+
+    public static RString parseRString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne();
         }
         
-        LinkedList<String> words = new LinkedList<String>();
-        LinkedList<Double> factors = new LinkedList<Double>();
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Double> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -154,46 +154,46 @@ public final class RString extends RingString {
     }
     
 
-    protected RString() { /* do nothing */ }
+    private RString() { /* do nothing */ }
     
 
     protected Object sum(Object x, Object y) {
-        double ix = ((Double)x).doubleValue();
-        double iy = ((Double)y).doubleValue();
-        return Double.valueOf(ix + iy);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix + iy;
     }
     
 
     protected Object difference(Object x, Object y) {
-        double ix = ((Double)x).doubleValue();
-        double iy = ((Double)y).doubleValue();
-        return Double.valueOf(ix - iy);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix - iy;
     }
 
     
     protected Object product(Object x, Object y) {
-        double ix = ((Double)x).doubleValue();
-        double iy = ((Double)y).doubleValue();
-        return Double.valueOf(ix * iy);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix * iy;
     }
     
 
     protected Object neg(Object x) {
-        double ix = ((Double)x).doubleValue();
-        return Double.valueOf(-ix);
+        double ix = (Double) x;
+        return -ix;
     }
     
 
     protected boolean equals(Object x, Object y) {
-        double ix = ((Double)x).doubleValue();
-        double iy = ((Double)y).doubleValue();
+        double ix = (Double) x;
+        double iy = (Double) y;
         return ix == iy;
     }
     
 
     protected int compare(Object x, Object y) {
-        double ix = ((Double)x).doubleValue();
-        double iy = ((Double)y).doubleValue();
+        double ix = (Double) x;
+        double iy = (Double) y;
         if (ix < iy) {
             return -1;
         }
@@ -207,29 +207,29 @@ public final class RString extends RingString {
 
     
     protected Object getObjectOne() {
-        return Double.valueOf(1.0);
+        return 1.0;
     }
 
     
     protected Object getObjectZero() {
-        return Double.valueOf(0.0);
+        return 0.0;
     }
 
     
     protected boolean isObjectZero(Object x) {
-        double ix = ((Double)x).doubleValue();
+        double ix = (Double) x;
         return ix == 0.0;
     }
 
     
     protected double ObjectToDouble(Object x) {
-        return ((Double)x).doubleValue();
+        return (Double) x;
     }
 
-    
-    public Object clone() {
+    @Override
+    public RingString deepCopy() {
         RString res = new RString();
-        res.dict = new HashMap<String,Object>(dict);
+        res.dict = new HashMap<>(dict);
         return res;
     }
 }

@@ -19,8 +19,8 @@
 
 package org.rubato.composer.dialogs.morphisms;
 
-import org.rubato.math.module.Module;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 
 public interface JMorphismContainer {
 

@@ -28,9 +28,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.RRing;
-import org.rubato.math.module.Ring;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.real.Ring;
 
 /**
  * 

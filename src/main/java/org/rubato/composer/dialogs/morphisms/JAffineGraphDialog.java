@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.rubato.math.module.Ring;
+import org.vetronauta.latrunculus.math.module.real.Ring;
 
 class JAffineGraphDialog extends JDialog implements ActionListener {
 

@@ -27,14 +27,26 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.rubato.logeo.FormFactory;
-import org.rubato.math.module.*;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.math.module.complex.CRing;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.denotex.DenotexReader;
 import org.rubato.scheme.*;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 
 /**
  * A repository of forms and denotators, retrievable by their names.

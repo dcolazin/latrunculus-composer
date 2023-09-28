@@ -24,11 +24,13 @@ import static org.rubato.xml.XMLConstants.*;
 import java.util.IdentityHashMap;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.morphism.CompositionException;
-import org.rubato.math.module.morphism.ConstantMorphism;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.math.module.morphism.ConstantMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;

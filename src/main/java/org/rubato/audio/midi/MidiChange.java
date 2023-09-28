@@ -21,7 +21,7 @@ package org.rubato.audio.midi;
 
 import org.rubato.math.arith.Rational;
 import org.rubato.math.arith.ZString;
-import org.rubato.math.module.ZStringElement;
+import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
 import org.rubato.math.yoneda.FactorDenotator;
 import org.rubato.math.yoneda.SimpleDenotator;
 

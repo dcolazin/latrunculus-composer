@@ -28,10 +28,10 @@ import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.morphism.MappingException;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.util.TextUtils;
 import org.rubato.xml.XMLWriter;
 

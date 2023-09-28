@@ -7,9 +7,9 @@ import java.util.Set;
 
 import org.rubato.base.RubatoException;
 import org.rubato.math.matrix.RMatrix;
-import org.rubato.math.module.morphism.CompositionException;
-import org.rubato.math.module.morphism.ModuleMorphism;
-import org.rubato.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;

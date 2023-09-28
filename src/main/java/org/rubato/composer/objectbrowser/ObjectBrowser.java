@@ -38,9 +38,9 @@ import javax.swing.event.ListSelectionListener;
 
 import org.rubato.base.Repository;
 import org.rubato.composer.dialogs.morphisms.JMorphismDialog;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.scheme.Env;

@@ -25,12 +25,12 @@ import java.util.List;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.rubato.math.arith.Rational;
-import org.rubato.math.module.DomainException;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.QElement;
-import org.rubato.math.module.RElement;
-import org.rubato.math.module.RRing;
-import org.rubato.math.module.ZElement;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.LimitDenotator;
 import org.rubato.math.yoneda.NameDenotator;
@@ -425,7 +425,7 @@ public abstract class NoteGenerator {
 	
 	protected void setLayerToVoice(LimitDenotator note) throws RubatoException {
 		int[] voicePath = new int[]{4,0};
-		ZElement voiceElement = (ZElement)note.getElement(voicePath).clone();
+		ZElement voiceElement = (ZElement)note.getElement(voicePath).deepCopy();
 		Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);
 		note.setFactor(5, currentLayer);
 	}

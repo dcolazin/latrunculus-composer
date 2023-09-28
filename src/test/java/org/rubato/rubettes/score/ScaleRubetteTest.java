@@ -31,7 +31,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.QElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.ScaleMap;

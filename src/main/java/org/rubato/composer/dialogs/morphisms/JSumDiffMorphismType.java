@@ -26,7 +26,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.rubato.composer.components.JMorphismEntry;
-import org.rubato.math.module.morphism.*;
+import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.math.module.morphism.DifferenceMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.SumMorphism;
 
 class JSumDiffMorphismType extends JMorphismType implements ActionListener {
 

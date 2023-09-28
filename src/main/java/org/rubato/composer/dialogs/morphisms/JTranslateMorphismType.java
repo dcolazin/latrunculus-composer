@@ -27,9 +27,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import org.rubato.composer.components.JSimpleEntry;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.morphism.ModuleMorphism;
-import org.rubato.math.module.morphism.TranslationMorphism;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.TranslationMorphism;
 
 class JTranslateMorphismType extends JMorphismType implements ActionListener {
 

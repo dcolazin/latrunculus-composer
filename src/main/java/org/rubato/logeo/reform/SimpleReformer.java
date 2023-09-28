@@ -24,9 +24,9 @@ import java.util.List;
 
 import org.rubato.base.RubatoException;
 import org.rubato.logeo.DenoFactory;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.morphism.CanonicalMorphism;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.morphism.CanonicalMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 
 abstract class SimpleReformer extends Reformer {

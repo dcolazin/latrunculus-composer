@@ -29,12 +29,12 @@ $ mvn javadoc:javadoc
 * [ ] Move the BigBang rubette to a different jar, as many dependencies are required for this rubette and not for the core composer?
 * [ ] Handle all the dependencies in the pom, without having a separate script to install the libraries
 * [ ] Review the rubette loading
-* [ ] The basic rubette interface should be independent of swing/gui concepts
 * [ ] Test coverage >70% and review current tests
 * [ ] OSC support
 * [ ] Linting and improve maintainability
 * [ ] SLF4J
 * [ ] Review i18n
+* [ ] Separation of the server "core" components and of the client "gui" components
 * [ ] Move package org.rubato to org.vetronauta.latrunculus
 * [ ] Initial splash art
 

@@ -23,7 +23,7 @@ import java.io.PrintStream;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.xml.XMLWriter;
 
 /**

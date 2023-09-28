@@ -27,13 +27,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import org.rubato.composer.dialogs.morphisms.JGeometryView;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.ZElement;
-import org.rubato.math.module.RElement;
-import org.rubato.math.module.RRing;
-import org.rubato.math.module.morphism.ModuleMorphism;
-import org.rubato.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.MappingException;
 
 /**
  * This view is similar to JGeometryView, except for that it does not just show the colored square

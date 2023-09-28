@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ProductRing;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ProductRing;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.SimpleForm;
 import org.rubato.math.yoneda.Yoneda;

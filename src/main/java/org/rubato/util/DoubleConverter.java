@@ -20,8 +20,16 @@
 package org.rubato.util;
 
 import org.rubato.math.arith.Rational;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 
 
 /**

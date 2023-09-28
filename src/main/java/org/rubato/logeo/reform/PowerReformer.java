@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
 
 abstract class PowerReformer extends Reformer {

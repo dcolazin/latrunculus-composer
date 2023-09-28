@@ -10,8 +10,12 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 
 public abstract class JElementSlider extends JPanel {
 

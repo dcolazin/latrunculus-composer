@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.rubato.base.Repository;
-import org.rubato.math.module.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
 
 
 /**

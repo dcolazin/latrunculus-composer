@@ -36,13 +36,13 @@ import org.rubato.composer.components.JFormTree;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.view2d.*;
 import org.rubato.composer.view2d.Point;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.util.DoubleConverter;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.w3c.dom.Element;
 
 class Select2DPanel

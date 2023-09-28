@@ -36,7 +36,6 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
-import org.rubato.math.module.morphism.*;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
@@ -44,6 +43,7 @@ import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.SimpleFormFinder;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.w3c.dom.Element;
 
 /**

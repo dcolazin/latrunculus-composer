@@ -20,6 +20,7 @@
 package org.rubato.math.arith;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.DeepCopyable;
 
 /**
  * Rational number arithmetic.
@@ -27,7 +28,7 @@ import org.rubato.util.TextUtils;
  * @author Gérard Milmeister
  */
 @SuppressWarnings("nls")
-public final class Rational extends Number implements Comparable<Rational>, Cloneable {   
+public final class Rational extends Number implements Comparable<Rational>, DeepCopyable<Rational> {
 
     private final static int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;
@@ -526,7 +527,7 @@ public final class Rational extends Number implements Comparable<Rational>, Clon
     }
 
 
-    public Object clone() {
+    public Rational deepCopy() {
         Rational res = new Rational();
         res.num = num;
         res.denom = denom;

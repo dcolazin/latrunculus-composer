@@ -28,7 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.Repository;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.NameEntry;

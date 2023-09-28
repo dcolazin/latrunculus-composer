@@ -12,9 +12,32 @@ import java.util.List;
 import org.rubato.base.Repository;
 import org.rubato.math.arith.Complex;
 import org.rubato.math.arith.Rational;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.complex.CElement;
+import org.vetronauta.latrunculus.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.math.module.complex.CRing;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.rational.QStringElement;
+import org.vetronauta.latrunculus.math.module.rational.QStringRing;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.real.RStringElement;
+import org.vetronauta.latrunculus.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.math.module.integer.ZStringRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnStringElement;
+import org.vetronauta.latrunculus.math.module.modular.ZnStringRing;
 
 @SuppressWarnings("all")
 public final class DenotexParser implements DenotexParserConstants {

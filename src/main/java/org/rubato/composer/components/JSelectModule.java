@@ -29,9 +29,23 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.math.module.polynomial.ModularPolynomialProperFreeModule;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialProperFreeModule;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.math.module.definition.ProductProperFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QStringProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RStringProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZStringProperFreeModule;
+import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.math.module.modular.ZnStringProperFreeModule;
 
 /**
  * A component for creating modules.

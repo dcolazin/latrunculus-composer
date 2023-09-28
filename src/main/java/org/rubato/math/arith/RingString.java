@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.DeepCopyable;
 
 /**
  * The ring of strings.
@@ -34,14 +35,14 @@ import org.rubato.util.TextUtils;
  * and the s_i are character strings (<code>String</code>).
  */
 @SuppressWarnings("nls")
-public abstract class RingString implements Comparable<RingString>, Serializable, Cloneable {
+public abstract class RingString implements DeepCopyable<RingString>, Comparable<RingString>, Serializable {
 
     /**
      * Creates a new <code>RingString</code> instance.
      * This is the Zero RingString.
      */
     protected RingString() {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
     }
 
     /**
@@ -75,8 +76,8 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * Creates a new <code>RingString</code> instance.
      * Copy constructor.
      */
-    public RingString(RingString rs) {
-        dict = new HashMap<String,Object>(rs.dict);
+    protected RingString(RingString rs) {
+        dict = new HashMap<>(rs.dict);
     }
 
     /**
@@ -117,7 +118,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * @return a new RingString object
      */
     public RingString sum(RingString x) {
-        RingString res = (RingString)clone();
+        RingString res = this.deepCopy();
         res.add(x);
         return res;
     }
@@ -137,7 +138,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * @return a new RingString object.
      */
     public RingString difference(RingString x) {
-        RingString res = (RingString)clone();
+        RingString res = this.deepCopy();
         res.subtract(x);
         return res;
     }
@@ -157,7 +158,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * @return a new RingString object
      */
     public RingString product(RingString x) {
-        RingString res = (RingString)clone();
+        RingString res = this.deepCopy();
         res.multiply(x);
         return res;
     }
@@ -168,7 +169,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
     public void multiply(RingString x) {
         Iterator<String> keys = x.dict.keySet().iterator();
         HashMap<String,Object> myDict = dict;
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         while (keys.hasNext()) {
             String key = keys.next();
             Object factor = x.dict.get(key);
@@ -183,7 +184,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * Returns this with all factors negated.
      */
     public RingString negated() {
-        RingString res = (RingString)clone();
+        RingString res = this.deepCopy();
         res.negate();
         return res;
     }
@@ -203,7 +204,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
      * @return a new RingString object
      */
     public RingString scaled(Object x) {
-        RingString res = (RingString)clone();
+        RingString res = this.deepCopy();
         res.scale(x);
         return res;
     }
@@ -330,7 +331,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
             return (Integer)x;
         }
         else if (x instanceof Number) {
-            return new Integer(((Number)x).intValue());
+            return ((Number) x).intValue();
         }
         else {
             return null;
@@ -342,7 +343,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
             return (Double)x;
         }
         else if (x instanceof Number) {
-            return Double.valueOf(((Number)x).doubleValue());
+            return ((Number) x).doubleValue();
         }
         else {
             return null;
@@ -354,7 +355,7 @@ public abstract class RingString implements Comparable<RingString>, Serializable
             return (Rational)x;
         }
         else if (x instanceof Integer) {
-            return new Rational(((Integer)x).intValue());
+            return new Rational((Integer) x);
         }
         else if (x instanceof Number) {
             return new Rational(((Number)x).doubleValue());
@@ -375,8 +376,6 @@ public abstract class RingString implements Comparable<RingString>, Serializable
             return null;
         }
     }
-
-    public abstract Object clone();
 
     /**
      * Add string <code>word</code> with factor <code>factor</code> to this.

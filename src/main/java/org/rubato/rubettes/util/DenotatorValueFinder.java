@@ -3,8 +3,8 @@ package org.rubato.rubettes.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ProductRing;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ProductRing;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.SimpleForm;

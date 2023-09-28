@@ -30,7 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Form;
 
 /**

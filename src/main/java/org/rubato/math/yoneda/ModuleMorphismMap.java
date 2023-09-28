@@ -30,13 +30,16 @@ import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.ZRing;
-import org.rubato.math.module.morphism.*;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.math.module.morphism.CanonicalMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.w3c.dom.Element;
 
 /**

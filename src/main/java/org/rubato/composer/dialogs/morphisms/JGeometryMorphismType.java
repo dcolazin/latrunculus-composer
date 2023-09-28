@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import org.rubato.math.matrix.RMatrix;
-import org.rubato.math.module.morphism.ModuleMorphism;
-import org.rubato.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.RFreeAffineMorphism;
 
 public class JGeometryMorphismType extends JMorphismType implements ActionListener {
 

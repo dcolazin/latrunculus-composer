@@ -2,6 +2,15 @@ package org.rubato.math.module;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -200,26 +209,26 @@ class PolynomialElementTest {
 
     @Test
     void testClone() {
-        assertEquals(i0, i0.clone());
-        assertEquals(i1, i1.clone());
-        assertEquals(ia, ia.clone());
-        assertEquals(ib, ib.clone());
-        assertEquals(ic, ic.clone());
-        assertEquals(id, id.clone());
+        assertEquals(i0, i0.deepCopy());
+        assertEquals(i1, i1.deepCopy());
+        assertEquals(ia, ia.deepCopy());
+        assertEquals(ib, ib.deepCopy());
+        assertEquals(ic, ic.deepCopy());
+        assertEquals(id, id.deepCopy());
 
-        assertEquals(r0, r0.clone());
-        assertEquals(r1, r1.clone());
-        assertEquals(ra, ra.clone());
-        assertEquals(rb, rb.clone());
-        assertEquals(rc, rc.clone());
-        assertEquals(rd, rd.clone());
+        assertEquals(r0, r0.deepCopy());
+        assertEquals(r1, r1.deepCopy());
+        assertEquals(ra, ra.deepCopy());
+        assertEquals(rb, rb.deepCopy());
+        assertEquals(rc, rc.deepCopy());
+        assertEquals(rd, rd.deepCopy());
 
-        assertEquals(q0, q0.clone());
-        assertEquals(q1, q1.clone());
-        assertEquals(qa, qa.clone());
-        assertEquals(qb, qb.clone());
-        assertEquals(qc, qc.clone());
-        assertEquals(qd, qd.clone());
+        assertEquals(q0, q0.deepCopy());
+        assertEquals(q1, q1.deepCopy());
+        assertEquals(qa, qa.deepCopy());
+        assertEquals(qb, qb.deepCopy());
+        assertEquals(qc, qc.deepCopy());
+        assertEquals(qd, qd.deepCopy());
     }
 
     @Test

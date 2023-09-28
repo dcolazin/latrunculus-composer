@@ -32,13 +32,13 @@ import org.rubato.util.TextUtils;
 public final class QString extends RingString {
 
     public QString(String word) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         dict.put(word, getObjectOne());
     }
     
 
     public QString(String word, Rational factor) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         if (!factor.isZero()) {
             add(word, factor);
         }
@@ -46,7 +46,7 @@ public final class QString extends RingString {
     
 
     public QString(String[] words, Rational[] factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
             if (!factors[i].isZero()) {
@@ -57,7 +57,7 @@ public final class QString extends RingString {
     
 
     public QString(List<String> words, List<Rational> factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
         Iterator<Rational> fiter = factors.iterator();
@@ -84,10 +84,10 @@ public final class QString extends RingString {
 
     public QString(RingString rs) {
         if (rs instanceof QString) {
-            dict = new HashMap<String,Object>(rs.dict);
+            dict = new HashMap<>(rs.dict);
         }
         else {
-            dict = new HashMap<String,Object>();
+            dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
                 Rational f = ObjectRational(value);
@@ -117,28 +117,28 @@ public final class QString extends RingString {
     public QString(Complex c) {
         this("", new Rational(c.doubleValue()));
     }
-    
-    
-    static public QString getZero() {
+
+
+    public static QString getZero() {
         QString res = new QString();
-        res.dict = new HashMap<String,Object>();
+        res.dict = new HashMap<>();
         return res;
     }
-    
 
-    static public QString getOne() {
+
+    public static QString getOne() {
         return new QString("");
     }
-    
-    
-    static public QString parseQString(String string) {
+
+
+    public static QString parseQString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne();
         }
         
-        LinkedList<String> words = new LinkedList<String>();
-        LinkedList<Rational> factors = new LinkedList<Rational>();
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Rational> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -154,7 +154,7 @@ public final class QString extends RingString {
     }
     
 
-    protected QString() { /* do nothing */ }
+    private QString() { /* do nothing */ }
 
     
     protected Object sum(Object x, Object y) {
@@ -208,10 +208,11 @@ public final class QString extends RingString {
         return ((Rational)x).doubleValue();
     }
 
-    
-    public Object clone() {
+
+    @Override
+    public RingString deepCopy() {
         QString res = new QString();
-        res.dict = new HashMap<String,Object>(dict);
+        res.dict = new HashMap<>(dict);
         return res;
     }
 }

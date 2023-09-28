@@ -32,13 +32,13 @@ import org.rubato.util.TextUtils;
 public final class ZString extends RingString {
 
     public ZString(String word) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         dict.put(word, getObjectOne());
     }
     
 
     public ZString(String word, int factor) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         if (factor != 0) {
             add(word, factor);
         }
@@ -46,7 +46,7 @@ public final class ZString extends RingString {
     
 
     public ZString(String[] words, int[] factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
             if (factors[i] != 0) {
@@ -57,7 +57,7 @@ public final class ZString extends RingString {
     
     
     public ZString(List<String> words, List<Integer> factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = Math.min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
         Iterator<Integer> fiter = factors.iterator();
@@ -84,10 +84,10 @@ public final class ZString extends RingString {
 
     public ZString(RingString rs) {
         if (rs instanceof ZString) {
-            dict = new HashMap<String,Object>(rs.dict);
+            dict = new HashMap<>(rs.dict);
         }
         else {
-            dict = new HashMap<String,Object>();
+            dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
                 Integer i = ObjectInteger(value);
@@ -117,28 +117,28 @@ public final class ZString extends RingString {
     public ZString(Complex c) {
         this("", c.intValue());
     }
-    
-    
-    static public ZString getZero() {
+
+
+    public static ZString getZero() {
         ZString res = new ZString();
-        res.dict = new HashMap<String,Object>();
+        res.dict = new HashMap<>();
         return res;
     }
 
-    
-    static public ZString getOne() {
+
+    public static ZString getOne() {
         return new ZString("");
     }
 
-    
-    static public ZString parseZString(String string) {
+
+    public static ZString parseZString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');        
         if (terms.length == 0) {
             return getOne();
         }
         
-        LinkedList<String> words = new LinkedList<String>();
-        LinkedList<Integer> factors = new LinkedList<Integer>();
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Integer> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -154,62 +154,62 @@ public final class ZString extends RingString {
     }
     
 
-    protected ZString() { /* do nothing */ }
+    private ZString() { /* do nothing */ }
 
     
     protected Object sum(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(ix + iy);
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return ix + iy;
     }
 
     
     protected Object difference(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(ix - iy);
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return ix - iy;
     }
 
     
     protected Object product(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
-        return Integer.valueOf(ix * iy);
+        int ix = (Integer) x;
+        int iy = (Integer) y;
+        return ix * iy;
     }
 
     
     protected Object neg(Object x) {
-        int ix = ((Integer)x).intValue();
-        return Integer.valueOf(-ix);
+        int ix = (Integer) x;
+        return -ix;
     }
 
     
     protected boolean equals(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
+        int ix = (Integer) x;
+        int iy = (Integer) y;
         return ix == iy;
     }
 
     
     protected int compare(Object x, Object y) {
-        int ix = ((Integer)x).intValue();
-        int iy = ((Integer)y).intValue();
+        int ix = (Integer) x;
+        int iy = (Integer) y;
         return ix-iy;
     }
 
     
     protected Object getObjectOne() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     
     protected Object getObjectZero() {
-        return Integer.valueOf(0);
+        return 0;
     }
 
     
     protected boolean isObjectZero(Object x) {
-        int ix = ((Integer)x).intValue();
+        int ix = (Integer) x;
         return ix == 0;
     }
 
@@ -218,10 +218,10 @@ public final class ZString extends RingString {
         return ((Integer)x).doubleValue();
     }
 
-    
-    public Object clone() {
+    @Override
+    public RingString deepCopy() {
         ZString res = new ZString();
-        res.dict = new HashMap<String,Object>(dict);
+        res.dict = new HashMap<>(dict);
         return res;
     }
 }

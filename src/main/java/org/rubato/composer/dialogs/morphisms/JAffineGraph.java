@@ -29,7 +29,12 @@ import org.rubato.math.arith.Complex;
 import org.rubato.math.arith.NumberTheory;
 import org.rubato.math.arith.Rational;
 import org.rubato.math.matrix.*;
-import org.rubato.math.module.*;
+import org.vetronauta.latrunculus.math.module.complex.CRing;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 
 class JAffineGraph
         extends JPanel

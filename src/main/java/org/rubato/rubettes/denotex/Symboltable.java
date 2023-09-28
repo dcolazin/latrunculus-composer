@@ -22,7 +22,7 @@ package org.rubato.rubettes.denotex;
 
 import java.util.*;
 
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.NameEntry;

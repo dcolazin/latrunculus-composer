@@ -33,11 +33,22 @@ import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
-import org.rubato.math.module.*;
 import org.rubato.math.yoneda.*;
 import org.rubato.xml.XMLConstants;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.math.module.complex.CElement;
+import org.vetronauta.latrunculus.math.module.complex.CRing;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.w3c.dom.Element;
 
 public class StatRubette extends AbstractRubette {
@@ -117,7 +128,7 @@ public class StatRubette extends AbstractRubette {
         if (denoList.size() > 0) {
             Iterator<Denotator> iter = denoList.iterator();
             Denotator d = iter.next();
-            ModuleElement cur = ((SimpleDenotator)d).getElement().clone();
+            ModuleElement cur = ((SimpleDenotator)d).getElement().deepCopy();
             try {
                 while (iter.hasNext()) {
                     d = iter.next();
@@ -151,7 +162,7 @@ public class StatRubette extends AbstractRubette {
                 // compute mean
                 iter = denoList.iterator();
                 d = iter.next();
-                cur = ((SimpleDenotator)d).getElement().clone();
+                cur = ((SimpleDenotator)d).getElement().deepCopy();
                 while (iter.hasNext()) {
                     d = iter.next();
                     ModuleElement m = ((SimpleDenotator)d).getElement();
@@ -189,7 +200,7 @@ public class StatRubette extends AbstractRubette {
         if (denoList.size() > 0) {
             Iterator<Denotator> iter = denoList.iterator();
             Denotator d = iter.next();
-            ModuleElement cur = ((SimpleDenotator)d).getElement().clone();
+            ModuleElement cur = ((SimpleDenotator)d).getElement().deepCopy();
             try {
                 while (iter.hasNext()) {
                     d = iter.next();
@@ -217,7 +228,7 @@ public class StatRubette extends AbstractRubette {
         else if (denoList.size() > 0) {
             Iterator<Denotator> iter = denoList.iterator();
             Denotator d = iter.next();
-            FreeElement cur = (RingElement)((SimpleDenotator)d).getElement().clone();
+            FreeElement cur = (RingElement)((SimpleDenotator)d).getElement().deepCopy();
             try {
                 while (iter.hasNext()) {
                     d = iter.next();

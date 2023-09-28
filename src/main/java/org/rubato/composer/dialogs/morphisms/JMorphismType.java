@@ -21,7 +21,7 @@ package org.rubato.composer.dialogs.morphisms;
 
 import javax.swing.JPanel;
 
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 
 public abstract class JMorphismType extends JPanel {
 

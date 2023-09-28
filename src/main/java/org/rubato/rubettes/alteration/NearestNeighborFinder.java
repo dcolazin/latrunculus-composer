@@ -24,8 +24,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.RElement;
-import org.rubato.math.module.RRing;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.real.RRing;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.alteration.CG.KDTree;

@@ -19,13 +19,15 @@
 
 package org.rubato.math.arith;
 
+import org.vetronauta.latrunculus.core.DeepCopyable;
+
 /**
  * Complex number arithmetic.
  * 
  * @author Gérard Milmeister
  */
 @SuppressWarnings("nls")
-public final class Complex extends Number implements Comparable<Complex>, Cloneable {
+public final class Complex extends Number implements Comparable<Complex>, DeepCopyable<Complex> {
     
     /**
      * Creates the complex number 0+i0.
@@ -574,12 +576,6 @@ public final class Complex extends Number implements Comparable<Complex>, Clonea
         return new Complex(s);
     }
     
-    
-    public Object clone() {
-        return new Complex(real, imag);
-    }
-
-    
     /**
      * Compares this number with <code>object</code>.
      * Since complex numbers are not linearly ordered, the comparison
@@ -606,4 +602,9 @@ public final class Complex extends Number implements Comparable<Complex>, Clonea
 
     private double real;
     private double imag;
+
+    @Override
+    public Complex deepCopy() {
+        return new Complex(real, imag);
+    }
 }

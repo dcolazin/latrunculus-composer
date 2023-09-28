@@ -25,8 +25,15 @@ import java.util.List;
 import org.rubato.base.RubatoException;
 import org.rubato.math.arith.Complex;
 import org.rubato.math.arith.Rational;
-import org.rubato.math.module.*;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.complex.CElement;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 
 

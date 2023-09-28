@@ -20,9 +20,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.Ring;
-import org.rubato.math.module.RingElement;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.rubato.math.yoneda.SimpleDenotator;
 
 

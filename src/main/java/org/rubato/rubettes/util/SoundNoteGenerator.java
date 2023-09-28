@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.DomainException;
-import org.rubato.math.module.ModuleElement;
-import org.rubato.math.module.QElement;
-import org.rubato.math.module.RElement;
-import org.rubato.math.module.ZElement;
+import org.vetronauta.latrunculus.math.exception.DomainException;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.LimitDenotator;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.rubato.math.module.ZElement;
+import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.LimitDenotator;
@@ -50,7 +50,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 			for (int i = 0; i < factors.size(); i++) {
 				LimitDenotator currentNode = (LimitDenotator)factors.get(i);
 				LimitDenotator currentNote = (LimitDenotator)currentNode.getFactor(0);
-				ZElement voiceElement = (ZElement)currentNote.getElement(voicePath).clone();
+				ZElement voiceElement = (ZElement)currentNote.getElement(voicePath).deepCopy();
 				Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);
 				currentNote.setFactor(5, currentLayer);
 				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), voiceElement.getValue());

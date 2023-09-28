@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.xml.XMLWriter;
 
 /**

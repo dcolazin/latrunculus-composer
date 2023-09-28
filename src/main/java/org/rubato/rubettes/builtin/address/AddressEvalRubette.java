@@ -38,10 +38,29 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.math.arith.Complex;
 import org.rubato.math.arith.Rational;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
-import org.rubato.math.module.morphism.MappingException;
-import org.rubato.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.complex.CElement;
+import org.vetronauta.latrunculus.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.math.module.complex.CRing;
+import org.vetronauta.latrunculus.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.rational.QFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QRing;
+import org.vetronauta.latrunculus.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeElement;
+import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;
+import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeElement;
+import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
@@ -648,7 +667,7 @@ public final class AddressEvalRubette
     private void layoutAddressPanel(int type) {
         addressPanel.removeAll();
         if (type == EVAL_TYPE_ELEMENT) {
-            Module m = (module == null)?ZRing.ring:module;
+            Module m = (module == null)? ZRing.ring:module;
             elementEntry = new JModuleElementEntry(m);
             elementEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.moduleelement"))); //$NON-NLS-1$
             elementEntry.setToolTipText(Messages.getString("AddressEvalRubette.selectelement")); //$NON-NLS-1$

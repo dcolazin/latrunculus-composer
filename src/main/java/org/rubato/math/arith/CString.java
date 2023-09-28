@@ -117,28 +117,28 @@ public final class CString extends RingString {
     public CString(Complex c) {
         this("", c);
     }
-    
-    
-    static public CString getZero() {
+
+
+    public static CString getZero() {
         CString res = new CString();
         res.dict = new HashMap<String,Object>();
         return res;
     }
 
-    
-    static public CString getOne() {
+
+    public static CString getOne() {
         return new CString("");
     }
 
-    
-    static public CString parseCString(String string) {
+
+    public static CString parseCString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne();
         }
         
-        LinkedList<String> words = new LinkedList<String>();
-        LinkedList<Complex> factors = new LinkedList<Complex>();
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Complex> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -205,10 +205,10 @@ public final class CString extends RingString {
         return ((Complex)x).doubleValue();
     }
 
-    
-    public Object clone() {
+    @Override
+    public RingString deepCopy() {
         CString res = new CString();
-        res.dict = new HashMap<String,Object>(dict);
+        res.dict = new HashMap<>(dict);
         return res;
     }
 }

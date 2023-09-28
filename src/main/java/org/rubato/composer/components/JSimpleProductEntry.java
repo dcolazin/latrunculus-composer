@@ -28,7 +28,13 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.rubato.math.module.*;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.math.module.definition.ProductFreeElement;
+import org.vetronauta.latrunculus.math.module.definition.ProductFreeModule;
+import org.vetronauta.latrunculus.math.module.definition.ProductProperFreeElement;
+import org.vetronauta.latrunculus.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.math.module.definition.RingElement;
 
 public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
 

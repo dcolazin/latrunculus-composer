@@ -30,8 +30,21 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.rubato.math.module.*;
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.math.module.polynomial.ModularPolynomialRing;
+import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.math.module.rational.QFreeModule;
+import org.vetronauta.latrunculus.math.module.rational.QStringRing;
+import org.vetronauta.latrunculus.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.math.module.integer.ZStringRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;
+import org.vetronauta.latrunculus.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.math.module.modular.ZnStringRing;
 
 public class JSimpleNumberEntry
         extends JSimpleEntry

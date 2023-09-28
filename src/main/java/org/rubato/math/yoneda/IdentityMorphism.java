@@ -21,7 +21,7 @@
 
 package org.rubato.math.yoneda;
 
-import org.rubato.math.module.Module;
+import org.vetronauta.latrunculus.math.module.definition.Module;
 
 /**
  * Abstract base class for identity morphisms.

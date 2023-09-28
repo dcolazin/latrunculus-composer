@@ -7,9 +7,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.rubato.math.matrix.RMatrix;
-import org.rubato.math.module.morphism.CompositionException;
-import org.rubato.math.module.morphism.ModuleMorphism;
-import org.rubato.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
