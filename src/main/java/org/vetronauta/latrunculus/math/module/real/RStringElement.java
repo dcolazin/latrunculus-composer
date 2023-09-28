@@ -24,8 +24,8 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.*;
 
-import org.rubato.math.arith.RString;
-import org.rubato.math.arith.RingString;
+import org.vetronauta.latrunculus.math.arith.RString;
+import org.vetronauta.latrunculus.math.arith.RingString;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;

@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import javax.sound.midi.*;
 
 import org.rubato.base.Repository;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 

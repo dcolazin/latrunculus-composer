@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 
 public class MainPreferences extends JPreferencesPanel {
 

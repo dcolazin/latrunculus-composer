@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.FormFactory;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.real.RRing;

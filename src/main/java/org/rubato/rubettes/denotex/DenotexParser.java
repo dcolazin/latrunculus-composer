@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.Repository;
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.math.module.complex.CRing;

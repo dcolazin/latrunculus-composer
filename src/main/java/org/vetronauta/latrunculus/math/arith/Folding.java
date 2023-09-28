@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
 
 /**
  * Various functions for folding a set of real numbers to a real interval.

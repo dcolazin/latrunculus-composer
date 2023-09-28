@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.math.arith.QString;
+import org.vetronauta.latrunculus.math.arith.QString;
 import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;

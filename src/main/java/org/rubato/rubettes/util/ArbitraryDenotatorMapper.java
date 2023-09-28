@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.rubato.math.matrix.QMatrix;
 import org.rubato.math.matrix.RMatrix;
 import org.rubato.math.matrix.ZMatrix;

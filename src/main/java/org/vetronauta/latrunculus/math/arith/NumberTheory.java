@@ -17,7 +17,9 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
+
+import org.vetronauta.latrunculus.math.exception.ZeroDivisorException;
 
 /**
  * Various number theoretic functions.

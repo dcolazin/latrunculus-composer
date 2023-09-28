@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.rubato.math.yoneda.*;
 
 public class Note implements Comparable<Note> {

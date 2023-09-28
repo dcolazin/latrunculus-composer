@@ -21,9 +21,9 @@ package org.rubato.scheme;
 
 import static org.rubato.scheme.SExpr.*;
 
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.NumberTheory;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.Rational;
 
 
 /**

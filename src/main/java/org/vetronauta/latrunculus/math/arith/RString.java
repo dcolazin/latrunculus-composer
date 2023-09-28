@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
 
 import static java.lang.Math.min;
 
@@ -26,192 +26,209 @@ import java.util.*;
 import org.rubato.util.TextUtils;
 
 /**
- * The ring of strings with rational factors.
+ * The ring of strings with real factors.
  */
 @SuppressWarnings("nls")
-public final class QString extends RingString {
+public final class RString extends RingString {
 
-    public QString(String word) {
-        dict = new HashMap<>();
+    public RString(String word) {
+        dict = new HashMap<String,Object>();
         dict.put(word, getObjectOne());
     }
-    
 
-    public QString(String word, Rational factor) {
-        dict = new HashMap<>();
-        if (!factor.isZero()) {
+    
+    public RString(String word, double factor) {
+        dict = new HashMap<String,Object>();
+        if (factor != 0.0) {
             add(word, factor);
         }
     }
-    
 
-    public QString(String[] words, Rational[] factors) {
-        dict = new HashMap<>();
+    
+    public RString(String[] words, double[] factors) {
+        dict = new HashMap<String,Object>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
-            if (!factors[i].isZero()) {
+            if (factors[i] != 0.0) {
                 add(words[i], factors[i]);
             }
         }
     }
-    
 
-    public QString(List<String> words, List<Rational> factors) {
-        dict = new HashMap<>();
+    
+    public RString(List<String> words, List<Double> factors) {
+        dict = new HashMap<String,Object>();
         int len = min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
-        Iterator<Rational> fiter = factors.iterator();
+        Iterator<Double> fiter = factors.iterator();
         for (int i = 0; i < len; i++) {            
             String w = witer.next();
-            Rational f = fiter.next();
-            if (!f.isZero()) {
+            double f = fiter.next();
+            if (f != 0.0) {
                 add(w, i);
             }
         }
     }
     
 
-    public QString(Object ... objects) {
+    public RString(Object ... objects) {
         for (int i = 0; i < objects.length; i += 2) {
             String w = (String)objects[i]; 
-            Rational f = (Rational)objects[i+1];
-            if (!f.isZero()) {
+            double f = (Double)objects[i+1];
+            if (f != 0.0) {
                 add(w, f);
             }
         }
     }
     
 
-    public QString(RingString rs) {
-        if (rs instanceof QString) {
-            dict = new HashMap<>(rs.dict);
+    public RString(RingString rs) {
+        if (rs instanceof RString) {
+            dict = new HashMap<String,Object>(rs.dict);
         }
         else {
-            dict = new HashMap<>();
+            dict = new HashMap<String,Object>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Rational f = ObjectRational(value);
-                if (!f.isZero()) {
+                Double f = ObjectDouble(value);
+                if (f != 0.0) {
                     add(key, f);
                 }
             }
         }
     }
-    
 
-    public QString(int i) {
-        this("", new Rational(i));
+    
+    public RString(int i) {
+        this("", i);
     }
 
     
-    public QString(Rational r) {
-        this("", r);
+    public RString(Rational r) {
+        this("", r.doubleValue());
     }
 
     
-    public QString(double d) {
-        this("", new Rational(d));
+    public RString(double d) {
+        this("", d);
     }
     
     
-    public QString(Complex c) {
-        this("", new Rational(c.doubleValue()));
+    public RString(Complex c) {
+        this("", c.doubleValue());
     }
 
 
-    public static QString getZero() {
-        QString res = new QString();
+    public static RString getZero() {
+        RString res = new RString();
         res.dict = new HashMap<>();
         return res;
     }
 
 
-    public static QString getOne() {
-        return new QString("");
+    public static RString getOne() {
+        return new RString("");
     }
 
 
-    public static QString parseQString(String string) {
+    public static RString parseRString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne();
         }
         
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<Rational> factors = new LinkedList<>();
+        LinkedList<Double> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
                 throw new NumberFormatException();
             }
-            Rational f = Rational.parseRational(term[0]);
+            double f = Double.parseDouble(term[0]);
             String w = TextUtils.unquote(term[1]);
             factors.add(f);
             words.add(w);
         }
         
-        return new QString(words, factors);
+        return new RString(words, factors);
     }
     
 
-    private QString() { /* do nothing */ }
-
+    private RString() { /* do nothing */ }
     
+
     protected Object sum(Object x, Object y) {
-        return ((Rational)x).sum((Rational)y);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix + iy;
     }
     
 
     protected Object difference(Object x, Object y) {
-        return ((Rational)x).difference((Rational)y);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix - iy;
     }
 
     
     protected Object product(Object x, Object y) {
-        return ((Rational)x).product((Rational)y);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix * iy;
     }
-
     
+
     protected Object neg(Object x) {
-        return ((Rational)x).negated();
+        double ix = (Double) x;
+        return -ix;
     }
-
     
+
     protected boolean equals(Object x, Object y) {
-        return x.equals(y);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        return ix == iy;
     }
-
     
+
     protected int compare(Object x, Object y) {
-        Rational rx = (Rational)x;
-        Rational ry = (Rational)y;
-        return rx.compareTo(ry);
+        double ix = (Double) x;
+        double iy = (Double) y;
+        if (ix < iy) {
+            return -1;
+        }
+        else if (ix > iy) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
     
     protected Object getObjectOne() {
-        return new Rational(1);
+        return 1.0;
     }
 
     
     protected Object getObjectZero() {
-        return new Rational(0);
+        return 0.0;
     }
 
     
     protected boolean isObjectZero(Object x) {
-        return ((Rational)x).isZero();
+        double ix = (Double) x;
+        return ix == 0.0;
     }
 
     
     protected double ObjectToDouble(Object x) {
-        return ((Rational)x).doubleValue();
+        return (Double) x;
     }
-
 
     @Override
     public RingString deepCopy() {
-        QString res = new QString();
+        RString res = new RString();
         res.dict = new HashMap<>(dict);
         return res;
     }

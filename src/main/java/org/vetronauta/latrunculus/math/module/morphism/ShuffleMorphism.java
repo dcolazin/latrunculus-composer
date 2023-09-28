@@ -19,8 +19,8 @@
 
 package org.vetronauta.latrunculus.math.module.morphism;
 
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.rubato.math.matrix.*;
 import org.vetronauta.latrunculus.math.module.complex.CRing;
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;

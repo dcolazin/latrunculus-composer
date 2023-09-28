@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.math.module.morphism;
 
-import org.rubato.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Complex;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.module.complex.CRing;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;

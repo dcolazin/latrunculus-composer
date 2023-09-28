@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.math.arith.ZnString;
+import org.vetronauta.latrunculus.math.arith.ZnString;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.definition.ProperFreeModule;

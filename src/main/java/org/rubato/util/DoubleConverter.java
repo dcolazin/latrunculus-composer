@@ -19,7 +19,7 @@
 
 package org.rubato.util;
 
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.rational.QElement;

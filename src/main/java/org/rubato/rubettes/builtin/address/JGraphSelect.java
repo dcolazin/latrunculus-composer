@@ -27,8 +27,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.math.module.complex.CRing;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;

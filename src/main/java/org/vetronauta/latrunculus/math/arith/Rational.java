@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.DeepCopyable;

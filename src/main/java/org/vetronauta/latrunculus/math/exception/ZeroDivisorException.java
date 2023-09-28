@@ -17,14 +17,14 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.exception;
 
 /**
  * Exception thrown by various functions involving modular arithmetic.
  * Zero divisors modulo <code>n</code> are numbers <code>a</code> and <code>b</code>,
  * both not zero, such that <code>a</code>*<code>b</code> = 0 mod <code>n</code>.
  */
-public final class ZeroDivisorException extends java.lang.ArithmeticException {
+public final class ZeroDivisorException extends ArithmeticException {
     
     public ZeroDivisorException() { /* do nothing */ }
 

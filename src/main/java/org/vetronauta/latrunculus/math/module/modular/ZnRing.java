@@ -25,7 +25,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.List;
 
-import org.rubato.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;

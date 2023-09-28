@@ -31,7 +31,7 @@ import javax.swing.*;
 import org.rubato.base.Repository;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.rubette.RubetteModel;
-import org.rubato.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 import org.rubato.scheme.Env;
 import org.rubato.scheme.Evaluator;
 import org.rubato.scheme.SExpr;

@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.math.module.morphism;
 import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.rational.QElement;
 import org.vetronauta.latrunculus.math.module.definition.RingElement;

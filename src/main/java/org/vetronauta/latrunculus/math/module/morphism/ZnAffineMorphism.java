@@ -23,7 +23,7 @@ import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
 import static org.rubato.xml.XMLConstants.MODULUS_ATTR;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.rubato.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;

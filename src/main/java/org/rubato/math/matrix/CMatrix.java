@@ -21,7 +21,7 @@ package org.rubato.math.matrix;
 
 import java.util.Arrays;
 
-import org.rubato.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Complex;
 
 /**
  * Matrixes over complex numbers.

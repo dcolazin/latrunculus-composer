@@ -22,7 +22,7 @@ package org.rubato.math.matrix;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-import org.rubato.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 
 /**
  * Matrixes over modular integers.

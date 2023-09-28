@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
 
 import static java.lang.Math.min;
 
@@ -26,72 +26,72 @@ import java.util.*;
 import org.rubato.util.TextUtils;
 
 /**
- * The ring of strings with real factors.
+ * The ring of strings with complex factors.
  */
 @SuppressWarnings("nls")
-public final class RString extends RingString {
+public final class CString extends RingString {
 
-    public RString(String word) {
+    public CString(String word) {
         dict = new HashMap<String,Object>();
         dict.put(word, getObjectOne());
     }
 
     
-    public RString(String word, double factor) {
+    public CString(String word, Complex factor) {
         dict = new HashMap<String,Object>();
-        if (factor != 0.0) {
+        if (!factor.isZero()) {
             add(word, factor);
         }
     }
 
     
-    public RString(String[] words, double[] factors) {
+    public CString(String[] words, Complex[] factors) {
         dict = new HashMap<String,Object>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
-            if (factors[i] != 0.0) {
+            if (!factors[i].isZero()) {
                 add(words[i], factors[i]);
             }
         }
     }
 
     
-    public RString(List<String> words, List<Double> factors) {
+    public CString(List<String> words, List<Complex> factors) {
         dict = new HashMap<String,Object>();
         int len = min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
-        Iterator<Double> fiter = factors.iterator();
+        Iterator<Complex> fiter = factors.iterator();
         for (int i = 0; i < len; i++) {            
             String w = witer.next();
-            double f = fiter.next();
-            if (f != 0.0) {
+            Complex f = fiter.next();
+            if (!f.isZero()) {
                 add(w, i);
             }
         }
-    }
-    
+    }    
 
-    public RString(Object ... objects) {
+    
+    public CString(Object ... objects) {
         for (int i = 0; i < objects.length; i += 2) {
             String w = (String)objects[i]; 
-            double f = (Double)objects[i+1];
-            if (f != 0.0) {
+            Complex f = (Complex)objects[i+1];
+            if (!f.isZero()) {
                 add(w, f);
             }
         }
     }
     
 
-    public RString(RingString rs) {
-        if (rs instanceof RString) {
+    public CString(RingString rs) {
+        if (rs instanceof CString) {
             dict = new HashMap<String,Object>(rs.dict);
         }
         else {
             dict = new HashMap<String,Object>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Double f = ObjectDouble(value);
-                if (f != 0.0) {
+                Complex f = ObjectComplex(value);
+                if (!f.isZero()) {
                     add(key, f);
                 }
             }
@@ -99,136 +99,115 @@ public final class RString extends RingString {
     }
 
     
-    public RString(int i) {
-        this("", i);
+    public CString(int i) {
+        this("", new Complex(i));
     }
 
     
-    public RString(Rational r) {
-        this("", r.doubleValue());
+    public CString(Rational r) {
+        this("", new Complex(r.doubleValue()));
     }
 
     
-    public RString(double d) {
-        this("", d);
+    public CString(double d) {
+        this("", new Complex(d));
     }
     
     
-    public RString(Complex c) {
-        this("", c.doubleValue());
+    public CString(Complex c) {
+        this("", c);
     }
 
 
-    public static RString getZero() {
-        RString res = new RString();
-        res.dict = new HashMap<>();
+    public static CString getZero() {
+        CString res = new CString();
+        res.dict = new HashMap<String,Object>();
         return res;
     }
 
 
-    public static RString getOne() {
-        return new RString("");
+    public static CString getOne() {
+        return new CString("");
     }
 
 
-    public static RString parseRString(String string) {
+    public static CString parseCString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return getOne();
         }
         
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<Double> factors = new LinkedList<>();
+        LinkedList<Complex> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
                 throw new NumberFormatException();
             }
-            double f = Double.parseDouble(term[0]);
+            Complex f = Complex.parseComplex(term[0]);
             String w = TextUtils.unquote(term[1]);
             factors.add(f);
             words.add(w);
         }
         
-        return new RString(words, factors);
+        return new CString(words, factors);
     }
-    
-
-    private RString() { /* do nothing */ }
     
 
     protected Object sum(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix + iy;
+        return ((Complex)x).sum((Complex)y);
     }
-    
 
+    
     protected Object difference(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix - iy;
+        return ((Complex)x).difference((Complex)y);
     }
 
     
     protected Object product(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix * iy;
+        return ((Complex)x).product((Complex)y);
     }
-    
 
+    
     protected Object neg(Object x) {
-        double ix = (Double) x;
-        return -ix;
+        return ((Complex)x).negated();
     }
-    
 
+    
     protected boolean equals(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix == iy;
+        return x.equals(y);
     }
-    
 
+    
     protected int compare(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        if (ix < iy) {
-            return -1;
-        }
-        else if (ix > iy) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
+        Complex rx = (Complex)x;
+        Complex ry = (Complex)y;
+        return rx.compareTo(ry);
     }
 
     
     protected Object getObjectOne() {
-        return 1.0;
+        return Complex.getOne();
     }
 
     
     protected Object getObjectZero() {
-        return 0.0;
+        return Complex.getZero();
     }
 
     
     protected boolean isObjectZero(Object x) {
-        double ix = (Double) x;
-        return ix == 0.0;
+        return ((Complex)x).isZero();
     }
 
     
     protected double ObjectToDouble(Object x) {
-        return (Double) x;
+        return ((Complex)x).doubleValue();
     }
 
     @Override
     public RingString deepCopy() {
-        RString res = new RString();
+        CString res = new CString();
         res.dict = new HashMap<>(dict);
         return res;
     }

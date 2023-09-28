@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.rubato.math.matrix.QMatrix;
 import org.rubato.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.math.module.rational.QElement;

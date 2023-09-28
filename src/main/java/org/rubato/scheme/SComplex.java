@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.rubato.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Complex;
 
 /**
  * The class of complex number values.

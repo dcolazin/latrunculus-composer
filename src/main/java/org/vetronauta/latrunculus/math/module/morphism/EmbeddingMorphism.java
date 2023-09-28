@@ -26,8 +26,8 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Rational;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.module.complex.CFreeElement;
 import org.vetronauta.latrunculus.math.module.complex.CFreeModule;

@@ -23,7 +23,7 @@ import static org.rubato.xml.XMLConstants.*;
 
 import java.util.Arrays;
 
-import org.rubato.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 import org.rubato.math.matrix.ZnMatrix;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;

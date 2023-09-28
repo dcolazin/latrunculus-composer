@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.math.arith;
+package org.vetronauta.latrunculus.math.arith;
 
 import org.vetronauta.latrunculus.core.DeepCopyable;
 
@@ -26,9 +26,11 @@ import org.vetronauta.latrunculus.core.DeepCopyable;
  * 
  * @author Gérard Milmeister
  */
-@SuppressWarnings("nls")
 public final class Complex extends Number implements Comparable<Complex>, DeepCopyable<Complex> {
-    
+
+    private double real;
+    private double imag;
+
     /**
      * Creates the complex number 0+i0.
      */
@@ -155,7 +157,7 @@ public final class Complex extends Number implements Comparable<Complex>, DeepCo
     /**
      * Returns the complex number 1+i0.
      */
-    static public Complex getOne() {
+    public static Complex getOne() {
         return new Complex(1.0);
     }
 
@@ -163,7 +165,7 @@ public final class Complex extends Number implements Comparable<Complex>, DeepCo
     /**
      * Returns the complex number 0+i0.
      */
-    static public Complex getZero() {
+    public static Complex getZero() {
         return new Complex(0.0);
     }
 
@@ -598,10 +600,6 @@ public final class Complex extends Number implements Comparable<Complex>, DeepCo
             return 0;
         }
     }
-
-
-    private double real;
-    private double imag;
 
     @Override
     public Complex deepCopy() {

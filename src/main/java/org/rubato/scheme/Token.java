@@ -21,8 +21,8 @@ package org.rubato.scheme;
 
 import java.util.HashSet;
 
-import org.rubato.math.arith.Complex;
-import org.rubato.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.Rational;
 
 
 /**

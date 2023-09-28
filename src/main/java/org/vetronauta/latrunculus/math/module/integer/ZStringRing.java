@@ -22,8 +22,8 @@ package org.vetronauta.latrunculus.math.module.integer;
 import static org.rubato.xml.XMLConstants.MODULE;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.rubato.math.arith.RingString;
-import org.rubato.math.arith.ZString;
+import org.vetronauta.latrunculus.math.arith.RingString;
+import org.vetronauta.latrunculus.math.arith.ZString;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.definition.StringElement;
