@@ -99,8 +99,7 @@ public class RubetteProperties implements Cloneable {
     }
     
 
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         String s;
         s = "------------------------------------------------\n";
         for (RubetteProperty prop : properties.values()) {

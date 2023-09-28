@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.math.module.morphism;
 import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;

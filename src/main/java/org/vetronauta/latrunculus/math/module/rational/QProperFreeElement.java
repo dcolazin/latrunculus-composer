@@ -24,7 +24,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 import static org.rubato.xml.XMLConstants.VALUES_ATTR;
 
 import org.vetronauta.latrunculus.math.arith.Folding;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.rubato.util.TextUtils;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;

@@ -23,8 +23,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.arith.Complex;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.exception.DomainException;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;

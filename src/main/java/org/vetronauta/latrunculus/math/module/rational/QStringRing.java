@@ -22,8 +22,8 @@ package org.vetronauta.latrunculus.math.module.rational;
 import static org.rubato.xml.XMLConstants.MODULE;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.vetronauta.latrunculus.math.arith.QString;
-import org.vetronauta.latrunculus.math.arith.RingString;
+import org.vetronauta.latrunculus.math.arith.string.QString;
+import org.vetronauta.latrunculus.math.arith.string.RingString;
 import org.rubato.util.TextUtils;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;

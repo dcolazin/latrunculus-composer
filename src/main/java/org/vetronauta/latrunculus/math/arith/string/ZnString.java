@@ -17,64 +17,61 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.arith;
+package org.vetronauta.latrunculus.math.arith.string;
 
 import static java.lang.Math.min;
 
 import java.util.*;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 /**
- * The ring of strings with integer factors.
+ * The ring of strings with integer factors mod <i>p</i>.
  */
-@SuppressWarnings("nls")
-public final class ZString extends RingString {
+public final class ZnString extends RingString {
 
-    public ZString(String word) {
-        dict = new HashMap<>();
+    public ZnString(String word, int modulus) {
+        this.modulus = modulus;
+        dict = new HashMap<String,Object>();
         dict.put(word, getObjectOne());
     }
-    
 
-    public ZString(String word, int factor) {
-        dict = new HashMap<>();
-        if (factor != 0) {
-            add(word, factor);
+    
+    public ZnString(String word, int factor, int modulus) {
+        this.modulus = modulus;
+        dict = new HashMap<String,Object>();
+        int f = NumberTheory.mod(factor, modulus);
+        if (f != 0) {
+            add(word, f);
         }
     }
     
 
-    public ZString(String[] words, int[] factors) {
+    public ZnString(String[] words, int[] factors, int modulus) {
+        this.modulus = modulus;
         dict = new HashMap<>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
-            if (factors[i] != 0) {
-                add(words[i], factors[i]);
+            int f = NumberTheory.mod(factors[i], modulus);
+            if (f != 0) {
+                add(words[i], f);
             }
         }
     }
+
     
-    
-    public ZString(List<String> words, List<Integer> factors) {
+    public ZnString(List<String> words, List<Integer> factors, int modulus) {
+        this.modulus = modulus;
         dict = new HashMap<>();
         int len = Math.min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
         Iterator<Integer> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {            
             String w = witer.next();
-            int f = fiter.next();
-            if (f != 0) {
-                add(w, i);
-            }
-        }
-    }
-    
-    
-    public ZString(Object ... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            int f = (Integer)objects[i+1];
+            int f = NumberTheory.mod(fiter.next(), modulus);
             if (f != 0) {
                 add(w, f);
             }
@@ -82,59 +79,66 @@ public final class ZString extends RingString {
     }
     
 
-    public ZString(RingString rs) {
-        if (rs instanceof ZString) {
-            dict = new HashMap<>(rs.dict);
-        }
-        else {
-            dict = new HashMap<>();
-            for (String key : rs.dict.keySet()) {
-                Object value = rs.dict.get(key);
-                Integer i = ObjectInteger(value);
-                if (i != 0) {
-                    add(key, i);
-                }
+    public ZnString(int modulus, Object ... objects) {
+        for (int i = 0; i < objects.length; i += 2) {
+            String w = (String)objects[i]; 
+            int f = NumberTheory.mod(((Integer)objects[i+1]), modulus);
+            if (f != 0) {
+                add(w, f);
             }
         }
     }
     
-    
-    public ZString(int i) {
-        this("", i);
+
+    public ZnString(RingString rs, int modulus) {
+        this.modulus = modulus;
+        dict = new HashMap<String,Object>();
+        for (String key : rs.dict.keySet()) {
+            Object value = rs.dict.get(key);
+            int i = NumberTheory.mod(ObjectInteger(value), modulus);
+            if (i != 0) {
+                add(key, i);
+            }
+        }
     }
 
     
-    public ZString(Rational r) {
-        this("", r.intValue());
+    public ZnString(int i, int modulus) {
+        this("", i, modulus);
     }
 
     
-    public ZString(double d) {
-        this("", (int)Math.round(d));
+    public ZnString(Rational r, int modulus) {
+        this("", r.intValue(), modulus);
+    }
+
+    
+    public ZnString(double d, int modulus) {
+        this("", (int)Math.round(d), modulus);
     }
     
     
-    public ZString(Complex c) {
-        this("", c.intValue());
+    public ZnString(Complex c, int modulus) {
+        this("", c.intValue(), modulus);
     }
 
 
-    public static ZString getZero() {
-        ZString res = new ZString();
-        res.dict = new HashMap<>();
+    public static ZnString getZero(int modulus) {
+        ZnString res = new ZnString(modulus);
+        res.dict = new HashMap<String,Object>();
         return res;
     }
 
 
-    public static ZString getOne() {
-        return new ZString("");
+    public static ZnString getOne(int modulus) {
+        return new ZnString("", modulus);
     }
 
 
-    public static ZString parseZString(String string) {
-        String[] terms = TextUtils.split(string.trim(), '+');        
+    public static ZnString parseZnString(String string, int modulus) {
+        String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
-            return getOne();
+            return getOne(modulus);
         }
         
         LinkedList<String> words = new LinkedList<>();
@@ -150,37 +154,39 @@ public final class ZString extends RingString {
             words.add(w);
         }
         
-        return new ZString(words, factors);
+        return new ZnString(words, factors, modulus);
     }
     
 
-    private ZString() { /* do nothing */ }
+    private ZnString(int modulus) {
+        this.modulus = modulus;
+    }
 
     
     protected Object sum(Object x, Object y) {
         int ix = (Integer) x;
         int iy = (Integer) y;
-        return ix + iy;
+        return NumberTheory.mod(ix + iy, modulus);
     }
 
     
     protected Object difference(Object x, Object y) {
         int ix = (Integer) x;
         int iy = (Integer) y;
-        return ix - iy;
+        return NumberTheory.mod(ix - iy, modulus);
     }
 
     
     protected Object product(Object x, Object y) {
         int ix = (Integer) x;
         int iy = (Integer) y;
-        return ix * iy;
+        return NumberTheory.mod(ix * iy, modulus);
     }
 
     
     protected Object neg(Object x) {
         int ix = (Integer) x;
-        return -ix;
+        return NumberTheory.mod(-ix, modulus);
     }
 
     
@@ -218,9 +224,18 @@ public final class ZString extends RingString {
         return ((Integer)x).doubleValue();
     }
 
+    
+    public int getModulus() {
+        return modulus;
+    }
+
+    
+    private int modulus;
+
     @Override
     public RingString deepCopy() {
-        ZString res = new ZString();
+        ZnString res = new ZnString(modulus);
+        res.modulus = modulus;
         res.dict = new HashMap<>(dict);
         return res;
     }

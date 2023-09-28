@@ -277,8 +277,7 @@ public class SplitRubette
 
     protected class FormListModel extends DefaultListModel {
 
-        @SuppressWarnings("nls")
-        public void setForm(LimitForm limitForm) {
+                public void setForm(LimitForm limitForm) {
             removeAllElements();            
             forms = null;
             if (limitForm != null) {

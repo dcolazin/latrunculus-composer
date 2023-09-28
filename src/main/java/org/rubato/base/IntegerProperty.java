@@ -157,8 +157,7 @@ public class IntegerProperty
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

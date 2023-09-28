@@ -32,7 +32,7 @@ import javax.swing.WindowConstants;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.plugin.PluginManager;
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 
 public class Composer implements WindowStateListener {
@@ -168,8 +168,7 @@ public class Composer implements WindowStateListener {
     }
     
     
-    @SuppressWarnings("nls")
-    private static void usage() {
+        private static void usage() {
         System.out.println("Usage: composer [OPTION]... [FILE]");
         System.out.println("Start Rubato Composer and optionally open the project FILE");
         System.out.println("       --help     display this help and exit");
@@ -177,8 +176,7 @@ public class Composer implements WindowStateListener {
     }
     
     
-    @SuppressWarnings("nls")
-    private static void version() {
+        private static void version() {
         System.out.println("Rubato Composer version "+version);
         System.out.println("Copyright (C) 2006 Gerard Milmeister");
         System.out.println("This is free software; see the source for copying conditions.  There is NO");
@@ -187,8 +185,7 @@ public class Composer implements WindowStateListener {
     }
     
     
-    @SuppressWarnings("nls")
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         for (String arg : args) {
             if (arg.equals("--help")) {
                 usage();

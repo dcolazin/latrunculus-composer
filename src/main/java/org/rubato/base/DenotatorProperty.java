@@ -127,8 +127,7 @@ public class DenotatorProperty
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "DenotatorProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

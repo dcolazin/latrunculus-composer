@@ -761,8 +761,7 @@ public class ListDenotator
     }
     
     
-    @SuppressWarnings("nls")
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
+        protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");

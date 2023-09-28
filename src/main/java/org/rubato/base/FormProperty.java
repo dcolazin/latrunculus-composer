@@ -127,8 +127,7 @@ public class FormProperty
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "FormProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

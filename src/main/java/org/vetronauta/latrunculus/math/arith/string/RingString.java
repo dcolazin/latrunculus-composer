@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.arith;
+package org.vetronauta.latrunculus.math.arith.string;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.atan;
@@ -27,6 +27,8 @@ import java.util.*;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 /**
  * The ring of strings.

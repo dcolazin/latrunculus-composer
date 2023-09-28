@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
 
 /**
  * The class of real values.

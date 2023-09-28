@@ -17,18 +17,19 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.arith;
+package org.vetronauta.latrunculus.math.arith.string;
 
 import static java.lang.Math.min;
 
 import java.util.*;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 /**
  * The ring of strings with real factors.
  */
-@SuppressWarnings("nls")
 public final class RString extends RingString {
 
     public RString(String word) {

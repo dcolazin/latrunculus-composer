@@ -35,7 +35,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.rubato.math.matrix.RMatrix;
 import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.math.module.definition.Module;

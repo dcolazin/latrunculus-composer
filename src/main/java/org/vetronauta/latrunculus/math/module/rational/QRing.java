@@ -24,7 +24,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.vetronauta.latrunculus.math.module.real.RElement;
 import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.math.module.modular.ZnElement;

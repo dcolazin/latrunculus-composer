@@ -35,7 +35,7 @@ import org.rubato.base.Repository;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.xml.XMLConstants;

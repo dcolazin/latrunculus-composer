@@ -19,7 +19,6 @@
 
 package org.rubato.base;
 
-@SuppressWarnings("nls")
 public interface RubatoConstants {
 
     // Rubette groups

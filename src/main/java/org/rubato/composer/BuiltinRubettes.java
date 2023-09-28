@@ -29,8 +29,7 @@ public final class BuiltinRubettes {
     /**
      * All builtin Rubettes specified by their complete class names.
      */
-    @SuppressWarnings("nls")
-    public static final String[] classes = {
+        public static final String[] classes = {
         "org.rubato.rubettes.builtin.DisplayRubette",
         "org.rubato.rubettes.builtin.SourceRubette",
         "org.rubato.rubettes.builtin.LatchRubette",

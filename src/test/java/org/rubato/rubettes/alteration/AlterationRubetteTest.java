@@ -28,7 +28,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.rubato.math.matrix.QMatrix;
 import org.rubato.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;

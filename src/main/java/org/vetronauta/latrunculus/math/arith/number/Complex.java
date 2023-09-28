@@ -17,16 +17,14 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.arith;
-
-import org.vetronauta.latrunculus.core.DeepCopyable;
+package org.vetronauta.latrunculus.math.arith.number;
 
 /**
  * Complex number arithmetic.
  * 
  * @author Gérard Milmeister
  */
-public final class Complex extends Number implements Comparable<Complex>, DeepCopyable<Complex> {
+public final class Complex extends ArithmeticNumber<Complex> {
 
     private double real;
     private double imag;

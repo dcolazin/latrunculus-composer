@@ -87,8 +87,7 @@ public class JFormTree
     }
     
     
-    @SuppressWarnings("nls")
-    protected String getFormString(String label, Form f) {
+        protected String getFormString(String label, Form f) {
         StringBuilder buf = new StringBuilder(30);
         buf.append("<html>");
         if (label != null) {

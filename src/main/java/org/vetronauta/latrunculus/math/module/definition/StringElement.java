@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.math.module.definition;
 
 import java.util.HashMap;
 
-import org.vetronauta.latrunculus.math.arith.RingString;
+import org.vetronauta.latrunculus.math.arith.string.RingString;
 import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
 
 /**

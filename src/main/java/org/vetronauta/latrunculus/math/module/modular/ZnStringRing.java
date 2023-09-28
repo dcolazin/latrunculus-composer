@@ -23,8 +23,8 @@ import static org.rubato.xml.XMLConstants.MODULE;
 import static org.rubato.xml.XMLConstants.MODULUS_ATTR;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
-import org.vetronauta.latrunculus.math.arith.RingString;
-import org.vetronauta.latrunculus.math.arith.ZnString;
+import org.vetronauta.latrunculus.math.arith.string.RingString;
+import org.vetronauta.latrunculus.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.math.module.definition.Module;

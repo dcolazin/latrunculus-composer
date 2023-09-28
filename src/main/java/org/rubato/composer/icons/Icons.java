@@ -23,7 +23,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-@SuppressWarnings("nls")
 public class Icons {
     
     public final static ImageIcon emptyIcon; 

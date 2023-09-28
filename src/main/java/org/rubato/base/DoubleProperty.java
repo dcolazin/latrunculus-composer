@@ -157,8 +157,7 @@ public class DoubleProperty
     }
     
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

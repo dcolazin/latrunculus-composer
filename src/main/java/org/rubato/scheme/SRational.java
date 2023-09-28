@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 /**
  * The class of rational values.

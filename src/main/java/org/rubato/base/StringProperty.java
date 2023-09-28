@@ -167,8 +167,7 @@ public class StringProperty
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "StringProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

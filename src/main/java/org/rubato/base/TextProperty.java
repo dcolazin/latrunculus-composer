@@ -146,8 +146,7 @@ public class TextProperty
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "TextProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+rows+","+cols+"]";
     }
 

@@ -23,7 +23,7 @@ import static org.rubato.xml.XMLConstants.MODULEELEMENT;
 import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 import static org.rubato.xml.XMLConstants.VALUE_ATTR;
 
-import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.vetronauta.latrunculus.math.arith.Folding;
 import org.rubato.util.TextUtils;
 import org.rubato.xml.XMLInputOutput;

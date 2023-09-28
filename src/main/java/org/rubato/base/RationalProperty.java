@@ -29,7 +29,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -164,8 +164,7 @@ public class RationalProperty
     }
     
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "RationalProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

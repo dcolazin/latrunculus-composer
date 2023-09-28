@@ -29,7 +29,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -140,8 +140,7 @@ public class ComplexProperty
     }
     
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

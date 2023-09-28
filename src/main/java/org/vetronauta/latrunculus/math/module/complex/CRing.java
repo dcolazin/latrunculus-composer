@@ -24,7 +24,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.arith.Complex;
+import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.vetronauta.latrunculus.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.NumberRing;

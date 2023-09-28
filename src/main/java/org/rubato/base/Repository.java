@@ -55,7 +55,6 @@ import org.vetronauta.latrunculus.math.module.definition.Module;
  * 
  * @author Gérard Milmeister
  */
-@SuppressWarnings("nls")
 public class Repository
         extends Observable
         implements RubatoDictionary {

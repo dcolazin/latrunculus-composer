@@ -25,7 +25,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.vetronauta.latrunculus.math.arith.ZString;
+import org.vetronauta.latrunculus.math.arith.string.ZString;
 import org.rubato.util.TextUtils;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;

@@ -19,8 +19,8 @@
 
 package org.rubato.audio.midi;
 
-import org.vetronauta.latrunculus.math.arith.Rational;
-import org.vetronauta.latrunculus.math.arith.ZString;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
+import org.vetronauta.latrunculus.math.arith.string.ZString;
 import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
 import org.rubato.math.yoneda.FactorDenotator;
 import org.rubato.math.yoneda.SimpleDenotator;
@@ -71,8 +71,7 @@ public class MidiChange implements Comparable<MidiChange> {
     }
 
 
-    @SuppressWarnings("nls")
-    public static MidiChange getPedalOn(FactorDenotator pedal, int resolution) {
+        public static MidiChange getPedalOn(FactorDenotator pedal, int resolution) {
         MidiChange newChange = new MidiChange();
         ZString v = ((ZStringElement)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
         double  o = ((SimpleDenotator)pedal.getFactor(1)).getReal();
@@ -165,8 +164,7 @@ public class MidiChange implements Comparable<MidiChange> {
     }
 
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         StringBuilder buf = new StringBuilder(40);
         buf.append("MidiChange[");
         buf.append("onset=");

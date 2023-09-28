@@ -25,7 +25,7 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.HashMap;
 
-import org.vetronauta.latrunculus.math.arith.Rational;
+import org.vetronauta.latrunculus.math.arith.number.Rational;
 import org.vetronauta.latrunculus.math.module.complex.CElement;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.rubato.util.Pair;

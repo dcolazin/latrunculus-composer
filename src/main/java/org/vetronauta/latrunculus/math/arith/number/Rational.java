@@ -17,17 +17,17 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.arith;
+package org.vetronauta.latrunculus.math.arith.number;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
 
 /**
  * Rational number arithmetic.
  * 
  * @author Gérard Milmeister
  */
-public final class Rational extends Number implements Comparable<Rational>, DeepCopyable<Rational> {
+public final class Rational extends ArithmeticNumber<Rational> {
 
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;

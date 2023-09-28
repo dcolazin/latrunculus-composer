@@ -102,8 +102,7 @@ public class Point {
     }
     
     
-    @SuppressWarnings("nls")
-    public String toString() {
+        public String toString() {
         StringBuilder buf = new StringBuilder(30);
         buf.append("Point[");
         buf.append("realX=");
