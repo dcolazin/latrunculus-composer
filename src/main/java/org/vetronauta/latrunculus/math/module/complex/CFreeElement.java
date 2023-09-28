@@ -19,10 +19,7 @@
 
 package org.vetronauta.latrunculus.math.module.complex;
 
-import org.vetronauta.latrunculus.math.exception.DomainException;
-import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 
 /**
  * The interface for elements in the free modules of complex numbers.
@@ -41,19 +38,5 @@ public interface CFreeElement extends FreeElement {
      * Conjugates this element.
      */
     void conjugate();
-    
-    CFreeElement sum(ModuleElement element) throws DomainException;
-
-    CFreeElement difference(ModuleElement element) throws DomainException;
-
-    CFreeElement negated();
-
-    CFreeElement scaled(RingElement element) throws DomainException;
-
-    CFreeElement resize(int n);
-
-    CElement getComponent(int i);
-
-    CElement getRingElement(int i);
 
 }

@@ -29,9 +29,9 @@ import org.vetronauta.latrunculus.math.module.real.Ring;
  */
 public interface ProductFreeModule extends FreeModule {
 
-    public int getFactorCount();
+    int getFactorCount();
     
-    public Ring[] getFactors();
+    Ring[] getFactors();
     
-    public Ring getFactor(int i);
+    Ring getFactor(int i);
 }

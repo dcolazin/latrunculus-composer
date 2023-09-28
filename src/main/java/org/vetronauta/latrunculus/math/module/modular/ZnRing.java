@@ -86,7 +86,7 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return isField();
     }
 

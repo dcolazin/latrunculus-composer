@@ -46,9 +46,7 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule
-		extends ProperFreeModule
-		implements CFreeModule {
+public final class CProperFreeModule extends ProperFreeModule implements CFreeModule {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);  
        
@@ -112,7 +110,7 @@ public final class CProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return true;
     }
     

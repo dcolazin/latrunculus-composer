@@ -52,11 +52,6 @@ public interface FreeElement extends ModuleElement, Iterable<RingElement> {
     void multiplyCW(ModuleElement element) throws DomainException;
 
     /**
-     * Returns an iterator to the factors of the element.
-     */
-    Iterator<RingElement> iterator();
-    
-    /**
      * Returns this free element resized to length <code>n</code>.
      * If the new length <code>n</code> is greater than the old length,
      * the new values are filled with the zero of the underlying ring.

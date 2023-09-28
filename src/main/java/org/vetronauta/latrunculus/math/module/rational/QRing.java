@@ -88,7 +88,7 @@ public final class QRing extends NumberRing implements QFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return true;
     }
 

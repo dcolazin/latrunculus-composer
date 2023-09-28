@@ -170,7 +170,7 @@ public final class ProductRing
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

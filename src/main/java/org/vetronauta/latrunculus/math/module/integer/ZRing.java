@@ -77,7 +77,7 @@ public final class ZRing extends NumberRing implements ZFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

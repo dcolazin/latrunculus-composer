@@ -32,11 +32,6 @@ import java.util.List;
  */
 public interface ZnFreeModule extends FreeModule {
     
-    public int getModulus();
+    int getModulus();
 
-    public ZnFreeElement createElement(List<ModuleElement> elements);
-    
-    public ZnFreeElement getZero();
-
-    public ZnFreeElement getUnitElement(int i);
 }

@@ -106,7 +106,7 @@ public final class QStringProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

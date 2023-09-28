@@ -33,10 +33,10 @@ public interface PolynomialFreeElement extends FreeElement {
     /**
      * Returns the ring of the coefficients of the polynomial.
      */
-    public Ring getCoefficientRing();
+    Ring getCoefficientRing();
         
     /**
      * Returns the indeterminate of the polynomial.
      */
-    public String getIndeterminate();
+    String getIndeterminate();
 }

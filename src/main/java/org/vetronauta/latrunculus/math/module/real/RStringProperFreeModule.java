@@ -104,7 +104,7 @@ public final class RStringProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

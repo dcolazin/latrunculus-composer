@@ -105,7 +105,7 @@ public final class ZStringProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

@@ -78,7 +78,7 @@ public final class CRing extends NumberRing implements CFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return true;
     }
 

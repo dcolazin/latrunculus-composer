@@ -113,7 +113,7 @@ public final class ModularPolynomialProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

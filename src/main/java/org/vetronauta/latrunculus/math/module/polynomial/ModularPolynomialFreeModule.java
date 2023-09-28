@@ -19,10 +19,8 @@
 
 package org.vetronauta.latrunculus.math.module.polynomial;
 
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.math.module.real.Ring;
 
 /**
  * The interface for free modules over modular polynomials.
@@ -34,21 +32,21 @@ public interface ModularPolynomialFreeModule extends FreeModule {
     /**
      * Returns the ring of the coefficients of the polynomials.
      */
-    public Ring getCoefficientRing();
+    Ring getCoefficientRing();
     
     /**
      * Returns the indeterminate of this modular polynomial module.
      */
-    public String getIndeterminate();
+    String getIndeterminate();
     
     /**
      * Returns the modulus of this modular polynomial module.
      * 
      */
-    public PolynomialElement getModulus();
+    PolynomialElement getModulus();
     
     /**
      * Returns the ring of the modulus.
      */
-    public PolynomialRing getModulusRing();
+    PolynomialRing getModulusRing();
 }

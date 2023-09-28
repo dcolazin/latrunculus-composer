@@ -65,7 +65,7 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

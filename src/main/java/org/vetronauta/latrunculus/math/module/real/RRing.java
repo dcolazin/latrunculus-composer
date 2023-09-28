@@ -79,7 +79,7 @@ public final class RRing extends NumberRing implements RFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return true;
     }
 

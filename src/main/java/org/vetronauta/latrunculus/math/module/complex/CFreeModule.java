@@ -20,9 +20,6 @@
 package org.vetronauta.latrunculus.math.module.complex;
 
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-
-import java.util.List;
 
 /**
  * The interface for free modules over complex numbers.
@@ -32,9 +29,4 @@ import java.util.List;
  */
 public interface CFreeModule extends FreeModule {
 
-    public CFreeElement createElement(List<ModuleElement> elements);
-    
-    public CFreeElement getZero();
-
-    public CFreeElement getUnitElement(int i);
 }

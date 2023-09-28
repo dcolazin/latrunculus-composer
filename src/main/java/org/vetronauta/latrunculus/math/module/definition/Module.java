@@ -32,99 +32,76 @@ import org.rubato.xml.XMLInputOutput;
  * 
  * @author Gérard Milmeister
  */
-public interface Module
-        extends Serializable, Comparable<Module>,
-                XMLInputOutput<Module> {
+public interface Module extends Serializable, Comparable<Module>, XMLInputOutput<Module> {
 
     /**
      * Returns the zero element in this module.
      */
-    public ModuleElement getZero();
+    ModuleElement getZero();
 
     /**
      * Returns the identity morphism in this module.
      */
-    public ModuleMorphism getIdentityMorphism();
+    ModuleMorphism getIdentityMorphism();
 
     /**
      * Returns the dimension of this module.
      */
-    public int getDimension();
+    int getDimension();
 
     /**
      * Returns the null-module corresponding to this module.
      */
-    public Module getNullModule();
+    Module getNullModule();
     
     /**
      * Returns true iff this is a null-module.
      */
-    public boolean isNullModule();
+    boolean isNullModule();
     
     /**
      * Returns true iff this module is a ring.
      */
-    public boolean isRing();
+    boolean isRing();
     
     /**
      * Returns the underlying ring of this module.
      */
-    public Ring getRing();
+    Ring getRing();
 
     /**
      * Returns the <code>i</code>-th component module.
      */
-    public Module getComponentModule(int i);
+    Module getComponentModule(int i);
 
     /**
      * Returns true iff <code>element</code> is an element of this module.
      */
-    public boolean hasElement(ModuleElement element);
+    boolean hasElement(ModuleElement element);
 
     /**
      * Returns a morphism that translates by <code>element</code>.
      */
-    public ModuleMorphism getTranslation(ModuleElement element);
+    ModuleMorphism getTranslation(ModuleElement element);
 
     /**
      * Casts <code>element</code> to an element in this module if possible.
      * @return null if cast is not possible
      */
-    public ModuleElement cast(ModuleElement element);   
+    ModuleElement cast(ModuleElement element);
     
     /**
      * Creates an element in this module from a list of module elements.
      * @return null if no element in this module can be created from
      *         the arguments.
      */
-    public ModuleElement createElement(List<ModuleElement> elements);
+    ModuleElement createElement(List<ModuleElement> elements);
 
     /**
      * Creates an element in this module from a string representation.
      * @return null if the string is in the wrong format
      */
-    public ModuleElement parseString(String string);
-
-    /**
-     * Returns the hash code for this module.
-     */
-    public int hashCode();
-
-    /**
-     * Returns true iff this module is equals to <code>object</code>.
-     */
-    public boolean equals(Object object);
-
-    /**
-     * Compares this module with <code>object</code>.
-     */
-    public int compareTo(Module object);
-
-    /**
-     * Returns a human readable string representation of this module.
-     * The representation is not meant to be parseable.
-     */
-    public String toString();
+    ModuleElement parseString(String string);
 
     /**
      * Returns a human readable string representation of this module.
@@ -132,5 +109,5 @@ public interface Module
      * The string should be a short representation, possibly using
      * Unicode characters.
      */
-    public String toVisualString();
+    String toVisualString();
 }

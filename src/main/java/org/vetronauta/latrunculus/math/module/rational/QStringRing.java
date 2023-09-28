@@ -69,7 +69,7 @@ public final class QStringRing
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

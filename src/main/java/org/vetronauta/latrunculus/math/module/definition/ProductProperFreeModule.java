@@ -126,7 +126,7 @@ public final class ProductProperFreeModule
     }
 
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return ring.isField();
     }
 

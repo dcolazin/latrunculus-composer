@@ -32,12 +32,12 @@ public interface FreeModule extends Module {
     /**
      * Returns true if this free module is a vector space.
      */
-    public boolean isVectorspace();
+    boolean isVectorSpace();
     
     /**
      * Returns the unit vector with 1 at position <code>i</code>.
      */
-    public ModuleElement getUnitElement(int i);
+    ModuleElement getUnitElement(int i);
     
     /**
      * Returns a module morphism that projects the free module
@@ -46,7 +46,7 @@ public interface FreeModule extends Module {
      *        the index will be clamped between 0 and the dimension-1 of
      *        the free module
      */
-    public ModuleMorphism getProjection(int index);
+    ModuleMorphism getProjection(int index);
 
     /**
      * Returns a module morphism that injects a ring into the free module
@@ -55,5 +55,5 @@ public interface FreeModule extends Module {
      *        the index will be clamped between 0 and the dimension-1 of
      *        the free module
      */
-    public ModuleMorphism getInjection(int index);
+    ModuleMorphism getInjection(int index);
 }

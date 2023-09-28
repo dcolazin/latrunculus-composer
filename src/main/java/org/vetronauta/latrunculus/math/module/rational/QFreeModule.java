@@ -20,9 +20,6 @@
 package org.vetronauta.latrunculus.math.module.rational;
 
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-
-import java.util.List;
 
 /**
  * The interface for free modules over rationals.
@@ -31,10 +28,5 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public interface QFreeModule extends FreeModule {
-    
-    public QFreeElement createElement(List<ModuleElement> elements);
-    
-    public QFreeElement getZero();
 
-    public QFreeElement getUnitElement(int i);
 }

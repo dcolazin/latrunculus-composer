@@ -67,7 +67,7 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

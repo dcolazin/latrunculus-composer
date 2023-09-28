@@ -102,7 +102,7 @@ public final class ZnProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return getRing().isField();
     }
     

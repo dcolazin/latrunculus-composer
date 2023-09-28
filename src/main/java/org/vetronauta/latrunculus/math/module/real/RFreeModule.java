@@ -20,9 +20,6 @@
 package org.vetronauta.latrunculus.math.module.real;
 
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-
-import java.util.List;
 
 /**
  * The interface for free modules over reals.
@@ -32,9 +29,4 @@ import java.util.List;
  */
 public interface RFreeModule extends FreeModule {
 
-    public RFreeElement createElement(List<ModuleElement> elements);
-    
-    public RFreeElement getZero();
-
-    public RFreeElement getUnitElement(int i);
 }

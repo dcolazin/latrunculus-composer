@@ -33,10 +33,10 @@ public interface PolynomialFreeModule extends FreeModule {
     /**
      * Returns the ring of the coefficients of the polynomials.
      */
-    public Ring getCoefficientRing();
+    Ring getCoefficientRing();
     
     /**
      * Returns the indeterminate of this polynomial module.
      */
-    public String getIndeterminate();    
+    String getIndeterminate();
 }

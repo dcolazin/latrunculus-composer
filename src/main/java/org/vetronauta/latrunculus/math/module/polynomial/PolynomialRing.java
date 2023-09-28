@@ -127,7 +127,7 @@ public final class PolynomialRing
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

@@ -73,7 +73,7 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
     }
     
     
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return false;
     }
 

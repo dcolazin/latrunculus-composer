@@ -29,5 +29,5 @@ import org.vetronauta.latrunculus.math.module.definition.FreeElement;
  */
 public interface ZnStringFreeElement extends FreeElement {
     
-    public int getModulus();
+    int getModulus();
 }

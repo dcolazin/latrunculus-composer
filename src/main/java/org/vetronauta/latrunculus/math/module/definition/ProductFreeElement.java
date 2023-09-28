@@ -30,10 +30,10 @@ public interface ProductFreeElement extends FreeElement {
     /**
      * Returns the number of factors of the underlying product ring.
      */
-    public int getFactorCount();
+    int getFactorCount();
 
     /**
      * Returns the underlying product ring.
      */
-    public ProductRing getRing();
+    ProductRing getRing();
 }

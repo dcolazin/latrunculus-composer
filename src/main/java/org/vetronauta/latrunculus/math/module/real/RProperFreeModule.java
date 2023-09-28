@@ -101,7 +101,7 @@ public final class RProperFreeModule
     }
 
 
-    public boolean isVectorspace() {
+    public boolean isVectorSpace() {
         return true;
     }
 

@@ -20,9 +20,6 @@
 package org.vetronauta.latrunculus.math.module.integer;
 
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-
-import java.util.List;
 
 /**
  * The interface for free modules over integers.
@@ -32,9 +29,4 @@ import java.util.List;
  */
 public interface ZFreeModule extends FreeModule {
 
-    public ZFreeElement createElement(List<ModuleElement> elements);
-    
-    public ZFreeElement getZero();
-
-    public ZFreeElement getUnitElement(int i);
 }
