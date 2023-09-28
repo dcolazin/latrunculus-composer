@@ -22,7 +22,7 @@ which generates the latest `jar` file in the target folder. Moreover, it is poss
 $ mvn javadoc:javadoc
 ```
 
-## 1.0.0 roadmap
+## 0.1.0 roadmap
 * [x] Build with Maven
 * [x] Update to Java 8
 * [ ] Be ready to be able to update to Java 11 when needed (and consider updating)
