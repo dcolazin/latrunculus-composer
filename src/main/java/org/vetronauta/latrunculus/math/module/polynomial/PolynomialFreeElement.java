@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.math.module.polynomial;
 
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.FreeElement;
 
 /**

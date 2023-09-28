@@ -36,7 +36,7 @@ import org.vetronauta.latrunculus.math.module.rational.QElement;
 import org.vetronauta.latrunculus.math.module.rational.QRing;
 import org.vetronauta.latrunculus.math.module.real.RElement;
 import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;

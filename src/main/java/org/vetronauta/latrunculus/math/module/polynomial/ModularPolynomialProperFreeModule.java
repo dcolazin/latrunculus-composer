@@ -29,7 +29,7 @@ import java.util.List;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.math.module.rational.QElement;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;

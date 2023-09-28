@@ -26,7 +26,7 @@ import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;

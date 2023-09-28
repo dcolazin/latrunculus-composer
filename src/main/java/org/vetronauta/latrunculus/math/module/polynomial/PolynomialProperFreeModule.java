@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.vetronauta.latrunculus.math.module.definition.ProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;

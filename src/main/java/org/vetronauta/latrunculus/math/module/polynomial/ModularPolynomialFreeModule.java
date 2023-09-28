@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.math.module.polynomial;
 
 import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 
 /**
  * The interface for free modules over modular polynomials.

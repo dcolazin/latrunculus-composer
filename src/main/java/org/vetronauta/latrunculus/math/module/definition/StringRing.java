@@ -30,7 +30,6 @@ import org.vetronauta.latrunculus.math.module.rational.QRing;
 import org.vetronauta.latrunculus.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RRing;
 import org.vetronauta.latrunculus.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
 
 /**
  * The abstract base class for rings with RingString elements.

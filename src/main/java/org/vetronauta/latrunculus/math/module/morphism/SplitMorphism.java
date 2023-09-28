@@ -38,7 +38,7 @@ import org.rubato.xml.XMLWriter;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;

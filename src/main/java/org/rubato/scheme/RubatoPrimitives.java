@@ -33,7 +33,7 @@ import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.rational.QElement;
 import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.math.module.modular.ZnElement;

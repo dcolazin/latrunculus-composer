@@ -31,6 +31,7 @@ import org.rubato.math.arith.RString;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.util.TextUtils;
@@ -45,14 +46,12 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeModule
-		extends ProperFreeModule
-		implements RStringFreeModule {
+public final class RStringProperFreeModule extends ProperFreeModule implements RStringFreeModule {
 
     public static final RStringProperFreeModule nullModule = new RStringProperFreeModule(0);
 
     public static RStringFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }
@@ -150,7 +149,7 @@ public final class RStringProperFreeModule
     public ModuleElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             RStringRing ring = RStringRing.ring;
-            List<ModuleElement> elementList = new LinkedList<ModuleElement>();
+            List<ModuleElement> elementList = new LinkedList<>();
             for (int i = 0; i < getDimension(); i++) {
                 ModuleElement e = ring.cast(element.getComponent(i));
                 if (e != null) {

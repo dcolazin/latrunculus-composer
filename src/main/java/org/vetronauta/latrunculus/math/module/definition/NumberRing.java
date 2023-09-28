@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.math.module.definition;
 
-import org.vetronauta.latrunculus.math.module.real.Ring;
 import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 
 /**

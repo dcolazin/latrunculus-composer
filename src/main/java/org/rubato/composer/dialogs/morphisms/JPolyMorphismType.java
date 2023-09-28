@@ -30,7 +30,7 @@ import org.rubato.composer.components.JSimpleEntry;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.PolynomialMorphism;
 

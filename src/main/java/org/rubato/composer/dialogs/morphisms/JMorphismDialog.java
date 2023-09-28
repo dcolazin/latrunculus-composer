@@ -47,7 +47,7 @@ import org.vetronauta.latrunculus.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;
 import org.vetronauta.latrunculus.math.module.modular.ZnRing;

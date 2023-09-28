@@ -32,7 +32,7 @@ import org.rubato.math.matrix.*;
 import org.vetronauta.latrunculus.math.module.complex.CRing;
 import org.vetronauta.latrunculus.math.module.rational.QRing;
 import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.math.module.modular.ZnRing;
 

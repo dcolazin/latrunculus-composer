@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.module.real.Ring;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.TranslationMorphism;
 import org.rubato.util.TextUtils;

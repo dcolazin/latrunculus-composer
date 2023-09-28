@@ -17,12 +17,8 @@
  *
  */
 
-package org.vetronauta.latrunculus.math.module.real;
+package org.vetronauta.latrunculus.math.module.definition;
 
-import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.TranslationMorphism;
 

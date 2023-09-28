@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.math.module.definition;
 
-import org.vetronauta.latrunculus.math.module.real.Ring;
-
 /**
  * The interface for free modules over product rings.
  * @see ProductFreeElement

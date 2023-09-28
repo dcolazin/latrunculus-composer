@@ -41,7 +41,7 @@ public abstract class ModuleMorphism
      * Creates a new morphism with <code>domain</code>
      * and <code>codomain<code> as indicated.
      */
-    public ModuleMorphism(Module domain, Module codomain) {
+    protected ModuleMorphism(Module domain, Module codomain) {
         this.domain = domain;
         this.codomain = codomain;
     }
@@ -230,7 +230,7 @@ public abstract class ModuleMorphism
      * Returns true iff the composition <code>f</code>*<code>g</code>
      * is possible.
      */
-    public final static boolean composable(ModuleMorphism f, ModuleMorphism g) {
+    public static final boolean composable(ModuleMorphism f, ModuleMorphism g) {
         return f.getDomain().equals(g.getCodomain());
     }
     

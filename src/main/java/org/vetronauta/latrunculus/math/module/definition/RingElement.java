@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.vetronauta.latrunculus.math.exception.DivisionException;
 import org.vetronauta.latrunculus.math.exception.DomainException;
 import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
 
 import java.util.Collections;
 import java.util.Iterator;

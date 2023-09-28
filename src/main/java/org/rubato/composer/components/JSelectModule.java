@@ -41,7 +41,7 @@ import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;

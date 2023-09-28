@@ -58,7 +58,7 @@ import org.vetronauta.latrunculus.math.module.real.RFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.math.module.integer.ZElement;

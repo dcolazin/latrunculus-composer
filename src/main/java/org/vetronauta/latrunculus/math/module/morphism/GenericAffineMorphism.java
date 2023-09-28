@@ -31,7 +31,7 @@ import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
 import org.vetronauta.latrunculus.math.exception.DomainException;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.w3c.dom.Element;

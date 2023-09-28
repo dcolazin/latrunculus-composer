@@ -31,7 +31,7 @@ import org.rubato.xml.XMLWriter;
 import org.vetronauta.latrunculus.math.exception.DivisionException;
 import org.vetronauta.latrunculus.math.exception.DomainException;
 import org.vetronauta.latrunculus.math.exception.InverseException;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.math.module.complex.CRing;
 import org.vetronauta.latrunculus.math.module.definition.Module;

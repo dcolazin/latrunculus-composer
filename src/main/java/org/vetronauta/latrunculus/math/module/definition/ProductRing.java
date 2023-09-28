@@ -24,7 +24,6 @@ import static org.rubato.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.*;
 
-import org.vetronauta.latrunculus.math.module.real.Ring;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.rubato.xml.XMLInputOutput;
 import org.rubato.xml.XMLReader;

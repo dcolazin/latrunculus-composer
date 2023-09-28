@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.math.module.definition.Module;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.util.TextUtils;

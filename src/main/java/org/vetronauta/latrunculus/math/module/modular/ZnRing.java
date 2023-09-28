@@ -41,7 +41,7 @@ import org.rubato.xml.XMLReader;
 import org.rubato.xml.XMLWriter;
 import org.vetronauta.latrunculus.math.module.rational.QElement;
 import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.w3c.dom.Element;
 
 /**

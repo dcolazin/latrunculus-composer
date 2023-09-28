@@ -30,7 +30,7 @@ import org.rubato.xml.XMLWriter;
 import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.math.module.real.Ring;
+import org.vetronauta.latrunculus.math.module.definition.Ring;
 import org.vetronauta.latrunculus.math.module.integer.ZRing;
 import org.w3c.dom.Element;
 
