@@ -91,7 +91,7 @@ public final class RString extends RingString {
             dict = new HashMap<String,Object>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Double f = ObjectDouble(value);
+                Double f = objectDouble(value);
                 if (f != 0.0) {
                     add(key, f);
                 }
@@ -223,7 +223,7 @@ public final class RString extends RingString {
     }
 
     
-    protected double ObjectToDouble(Object x) {
+    protected double objectToDouble(Object x) {
         return (Double) x;
     }
 

@@ -95,7 +95,7 @@ public final class ZnString extends RingString {
         dict = new HashMap<String,Object>();
         for (String key : rs.dict.keySet()) {
             Object value = rs.dict.get(key);
-            int i = NumberTheory.mod(ObjectInteger(value), modulus);
+            int i = NumberTheory.mod(objectInteger(value), modulus);
             if (i != 0) {
                 add(key, i);
             }
@@ -220,7 +220,7 @@ public final class ZnString extends RingString {
     }
 
     
-    protected double ObjectToDouble(Object x) {
+    protected double objectToDouble(Object x) {
         return ((Integer)x).doubleValue();
     }
 

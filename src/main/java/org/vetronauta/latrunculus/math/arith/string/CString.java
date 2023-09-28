@@ -91,7 +91,7 @@ public final class CString extends RingString {
             dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Complex f = ObjectComplex(value);
+                Complex f = objectComplex(value);
                 if (!f.isZero()) {
                     add(key, f);
                 }
@@ -202,7 +202,7 @@ public final class CString extends RingString {
     }
 
     
-    protected double ObjectToDouble(Object x) {
+    protected double objectToDouble(Object x) {
         return ((Complex)x).doubleValue();
     }
 

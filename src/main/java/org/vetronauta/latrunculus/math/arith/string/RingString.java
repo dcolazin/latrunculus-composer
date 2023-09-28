@@ -45,7 +45,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * This is the Zero RingString.
      */
     protected RingString() {
-        dict = new HashMap<>();
+        this.dict = new HashMap<>();
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * The resulting string is represented as factor*word.
      */
     protected RingString(String word, Object factor) {
-        super();
+        this();
         dict.put(word, factor);
     }
 
@@ -62,14 +62,8 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * The resulting string is represented as sum(factors[i]*words[i]).
      */
     protected RingString(String[] words, Object[] factors) {
-        super();
-        int len;
-        if (factors.length < words.length) {
-            len = factors.length;
-        }
-        else {
-            len = words.length;
-        }
+        this();
+        int len = Math.min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
             add(words[i], factors[i]);
         }
@@ -91,7 +85,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      */
     public String getString() {
         Set<String> keys = dict.keySet();
-        if (keys.size() > 0) {
+        if (!keys.isEmpty()) {
             return keys.iterator().next();
         }
         return null;
@@ -112,7 +106,6 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
         if (dict.containsKey(word)) {
             return dict.get(word);
         }
-
         return getObjectZero();
     }
 
@@ -176,9 +169,8 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
         while (keys.hasNext()) {
             String key = keys.next();
             Object factor = x.dict.get(key);
-            for (String myKey : myDict.keySet()) {
-                Object myFactor = myDict.get(myKey);
-                add(myKey + key, product(factor, myFactor));
+            for (Map.Entry<String, Object> entry : myDict.entrySet()) {
+                add(entry.getKey() + key, product(factor, entry.getValue()));
             }
         }
     }
@@ -196,9 +188,9 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * Negate all factors in this.
      */
     public void negate() {
-        for (String key : dict.keySet()) {
-            Object newFactor = neg(dict.get(key));
-            dict.put(key, newFactor);
+        for (Map.Entry<String, Object> entry : dict.entrySet()) {
+            Object newFactor = neg(entry.getValue());
+            dict.put(entry.getKey(), newFactor);
         }
     }
 
@@ -216,13 +208,12 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * Scale this by <code>x</code>.
      */
     public void scale(Object x) {
-        for (String key : dict.keySet()) {
-            Object newFactor = product(x, dict.get(key));
+        for (Map.Entry<String, Object> entry : dict.entrySet()) {
+            Object newFactor = product(x, entry.getValue());
             if (isObjectZero(newFactor)) {
-                dict.remove(key);
-            }
-            else {
-                dict.put(key, newFactor);
+                dict.remove(entry.getKey());
+            } else {
+                dict.put(entry.getKey(), newFactor);
             }
         }
     }
@@ -233,50 +224,44 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * of each are equal.
      */
     public boolean equals(Object object) {
-        if (object instanceof RingString) {
-            Map<String,Object> ht = ((RingString)object).dict;
-            Set<String> obj_set = ht.keySet();
-            Set<String> set = dict.keySet();
-            if (obj_set.size() == set.size()) {
-                for (String key : set) {
-                    if (!equals(dict.get(key), ht.get(key))) {
-                        return false;
-                    }
-                }
-                return true;
+        if (!(object instanceof RingString)) {
+            return false;
+        }
+        Map<String,Object> ht = ((RingString)object).dict;
+        Set<String> otherObjectSet = ht.keySet();
+        Set<String> set = dict.keySet();
+        if (otherObjectSet.size() != set.size()) {
+            return false;
+        }
+        for (String key : set) {
+            if (!equals(dict.get(key), ht.get(key))) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
      *
      */
     public int compareTo(RingString rs) {
-        Object[] obj_strs = rs.dict.keySet().toArray();
-        Object[] strs = dict.keySet().toArray();
-        int len;
-        Arrays.sort(obj_strs);
-        Arrays.sort(strs);
-        if (obj_strs.length < strs.length) {
-            len = obj_strs.length;
-        }
-        else {
-            len = strs.length;
-        }
+        Object[] otherKeyArray = rs.dict.keySet().toArray();
+        Object[] thisKeyArray = dict.keySet().toArray();
+        Arrays.sort(otherKeyArray);
+        Arrays.sort(thisKeyArray);
+        int len = Math.min(otherKeyArray.length, thisKeyArray.length);
         for (int i = 0; i < len; i++) {
-            int str_comp = ((String)strs[i]).compareTo((String)obj_strs[i]);
-            if (str_comp == 0) {
-                int comp = compare(dict.get(strs[i]), rs.dict.get(obj_strs[i]));
+            int stringCompare = ((String)thisKeyArray[i]).compareTo((String)otherKeyArray[i]);
+            if (stringCompare == 0) {
+                int comp = compare(dict.get(thisKeyArray[i]), rs.dict.get(otherKeyArray[i]));
                 if (comp != 0) {
                     return comp;
                 }
-            }
-            else if (str_comp != 0) {
-                return str_comp;
+            } else {
+                return stringCompare;
             }
         }
-        return (strs.length - obj_strs.length);
+        return (thisKeyArray.length - otherKeyArray.length);
     }
 
     /**
@@ -327,55 +312,46 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
     /**
      * Returns the double value for factor object.
      */
-    protected abstract double ObjectToDouble(Object x);
+    protected abstract double objectToDouble(Object x);
     
-    protected static Integer ObjectInteger(Object x) {
+    protected static Integer objectInteger(Object x) {
         if (x instanceof Integer) {
             return (Integer)x;
-        }
-        else if (x instanceof Number) {
+        } else if (x instanceof Number) {
             return ((Number) x).intValue();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    protected static Double ObjectDouble(Object x) {
+    protected static Double objectDouble(Object x) {
         if (x instanceof Double) {
             return (Double)x;
-        }
-        else if (x instanceof Number) {
+        } else if (x instanceof Number) {
             return ((Number) x).doubleValue();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    protected static Rational ObjectRational(Object x) {
+    protected static Rational objectRational(Object x) {
         if (x instanceof Rational) {
             return (Rational)x;
-        }
-        else if (x instanceof Integer) {
+        } else if (x instanceof Integer) {
             return new Rational((Integer) x);
-        }
-        else if (x instanceof Number) {
+        } else if (x instanceof Number) {
             return new Rational(((Number)x).doubleValue());
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    protected static Complex ObjectComplex(Object x) {
+    protected static Complex objectComplex(Object x) {
         if (x instanceof Complex) {
             return (Complex)x;
-        }
-        else if (x instanceof Number) {
+        } else if (x instanceof Number) {
             return new Complex(((Number)x).doubleValue());
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -480,7 +456,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
         return buf.toString();
     }
 
-    public static double StringToDouble(String s) {
+    public static double stringToDouble(String s) {
         double sum = 0.0;
         double oneByAscii = 1.0 / 256.0;
         double factor = oneByAscii;
@@ -499,7 +475,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
 
         public Word(String s, double f) {
             word = s;
-            word_value = StringToDouble(s);
+            word_value = stringToDouble(s);
             word_factor = f;
         }
 
@@ -545,7 +521,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
         while (keys.hasNext()) {
             word = keys.next();
             factor = dict.get(word);
-            res[i++] = new Word(word, ObjectToDouble(factor));
+            res[i++] = new Word(word, objectToDouble(factor));
         }
         Arrays.sort(res);
         return res;

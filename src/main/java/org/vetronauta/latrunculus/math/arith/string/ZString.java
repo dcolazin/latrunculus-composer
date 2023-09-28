@@ -91,7 +91,7 @@ public final class ZString extends RingString {
             dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Integer i = ObjectInteger(value);
+                Integer i = objectInteger(value);
                 if (i != 0) {
                     add(key, i);
                 }
@@ -215,7 +215,7 @@ public final class ZString extends RingString {
     }
 
     
-    protected double ObjectToDouble(Object x) {
+    protected double objectToDouble(Object x) {
         return ((Integer)x).doubleValue();
     }
 

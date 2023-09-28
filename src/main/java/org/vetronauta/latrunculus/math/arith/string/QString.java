@@ -91,7 +91,7 @@ public final class QString extends RingString {
             dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
-                Rational f = ObjectRational(value);
+                Rational f = objectRational(value);
                 if (!f.isZero()) {
                     add(key, f);
                 }
@@ -205,7 +205,7 @@ public final class QString extends RingString {
     }
 
     
-    protected double ObjectToDouble(Object x) {
+    protected double objectToDouble(Object x) {
         return ((Rational)x).doubleValue();
     }
 
