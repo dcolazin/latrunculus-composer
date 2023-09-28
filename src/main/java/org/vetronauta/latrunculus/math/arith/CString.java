@@ -28,17 +28,16 @@ import org.rubato.util.TextUtils;
 /**
  * The ring of strings with complex factors.
  */
-@SuppressWarnings("nls")
 public final class CString extends RingString {
 
     public CString(String word) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         dict.put(word, getObjectOne());
     }
 
     
     public CString(String word, Complex factor) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         if (!factor.isZero()) {
             add(word, factor);
         }
@@ -46,7 +45,7 @@ public final class CString extends RingString {
 
     
     public CString(String[] words, Complex[] factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
             if (!factors[i].isZero()) {
@@ -57,7 +56,7 @@ public final class CString extends RingString {
 
     
     public CString(List<String> words, List<Complex> factors) {
-        dict = new HashMap<String,Object>();
+        dict = new HashMap<>();
         int len = min(factors.size(), words.size());
         Iterator<String> witer = words.iterator();
         Iterator<Complex> fiter = factors.iterator();
@@ -71,7 +70,7 @@ public final class CString extends RingString {
     }    
 
     
-    public CString(Object ... objects) {
+    public CString(Object... objects) {
         for (int i = 0; i < objects.length; i += 2) {
             String w = (String)objects[i]; 
             Complex f = (Complex)objects[i+1];
@@ -84,10 +83,10 @@ public final class CString extends RingString {
 
     public CString(RingString rs) {
         if (rs instanceof CString) {
-            dict = new HashMap<String,Object>(rs.dict);
+            dict = new HashMap<>(rs.dict);
         }
         else {
-            dict = new HashMap<String,Object>();
+            dict = new HashMap<>();
             for (String key : rs.dict.keySet()) {
                 Object value = rs.dict.get(key);
                 Complex f = ObjectComplex(value);
@@ -121,7 +120,7 @@ public final class CString extends RingString {
 
     public static CString getZero() {
         CString res = new CString();
-        res.dict = new HashMap<String,Object>();
+        res.dict = new HashMap<>();
         return res;
     }
 

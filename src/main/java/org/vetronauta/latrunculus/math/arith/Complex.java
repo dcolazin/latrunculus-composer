@@ -107,7 +107,7 @@ public final class Complex extends Number implements Comparable<Complex>, DeepCo
             imag = 0.0;
         }
         catch (Exception e) {
-            throw new NumberFormatException();
+            throw new NumberFormatException(e.getMessage());
         }
     }
 
@@ -583,6 +583,7 @@ public final class Complex extends Number implements Comparable<Complex>, DeepCo
      * Since complex numbers are not linearly ordered, the comparison
      * is lexicographic.
      */
+    //TODO equals!!!
     public int compareTo(Complex c) {
         if (real < c.real) {
             return -1;

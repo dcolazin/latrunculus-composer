@@ -27,10 +27,9 @@ import org.vetronauta.latrunculus.core.DeepCopyable;
  * 
  * @author Gérard Milmeister
  */
-@SuppressWarnings("nls")
 public final class Rational extends Number implements Comparable<Rational>, DeepCopyable<Rational> {
 
-    private final static int INITIAL_DEFAULT_QUANT = 128*3*5;
+    private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;
     
     /**

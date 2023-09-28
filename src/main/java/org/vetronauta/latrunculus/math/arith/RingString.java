@@ -34,8 +34,9 @@ import org.vetronauta.latrunculus.core.DeepCopyable;
  * where the a_i are elements in a ring
  * and the s_i are character strings (<code>String</code>).
  */
-@SuppressWarnings("nls")
 public abstract class RingString implements DeepCopyable<RingString>, Comparable<RingString>, Serializable {
+
+    protected HashMap<String,Object> dict;
 
     /**
      * Creates a new <code>RingString</code> instance.
@@ -659,5 +660,4 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
         return ((b - a) / PI) * v + (a + b) / 2;
     }
 
-    protected HashMap<String,Object> dict;
 }

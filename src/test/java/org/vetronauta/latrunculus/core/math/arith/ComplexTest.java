@@ -46,6 +46,46 @@ class ComplexTest {
         assertComponentsAreEquals(1.0, 0.0, c);
     }
 
+    @Test
+    void stringConstructorTest() {
+        Complex c = new Complex("1");
+        assertComponentsAreEquals(1.0, 0.0, c);
+
+        c = new Complex("-1");
+        assertComponentsAreEquals(-1.0, 0.0, c);
+
+        c = new Complex("1.2");
+        assertComponentsAreEquals(1.2, 0.0, c);
+
+        c = new Complex("-1.2");
+        assertComponentsAreEquals(-1.2, 0.0, c);
+
+        c = new Complex("i*1");
+        assertComponentsAreEquals(0.0, 1.0, c);
+
+        c = new Complex("i*-1");
+        assertComponentsAreEquals(0.0, -1.0, c);
+
+        c = new Complex("i*1.2");
+        assertComponentsAreEquals(0.0, 1.2, c);
+
+        c = new Complex("i*-1.2");
+        assertComponentsAreEquals(0.0, -1.2, c);
+
+        c = new Complex("1.2+i*3.4");
+        assertComponentsAreEquals(1.2, 3.4, c);
+
+        c = new Complex("i");
+        assertComponentsAreEquals(0.0, 1.0, c);
+    }
+
+    @Test
+    void fromPolarTest() {
+        Complex c1 = Complex.fromPolar(2, 0);
+        Complex c2 = new Complex(2);
+        Assertions.assertEquals(0, c1.compareTo(c2));
+    }
+
     private static void assertComponentsAreEquals(double a, double b, Complex c) {
         Assertions.assertEquals(a, c.getReal());
         Assertions.assertEquals(b, c.getImag());
