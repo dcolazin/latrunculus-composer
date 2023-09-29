@@ -35,7 +35,7 @@ import java.util.function.Function;
  */
 public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
 
-    private int modulus;
+    private final int modulus;
 
     private ZnString(int modulus) {
         super();
@@ -43,7 +43,7 @@ public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
     }
 
     public ZnString(String word, int modulus) {
-        super(word);
+        super(word, new ArithmeticModulus(1, modulus));
         this.modulus = modulus;
     }
     
@@ -83,16 +83,20 @@ public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
     }
 
     public ZnString(ArithmeticNumber<?> number, int modulus) {
-        super(number);
+        super(new ArithmeticModulus(number.intValue(), modulus));
         this.modulus = modulus;
     }
 
     @Override
     public ArithmeticModulus canonicalTransformation(ArithmeticNumber<?> number) {
-        if (number instanceof ArithmeticModulus && (((ArithmeticModulus) number).getModulus() == modulus)) {
+        if (number instanceof ArithmeticModulus && moduliAreComparable(((ArithmeticModulus) number).getModulus())) {
             return (ArithmeticModulus) number;
         }
         return new ArithmeticModulus(number.intValue(), modulus);
+    }
+
+    private boolean moduliAreComparable(int otherModulus) {
+        return modulus == 0 || modulus == otherModulus;
     }
 
     /**
