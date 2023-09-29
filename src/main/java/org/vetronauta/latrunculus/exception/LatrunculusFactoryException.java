@@ -22,18 +22,9 @@ package org.vetronauta.latrunculus.exception;
 /**
  * @author vetronauta
  */
-public class LatrunculusException extends Exception {
+public class LatrunculusFactoryException extends LatrunculusException {
 
-    public LatrunculusException() {
-        super();
-    }
-
-    public LatrunculusException(String message) {
-        super(message);
-    }
-
-    public LatrunculusException(Throwable th) {
+    public LatrunculusFactoryException(Throwable th) {
         super(th);
     }
-
 }

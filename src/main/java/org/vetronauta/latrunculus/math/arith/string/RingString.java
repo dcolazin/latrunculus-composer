@@ -176,8 +176,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Returns the sum of this and <code>x</code>.
      * @return a new RingString object
      */
-    public RingString sum(RingString x) {
-        RingString res = this.deepCopy();
+    public RingString<T> sum(RingString<T> x) {
+        RingString<T> res = this.deepCopy();
         res.add(x);
         return res;
     }

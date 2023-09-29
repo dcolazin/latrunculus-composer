@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
@@ -39,6 +40,11 @@ import java.util.function.Function;
 public final class ZnString extends RingString<ArithmeticModulus> {
 
     private int modulus;
+
+    private ZnString(int modulus) {
+        super();
+        this.modulus = modulus;
+    }
 
     public ZnString(String word, int modulus) {
         super(word);
@@ -93,15 +99,20 @@ public final class ZnString extends RingString<ArithmeticModulus> {
         return new ArithmeticModulus(number.intValue(), modulus);
     }
 
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static ZnString getZero(int modulus) {
-        ZnString res = new ZnString(modulus);
-        res.dict = new HashMap<String,Object>();
-        return res;
+        return new ZnString(modulus);
     }
 
-
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static ZnString getOne(int modulus) {
-        return new ZnString("", modulus);
+        return new ZnString(StringUtils.EMPTY, modulus);
     }
 
 
@@ -125,11 +136,6 @@ public final class ZnString extends RingString<ArithmeticModulus> {
         }
         
         return new ZnString(words, factors, modulus);
-    }
-    
-
-    private ZnString(int modulus) {
-        this.modulus = modulus;
     }
 
     

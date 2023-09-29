@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
@@ -78,15 +79,20 @@ public final class QString extends RingString<Rational> {
         return new Rational(number.doubleValue());
     }
 
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static QString getZero() {
-        QString res = new QString();
-        res.dict = new HashMap<>();
-        return res;
+        return new QString();
     }
 
-
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static QString getOne() {
-        return new QString("");
+        return new QString(StringUtils.EMPTY);
     }
 
 

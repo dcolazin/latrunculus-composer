@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
@@ -81,15 +82,20 @@ public final class RString extends RingString<ArithmeticDouble> {
         return new ArithmeticDouble(number.doubleValue());
     }
 
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static RString getZero() {
-        RString res = new RString();
-        res.dict = new HashMap<>();
-        return res;
+        return new RString();
     }
 
-
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static RString getOne() {
-        return new RString("");
+        return new RString(StringUtils.EMPTY);
     }
 
 

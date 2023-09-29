@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
@@ -82,15 +83,20 @@ public final class ZString extends RingString<ArithmeticInteger> {
         return new ArithmeticInteger(number.intValue());
     }
 
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static ZString getZero() {
-        ZString res = new ZString();
-        res.dict = new HashMap<>();
-        return res;
+        return new ZString();
     }
 
-
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static ZString getOne() {
-        return new ZString("");
+        return new ZString(StringUtils.EMPTY);
     }
 
 

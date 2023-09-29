@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
@@ -78,17 +79,21 @@ public final class CString extends RingString<Complex> {
         return new Complex(number.doubleValue());
     }
 
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static CString getZero() {
-        CString res = new CString();
-        res.dict = new HashMap<>();
-        return res;
+        return new CString();
     }
 
-
+    /**
+     * @deprecated use the RingStringFactory method
+     */
+    @Deprecated
     public static CString getOne() {
-        return new CString("");
+        return new CString(StringUtils.EMPTY);
     }
-
 
     public static CString parseCString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
