@@ -21,17 +21,17 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**
@@ -214,11 +214,11 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
         }
         ModuleElement l = null;
         ModuleElement h = null;
-        child = XMLReader.getNextSibling(child, MODULEELEMENT);
+        child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
         if (child != null) {
             l = reader.parseModuleElement(child);
             if (l != null) {
-                child = XMLReader.getNextSibling(child, MODULEELEMENT);
+                child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
                 h = reader.parseModuleElement(child);
             }
         }

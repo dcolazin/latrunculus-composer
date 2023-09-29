@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
 
 public class View2DModel {

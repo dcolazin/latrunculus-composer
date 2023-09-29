@@ -21,9 +21,9 @@ package org.rubato.base;
 
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 
@@ -32,40 +32,40 @@ public interface RubatoDictionary {
     /**
      * Returns a list of all forms.
      */
-    public List<Form> getForms();
+    List<Form> getForms();
     
     /**
      * Returns the form for the given <code>name</code>.
      * @return null if there is no form of the given name
      */
-    public Form getForm(String name);
+    Form getForm(String name);
     
     /**
      * Returns a list of all denotators.
      */
-    public List<Denotator> getDenotators();
+    List<Denotator> getDenotators();
     
     /**
      * Returns the denotator for the given <code>name</code>.
      * @return null if there is no denotator of the given name
      */
-    public Denotator getDenotator(String name);
+    Denotator getDenotator(String name);
 
     /**
      * Returns the module for the given <code>name</code>.
      * @return null if there is no module of the given name
      */
-    public Module getModule(String name);
+    Module getModule(String name);
     
     /**
      * Returns the module element for the given <code>name</code>.
      * @return null if there is no module element of the given name
      */
-    public ModuleElement getModuleElement(String name);
+    ModuleElement getModuleElement(String name);
     
     /**
      * Returns the module morphism for the given <code>name</code>.
      * @return null if there is no module morphism of the given name
      */
-    public ModuleMorphism getModuleMorphism(String name);
+    ModuleMorphism getModuleMorphism(String name);
 }

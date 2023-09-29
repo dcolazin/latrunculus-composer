@@ -6,9 +6,9 @@ import org.rubato.math.yoneda.ListDenotator;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
-import org.rubato.xml.XMLConstants;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLConstants;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class InputCompositionOperation extends AbstractOperation {

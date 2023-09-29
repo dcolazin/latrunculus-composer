@@ -20,7 +20,7 @@
 package org.rubato.rubettes.builtin;
 
 import static org.rubato.composer.Utilities.getJDialog;
-import static org.rubato.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -37,12 +37,12 @@ import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JSimpleEntry;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.math.exception.DomainException;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 

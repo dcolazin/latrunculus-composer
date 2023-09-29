@@ -20,7 +20,7 @@
 package org.rubato.math.yoneda;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 
 /**
  * Exception thrown in cases of mismatched addresses.

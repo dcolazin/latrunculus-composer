@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.FormFactory;
-import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.rubato.math.yoneda.ColimitForm;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.FormReference;

@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model;
 
-import static org.rubato.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,8 @@ import org.rubato.rubettes.bigbang.model.operations.ShearingTransformation;
 import org.rubato.rubettes.bigbang.model.operations.TranslationTransformation;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.PerformanceCheck;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;

@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.select2d;
 
-import static org.rubato.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,8 +37,8 @@ import org.rubato.logeo.DenoFactory;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.FactorDenotator;
 import org.rubato.math.yoneda.Form;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class Select2DRubette extends AbstractRubette {

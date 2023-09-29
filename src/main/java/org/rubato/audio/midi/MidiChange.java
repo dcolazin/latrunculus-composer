@@ -19,9 +19,9 @@
 
 package org.rubato.audio.midi;
 
-import org.vetronauta.latrunculus.math.arith.number.Rational;
-import org.vetronauta.latrunculus.math.arith.string.ZString;
-import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.string.ZString;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.rubato.math.yoneda.FactorDenotator;
 import org.rubato.math.yoneda.SimpleDenotator;
 

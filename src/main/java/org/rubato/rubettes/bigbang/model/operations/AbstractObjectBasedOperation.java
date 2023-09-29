@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.util.DenotatorPath;
-import org.rubato.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 public abstract class AbstractObjectBasedOperation extends AbstractOperation {

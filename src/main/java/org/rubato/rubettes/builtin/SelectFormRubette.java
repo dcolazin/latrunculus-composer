@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -36,8 +36,8 @@ import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
 import org.rubato.math.yoneda.*;
 import org.rubato.util.TextUtils;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class SelectFormRubette extends AbstractRubette {

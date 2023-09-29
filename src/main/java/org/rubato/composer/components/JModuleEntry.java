@@ -28,7 +28,7 @@ import javax.swing.event.EventListenerList;
 
 import org.rubato.composer.dialogs.JModuleDialog;
 import org.rubato.composer.dialogs.JModuleListDialog;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 
 /**
  * @author Gérard Milmeister

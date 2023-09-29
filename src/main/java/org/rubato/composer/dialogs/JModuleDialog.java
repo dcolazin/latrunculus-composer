@@ -35,7 +35,7 @@ import javax.swing.event.CaretListener;
 
 import org.rubato.base.Repository;
 import org.rubato.composer.components.JSelectModule;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 
 
 /**

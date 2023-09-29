@@ -28,8 +28,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 
 /**

@@ -35,12 +35,12 @@ import org.rubato.base.Repository;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
-import org.rubato.xml.XMLConstants;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLConstants;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public final class ScoreToCsoundRubette extends AbstractRubette {

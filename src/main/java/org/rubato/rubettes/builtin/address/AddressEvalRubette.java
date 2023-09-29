@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin.address;
 
 import static org.rubato.composer.Utilities.getJDialog;
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -36,38 +36,38 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.*;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
-import org.vetronauta.latrunculus.math.module.complex.CElement;
-import org.vetronauta.latrunculus.math.module.complex.CFreeModule;
-import org.vetronauta.latrunculus.math.module.complex.CRing;
-import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.rational.QFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QRing;
-import org.vetronauta.latrunculus.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
-import org.vetronauta.latrunculus.math.module.integer.ZProperFreeElement;
-import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;
-import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeElement;
-import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;
-import org.vetronauta.latrunculus.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**
@@ -564,7 +564,7 @@ public final class AddressEvalRubette
 
         if (t == EVAL_TYPE_ELEMENT) {
             // type evaluate at element
-            child = XMLReader.getNextSibling(child, MODULEELEMENT);
+            child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
             if (child != null) {
                 ModuleElement mel = reader.parseModuleElement(child);
                 if (mel != null) {
@@ -575,7 +575,7 @@ public final class AddressEvalRubette
                 }                
             }
             else {
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULEELEMENT); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT); //$NON-NLS-1$
             }
         }
         else if (t == EVAL_TYPE_LIST) {
@@ -604,7 +604,7 @@ public final class AddressEvalRubette
                 return null;
             }
             LinkedList<ModuleElement> list = new LinkedList<ModuleElement>();
-            child = XMLReader.getNextSibling(child, MODULEELEMENT);
+            child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
             while (child != null) {
                 ModuleElement e = reader.parseModuleElement(child);
                 if (e == null) {
@@ -615,7 +615,7 @@ public final class AddressEvalRubette
                     return null;
                 }
                 list.add(e);
-                child = XMLReader.getNextSibling(child, MODULEELEMENT);
+                child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
             }
             newRubette = new AddressEvalRubette();
             newRubette.evalType = t;
@@ -625,11 +625,11 @@ public final class AddressEvalRubette
         }
         else if (t == EVAL_TYPE_CHANGE) {
             // type change address
-            child = XMLReader.getNextSibling(child, MODULEMORPHISM);
+            child = XMLReader.getNextSibling(child, MODULE_MORPHISM);
             if (child == null) {
                 // no module morphism has been given
                 // there must be a module morphism
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULEMORPHISM); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM); //$NON-NLS-1$
                 return null;
             }
             ModuleMorphism morphism0 = reader.parseModuleMorphism(child);

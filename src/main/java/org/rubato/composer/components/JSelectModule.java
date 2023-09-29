@@ -29,23 +29,23 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.vetronauta.latrunculus.math.module.complex.CProperFreeModule;
-import org.vetronauta.latrunculus.math.module.polynomial.ModularPolynomialProperFreeModule;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialProperFreeModule;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.definition.ProductProperFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QStringProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RProperFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.math.module.definition.Ring;
-import org.vetronauta.latrunculus.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.math.module.integer.ZStringProperFreeModule;
-import org.vetronauta.latrunculus.math.module.modular.ZnProperFreeModule;
-import org.vetronauta.latrunculus.math.module.modular.ZnStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
 
 /**
  * A component for creating modules.

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.LimitDenotator;

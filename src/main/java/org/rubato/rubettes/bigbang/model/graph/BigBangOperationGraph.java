@@ -12,8 +12,8 @@ import java.util.TreeSet;
 
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.operations.AbstractOperation;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;

@@ -27,12 +27,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import org.rubato.composer.components.JSimpleEntry;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.definition.Ring;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.PolynomialMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.PolynomialMorphism;
 
 class JPolyMorphismType extends JMorphismType implements ActionListener {
 

@@ -25,20 +25,20 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import org.vetronauta.latrunculus.math.module.complex.CFreeModule;
-import org.vetronauta.latrunculus.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.definition.ProductFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QFreeModule;
-import org.vetronauta.latrunculus.math.module.rational.QStringFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.math.module.real.RStringFreeModule;
-import org.vetronauta.latrunculus.math.module.integer.ZFreeModule;
-import org.vetronauta.latrunculus.math.module.integer.ZStringFreeModule;
-import org.vetronauta.latrunculus.math.module.modular.ZnFreeModule;
-import org.vetronauta.latrunculus.math.module.modular.ZnStringFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RStringFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringFreeModule;
 
 public abstract class JSimpleEntry extends JPanel {
 

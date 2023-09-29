@@ -5,7 +5,7 @@ import java.util.Set;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
-import org.rubato.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 public class FlattenOperation extends AbstractObjectBasedOperation {

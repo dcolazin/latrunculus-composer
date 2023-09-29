@@ -1,6 +1,6 @@
 package org.rubato.rubettes.util;
 
-import static org.rubato.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,13 +10,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.SimpleForm;
 import org.rubato.math.yoneda.Yoneda;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**

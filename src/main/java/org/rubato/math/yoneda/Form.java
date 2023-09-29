@@ -28,8 +28,8 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
  * Abstract base class for forms.

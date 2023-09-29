@@ -21,7 +21,7 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.io.PrintStream;
 import java.util.*;
@@ -30,12 +30,12 @@ import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**

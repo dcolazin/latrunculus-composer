@@ -24,8 +24,8 @@ package org.rubato.math.yoneda;
 import java.util.*;
 
 import org.rubato.base.RubatoDictionary;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**

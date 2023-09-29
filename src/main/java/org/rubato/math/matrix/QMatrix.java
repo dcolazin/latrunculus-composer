@@ -21,7 +21,7 @@ package org.rubato.math.matrix;
 
 import java.util.Arrays;
 
-import org.vetronauta.latrunculus.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 
 /**
  * Matrixes over rational numbers.

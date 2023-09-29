@@ -3,7 +3,7 @@ package org.rubato.rubettes.bigbang.model.operations;
 import org.rubato.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
-import org.rubato.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 public class AffineTransformation extends AbstractLocalTransformation {

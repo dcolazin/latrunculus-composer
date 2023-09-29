@@ -29,7 +29,7 @@ import javax.swing.JTabbedPane;
 import org.rubato.composer.JComposer;
 import org.rubato.composer.JNetworkList;
 import org.rubato.composer.rubette.JRubette;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
  * @author Gérard Milmeister

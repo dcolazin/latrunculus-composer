@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.xml.XMLConstants.NETWORK;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NETWORK;
 
 import javax.swing.ImageIcon;
 
@@ -30,8 +30,8 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.rubette.RubetteModel;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 

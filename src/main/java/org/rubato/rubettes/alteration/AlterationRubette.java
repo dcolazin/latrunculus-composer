@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.alteration;
 
-import static org.rubato.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,8 +49,8 @@ import org.rubato.composer.components.JStatusline;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.PowerForm;
 import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**

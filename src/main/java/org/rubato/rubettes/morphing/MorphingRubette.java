@@ -29,7 +29,7 @@ import java.util.Set;
 import org.rubato.base.RubatoException;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.composer.RunInfo;
-import org.vetronauta.latrunculus.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.LimitDenotator;
 import org.rubato.math.yoneda.NameDenotator;

@@ -26,17 +26,17 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.math.module.complex.CElement;
-import org.vetronauta.latrunculus.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.definition.Ring;
-import org.vetronauta.latrunculus.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 
 
 /**

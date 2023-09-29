@@ -21,17 +21,17 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**
@@ -233,7 +233,7 @@ public final class SimpleForm extends Form {
         if (childElement != null) {
             ModuleElement loValue = null;
             ModuleElement hiValue = null;
-            Element loValueElement = XMLReader.getChild(childElement, MODULEELEMENT);
+            Element loValueElement = XMLReader.getChild(childElement, MODULE_ELEMENT);
             if (loValueElement != null) {
                 loValue = reader.parseModuleElement(loValueElement);                
             }

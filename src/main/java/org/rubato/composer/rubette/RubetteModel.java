@@ -32,7 +32,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.rubato.base.Rubette;
 import org.rubato.rubettes.builtin.MacroRubette;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 @Getter
 @Setter

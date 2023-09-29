@@ -12,8 +12,8 @@ import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.view.model.BigBangSwingView;
 import org.rubato.rubettes.bigbang.view.model.MTBigBangView;
 import org.rubato.rubettes.util.CoolFormRegistrant;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class BigBangRubette extends AbstractRubette {

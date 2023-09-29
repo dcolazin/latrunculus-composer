@@ -21,7 +21,7 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -30,22 +30,22 @@ import java.util.LinkedList;
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
-import org.vetronauta.latrunculus.math.arith.string.ZString;
-import org.vetronauta.latrunculus.math.module.complex.CElement;
-import org.vetronauta.latrunculus.math.exception.DomainException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.string.ZString;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**
@@ -732,7 +732,7 @@ public final class SimpleDenotator extends Denotator {
         MorphismMap map;
         CompoundMorphism cm;
         CompoundMorphism fcm;
-        Element childElement = XMLReader.getChild(element, MORPHISMMAP);
+        Element childElement = XMLReader.getChild(element, MORPHISM_MAP);
         if (childElement != null) {
             map = reader.parseMorphismMap(childElement);
             
@@ -749,7 +749,7 @@ public final class SimpleDenotator extends Denotator {
             }
 
             // read the frame coordinate, if present
-            childElement = XMLReader.getChild(childElement, MORPHISMMAP);
+            childElement = XMLReader.getChild(childElement, MORPHISM_MAP);
             if (childElement != null) {
                 map = reader.parseMorphismMap(childElement);
                 
@@ -769,7 +769,7 @@ public final class SimpleDenotator extends Denotator {
             return new SimpleDenotator(name, (SimpleForm)form, cm, fcm);
         }
         else {
-            reader.setError("Missing element <%1>.", MORPHISMMAP);
+            reader.setError("Missing element <%1>.", MORPHISM_MAP);
             return null;            
         }
     }

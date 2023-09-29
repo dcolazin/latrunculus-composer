@@ -31,12 +31,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.ScaleMap;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 

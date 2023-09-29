@@ -23,8 +23,8 @@ import java.io.PrintStream;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
  * A placeholder for forms that are not yet known.

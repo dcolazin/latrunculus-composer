@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
 
 class RecursiveLimitReformer extends LimitReformer {

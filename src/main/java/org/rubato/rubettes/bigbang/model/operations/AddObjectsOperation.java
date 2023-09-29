@@ -10,8 +10,8 @@ import org.rubato.math.yoneda.Form;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.rubato.rubettes.util.DenotatorPath;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class AddObjectsOperation extends AbstractOperation {

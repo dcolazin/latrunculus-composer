@@ -20,8 +20,8 @@
 package org.rubato.rubettes.builtin;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.rubato.xml.XMLConstants.FORM;
-import static org.rubato.xml.XMLConstants.VALUE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -36,8 +36,8 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.math.yoneda.*;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 

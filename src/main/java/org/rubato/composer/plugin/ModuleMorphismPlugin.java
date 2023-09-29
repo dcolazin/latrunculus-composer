@@ -21,9 +21,9 @@ package org.rubato.composer.plugin;
 
 import org.rubato.composer.dialogs.morphisms.JMorphismContainer;
 import org.rubato.composer.dialogs.morphisms.JMorphismType;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.rubato.xml.Dispatcher;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.Dispatcher;
 
 public abstract class ModuleMorphismPlugin implements Plugin {
 

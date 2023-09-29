@@ -2,15 +2,15 @@ package org.rubato.math.module;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.math.exception.DomainException;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
-import org.vetronauta.latrunculus.math.module.rational.QRing;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

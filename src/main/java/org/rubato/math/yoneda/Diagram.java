@@ -25,7 +25,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
-import org.rubato.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 
 /**
  * Abstract base class for diagrams.

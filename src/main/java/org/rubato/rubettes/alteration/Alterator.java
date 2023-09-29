@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.morphism.CanonicalMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.NameDenotator;
 import org.rubato.math.yoneda.PowerDenotator;

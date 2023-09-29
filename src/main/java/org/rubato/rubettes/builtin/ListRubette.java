@@ -32,8 +32,8 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Lists;
 import org.rubato.math.yoneda.*;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 

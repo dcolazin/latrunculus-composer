@@ -26,7 +26,7 @@ import java.util.List;
 import org.rubato.base.RubatoException;
 import org.rubato.logeo.functions.Function;
 import org.rubato.logeo.predicates.Predicate;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
 
 

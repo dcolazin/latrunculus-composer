@@ -1,8 +1,8 @@
 package org.rubato.rubettes.select2d;
 
-import org.vetronauta.latrunculus.math.arith.number.Rational;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 
 public class JQElementSlider extends JElementSlider {
 

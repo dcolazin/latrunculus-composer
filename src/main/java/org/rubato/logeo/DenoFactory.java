@@ -23,17 +23,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
-import org.vetronauta.latrunculus.math.module.complex.CElement;
-import org.vetronauta.latrunculus.math.exception.DomainException;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.rational.QElement;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 
 

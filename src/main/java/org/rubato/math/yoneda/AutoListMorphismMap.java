@@ -19,17 +19,17 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.util.*;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 
@@ -251,7 +251,7 @@ public final class AutoListMorphismMap implements MorphismMap {
     
     
     public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISMMAP, getElementTypeName());
+        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName());
         for (Denotator d : this.getFactors()) {
             d.toXML(writer);
         }

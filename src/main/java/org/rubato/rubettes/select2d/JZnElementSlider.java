@@ -1,7 +1,7 @@
 package org.rubato.rubettes.select2d;
 
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 
 public class JZnElementSlider extends JElementSlider {
 

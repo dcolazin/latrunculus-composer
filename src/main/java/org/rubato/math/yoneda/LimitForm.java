@@ -21,16 +21,16 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.FORM;
-import static org.rubato.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 import java.io.PrintStream;
 import java.util.*;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 /**

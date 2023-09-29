@@ -26,8 +26,8 @@ import javax.swing.JComponent;
 
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.math.yoneda.Form;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class FormProperty

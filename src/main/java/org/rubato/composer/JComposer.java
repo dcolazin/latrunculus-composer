@@ -19,8 +19,8 @@
 
 package org.rubato.composer;
 
-import static org.rubato.xml.XMLConstants.NAME_ATTR;
-import static org.rubato.xml.XMLConstants.RUBETTE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.RUBETTE;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -53,8 +53,8 @@ import org.rubato.composer.rubette.JRubette;
 import org.rubato.composer.rubette.RubetteModel;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.rubato.util.TextUtils;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 
 /**

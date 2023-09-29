@@ -19,9 +19,9 @@
 
 package org.rubato.rubettes.wallpaper;
 
-import static org.rubato.xml.XMLConstants.FORM;
-import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
-import static org.rubato.xml.XMLConstants.VALUE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,9 +41,9 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.SimpleFormFinder;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.w3c.dom.Element;
 
 /**
@@ -480,7 +480,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 		while (child != null) {
 			int currentFrom = XMLReader.getIntAttribute(child, R_FROM, 0);
 			int currentTo = XMLReader.getIntAttribute(child, R_TO, 1);
-			Element grandChild = XMLReader.getChild(child, MODULEMORPHISM);
+			Element grandChild = XMLReader.getChild(child, MODULE_MORPHISM);
 			ModuleMorphism currentMorphism = reader.parseModuleMorphism(grandChild);
 			List<List<Integer>> currentElementPaths = new ArrayList<List<Integer>>();
 			grandChild = XMLReader.getNextSibling(grandChild, PATH);

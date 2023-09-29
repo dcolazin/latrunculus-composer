@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.math.module.real.RElement;
-import org.vetronauta.latrunculus.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.rubato.math.yoneda.ColimitDenotator;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.FactorDenotator;

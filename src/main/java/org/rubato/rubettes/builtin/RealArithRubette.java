@@ -36,12 +36,12 @@ import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.SimpleDenotator;
 import org.rubato.math.yoneda.SimpleForm;
 import org.rubato.util.TextUtils;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
-import org.vetronauta.latrunculus.math.module.rational.QRing;
-import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.w3c.dom.Element;
 
 

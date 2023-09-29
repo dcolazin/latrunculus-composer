@@ -22,14 +22,14 @@ package org.rubato.logeo;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.math.module.complex.CRing;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
-import org.vetronauta.latrunculus.math.module.rational.QRing;
-import org.vetronauta.latrunculus.math.module.real.RRing;
-import org.vetronauta.latrunculus.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.math.module.integer.ZStringRing;
-import org.vetronauta.latrunculus.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 
 /**
  * Static utility class for building forms.

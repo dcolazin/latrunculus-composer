@@ -43,7 +43,7 @@ import org.rubato.composer.rubette.*;
 import org.rubato.rubettes.builtin.MacroInputRubette;
 import org.rubato.rubettes.builtin.MacroOutputRubette;
 import org.rubato.rubettes.builtin.MacroRubette;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 public class JNetwork extends JLayeredPane
         implements MouseListener, MouseMotionListener, Scrollable {

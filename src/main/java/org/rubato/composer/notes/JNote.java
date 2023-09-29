@@ -26,7 +26,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import org.rubato.composer.network.JNetwork;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 public class JNote
         extends JPanel

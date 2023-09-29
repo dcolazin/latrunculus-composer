@@ -23,9 +23,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.vetronauta.latrunculus.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.ShuffleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ShuffleMorphism;
 
 public class JShuffleMorphismType
         extends JMorphismType implements ActionListener {

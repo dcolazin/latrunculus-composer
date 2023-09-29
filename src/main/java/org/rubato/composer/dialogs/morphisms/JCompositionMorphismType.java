@@ -32,9 +32,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.rubato.composer.components.JMorphismEntry;
-import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
-import org.vetronauta.latrunculus.math.module.morphism.CompositionMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 class JCompositionMorphismType
         extends JMorphismType

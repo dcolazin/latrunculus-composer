@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.arith;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 
 /**
  * @author vetronauta

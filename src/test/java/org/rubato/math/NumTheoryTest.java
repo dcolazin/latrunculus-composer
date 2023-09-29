@@ -20,8 +20,8 @@
 package org.rubato.math;
 
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.math.exception.ZeroDivisorException;
+import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

@@ -28,17 +28,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.rubato.math.matrix.QMatrix;
 import org.rubato.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.math.yoneda.PowerDenotator;
 import org.rubato.math.yoneda.SimpleForm;
 import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 

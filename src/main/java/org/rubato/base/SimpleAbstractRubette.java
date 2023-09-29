@@ -21,8 +21,8 @@ package org.rubato.base;
 
 import javax.swing.JComponent;
 
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public abstract class SimpleAbstractRubette extends AbstractRubette {

@@ -19,7 +19,7 @@
 
 package org.rubato.composer.network;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ import org.rubato.composer.RubetteManager;
 import org.rubato.composer.notes.NoteModel;
 import org.rubato.composer.rubette.Link;
 import org.rubato.composer.rubette.RubetteModel;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class NetworkModel {

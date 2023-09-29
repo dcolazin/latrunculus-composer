@@ -19,8 +19,8 @@
 
 package org.rubato.base;
 
-import static org.rubato.xml.XMLConstants.FALSE_VALUE;
-import static org.rubato.xml.XMLConstants.TRUE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -30,8 +30,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class BooleanProperty extends RubetteProperty implements ActionListener {

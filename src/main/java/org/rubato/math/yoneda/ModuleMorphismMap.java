@@ -21,25 +21,25 @@
 
 package org.rubato.math.yoneda;
 
-import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
-import static org.rubato.xml.XMLConstants.MORPHISMMAP;
-import static org.rubato.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.math.module.integer.ZRing;
-import org.rubato.xml.XMLInputOutput;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
-import org.vetronauta.latrunculus.math.module.morphism.CanonicalMorphism;
-import org.vetronauta.latrunculus.math.module.morphism.CompositionException;
-import org.vetronauta.latrunculus.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.w3c.dom.Element;
 
 /**
@@ -262,7 +262,7 @@ public class ModuleMorphismMap implements MorphismMap {
 
     
     public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISMMAP, getElementTypeName());
+        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName());
         moduleMorphism.toXML(writer);
         writer.closeBlock();
     }
@@ -271,9 +271,9 @@ public class ModuleMorphismMap implements MorphismMap {
     public MorphismMap fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         
-        Element childElement = XMLReader.getChild(element, MODULEMORPHISM);
+        Element childElement = XMLReader.getChild(element, MODULE_MORPHISM);
         if (childElement == null) {
-            reader.setError("<%1> of type %%2 is missing child element <%3>.", MORPHISMMAP, getElementTypeName(), MODULEMORPHISM);
+            reader.setError("<%1> of type %%2 is missing child element <%3>.", MORPHISM_MAP, getElementTypeName(), MODULE_MORPHISM);
             return null;
         }
         ModuleMorphism morphism = reader.parseModuleMorphism(childElement);

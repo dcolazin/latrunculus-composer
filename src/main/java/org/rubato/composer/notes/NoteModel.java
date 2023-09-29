@@ -19,14 +19,14 @@
 
 package org.rubato.composer.notes;
 
-import static org.rubato.xml.XMLConstants.NOTE;
-import static org.rubato.xml.XMLConstants.X_ATTR;
-import static org.rubato.xml.XMLConstants.Y_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NOTE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.X_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.Y_ATTR;
 
 import java.awt.Dimension;
 
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class NoteModel {

@@ -20,7 +20,7 @@
 package org.rubato.rubettes.select2d;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.rubato.xml.XMLConstants.VALUE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,13 +36,13 @@ import org.rubato.composer.components.JFormTree;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.view2d.*;
 import org.rubato.composer.view2d.Point;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.util.DoubleConverter;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
-import org.vetronauta.latrunculus.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.w3c.dom.Element;
 
 class Select2DPanel

@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.vetronauta.latrunculus.exception.LatrunculusCastException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCastException;
 
 import java.util.ArrayList;
 import java.util.List;

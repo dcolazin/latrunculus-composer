@@ -19,9 +19,9 @@
 
 package org.rubato.composer.rubette;
 
-import static org.rubato.xml.XMLConstants.*;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 
 public class Link {

@@ -20,9 +20,9 @@
 package org.rubato.rubettes.builtin;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.rubato.xml.XMLConstants.FORM;
-import static org.rubato.xml.XMLConstants.MODULEMORPHISM;
-import static org.rubato.xml.XMLConstants.VALUE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,13 +34,13 @@ import javax.swing.*;
 import org.rubato.base.*;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.*;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
 import org.rubato.math.yoneda.SimpleForm;
-import org.rubato.xml.XMLReader;
-import org.rubato.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public class ModuleMapRubette
@@ -300,7 +300,7 @@ public class ModuleMapRubette
         }
         
         // get module morphism
-        child = XMLReader.getNextSibling(child, MODULEMORPHISM);
+        child = XMLReader.getNextSibling(child, MODULE_MORPHISM);
         if (child == null) {
             // no module morphism has been given
             newRubette = new ModuleMapRubette();

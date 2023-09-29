@@ -32,7 +32,7 @@ import javax.swing.event.*;
 import javax.swing.tree.*;
 
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
 
 

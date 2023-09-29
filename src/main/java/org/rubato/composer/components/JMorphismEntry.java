@@ -28,8 +28,8 @@ import javax.swing.event.EventListenerList;
 
 import org.rubato.composer.dialogs.morphisms.JMorphismDialog;
 import org.rubato.composer.dialogs.morphisms.JMorphismListDialog;
-import org.vetronauta.latrunculus.math.module.definition.Module;
-import org.vetronauta.latrunculus.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 
 /**
