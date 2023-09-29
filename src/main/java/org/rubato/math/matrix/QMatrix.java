@@ -803,7 +803,7 @@ public class QMatrix extends Matrix {
             return m.determinant();
         }
         else {
-            return m.determinant().negated();
+            return m.determinant().neg();
         }
     }
     

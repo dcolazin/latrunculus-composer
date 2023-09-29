@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -118,66 +117,19 @@ public final class RString extends RingString<ArithmeticDouble, RString> {
         
         return new RString(words, factors);
     }
-    
-    protected Object product(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix * iy;
-    }
-    
 
-    protected Object neg(Object x) {
-        double ix = (Double) x;
-        return -ix;
-    }
-    
-
-    protected boolean equals(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix == iy;
-    }
-    
-
-    protected int compare(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        if (ix < iy) {
-            return -1;
-        }
-        else if (ix > iy) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
-    }
-
-    
-    protected Object getObjectOne() {
-        return 1.0;
-    }
-
-    
-    protected Object getObjectZero() {
-        return 0.0;
-    }
-
-    
-    protected boolean isObjectZero(Object x) {
-        double ix = (Double) x;
-        return ix == 0.0;
-    }
-
-    
-    protected double objectToDouble(Object x) {
-        return (Double) x;
+    @Override
+    protected ArithmeticDouble getObjectOne() {
+        return new ArithmeticDouble(1);
     }
 
     @Override
-    public RingString deepCopy() {
-        RString res = new RString();
-        res.dict = new HashMap<>(dict);
-        return res;
+    protected ArithmeticDouble getObjectZero() {
+        return new ArithmeticDouble(0);
+    }
+
+    @Override
+    public RString deepCopy() {
+        return new RString(this);
     }
 }

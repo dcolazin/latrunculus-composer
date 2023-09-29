@@ -31,7 +31,15 @@ public final class Rational extends ArithmeticNumber<Rational> {
 
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;
-    
+
+    private int num;
+    private int denom;
+
+    /**
+     * Private constructor for internal purposes only.
+     */
+    private Rational() { /* do nothing */ }
+
     /**
      * Creates a new rational number <code>n</code>/1.
      */
@@ -140,7 +148,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     /**
      * Returns the rational 0/1.
      */
-    static public Rational getZero() {
+    public static Rational getZero() {
         return new Rational(0);
     }
 
@@ -148,26 +156,18 @@ public final class Rational extends ArithmeticNumber<Rational> {
     /**
      * Returns the rational 1/1.
      */
-    static public Rational getOne() {
+    public static Rational getOne() {
         return new Rational(1);
     }
 
 
-    public boolean equals(Object object) {
-        if (object instanceof Rational) {
-            return equals((Rational)object);
+    public boolean equals(Object other) {
+        if (!(other instanceof Rational)) {
+            return false;
         }
-        return false;
+        Rational otherRational = (Rational) other;
+        return otherRational.num == num && otherRational.denom == denom;
     }
-
-
-    public boolean equals(Rational r) {
-        if (r.num == num && r.denom == denom) {
-            return true;
-        }
-        return false;
-    }
-
 
     /**
      * Returns true iff this number is 0/1.
@@ -185,7 +185,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
         return num == 1 && denom == 1;
     }
 
-
+    @Override
     public int compareTo(Rational r) {
         int a, b;
         a = num * r.getDenominator();
@@ -425,17 +425,13 @@ public final class Rational extends ArithmeticNumber<Rational> {
         }
     }
 
-
     /**
      * Returns -this number.
      */
-    public Rational negated() {
-        Rational r = new Rational();
-        r.num = -num;
-        r.denom = denom;
-        return r;
+    @Override
+    public Rational neg() {
+        return new Rational(-num, denom);
     }
-
 
     /**
      * Negates this rational.
@@ -443,7 +439,6 @@ public final class Rational extends ArithmeticNumber<Rational> {
     public void negate() {
         num = -num;
     }
-
 
     /**
      * Returns the numerator of this rational.
@@ -592,13 +587,4 @@ public final class Rational extends ArithmeticNumber<Rational> {
         }
     }
 
-    
-    /**
-     * Private constructor for internal purposes only.
-     */
-    private Rational() { /* do nothing */ }
-
-    
-    private int num;
-    private int denom;
 }

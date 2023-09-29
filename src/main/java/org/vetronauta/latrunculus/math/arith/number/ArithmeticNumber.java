@@ -21,4 +21,14 @@ public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
      */
     public abstract T difference(T y);
 
+    /**
+     * pure product between this number and the parameter
+     */
+    public abstract T product(T y);
+
+    /**
+     * pure negation of this number
+     */
+    public abstract T neg();
+
 }

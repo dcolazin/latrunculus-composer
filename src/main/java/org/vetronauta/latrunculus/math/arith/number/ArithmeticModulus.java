@@ -86,6 +86,30 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
         return new ArithmeticModulus(value - other.value, modulus);
     }
 
+    @Override
+    public ArithmeticModulus product(ArithmeticModulus other) {
+        return new ArithmeticModulus(value * other.value, modulus);
+    }
+
+    @Override
+    public ArithmeticModulus neg() {
+        return new ArithmeticModulus(-value, modulus);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ArithmeticModulus)) {
+            return false;
+        }
+        ArithmeticModulus otherModulus = (ArithmeticModulus) other;
+        return otherModulus.value == value && otherModulus.modulus == modulus;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
+
     public static ArithmeticModulus[] toArray(int[] array, int m) {
         return Arrays.stream(array)
                 .mapToObj(i -> new ArithmeticModulus(i, m))

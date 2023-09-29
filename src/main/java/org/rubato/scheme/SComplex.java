@@ -149,7 +149,7 @@ public final class SComplex extends SNumber {
     }
     
     public SNumber neg() {
-        return SComplex.make(c.negated());
+        return SComplex.make(c.neg());
     }
     
     public SNumber abs() {

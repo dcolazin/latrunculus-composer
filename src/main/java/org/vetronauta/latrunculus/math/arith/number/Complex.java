@@ -231,6 +231,7 @@ public final class Complex extends ArithmeticNumber<Complex> {
     /**
      * Returns the product of this number and <code>c</code>.
      */
+    @Override
     public Complex product(Complex c) {
         return new Complex(real*c.real-imag*c.imag, real*c.imag+imag*c.real);
     }
@@ -319,7 +320,8 @@ public final class Complex extends ArithmeticNumber<Complex> {
     /**
      * Returns the negative of this number.
      */
-    public Complex negated() {
+    @Override
+    public Complex neg() {
         return new Complex(-real, -imag);
     }
 
@@ -547,25 +549,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return null;
     }
     
-    
-    /**
-     * Returns hashcode for this number.
-     */
-    public int hashCode() {
-        long h = Double.doubleToRawLongBits(real);
-        h = h*17+Double.doubleToLongBits(imag);
-        return (int)((h >> 32)^h);
-    }
-
-    
-    /**
-     * Returns the string representation of this number.
-     */
-    public String toString() {
-        return real+"+i*"+imag;
-    }
-    
-    
     /**
      * Returns the complex number with the string representation <code>s</code>
      */
@@ -578,29 +561,44 @@ public final class Complex extends ArithmeticNumber<Complex> {
         }
         return new Complex(s);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Complex)) {
+            return false;
+        }
+        Complex otherComplex = (Complex) other;
+        return real == otherComplex.real && imag == otherComplex.imag;
+    }
+
+    /**
+     * Returns hashcode for this number.
+     */
+    public int hashCode() {
+        long h = Double.doubleToRawLongBits(real);
+        h = h*17+Double.doubleToLongBits(imag);
+        return (int)((h >> 32)^h);
+    }
+
+
+    /**
+     * Returns the string representation of this number.
+     */
+    public String toString() {
+        return real+"+i*"+imag;
+    }
     
     /**
      * Compares this number with <code>object</code>.
      * Since complex numbers are not linearly ordered, the comparison
      * is lexicographic.
      */
-    //TODO equals!!!
+    @Override
     public int compareTo(Complex c) {
-        if (real < c.real) {
-            return -1;
+        if (real != c.real) {
+            return Double.compare(real, c.real);
         }
-        else if (real > c.real) {
-            return 1;
-        }
-        else if (imag < c.imag) {
-            return -1;
-        }
-        else if (imag > c.imag) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
+        return Double.compare(imag, c.imag);
     }
 
     @Override

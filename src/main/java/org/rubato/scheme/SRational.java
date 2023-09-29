@@ -141,7 +141,7 @@ public final class SRational extends SNumber {
     }
     
     public SNumber neg() {
-        return new SRational(q.negated());
+        return new SRational(q.neg());
     }
 
     public SNumber abs() {

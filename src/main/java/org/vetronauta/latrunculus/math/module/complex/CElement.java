@@ -146,7 +146,7 @@ public final class CElement extends RingElement implements CFreeElement {
     
     
     public CElement negated() {
-        return new CElement(value.negated());
+        return new CElement(value.neg());
     }
 
 

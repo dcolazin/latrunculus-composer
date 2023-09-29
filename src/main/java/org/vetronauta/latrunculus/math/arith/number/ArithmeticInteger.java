@@ -79,6 +79,29 @@ public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
         return new ArithmeticInteger(value - other.value);
     }
 
+    @Override
+    public ArithmeticInteger product(ArithmeticInteger other) {
+        return new ArithmeticInteger(value * other.value);
+    }
+
+    @Override
+    public ArithmeticInteger neg() {
+        return new ArithmeticInteger(-value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ArithmeticInteger)) {
+            return false;
+        }
+        return ((ArithmeticInteger) other).value == value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
+
     public static ArithmeticInteger[] toArray(int[] array) {
         return Arrays.stream(array)
                 .mapToObj(ArithmeticInteger::new)

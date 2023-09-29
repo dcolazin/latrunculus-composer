@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Complex;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,52 +116,19 @@ public final class CString extends RingString<Complex, CString> {
         
         return new CString(words, factors);
     }
-    
-    protected Object product(Object x, Object y) {
-        return ((Complex)x).product((Complex)y);
-    }
 
-    
-    protected Object neg(Object x) {
-        return ((Complex)x).negated();
-    }
-
-    
-    protected boolean equals(Object x, Object y) {
-        return x.equals(y);
-    }
-
-    
-    protected int compare(Object x, Object y) {
-        Complex rx = (Complex)x;
-        Complex ry = (Complex)y;
-        return rx.compareTo(ry);
-    }
-
-    
-    protected Object getObjectOne() {
+    @Override
+    protected Complex getObjectOne() {
         return Complex.getOne();
     }
 
-    
-    protected Object getObjectZero() {
+    @Override
+    protected Complex getObjectZero() {
         return Complex.getZero();
     }
 
-    
-    protected boolean isObjectZero(Object x) {
-        return ((Complex)x).isZero();
-    }
-
-    
-    protected double objectToDouble(Object x) {
-        return ((Complex)x).doubleValue();
-    }
-
     @Override
-    public RingString deepCopy() {
-        CString res = new CString();
-        res.dict = new HashMap<>(dict);
-        return res;
+    public CString deepCopy() {
+        return new CString(this);
     }
 }

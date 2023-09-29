@@ -79,6 +79,29 @@ public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
         return new ArithmeticDouble(value - other.value);
     }
 
+    @Override
+    public ArithmeticDouble product(ArithmeticDouble other) {
+        return new ArithmeticDouble(value * other.value);
+    }
+
+    @Override
+    public ArithmeticDouble neg() {
+        return new ArithmeticDouble(-value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ArithmeticDouble)) {
+            return false;
+        }
+        return ((ArithmeticDouble) other).value == value;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) value;
+    }
+
     public static ArithmeticDouble[] toArray(double[] array) {
         return Arrays.stream(array)
             .mapToObj(ArithmeticDouble::new)

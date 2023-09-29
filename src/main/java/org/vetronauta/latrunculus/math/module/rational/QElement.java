@@ -143,7 +143,7 @@ public final class QElement extends RingElement implements QFreeElement {
 
     
     public QElement negated() {
-        return new QElement(value.negated());
+        return new QElement(value.neg());
     }
 
     

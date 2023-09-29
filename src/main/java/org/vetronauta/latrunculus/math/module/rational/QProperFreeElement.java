@@ -246,7 +246,7 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
     public QProperFreeElement negated() {
         Rational[] res = new Rational[getLength()];
         for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].negated();
+            res[i] = value[i].neg();
         }
         return new QProperFreeElement(res);
     }

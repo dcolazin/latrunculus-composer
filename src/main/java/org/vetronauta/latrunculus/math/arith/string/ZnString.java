@@ -23,11 +23,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
-import org.vetronauta.latrunculus.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -135,64 +133,23 @@ public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
         
         return new ZnString(words, factors, modulus);
     }
-    
-    protected Object product(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return NumberTheory.mod(ix * iy, modulus);
+
+    @Override
+    protected ArithmeticModulus getObjectOne() {
+        return new ArithmeticModulus(1, modulus);
     }
 
-    
-    protected Object neg(Object x) {
-        int ix = (Integer) x;
-        return NumberTheory.mod(-ix, modulus);
+    @Override
+    protected ArithmeticModulus getObjectZero() {
+        return new ArithmeticModulus(0, modulus);
     }
-
-    
-    protected boolean equals(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix == iy;
-    }
-
-    
-    protected int compare(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix-iy;
-    }
-
-    
-    protected Object getObjectOne() {
-        return 1;
-    }
-
-    
-    protected Object getObjectZero() {
-        return 0;
-    }
-
-    
-    protected boolean isObjectZero(Object x) {
-        int ix = (Integer) x;
-        return ix == 0;
-    }
-
-    
-    protected double objectToDouble(Object x) {
-        return ((Integer)x).doubleValue();
-    }
-
     
     public int getModulus() {
         return modulus;
     }
 
     @Override
-    public RingString deepCopy() {
-        ZnString res = new ZnString(modulus);
-        res.modulus = modulus;
-        res.dict = new HashMap<>(dict);
-        return res;
+    public ZnString deepCopy() {
+        return new ZnString(this, modulus);
     }
 }

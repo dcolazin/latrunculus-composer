@@ -231,7 +231,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
             String key = keys.next();
             T factor = x.dict.get(key);
             for (Map.Entry<String, T> entry : myDict.entrySet()) {
-                add(entry.getKey() + key, product(factor, entry.getValue()));
+                add(entry.getKey() + key, factor.product(entry.getValue()));
             }
         }
     }
@@ -250,7 +250,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      */
     public void negate() {
         for (Map.Entry<String, T> entry : dict.entrySet()) {
-            T newFactor = neg(entry.getValue());
+            T newFactor = entry.getValue().neg();
             dict.put(entry.getKey(), newFactor);
         }
     }
@@ -270,7 +270,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      */
     public void scale(T x) {
         for (Map.Entry<String, T> entry : dict.entrySet()) {
-            T newFactor = product(x, entry.getValue());
+            T newFactor = x.product(entry.getValue());
             if (isObjectZero(newFactor)) {
                 dict.remove(entry.getKey());
             } else {
@@ -288,7 +288,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
         if (!(object instanceof RingString)) {
             return false;
         }
-        Map<String, T> ht = ((RingString) object).dict;
+        Map<String, T> ht = ((RingString) object).dict; //TODO this cast is not always correct
         Set<String> otherObjectSet = ht.keySet();
         Set<String> set = dict.keySet();
         if (otherObjectSet.size() != set.size()) {
@@ -326,24 +326,30 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     }
 
     /**
-     * Returns the product of two factor objects.
-     */
-    protected abstract T product(T x, T y);
-
-    /**
-     * Returns the negative of a factor object.
-     */
-    protected abstract T neg(T x);
-
-    /**
      * The equality operation of two factor objects.
      */
-    protected abstract boolean equals(T x, T y);
+    private boolean equals(T x, T y) {
+        if (x == null && y == null) {
+            return true;
+        }
+        if (x == null || y == null) {
+            return false;
+        }
+        return x.equals(y);
+    }
 
     /**
      * Compare two factor objects, like compareTo.
      */
-    protected abstract int compare(T x, T y);
+    protected int compare(T x, T y) {
+        if (x == null && y == null) {
+            return 0;
+        }
+        if (x == null || y == null) {
+            return x != null ? 1 : -1;
+        }
+        return x.compareTo(y);
+    }
 
     /**
      * Returns the unit factor object.
@@ -358,12 +364,9 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * True, if <code>x</code> is the zero factor object.
      */
-    protected abstract boolean isObjectZero(T x);
-
-    /**
-     * Returns the double value for factor object.
-     */
-    protected abstract double objectToDouble(T x);
+    private boolean isObjectZero(T x) {
+        return x.isZero();
+    }
 
     /**
      * Add string <code>word</code> with factor <code>factor</code> to this.
@@ -475,7 +478,6 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /*
      * Implementation of RingString Folding.
      */
-
     static class Word implements Comparable<Word> {
 
         public Word(String s, double f) {
@@ -484,24 +486,12 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
             word_factor = f;
         }
 
+        @Override
         public int compareTo(Word x) {
-            if (word_value < x.word_value) {
-                return -1;
+            if (word_value != x.word_value) {
+                return Double.compare(word_value, x.word_value);
             }
-            else if (word_value > x.word_value) {
-                return 1;
-            }
-            else {
-                if (word_factor < x.word_factor) {
-                    return -1;
-                }
-                else if (word_factor > x.word_factor) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
-            }
+            return Double.compare(word_factor, x.word_factor);
         }
 
         public String toString() {
@@ -526,7 +516,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
         while (keys.hasNext()) {
             word = keys.next();
             factor = dict.get(word);
-            res[i++] = new Word(word, objectToDouble(factor));
+            res[i++] = new Word(word, factor.doubleValue());
         }
         Arrays.sort(res);
         return res;

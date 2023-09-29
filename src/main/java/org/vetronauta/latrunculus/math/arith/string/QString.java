@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Rational;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,53 +116,19 @@ public final class QString extends RingString<Rational, QString> {
         
         return new QString(words, factors);
     }
-    
-    protected Object product(Object x, Object y) {
-        return ((Rational)x).product((Rational)y);
-    }
 
-    
-    protected Object neg(Object x) {
-        return ((Rational)x).negated();
-    }
-
-    
-    protected boolean equals(Object x, Object y) {
-        return x.equals(y);
-    }
-
-    
-    protected int compare(Object x, Object y) {
-        Rational rx = (Rational)x;
-        Rational ry = (Rational)y;
-        return rx.compareTo(ry);
-    }
-
-    
+    @Override
     protected Rational getObjectOne() {
         return new Rational(1);
     }
 
-    
+    @Override
     protected Rational getObjectZero() {
         return new Rational(0);
     }
 
-    
-    protected boolean isObjectZero(Object x) {
-        return ((Rational)x).isZero();
-    }
-
-    
-    protected double objectToDouble(Object x) {
-        return ((Rational)x).doubleValue();
-    }
-
-
     @Override
-    public RingString deepCopy() {
-        QString res = new QString();
-        res.dict = new HashMap<>(dict);
-        return res;
+    public QString deepCopy() {
+        return new QString(this);
     }
 }

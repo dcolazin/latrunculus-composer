@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -122,58 +121,19 @@ public final class ZString extends RingString<ArithmeticInteger, ZString> {
         
         return new ZString(words, factors);
     }
-    
-    protected Object product(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix * iy;
-    }
 
-    
-    protected Object neg(Object x) {
-        int ix = (Integer) x;
-        return -ix;
-    }
-
-    
-    protected boolean equals(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix == iy;
-    }
-
-    
-    protected int compare(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix-iy;
-    }
-
-    
-    protected Object getObjectOne() {
-        return 1;
-    }
-
-    
-    protected Object getObjectZero() {
-        return 0;
-    }
-
-    
-    protected boolean isObjectZero(Object x) {
-        int ix = (Integer) x;
-        return ix == 0;
-    }
-
-    
-    protected double objectToDouble(Object x) {
-        return ((Integer)x).doubleValue();
+    @Override
+    protected ArithmeticInteger getObjectOne() {
+        return new ArithmeticInteger(1);
     }
 
     @Override
-    public RingString deepCopy() {
-        ZString res = new ZString();
-        res.dict = new HashMap<>(dict);
-        return res;
+    protected ArithmeticInteger getObjectZero() {
+        return new ArithmeticInteger(0);
+    }
+
+    @Override
+    public ZString deepCopy() {
+        return new ZString(this);
     }
 }

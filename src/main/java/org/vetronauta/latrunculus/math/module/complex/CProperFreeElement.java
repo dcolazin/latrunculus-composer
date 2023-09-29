@@ -259,7 +259,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
     public CProperFreeElement negated() {
         Complex[] res = new Complex[getLength()];
         for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].negated();
+            res[i] = value[i].neg();
         }
         return new CProperFreeElement(res);
     }
