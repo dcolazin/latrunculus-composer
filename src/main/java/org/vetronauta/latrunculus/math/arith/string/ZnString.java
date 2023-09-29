@@ -24,20 +24,18 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
 /**
  * The ring of strings with integer factors mod <i>p</i>.
  */
-public final class ZnString extends RingString<ArithmeticModulus> {
+public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
 
     private int modulus;
 
@@ -71,7 +69,7 @@ public final class ZnString extends RingString<ArithmeticModulus> {
         this.modulus = modulus;
     }
 
-    public ZnString(RingString<?> rs, int modulus) {
+    public ZnString(RingString<?, ?> rs, int modulus) {
         super(rs); //TODO this will not work!!!
         this.modulus = modulus;
     }
@@ -115,7 +113,7 @@ public final class ZnString extends RingString<ArithmeticModulus> {
         return new ZnString(StringUtils.EMPTY, modulus);
     }
 
-
+    //TODO factory method
     public static ZnString parseZnString(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -137,21 +135,6 @@ public final class ZnString extends RingString<ArithmeticModulus> {
         
         return new ZnString(words, factors, modulus);
     }
-
-    
-    protected Object sum(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return NumberTheory.mod(ix + iy, modulus);
-    }
-
-    
-    protected Object difference(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return NumberTheory.mod(ix - iy, modulus);
-    }
-
     
     protected Object product(Object x, Object y) {
         int ix = (Integer) x;

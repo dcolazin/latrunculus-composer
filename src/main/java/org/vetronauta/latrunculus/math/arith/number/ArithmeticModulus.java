@@ -76,6 +76,16 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
         return intValue() == 0;
     }
 
+    @Override
+    public ArithmeticModulus sum(ArithmeticModulus other) {
+        return new ArithmeticModulus(value + other.value, modulus);
+    }
+
+    @Override
+    public ArithmeticModulus difference(ArithmeticModulus other) {
+        return new ArithmeticModulus(value - other.value, modulus);
+    }
+
     public static ArithmeticModulus[] toArray(int[] array, int m) {
         return Arrays.stream(array)
                 .mapToObj(i -> new ArithmeticModulus(i, m))

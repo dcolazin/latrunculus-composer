@@ -69,6 +69,16 @@ public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
         return value == 0.0;
     }
 
+    @Override
+    public ArithmeticDouble sum(ArithmeticDouble other) {
+        return new ArithmeticDouble(value + other.value);
+    }
+
+    @Override
+    public ArithmeticDouble difference(ArithmeticDouble other) {
+        return new ArithmeticDouble(value - other.value);
+    }
+
     public static ArithmeticDouble[] toArray(double[] array) {
         return Arrays.stream(array)
             .mapToObj(ArithmeticDouble::new)

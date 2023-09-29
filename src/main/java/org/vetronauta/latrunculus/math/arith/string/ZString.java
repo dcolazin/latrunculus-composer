@@ -23,11 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
-import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +34,11 @@ import java.util.function.Function;
 /**
  * The ring of strings with integer factors.
  */
-public final class ZString extends RingString<ArithmeticInteger> {
+public final class ZString extends RingString<ArithmeticInteger, ZString> {
+
+    private ZString() {
+        super();
+    }
 
     public ZString(String word) {
         super(word);
@@ -59,7 +60,7 @@ public final class ZString extends RingString<ArithmeticInteger> {
         super(EntryList.handle(String.class, Function.identity(), Integer.class, ArithmeticInteger::new, objects));
     }
 
-    public ZString(RingString<?> rs) {
+    public ZString(RingString<?, ?> rs) {
         super(rs);
     }
 
@@ -99,7 +100,7 @@ public final class ZString extends RingString<ArithmeticInteger> {
         return new ZString(StringUtils.EMPTY);
     }
 
-
+    //TODO factory method
     public static ZString parseZString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');        
         if (terms.length == 0) {
@@ -121,24 +122,6 @@ public final class ZString extends RingString<ArithmeticInteger> {
         
         return new ZString(words, factors);
     }
-    
-
-    private ZString() { /* do nothing */ }
-
-    
-    protected Object sum(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix + iy;
-    }
-
-    
-    protected Object difference(Object x, Object y) {
-        int ix = (Integer) x;
-        int iy = (Integer) y;
-        return ix - iy;
-    }
-
     
     protected Object product(Object x, Object y) {
         int ix = (Integer) x;

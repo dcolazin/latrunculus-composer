@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * The ring of strings with rational factors.
  */
-public final class QString extends RingString<Rational> {
+public final class QString extends RingString<Rational, QString> {
 
     private QString() {
         super();
@@ -59,7 +59,7 @@ public final class QString extends RingString<Rational> {
         super(EntryList.handle(String.class, Rational.class, objects));
     }
 
-    public QString(RingString<?> rs) {
+    public QString(RingString<?, ?> rs) {
         super(rs);
     }
 
@@ -95,7 +95,7 @@ public final class QString extends RingString<Rational> {
         return new QString(StringUtils.EMPTY);
     }
 
-
+    //TODO factory method
     public static QString parseQString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -117,16 +117,6 @@ public final class QString extends RingString<Rational> {
         
         return new QString(words, factors);
     }
-    
-    protected Object sum(Object x, Object y) {
-        return ((Rational)x).sum((Rational)y);
-    }
-    
-
-    protected Object difference(Object x, Object y) {
-        return ((Rational)x).difference((Rational)y);
-    }
-
     
     protected Object product(Object x, Object y) {
         return ((Rational)x).product((Rational)y);
@@ -150,12 +140,12 @@ public final class QString extends RingString<Rational> {
     }
 
     
-    protected Object getObjectOne() {
+    protected Rational getObjectOne() {
         return new Rational(1);
     }
 
     
-    protected Object getObjectZero() {
+    protected Rational getObjectZero() {
         return new Rational(0);
     }
 

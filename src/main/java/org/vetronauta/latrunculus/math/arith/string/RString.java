@@ -25,8 +25,6 @@ import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -36,7 +34,7 @@ import java.util.function.Function;
 /**
  * The ring of strings with real factors.
  */
-public final class RString extends RingString<ArithmeticDouble> {
+public final class RString extends RingString<ArithmeticDouble, RString> {
 
     private RString() {
         super();
@@ -62,7 +60,7 @@ public final class RString extends RingString<ArithmeticDouble> {
         super(EntryList.handle(String.class, Function.identity(), Double.class, ArithmeticDouble::new, objects));
     }
 
-    public RString(RingString<?> rs) {
+    public RString(RingString<?, ?> rs) {
         super(rs);
     }
 
@@ -98,7 +96,7 @@ public final class RString extends RingString<ArithmeticDouble> {
         return new RString(StringUtils.EMPTY);
     }
 
-
+    //TODO factory method
     public static RString parseRString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -120,20 +118,6 @@ public final class RString extends RingString<ArithmeticDouble> {
         
         return new RString(words, factors);
     }
-
-    protected Object sum(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix + iy;
-    }
-    
-
-    protected Object difference(Object x, Object y) {
-        double ix = (Double) x;
-        double iy = (Double) y;
-        return ix - iy;
-    }
-
     
     protected Object product(Object x, Object y) {
         double ix = (Double) x;

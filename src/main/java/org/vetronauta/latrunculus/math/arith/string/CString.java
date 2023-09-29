@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * The ring of strings with complex factors.
  */
-public final class CString extends RingString<Complex> {
+public final class CString extends RingString<Complex, CString> {
 
     private CString() {
         super();
@@ -59,7 +59,7 @@ public final class CString extends RingString<Complex> {
         super(EntryList.handle(String.class, Complex.class, objects));
     }
 
-    public CString(RingString<?> rs) {
+    public CString(RingString<?, ?> rs) {
         super(rs);
     }
 
@@ -95,6 +95,7 @@ public final class CString extends RingString<Complex> {
         return new CString(StringUtils.EMPTY);
     }
 
+    //TODO factory method
     public static CString parseCString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -116,17 +117,6 @@ public final class CString extends RingString<Complex> {
         
         return new CString(words, factors);
     }
-    
-
-    protected Object sum(Object x, Object y) {
-        return ((Complex)x).sum((Complex)y);
-    }
-
-    
-    protected Object difference(Object x, Object y) {
-        return ((Complex)x).difference((Complex)y);
-    }
-
     
     protected Object product(Object x, Object y) {
         return ((Complex)x).product((Complex)y);

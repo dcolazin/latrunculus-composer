@@ -197,6 +197,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     /**
      * Returns the sum of this number and <code>r</code>.
      */
+    @Override
     public Rational sum(Rational r) {
         return new Rational(num * r.denom + denom * r.num, denom * r.denom);
     }
@@ -231,6 +232,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     /**
      * Returns the difference of this number and <code>r</code>.
      */
+    @Override
     public Rational difference(Rational r) {
         return new Rational(num * r.denom - denom * r.num, denom * r.denom);
     }

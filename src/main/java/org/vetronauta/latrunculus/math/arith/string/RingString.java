@@ -43,12 +43,12 @@ import static java.lang.Math.min;
  * where the a_i are elements in a ring
  * and the s_i are character strings (<code>String</code>).
  */
-public abstract class RingString<T extends ArithmeticNumber<T>>
-        implements DeepCopyable<RingString<T>>, Comparable<RingString<T>>, Serializable {
+public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingString<T, R>>
+        implements DeepCopyable<R>, Comparable<R>, Serializable {
 
     //TODO null checks everywhere
 
-    protected HashMap<String, T> dict; //TODO should be final?
+    protected Map<String, T> dict; //TODO should be final?
 
     /**
      * Creates a new <code>RingString</code> instance.
@@ -128,7 +128,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Creates a new <code>RingString</code> instance, in case converting the values with the canonical transformation
      */
-    protected RingString(RingString<?> rs) {
+    protected RingString(RingString<?, ?> rs) {
         this();
         for (Map.Entry<String, ? extends ArithmeticNumber<?>> entry : rs.dict.entrySet()) {
             T factor = canonicalTransformation(entry.getValue());
@@ -176,8 +176,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Returns the sum of this and <code>x</code>.
      * @return a new RingString object
      */
-    public RingString<T> sum(RingString<T> x) {
-        RingString<T> res = this.deepCopy();
+    public R sum(R x) {
+        R res = this.deepCopy();
         res.add(x);
         return res;
     }
@@ -185,10 +185,9 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Add <code>x</code> to this.
      */
-    public void add(RingString x) {
-        for (String key : x.dict.keySet()) {
-            Object factor = x.dict.get(key);
-            add(key, factor);
+    public void add(R x) {
+        for (Map.Entry<String, T> entry : x.dict.entrySet()) {
+            add(entry.getKey(), entry.getValue());
         }
     }
 
@@ -196,8 +195,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Returns the difference of this and <code>x</code>.
      * @return a new RingString object.
      */
-    public RingString difference(RingString x) {
-        RingString res = this.deepCopy();
+    public R difference(R x) {
+        R res = this.deepCopy();
         res.subtract(x);
         return res;
     }
@@ -205,10 +204,9 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Subtract <code>x</code> from this.
      */
-    public void subtract(RingString x) {
-        for (String key : x.dict.keySet()) {
-            Object factor = x.dict.get(key);
-            subtract(key, factor);
+    public void subtract(R x) {
+        for (Map.Entry<String, T> entry : x.dict.entrySet()) {
+            subtract(entry.getKey(), entry.getValue());
         }
     }
 
@@ -216,8 +214,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Returns the product of this and <code>x</code>
      * @return a new RingString object
      */
-    public RingString product(RingString x) {
-        RingString res = this.deepCopy();
+    public R product(R x) {
+        R res = this.deepCopy();
         res.multiply(x);
         return res;
     }
@@ -225,14 +223,14 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Multiply this by <code>x</code>.
      */
-    public void multiply(RingString x) {
+    public void multiply(R x) {
         Iterator<String> keys = x.dict.keySet().iterator();
-        HashMap<String,Object> myDict = dict;
+        Map<String, T> myDict = dict;
         dict = new HashMap<>();
         while (keys.hasNext()) {
             String key = keys.next();
-            Object factor = x.dict.get(key);
-            for (Map.Entry<String, Object> entry : myDict.entrySet()) {
+            T factor = x.dict.get(key);
+            for (Map.Entry<String, T> entry : myDict.entrySet()) {
                 add(entry.getKey() + key, product(factor, entry.getValue()));
             }
         }
@@ -241,8 +239,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Returns this with all factors negated.
      */
-    public RingString negated() {
-        RingString res = this.deepCopy();
+    public R negated() {
+        R res = this.deepCopy();
         res.negate();
         return res;
     }
@@ -261,8 +259,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Returns this scaled by <code>x</code>.
      * @return a new RingString object
      */
-    public RingString scaled(Object x) {
-        RingString res = this.deepCopy();
+    public R scaled(T x) {
+        R res = this.deepCopy();
         res.scale(x);
         return res;
     }
@@ -270,9 +268,9 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Scale this by <code>x</code>.
      */
-    public void scale(Object x) {
-        for (Map.Entry<String, Object> entry : dict.entrySet()) {
-            Object newFactor = product(x, entry.getValue());
+    public void scale(T x) {
+        for (Map.Entry<String, T> entry : dict.entrySet()) {
+            T newFactor = product(x, entry.getValue());
             if (isObjectZero(newFactor)) {
                 dict.remove(entry.getKey());
             } else {
@@ -290,7 +288,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
         if (!(object instanceof RingString)) {
             return false;
         }
-        Map<String,Object> ht = ((RingString)object).dict;
+        Map<String, T> ht = ((RingString) object).dict;
         Set<String> otherObjectSet = ht.keySet();
         Set<String> set = dict.keySet();
         if (otherObjectSet.size() != set.size()) {
@@ -307,7 +305,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      *
      */
-    public int compareTo(RingString rs) {
+    public int compareTo(R rs) {
         Object[] otherKeyArray = rs.dict.keySet().toArray();
         Object[] thisKeyArray = dict.keySet().toArray();
         Arrays.sort(otherKeyArray);
@@ -328,34 +326,24 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     }
 
     /**
-     * Returns the sum of two factor objects.
-     */
-    protected abstract T sum(T x, T y);
-
-    /**
-     * Returns the difference of two factor objects.
-     */
-    protected abstract Object difference(Object x, Object y);
-
-    /**
      * Returns the product of two factor objects.
      */
-    protected abstract Object product(Object x, Object y);
+    protected abstract T product(T x, T y);
 
     /**
      * Returns the negative of a factor object.
      */
-    protected abstract T neg(Object x);
+    protected abstract T neg(T x);
 
     /**
      * The equality operation of two factor objects.
      */
-    protected abstract boolean equals(Object x, Object y);
+    protected abstract boolean equals(T x, T y);
 
     /**
      * Compare two factor objects, like compareTo.
      */
-    protected abstract int compare(Object x, Object y);
+    protected abstract int compare(T x, T y);
 
     /**
      * Returns the unit factor object.
@@ -370,27 +358,25 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * True, if <code>x</code> is the zero factor object.
      */
-    protected abstract boolean isObjectZero(Object x);
+    protected abstract boolean isObjectZero(T x);
 
     /**
      * Returns the double value for factor object.
      */
-    protected abstract double objectToDouble(Object x);
+    protected abstract double objectToDouble(T x);
 
     /**
      * Add string <code>word</code> with factor <code>factor</code> to this.
      */
     protected void add(String word, T factor) {
         if (dict.containsKey(word)) {
-            Object newFactor = sum(dict.get(word), factor);
+            T newFactor = factor.sum(dict.get(word));
             if (!isObjectZero(newFactor)) {
                 dict.put(word, newFactor);
-            }
-            else {
+            } else {
                 dict.remove(word);
             }
-        }
-        else if (!isObjectZero(factor)) {
+        } else if (!isObjectZero(factor)) {
             dict.put(word, factor);
         }
     }
@@ -398,17 +384,15 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     /**
      * Subtract string <code>word</code> with factor <code>factor</code> to this.
      */
-    protected void subtract(String word, Object factor) {
+    protected void subtract(String word, T factor) {
         if (dict.containsKey(word)) {
-            Object newFactor = difference(dict.get(word), factor);
+            T newFactor = dict.get(word).difference(factor);
             if (!isObjectZero(newFactor)) {
                 dict.put(word, newFactor);
-            }
-            else {
+            } else {
                 dict.remove(word);
             }
-        }
-        else if (!isObjectZero(factor)) {
+        } else if (!isObjectZero(factor)) {
             dict.put(word, factor);
         }
     }
@@ -492,7 +476,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
      * Implementation of RingString Folding.
      */
 
-    class Word implements Comparable<Word> {
+    static class Word implements Comparable<Word> {
 
         public Word(String s, double f) {
             word = s;
@@ -536,7 +520,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>>
     private Word[] wordToArray() {
         Word res[] = new Word[dict.size()];
         String word;
-        Object factor;
+        T factor;
         int i = 0;
         Iterator<String> keys = dict.keySet().iterator();
         while (keys.hasNext()) {

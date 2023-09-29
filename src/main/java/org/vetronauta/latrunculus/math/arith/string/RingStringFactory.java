@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.exception.LatrunculusFactoryException;
  * @author vetronauta
  */
 @AllArgsConstructor
-public class RingStringFactory<T extends RingString<?>> {
+public class RingStringFactory<T extends RingString<?, ?>> {
 
     private Class<T> ringStringClass;
 

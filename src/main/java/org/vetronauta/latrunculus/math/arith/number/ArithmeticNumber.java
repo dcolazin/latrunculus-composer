@@ -11,4 +11,14 @@ public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
 
     public abstract boolean isZero();
 
+    /**
+     * pure sum between this number and the parameter
+     */
+    public abstract T sum(T y);
+
+    /**
+     * pure difference between this number and the parameter
+     */
+    public abstract T difference(T y);
+
 }

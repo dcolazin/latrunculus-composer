@@ -171,6 +171,7 @@ public final class Complex extends ArithmeticNumber<Complex> {
     /**
      * Returns the sum of this number and <code>c</code>.
      */
+    @Override
     public Complex sum(Complex c) {
         return new Complex(real+c.real, imag+c.imag);
     }
@@ -204,6 +205,7 @@ public final class Complex extends ArithmeticNumber<Complex> {
     /**
      * Returns the difference of this number and <code>c</code>.
      */
+    @Override
     public Complex difference(Complex c) {
         return new Complex(real-c.real, imag-c.imag);
     }

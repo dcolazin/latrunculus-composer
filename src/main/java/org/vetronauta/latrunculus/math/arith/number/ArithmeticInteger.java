@@ -69,6 +69,16 @@ public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
         return value == 0;
     }
 
+    @Override
+    public ArithmeticInteger sum(ArithmeticInteger other) {
+        return new ArithmeticInteger(value + other.value);
+    }
+
+    @Override
+    public ArithmeticInteger difference(ArithmeticInteger other) {
+        return new ArithmeticInteger(value - other.value);
+    }
+
     public static ArithmeticInteger[] toArray(int[] array) {
         return Arrays.stream(array)
                 .mapToObj(ArithmeticInteger::new)
