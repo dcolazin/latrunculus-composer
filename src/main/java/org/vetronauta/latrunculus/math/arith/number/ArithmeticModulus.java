@@ -19,17 +19,27 @@
 
 package org.vetronauta.latrunculus.math.arith.number;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.vetronauta.latrunculus.math.arith.NumberTheory;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Wrapper modulus class to be used in a <code>ZnString</code>.
  * @author vetronauta
  */
-@AllArgsConstructor
+@Getter
 public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
 
     private int value;
     private int modulus;
+
+    public ArithmeticModulus(int value, int modulus) {
+        this.value = NumberTheory.mod(value, modulus);
+        this.modulus = modulus;
+    }
 
     @Override
     public int compareTo(ArithmeticModulus arithmeticModulus) {
@@ -38,7 +48,7 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
 
     @Override
     public int intValue() {
-        return value % modulus;
+        return value;
     }
 
     @Override
@@ -60,4 +70,20 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
     public ArithmeticModulus deepCopy() {
         return new ArithmeticModulus(value, modulus);
     }
+
+    @Override
+    public boolean isZero() {
+        return intValue() == 0;
+    }
+
+    public static ArithmeticModulus[] toArray(int[] array, int m) {
+        return Arrays.stream(array)
+                .mapToObj(i -> new ArithmeticModulus(i, m))
+                .toArray(ArithmeticModulus[]::new);
+    }
+
+    public static List<ArithmeticModulus> toList(List<Integer> list, int m) {
+        return list.stream().map(i -> new ArithmeticModulus(i, m)).collect(Collectors.toList());
+    }
+
 }

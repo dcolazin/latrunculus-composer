@@ -19,109 +19,79 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.min;
-
-import java.util.*;
-
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.exception.LatrunculusCastException;
 import org.vetronauta.latrunculus.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.vetronauta.latrunculus.math.arith.number.Rational;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * The ring of strings with integer factors mod <i>p</i>.
  */
-public final class ZnString extends RingString {
+public final class ZnString extends RingString<ArithmeticModulus> {
+
+    private int modulus;
 
     public ZnString(String word, int modulus) {
+        super(word);
         this.modulus = modulus;
-        dict = new HashMap<String,Object>();
-        dict.put(word, getObjectOne());
     }
-
     
     public ZnString(String word, int factor, int modulus) {
+        super(word, new ArithmeticModulus(factor, modulus));
         this.modulus = modulus;
-        dict = new HashMap<String,Object>();
-        int f = NumberTheory.mod(factor, modulus);
-        if (f != 0) {
-            add(word, f);
-        }
     }
-    
 
     public ZnString(String[] words, int[] factors, int modulus) {
+        super(words, ArithmeticModulus.toArray(factors, modulus));
         this.modulus = modulus;
-        dict = new HashMap<>();
-        int len = min(factors.length, words.length);
-        for (int i = 0; i < len; i++) {
-            int f = NumberTheory.mod(factors[i], modulus);
-            if (f != 0) {
-                add(words[i], f);
-            }
-        }
     }
 
-    
     public ZnString(List<String> words, List<Integer> factors, int modulus) {
+        super(words, ArithmeticModulus.toList(factors, modulus));
         this.modulus = modulus;
-        dict = new HashMap<>();
-        int len = Math.min(factors.size(), words.size());
-        Iterator<String> witer = words.iterator();
-        Iterator<Integer> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {            
-            String w = witer.next();
-            int f = NumberTheory.mod(fiter.next(), modulus);
-            if (f != 0) {
-                add(w, f);
-            }
-        }
     }
-    
 
-    public ZnString(int modulus, Object ... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            int f = NumberTheory.mod(((Integer)objects[i+1]), modulus);
-            if (f != 0) {
-                add(w, f);
-            }
-        }
-    }
-    
-
-    public ZnString(RingString rs, int modulus) {
+    public ZnString(int modulus, Object... objects) throws LatrunculusCastException {
+        super(EntryList.handle(String.class, Function.identity(), Integer.class, i -> new ArithmeticModulus(i, modulus), objects));
         this.modulus = modulus;
-        dict = new HashMap<String,Object>();
-        for (String key : rs.dict.keySet()) {
-            Object value = rs.dict.get(key);
-            int i = NumberTheory.mod(objectInteger(value), modulus);
-            if (i != 0) {
-                add(key, i);
-            }
-        }
     }
 
-    
-    public ZnString(int i, int modulus) {
-        this("", i, modulus);
+    public ZnString(RingString<?> rs, int modulus) {
+        super(rs); //TODO this will not work!!!
+        this.modulus = modulus;
     }
 
-    
-    public ZnString(Rational r, int modulus) {
-        this("", r.intValue(), modulus);
-    }
-
-    
     public ZnString(double d, int modulus) {
-        this("", (int)Math.round(d), modulus);
-    }
-    
-    
-    public ZnString(Complex c, int modulus) {
-        this("", c.intValue(), modulus);
+        super(new ArithmeticModulus((int) d, modulus));
+        this.modulus = modulus;
     }
 
+    public ZnString(int i, int modulus) {
+        super(new ArithmeticModulus(i, modulus));
+        this.modulus = modulus;
+    }
+
+    public ZnString(ArithmeticNumber<?> number, int modulus) {
+        super(number);
+        this.modulus = modulus;
+    }
+
+    @Override
+    public ArithmeticModulus canonicalTransformation(ArithmeticNumber<?> number) {
+        if (number instanceof ArithmeticModulus && (((ArithmeticModulus) number).getModulus() == modulus)) {
+            return (ArithmeticModulus) number;
+        }
+        return new ArithmeticModulus(number.intValue(), modulus);
+    }
 
     public static ZnString getZero(int modulus) {
         ZnString res = new ZnString(modulus);
@@ -228,9 +198,6 @@ public final class ZnString extends RingString {
     public int getModulus() {
         return modulus;
     }
-
-    
-    private int modulus;
 
     @Override
     public RingString deepCopy() {

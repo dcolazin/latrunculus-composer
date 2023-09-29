@@ -19,106 +19,64 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.min;
-
-import java.util.*;
-
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.exception.LatrunculusCastException;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The ring of strings with complex factors.
  */
-public final class CString extends RingString {
+public final class CString extends RingString<Complex> {
+
+    private CString() {
+        super();
+    }
 
     public CString(String word) {
-        dict = new HashMap<>();
-        dict.put(word, getObjectOne());
+        super(word);
     }
-
     
     public CString(String word, Complex factor) {
-        dict = new HashMap<>();
-        if (!factor.isZero()) {
-            add(word, factor);
-        }
+        super(word, factor);
     }
 
-    
     public CString(String[] words, Complex[] factors) {
-        dict = new HashMap<>();
-        int len = min(factors.length, words.length);
-        for (int i = 0; i < len; i++) {
-            if (!factors[i].isZero()) {
-                add(words[i], factors[i]);
-            }
-        }
+        super(words, factors);
     }
 
-    
     public CString(List<String> words, List<Complex> factors) {
-        dict = new HashMap<>();
-        int len = min(factors.size(), words.size());
-        Iterator<String> witer = words.iterator();
-        Iterator<Complex> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {            
-            String w = witer.next();
-            Complex f = fiter.next();
-            if (!f.isZero()) {
-                add(w, i);
-            }
-        }
+        super(words, factors);
     }    
 
-    
-    public CString(Object... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            Complex f = (Complex)objects[i+1];
-            if (!f.isZero()) {
-                add(w, f);
-            }
-        }
-    }
-    
-
-    public CString(RingString rs) {
-        if (rs instanceof CString) {
-            dict = new HashMap<>(rs.dict);
-        }
-        else {
-            dict = new HashMap<>();
-            for (String key : rs.dict.keySet()) {
-                Object value = rs.dict.get(key);
-                Complex f = objectComplex(value);
-                if (!f.isZero()) {
-                    add(key, f);
-                }
-            }
-        }
+    public CString(Object... objects) throws LatrunculusCastException {
+        super(EntryList.handle(String.class, Complex.class, objects));
     }
 
-    
-    public CString(int i) {
-        this("", new Complex(i));
+    public CString(RingString<?> rs) {
+        super(rs);
     }
 
-    
-    public CString(Rational r) {
-        this("", new Complex(r.doubleValue()));
-    }
-
-    
     public CString(double d) {
-        this("", new Complex(d));
-    }
-    
-    
-    public CString(Complex c) {
-        this("", c);
+        super(new Complex(d));
     }
 
+    public CString(ArithmeticNumber<?> number) {
+        super(number);
+    }
+
+    @Override
+    public Complex canonicalTransformation(ArithmeticNumber<?> number) {
+        if (number instanceof Complex) {
+            return (Complex) number;
+        }
+        return new Complex(number.doubleValue());
+    }
 
     public static CString getZero() {
         CString res = new CString();

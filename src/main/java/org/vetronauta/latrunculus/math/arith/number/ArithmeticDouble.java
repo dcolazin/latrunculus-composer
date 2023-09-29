@@ -21,6 +21,10 @@ package org.vetronauta.latrunculus.math.arith.number;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Wrapper double class to be used in a <code>RString</code>.
  * @author vetronauta
@@ -59,4 +63,20 @@ public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
     public ArithmeticDouble deepCopy() {
         return new ArithmeticDouble(value);
     }
+
+    @Override
+    public boolean isZero() {
+        return value == 0.0;
+    }
+
+    public static ArithmeticDouble[] toArray(double[] array) {
+        return Arrays.stream(array)
+            .mapToObj(ArithmeticDouble::new)
+            .toArray(ArithmeticDouble[]::new);
+    }
+
+    public static List<ArithmeticDouble> toList(List<Double> list) {
+        return list.stream().map(ArithmeticDouble::new).collect(Collectors.toList());
+    }
+
 }

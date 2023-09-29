@@ -19,16 +19,23 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.atan;
-
-import java.io.Serializable;
-import java.util.*;
-
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.DeepCopyable;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
-import org.vetronauta.latrunculus.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.lang.Math.PI;
+import static java.lang.Math.atan;
+import static java.lang.Math.min;
 
 /**
  * The ring of strings.
@@ -36,9 +43,12 @@ import org.vetronauta.latrunculus.math.arith.number.Rational;
  * where the a_i are elements in a ring
  * and the s_i are character strings (<code>String</code>).
  */
-public abstract class RingString implements DeepCopyable<RingString>, Comparable<RingString>, Serializable {
+public abstract class RingString<T extends ArithmeticNumber<T>>
+        implements DeepCopyable<RingString<T>>, Comparable<RingString<T>>, Serializable {
 
-    protected HashMap<String,Object> dict;
+    //TODO null checks everywhere
+
+    protected HashMap<String, T> dict; //TODO should be final?
 
     /**
      * Creates a new <code>RingString</code> instance.
@@ -50,32 +60,85 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
 
     /**
      * Creates a new <code>RingString</code> instance.
+     * The resulting string is represented as 1*word.
+     */
+    protected RingString(String word) {
+        this();
+        dict.put(word, getObjectOne());
+    }
+
+    /**
+     * Creates a new <code>RingString</code> instance.
+     * The resulting string is represented as factor*"" after the canonical transformation.
+     */
+    protected RingString(ArithmeticNumber<?> factor) {
+        this();
+        dict.put(StringUtils.EMPTY, canonicalTransformation(factor));
+    }
+
+    /**
+     * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as factor*word.
      */
-    protected RingString(String word, Object factor) {
+    protected RingString(String word, T factor) {
         this();
-        dict.put(word, factor);
+        if (!factor.isZero()) {
+            dict.put(word, factor);
+        }
     }
 
     /**
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as sum(factors[i]*words[i]).
      */
-    protected RingString(String[] words, Object[] factors) {
+    protected RingString(String[] words, T[] factors) {
         this();
         int len = Math.min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
-            add(words[i], factors[i]);
+            T factor = factors[i];
+            if (!factor.isZero()) {
+                add(words[i], factor);
+            }
         }
     }
 
     /**
      * Creates a new <code>RingString</code> instance.
-     * Copy constructor.
+     * The resulting string is represented as sum(values[i]*keys[i]).
      */
-    protected RingString(RingString rs) {
-        dict = new HashMap<>(rs.dict);
+    protected RingString(EntryList<String, T> entryList) {
+        this(entryList.getKeys(), entryList.getValues());
     }
+
+    /**
+     * Creates a new <code>RingString</code> instance.
+     * The resulting string is represented as sum(factors[i]*words[i]).
+     */
+    protected RingString(List<String> words, List<T> factors) {
+        this();
+        int len = min(factors.size(), words.size());
+        for (int i = 0; i < len; i++) {
+            T factor = factors.get(i);
+            if (!factor.isZero()) {
+                add(words.get(i), factor);
+            }
+        }
+    }
+
+    /**
+     * Creates a new <code>RingString</code> instance, in case converting the values with the canonical transformation
+     */
+    protected RingString(RingString<?> rs) {
+        this();
+        for (Map.Entry<String, ? extends ArithmeticNumber<?>> entry : rs.dict.entrySet()) {
+            T factor = canonicalTransformation(entry.getValue());
+            if (!factor.isZero()) {
+                add(entry.getKey(), factor);
+            }
+        }
+    }
+
+    public abstract T canonicalTransformation(ArithmeticNumber<?> number);
 
     /**
      * Returns one character string in the RingString.
@@ -188,8 +251,8 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * Negate all factors in this.
      */
     public void negate() {
-        for (Map.Entry<String, Object> entry : dict.entrySet()) {
-            Object newFactor = neg(entry.getValue());
+        for (Map.Entry<String, T> entry : dict.entrySet()) {
+            T newFactor = neg(entry.getValue());
             dict.put(entry.getKey(), newFactor);
         }
     }
@@ -267,7 +330,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
     /**
      * Returns the sum of two factor objects.
      */
-    protected abstract Object sum(Object x, Object y);
+    protected abstract T sum(T x, T y);
 
     /**
      * Returns the difference of two factor objects.
@@ -282,7 +345,7 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
     /**
      * Returns the negative of a factor object.
      */
-    protected abstract Object neg(Object x);
+    protected abstract T neg(Object x);
 
     /**
      * The equality operation of two factor objects.
@@ -297,12 +360,12 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
     /**
      * Returns the unit factor object.
      */
-    protected abstract Object getObjectOne();
+    protected abstract T getObjectOne();
 
     /**
      * Returns the zero factor object.
      */
-    protected abstract Object getObjectZero();
+    protected abstract T getObjectZero();
 
     /**
      * True, if <code>x</code> is the zero factor object.
@@ -313,53 +376,11 @@ public abstract class RingString implements DeepCopyable<RingString>, Comparable
      * Returns the double value for factor object.
      */
     protected abstract double objectToDouble(Object x);
-    
-    protected static Integer objectInteger(Object x) {
-        if (x instanceof Integer) {
-            return (Integer)x;
-        } else if (x instanceof Number) {
-            return ((Number) x).intValue();
-        } else {
-            return null;
-        }
-    }
-
-    protected static Double objectDouble(Object x) {
-        if (x instanceof Double) {
-            return (Double)x;
-        } else if (x instanceof Number) {
-            return ((Number) x).doubleValue();
-        } else {
-            return null;
-        }
-    }
-
-    protected static Rational objectRational(Object x) {
-        if (x instanceof Rational) {
-            return (Rational)x;
-        } else if (x instanceof Integer) {
-            return new Rational((Integer) x);
-        } else if (x instanceof Number) {
-            return new Rational(((Number)x).doubleValue());
-        } else {
-            return null;
-        }
-    }
-
-    protected static Complex objectComplex(Object x) {
-        if (x instanceof Complex) {
-            return (Complex)x;
-        } else if (x instanceof Number) {
-            return new Complex(((Number)x).doubleValue());
-        } else {
-            return null;
-        }
-    }
 
     /**
      * Add string <code>word</code> with factor <code>factor</code> to this.
      */
-    protected void add(String word, Object factor) {
+    protected void add(String word, T factor) {
         if (dict.containsKey(word)) {
             Object newFactor = sum(dict.get(word), factor);
             if (!isObjectZero(newFactor)) {

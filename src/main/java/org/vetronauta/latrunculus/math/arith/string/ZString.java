@@ -19,106 +19,68 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.min;
-
-import java.util.*;
-
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.exception.LatrunculusCastException;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.vetronauta.latrunculus.math.arith.number.Rational;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * The ring of strings with integer factors.
  */
-public final class ZString extends RingString {
+public final class ZString extends RingString<ArithmeticInteger> {
 
     public ZString(String word) {
-        dict = new HashMap<>();
-        dict.put(word, getObjectOne());
+        super(word);
     }
-    
 
     public ZString(String word, int factor) {
-        dict = new HashMap<>();
-        if (factor != 0) {
-            add(word, factor);
-        }
+        super(word, new ArithmeticInteger(factor));
     }
-    
 
     public ZString(String[] words, int[] factors) {
-        dict = new HashMap<>();
-        int len = min(factors.length, words.length);
-        for (int i = 0; i < len; i++) {
-            if (factors[i] != 0) {
-                add(words[i], factors[i]);
-            }
-        }
+        super(words, ArithmeticInteger.toArray(factors));
     }
-    
-    
+
     public ZString(List<String> words, List<Integer> factors) {
-        dict = new HashMap<>();
-        int len = Math.min(factors.size(), words.size());
-        Iterator<String> witer = words.iterator();
-        Iterator<Integer> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {
-            String w = witer.next();
-            int f = fiter.next();
-            if (f != 0) {
-                add(w, i);
-            }
-        }
-    }
-    
-    
-    public ZString(Object ... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            int f = (Integer)objects[i+1];
-            if (f != 0) {
-                add(w, f);
-            }
-        }
-    }
-    
-
-    public ZString(RingString rs) {
-        if (rs instanceof ZString) {
-            dict = new HashMap<>(rs.dict);
-        }
-        else {
-            dict = new HashMap<>();
-            for (String key : rs.dict.keySet()) {
-                Object value = rs.dict.get(key);
-                Integer i = objectInteger(value);
-                if (i != 0) {
-                    add(key, i);
-                }
-            }
-        }
-    }
-    
-    
-    public ZString(int i) {
-        this("", i);
+        super(words, ArithmeticInteger.toList(factors));
     }
 
-    
-    public ZString(Rational r) {
-        this("", r.intValue());
+    public ZString(Object... objects) throws LatrunculusCastException {
+        super(EntryList.handle(String.class, Function.identity(), Integer.class, ArithmeticInteger::new, objects));
     }
 
-    
+    public ZString(RingString<?> rs) {
+        super(rs);
+    }
+
     public ZString(double d) {
-        this("", (int)Math.round(d));
-    }
-    
-    
-    public ZString(Complex c) {
-        this("", c.intValue());
+        super(new ArithmeticInteger((int) d));
     }
 
+    public ZString(int i) {
+        super(new ArithmeticInteger(i));
+    }
+    
+    public ZString(ArithmeticNumber<?> number) {
+        super(number);
+    }
+
+    @Override
+    public ArithmeticInteger canonicalTransformation(ArithmeticNumber<?> number) {
+        if (number instanceof ArithmeticInteger) {
+            return (ArithmeticInteger) number;
+        }
+        return new ArithmeticInteger(number.intValue());
+    }
 
     public static ZString getZero() {
         ZString res = new ZString();

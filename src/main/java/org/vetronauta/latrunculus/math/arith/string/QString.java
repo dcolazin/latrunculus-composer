@@ -19,106 +19,64 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.min;
-
-import java.util.*;
-
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.exception.LatrunculusCastException;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Rational;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The ring of strings with rational factors.
  */
-public final class QString extends RingString {
+public final class QString extends RingString<Rational> {
+
+    private QString() {
+        super();
+    }
 
     public QString(String word) {
-        dict = new HashMap<>();
-        dict.put(word, getObjectOne());
+        super(word);
     }
-    
 
     public QString(String word, Rational factor) {
-        dict = new HashMap<>();
-        if (!factor.isZero()) {
-            add(word, factor);
-        }
+        super(word, factor);
     }
-    
 
     public QString(String[] words, Rational[] factors) {
-        dict = new HashMap<>();
-        int len = min(factors.length, words.length);
-        for (int i = 0; i < len; i++) {
-            if (!factors[i].isZero()) {
-                add(words[i], factors[i]);
-            }
-        }
+        super(words, factors);
     }
-    
 
     public QString(List<String> words, List<Rational> factors) {
-        dict = new HashMap<>();
-        int len = min(factors.size(), words.size());
-        Iterator<String> witer = words.iterator();
-        Iterator<Rational> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {            
-            String w = witer.next();
-            Rational f = fiter.next();
-            if (!f.isZero()) {
-                add(w, i);
-            }
-        }
-    }
-    
-
-    public QString(Object ... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            Rational f = (Rational)objects[i+1];
-            if (!f.isZero()) {
-                add(w, f);
-            }
-        }
-    }
-    
-
-    public QString(RingString rs) {
-        if (rs instanceof QString) {
-            dict = new HashMap<>(rs.dict);
-        }
-        else {
-            dict = new HashMap<>();
-            for (String key : rs.dict.keySet()) {
-                Object value = rs.dict.get(key);
-                Rational f = objectRational(value);
-                if (!f.isZero()) {
-                    add(key, f);
-                }
-            }
-        }
-    }
-    
-
-    public QString(int i) {
-        this("", new Rational(i));
+        super(words, factors);
     }
 
-    
-    public QString(Rational r) {
-        this("", r);
+    public QString(Object... objects) throws LatrunculusCastException {
+        super(EntryList.handle(String.class, Rational.class, objects));
     }
 
-    
+    public QString(RingString<?> rs) {
+        super(rs);
+    }
+
     public QString(double d) {
-        this("", new Rational(d));
-    }
-    
-    
-    public QString(Complex c) {
-        this("", new Rational(c.doubleValue()));
+        super(new Rational(d));
     }
 
+    public QString(ArithmeticNumber<?> number) {
+        super(number);
+    }
+
+    @Override
+    public Rational canonicalTransformation(ArithmeticNumber<?> number) {
+        if (number instanceof Rational) {
+            return (Rational) number;
+        }
+        return new Rational(number.doubleValue());
+    }
 
     public static QString getZero() {
         QString res = new QString();
@@ -153,10 +111,6 @@ public final class QString extends RingString {
         
         return new QString(words, factors);
     }
-    
-
-    private QString() { /* do nothing */ }
-
     
     protected Object sum(Object x, Object y) {
         return ((Rational)x).sum((Rational)y);

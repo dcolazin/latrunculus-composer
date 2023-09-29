@@ -21,6 +21,10 @@ package org.vetronauta.latrunculus.math.arith.number;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Wrapper int class to be used in a <code>ZString</code>.
  * @author vetronauta
@@ -59,4 +63,20 @@ public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
     public ArithmeticInteger deepCopy() {
         return new ArithmeticInteger(value);
     }
+
+    @Override
+    public boolean isZero() {
+        return value == 0;
+    }
+
+    public static ArithmeticInteger[] toArray(int[] array) {
+        return Arrays.stream(array)
+                .mapToObj(ArithmeticInteger::new)
+                .toArray(ArithmeticInteger[]::new);
+    }
+
+    public static List<ArithmeticInteger> toList(List<Integer> list) {
+        return list.stream().map(ArithmeticInteger::new).collect(Collectors.toList());
+    }
+
 }

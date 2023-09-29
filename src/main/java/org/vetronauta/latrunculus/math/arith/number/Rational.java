@@ -172,6 +172,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     /**
      * Returns true iff this number is 0/1.
      */
+    @Override
     public boolean isZero() {
         return num == 0;
     }

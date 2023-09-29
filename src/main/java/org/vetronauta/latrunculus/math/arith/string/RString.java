@@ -19,106 +19,67 @@
 
 package org.vetronauta.latrunculus.math.arith.string;
 
-import static java.lang.Math.min;
-
-import java.util.*;
-
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.exception.LatrunculusCastException;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.math.arith.number.Complex;
 import org.vetronauta.latrunculus.math.arith.number.Rational;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * The ring of strings with real factors.
  */
-public final class RString extends RingString {
+public final class RString extends RingString<ArithmeticDouble> {
+
+    private RString() {
+        super();
+    }
 
     public RString(String word) {
-        dict = new HashMap<String,Object>();
-        dict.put(word, getObjectOne());
+        super(word);
     }
 
-    
     public RString(String word, double factor) {
-        dict = new HashMap<String,Object>();
-        if (factor != 0.0) {
-            add(word, factor);
-        }
+        super(word, new ArithmeticDouble(factor));
     }
 
-    
     public RString(String[] words, double[] factors) {
-        dict = new HashMap<String,Object>();
-        int len = min(factors.length, words.length);
-        for (int i = 0; i < len; i++) {
-            if (factors[i] != 0.0) {
-                add(words[i], factors[i]);
-            }
-        }
+        super(words, ArithmeticDouble.toArray(factors));
     }
 
-    
     public RString(List<String> words, List<Double> factors) {
-        dict = new HashMap<String,Object>();
-        int len = min(factors.size(), words.size());
-        Iterator<String> witer = words.iterator();
-        Iterator<Double> fiter = factors.iterator();
-        for (int i = 0; i < len; i++) {            
-            String w = witer.next();
-            double f = fiter.next();
-            if (f != 0.0) {
-                add(w, i);
-            }
-        }
-    }
-    
-
-    public RString(Object ... objects) {
-        for (int i = 0; i < objects.length; i += 2) {
-            String w = (String)objects[i]; 
-            double f = (Double)objects[i+1];
-            if (f != 0.0) {
-                add(w, f);
-            }
-        }
-    }
-    
-
-    public RString(RingString rs) {
-        if (rs instanceof RString) {
-            dict = new HashMap<String,Object>(rs.dict);
-        }
-        else {
-            dict = new HashMap<String,Object>();
-            for (String key : rs.dict.keySet()) {
-                Object value = rs.dict.get(key);
-                Double f = objectDouble(value);
-                if (f != 0.0) {
-                    add(key, f);
-                }
-            }
-        }
+        super(words, ArithmeticDouble.toList(factors));
     }
 
-    
-    public RString(int i) {
-        this("", i);
+    public RString(Object... objects) throws LatrunculusCastException {
+        super(EntryList.handle(String.class, Function.identity(), Double.class, ArithmeticDouble::new, objects));
     }
 
-    
-    public RString(Rational r) {
-        this("", r.doubleValue());
+    public RString(RingString<?> rs) {
+        super(rs);
     }
 
-    
     public RString(double d) {
-        this("", d);
-    }
-    
-    
-    public RString(Complex c) {
-        this("", c.doubleValue());
+        super(new ArithmeticDouble(d));
     }
 
+    public RString(ArithmeticNumber<?> number) {
+        super(number);
+    }
+
+    @Override
+    public ArithmeticDouble canonicalTransformation(ArithmeticNumber<?> number) {
+        if (number instanceof ArithmeticDouble) {
+            return (ArithmeticDouble) number;
+        }
+        return new ArithmeticDouble(number.doubleValue());
+    }
 
     public static RString getZero() {
         RString res = new RString();
@@ -153,10 +114,6 @@ public final class RString extends RingString {
         
         return new RString(words, factors);
     }
-    
-
-    private RString() { /* do nothing */ }
-    
 
     protected Object sum(Object x, Object y) {
         double ix = (Double) x;

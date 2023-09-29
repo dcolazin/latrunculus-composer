@@ -350,6 +350,7 @@ public final class Complex extends ArithmeticNumber<Complex> {
     /**
      * Returns true iff this number is 0+i0.
      */
+    @Override
     public boolean isZero() {
         return real == 0.0 && imag == 0.0;
     }
