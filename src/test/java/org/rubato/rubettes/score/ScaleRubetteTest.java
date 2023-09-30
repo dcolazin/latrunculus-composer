@@ -93,39 +93,41 @@ class ScaleRubetteTest {
 		if (!testFile.exists()) {
 			testFile.createNewFile();
 		}
-		XMLWriter writer = new XMLWriter(testFile);
-		Reader bufferedReader = new BufferedReader(new FileReader(testFile));
-		XMLReader reader = new XMLReader(bufferedReader);
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		
-		//test a preset
-		this.rubette.getProperties();
-		this.rubette.setTempPreset(2);
-		this.rubette.applyProperties();
-		writer.open();
-		this.rubette.toXML(writer);
-		writer.close();
-		Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
-		reader.parse();
-		this.rubette = (ScaleRubette)this.rubette.fromXML(reader, element);
-		assertTrue(this.rubette.getInfo().equals("dorian"));
-		
-		testFile.createNewFile();
-		writer = new XMLWriter(testFile);
-		bufferedReader = new BufferedReader(new FileReader(testFile));
-		
-		//test 'custom'
-		this.rubette.setTempPreset(0);
-		this.rubette.applyProperties();
-		writer.open();
-		this.rubette.toXML(writer);
-		writer.close();
-		reader.parse();
-		element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
-		this.rubette = (ScaleRubette)this.rubette.fromXML(reader, element);
-		assertTrue(this.rubette.getInfo().equals("custom"));
-		
-		testFile.delete();
+		try {
+			XMLWriter writer = new XMLWriter(testFile);
+			Reader bufferedReader = new BufferedReader(new FileReader(testFile));
+			XMLReader reader = new XMLReader(bufferedReader);
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+
+			//test a preset
+			this.rubette.getProperties();
+			this.rubette.setTempPreset(2);
+			this.rubette.applyProperties();
+			writer.open();
+			this.rubette.toXML(writer);
+			writer.close();
+			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
+			reader.parse();
+			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
+			assertTrue(this.rubette.getInfo().equals("dorian"));
+
+			testFile.createNewFile();
+			writer = new XMLWriter(testFile);
+			bufferedReader = new BufferedReader(new FileReader(testFile));
+
+			//test 'custom'
+			this.rubette.setTempPreset(0);
+			this.rubette.applyProperties();
+			writer.open();
+			this.rubette.toXML(writer);
+			writer.close();
+			reader.parse();
+			element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
+			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
+			assertTrue(this.rubette.getInfo().equals("custom"));
+		} finally {
+			testFile.delete();
+		}
 	}
 
 	@Test

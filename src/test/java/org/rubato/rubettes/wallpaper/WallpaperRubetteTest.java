@@ -162,20 +162,24 @@ class WallpaperRubetteTest {
 		if (!testFile.exists()) {
 			testFile.createNewFile();
 		}
-		Reader bufferedReader = new BufferedReader(new FileReader(testFile));
-		//PrintStream stream = new PrintStream(new ByteArrayOutputStream());
-		XMLWriter writer = new XMLWriter(testFile);
-		XMLReader reader = new XMLReader(bufferedReader);
-		writer.open();
-		this.rubette.toXML(writer);
-		writer.close();
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
-		reader.parse();
-		this.rubette = (WallpaperRubette)this.rubette.fromXML(reader, element);
-		this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
-		testFile.delete();
-		
+
+		try {
+			Reader bufferedReader = new BufferedReader(new FileReader(testFile));
+			//PrintStream stream = new PrintStream(new ByteArrayOutputStream());
+			XMLWriter writer = new XMLWriter(testFile);
+			XMLReader reader = new XMLReader(bufferedReader);
+			writer.open();
+			this.rubette.toXML(writer);
+			writer.close();
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
+			reader.parse();
+			this.rubette = (WallpaperRubette) this.rubette.fromXML(reader, element);
+			this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
+		} finally {
+			testFile.delete();
+		}
+
 		assertTrue(this.rubette.getTempInputForm().equals(this.scoreForm));
 		assertTrue(this.denotator.getFactorCount() == 6);
 		this.assertDenotatorFactor(0, 1, 2);
