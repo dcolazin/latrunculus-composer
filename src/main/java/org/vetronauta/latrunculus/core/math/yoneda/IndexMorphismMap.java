@@ -21,19 +21,19 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDEX_ATTR;
 
 /**
  * Morphism map containing a morphism and an index (for type colimit).
@@ -159,18 +159,6 @@ public final class IndexMorphismMap implements MorphismMap {
         }
     }
 
-    
-    private final static String INDEX_ATTR = "index";
-    
-    
-    public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName(),
-                                 INDEX_ATTR, index);
-        factor.toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
     public MorphismMap fromXML(XMLReader reader, Element element) {
         int i = XMLReader.getIntAttribute(element, INDEX_ATTR, 0);
         Element child = XMLReader.getChild(element, DENOTATOR);
@@ -186,7 +174,7 @@ public final class IndexMorphismMap implements MorphismMap {
     }
     
     
-    public final String getElementTypeName() {
+    public String getElementTypeName() {
         return "IndexMorphismMap";
     }
     

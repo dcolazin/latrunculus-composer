@@ -72,7 +72,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     //TODO extract common logic
 
-    private final ModuleDefinitionXmlWriter definitionWriter;
+    private final DefinitionXmlWriter definitionWriter;
 
     public void toXML(Module module, XMLWriter writer) {
         definitionWriter.toXML(module, writer);

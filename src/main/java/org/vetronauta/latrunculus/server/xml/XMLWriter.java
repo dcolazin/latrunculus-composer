@@ -45,7 +45,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultModuleDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
 
 
 /**
@@ -56,7 +56,7 @@ import org.vetronauta.latrunculus.server.xml.writer.DefaultModuleDefinitionXmlWr
 public class XMLWriter {
 
     //TODO constructor?
-    private final DefaultModuleDefinitionXmlWriter moduleElementWriter = new DefaultModuleDefinitionXmlWriter();
+    private final DefaultDefinitionXmlWriter moduleElementWriter = new DefaultDefinitionXmlWriter();
 
     /**
      * Creates a non-compressing writer to the specified file.

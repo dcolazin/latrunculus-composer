@@ -84,5 +84,6 @@ public final class XMLConstants {
     public static final String FACTOR_ATTR = "factor";
     public static final String KIND_ATTR   = "kind";
     public static final String INDETERMINATE_ATTR = "indeterminate";
+    public static final String INDEX_ATTR = "index";
 
 }

@@ -19,18 +19,23 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.util.*;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeMap;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 
 /**
@@ -49,8 +54,8 @@ public final class AutoListMorphismMap implements MorphismMap {
      * Creates an empty FastListMorphismMap.
      */
     public AutoListMorphismMap() {
-        this.indexMap = new TreeMap<Denotator,Integer>();
-        this.currentFactors = new ArrayList<Denotator>();
+        this.indexMap = new TreeMap<>();
+        this.currentFactors = new ArrayList<>();
     }
     
 
@@ -59,11 +64,11 @@ public final class AutoListMorphismMap implements MorphismMap {
      */
     public AutoListMorphismMap(Collection<Denotator> denotators) {
     	this.initMap(denotators);
-    	this.currentFactors = new ArrayList<Denotator>(this.indexMap.keySet());
+    	this.currentFactors = new ArrayList<>(this.indexMap.keySet());
     }
     
     private void initMap(Collection<Denotator> denotators) {
-    	this.indexMap = new TreeMap<Denotator,Integer>();
+    	this.indexMap = new TreeMap<>();
     	int currentIndex = 0;
     	for (Denotator currentDenotator: denotators) {
     		this.indexMap.put(currentDenotator, currentIndex);
@@ -127,7 +132,7 @@ public final class AutoListMorphismMap implements MorphismMap {
      */
     public ArrayList<Denotator> getFactors() {
     	if (this.listUpdateNecessary) {
-    		this.currentFactors = new ArrayList<Denotator>(this.indexMap.keySet());
+    		this.currentFactors = new ArrayList<>(this.indexMap.keySet());
     		this.listUpdateNecessary = false;
     	}
     	return this.currentFactors;
@@ -215,7 +220,7 @@ public final class AutoListMorphismMap implements MorphismMap {
 
     
     public MorphismMap changeAddress(Module address) {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>();
+        ArrayList<Denotator> newList = new ArrayList<>();
         for (Denotator d : this.getFactors()) {
             Denotator newD = d.changeAddress(address);
             if (newD == null) {
@@ -228,7 +233,7 @@ public final class AutoListMorphismMap implements MorphismMap {
     
     
     public MorphismMap changeAddress(ModuleMorphism morphism) {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>();
+        ArrayList<Denotator> newList = new ArrayList<>();
         for (Denotator d : this.getFactors()) {
             Denotator newD = d.changeAddress(morphism);
             if (newD == null) {
@@ -248,19 +253,9 @@ public final class AutoListMorphismMap implements MorphismMap {
         }
         return true;
     }
-    
-    
-    public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName());
-        for (Denotator d : this.getFactors()) {
-            d.toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
-    
+
     public MorphismMap fromXML(XMLReader reader, Element element) {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>();
+        ArrayList<Denotator> newList = new ArrayList<>();
         Element child = XMLReader.getChild(element, DENOTATOR);
         while (child != null) {
             Denotator denotator = reader.parseDenotator(child);
@@ -290,7 +285,7 @@ public final class AutoListMorphismMap implements MorphismMap {
      * Returns a copy of this list morphism map.
      */
     public AutoListMorphismMap copy() {
-    	ArrayList<Denotator> copiedFactors = new ArrayList<Denotator>();
+    	ArrayList<Denotator> copiedFactors = new ArrayList<>();
         for (Denotator d : this.getFactors()) {
         	copiedFactors.add(d.copy());
         }

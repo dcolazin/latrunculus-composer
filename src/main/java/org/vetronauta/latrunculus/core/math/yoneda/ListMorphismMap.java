@@ -21,18 +21,22 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.util.*;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 
 /**
@@ -48,7 +52,7 @@ public final class ListMorphismMap implements MorphismMap {
      * Creates a ListMorphismMap of initial capacity <code>n</code>.
      */
     public ListMorphismMap(int n) {
-        list = new ArrayList<Denotator>(n);
+        list = new ArrayList<>(n);
     }
     
 
@@ -56,7 +60,7 @@ public final class ListMorphismMap implements MorphismMap {
      * Creates a ListMorphismMap.
      */
     public ListMorphismMap(Collection<Denotator> denotators) {        
-        list = new ArrayList<Denotator>(denotators);
+        list = new ArrayList<>(denotators);
     }
 
     
@@ -293,16 +297,6 @@ public final class ListMorphismMap implements MorphismMap {
         }
         return true;
     }
-    
-    
-    public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName());
-        for (Denotator d : list) {
-            d.toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
     
     public MorphismMap fromXML(XMLReader reader, Element element) {
         ArrayList<Denotator> newList = new ArrayList<Denotator>();

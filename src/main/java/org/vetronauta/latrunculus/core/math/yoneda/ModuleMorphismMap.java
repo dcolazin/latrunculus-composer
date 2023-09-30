@@ -21,26 +21,23 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism map containing a module morphism (for type simple).
@@ -260,14 +257,6 @@ public class ModuleMorphismMap implements MorphismMap {
         }                        
     }
 
-    
-    public void toXML(XMLWriter writer) {        
-        writer.openBlockWithType(MORPHISM_MAP, getElementTypeName());
-        moduleMorphism.toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
     public MorphismMap fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         
@@ -282,15 +271,6 @@ public class ModuleMorphismMap implements MorphismMap {
         }
         return new ModuleMorphismMap(morphism);
     }
-    
-    
-    private static final XMLInputOutput<MorphismMap> xmlIO =
-        new ModuleMorphismMap(ModuleMorphism.getIdentityMorphism(ZRing.ring));
-
-    public static XMLInputOutput<MorphismMap> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ModuleMorphismMap";

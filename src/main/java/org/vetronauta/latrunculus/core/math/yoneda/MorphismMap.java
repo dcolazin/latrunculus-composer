@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.server.xml.XMLInput;
 
 /**
  * The implementation or "formula" of a morphism.
@@ -40,9 +40,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public interface MorphismMap 
-    extends Cloneable, Comparable<MorphismMap>, Serializable,
-            XMLInputOutput<MorphismMap> {
+public interface MorphismMap extends Cloneable, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap> {
 
     /**
      * Evaluates the map at an element.
@@ -53,21 +51,19 @@ public interface MorphismMap
      * @return a new morphism map if there has been any change
      * @throws MappingException if mapping fails
      */
-    public MorphismMap at(ModuleElement element)
+    MorphismMap at(ModuleElement element)
         throws MappingException;
     
     /**
      * Returns a deep copy of this MorphismMap.
      */
-    public Object clone();
+    Object clone();
 
     /**
      * Returns a deep copy of this MorphismMap.
      */
-    public MorphismMap copy();
-    
-    public int compareTo(MorphismMap object);
-    
+    MorphismMap copy();
+
     /**
      * Makes an address change.
      * 
@@ -75,7 +71,7 @@ public interface MorphismMap
      * @return a copy of this morphism with address <code>newAddress</code>
      *         or null if address changed fails
      */
-    public MorphismMap changeAddress(Module address);
+    MorphismMap changeAddress(Module address);
     
     /**
      * Makes an address change using a module morphism.
@@ -84,20 +80,20 @@ public interface MorphismMap
      * @return a copy of this morphism with the new address
      *         or null if address change fails
      */
-    public MorphismMap changeAddress(ModuleMorphism morphism);
+    MorphismMap changeAddress(ModuleMorphism morphism);
 
     /**
      * Every morphism map must have a hash function.
      * 
      * @return the hashcode of this morphism map
      */
-    public int hashCode();
+    int hashCode();
     
-    public boolean fullEquals(MorphismMap m, IdentityHashMap<Object,Object> s);
+    boolean fullEquals(MorphismMap m, IdentityHashMap<Object,Object> s);
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list);
+    LinkedList<Form> getFormDependencies(LinkedList<Form> list);
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
+    LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
    
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
+    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
 }

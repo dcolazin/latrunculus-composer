@@ -118,9 +118,10 @@ public class Dispatcher {
     private final HashMap<String,XMLInputOutput<Module>> modules = new HashMap<>();
     private final HashMap<String,XMLInputOutput<ModuleMorphism>> moduleMorphisms = new HashMap<>();
     private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
-    private final HashMap<String,XMLInputOutput<MorphismMap>> morphismMaps = new HashMap<>();
+    private final HashMap<String, Class<? extends MorphismMap>> morphismMaps = new HashMap<>();
 
     private LatrunculusXmlReader<ModuleElement> moduleReader; //TODO constructor and a DefinitionModuleReader
+    private LatrunculusXmlReader<MorphismMap> mapReader; //TODO constructor and a DefinitionModuleReader
 
     public static Dispatcher getDispatcher() {
         return DISPATCHER;
@@ -179,26 +180,9 @@ public class Dispatcher {
     }
 
     public MorphismMap resolveMorphismMap(XMLReader reader, Element morphismMapElement) {
-        MorphismMap morphismMap = null;
         String morphismMapName = morphismMapElement.getAttribute(TYPE_ATTR);
-        XMLInputOutput<MorphismMap> dispatch = morphismMaps.get(morphismMapName);
-
-        if (dispatch != null) {
-            morphismMap = dispatch.fromXML(reader, morphismMapElement);
-        }
-
-        if (morphismMap == null) {
-            try {
-                Class<?> c = Class.forName(morphismMapName);
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
-                morphismMap = (MorphismMap)m.invoke(c, new Object[] { reader, morphismMapElement });
-            }
-            catch (Exception e) {
-                reader.setError("Cannot build morphism map from %%1.", morphismMapName);
-            }
-        }
-
-        return morphismMap;
+        Class<? extends MorphismMap> dispatch = morphismMaps.get(morphismMapName);
+        return mapReader.fromXML(morphismMapElement, dispatch, reader);
     }
 
     public void addModule(XMLInputOutput<Module> dispatch) {
@@ -209,8 +193,8 @@ public class Dispatcher {
         moduleMorphisms.put(dispatch.getElementTypeName(), dispatch);
     }
 
-    public void addMorphismMap(XMLInputOutput<MorphismMap> dispatch) {
-        morphismMaps.put(dispatch.getElementTypeName(), dispatch);
+    public void addMorphismMap(Class<? extends MorphismMap> clazz) {
+        morphismMaps.put(clazz.getSimpleName(), clazz);
     }
 
     public void addModuleElement(Class<? extends ModuleElement> clazz) {
@@ -321,8 +305,9 @@ public class Dispatcher {
         addModuleMorphism(SplitMorphism.getXMLInputOutput());
         addModuleMorphism(CastMorphism.getXMLInputOutput());
 
-        addMorphismMap(ModuleMorphismMap.getXMLInputOutput());
-        addMorphismMap(ConstantModuleMorphismMap.getXMLInputOutput());
+        //TODO AutoListMorphismMap, EmptyMorphismMap, IndexMorphismMap, ListMorphismMap are not registered
+        addMorphismMap(ModuleMorphismMap.class);
+        addMorphismMap(ConstantModuleMorphismMap.class);
     }
     
         
