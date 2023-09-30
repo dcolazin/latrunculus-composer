@@ -104,6 +104,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.server.xml.reader.DefaultDefinitionXmlReader;
 import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
 import org.w3c.dom.Element;
 
@@ -120,7 +121,8 @@ public class Dispatcher {
     private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
     private final HashMap<String, Class<? extends MorphismMap>> morphismMaps = new HashMap<>();
 
-    private LatrunculusXmlReader<MathDefinition> definitionReader; //TODO constructor and a DefaultDefinitionModuleReader
+    //TODO constructor
+    private final LatrunculusXmlReader<MathDefinition> definitionReader = new DefaultDefinitionXmlReader();
 
     public static Dispatcher getDispatcher() {
         return DISPATCHER;
