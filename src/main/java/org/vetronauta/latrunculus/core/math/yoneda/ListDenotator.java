@@ -21,14 +21,6 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
@@ -40,8 +32,18 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.LIST_TYPE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * List denotator class.
@@ -50,9 +52,7 @@ import org.w3c.dom.Element;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public class ListDenotator 
-        extends Denotator        
-        implements FactorDenotator {
+public class ListDenotator extends Denotator implements FactorDenotator {
 
     /**
      * Creates a new list denotator.
@@ -681,43 +681,17 @@ public class ListDenotator
         }
         return list;
     }
-    
-    
-    private static final String FORM_ATTR  = "form";
-    private static final String NAME_ATTR  = "name";
-    private static final String TYPE_VALUE = "list";
-    
-    @Override
-    public void toXML(XMLWriter writer) {
-        Object[] attrs = new Object[4+(getName()!=null?2:0)];
-        attrs[0] = TYPE_ATTR;
-        attrs[1] = TYPE_VALUE;
-        attrs[2] = FORM_ATTR;
-        attrs[3] = getForm().getNameString();
-        if (getName() != null) {
-            attrs[4] = NAME_ATTR;
-            attrs[5] = getNameString();
-        }
-        writer.openBlock(DENOTATOR, attrs);
 
-        for (Denotator d : getFactors()) {
-            writer.writeDenotatorRef(d);
-        }
-        
-        writer.closeBlock();
-    }
-
-    
     /**
      * Reads XML representation from <code>reader</code> starting with <code>element</code>.
      * 
      * @return a list denotator or null if parsing failed
      */
     public static ListDenotator fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(TYPE_VALUE));
+        assert(element.getAttribute(TYPE_ATTR).equals(LIST_TYPE_VALUE));
         
         if (!element.hasAttribute(FORM_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", TYPE_VALUE, DENOTATOR, FORM_ATTR);
+            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", LIST_TYPE_VALUE, DENOTATOR, FORM_ATTR);
             return null;                                                
         }
         String formName = element.getAttribute(FORM_ATTR);
@@ -727,7 +701,7 @@ public class ListDenotator
             return null;
         }
         if (!(form instanceof ListForm)) {
-            reader.setError("Form with name %%1 is not a form of type %%2.", formName, TYPE_VALUE);
+            reader.setError("Form with name %%1 is not a form of type %%2.", formName, LIST_TYPE_VALUE);
             return null;
         }
         ListForm listForm = (ListForm)form;

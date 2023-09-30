@@ -21,32 +21,36 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.SIMPLE_TYPE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Simple denotator class.
@@ -669,45 +673,18 @@ public final class SimpleDenotator extends Denotator {
         }
         return list;
     }
-    
-    
-    private static final String TYPE_VALUE = "simple";
-    
-    @Override
-    public void toXML(XMLWriter writer) {
-        Object[] attrs = new Object[4+(getName()!=null?2:0)];
-        attrs[0] = TYPE_ATTR;
-        attrs[1] = TYPE_VALUE;
-        attrs[2] = FORM_ATTR;
-        attrs[3] = getForm().getNameString();
-        if (getName() != null) {
-            attrs[4] = NAME_ATTR;
-            attrs[5] = getNameString();
-        }
-        writer.openBlock(DENOTATOR, attrs);
 
-        // write the coordinate
-        getModuleMorphismMap().toXML(writer);
-        if (getCoordinate() != getFrameCoordinate()) {
-            // write the frame coordinate, if not identical to the coordinate
-            getFrameModuleMorphismMap().toXML(writer);
-        }
-        
-        writer.closeBlock();
-    }
-
-    
     /**
      * Reads XML representation from <code>reader</code> starting with <code>element</code>.
      * 
      * @return a simple denotator or null if parsing failed
      */
     public static SimpleDenotator fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(TYPE_VALUE));
+        assert(element.getAttribute(TYPE_ATTR).equals(SIMPLE_TYPE_VALUE));
 
         // read the form
         if (!element.hasAttribute(FORM_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", TYPE_VALUE, DENOTATOR, FORM_ATTR);
+            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", SIMPLE_TYPE_VALUE, DENOTATOR, FORM_ATTR);
             return null;                                                
         }
         String formName = element.getAttribute(FORM_ATTR);
@@ -717,7 +694,7 @@ public final class SimpleDenotator extends Denotator {
             return null;
         }
         if (!(form instanceof SimpleForm)) {
-            reader.setError("Form with name %%1 is not a form of type %%2.", formName, TYPE_VALUE);
+            reader.setError("Form with name %%1 is not a form of type %%2.", formName, SIMPLE_TYPE_VALUE);
             return null;
         }
 

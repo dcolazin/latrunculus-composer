@@ -19,15 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+
+import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * A placeholder for denotators that are not yet known.
@@ -156,13 +155,6 @@ public final class DenotatorReference extends Denotator {
     protected LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
         throw new Error("Fatal error: DenotatorReference.getDependencies never be called");
     }
-
-    
-    @Override
-    public void toXML(XMLWriter writer) {
-        throw new Error("Fatal error: DenotatorReference.toXML should never be called");
-    }
-    
     
     @Override
     public String toString() {

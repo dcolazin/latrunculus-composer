@@ -21,19 +21,18 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import java.io.PrintStream;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+
+import java.io.PrintStream;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Abstract base class for denotators.
@@ -478,10 +477,6 @@ public abstract class Denotator
         }
     }
 
-    
-    public abstract void toXML(XMLWriter writer);
-    
-    
     /**
      * Print denotator to stdout.
      */
@@ -496,7 +491,7 @@ public abstract class Denotator
      * @param out the stream to print to
      */
     public final void display(PrintStream out) {
-        display(out, new LinkedList<Denotator>(), 0);
+        display(out, new LinkedList<>(), 0);
     }
     
     

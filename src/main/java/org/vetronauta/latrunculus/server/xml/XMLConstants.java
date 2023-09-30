@@ -91,4 +91,13 @@ public final class XMLConstants {
     public static final String POWER_ATTR = "power";
     public static final String ORDERING_ATTR = "ordering";
 
+    public static final String COLIMIT_TYPE_VALUE = "colimit";
+    public static final String LIMIT_TYPE_VALUE = "limit";
+    public static final String LIST_TYPE_VALUE = "list";
+    public static final String POWER_TYPE_VALUE = "power";
+    public static final String SIMPLE_TYPE_VALUE = "simple";
+
+
+
+
 }
