@@ -97,7 +97,6 @@ public final class XMLConstants {
     public static final String POWER_TYPE_VALUE = "power";
     public static final String SIMPLE_TYPE_VALUE = "simple";
 
-
-
+    public static final String FORMTYPE_ATTR = "formType";
 
 }

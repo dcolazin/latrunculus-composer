@@ -21,19 +21,16 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
 
 
 /**
@@ -45,8 +42,7 @@ import org.w3c.dom.Element;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public final class CompoundMorphism
-        extends YonedaMorphism {
+public final class CompoundMorphism extends YonedaMorphism {
 
     /**
      * Creates a morphism between two general objects.
@@ -151,7 +147,7 @@ public final class CompoundMorphism
 
     
     public CompoundMorphism copy() {
-        return new CompoundMorphism(domain, codomain, map.copy());
+        return new CompoundMorphism(domain, codomain, map.deepCopy());
     }
 
     
@@ -231,17 +227,7 @@ public final class CompoundMorphism
     public String toString() {
         return "CompoundMorphism["+domain+","+codomain+","+map+"]";
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(MORPHISM, getElementTypeName());
-        domain.toXML(writer);
-        codomain.toXML(writer);
-        map.toXML(writer);
-        writer.close();
-    }
-    
-    
+
     public YonedaMorphism fromXML(XMLReader reader, Element element) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");

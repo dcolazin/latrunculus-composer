@@ -21,15 +21,15 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.server.xml.XMLInput;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
 
 /**
  * Abstract base class for morphisms.
@@ -38,8 +38,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class YonedaMorphism
-    implements Yoneda, XMLInputOutput<YonedaMorphism>, Comparable<YonedaMorphism> {
+public abstract class YonedaMorphism implements Yoneda, XMLInput<YonedaMorphism>, Comparable<YonedaMorphism> {
 
     /**
      * Returns the domain diagram of this morphism.
@@ -171,7 +170,7 @@ public abstract class YonedaMorphism
      * @return true iff all references have been resolved.
      */
     abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
-    
+
     /**
      * Returns a hash code for this morphism.
      */

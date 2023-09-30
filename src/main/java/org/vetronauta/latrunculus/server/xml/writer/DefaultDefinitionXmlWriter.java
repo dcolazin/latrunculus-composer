@@ -5,6 +5,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
@@ -17,6 +18,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
     private final LatrunculusXmlWriter<ModuleElement> moduleElementWriter;
     private final LatrunculusXmlWriter<MorphismMap> moduleMapWriter;
     private final LatrunculusXmlWriter<Denotator> denotatorXmlWriter;
+    private final LatrunculusXmlWriter<YonedaMorphism> yonedaMorphismXmlWriter;
 
     public DefaultDefinitionXmlWriter() {
         this.moduleWriter = new DefaultModuleXmlWriter(this);
@@ -24,6 +26,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
         this.moduleElementWriter = new DefaultModuleElementXmlWriter(this);
         this.moduleMapWriter = new DefaultMorphismMapXmlWriter(this);
         this.denotatorXmlWriter = new DefaultDenotatorXmlWriter(this);
+        this.yonedaMorphismXmlWriter = new DefaultYonedaMorphismXmlWriter(this);
     }
 
     @Override
@@ -51,5 +54,9 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
         denotatorXmlWriter.toXML(object, writer);
     }
 
+    @Override
+    public void toXML(YonedaMorphism object, XMLWriter writer) {
+        yonedaMorphismXmlWriter.toXML(object, writer);
+    }
 
 }

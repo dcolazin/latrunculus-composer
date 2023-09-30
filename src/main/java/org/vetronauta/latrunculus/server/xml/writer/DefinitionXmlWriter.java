@@ -5,6 +5,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
@@ -17,5 +18,6 @@ public interface DefinitionXmlWriter {
     void toXML(ModuleElement object, XMLWriter writer);
     void toXML(MorphismMap object, XMLWriter writer);
     void toXML(Denotator object, XMLWriter writer);
+    void toXML(YonedaMorphism object, XMLWriter writer);
 
 }

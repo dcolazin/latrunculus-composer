@@ -21,18 +21,18 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 /**
  * Identity morphism representing a module "object".
@@ -189,18 +189,6 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     public String toString() {
         return "RepresentableIdentityMorphism["+module+"]";
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(MORPHISM, getElementTypeName());
-        module.toXML(writer);
-        if (lowValue != null && highValue != null) {
-            lowValue.toXML(writer);
-            highValue.toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
     
     public YonedaMorphism fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, MODULE);

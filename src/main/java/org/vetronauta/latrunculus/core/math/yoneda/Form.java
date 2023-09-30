@@ -419,7 +419,8 @@ public abstract class Form
     private   boolean       hasHashcode = false;
     private   int     	    hashcode    = 0;
     protected boolean 	    registered  = false;
-    
+
+    //TODO enum...
     private static final String[] types = { "simple" ,
                                             "limit",
                                             "colimit",

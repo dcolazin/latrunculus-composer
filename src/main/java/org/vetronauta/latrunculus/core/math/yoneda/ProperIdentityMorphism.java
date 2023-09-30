@@ -197,18 +197,6 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
         return "ProperIdentityMorphism["+diagram+","+Form.typeToString(type)+"]";
     }
 
-    
-    private final static String FORMTYPE_ATTR = "formType";
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MORPHISM, getElementTypeName(),
-                                 FORMTYPE_ATTR, Form.typeToString(getType()).toLowerCase());
-        diagram.toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
     public YonedaMorphism fromXML(XMLReader reader, Element element) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");
