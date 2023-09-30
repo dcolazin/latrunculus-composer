@@ -74,7 +74,7 @@ public abstract class Form
     /**
      * Returns the identifier of the form.
      */
-    public Morphism getIdentifier() {
+    public YonedaMorphism getIdentifier() {
         return identifier;
     }
 
@@ -99,7 +99,7 @@ public abstract class Form
     /**
      * Sets the identifier of the form.
      */
-    public void setIdentifier(Morphism identifier) {
+    public void setIdentifier(YonedaMorphism identifier) {
         this.identifier = identifier;
         this.hasHashcode = false;
     }
@@ -407,14 +407,14 @@ public abstract class Form
     /**
      * Generic form constructor.
      */
-    protected Form(NameDenotator name, Morphism identifier) {
+    protected Form(NameDenotator name, YonedaMorphism identifier) {
         this.name = name;
         this.identifier = identifier;
     }
 
 
     protected NameDenotator name;
-    protected Morphism 	    identifier;
+    protected YonedaMorphism identifier;
     
     private   boolean       hasHashcode = false;
     private   int     	    hashcode    = 0;

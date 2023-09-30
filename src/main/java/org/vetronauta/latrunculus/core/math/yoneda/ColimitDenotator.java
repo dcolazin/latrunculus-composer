@@ -113,14 +113,14 @@ public final class ColimitDenotator
     
     @Override
     public Denotator namedCopy(NameDenotator name) {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = (Morphism)getCoordinate().clone();
+            coord = frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         else {
-            coord = (Morphism)getCoordinate().clone();
-            frameCoord = (Morphism)getCoordinate().clone();
+            coord = (YonedaMorphism)getCoordinate().clone();
+            frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         return new ColimitDenotator(name, getColimitForm(), getIndex(),
                                     coord, frameCoord);
@@ -144,7 +144,7 @@ public final class ColimitDenotator
         }
         else {
             if (getCoordinate() == getFrameCoordinate()) {
-                Morphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
                 if (newCoord == getCoordinate()) {
                     return this;
                 }
@@ -153,8 +153,8 @@ public final class ColimitDenotator
                 }
             }
             else {
-                Morphism newCoord = getCoordinate().at(element);
-                Morphism newFCoord = getFrameCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newFCoord = getFrameCoordinate().at(element);
                 if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                     return this;
                 }
@@ -172,7 +172,7 @@ public final class ColimitDenotator
             return this;
         }
         else if (getCoordinate() == getFrameCoordinate()) {
-            Morphism newCoord = getCoordinate().changeAddress(newAddress);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(newAddress);
             if (newCoord == getCoordinate()) {
                 return this;
             }
@@ -181,8 +181,8 @@ public final class ColimitDenotator
             }
         }
         else {
-            Morphism newCoord = getCoordinate().changeAddress(newAddress);
-            Morphism newFCoord = getFrameCoordinate().changeAddress(newAddress);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(newAddress);
+            YonedaMorphism newFCoord = getFrameCoordinate().changeAddress(newAddress);
             if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                 return this;
             }
@@ -196,7 +196,7 @@ public final class ColimitDenotator
     @Override
     public Denotator changeAddress(ModuleMorphism morphism) {
         if (getCoordinate() == getFrameCoordinate()) {
-            Morphism newCoord = getCoordinate().changeAddress(morphism);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(morphism);
             if (newCoord == getCoordinate()) {
                 return this;
             }
@@ -205,8 +205,8 @@ public final class ColimitDenotator
             }
         }
         else {
-            Morphism newCoord = getCoordinate().changeAddress(morphism);
-            Morphism newFCoord = getFrameCoordinate().changeAddress(morphism);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(morphism);
+            YonedaMorphism newFCoord = getFrameCoordinate().changeAddress(morphism);
             if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                 return this;
             }
@@ -546,8 +546,8 @@ public final class ColimitDenotator
 
     @Override
     public ColimitDenotator copy() {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
             coord = frameCoord = getCoordinate().copy();
         }
@@ -780,8 +780,8 @@ public final class ColimitDenotator
     /**
      * Generic colimit denotator constructor.
      */
-    private ColimitDenotator(NameDenotator name, ColimitForm form, int index, 
-                             Morphism coordinate, Morphism frameCoordinate) {
+    private ColimitDenotator(NameDenotator name, ColimitForm form, int index,
+                             YonedaMorphism coordinate, YonedaMorphism frameCoordinate) {
         super(name, form, coordinate, frameCoordinate);
         setIndex(index);
     }

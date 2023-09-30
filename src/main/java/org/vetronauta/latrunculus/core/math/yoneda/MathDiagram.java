@@ -40,22 +40,22 @@ public class MathDiagram extends Diagram {
     /**
      * Creates a diagram with a single vertex.
      */
-    public MathDiagram(Morphism vertex) {
+    public MathDiagram(YonedaMorphism vertex) {
         this(1);
         vertexes.add(1, vertex);
-        arrows.add(1, new ArrayList<Morphism>());
+        arrows.add(1, new ArrayList<YonedaMorphism>());
     }
 
     
     /**
      * Creates a diagram with a list of vertexes.
      */
-    public MathDiagram(List<Morphism> vertexes) {
+    public MathDiagram(List<YonedaMorphism> vertexes) {
         int size = vertexes.size();
-        this.vertexes = new ArrayList<Morphism>(vertexes);
-        this.arrows = new ArrayList<ArrayList<Morphism>>(size*size);
+        this.vertexes = new ArrayList<YonedaMorphism>(vertexes);
+        this.arrows = new ArrayList<ArrayList<YonedaMorphism>>(size*size);
         for (int i = 0; i < size*size; i++) {
-            this.arrows.add(new ArrayList<Morphism>());
+            this.arrows.add(new ArrayList<YonedaMorphism>());
         }
     }
     
@@ -63,15 +63,15 @@ public class MathDiagram extends Diagram {
     /**
      * Creates a diagram with a list of vertexes and list of arrows.
      */
-    public MathDiagram(List<Morphism> vertexes, List<ArrayList<Morphism>> arrows) {
+    public MathDiagram(List<YonedaMorphism> vertexes, List<ArrayList<YonedaMorphism>> arrows) {
         int size = vertexes.size();
         if(arrows.size() != size*size) {
             throw new IllegalArgumentException("mismatching vertex and arrow list sizes");
         }
-        this.vertexes = new ArrayList<Morphism>(vertexes);
-        this.arrows = new ArrayList<ArrayList<Morphism>>(size*size);
+        this.vertexes = new ArrayList<YonedaMorphism>(vertexes);
+        this.arrows = new ArrayList<ArrayList<YonedaMorphism>>(size*size);
         for (int i = 0; i < size*size; i++) {
-            this.arrows.add(new ArrayList<Morphism>(arrows.get(i)));
+            this.arrows.add(new ArrayList<YonedaMorphism>(arrows.get(i)));
         }
     }
     
@@ -95,7 +95,7 @@ public class MathDiagram extends Diagram {
     /**
      * Sets the vertex at position <code>i</code> to <i>morphism<i>.
      */
-    public void setVertex(int i, Morphism morphism) {
+    public void setVertex(int i, YonedaMorphism morphism) {
         set(i, morphism);
     }
     
@@ -103,7 +103,7 @@ public class MathDiagram extends Diagram {
     /**
      * Inserts the vertex <code>morphism</code> at position <code>i</code>.
      */
-    public void insertVertex(int i, Morphism morphism) {
+    public void insertVertex(int i, YonedaMorphism morphism) {
         insert(i, morphism);
     }
     
@@ -124,7 +124,7 @@ public class MathDiagram extends Diagram {
     /**
      * Returns the <code>n</code>-th arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public final Morphism getArrow(int i, int j, int n) {
+    public final YonedaMorphism getArrow(int i, int j, int n) {
         return arrows.get(vertexes.size() * i + j).get(n);
     }
 
@@ -142,7 +142,7 @@ public class MathDiagram extends Diagram {
      */
     public final int getArrowCount() {
         int c = 0;
-        for (ArrayList<Morphism> a : arrows) {
+        for (ArrayList<YonedaMorphism> a : arrows) {
             if (a != null) {
                 c += a.size();
             }
@@ -154,7 +154,7 @@ public class MathDiagram extends Diagram {
     /**
      * Inserts the arrow <code>morphism</code> from <code>i</code> to <code>j</code> at <code>n</code>.
      */
-    public final void insertArrow(int i, int j, int n, Morphism morphism) {
+    public final void insertArrow(int i, int j, int n, YonedaMorphism morphism) {
         arrows.get(vertexes.size() * i + j).add(n, morphism);
     }
 
@@ -174,7 +174,7 @@ public class MathDiagram extends Diagram {
 
 
     public final void deleteArrows(int i, int j) {
-        arrows.add(vertexes.size() * i + j, new ArrayList<Morphism>());
+        arrows.add(vertexes.size() * i + j, new ArrayList<YonedaMorphism>());
     }
     
 
@@ -196,42 +196,42 @@ public class MathDiagram extends Diagram {
     
 
     protected MathDiagram() {
-        vertexes = new ArrayList<Morphism>();
-        arrows = new ArrayList<ArrayList<Morphism>>();
+        vertexes = new ArrayList<YonedaMorphism>();
+        arrows = new ArrayList<ArrayList<YonedaMorphism>>();
     }
         
 
     protected MathDiagram(int n) {
-        vertexes = new ArrayList<Morphism>(n);
-        arrows = new ArrayList<ArrayList<Morphism>>(n*n);
+        vertexes = new ArrayList<YonedaMorphism>(n);
+        arrows = new ArrayList<ArrayList<YonedaMorphism>>(n*n);
     }
 
 
-    protected final ArrayList<Morphism> getVertexes() {
+    protected final ArrayList<YonedaMorphism> getVertexes() {
         return vertexes;
     }
     
 
-    protected final ArrayList<ArrayList<Morphism>> getArrows() {
+    protected final ArrayList<ArrayList<YonedaMorphism>> getArrows() {
         return arrows;
     }    
 
 
     protected final void set(int i, Object object) {
-        vertexes.set(i, (Morphism)object);
+        vertexes.set(i, (YonedaMorphism)object);
     }
     
 
     protected final void insert(int i, Object object) {
         int oldSize = vertexes.size();
         int newSize = oldSize+1;
-        vertexes.add(i, (Morphism)object);
-        ArrayList<ArrayList<Morphism>> a = new ArrayList<ArrayList<Morphism>>(newSize*newSize);
-        ListIterator<ArrayList<Morphism>> m = arrows.listIterator();
+        vertexes.add(i, (YonedaMorphism)object);
+        ArrayList<ArrayList<YonedaMorphism>> a = new ArrayList<ArrayList<YonedaMorphism>>(newSize*newSize);
+        ListIterator<ArrayList<YonedaMorphism>> m = arrows.listIterator();
         for (int ii = 0; ii < newSize; ii++) {
             for (int jj = 0; jj < newSize; jj++) {
                 if((ii % newSize == i) || (jj % newSize == i)) {
-                    a.add(new ArrayList<Morphism>());
+                    a.add(new ArrayList<YonedaMorphism>());
                 }
                 else {
                     a.add(m.next());
@@ -246,8 +246,8 @@ public class MathDiagram extends Diagram {
         int oldSize = vertexes.size();
         int newSize = oldSize-1;
         vertexes.remove(i);
-        ArrayList<ArrayList<Morphism>> a = new ArrayList<ArrayList<Morphism>>(newSize*newSize);
-        ListIterator<ArrayList<Morphism>> m = arrows.listIterator();
+        ArrayList<ArrayList<YonedaMorphism>> a = new ArrayList<ArrayList<YonedaMorphism>>(newSize*newSize);
+        ListIterator<ArrayList<YonedaMorphism>> m = arrows.listIterator();
         for (int ii = 0; ii < oldSize; ii++) {
             for (int jj = 0; jj < oldSize; jj++) {
                 if((ii % oldSize == i) || (jj % oldSize == i)) {
@@ -270,7 +270,7 @@ public class MathDiagram extends Diagram {
     
     public int hashCode() {
         int hashcode = 7;
-        ListIterator<Morphism> iter = vertexes.listIterator();
+        ListIterator<YonedaMorphism> iter = vertexes.listIterator();
         while (iter.hasNext()) {
             hashcode = 37*hashcode + iter.next().hashCode();
         }
@@ -291,7 +291,7 @@ public class MathDiagram extends Diagram {
                 return false;
             }
             for (int i = 0; i < getVertexCount(); i++) {
-                if (!((Morphism)getVertex(i)).fullEquals((Morphism)md.getVertex(i), s)) {
+                if (!((YonedaMorphism)getVertex(i)).fullEquals((YonedaMorphism)md.getVertex(i), s)) {
                     return false;
                 }
             }
@@ -306,11 +306,11 @@ public class MathDiagram extends Diagram {
     
     
     public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
-        for (Morphism m : vertexes) {
+        for (YonedaMorphism m : vertexes) {
             list = m.getFormDependencies(list);
         }
-        for (ArrayList<Morphism> a : arrows) {
-            for (Morphism m : a) {
+        for (ArrayList<YonedaMorphism> a : arrows) {
+            for (YonedaMorphism m : a) {
                 if (m != null) {
                     list = m.getFormDependencies(list);
                 }
@@ -342,6 +342,6 @@ public class MathDiagram extends Diagram {
     }
     
 
-    private ArrayList<Morphism> vertexes;
-    private ArrayList<ArrayList<Morphism>> arrows;
+    private ArrayList<YonedaMorphism> vertexes;
+    private ArrayList<ArrayList<YonedaMorphism>> arrows;
 }

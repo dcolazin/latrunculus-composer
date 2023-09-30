@@ -101,17 +101,17 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
     
 
-    public Morphism at(ModuleElement element) {
+    public YonedaMorphism at(ModuleElement element) {
         return this;
     }
 
     
-    public Morphism changeAddress(Module address) {
+    public YonedaMorphism changeAddress(Module address) {
         return this;
     }
 
 
-    public Morphism changeAddress(ModuleMorphism morphism) {
+    public YonedaMorphism changeAddress(ModuleMorphism morphism) {
         return this;
     }
 
@@ -121,7 +121,7 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
 
 
-    public int compareTo(Morphism object) {
+    public int compareTo(YonedaMorphism object) {
         if (this == object) {
             return 0;
         }
@@ -171,7 +171,7 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
 
     
-    public boolean fullEquals(Morphism m, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(YonedaMorphism m, IdentityHashMap<Object,Object> s) {
         return equals(m);
     }
     
@@ -202,7 +202,7 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
     
     
-    public Morphism fromXML(XMLReader reader, Element element) {
+    public YonedaMorphism fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, MODULE);
         if (child == null) {
             reader.setError("Expected element of type <%1>", MODULE);

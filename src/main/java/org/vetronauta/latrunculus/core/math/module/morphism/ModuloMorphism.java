@@ -19,11 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
@@ -31,7 +26,12 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The function that takes an element <i>i</i> in <i>Z^d</i> 
@@ -167,14 +167,6 @@ public class ModuloMorphism extends ModuleMorphism {
     public String toString() {
         return "ModuloMorphism["+getDimension()+","+getModulus()+"]";
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, getElementTypeName(),
-                             DIMENSION_ATTR, getDimension(),
-                             MODULUS_ATTR, getModulus());
-    }
-
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

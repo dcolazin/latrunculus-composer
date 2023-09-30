@@ -19,22 +19,20 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 
 /**
@@ -54,6 +52,22 @@ public final class GenericAffineMorphism extends ModuleMorphism {
      */
     public GenericAffineMorphism(Ring ring, int dim, int codim) {
         this(ring.getFreeModule(dim), ring.getFreeModule(codim));
+    }
+
+    public int getCodim() {
+        return codim;
+    }
+
+    public int getDim() {
+        return dim;
+    }
+
+    public RingElement[][] getMatrix() {
+        return A;
+    }
+
+    public RingElement[] getVector() {
+        return b;
     }
     
 
@@ -307,23 +321,6 @@ public final class GenericAffineMorphism extends ModuleMorphism {
     public String toString() {
         return "GenericAffineMorphism["+getDomain()+","+getCodomain()+"]";
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName());
-        getDomain().toXML(writer);
-        getCodomain().toXML(writer);
-        for (int i = 0; i < codim; i++) {
-            for (int j = 0; j < dim; j++) {
-                A[i][j].toXML(writer);
-            }
-        }
-        for (int i = 0; i < codim; i++) {
-            b[i].toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         Element m = XMLReader.getChild(element, MODULE);

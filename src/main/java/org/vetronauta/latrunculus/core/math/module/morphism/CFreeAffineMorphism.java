@@ -19,20 +19,20 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.Arrays;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.COLUMNS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.ROWS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in a free <i>C</i>-module.
@@ -219,34 +219,6 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
     private final static String A_ATTR = "A";
     private final static String B_ATTR = "b";
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName(),
-                                 ROWS_ATTR, A.getRowCount(),
-                                 COLUMNS_ATTR, A.getColumnCount());
-        String s = "";
-        for (int i = 0; i < A.getRowCount(); i++) {
-            for (int j = 0; j < A.getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += A.get(i, j);
-            }
-        }
-        writer.openInline(A_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        s = b[0].toString();
-        for (int i = 1; i < b.length; i++) {
-            s += ","+b[i];
-        }
-        writer.openInline(B_ATTR);
-        writer.text(s);
-        writer.closeInline();        
-        writer.closeBlock();
-    }
-        
-    
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
 

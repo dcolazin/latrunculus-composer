@@ -19,21 +19,18 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.ORDERING_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * These are generalized projections, i.e., factors of a product ring
@@ -204,23 +201,6 @@ public class ReorderMorphism extends ModuleMorphism {
         res.append("}]");
         return res.toString();
     }
-
-    
-    private static final String ORDERING_ATTR = "ordering";
-    
-    
-    public void toXML(XMLWriter writer) {
-        StringBuilder res = new StringBuilder();
-        res.append(ordering[0]);
-        for (int i = 1; i < ordering.length; i++) {
-            res.append(",");
-            res.append(ordering[i]);
-        }
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName(), ORDERING_ATTR, res);
-        getDomain().toXML(writer);
-        writer.closeBlock();
-    }
-
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

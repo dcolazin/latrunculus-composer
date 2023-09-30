@@ -19,15 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
+import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.Arrays;
 
-import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.COLUMNS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.ROWS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in a free <i>Z</i> module.
@@ -183,42 +185,9 @@ public final class ZFreeAffineMorphism extends ZFreeAbstractMorphism {
         }
     }
     
-    
-    private final static String A_ATTR = "A";
-    private final static String B_ATTR = "b";
-
-    
     public String toString() {
         return "ZFreeAffineMorphism["+getDomain().getDimension()+","+getCodomain().getDimension()+"]";
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName(),
-                                 ROWS_ATTR, A.getRowCount(),
-                                 COLUMNS_ATTR, A.getColumnCount());
-        String s = "";
-        for (int i = 0; i < A.getRowCount(); i++) {
-            for (int j = 0; j < A.getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += A.get(i, j);
-            }
-        }
-        writer.openInline(A_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        s = Integer.toString(b[0]);
-        for (int i = 1; i < b.length; i++) {
-            s += ","+b[i];
-        }
-        writer.openInline(B_ATTR);
-        writer.text(s);
-        writer.closeInline();        
-        writer.closeBlock();
-    }
-        
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

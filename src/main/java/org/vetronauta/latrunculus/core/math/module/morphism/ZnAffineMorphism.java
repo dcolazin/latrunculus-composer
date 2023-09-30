@@ -19,18 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
+import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in <i>Zn</i>.
@@ -165,19 +164,6 @@ public final class ZnAffineMorphism extends ZnAbstractMorphism {
     
     public String toString() {
         return "ZnAffineMorphism("+getModulus()+")["+a+","+b+"]";
-    }
-
-    
-    private final static String A_ATTR = "a";
-    private final static String B_ATTR = "b";
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, getElementTypeName(),
-                             MODULUS_ATTR, modulus,
-                             A_ATTR, a,
-                             B_ATTR, b);
-                             
     }
 
     

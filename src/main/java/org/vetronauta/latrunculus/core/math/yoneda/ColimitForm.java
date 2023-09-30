@@ -45,7 +45,7 @@ public final class ColimitForm extends Form {
     /**
      * Generic form constructor.
      */
-    public ColimitForm(NameDenotator name, Morphism identifier) {
+    public ColimitForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 

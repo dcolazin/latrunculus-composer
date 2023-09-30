@@ -38,8 +38,8 @@ import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class Morphism
-    implements Yoneda, XMLInputOutput<Morphism>, Comparable<Morphism> {
+public abstract class YonedaMorphism
+    implements Yoneda, XMLInputOutput<YonedaMorphism>, Comparable<YonedaMorphism> {
 
     /**
      * Returns the domain diagram of this morphism.
@@ -98,7 +98,7 @@ public abstract class Morphism
      * @return a copy of this morphism with address <code>newAddress</code>
      *         or null if address changed fails
      */
-    public abstract Morphism changeAddress(Module address);
+    public abstract YonedaMorphism changeAddress(Module address);
     
     /**
      * Makes an address change using a module morphism.
@@ -107,7 +107,7 @@ public abstract class Morphism
      * @return a copy of this morphism with the new address
      *         or null if address change fails
      */
-    public abstract Morphism changeAddress(ModuleMorphism morphism);
+    public abstract YonedaMorphism changeAddress(ModuleMorphism morphism);
     
     /**
      * Returns a deep copy of this morphism.
@@ -119,14 +119,14 @@ public abstract class Morphism
     /**
      * Returns a deep copy of this morphism.
      */
-    public abstract Morphism copy();
+    public abstract YonedaMorphism copy();
 
     /**
      * Evaluates this morphism at address <code>element</code>.
      * 
      * @throws MappingException if evaluation fails
      */
-    public abstract Morphism at(ModuleElement element)
+    public abstract YonedaMorphism at(ModuleElement element)
         throws MappingException;
     
     /**
@@ -154,7 +154,7 @@ public abstract class Morphism
      */
     public abstract LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
     
-    public int compareTo(Morphism object) {
+    public int compareTo(YonedaMorphism object) {
          return getClass().getName().compareTo(object.getClass().getName());
     }
 
@@ -163,7 +163,7 @@ public abstract class Morphism
      */
     public abstract boolean equals(Object object);
     
-    public abstract boolean fullEquals(Morphism m, IdentityHashMap<Object,Object> s);
+    public abstract boolean fullEquals(YonedaMorphism m, IdentityHashMap<Object,Object> s);
     
     /**
      * Resolve the references in this morphism resulting from parsing.

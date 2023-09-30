@@ -19,13 +19,13 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import java.io.Serializable;
-
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.Dispatcher;
+import org.vetronauta.latrunculus.server.xml.XMLInput;
+
+import java.io.Serializable;
 
 /**
  * The abstract base class for morphisms in modules.
@@ -36,7 +36,7 @@ import org.vetronauta.latrunculus.server.xml.Dispatcher;
  * @author Gérard Milmeister
  */
 public abstract class ModuleMorphism
-    implements Comparable<ModuleMorphism>, Cloneable, Serializable, XMLInputOutput<ModuleMorphism> {
+    implements Comparable<ModuleMorphism>, Cloneable, Serializable, XMLInput<ModuleMorphism> {
 
     /**
      * Creates a new morphism with <code>domain</code>

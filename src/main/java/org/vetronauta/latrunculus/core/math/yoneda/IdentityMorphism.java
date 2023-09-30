@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class IdentityMorphism extends Morphism {   
+public abstract class IdentityMorphism extends YonedaMorphism {
 
     /**
      * Returns the diagram of this identity morphism.

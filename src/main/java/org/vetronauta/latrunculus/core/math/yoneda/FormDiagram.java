@@ -78,7 +78,7 @@ public final class FormDiagram extends Diagram {
 
     public void insertForm(int i, Form form) {
         Form[] oldForms = forms;
-        ArrayList<Morphism>[][] oldMorphisms = morphisms;
+        ArrayList<YonedaMorphism>[][] oldMorphisms = morphisms;
         allocate(oldForms.length+1);
         for (int j = 0; j < i; j++) {
             forms[j] = oldForms[j];
@@ -104,7 +104,7 @@ public final class FormDiagram extends Diagram {
 
     public void deleteForm(int i) {
         Form[] oldForms = forms;
-        ArrayList<Morphism>[][] oldMorphisms = morphisms;
+        ArrayList<YonedaMorphism>[][] oldMorphisms = morphisms;
         allocate(oldForms.length-1);
         for (int j = 0; j < forms.length; j++) {
             int x = (j < i)?j:j+1;
@@ -135,7 +135,7 @@ public final class FormDiagram extends Diagram {
     }
 
     
-    public Morphism getArrow(int i, int j, int n) {
+    public YonedaMorphism getArrow(int i, int j, int n) {
         return morphisms[i][j].get(n);
     }
 
@@ -150,7 +150,7 @@ public final class FormDiagram extends Diagram {
     }
 
 
-    public void insertArrow(int i, int j, int n, Morphism morphism) {
+    public void insertArrow(int i, int j, int n, YonedaMorphism morphism) {
         morphisms[i][j].add(n, morphism);
         
     }
@@ -164,9 +164,9 @@ public final class FormDiagram extends Diagram {
     }
 
     
-    public void appendArrow(int i, int j, Morphism morphism) {
+    public void appendArrow(int i, int j, YonedaMorphism morphism) {
         if (morphisms[i][j] == null) {
-            morphisms[i][j] = new ArrayList<Morphism>();
+            morphisms[i][j] = new ArrayList<YonedaMorphism>();
         }
         morphisms[i][j].add(morphism);
     }
@@ -265,7 +265,7 @@ public final class FormDiagram extends Diagram {
         }
         for (int i = 0; i < forms.length; i++) {
             for (int j = 0; j < forms.length; j++) {
-                diagram.morphisms[i][j] = new ArrayList<Morphism>(morphisms[i][j]);
+                diagram.morphisms[i][j] = new ArrayList<YonedaMorphism>(morphisms[i][j]);
             }
         }
         return diagram;
@@ -404,7 +404,7 @@ public final class FormDiagram extends Diagram {
     
     
     private Form[] forms;
-    private ArrayList<Morphism>[][] morphisms;
+    private ArrayList<YonedaMorphism>[][] morphisms;
     
     private FormDiagram() { /* not allowed */ }
     

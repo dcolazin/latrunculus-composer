@@ -46,7 +46,7 @@ public final class SimpleForm extends Form {
     /**
      * Generic simple form constructor.
      */
-    public SimpleForm(NameDenotator name, Morphism identifier) {
+    public SimpleForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 

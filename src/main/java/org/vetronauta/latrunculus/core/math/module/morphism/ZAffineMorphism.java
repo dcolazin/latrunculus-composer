@@ -19,16 +19,15 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in the <i>Z</i>.
@@ -161,17 +160,6 @@ public final class ZAffineMorphism extends ZAbstractMorphism {
     public String toString() {
         return "ZAffineMorphism["+a+","+b+"]";
     }
-
-    
-    private final static String A_ATTR = "a";
-    private final static String B_ATTR = "b";
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, getElementTypeName(),
-                             A_ATTR, a, B_ATTR, b);
-    }
-
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

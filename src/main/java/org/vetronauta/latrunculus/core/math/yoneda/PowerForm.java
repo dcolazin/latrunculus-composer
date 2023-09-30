@@ -46,7 +46,7 @@ public final class PowerForm extends Form {
     /**
      * Generic power form constructor.
      */
-    public PowerForm(NameDenotator name, Morphism identifier) {
+    public PowerForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 

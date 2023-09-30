@@ -112,7 +112,7 @@ public abstract class Denotator
     /**
      * Returns the coordinate of the denotator.
      */
-    public final Morphism getCoordinate() {
+    public final YonedaMorphism getCoordinate() {
         return coordinate;
     } 
     
@@ -120,7 +120,7 @@ public abstract class Denotator
     /**
      * Sets the coordinate of the denotator.
      */
-    protected final void setCoordinate(Morphism morphism) {
+    protected final void setCoordinate(YonedaMorphism morphism) {
         coordinate = morphism;
     } 
 
@@ -128,7 +128,7 @@ public abstract class Denotator
     /**
      * Returns the frame coordinate of the denotator.
      */
-    public Morphism getFrameCoordinate() {
+    public YonedaMorphism getFrameCoordinate() {
         return frameCoordinate;
     }
     
@@ -136,7 +136,7 @@ public abstract class Denotator
     /**
      * Sets the frame coordinate of the denotator.
      */
-    protected final void setFrameCoordinate(Morphism morphism) {
+    protected final void setFrameCoordinate(YonedaMorphism morphism) {
         frameCoordinate = morphism;
     }
     
@@ -144,7 +144,7 @@ public abstract class Denotator
     /**
      * Sets both coordinates of the denotator.
      */
-    protected final void setCoordinates(Morphism morphism) {
+    protected final void setCoordinates(YonedaMorphism morphism) {
         coordinate = frameCoordinate = morphism;
     }
 
@@ -575,7 +575,7 @@ public abstract class Denotator
      * Generic constructor for denotators.
      */
     protected Denotator(NameDenotator name, Form form,
-                        Morphism coordinate, Morphism frameCoordinate) {
+                        YonedaMorphism coordinate, YonedaMorphism frameCoordinate) {
         this.name = name;
         this.form = form;
         this.coordinate = coordinate;
@@ -624,6 +624,6 @@ public abstract class Denotator
     
     private NameDenotator name;
     private Form          form;
-    private Morphism      coordinate;
-    private Morphism      frameCoordinate;
+    private YonedaMorphism coordinate;
+    private YonedaMorphism frameCoordinate;
 }

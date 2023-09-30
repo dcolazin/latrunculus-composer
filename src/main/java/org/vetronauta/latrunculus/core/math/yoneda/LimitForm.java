@@ -45,7 +45,7 @@ public final class LimitForm extends Form {
     /**
      * Generic form constructor.
      */
-    public LimitForm(NameDenotator name, Morphism identifier) {
+    public LimitForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 

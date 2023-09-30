@@ -20,7 +20,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
 
     public DefaultDefinitionXmlWriter() {
         this.moduleWriter = new DefaultModuleXmlWriter(this);
-        this.moduleMorphismWriter = null; //TODO
+        this.moduleMorphismWriter = new DefaultModuleMorphismXmlWriter(this);
         this.moduleElementWriter = new DefaultModuleElementXmlWriter(this);
         this.moduleMapWriter = new DefaultMorphismMapXmlWriter(this);
         this.denotatorXmlWriter = null; //TODO

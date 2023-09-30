@@ -170,14 +170,14 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     public Denotator namedCopy(NameDenotator name) {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = (Morphism)getCoordinate().clone();
+            coord = frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         else {
-            coord = (Morphism)getCoordinate().clone();
-            frameCoord = (Morphism)getCoordinate().clone();
+            coord = (YonedaMorphism)getCoordinate().clone();
+            frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         return new SimpleDenotator(name, getSimpleForm(), coord, frameCoord);
     }
@@ -200,7 +200,7 @@ public final class SimpleDenotator extends Denotator {
         }
         else {
             if (getCoordinate() == getFrameCoordinate()) {
-                Morphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
                 if (newCoord == getCoordinate()) {
                     return this;
                 }
@@ -209,8 +209,8 @@ public final class SimpleDenotator extends Denotator {
                 }
             }
             else {
-                Morphism newCoord = getCoordinate().at(element);
-                Morphism newFCoord = getFrameCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newFCoord = getFrameCoordinate().at(element);
                 if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                     return this;
                 }
@@ -626,8 +626,8 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     public SimpleDenotator copy() {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
             coord = frameCoord = getCoordinate().copy();
         }
@@ -846,8 +846,8 @@ public final class SimpleDenotator extends Denotator {
     }
     
     
-    private SimpleDenotator(NameDenotator name, SimpleForm form, 
-                            Morphism coordinate, Morphism frameCoordinate) {
+    private SimpleDenotator(NameDenotator name, SimpleForm form,
+                            YonedaMorphism coordinate, YonedaMorphism frameCoordinate) {
         super(name, form, coordinate, frameCoordinate);
     }
 }

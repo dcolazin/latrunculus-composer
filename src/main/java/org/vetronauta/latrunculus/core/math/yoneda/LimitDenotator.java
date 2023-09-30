@@ -138,14 +138,14 @@ public final class LimitDenotator
     
     @Override
     public Denotator namedCopy(NameDenotator name) {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = (Morphism)getCoordinate().clone();
+            coord = frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         else {
-            coord = (Morphism)getCoordinate().clone();
-            frameCoord = (Morphism)getCoordinate().clone();
+            coord = (YonedaMorphism)getCoordinate().clone();
+            frameCoord = (YonedaMorphism)getCoordinate().clone();
         }
         return new LimitDenotator(name, getLimitForm(), coord, frameCoord);
     }
@@ -167,7 +167,7 @@ public final class LimitDenotator
         }
         else {
             if (getCoordinate() == getFrameCoordinate()) {
-                Morphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
                 if (newCoord == getCoordinate()) {
                     return this;
                 }
@@ -176,8 +176,8 @@ public final class LimitDenotator
                 }
             }
             else {
-                Morphism newCoord = getCoordinate().at(element);
-                Morphism newFCoord = getFrameCoordinate().at(element);
+                YonedaMorphism newCoord = getCoordinate().at(element);
+                YonedaMorphism newFCoord = getFrameCoordinate().at(element);
                 if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                     return this;
                 }
@@ -195,7 +195,7 @@ public final class LimitDenotator
             return this;
         }
         else if (getCoordinate() == getFrameCoordinate()) {
-            Morphism newCoord = getCoordinate().changeAddress(newAddress);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(newAddress);
             if (newCoord == getCoordinate()) {
                 return this;
             }
@@ -204,8 +204,8 @@ public final class LimitDenotator
             }
         }
         else {
-            Morphism newCoord = getCoordinate().changeAddress(newAddress);
-            Morphism newFCoord = getFrameCoordinate().changeAddress(newAddress);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(newAddress);
+            YonedaMorphism newFCoord = getFrameCoordinate().changeAddress(newAddress);
             if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                 return this;
             }
@@ -219,7 +219,7 @@ public final class LimitDenotator
     @Override
     public Denotator changeAddress(ModuleMorphism morphism) {
         if (getCoordinate() == getFrameCoordinate()) {
-            Morphism newCoord = getCoordinate().changeAddress(morphism);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(morphism);
             if (newCoord == getCoordinate()) {
                 return this;
             }
@@ -228,8 +228,8 @@ public final class LimitDenotator
             }
         }
         else {
-            Morphism newCoord = getCoordinate().changeAddress(morphism);
-            Morphism newFCoord = getFrameCoordinate().changeAddress(morphism);
+            YonedaMorphism newCoord = getCoordinate().changeAddress(morphism);
+            YonedaMorphism newFCoord = getFrameCoordinate().changeAddress(morphism);
             if (newCoord == getCoordinate() && newFCoord == getFrameCoordinate()) {
                 return this;
             }
@@ -541,8 +541,8 @@ public final class LimitDenotator
 
     @Override
     public LimitDenotator copy() {
-        Morphism coord;
-        Morphism frameCoord;
+        YonedaMorphism coord;
+        YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
             coord = frameCoord = getCoordinate().copy();
         }
@@ -768,8 +768,8 @@ public final class LimitDenotator
     /**
      * Generic limit denotator constructor.
      */
-    private LimitDenotator(NameDenotator name, LimitForm form, 
-                           Morphism coordinate, Morphism frameCoordinate) {
+    private LimitDenotator(NameDenotator name, LimitForm form,
+                           YonedaMorphism coordinate, YonedaMorphism frameCoordinate) {
         super(name, form, coordinate, frameCoordinate);
     }
 }

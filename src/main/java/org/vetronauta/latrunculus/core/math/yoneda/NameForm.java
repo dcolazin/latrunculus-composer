@@ -67,7 +67,7 @@ public final class NameForm extends ListForm {
     /**
      * Returns the identifier of the form.
      */
-    public Morphism getIdentifier() {
+    public YonedaMorphism getIdentifier() {
         if (identifier == null) {
             identifier = new ProperIdentityMorphism(new FormDiagram(stringForm), LIST);        
         }
@@ -86,7 +86,7 @@ public final class NameForm extends ListForm {
     /**
      * Sets the identifier of the form.
      */
-    public void setIdentifier(Morphism identifier) {
+    public void setIdentifier(YonedaMorphism identifier) {
         throw new UnsupportedOperationException("Name form is immutable");
     }
 
@@ -164,7 +164,7 @@ public final class NameForm extends ListForm {
         
     
     private NameForm() {
-        super(null, (Morphism)null);
+        super(null, (YonedaMorphism)null);
     }
     
     

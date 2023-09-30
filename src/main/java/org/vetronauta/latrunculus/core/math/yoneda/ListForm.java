@@ -46,7 +46,7 @@ public class ListForm extends Form {
     /**
      * Generic form constructor.
      */
-    public ListForm(NameDenotator name, Morphism identifier) {
+    public ListForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 

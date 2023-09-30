@@ -250,28 +250,28 @@ public class Dispatcher {
         addModuleMorphism(QFreeAffineMorphism.class);
         addModuleMorphism(RFreeAffineMorphism.class);
         addModuleMorphism(CFreeAffineMorphism.class);
-        
+
+        addModuleMorphism(CanonicalMorphism.class);
+        addModuleMorphism(CastMorphism.class);
         addModuleMorphism(CompositionMorphism.class);
+        addModuleMorphism(ConjugationMorphism.class);
         addModuleMorphism(ConstantMorphism.class);
         addModuleMorphism(DifferenceMorphism.class);
-        addModuleMorphism(SumMorphism.class);
-        addModuleMorphism(ProductMorphism.class);
+        addModuleMorphism(EmbeddingMorphism.class);
         addModuleMorphism(FoldingMorphism.class);
+        addModuleMorphism(GenericAffineMorphism.class);
+        addModuleMorphism(GenericBasisMorphism.class);
         addModuleMorphism(IdentityMorphism.class);
+        addModuleMorphism(ModuloMorphism.class);
         addModuleMorphism(PolynomialMorphism.class);
         addModuleMorphism(PowerMorphism.class);
-        addModuleMorphism(ScaledMorphism.class);
-        addModuleMorphism(TranslationMorphism.class);
-        addModuleMorphism(ModuloMorphism.class);
-        addModuleMorphism(EmbeddingMorphism.class);
+        addModuleMorphism(ProductMorphism.class);
         addModuleMorphism(ProjectionMorphism.class);
-        addModuleMorphism(ConjugationMorphism.class);
-        addModuleMorphism(GenericBasisMorphism.class);
         addModuleMorphism(ReorderMorphism.class);
-        addModuleMorphism(CanonicalMorphism.class);
-        addModuleMorphism(GenericAffineMorphism.class);
+        addModuleMorphism(ScaledMorphism.class);
         addModuleMorphism(SplitMorphism.class);
-        addModuleMorphism(CastMorphism.class);
+        addModuleMorphism(SumMorphism.class);
+        addModuleMorphism(TranslationMorphism.class);
 
         //TODO AutoListMorphismMap, EmptyMorphismMap, IndexMorphismMap, ListMorphismMap are not registered
         addMorphismMap(ModuleMorphismMap.class);

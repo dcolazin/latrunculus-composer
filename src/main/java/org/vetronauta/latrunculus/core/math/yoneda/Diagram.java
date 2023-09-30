@@ -64,7 +64,7 @@ public abstract class Diagram implements Yoneda, XMLInputOutput<Diagram> {
     /**
      * Returns the <code>n</code>-th arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public abstract Morphism getArrow(int i, int j, int n);
+    public abstract YonedaMorphism getArrow(int i, int j, int n);
 
     /**
      * Returns the number of arrows from vertex <code>i</code> to vertex <code>j</code>.
@@ -74,12 +74,12 @@ public abstract class Diagram implements Yoneda, XMLInputOutput<Diagram> {
     /**
      * Inserts an arrow from vertex <code>i</code> to vertex <code>j</code> at position <code>n</code>.
      */
-    public abstract void insertArrow(int i, int j, int n, Morphism morphism);
+    public abstract void insertArrow(int i, int j, int n, YonedaMorphism morphism);
 
     /**
      * Appends an arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public void appendArrow(int i, int j, Morphism morphism) {
+    public void appendArrow(int i, int j, YonedaMorphism morphism) {
         insertArrow(i, j, getArrowCount(i, j), morphism);
     }
 

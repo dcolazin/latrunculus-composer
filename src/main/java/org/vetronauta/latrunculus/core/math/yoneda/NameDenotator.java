@@ -211,7 +211,7 @@ public final class NameDenotator extends ListDenotator {
     
     
     @Override
-    public Morphism getFrameCoordinate() {
+    public YonedaMorphism getFrameCoordinate() {
         return createCoordinates();
     }
     
@@ -331,7 +331,7 @@ public final class NameDenotator extends ListDenotator {
     }
 
     
-    private Morphism createCoordinates() {
+    private YonedaMorphism createCoordinates() {
         if (stringForm == null) {
             stringForm = (SimpleForm)Repository.systemRepository().getForm("String");
         }

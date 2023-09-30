@@ -28,11 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.w3c.dom.Element;
 
 
@@ -159,17 +155,9 @@ public class GenericBasisMorphism extends ModuleMorphism {
         return buf.toString();
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName());
-        getDomain().toXML(writer);
-        getCodomain().toXML(writer);
-        for (int i = 0; i < fi.length; i++) {
-            fi[i].toXML(writer);
-        }
-        writer.closeBlock();
+    public ModuleElement[] getModuleElements() {
+        return fi;
     }
-
     
     public GenericBasisMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

@@ -19,20 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism that represents the folding of a set of ModuleElements.
@@ -48,10 +45,14 @@ public final class FoldingMorphism extends ModuleMorphism {
         super(elements[0].getModule(), RRing.ring);
         this.elements = elements;
         double[] f = elements[0].fold(elements);
-        values = new HashMap<ModuleElement,RElement>();
+        values = new HashMap<>();
         for (int i = 0; i < f.length; i++) {
             values.put(elements[i], new RElement(f[i]));
         }
+    }
+
+    public ModuleElement[] getElements() {
+        return elements;
     }
 
     
@@ -113,16 +114,6 @@ public final class FoldingMorphism extends ModuleMorphism {
         buf.append("]");
         return buf.toString();
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, getElementTypeName());
-        for (int i = 0; i < elements.length; i++) {
-            elements[i].toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
     
     public ModuleMorphism fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

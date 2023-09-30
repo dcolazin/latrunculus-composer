@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import java.io.Serializable;
 
 import org.vetronauta.latrunculus.server.xml.XMLInput;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 
