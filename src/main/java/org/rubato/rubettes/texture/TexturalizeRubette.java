@@ -10,8 +10,8 @@ import org.rubato.composer.RunInfo;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.util.ObjectGenerator;
 

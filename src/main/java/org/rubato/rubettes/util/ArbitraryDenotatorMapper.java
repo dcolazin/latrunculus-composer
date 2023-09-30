@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.rubato.math.matrix.QMatrix;
-import org.rubato.math.matrix.RMatrix;
-import org.rubato.math.matrix.ZMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -30,11 +30,11 @@ import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.NameDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.SimpleDenotator;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 
 /**

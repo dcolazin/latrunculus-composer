@@ -3,10 +3,10 @@ package org.rubato.rubettes.bigbang.model;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.rubato.math.yoneda.ColimitDenotator;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.FactorDenotator;
-import org.rubato.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.rubato.rubettes.util.DenotatorPath;
 
 public class ObjectPathFinder {

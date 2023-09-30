@@ -19,7 +19,7 @@
 
 package org.rubato.composer.dialogs.forms;
 
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 public interface FormEntry {
 

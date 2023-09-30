@@ -22,8 +22,8 @@ package org.rubato.logeo.predicates;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.rubato.logeo.functions.Function;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 
 /**

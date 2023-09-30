@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
 
 /**

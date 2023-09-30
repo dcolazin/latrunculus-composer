@@ -22,7 +22,7 @@ package org.rubato.composer.view2d;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
 
 public class Point {

@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

@@ -25,6 +25,10 @@ import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 public class Note implements Comparable<Note> {
     

@@ -26,7 +26,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 import java.util.Iterator;
 import java.util.List;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;

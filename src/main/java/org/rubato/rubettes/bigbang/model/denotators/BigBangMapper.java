@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;

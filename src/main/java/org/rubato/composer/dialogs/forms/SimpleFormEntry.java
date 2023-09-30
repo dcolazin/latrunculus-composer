@@ -28,7 +28,7 @@ import java.awt.event.ActionListener;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 public class SimpleFormEntry
         extends AbstractFormEntry

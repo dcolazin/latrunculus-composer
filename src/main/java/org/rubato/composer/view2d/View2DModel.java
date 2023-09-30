@@ -25,6 +25,10 @@ import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 
 public class View2DModel {
 
@@ -90,7 +94,7 @@ public class View2DModel {
     
     
     public void setForm(Form form) {
-        if (form instanceof PowerForm || form instanceof ListForm) { 
+        if (form instanceof PowerForm || form instanceof ListForm) {
             this.form = form;
             this.baseForm = form.getForm(0);
         }

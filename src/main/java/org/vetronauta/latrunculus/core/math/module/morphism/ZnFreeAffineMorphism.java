@@ -24,7 +24,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 import java.util.Arrays;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.rubato.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;

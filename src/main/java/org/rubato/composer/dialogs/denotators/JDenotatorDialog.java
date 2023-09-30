@@ -36,6 +36,14 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 public final class JDenotatorDialog
         extends JDialog

@@ -32,11 +32,11 @@ import javax.swing.*;
 import org.rubato.base.*;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.NameDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.rubato.rubettes.util.ObjectGenerator;
 
 /**

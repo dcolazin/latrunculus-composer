@@ -23,6 +23,13 @@ import java.util.HashMap;
 
 import org.rubato.base.RubatoException;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 
 /**

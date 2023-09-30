@@ -3,7 +3,7 @@ package org.rubato.rubettes.bigbang.model.operations;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
 import org.vetronauta.latrunculus.server.xml.XMLReader;

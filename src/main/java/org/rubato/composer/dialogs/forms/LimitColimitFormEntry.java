@@ -28,9 +28,9 @@ import java.util.List;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.logeo.FormFactory;
-import org.rubato.math.yoneda.ColimitForm;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 
 public class LimitColimitFormEntry
         extends AbstractFormEntry

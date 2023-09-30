@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.LimitDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 
 public class VoiceSplitter {
 	

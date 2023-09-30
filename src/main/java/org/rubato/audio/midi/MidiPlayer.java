@@ -28,9 +28,9 @@ import java.util.*;
 import javax.sound.midi.*;
 
 import org.rubato.base.Repository;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.FactorDenotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 
 /**

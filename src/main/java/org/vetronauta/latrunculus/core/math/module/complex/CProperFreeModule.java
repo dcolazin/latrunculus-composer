@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.matrix.CMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;

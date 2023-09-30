@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 /**
  * The class representing forms as Scheme values.

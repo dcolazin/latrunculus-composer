@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.view.model.tools;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.view.subview.AbstractPainter;
 import org.rubato.rubettes.util.Point2D;
 import org.rubato.rubettes.util.Polygon2D;

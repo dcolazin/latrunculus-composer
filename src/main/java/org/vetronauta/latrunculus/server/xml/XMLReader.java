@@ -40,6 +40,21 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.builtin.MacroRubette;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.DenotatorReference;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -192,8 +207,8 @@ public final class XMLReader implements RubatoDictionary {
         modules         = new HashMap<String,Module>();
         elements        = new HashMap<String,ModuleElement>();
         moduleMorphisms = new HashMap<String,ModuleMorphism>();
-        forms           = new HashMap<String,Form>();
-        denotators      = new HashMap<String,Denotator>();
+        forms           = new HashMap<String, Form>();
+        denotators      = new HashMap<String, Denotator>();
         networks        = new LinkedList<NetworkModel>();
         rubettes        = new LinkedList<Rubette>();
         schemeCode      = ""; //$NON-NLS-1$
@@ -582,7 +597,7 @@ public final class XMLReader implements RubatoDictionary {
             denotator = ListDenotator.fromXML(this, denotatorNode);
         }
         else if (type.equals("power")) { //$NON-NLS-1$
-            denotator = PowerDenotator.fromXML(this, denotatorNode);                
+            denotator = PowerDenotator.fromXML(this, denotatorNode);
         }
         else {
             // not a known type
@@ -648,7 +663,7 @@ public final class XMLReader implements RubatoDictionary {
             form = ListForm.fromXML(this, formNode);
         }
         else if (type.equals("power")) { //$NON-NLS-1$
-            form = PowerForm.fromXML(this, formNode);                
+            form = PowerForm.fromXML(this, formNode);
         }
         else {
             setError("Attribute %%1 of element <%2> has invalid value %%3",

@@ -31,7 +31,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 /**
  * A cell editor used for table cells defining the coordinates that are to be mapped by a morphism.

@@ -30,9 +30,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.rubato.base.RubatoDictionary;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.ListForm;
-import org.rubato.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 
 public final class JSelectFormDialog extends JDialog {
 

@@ -25,7 +25,7 @@ import java.awt.event.ComponentListener;
 
 import javax.swing.JPanel;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 
 public class JGeometryView extends JPanel implements ComponentListener {
 

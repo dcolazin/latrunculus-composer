@@ -29,6 +29,9 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 
 /**
  * A rubette for providing each note of an input Score denotators with new rhythmic quality,

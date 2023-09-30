@@ -33,7 +33,7 @@ import org.rubato.base.AbstractRubette;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import org.vetronauta.latrunculus.server.xml.XMLReader;

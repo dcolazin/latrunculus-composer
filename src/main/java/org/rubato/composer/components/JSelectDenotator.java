@@ -31,8 +31,8 @@ import javax.swing.event.EventListenerList;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.rubato.composer.dialogs.denotators.JDenotatorDialog;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 
 public class JSelectDenotator extends JPanel implements ActionListener {

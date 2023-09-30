@@ -14,9 +14,9 @@ import org.rubato.rubettes.bigbang.model.undo.RemoveOperationEdit;
 import org.rubato.rubettes.bigbang.model.undo.UndoManager;
 import org.rubato.rubettes.bigbang.model.undo.AbstractUndoableEdit;
 
-import org.rubato.math.matrix.RMatrix;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangDenotatorManager;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;

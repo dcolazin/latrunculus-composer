@@ -44,6 +44,18 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.denotex.DenotexReader;
 import org.rubato.scheme.*;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
+import org.vetronauta.latrunculus.core.math.yoneda.NameForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -289,7 +301,7 @@ public class Repository
     /**
      * Returns the form with the given name if it exists, otherwise null.
      */
-    public synchronized Form getForm(NameDenotator name) {        
+    public synchronized Form getForm(NameDenotator name) {
         FormItem item = forms.get(name.getNameEntry());
         return (item == null)?null:item.getForm();
     }

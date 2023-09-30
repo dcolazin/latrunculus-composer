@@ -1,9 +1,9 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.ListDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;

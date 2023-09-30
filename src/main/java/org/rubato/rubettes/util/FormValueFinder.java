@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.rubato.math.yoneda.ColimitForm;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.ListForm;
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 public class FormValueFinder {
 	

@@ -10,13 +10,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.LimitDenotator;
-import org.rubato.math.yoneda.LimitForm;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 public class SoundNoteGenerator extends NoteGenerator {
 	

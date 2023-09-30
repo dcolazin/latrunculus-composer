@@ -16,12 +16,12 @@ import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.rubato.math.yoneda.ColimitDenotator;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.FactorDenotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.NameDenotator;
-import org.rubato.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 /**
  * @author flo

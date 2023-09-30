@@ -34,8 +34,8 @@ import javax.swing.*;
 
 import org.rubato.base.Repository;
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 class Select2DDialog
         extends JPanel

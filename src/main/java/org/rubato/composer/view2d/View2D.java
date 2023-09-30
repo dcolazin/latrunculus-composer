@@ -29,7 +29,7 @@ import javax.swing.event.AncestorListener;
 import javax.swing.event.EventListenerList;
 
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
 
 public class View2D

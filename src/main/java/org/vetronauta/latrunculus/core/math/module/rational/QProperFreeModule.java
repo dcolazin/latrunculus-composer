@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.rubato.math.matrix.QMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;

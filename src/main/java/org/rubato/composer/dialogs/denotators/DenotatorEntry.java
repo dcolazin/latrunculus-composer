@@ -21,7 +21,7 @@ package org.rubato.composer.dialogs.denotators;
 
 import java.awt.event.ActionListener;
 
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
 public interface DenotatorEntry {
 

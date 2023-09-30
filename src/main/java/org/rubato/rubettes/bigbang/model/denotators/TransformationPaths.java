@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;

@@ -3,8 +3,8 @@ package org.rubato.rubettes.bigbang;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

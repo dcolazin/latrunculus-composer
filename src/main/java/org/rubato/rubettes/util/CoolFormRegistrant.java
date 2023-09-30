@@ -6,13 +6,13 @@ import java.util.List;
 import org.rubato.base.Repository;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
-import org.rubato.math.yoneda.ColimitForm;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.FormReference;
-import org.rubato.math.yoneda.LimitForm;
-import org.rubato.math.yoneda.ListForm;
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 public class CoolFormRegistrant {
 	

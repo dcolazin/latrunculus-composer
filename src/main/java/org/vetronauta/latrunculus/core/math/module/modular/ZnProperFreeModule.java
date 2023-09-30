@@ -24,7 +24,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 import java.util.Iterator;
 import java.util.List;
 
-import org.rubato.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;

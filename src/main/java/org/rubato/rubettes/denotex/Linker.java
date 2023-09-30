@@ -26,6 +26,13 @@ import java.util.Map.Entry;
 
 import org.rubato.base.Repository;
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.IndexMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.ListMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
+import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 
 public final class Linker {
 

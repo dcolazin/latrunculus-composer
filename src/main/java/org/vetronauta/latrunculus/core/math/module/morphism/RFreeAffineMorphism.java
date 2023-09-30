@@ -23,7 +23,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import java.util.Arrays;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;

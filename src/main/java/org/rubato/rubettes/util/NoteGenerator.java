@@ -31,13 +31,13 @@ import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.LimitDenotator;
-import org.rubato.math.yoneda.NameDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleDenotator;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 /**
  * A utility class for generating Note and Score denotators with ease. The following possibilities

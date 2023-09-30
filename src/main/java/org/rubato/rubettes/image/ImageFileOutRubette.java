@@ -34,9 +34,9 @@ import org.rubato.base.Repository;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.rubato.rubettes.util.DenotatorAnalyzer;
 import org.rubato.rubettes.util.ObjectGenerator;
 

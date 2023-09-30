@@ -32,8 +32,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.rubato.base.RubatoDictionary;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 public final class JSelectDenotatorDialog extends JDialog {
 

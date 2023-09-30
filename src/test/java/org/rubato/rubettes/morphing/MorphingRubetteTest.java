@@ -28,8 +28,8 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

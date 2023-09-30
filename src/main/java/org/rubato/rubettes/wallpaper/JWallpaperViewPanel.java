@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 /**
  * A JDialog that shows a JWallpaperView. The two coordinates that are to be shown can be selected

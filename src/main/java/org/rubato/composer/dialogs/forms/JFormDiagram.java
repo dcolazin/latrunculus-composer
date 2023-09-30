@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 public class JFormDiagram
         extends JPanel

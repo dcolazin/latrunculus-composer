@@ -25,6 +25,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.rubato.math.yoneda.*;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 
 public abstract class DenotexWriter {
 
@@ -63,7 +69,7 @@ public abstract class DenotexWriter {
             {
             case Yoneda.LIMIT:
                 out.println(offset+"[");
-                for (int i=0; i<((LimitDenotator)denotator).getFactorCount()-1; i++)
+                for (int i = 0; i<((LimitDenotator)denotator).getFactorCount()-1; i++)
                     {
                     write(out, ((LimitDenotator)denotator).getFactor(i), offset+"  ");
                     if (((LimitDenotator)denotator).getFactor(i).getForm().getType() == Yoneda.SIMPLE)
@@ -77,7 +83,7 @@ public abstract class DenotexWriter {
             break;
             case Yoneda.POWER:
                 out.println(offset+"{");
-                for (int i=0; i< ((PowerDenotator)denotator).getFactorCount()-1; i++)
+                for (int i = 0; i< ((PowerDenotator)denotator).getFactorCount()-1; i++)
                     {
                     write(out, ((PowerDenotator)denotator).getFactor(i), offset+"  ");
                     if (((PowerDenotator)denotator).getFactor(i).getForm().getType() == Yoneda.SIMPLE)

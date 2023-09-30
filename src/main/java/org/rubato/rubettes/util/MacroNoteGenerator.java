@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.LimitDenotator;
-import org.rubato.math.yoneda.LimitForm;
-import org.rubato.math.yoneda.PowerDenotator;
-import org.rubato.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 
 public class MacroNoteGenerator extends NoteGenerator {
 	

@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang.view.model;
 
 import javax.swing.JOptionPane;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.controller.BigBangController;	
 import org.rubato.rubettes.bigbang.view.model.tools.SelectionTool;
 import org.rubato.rubettes.bigbang.view.subview.multitouch.MTBigBangApp;

@@ -25,8 +25,8 @@ import java.util.List;
 import org.rubato.base.RubatoException;
 import org.rubato.logeo.predicates.FormPredicate;
 import org.rubato.logeo.predicates.Predicate;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 /**
  * The select methods traverse a denotator and collect all parts of the

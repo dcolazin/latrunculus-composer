@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 

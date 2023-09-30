@@ -32,8 +32,8 @@ import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.rubato.rubettes.util.JPropertiesTable;
 import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.server.xml.XMLReader;

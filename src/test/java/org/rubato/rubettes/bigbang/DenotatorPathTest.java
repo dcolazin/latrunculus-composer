@@ -14,12 +14,12 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
-import org.rubato.math.yoneda.ColimitForm;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.LimitForm;
-import org.rubato.math.yoneda.PowerForm;
-import org.rubato.math.yoneda.SimpleDenotator;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.rubato.rubettes.util.DenotatorPath;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

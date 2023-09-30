@@ -19,9 +19,9 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
-import org.rubato.math.yoneda.ConstantModuleMorphismMap;
-import org.rubato.math.yoneda.ModuleMorphismMap;
-import org.rubato.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;

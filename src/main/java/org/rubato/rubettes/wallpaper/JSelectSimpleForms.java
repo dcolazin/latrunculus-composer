@@ -31,7 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import org.rubato.composer.Utilities;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 

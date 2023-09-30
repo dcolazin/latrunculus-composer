@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang.model.denotators;
 
 import java.util.List;
 
-import org.rubato.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.rubettes.util.DenotatorPath;

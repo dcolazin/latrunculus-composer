@@ -3,9 +3,9 @@ package org.rubato.rubettes.util;
 import java.util.Iterator;
 
 import org.rubato.composer.RunInfo;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.LimitDenotator;
-import org.rubato.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 
 public class Quantizer {
 	

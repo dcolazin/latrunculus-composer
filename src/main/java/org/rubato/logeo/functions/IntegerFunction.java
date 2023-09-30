@@ -22,9 +22,9 @@ package org.rubato.logeo.functions;
 import static org.rubato.logeo.DenoFactory.makeDenotator;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 /**
  * This class can be used to implement function on integers.

@@ -33,7 +33,7 @@ import org.rubato.base.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.forms.TempDictionary;
-import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 
 public class JSelectForm extends JPanel implements ActionListener {

@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 public class DenotatorValueFinder {
 	

@@ -27,6 +27,8 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 
 /**
  * A rubette that quantizes a Score denotator according to the given time and pitch units. Rounds onset, pitch,

@@ -23,9 +23,9 @@ package org.rubato.rubettes.denotex;
 import java.util.*;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.Denotator;
-import org.rubato.math.yoneda.Form;
-import org.rubato.math.yoneda.NameEntry;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
 
 public final class Symboltable {
     public Symboltable(Map<NameEntry,Form> forms,
