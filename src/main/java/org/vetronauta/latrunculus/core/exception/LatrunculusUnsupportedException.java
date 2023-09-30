@@ -22,9 +22,12 @@ package org.vetronauta.latrunculus.core.exception;
 /**
  * @author vetronauta
  */
-public class LatrunculusFactoryException extends LatrunculusCheckedException {
+public class LatrunculusUnsupportedException extends LatrunculusRuntimeException {
 
-    public LatrunculusFactoryException(Throwable th) {
-        super(th);
+    private static final String ERROR_MESSAGE = "Not implemented";
+
+    public LatrunculusUnsupportedException() {
+        super(ERROR_MESSAGE);
     }
+
 }

@@ -99,4 +99,8 @@ public final class XMLConstants {
 
     public static final String FORMTYPE_ATTR = "formType";
 
+    public final static String ARROW     = "Arrow";
+    public final static String FROM_ATTR = "from";
+    public final static String TO_ATTR   = "to";
+
 }

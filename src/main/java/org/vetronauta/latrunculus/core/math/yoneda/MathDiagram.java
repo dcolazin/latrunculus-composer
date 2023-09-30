@@ -326,8 +326,7 @@ public class MathDiagram extends Diagram {
     
 
     public void toXML(XMLWriter writer) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
+
     }
     
     

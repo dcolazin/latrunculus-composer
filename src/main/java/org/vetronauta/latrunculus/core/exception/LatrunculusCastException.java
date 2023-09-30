@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.exception;
 /**
  * @author vetronauta
  */
-public class LatrunculusCastException extends LatrunculusException {
+public class LatrunculusCastException extends LatrunculusCheckedException {
 
     private static final String ERROR_MESSAGE_FORMAT = "Expected class %s but received class %s";
 

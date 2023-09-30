@@ -21,17 +21,15 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIAGRAM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.REF_ATTR;
-
-import java.util.*;
-
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Diagram of forms.
@@ -343,32 +341,6 @@ public final class FormDiagram extends Diagram {
         return list;
     }
 
-    
-    private final static String ARROW     = "Arrow";
-    private final static String FROM_ATTR = "from";
-    private final static String TO_ATTR   = "to";
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(DIAGRAM, getElementTypeName());
-        for (int i = 0; i < getFormCount(); i++) {
-            writer.empty(FORM, REF_ATTR, getForm(i).getNameString());
-        }
-        for (int i = 0; i < getFormCount(); i++) {
-            for (int j = 0; j < getFormCount(); j++) {
-                if (getArrowCount(i, j) > 0) {
-                    for (int k = 0; k < getArrowCount(i, j); k++) {
-                        writer.openBlock(ARROW, FROM_ATTR, i, TO_ATTR, j);
-                        getArrow(i, j, k).toXML(writer);
-                        writer.closeBlock();
-                    }
-                }
-            }
-        }
-        writer.closeBlock();
-    }
-    
-    
     public Diagram fromXML(XMLReader reader, Element element) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");
