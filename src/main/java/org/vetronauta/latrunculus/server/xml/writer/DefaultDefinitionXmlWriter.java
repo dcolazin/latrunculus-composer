@@ -19,7 +19,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
     private final LatrunculusXmlWriter<Denotator> denotatorXmlWriter;
 
     public DefaultDefinitionXmlWriter() {
-        this.moduleWriter = null; //TODO
+        this.moduleWriter = new DefaultModuleXmlWriter(this);
         this.moduleMorphismWriter = null; //TODO
         this.moduleElementWriter = new DefaultModuleElementXmlWriter(this);
         this.moduleMapWriter = new DefaultMorphismMapXmlWriter(this);

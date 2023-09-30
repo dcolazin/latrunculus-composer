@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.server.xml.XMLInput;
 
 /**
  * The interface for modules.
@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
  * 
  * @author Gérard Milmeister
  */
-public interface Module extends Serializable, Comparable<Module>, XMLInputOutput<Module> {
+public interface Module extends Serializable, Comparable<Module>, XMLInput<Module> {
 
     /**
      * Returns the zero element in this module.

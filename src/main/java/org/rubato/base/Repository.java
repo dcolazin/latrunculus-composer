@@ -41,7 +41,6 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.denotex.DenotexReader;
 import org.rubato.scheme.*;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;

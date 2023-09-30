@@ -19,20 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Module with arbitrary modules as components.
@@ -331,16 +330,6 @@ public final class DirectSumModule implements Module {
         buf.append("]");
         return buf.toString();
     }
-    
-
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE, getElementTypeName());
-        for (int i = 0; i < components.length; i++) {
-            components[i].toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
     
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

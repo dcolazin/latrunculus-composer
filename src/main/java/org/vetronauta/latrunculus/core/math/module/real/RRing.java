@@ -19,11 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.List;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -32,14 +28,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.List;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The field of real numbers.
@@ -188,12 +185,6 @@ public final class RRing extends NumberRing implements RFreeModule {
     		return null;
     	}
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE, getElementTypeName());
-    }
-        
     
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

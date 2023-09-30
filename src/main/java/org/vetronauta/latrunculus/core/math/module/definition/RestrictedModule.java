@@ -19,21 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.List;
-
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import java.util.List;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Modules with restricted ring of scalars. Instances are created using
@@ -229,15 +227,6 @@ public class RestrictedModule implements Module {
         return "("+morphism.getDomain().toVisualString()+")"+module.toVisualString();
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE, getElementTypeName());
-        morphism.toXML(writer);
-        module.toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         Element childElement = XMLReader.getChild(element, MODULE_MORPHISM);

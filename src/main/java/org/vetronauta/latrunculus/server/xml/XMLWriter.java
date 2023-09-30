@@ -55,8 +55,8 @@ import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
  */
 public class XMLWriter {
 
-    //TODO constructor?
-    private final DefaultDefinitionXmlWriter moduleElementWriter = new DefaultDefinitionXmlWriter();
+    //TODO constructor? or remove some logic from here?
+    private final DefaultDefinitionXmlWriter definitionWriter = new DefaultDefinitionXmlWriter();
 
     /**
      * Creates a non-compressing writer to the specified file.
@@ -397,7 +397,7 @@ public class XMLWriter {
      */
     public void writeModuleElement(String name, ModuleElement moduleElement) {
         openBlock(DEFINE_MODULE_ELEMENT, NAME_ATTR, name);
-        moduleElementWriter.toXML(moduleElement, this);
+        definitionWriter.toXML(moduleElement, this);
         closeBlock();
     }
     

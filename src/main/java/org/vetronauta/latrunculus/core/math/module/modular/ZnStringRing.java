@@ -19,10 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -31,13 +28,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The ring of ZnString.
@@ -152,12 +149,6 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
             return null;
         }
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE, getElementTypeName(), MODULUS_ATTR, getModulus());
-    }
-    
     
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

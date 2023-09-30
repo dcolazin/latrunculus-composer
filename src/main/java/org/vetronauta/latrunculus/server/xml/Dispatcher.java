@@ -175,6 +175,7 @@ public class Dispatcher {
     //TODO annotate this classes for autodetection
     private void init() {
         // modules
+        //TODO ProductProperFreeModule, ModularPolynomialProperFreeModule, ModularPolynomialRing, PolynomialFreeModule, PolynomialRing are not registered
         addModule(ZRing.class);
         addModule(ZnRing.class);
         addModule(RRing.class);

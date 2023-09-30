@@ -19,25 +19,25 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over integers mod <i>n</i>.
@@ -215,18 +215,11 @@ public final class ZnProperFreeModule
     }
 
     
-    public final int getModulus() {
+    public int getModulus() {
         return modulus;
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE, getElementTypeName(),
-                             DIMENSION_ATTR, getDimension(),
-                             MODULUS_ATTR, getModulus());
-    }
-    
-    
+
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
 

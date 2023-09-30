@@ -365,7 +365,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     private void write(DirectSumElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         for (int i = 0; i < element.getComponents().length; i++) {
-            toXML(element.getComponent(i), writer);
+            definitionWriter.toXML(element.getComponent(i), writer);
         }
         writer.closeBlock();
     }
@@ -373,16 +373,16 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     private void write(ProductElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         for (int i = 0; i < element.getFactorCount(); i++) {
-            toXML(element.getValue(i), writer);
+            definitionWriter.toXML(element.getValue(i), writer);
         }
         writer.closeBlock();
     }
 
     private void write(ProductProperFreeElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        toXML(element.getRing(), writer);
+        definitionWriter.toXML(element.getRing(), writer);
         for (int i = 1; i < element.getLength(); i++) {
-            toXML(element.getComponent(i), writer);
+            definitionWriter.toXML(element.getComponent(i), writer);
         }
         writer.closeBlock();
     }
@@ -391,7 +391,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(),
                 INDETERMINATE_ATTR, element.getRing().getIndeterminate());
         for (int i = 0; i < element.getCoefficients().length; i++) {
-            toXML(element.getCoefficients()[i], writer);
+            definitionWriter.toXML(element.getCoefficients()[i], writer);
         }
         writer.closeBlock();
     }
@@ -406,7 +406,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(ModularPolynomialElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        toXML(element.getRing(), writer);
+        definitionWriter.toXML(element.getRing(), writer);
         write(element.getPolynomial(), writer);
         writer.closeBlock();
     }
@@ -421,8 +421,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(RestrictedElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        toXML(element.getModule(), writer);
-        toXML(element.getModuleElement(), writer);
+        definitionWriter.toXML(element.getModule(), writer);
+        definitionWriter.toXML(element.getModuleElement(), writer);
         writer.closeBlock();
     }
 }

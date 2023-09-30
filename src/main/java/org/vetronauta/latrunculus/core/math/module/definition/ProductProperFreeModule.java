@@ -19,21 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over a product ring.
@@ -270,15 +268,6 @@ public final class ProductProperFreeModule
     public String toVisualString() {
         return "("+getRing().toVisualString()+")"+"^"+getDimension();
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE, getElementTypeName(),
-                                 DIMENSION_ATTR, getDimension());
-        getRing().toXML(writer);
-        writer.closeBlock();
-    }
-    
     
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));

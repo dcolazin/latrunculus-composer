@@ -19,24 +19,25 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.*;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The ring of polynomials with coefficients in a specified ring.
@@ -443,15 +444,6 @@ public final class PolynomialRing
     
     private final static String INDETERMINATE_ATTR = "indeterminate";
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE, getElementTypeName(),
-                                 INDETERMINATE_ATTR, indeterminate);
-        getCoefficientRing().toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
     public Module fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         if (!element.hasAttribute(INDETERMINATE_ATTR)) {

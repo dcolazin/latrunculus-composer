@@ -19,25 +19,22 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
 
 /**
  * Free modules over modular polynomials.
@@ -254,16 +251,7 @@ public final class ModularPolynomialProperFreeModule
     public String toVisualString() {
         return "("+getRing()+")^"+getDimension();
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE, getElementTypeName(),
-                                 DIMENSION_ATTR, getDimension());
-        ring.getModulus().toXML(writer);
-        writer.closeBlock();
-    }
-    
-    
+
     public Module fromXML(XMLReader reader, Element element) {
         int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
         Element childElement = XMLReader.getChild(element, MODULE);
