@@ -1,6 +1,8 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
+import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -15,7 +17,7 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
  * @author vetronauta
  */
 @RequiredArgsConstructor
-public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
+public class DefaultDefinitionXmlWriter implements LatrunculusXmlWriter<MathDefinition> {
 
     private final LatrunculusXmlWriter<Module> moduleWriter;
     private final LatrunculusXmlWriter<ModuleMorphism> moduleMorphismWriter;
@@ -38,43 +40,43 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
     }
 
     @Override
-    public void toXML(Module object, XMLWriter writer) {
-        moduleWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(ModuleMorphism object, XMLWriter writer) {
-        moduleMorphismWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(ModuleElement object, XMLWriter writer) {
-        moduleElementWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(MorphismMap object, XMLWriter writer) {
-        moduleMapWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(Denotator object, XMLWriter writer) {
-        denotatorXmlWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(YonedaMorphism object, XMLWriter writer) {
-        yonedaMorphismXmlWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(Diagram object, XMLWriter writer) {
-        diagramXmlWriter.toXML(object, writer);
-    }
-
-    @Override
-    public void toXML(Form object, XMLWriter writer) {
-        formXmlWriter.toXML(object, writer);
+    public void toXML(MathDefinition object, XMLWriter writer) {
+        if (object == null) {
+            return;
+        }
+        if (object instanceof Module) {
+            moduleWriter.toXML((Module) object, writer);
+            return;
+        }
+        if (object instanceof ModuleMorphism) {
+            moduleMorphismWriter.toXML((ModuleMorphism) object, writer);
+            return;
+        }
+        if (object instanceof ModuleElement) {
+            moduleElementWriter.toXML((ModuleElement) object, writer);
+            return;
+        }
+        if (object instanceof MorphismMap) {
+            moduleMapWriter.toXML((MorphismMap) object, writer);
+            return;
+        }
+        if (object instanceof Denotator) {
+            denotatorXmlWriter.toXML((Denotator) object, writer);
+            return;
+        }
+        if (object instanceof YonedaMorphism) {
+            yonedaMorphismXmlWriter.toXML((YonedaMorphism) object, writer);
+            return;
+        }
+        if (object instanceof Diagram) {
+            diagramXmlWriter.toXML((Diagram) object, writer);
+            return;
+        }
+        if (object instanceof Form) {
+            formXmlWriter.toXML((Form) object, writer);
+            return;
+        }
+        throw new LatrunculusUnsupportedException(String.format("Unknown MathDefinition class: %s", object.getClass()));
     }
 
 }

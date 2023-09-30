@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
@@ -119,10 +120,7 @@ public class Dispatcher {
     private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
     private final HashMap<String, Class<? extends MorphismMap>> morphismMaps = new HashMap<>();
 
-    private LatrunculusXmlReader<Module> moduleReader; //TODO constructor and a DefinitionModuleReader
-    private LatrunculusXmlReader<ModuleMorphism> moduleMorphismReader; //TODO constructor and a DefinitionModuleReader
-    private LatrunculusXmlReader<ModuleElement> moduleElementReader; //TODO constructor and a DefinitionModuleReader
-    private LatrunculusXmlReader<MorphismMap> mapReader; //TODO constructor and a DefinitionModuleReader
+    private LatrunculusXmlReader<MathDefinition> definitionReader; //TODO constructor and a DefaultDefinitionModuleReader
 
     public static Dispatcher getDispatcher() {
         return DISPATCHER;
@@ -131,25 +129,25 @@ public class Dispatcher {
     public Module resolveModule(XMLReader reader, Element moduleElement) {
         String moduleName = moduleElement.getAttribute(TYPE_ATTR);
         Class<? extends Module> clazz = modules.get(moduleName);
-        return moduleReader.fromXML(moduleElement, clazz, reader);
+        return definitionReader.fromXML(moduleElement, clazz, reader);
     }
 
     public ModuleMorphism resolveModuleMorphism(XMLReader reader, Element morphismElement) {
         String morphismName = morphismElement.getAttribute(TYPE_ATTR);
         Class<? extends ModuleMorphism> clazz = moduleMorphisms.get(morphismName);
-        return moduleMorphismReader.fromXML(morphismElement, clazz, reader);
+        return definitionReader.fromXML(morphismElement, clazz, reader);
     }
 
     public ModuleElement resolveElement(XMLReader reader, Element element) {
         String elementName = element.getAttribute(TYPE_ATTR);
         Class<? extends ModuleElement> elementClass = elements.get(elementName);
-        return moduleElementReader.fromXML(element, elementClass, reader);
+        return definitionReader.fromXML(element, elementClass, reader);
     }
 
     public MorphismMap resolveMorphismMap(XMLReader reader, Element morphismMapElement) {
         String morphismMapName = morphismMapElement.getAttribute(TYPE_ATTR);
         Class<? extends MorphismMap> dispatch = morphismMaps.get(morphismMapName);
-        return mapReader.fromXML(morphismMapElement, dispatch, reader);
+        return definitionReader.fromXML(morphismMapElement, dispatch, reader);
     }
 
     public void addModule(Class<? extends Module> clazz) {

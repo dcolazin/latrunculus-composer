@@ -27,6 +27,7 @@ import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
@@ -41,7 +42,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap> {
+public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap>, MathDefinition {
 
     /**
      * Evaluates the map at an element.

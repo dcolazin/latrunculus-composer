@@ -19,24 +19,16 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.getJDialog;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JSimpleEntry;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -49,14 +41,33 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static org.rubato.composer.Utilities.getJDialog;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 
 public class SimpleRubette extends AbstractRubette implements ActionListener {    
 
     //TODO rubette writer
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public SimpleRubette() {
         setInCount(0);

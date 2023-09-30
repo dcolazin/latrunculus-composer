@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.AutoListMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -39,7 +40,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
 @RequiredArgsConstructor
 public class DefaultMorphismMapXmlWriter implements LatrunculusXmlWriter<MorphismMap> {
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(MorphismMap object, XMLWriter writer) {

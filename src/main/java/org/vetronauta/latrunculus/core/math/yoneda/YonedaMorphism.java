@@ -22,6 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
@@ -38,7 +39,7 @@ import java.util.LinkedList;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class YonedaMorphism implements Yoneda, XMLInput<YonedaMorphism>, Comparable<YonedaMorphism> {
+public abstract class YonedaMorphism implements Yoneda, XMLInput<YonedaMorphism>, Comparable<YonedaMorphism>, MathDefinition {
 
     /**
      * Returns the domain diagram of this morphism.

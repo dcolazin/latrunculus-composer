@@ -1,22 +1,23 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
 import org.rubato.base.RubatoException;
+import org.rubato.rubettes.bigbang.model.BigBangModel;
+import org.rubato.rubettes.bigbang.model.OperationPathResults;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.rubato.rubettes.bigbang.model.BigBangModel;
-import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
 
 public class InputCompositionOperation extends AbstractOperation {
 
 	//TODO rubette writer
-	private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+	private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 	
 	private Denotator composition;
 	private Denotator modifiedComposition;

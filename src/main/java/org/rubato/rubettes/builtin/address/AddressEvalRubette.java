@@ -19,23 +19,25 @@
 
 package org.rubato.rubettes.builtin.address;
 
-import static org.rubato.composer.Utilities.getJDialog;
-import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.*;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.RubatoException;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
-import org.rubato.composer.components.*;
+import org.rubato.composer.components.JModuleElementEntry;
+import org.rubato.composer.components.JModuleElementList;
+import org.rubato.composer.components.JModuleEntry;
+import org.rubato.composer.components.JMorphismEntry;
+import org.rubato.composer.components.JSelectForm;
+import org.rubato.composer.components.JStatusline;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
+import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
+import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
+import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
@@ -44,14 +46,6 @@ import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -61,10 +55,14 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
-import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
-import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
@@ -76,8 +74,31 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.rubato.composer.Utilities.getJDialog;
+import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * 
@@ -86,7 +107,7 @@ import org.w3c.dom.Element;
 public final class AddressEvalRubette extends AbstractRubette implements ActionListener {
 
     //TODO writer for rubettes and properties
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public AddressEvalRubette() {
         setInCount(1);

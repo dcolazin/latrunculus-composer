@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.ProperIdentityMorphism;
@@ -36,7 +37,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM;
 @RequiredArgsConstructor
 public class DefaultYonedaMorphismXmlWriter implements LatrunculusXmlWriter<YonedaMorphism> {
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(YonedaMorphism object, XMLWriter writer) {

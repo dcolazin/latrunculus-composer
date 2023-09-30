@@ -19,33 +19,55 @@
 
 package org.rubato.rubettes.score;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-
 import org.rubato.audio.midi.MidiReader;
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class MidiFileInRubette extends AbstractRubette {
 
     //TODO rubette writer
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public MidiFileInRubette() {
         setInCount(0);

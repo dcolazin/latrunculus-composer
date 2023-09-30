@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.rubato.base.LatrunculusError;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.DenotatorReference;
@@ -49,7 +50,7 @@ public class DefaultDenotatorXmlWriter implements LatrunculusXmlWriter<Denotator
 
     //TODO common logic
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(Denotator object, XMLWriter writer) {

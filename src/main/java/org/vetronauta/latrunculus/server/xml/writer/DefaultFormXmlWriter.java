@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
@@ -53,7 +54,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 @RequiredArgsConstructor
 public class DefaultFormXmlWriter implements LatrunculusXmlWriter<Form> {
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(Form object, XMLWriter writer) {

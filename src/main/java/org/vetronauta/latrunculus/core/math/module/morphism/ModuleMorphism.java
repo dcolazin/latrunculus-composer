@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -36,7 +37,7 @@ import java.io.Serializable;
  * @author Gérard Milmeister
  */
 public abstract class ModuleMorphism
-    implements Comparable<ModuleMorphism>, Cloneable, Serializable, XMLInput<ModuleMorphism> {
+    implements Comparable<ModuleMorphism>, Cloneable, Serializable, XMLInput<ModuleMorphism>, MathDefinition {
 
     /**
      * Creates a new morphism with <code>domain</code>

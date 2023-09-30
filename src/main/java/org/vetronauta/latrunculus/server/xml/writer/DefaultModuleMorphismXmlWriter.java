@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -74,7 +75,7 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
 
     //TODO extract common logic
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(ModuleMorphism object, XMLWriter writer) {

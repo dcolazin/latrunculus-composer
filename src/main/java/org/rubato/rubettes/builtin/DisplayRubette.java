@@ -19,11 +19,30 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.Rubette;
+import org.rubato.composer.RunInfo;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
+import org.w3c.dom.Element;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,21 +50,10 @@ import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-
-import org.rubato.base.AbstractRubette;
-import org.rubato.base.RubatoConstants;
-import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
-import org.w3c.dom.Element;
+import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 
 /**
@@ -57,7 +65,7 @@ import org.w3c.dom.Element;
 public class DisplayRubette extends AbstractRubette implements ActionListener {
 
     //TODO rubette writer
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public DisplayRubette() {
         setInCount(1);

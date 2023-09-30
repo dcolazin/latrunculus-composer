@@ -23,6 +23,7 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 
 import java.io.PrintStream;
@@ -37,7 +38,7 @@ import java.util.List;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class Form extends AbstractConnectableYoneda implements Comparable<Form> {
+public abstract class Form extends AbstractConnectableYoneda implements Comparable<Form>, MathDefinition {
 
     /**
      * Returns the name of the form as a denotator.

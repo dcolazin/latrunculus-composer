@@ -24,6 +24,7 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
@@ -41,9 +42,7 @@ import java.util.LinkedList;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class Denotator 
-    extends AbstractConnectableYoneda
-    implements Comparable<Denotator>, Iterable<Denotator> {
+public abstract class Denotator extends AbstractConnectableYoneda implements Comparable<Denotator>, Iterable<Denotator>, MathDefinition {
 
     
     /**

@@ -19,28 +19,37 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.awt.BorderLayout;
-
-import javax.swing.*;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JSelectDenotator;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 
 public class SourceRubette extends AbstractRubette {
 
     //TODO rubette writer
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
     
     public SourceRubette() {
         setInCount(0);

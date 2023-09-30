@@ -17,21 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.exception;
+package org.vetronauta.latrunculus.core.math;
 
 /**
+ * Base interface for mathematical objects
  * @author vetronauta
  */
-public class LatrunculusUnsupportedException extends LatrunculusRuntimeException {
-
-    private static final String ERROR_MESSAGE = "Not implemented";
-
-    public LatrunculusUnsupportedException() {
-        super(ERROR_MESSAGE);
-    }
-
-    public LatrunculusUnsupportedException(String message) {
-        super(message);
-    }
-
+public interface MathDefinition {
 }

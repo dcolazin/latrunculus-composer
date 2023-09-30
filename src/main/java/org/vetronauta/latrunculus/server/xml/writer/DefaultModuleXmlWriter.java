@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
@@ -60,7 +61,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
 @RequiredArgsConstructor
 public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
 
-    private final DefinitionXmlWriter definitionXmlWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter;
 
     @Override
     public void toXML(Module object, XMLWriter writer) {

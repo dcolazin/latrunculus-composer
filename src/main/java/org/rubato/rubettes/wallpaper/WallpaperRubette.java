@@ -19,19 +19,11 @@
 
 package org.rubato.rubettes.wallpaper;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.*;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.RubatoException;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
@@ -40,16 +32,37 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.SimpleFormFinder;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * A rubette that creates a wallpaper using an input power denotator and a number of morphisms.
@@ -59,7 +72,7 @@ import org.w3c.dom.Element;
 public class WallpaperRubette extends AbstractRubette implements ActionListener {
 
 	//TODO rubette writer
-	private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+	private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 	
 	private PowerForm inputForm = null;
 	private SimpleFormFinder simpleFormFinder;

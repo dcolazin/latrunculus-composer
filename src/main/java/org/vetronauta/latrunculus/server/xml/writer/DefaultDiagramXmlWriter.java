@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.MathDiagram;
@@ -39,7 +40,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TO_ATTR;
 @RequiredArgsConstructor
 public class DefaultDiagramXmlWriter implements LatrunculusXmlWriter<Diagram> {
 
-    private final DefinitionXmlWriter definitionWriter;
+    private final LatrunculusXmlWriter<MathDefinition> definitionWriter;
 
     @Override
     public void toXML(Diagram object, XMLWriter writer) {

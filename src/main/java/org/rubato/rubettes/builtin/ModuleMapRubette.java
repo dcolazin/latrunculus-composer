@@ -19,21 +19,17 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.RubatoException;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
-import org.rubato.composer.components.*;
+import org.rubato.composer.components.JFormTree;
+import org.rubato.composer.components.JMorphismEntry;
+import org.rubato.composer.components.JSelectForm;
+import org.rubato.composer.components.JStatusline;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -42,13 +38,27 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
+
+import javax.swing.Box;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class ModuleMapRubette extends AbstractRubette implements ActionListener {
 
     //TODO rubette writer
-    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
     
     public ModuleMapRubette() {
         setInCount(1);
