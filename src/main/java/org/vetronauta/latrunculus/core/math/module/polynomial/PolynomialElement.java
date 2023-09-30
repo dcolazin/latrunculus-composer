@@ -19,25 +19,23 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.LinkedList;
-
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a ring of polynomials.
@@ -960,19 +958,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         return module.cast(this);
     }
 
-    
-    private final static String INDETERMINATE_ATTR = "indeterminate";
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName(),
-                                 INDETERMINATE_ATTR, ring.getIndeterminate());
-        for (int i = 0; i < coefficients.length; i++) {
-            coefficients[i].toXML(writer);
-        }
-        writer.closeBlock();
-    }
 
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         if (!element.hasAttribute(INDETERMINATE_ATTR)) {
@@ -1025,15 +1011,6 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             return null;
         }
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO =
-        new PolynomialElement("X", new ZElement(0));
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "PolynomialElement";

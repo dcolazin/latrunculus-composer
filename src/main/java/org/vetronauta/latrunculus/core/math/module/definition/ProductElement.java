@@ -19,22 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a product ring.
@@ -585,16 +582,6 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         return module.cast(this);
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName());
-        for (int i = 0; i < getFactorCount(); i++) {
-            getValue(i).toXML(writer);
-        }
-        writer.closeBlock();
-    }
-
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
@@ -637,14 +624,6 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         }
         
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = ProductElement.make(new ZElement(0), new ZElement(0));
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "ProductElement";

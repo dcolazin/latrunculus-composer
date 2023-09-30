@@ -31,6 +31,7 @@ $ mvn javadoc:javadoc
 * [ ] Review the rubette loading
 * [ ] Test coverage >70% and review current tests
 * [ ] OSC support
+* [ ] JSON serialization
 * [ ] Linting and improve maintainability
 * [ ] SLF4J
 * [ ] Review i18n

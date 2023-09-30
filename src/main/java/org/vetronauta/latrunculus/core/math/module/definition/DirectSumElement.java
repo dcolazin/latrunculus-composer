@@ -19,20 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.arith.Folding;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements with components from arbitrary modules.
@@ -77,7 +74,10 @@ public final class DirectSumElement implements ModuleElement {
         }
         return true;
     }
-    
+
+    public ModuleElement[] getComponents() {
+        return components;
+    }
     
     public DirectSumElement sum(ModuleElement element)
             throws DomainException {
@@ -432,16 +432,6 @@ public final class DirectSumElement implements ModuleElement {
         return true;
     }
     
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName());
-        for (int i = 0; i < components.length; i++) {
-            components[i].toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
@@ -473,14 +463,6 @@ public final class DirectSumElement implements ModuleElement {
             return null;
         }
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = new DirectSumElement(ZRing.ring);
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "DirectSumElement";

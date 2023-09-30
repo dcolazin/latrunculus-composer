@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 
 import java.io.Serializable;
 
+import org.vetronauta.latrunculus.server.xml.XMLInput;
 import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -31,7 +32,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
  * 
  * @author Gérard Milmeister
  */
-public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable, Comparable<ModuleElement>, XMLInputOutput<ModuleElement> {
+public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable, Comparable<ModuleElement>, XMLInput<ModuleElement> {
 
     /**
      * Returns true iff this element is zero.

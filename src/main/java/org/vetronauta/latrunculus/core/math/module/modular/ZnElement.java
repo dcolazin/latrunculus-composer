@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -28,10 +26,12 @@ import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * Elements in the ring of integers mod <i>n</i>.
@@ -390,12 +390,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
         return module.cast(this);
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, getElementTypeName(), VALUE_ATTR, value, MODULUS_ATTR, modulus);
-    }
-
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         if (!element.hasAttribute(VALUE_ATTR)) {
@@ -430,14 +424,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
             return null;                    
         }
     }
-
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = new ZnElement(0, 2);
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "ZnElement";

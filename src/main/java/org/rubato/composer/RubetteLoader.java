@@ -28,7 +28,7 @@ import org.rubato.composer.plugin.PluginManager;
 import org.rubato.util.TextUtils;
 
 /**
- * The RubetteLoader is reponsible for loading and registering Rubettes.
+ * The RubetteLoader is responsible for loading and registering Rubettes.
  * 
  * @author Gérard Milmeister
  */

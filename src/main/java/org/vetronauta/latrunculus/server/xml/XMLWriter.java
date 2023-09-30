@@ -45,6 +45,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.math.yoneda.Denotator;
 import org.rubato.math.yoneda.Form;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultModuleElementXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 
 
 /**
@@ -53,6 +55,9 @@ import org.rubato.math.yoneda.Form;
  * @author Gérard Milmeister
  */
 public class XMLWriter {
+
+    //TODO constructor
+    private final LatrunculusXmlWriter<ModuleElement> moduleElementWriter = new DefaultModuleElementXmlWriter();
 
     /**
      * Creates a non-compressing writer to the specified file.
@@ -393,7 +398,7 @@ public class XMLWriter {
      */
     public void writeModuleElement(String name, ModuleElement moduleElement) {
         openBlock(DEFINE_MODULE_ELEMENT, NAME_ATTR, name);
-        moduleElement.toXML(this);
+        moduleElementWriter.toXML(moduleElement, this);
         closeBlock();
     }
     

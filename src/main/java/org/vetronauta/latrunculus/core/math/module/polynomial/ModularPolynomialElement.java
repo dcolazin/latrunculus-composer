@@ -19,21 +19,18 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 /**
  * Elements in a ring of polynomials.
@@ -485,6 +482,10 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         return polynomial.stringRep(parens);
     }
 
+    public PolynomialElement getPolynomial() {
+        return polynomial;
+    }
+
     
     public String toString() {
         return "ModularPolynomial["+polynomial.stringRep()+","+modulus.stringRep()+"]";
@@ -499,15 +500,6 @@ public final class ModularPolynomialElement extends RingElement implements Modul
     public ModuleElement cast(Module module) {
         return module.cast(this);
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName());        ring.toXML(writer);
-        ring.toXML(writer);
-        polynomial.toXML(writer);
-        writer.closeBlock();
-    }
-
     
     public ModuleElement fromXML(XMLReader reader, Element element) {
         element = XMLReader.getChild(element, MODULE_ELEMENT);
@@ -536,15 +528,6 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         }
         return null;
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO =
-        new ModularPolynomialElement(ModularPolynomialRing.make(PolynomialRing.make(QRing.ring,"X").getOne()), new QElement(0));
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "ModularPolynomialElement";

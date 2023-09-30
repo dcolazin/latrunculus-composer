@@ -19,11 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.*;
-
 import org.vetronauta.latrunculus.core.math.arith.string.RString;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
@@ -34,10 +29,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in the ring of strings with real factors.
@@ -196,7 +196,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
 
     
     public RStringElement product(RStringElement element) {
-        return new RStringElement((RString)getValue().product(element.getValue()));
+        return new RStringElement(getValue().product(element.getValue()));
     }
 
 
@@ -313,7 +313,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
 
     @Override
     public RingElement deepCopy() {
-        return new RStringElement((RString)getValue().deepCopy());
+        return new RStringElement(getValue().deepCopy());
     }
 
     public String toString() {
@@ -348,19 +348,6 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     
     private final static String WORD        = "Word";
     private final static String FACTOR_ATTR = "factor";
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName());
-        for (String word : value.getStrings()) {
-            double factor = ((Double)value.getFactorForString(word)).doubleValue();
-            writer.openInline(WORD, FACTOR_ATTR, factor);
-            writer.text(word);
-            writer.closeInline();                
-        }
-        writer.closeBlock();
-    }
-    
     
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
@@ -421,14 +408,6 @@ public final class RStringElement extends StringElement implements RStringFreeEl
             return null;            
         }        
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = new RStringElement("");
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "RStringElement";

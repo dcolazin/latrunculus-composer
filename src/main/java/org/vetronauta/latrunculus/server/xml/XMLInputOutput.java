@@ -27,6 +27,7 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
+@Deprecated
 public interface XMLInputOutput<T> {
 
     /**

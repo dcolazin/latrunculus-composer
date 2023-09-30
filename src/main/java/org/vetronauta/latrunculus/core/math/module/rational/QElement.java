@@ -19,22 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * Elements in the field of rationals.
@@ -395,12 +392,6 @@ public final class QElement extends RingElement implements QFreeElement {
         return module.cast(this);
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, getElementTypeName(), VALUE_ATTR, value);
-    }
-
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         if (element.hasAttribute(VALUE_ATTR)) {
@@ -418,14 +409,6 @@ public final class QElement extends RingElement implements QFreeElement {
             return null;                
         }
     }
-
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = new QElement(0);
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "QElement";

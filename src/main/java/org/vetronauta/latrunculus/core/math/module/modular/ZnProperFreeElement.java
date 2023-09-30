@@ -19,20 +19,20 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
 
 /**
  * Elements in a free module over integers mod <i>n</i>.
@@ -458,22 +458,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
         }
         return Folding.fold(res);
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        String s = "";        
-        if (value.length > 0) {
-            s += value[0];
-            for (int i = 1; i < value.length; i++) {
-              s += ","+value[i];
-            }
-        }
-        s += "\"";
-        writer.emptyWithType(MODULE_ELEMENT, getElementTypeName(),
-                             MODULUS_ATTR, getModulus(),
-                             VALUES_ATTR, s);
-    }
-
     
     public ModuleElement fromXML(XMLReader xmlReader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
@@ -512,14 +496,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
         
         return ZnProperFreeElement.make(intValues, mod);
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = ZnProperFreeElement.make(new int[0], 2);
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "ZnFreeElement";

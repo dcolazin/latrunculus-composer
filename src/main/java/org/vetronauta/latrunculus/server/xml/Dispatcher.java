@@ -19,45 +19,16 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-
+import org.rubato.math.yoneda.ConstantModuleMorphismMap;
+import org.rubato.math.yoneda.ModuleMorphismMap;
+import org.rubato.math.yoneda.MorphismMap;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.ConstantModuleMorphismMap;
-import org.rubato.math.yoneda.ModuleMorphismMap;
-import org.rubato.math.yoneda.MorphismMap;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
@@ -108,7 +79,37 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
+import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
 import org.w3c.dom.Element;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 public class Dispatcher {
 
@@ -116,14 +117,15 @@ public class Dispatcher {
 
     private final HashMap<String,XMLInputOutput<Module>> modules = new HashMap<>();
     private final HashMap<String,XMLInputOutput<ModuleMorphism>> moduleMorphisms = new HashMap<>();
-    private final HashMap<String,XMLInputOutput<ModuleElement>> elements = new HashMap<>();
+    private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
     private final HashMap<String,XMLInputOutput<MorphismMap>> morphismMaps = new HashMap<>();
+
+    private LatrunculusXmlReader<ModuleElement> moduleReader; //TODO constructor
 
     public static Dispatcher getDispatcher() {
         return DISPATCHER;
     }
 
-    
     public Module resolveModule(XMLReader reader, Element moduleElement) {
         Module module = null;
         String moduleName = moduleElement.getAttribute(TYPE_ATTR);
@@ -147,7 +149,6 @@ public class Dispatcher {
         return module;
     }
 
-    
     public ModuleMorphism resolveModuleMorphism(XMLReader reader, Element morphismElement) {
         ModuleMorphism morphism = null;
         String morphismName = morphismElement.getAttribute(TYPE_ATTR);
@@ -171,31 +172,12 @@ public class Dispatcher {
         return morphism;
     }
 
-    
     public ModuleElement resolveElement(XMLReader reader, Element element) {
-        ModuleElement moduleElement = null;
         String elementName = element.getAttribute(TYPE_ATTR);
-        XMLInputOutput<ModuleElement> dispatch = elements.get(elementName);
-
-        if (dispatch != null) {
-            moduleElement = dispatch.fromXML(reader, element);
-        }
-
-        if (moduleElement == null) {
-            try {
-                Class<?> c = Class.forName("org.rubato.math.module."+elementName); //$NON-NLS-1$
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
-                moduleElement = (ModuleElement)m.invoke(c, new Object[] { reader, element });
-            }
-            catch (Exception e) {
-                reader.setError("Cannot build module from %%1.", elementName);
-            }
-        }
-
-        return moduleElement;
+        Class<? extends ModuleElement> elementClass = elements.get(elementName);
+        return moduleReader.fromXML(element, elementClass, reader);
     }
 
-    
     public MorphismMap resolveMorphismMap(XMLReader reader, Element morphismMapElement) {
         MorphismMap morphismMap = null;
         String morphismMapName = morphismMapElement.getAttribute(TYPE_ATTR);
@@ -219,31 +201,27 @@ public class Dispatcher {
         return morphismMap;
     }
 
-    
     public void addModule(XMLInputOutput<Module> dispatch) {
         modules.put(dispatch.getElementTypeName(), dispatch);
     }
-    
-    
+
     public void addModuleMorphism(XMLInputOutput<ModuleMorphism> dispatch) {
         moduleMorphisms.put(dispatch.getElementTypeName(), dispatch);
     }
-    
-    
+
     public void addMorphismMap(XMLInputOutput<MorphismMap> dispatch) {
         morphismMaps.put(dispatch.getElementTypeName(), dispatch);
     }
-    
-    
-    public void addModuleElement(XMLInputOutput<ModuleElement> dispatch) {
-        elements.put(dispatch.getElementTypeName(), dispatch);
+
+    public void addModuleElement(Class<? extends ModuleElement> clazz) {
+        elements.put(clazz.getSimpleName(), clazz);
     }    
-    
 
     /**
      * Every type of ModuleMorphism must be registered here
      * so that an XML representation can be read.
      */
+    //TODO annotate this classes for autodetection
     private void init() {
         // modules
         addModule(ZRing.getXMLInputOutput());
@@ -278,34 +256,35 @@ public class Dispatcher {
         addModule(RestrictedModule.getXMLInputOutput());
         
         // module elements
-        addModuleElement(ZElement.getXMLInputOutput());
-        addModuleElement(ZnElement.getXMLInputOutput());
-        addModuleElement(RElement.getXMLInputOutput());
-        addModuleElement(QElement.getXMLInputOutput());
-        addModuleElement(CElement.getXMLInputOutput());
+        //TODO DirectSumElement, ProductElement, ProductProperFreeElement are not registered
+        addModuleElement(ZElement.class);
+        addModuleElement(ZnElement.class);
+        addModuleElement(RElement.class);
+        addModuleElement(QElement.class);
+        addModuleElement(CElement.class);
         
-        addModuleElement(ZStringElement.getXMLInputOutput());
-        addModuleElement(ZnStringElement.getXMLInputOutput());
-        addModuleElement(RStringElement.getXMLInputOutput());
-        addModuleElement(QStringElement.getXMLInputOutput());
+        addModuleElement(ZStringElement.class);
+        addModuleElement(ZnStringElement.class);
+        addModuleElement(RStringElement.class);
+        addModuleElement(QStringElement.class);
 
-        addModuleElement(ZProperFreeElement.getXMLInputOutput());
-        addModuleElement(ZnProperFreeElement.getXMLInputOutput());
-        addModuleElement(RProperFreeElement.getXMLInputOutput());
-        addModuleElement(QProperFreeElement.getXMLInputOutput());
-        addModuleElement(CProperFreeElement.getXMLInputOutput());
+        addModuleElement(ZProperFreeElement.class);
+        addModuleElement(ZnProperFreeElement.class);
+        addModuleElement(RProperFreeElement.class);
+        addModuleElement(QProperFreeElement.class);
+        addModuleElement(CProperFreeElement.class);
         
-        addModuleElement(ZStringProperFreeElement.getXMLInputOutput());
-        addModuleElement(ZnStringProperFreeElement.getXMLInputOutput());
-        addModuleElement(RStringProperFreeElement.getXMLInputOutput());
-        addModuleElement(QStringProperFreeElement.getXMLInputOutput());
+        addModuleElement(ZStringProperFreeElement.class);
+        addModuleElement(ZnStringProperFreeElement.class);
+        addModuleElement(RStringProperFreeElement.class);
+        addModuleElement(QStringProperFreeElement.class);
 
-        addModuleElement(PolynomialElement.getXMLInputOutput());
-        addModuleElement(PolynomialProperFreeElement.getXMLInputOutput());
-        addModuleElement(ModularPolynomialElement.getXMLInputOutput());
-        addModuleElement(ModularPolynomialProperFreeElement.getXMLInputOutput());
+        addModuleElement(PolynomialElement.class);
+        addModuleElement(PolynomialProperFreeElement.class);
+        addModuleElement(ModularPolynomialElement.class);
+        addModuleElement(ModularPolynomialProperFreeElement.class);
 
-        addModuleElement(RestrictedElement.getXMLInputOutput());
+        addModuleElement(RestrictedElement.class);
         
         // module morphisms
         addModuleMorphism(ZnAffineMorphism.getXMLInputOutput());

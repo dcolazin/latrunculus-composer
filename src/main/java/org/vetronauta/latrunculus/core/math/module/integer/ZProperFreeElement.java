@@ -19,24 +19,22 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
-
+import org.rubato.util.Base64;
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.rubato.util.Base64;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 import java.util.Arrays;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.BASE64;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
 
 /**
  * Elements in a free module over integers.
@@ -423,7 +421,7 @@ public final class ZProperFreeElement extends ProperFreeElement implements ZFree
     public double[] fold(ModuleElement[] elements) {
         assert(elements.length > 0);
         double[][] res = new double[elements.length][];
-        int len = ((ZProperFreeElement)elements[0]).getLength();
+        int len = elements[0].getLength();
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
@@ -434,33 +432,6 @@ public final class ZProperFreeElement extends ProperFreeElement implements ZFree
         }
         return Folding.fold(res);
     }
-
-
-    private static final String BASE64 = "Base64";
-    
-    
-    public void toXML(XMLWriter writer) {
-        if (value.length <= 16) {
-            String s = "";
-            if (value.length > 0) {
-                s += value[0];
-                for (int i = 1; i < value.length; i++) {
-                  s += ","+value[i];
-                }
-            }
-            writer.emptyWithType(MODULE_ELEMENT, getElementTypeName(), VALUES_ATTR, s);
-        }
-        else {
-            writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName());
-            writer.openBlock(BASE64);
-            writer.writeTextNode("\n");
-            writer.writeTextNode(Base64.encodeIntArray(value));
-            writer.writeTextNode("\n");
-            writer.closeBlock();
-            writer.closeBlock();
-        }
-    }
-
     
     public ModuleElement fromXML(XMLReader xmlReader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
@@ -490,12 +461,6 @@ public final class ZProperFreeElement extends ProperFreeElement implements ZFree
         
         return ZProperFreeElement.make(intValues);
     }
-    
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return ZProperFreeElement.nullElement;
-    }
-       
 
     public String getElementTypeName() {
         return "ZFreeElement";

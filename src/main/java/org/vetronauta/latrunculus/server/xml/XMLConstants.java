@@ -77,4 +77,12 @@ public final class XMLConstants {
     public static final String TAG_OPEN = "<";
     public static final String TAG_CLOSE = ">";
     public static final String SPACE = " ";
+
+    public static final String BASE64 = "Base64";
+
+    public static final String WORD        = "Word";
+    public static final String FACTOR_ATTR = "factor";
+    public static final String KIND_ATTR   = "kind";
+    public static final String INDETERMINATE_ATTR = "indeterminate";
+
 }

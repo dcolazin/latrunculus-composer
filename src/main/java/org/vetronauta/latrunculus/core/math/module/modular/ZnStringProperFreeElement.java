@@ -19,26 +19,24 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.server.xml.XMLInputOutput;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.w3c.dom.Element;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a free modules over ZnString.
@@ -450,17 +448,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
         throw new UnsupportedOperationException("Not implemented");
     }
     
-
-    public void toXML(XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, getElementTypeName(),
-                                 MODULUS_ATTR, getModulus());
-        for (int i = 0; i < value.length; i++) {
-            new ZnStringElement(value[i]).toXML(writer);
-        }
-        writer.closeBlock();
-    }
-
-    
     public ModuleElement fromXML(XMLReader reader, Element element) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
@@ -504,14 +491,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             return null;
         }
     }
-    
-    
-    private final static XMLInputOutput<ModuleElement> xmlIO = ZnStringProperFreeElement.make(new ZnString[0], 2);
-    
-    public static XMLInputOutput<ModuleElement> getXMLInputOutput() {
-        return xmlIO;
-    }
-       
 
     public String getElementTypeName() {
         return "ZnStringFreeElement";
@@ -541,7 +520,7 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
     public ModuleElement deepCopy() {
         ZnString[] v = new ZnString[getLength()];
         for (int i = 0; i < getLength(); i++) {
-            v[i] = (ZnString)value[i].deepCopy();
+            v[i] = value[i].deepCopy();
         }
         return new ZnStringProperFreeElement(v, modulus);
     }
