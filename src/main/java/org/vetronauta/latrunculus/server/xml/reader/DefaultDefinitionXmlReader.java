@@ -38,7 +38,9 @@ import org.w3c.dom.Element;
  * @author vetronauta
  */
 @RequiredArgsConstructor
-public class DefaultDefinitionXmlReader implements LatrunculusXmlReader<MathDefinition> {
+public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReader<MathDefinition> {
+
+    private static final String ERROR_MESSAGE = "Unknown MathDefinition class: %s, superclass %s";
 
     //TODO chain of responsibility
 
@@ -64,32 +66,33 @@ public class DefaultDefinitionXmlReader implements LatrunculusXmlReader<MathDefi
     
     @Override
     @SuppressWarnings("unchecked")
-    public <S extends MathDefinition> S fromXML(@NonNull Element element, @NonNull Class<S> clazz, @NonNull XMLReader reader) {
+    public <S extends R, R extends MathDefinition> R fromXML(@NonNull Element element,
+                 @NonNull Class<S> clazz, @NonNull Class<R> superClass, @NonNull XMLReader reader) {
         if (Module.class.isAssignableFrom(clazz)) {
-            return (S) moduleReader.fromXML(element, (Class<? extends Module>) clazz, reader);
+            return (R) moduleReader.fromXML(element, (Class<? extends Module>) clazz, reader);
         }
         if (ModuleMorphism.class.isAssignableFrom(clazz)) {
-            return (S) moduleMorphismReader.fromXML(element, (Class<? extends ModuleMorphism>) clazz, reader);
+            return (R) moduleMorphismReader.fromXML(element, (Class<? extends ModuleMorphism>) clazz, reader);
         }
         if (ModuleElement.class.isAssignableFrom(clazz)) {
-            return (S) moduleElementReader.fromXML(element, (Class<? extends ModuleElement>) clazz, reader);
+            return (R) moduleElementReader.fromXML(element, (Class<? extends ModuleElement>) clazz, reader);
         }
         if (MorphismMap.class.isAssignableFrom(clazz)) {
-            return (S) moduleMapReader.fromXML(element, (Class<? extends MorphismMap>) clazz, reader);
+            return (R) moduleMapReader.fromXML(element, (Class<? extends MorphismMap>) clazz, reader);
         }
         if (Denotator.class.isAssignableFrom(clazz)) {
-            return (S) denotatorReader.fromXML(element, (Class<? extends Denotator>) clazz, reader);
+            return (R) denotatorReader.fromXML(element, (Class<? extends Denotator>) clazz, reader);
         }
         if (YonedaMorphism.class.isAssignableFrom(clazz)) {
-            return (S) yonedaMorphismReader.fromXML(element, (Class<? extends YonedaMorphism>) clazz, reader);
+            return (R) yonedaMorphismReader.fromXML(element, (Class<? extends YonedaMorphism>) clazz, reader);
         }
         if (Diagram.class.isAssignableFrom(clazz)) {
-            return (S) diagramReader.fromXML(element, (Class<? extends Diagram>) clazz, reader);
+            return (R) diagramReader.fromXML(element, (Class<? extends Diagram>) clazz, reader);
         }
         if (Form.class.isAssignableFrom(clazz)) {
-            return (S) formReader.fromXML(element, (Class<? extends Form>) clazz, reader);
+            return (R) formReader.fromXML(element, (Class<? extends Form>) clazz, reader);
         }
-        throw new LatrunculusUnsupportedException(String.format("Unknown MathDefinition class: %s", clazz));
+        throw new LatrunculusUnsupportedException(String.format(ERROR_MESSAGE, clazz, superClass));
     }
     
 }

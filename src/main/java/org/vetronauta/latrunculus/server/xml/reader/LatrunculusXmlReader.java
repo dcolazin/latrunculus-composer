@@ -8,6 +8,6 @@ import org.w3c.dom.Element;
  */
 public interface LatrunculusXmlReader<T> {
 
-    <S extends T> S fromXML(Element element, Class<S> clazz, XMLReader reader);
+    <S extends T> T fromXML(Element element, Class<S> clazz, XMLReader reader);
 
 }
