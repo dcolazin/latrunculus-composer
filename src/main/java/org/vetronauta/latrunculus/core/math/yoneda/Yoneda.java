@@ -32,6 +32,7 @@ import java.io.Serializable;
  */
 public interface Yoneda extends Cloneable, Serializable {
 
+    //TODO enum
     int SIMPLE  = 0;
     int LIMIT   = 1;
     int COLIMIT = 2;

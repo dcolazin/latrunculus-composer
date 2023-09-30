@@ -272,19 +272,8 @@ public final class AutoListMorphismMap implements MorphismMap {
         return "ListMorphismMap";
     }
     
-    
-    /**
-     * Returns a copy of this list morphism map.
-     */
-    public Object clone() {
-        return copy();
-    }
-    
-
-    /**
-     * Returns a copy of this list morphism map.
-     */
-    public AutoListMorphismMap copy() {
+    @Override
+    public AutoListMorphismMap deepCopy() {
     	ArrayList<Denotator> copiedFactors = new ArrayList<>();
         for (Denotator d : this.getFactors()) {
         	copiedFactors.add(d.copy());
@@ -389,7 +378,7 @@ public final class AutoListMorphismMap implements MorphismMap {
         return buf.toString();
     }
 
-    
+
     /**
      * Returns a hash code of this list morphism map.
      */

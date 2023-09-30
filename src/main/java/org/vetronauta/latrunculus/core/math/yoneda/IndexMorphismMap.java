@@ -208,17 +208,11 @@ public final class IndexMorphismMap implements MorphismMap {
     public boolean isConstant() {
         return factor.isConstant();
     }
-    
-    
-    public Object clone() {
-        return copy();
-    }
-    
-    
-    public IndexMorphismMap copy() {
+
+    @Override
+    public IndexMorphismMap deepCopy() {
         return new IndexMorphismMap(index, factor.copy()); 
     }
-    
 
     public boolean equals(Object object) {
         if (object instanceof IndexMorphismMap) {

@@ -315,27 +315,15 @@ public final class ListMorphismMap implements MorphismMap {
     public String getElementTypeName() {
         return "ListMorphismMap";
     }
-    
-    
-    /**
-     * Returns a copy of this list morphism map.
-     */
-    public Object clone() {
-        return copy();
-    }
-    
 
-    /**
-     * Returns a copy of this list morphism map.
-     */
-    public ListMorphismMap copy() {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>(list.size());
+    @Override
+    public ListMorphismMap deepCopy() {
+        ArrayList<Denotator> newList = new ArrayList<>(list.size());
         for (Denotator d : list) {
             newList.add(d.copy());
         }
         return new ListMorphismMap(newList);
     }
-    
 
     public boolean equals(Object object) {
         if (this == object) {

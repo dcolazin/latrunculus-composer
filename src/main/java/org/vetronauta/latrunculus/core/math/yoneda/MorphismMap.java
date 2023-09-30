@@ -26,6 +26,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
@@ -40,7 +41,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public interface MorphismMap extends Cloneable, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap> {
+public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap> {
 
     /**
      * Evaluates the map at an element.
@@ -53,16 +54,6 @@ public interface MorphismMap extends Cloneable, Comparable<MorphismMap>, Seriali
      */
     MorphismMap at(ModuleElement element)
         throws MappingException;
-    
-    /**
-     * Returns a deep copy of this MorphismMap.
-     */
-    Object clone();
-
-    /**
-     * Returns a deep copy of this MorphismMap.
-     */
-    MorphismMap copy();
 
     /**
      * Makes an address change.
@@ -82,13 +73,6 @@ public interface MorphismMap extends Cloneable, Comparable<MorphismMap>, Seriali
      */
     MorphismMap changeAddress(ModuleMorphism morphism);
 
-    /**
-     * Every morphism map must have a hash function.
-     * 
-     * @return the hashcode of this morphism map
-     */
-    int hashCode();
-    
     boolean fullEquals(MorphismMap m, IdentityHashMap<Object,Object> s);
     
     LinkedList<Form> getFormDependencies(LinkedList<Form> list);

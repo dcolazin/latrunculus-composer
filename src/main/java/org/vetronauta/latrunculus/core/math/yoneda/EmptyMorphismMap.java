@@ -77,15 +77,10 @@ public final class EmptyMorphismMap implements MorphismMap {
     public String getElementTypeName() {
         return "EmptyMorphismMap";
     }
-    
 
-    public Object clone() {
-        return copy();
-    }
-
-
-    public EmptyMorphismMap copy() {
-        return this;
+    @Override
+    public EmptyMorphismMap deepCopy() {
+        return this; //TODO is this correct?
     }
 
 

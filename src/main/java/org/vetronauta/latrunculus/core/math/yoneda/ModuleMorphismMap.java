@@ -299,21 +299,10 @@ public class ModuleMorphismMap implements MorphismMap {
     public boolean isConstant() {
         return moduleMorphism.isConstant();
     }
-    
-    
-    /**
-     * Returns a copy of this module morphism map.
-     */
-    public Object clone() {
-        return copy();
-    }
 
-    
-    /**
-     * Returns a copy of this module morphism map.
-     */
-    public ModuleMorphismMap copy() {
-        return new ModuleMorphismMap(moduleMorphism);
+    @Override
+    public ModuleMorphismMap deepCopy() {
+        return new ModuleMorphismMap((ModuleMorphism) moduleMorphism.clone());
     }
 
     

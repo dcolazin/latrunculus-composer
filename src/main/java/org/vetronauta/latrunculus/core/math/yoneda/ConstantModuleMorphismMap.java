@@ -229,24 +229,12 @@ public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
     public boolean isConstant() {
         return true;
     }
-    
-    
-    /**
-     * Returns a copy of this module morphism map.
-     */
-    public Object clone() {
-        return copy();
-    }
 
-    
-    /**
-     * Returns a copy of this module morphism map.
-     */
-    public ModuleMorphismMap copy() {
+    @Override
+    public ModuleMorphismMap deepCopy() {
         return new ConstantModuleMorphismMap(moduleElement);
     }
 
-    
     public String toString() {
         return "ConstantModuleMorphismMap["+moduleElement+"]";
     }
