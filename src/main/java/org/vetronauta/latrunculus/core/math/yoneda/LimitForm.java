@@ -21,17 +21,25 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-
-import java.io.PrintStream;
-import java.util.*;
-
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.LABEL;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.LABELS;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.LIMIT_TYPE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.POS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Limit form class.
@@ -261,41 +269,11 @@ public final class LimitForm extends Form {
         }
         return list;
     }
-    
-    
-    private static final String NAME_ATTR  = "name";
-    private static final String TYPE_VALUE = "limit";
-    private static final String LABELS     = "Labels";
-    private static final String LABEL      = "Label";
-    private static final String POS_ATTR   = "pos";
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(FORM, TYPE_ATTR, TYPE_VALUE, NAME_ATTR, getNameString());
-        
-        if (labelMap != null) {
-            writer.openBlock(LABELS);
-            for (String label : labelMap.keySet()) {
-                int i = labelMap.get(label).intValue();
-                writer.empty(LABEL, NAME_ATTR, label, POS_ATTR, i);
-            }
-            writer.closeBlock();
-        }
-        
-        if (identifier instanceof ProperIdentityMorphism) {
-            ProperIdentityMorphism im = (ProperIdentityMorphism)identifier;
-            if (im.getDiagram() instanceof FormDiagram) {
-                for (Form f : getForms()) {
-                    writer.writeFormRef(f);
-                }
-                writer.closeBlock();
-                return;
-            }
-        }
 
-        identifier.toXML(writer);
-        writer.closeBlock();
+    public Map<String, Integer> getLabelMap() {
+        return labelMap;
     }
+
 
 
     /**
@@ -304,9 +282,9 @@ public final class LimitForm extends Form {
      * @return a limit form or null if parsing failed
      */
     public static LimitForm fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(TYPE_VALUE));
+        assert(element.getAttribute(TYPE_ATTR).equals(LIMIT_TYPE_VALUE));
         if (!element.hasAttribute(NAME_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", TYPE_VALUE, FORM, NAME_ATTR);
+            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", LIMIT_TYPE_VALUE, FORM, NAME_ATTR);
             return null;                                                
         }
 
@@ -327,7 +305,7 @@ public final class LimitForm extends Form {
         
         childElement = XMLReader.getChild(element, FORM);
         if (childElement == null) {
-            reader.setError("Type %%1 of element <%2> is missing elements of type <%2>.", TYPE_VALUE, FORM);
+            reader.setError("Type %%1 of element <%2> is missing elements of type <%2>.", LIMIT_TYPE_VALUE, FORM);
             return null;
         }
         

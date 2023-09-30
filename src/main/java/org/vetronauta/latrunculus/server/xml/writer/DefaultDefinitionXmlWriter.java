@@ -1,10 +1,12 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
+import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
@@ -12,6 +14,7 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
 /**
  * @author vetronauta
  */
+@RequiredArgsConstructor
 public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
 
     private final LatrunculusXmlWriter<Module> moduleWriter;
@@ -21,6 +24,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
     private final LatrunculusXmlWriter<Denotator> denotatorXmlWriter;
     private final LatrunculusXmlWriter<YonedaMorphism> yonedaMorphismXmlWriter;
     private final LatrunculusXmlWriter<Diagram> diagramXmlWriter;
+    private final LatrunculusXmlWriter<Form> formXmlWriter;
 
     public DefaultDefinitionXmlWriter() {
         this.moduleWriter = new DefaultModuleXmlWriter(this);
@@ -30,6 +34,7 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
         this.denotatorXmlWriter = new DefaultDenotatorXmlWriter(this);
         this.yonedaMorphismXmlWriter = new DefaultYonedaMorphismXmlWriter(this);
         this.diagramXmlWriter = new DefaultDiagramXmlWriter(this);
+        this.formXmlWriter = new DefaultFormXmlWriter(this);
     }
 
     @Override
@@ -65,6 +70,11 @@ public class DefaultDefinitionXmlWriter implements DefinitionXmlWriter {
     @Override
     public void toXML(Diagram object, XMLWriter writer) {
         diagramXmlWriter.toXML(object, writer);
+    }
+
+    @Override
+    public void toXML(Form object, XMLWriter writer) {
+        formXmlWriter.toXML(object, writer);
     }
 
 }

@@ -21,18 +21,24 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
+import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.w3c.dom.Element;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
-import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.HIVALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.LOVALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.SIMPLE_TYPE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Simple form class.
@@ -183,28 +189,6 @@ public final class SimpleForm extends Form {
         }
         return list;
     }
-    
-    
-    private static final String TYPE_VALUE = "simple";
-    private static final String LOVALUE    = "LoValue";
-    private static final String HIVALUE    = "HiValue";
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(FORM, TYPE_ATTR, TYPE_VALUE, NAME_ATTR, getNameString());
-        getModule().toXML(writer);
-        RepresentableIdentityMorphism morphism = (RepresentableIdentityMorphism)identifier;
-        if (morphism.hasBounds()) {
-            writer.openBlock(LOVALUE);
-            morphism.getLowValue().toXML(writer);
-            writer.closeBlock();
-            writer.openBlock(HIVALUE);
-            morphism.getHighValue().toXML(writer);
-            writer.closeBlock();
-        }
-        writer.closeBlock();
-    }
-
 
     /**
      * Reads XML representation from <code>reader</code> starting with <code>element</code>.
@@ -212,15 +196,15 @@ public final class SimpleForm extends Form {
      * @return a simple form or null if parsing failed
      */
     public static SimpleForm fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(TYPE_VALUE));
+        assert(element.getAttribute(TYPE_ATTR).equals(SIMPLE_TYPE_VALUE));
         if (!element.hasAttribute(NAME_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", TYPE_VALUE, FORM, NAME_ATTR);
+            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", SIMPLE_TYPE_VALUE, FORM, NAME_ATTR);
             return null;                                                
         }
         
         Element childElement = XMLReader.getChild(element, MODULE);
         if (childElement == null) {
-            reader.setError("Type %%1 of element <%2> is missing element <%3>.", TYPE_VALUE, FORM, MODULE);
+            reader.setError("Type %%1 of element <%2> is missing element <%3>.", SIMPLE_TYPE_VALUE, FORM, MODULE);
             return null;
         }
         
@@ -246,7 +230,7 @@ public final class SimpleForm extends Form {
                 return new SimpleForm(NameDenotator.make(element.getAttribute(NAME_ATTR)), module, loValue, hiValue);
             }
             else {
-                reader.setError("<%1> and <%2> of element <%3> of type %%4 don't have the right shape.", LOVALUE, HIVALUE, FORM, TYPE_VALUE);
+                reader.setError("<%1> and <%2> of element <%3> of type %%4 don't have the right shape.", LOVALUE, HIVALUE, FORM, SIMPLE_TYPE_VALUE);
                 return null;
             }
         }

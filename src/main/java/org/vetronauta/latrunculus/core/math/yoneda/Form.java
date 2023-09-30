@@ -21,15 +21,14 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 /**
  * Abstract base class for forms.
@@ -38,9 +37,7 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public abstract class Form
-    extends AbstractConnectableYoneda
-    implements Comparable<Form> {
+public abstract class Form extends AbstractConnectableYoneda implements Comparable<Form> {
 
     /**
      * Returns the name of the form as a denotator.
@@ -181,7 +178,7 @@ public abstract class Form
      * Returns true iff this form is <i>structurally</i> equal to <code>f</code>.
      */
     public boolean fullEquals(Form f) {
-        return fullEquals(f, new IdentityHashMap<Object,Object>());
+        return fullEquals(f, new IdentityHashMap<>());
     }
 
 
@@ -257,9 +254,6 @@ public abstract class Form
     public abstract String toString();
 
     
-    public abstract void toXML(XMLWriter writer);
-    
-    
     /**
      * Print form to stdout.
      */
@@ -274,7 +268,7 @@ public abstract class Form
      * @param out the stream to print to
      */
     public void display(PrintStream out) {
-        display(out, new LinkedList<Form>(), 0);
+        display(out, new LinkedList<>(), 0);
     }
 
 

@@ -19,12 +19,11 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import java.io.PrintStream;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+
+import java.io.PrintStream;
+import java.util.LinkedList;
 
 /**
  * A placeholder for forms that are not yet known.
@@ -42,7 +41,7 @@ public final class FormReference extends Form {
         super(NameDenotator.make(name), null);
         this.type = type;
     }
-    
+
     public int getType() {
         return type;
     }
@@ -85,10 +84,6 @@ public final class FormReference extends Form {
     
     public boolean resolveReferences(RubatoDictionary dict) {
         return true;
-    }
-
-    public void toXML(XMLWriter writer) {
-        throw new UnsupportedOperationException();
     }
     
     public String toString() {
