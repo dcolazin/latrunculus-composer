@@ -241,12 +241,6 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
     public String getElementTypeName() {
         return "RStringFreeModule";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return RStringProperFreeModule.nullModule;
-    }
-    
 
     public int hashCode() {
         return 37*basicHash + getDimension();

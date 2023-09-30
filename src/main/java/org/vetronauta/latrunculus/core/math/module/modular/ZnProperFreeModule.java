@@ -272,14 +272,6 @@ public final class ZnProperFreeModule
         return "ZnFreeElement";
     }
 
-    
-    private final static XMLInputOutput<Module> xmlIO = ZnProperFreeModule.make(0, 2); 
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
-
     public int hashCode() {
         return 37*37*basicHash+37*modulus+getDimension();
     }

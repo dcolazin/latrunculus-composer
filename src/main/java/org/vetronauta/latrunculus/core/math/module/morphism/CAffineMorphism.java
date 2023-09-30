@@ -210,14 +210,6 @@ public final class CAffineMorphism extends CAbstractMorphism {
         
         return new CAffineMorphism(a0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new CAffineMorphism(new Complex(0), new Complex(0));
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "CAffineMorphism";

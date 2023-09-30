@@ -161,15 +161,6 @@ public class ProjectionMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        ProjectionMorphism.make(ProductRing.make(ZRing.ring, ZRing.ring), 0);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ProjectionMorphism";

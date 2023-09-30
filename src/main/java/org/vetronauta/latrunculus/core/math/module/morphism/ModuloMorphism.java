@@ -192,14 +192,6 @@ public class ModuloMorphism extends ModuleMorphism {
         return make(dimension0, modulus0);
     }
 
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new ModuloMorphism(0, 2);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
-
     public String getElementTypeName() {
         return "ModuloMorphism";
     }

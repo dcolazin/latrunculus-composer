@@ -197,15 +197,6 @@ public final class SumMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new SumMorphism(getIdentityMorphism(ZRing.ring), getIdentityMorphism(ZRing.ring));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "SumMorphism";

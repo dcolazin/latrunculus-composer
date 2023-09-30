@@ -204,15 +204,6 @@ public final class PowerMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new PowerMorphism(getIdentityMorphism(ZRing.ring), 0);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "PowerMorphism";

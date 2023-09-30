@@ -204,15 +204,6 @@ public final class ProductMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new ProductMorphism(getIdentityMorphism(ZRing.ring), getIdentityMorphism(ZRing.ring));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "SumMorphism";

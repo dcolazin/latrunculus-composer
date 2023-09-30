@@ -202,12 +202,7 @@ public final class ZRing extends NumberRing implements ZFreeModule {
     public String getElementTypeName() {
         return "ZRing";
     }
-    
 
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return ZRing.ring;
-    }
-       
 
     public int hashCode() {
         return basicHash;

@@ -327,14 +327,6 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
         
         return new CFreeAffineMorphism(A0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = CFreeAffineMorphism.make(CMatrix.getUnitMatrix(0), new Complex[0]);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "CFreeAffineMorphism";

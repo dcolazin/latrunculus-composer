@@ -315,14 +315,6 @@ public final class ModularPolynomialRing
         return null;
     }
     
-    
-    private final static XMLInputOutput<Module> xmlIO = ModularPolynomialRing.make(PolynomialRing.make(QRing.ring,"X").getOne());
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-
-    
     public String getElementTypeName() {
         return "ModularPolynomialRing";
     }

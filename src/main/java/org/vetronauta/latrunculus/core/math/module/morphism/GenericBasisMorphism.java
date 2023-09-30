@@ -223,15 +223,6 @@ public class GenericBasisMorphism extends ModuleMorphism {
             return null;            
         }
     }
-    
-
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new GenericBasisMorphism(ZRing.ring, ZRing.ring, new ZElement[] { new ZElement(0) });
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "GenericBasisMorphism";

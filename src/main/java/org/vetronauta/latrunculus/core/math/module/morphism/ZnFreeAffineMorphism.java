@@ -322,14 +322,6 @@ public final class ZnFreeAffineMorphism extends ZnFreeAbstractMorphism {
         
         return new ZnFreeAffineMorphism(A0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = ZnFreeAffineMorphism.make(ZnMatrix.getUnitMatrix(0, 2), new int[0]);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ZnFreeAffineMorphism";

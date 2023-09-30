@@ -382,15 +382,6 @@ public final class GenericAffineMorphism extends ModuleMorphism {
         return res;
     }
 
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new GenericAffineMorphism(ZRing.ring, ZRing.ring);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
-
     public String getElementTypeName() {
         return "GenericAffineMorphism";
     }

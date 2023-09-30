@@ -225,21 +225,9 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
         return CProperFreeModule.make(dimension);
     }
     
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return CProperFreeModule.nullModule;
-    }
-
-    
     public String getElementTypeName() {
         return "CFreeModule";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInput() {
-        return CProperFreeModule.nullModule;
-    }
-    
 
     public int hashCode() {
         return 37*basicHash + getDimension();

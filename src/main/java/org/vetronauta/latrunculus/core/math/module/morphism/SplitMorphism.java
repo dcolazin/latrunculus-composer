@@ -288,15 +288,6 @@ public class SplitMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private final static XMLInputOutput<ModuleMorphism> xmlIO =
-        new SplitMorphism(ZRing.ring, new LinkedList<ModuleMorphism>());
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-
 
     public String getElementTypeName() {
         return "SplitMorphism";

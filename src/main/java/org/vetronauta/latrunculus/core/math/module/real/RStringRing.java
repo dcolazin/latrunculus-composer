@@ -152,12 +152,6 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
     public String getElementTypeName() {
         return "RStringRing";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return RStringRing.ring;
-    }
-    
 
     public int hashCode() {
         return basicHash;

@@ -278,15 +278,6 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
         }
     }
 
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        CanonicalMorphism.makeCanonicalMorphism(ZProperFreeModule.nullModule, ZProperFreeModule.nullModule);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
-
     public String getElementTypeName() {
         return "CanonicalMorphism";
     }

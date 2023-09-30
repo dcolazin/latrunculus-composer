@@ -204,12 +204,6 @@ public final class RRing extends NumberRing implements RFreeModule {
     public String getElementTypeName() {
         return "RRing";
     }
-    
-
-    public static XMLInputOutput<Module> getXMLInputOuput() {
-        return RRing.ring;
-    }
-    
 
     public int hashCode() {
         return basicHash;

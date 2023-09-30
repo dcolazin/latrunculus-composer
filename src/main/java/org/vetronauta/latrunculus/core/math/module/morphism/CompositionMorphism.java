@@ -218,15 +218,6 @@ public final class CompositionMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new CompositionMorphism(getIdentityMorphism(ZRing.ring), getIdentityMorphism(ZRing.ring));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "CompositionMorphism";

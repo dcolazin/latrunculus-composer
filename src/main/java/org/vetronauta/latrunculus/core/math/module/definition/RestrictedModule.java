@@ -273,14 +273,6 @@ public class RestrictedModule implements Module {
         }
     }
     
-    
-    private final static XMLInputOutput<Module> xmlIO = new RestrictedModule(null, null);
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-
-    
     public String getElementTypeName() {
         return "RestrictedModule";
     }

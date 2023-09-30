@@ -242,12 +242,6 @@ public final class QProperFreeModule
     public String getElementTypeName() {
         return "QFreeModule";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return QProperFreeModule.nullModule;
-    }
-    
 
     public int hashCode() {
         return 37*basicHash + getDimension();

@@ -286,16 +286,7 @@ public final class ModularPolynomialProperFreeModule
             return null;                        
         }
     }
-    
-    
-    private final static ModularPolynomialFreeModule xmlIO =
-        new ModularPolynomialProperFreeModule(new PolynomialElement("X", new QElement(0)), 0);
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
 
-    
     public String getElementTypeName() {
         return "ModularPolynomialFreeModule";
     }

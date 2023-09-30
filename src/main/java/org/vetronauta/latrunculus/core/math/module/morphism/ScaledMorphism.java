@@ -193,15 +193,6 @@ public final class ScaledMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new ScaledMorphism(getIdentityMorphism(ZRing.ring), new ZElement(0));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ScaledMorphism";

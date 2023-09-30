@@ -230,24 +230,10 @@ public final class ZnStringProperFreeModule
         int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
         return ZnStringProperFreeModule.make(dimension, modulus0);
     }
-    
-    
-    private static final XMLInputOutput<Module> xmlIO = ZnStringProperFreeModule.make(0, 2);
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ZnStringFreeModule";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOuput() {
-        return ZnStringProperFreeModule.make(0, 2);
-    }
-    
 
     public int hashCode() {
         return 11*(37*basicHash + getDimension())+getModulus();        

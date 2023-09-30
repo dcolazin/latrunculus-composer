@@ -302,15 +302,6 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
         }
     }
 
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        EmbeddingMorphism.makeRingEmbedding(ZRing.ring, RRing.ring);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
-
     public String getElementTypeName() {
         return "EmbeddingMorphism";
     }

@@ -234,12 +234,6 @@ public final class RProperFreeModule
 
         return RProperFreeModule.make(dimension);
     }
-
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return RProperFreeModule.nullModule;
-    }
-
     
     public String getElementTypeName() {
         return "RFreeModule";

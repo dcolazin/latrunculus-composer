@@ -320,12 +320,6 @@ public final class ProductProperFreeModule
     public String getElementTypeName() {
         return "ProductFreeModule";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOuput() {
-        return new ProductProperFreeModule((ProductRing)null, 0);
-    }
-    
 
     public int hashCode() {
         if (hashcode == 0) {

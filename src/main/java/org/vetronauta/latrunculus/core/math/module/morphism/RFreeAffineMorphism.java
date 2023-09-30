@@ -295,14 +295,6 @@ public final class RFreeAffineMorphism extends RFreeAbstractMorphism {
         
         return new RFreeAffineMorphism(A0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = RFreeAffineMorphism.make(RMatrix.getUnitMatrix(0), new double[0]);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "RFreeAffineMorphism";

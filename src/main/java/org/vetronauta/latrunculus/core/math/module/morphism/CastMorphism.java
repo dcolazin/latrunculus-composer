@@ -325,15 +325,7 @@ public abstract class CastMorphism extends ModuleMorphism {
     }
 
     
-    private static HashMap<Pair<Module,Module>,ModuleMorphism> castingMorphisms = new HashMap<Pair<Module,Module>,ModuleMorphism>();
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        CastMorphism.make(RRing.ring, ZRing.ring);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
+    private static HashMap<Pair<Module,Module>,ModuleMorphism> castingMorphisms = new HashMap<>();
 
     public String getElementTypeName() {
         return "CastMorphism";

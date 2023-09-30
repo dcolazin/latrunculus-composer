@@ -106,7 +106,6 @@ import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
 import org.w3c.dom.Element;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
@@ -115,12 +114,14 @@ public class Dispatcher {
 
     private static final Dispatcher DISPATCHER = new Dispatcher();
 
-    private final HashMap<String,XMLInputOutput<Module>> modules = new HashMap<>();
-    private final HashMap<String,XMLInputOutput<ModuleMorphism>> moduleMorphisms = new HashMap<>();
+    private final HashMap<String, Class<? extends Module>> modules = new HashMap<>();
+    private final HashMap<String, Class<? extends ModuleMorphism>> moduleMorphisms = new HashMap<>();
     private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
     private final HashMap<String, Class<? extends MorphismMap>> morphismMaps = new HashMap<>();
 
-    private LatrunculusXmlReader<ModuleElement> moduleReader; //TODO constructor and a DefinitionModuleReader
+    private LatrunculusXmlReader<Module> moduleReader; //TODO constructor and a DefinitionModuleReader
+    private LatrunculusXmlReader<ModuleMorphism> moduleMorphismReader; //TODO constructor and a DefinitionModuleReader
+    private LatrunculusXmlReader<ModuleElement> moduleElementReader; //TODO constructor and a DefinitionModuleReader
     private LatrunculusXmlReader<MorphismMap> mapReader; //TODO constructor and a DefinitionModuleReader
 
     public static Dispatcher getDispatcher() {
@@ -128,55 +129,21 @@ public class Dispatcher {
     }
 
     public Module resolveModule(XMLReader reader, Element moduleElement) {
-        Module module = null;
         String moduleName = moduleElement.getAttribute(TYPE_ATTR);
-        XMLInputOutput<Module> dispatch = modules.get(moduleName);
-
-        if (dispatch != null) {
-            module = dispatch.fromXML(reader, moduleElement);
-        }
-
-        if (module == null) {
-            try {
-                Class<?> c = Class.forName("org.rubato.math.module."+moduleName); //$NON-NLS-1$
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
-                module = (Module)m.invoke(c, new Object[] { reader, moduleElement });
-            }
-            catch (Exception e) {
-                reader.setError("Cannot build module from %%1.", moduleName);
-            }
-        }
-
-        return module;
+        Class<? extends Module> clazz = modules.get(moduleName);
+        return moduleReader.fromXML(moduleElement, clazz, reader);
     }
 
     public ModuleMorphism resolveModuleMorphism(XMLReader reader, Element morphismElement) {
-        ModuleMorphism morphism = null;
         String morphismName = morphismElement.getAttribute(TYPE_ATTR);
-        XMLInputOutput<ModuleMorphism> dispatch = moduleMorphisms.get(morphismName);
-        
-        if (dispatch != null) {
-            morphism = dispatch.fromXML(reader, morphismElement);
-        }
-        
-        if (morphism == null) {
-            try {
-                Class<?> c = Class.forName("org.rubato.math.module."+morphismName); //$NON-NLS-1$
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
-                morphism = (ModuleMorphism)m.invoke(c, new Object[] { reader, morphismElement });
-            }
-            catch (Exception e) {
-                reader.setError("Cannot build module morphism from %%1.", morphismName);
-            }
-        }
-
-        return morphism;
+        Class<? extends ModuleMorphism> clazz = moduleMorphisms.get(morphismName);
+        return moduleMorphismReader.fromXML(morphismElement, clazz, reader);
     }
 
     public ModuleElement resolveElement(XMLReader reader, Element element) {
         String elementName = element.getAttribute(TYPE_ATTR);
         Class<? extends ModuleElement> elementClass = elements.get(elementName);
-        return moduleReader.fromXML(element, elementClass, reader);
+        return moduleElementReader.fromXML(element, elementClass, reader);
     }
 
     public MorphismMap resolveMorphismMap(XMLReader reader, Element morphismMapElement) {
@@ -185,12 +152,12 @@ public class Dispatcher {
         return mapReader.fromXML(morphismMapElement, dispatch, reader);
     }
 
-    public void addModule(XMLInputOutput<Module> dispatch) {
-        modules.put(dispatch.getElementTypeName(), dispatch);
+    public void addModule(Class<? extends Module> clazz) {
+        modules.put(clazz.getSimpleName(), clazz);
     }
 
-    public void addModuleMorphism(XMLInputOutput<ModuleMorphism> dispatch) {
-        moduleMorphisms.put(dispatch.getElementTypeName(), dispatch);
+    public void addModuleMorphism(Class<? extends ModuleMorphism> clazz) {
+        moduleMorphisms.put(clazz.getSimpleName(), clazz);
     }
 
     public void addMorphismMap(Class<? extends MorphismMap> clazz) {
@@ -208,36 +175,36 @@ public class Dispatcher {
     //TODO annotate this classes for autodetection
     private void init() {
         // modules
-        addModule(ZRing.getXMLInputOutput());
-        addModule(ZnRing.getXMLInputOutput());
-        addModule(RRing.getXMLInputOuput());
-        addModule(QRing.getXMLInputOutput());
-        addModule(CRing.getXMLInputOutput());
+        addModule(ZRing.class);
+        addModule(ZnRing.class);
+        addModule(RRing.class);
+        addModule(QRing.class);
+        addModule(CRing.class);
         
-        addModule(ZStringRing.getXMLInputOutput());
-        addModule(ZnStringRing.getXMLInputOutput());
-        addModule(RStringRing.getXMLInputOutput());
-        addModule(QStringRing.getXMLInputOutput());
+        addModule(ZStringRing.class);
+        addModule(ZnStringRing.class);
+        addModule(RStringRing.class);
+        addModule(QStringRing.class);
         
-        addModule(ZProperFreeModule.getXMLInputOutput());
-        addModule(ZnProperFreeModule.getXMLInputOutput());
-        addModule(RProperFreeModule.getXMLInputOutput());
-        addModule(QProperFreeModule.getXMLInputOutput());
-        addModule(CProperFreeModule.getXMLInputOutput());
+        addModule(ZProperFreeModule.class);
+        addModule(ZnProperFreeModule.class);
+        addModule(RProperFreeModule.class);
+        addModule(QProperFreeModule.class);
+        addModule(CProperFreeModule.class);
         
-        addModule(ZStringProperFreeModule.getXMLInputOutput());
-        addModule(ZnStringProperFreeModule.getXMLInputOutput());
-        addModule(RStringProperFreeModule.getXMLInputOutput());
-        addModule(QStringProperFreeModule.getXMLInputOutput());
+        addModule(ZStringProperFreeModule.class);
+        addModule(ZnStringProperFreeModule.class);
+        addModule(RStringProperFreeModule.class);
+        addModule(QStringProperFreeModule.class);
 
-        addModule(PolynomialRing.getXMLInputOutput());
-        addModule(PolynomialProperFreeModule.getXMLInputOutput());
-        addModule(ModularPolynomialRing.getXMLInputOutput());
-        addModule(ModularPolynomialProperFreeModule.getXMLInputOutput());
+        addModule(PolynomialRing.class);
+        addModule(PolynomialProperFreeModule.class);
+        addModule(ModularPolynomialRing.class);
+        addModule(ModularPolynomialProperFreeModule.class);
         
-        addModule(ProductRing.getXMLInputOutput());
+        addModule(ProductRing.class);
         
-        addModule(RestrictedModule.getXMLInputOutput());
+        addModule(RestrictedModule.class);
         
         // module elements
         //TODO DirectSumElement, ProductElement, ProductProperFreeElement are not registered
@@ -271,39 +238,39 @@ public class Dispatcher {
         addModuleElement(RestrictedElement.class);
         
         // module morphisms
-        addModuleMorphism(ZnAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(ZAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(QAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(RAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(CAffineMorphism.getXMLInputOutput());
+        addModuleMorphism(ZnAffineMorphism.class);
+        addModuleMorphism(ZAffineMorphism.class);
+        addModuleMorphism(QAffineMorphism.class);
+        addModuleMorphism(RAffineMorphism.class);
+        addModuleMorphism(CAffineMorphism.class);
         
-        addModuleMorphism(ZnFreeAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(ZFreeAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(QFreeAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(RFreeAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(CFreeAffineMorphism.getXMLInputOutput());
+        addModuleMorphism(ZnFreeAffineMorphism.class);
+        addModuleMorphism(ZFreeAffineMorphism.class);
+        addModuleMorphism(QFreeAffineMorphism.class);
+        addModuleMorphism(RFreeAffineMorphism.class);
+        addModuleMorphism(CFreeAffineMorphism.class);
         
-        addModuleMorphism(CompositionMorphism.getXMLInputOutput());
-        addModuleMorphism(ConstantMorphism.getXMLInputOutput());
-        addModuleMorphism(DifferenceMorphism.getXMLInputOutput());
-        addModuleMorphism(SumMorphism.getXMLInputOutput());
-        addModuleMorphism(ProductMorphism.getXMLInputOutput());
-        addModuleMorphism(FoldingMorphism.getXMLInputOutput());
-        addModuleMorphism(IdentityMorphism.getXMLInputOutput());
-        addModuleMorphism(PolynomialMorphism.getXMLInputOutput());
-        addModuleMorphism(PowerMorphism.getXMLInputOutput());
-        addModuleMorphism(ScaledMorphism.getXMLInputOutput());
-        addModuleMorphism(TranslationMorphism.getXMLInputOutput());
-        addModuleMorphism(ModuloMorphism.getXMLInputOutput());
-        addModuleMorphism(EmbeddingMorphism.getXMLInputOutput());
-        addModuleMorphism(ProjectionMorphism.getXMLInputOutput());
-        addModuleMorphism(ConjugationMorphism.getXMLInputOutput());
-        addModuleMorphism(GenericBasisMorphism.getXMLInputOutput());
-        addModuleMorphism(ReorderMorphism.getXMLInputOutput());
-        addModuleMorphism(CanonicalMorphism.getXMLInputOutput());
-        addModuleMorphism(GenericAffineMorphism.getXMLInputOutput());
-        addModuleMorphism(SplitMorphism.getXMLInputOutput());
-        addModuleMorphism(CastMorphism.getXMLInputOutput());
+        addModuleMorphism(CompositionMorphism.class);
+        addModuleMorphism(ConstantMorphism.class);
+        addModuleMorphism(DifferenceMorphism.class);
+        addModuleMorphism(SumMorphism.class);
+        addModuleMorphism(ProductMorphism.class);
+        addModuleMorphism(FoldingMorphism.class);
+        addModuleMorphism(IdentityMorphism.class);
+        addModuleMorphism(PolynomialMorphism.class);
+        addModuleMorphism(PowerMorphism.class);
+        addModuleMorphism(ScaledMorphism.class);
+        addModuleMorphism(TranslationMorphism.class);
+        addModuleMorphism(ModuloMorphism.class);
+        addModuleMorphism(EmbeddingMorphism.class);
+        addModuleMorphism(ProjectionMorphism.class);
+        addModuleMorphism(ConjugationMorphism.class);
+        addModuleMorphism(GenericBasisMorphism.class);
+        addModuleMorphism(ReorderMorphism.class);
+        addModuleMorphism(CanonicalMorphism.class);
+        addModuleMorphism(GenericAffineMorphism.class);
+        addModuleMorphism(SplitMorphism.class);
+        addModuleMorphism(CastMorphism.class);
 
         //TODO AutoListMorphismMap, EmptyMorphismMap, IndexMorphismMap, ListMorphismMap are not registered
         addMorphismMap(ModuleMorphismMap.class);

@@ -150,12 +150,6 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
         return "ZStringRing";
     }
 
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return ZStringRing.ring;
-    }
-    
-
     public int hashCode() {
         return basicHash;
     }

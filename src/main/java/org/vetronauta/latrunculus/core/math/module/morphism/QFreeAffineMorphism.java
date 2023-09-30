@@ -296,14 +296,6 @@ public final class QFreeAffineMorphism extends QFreeAbstractMorphism {
         
         return new QFreeAffineMorphism(A0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = QFreeAffineMorphism.make(QMatrix.getUnitMatrix(0), new Rational[0]);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "QFreeAffineMorphism";

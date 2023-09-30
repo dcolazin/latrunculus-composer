@@ -203,14 +203,6 @@ public final class ZAffineMorphism extends ZAbstractMorphism {
         
         return new ZAffineMorphism(a0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new ZAffineMorphism(0, 0);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ZAffineMorphism";

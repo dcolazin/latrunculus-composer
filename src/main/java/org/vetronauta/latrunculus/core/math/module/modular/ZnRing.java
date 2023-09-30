@@ -256,20 +256,11 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     public String getElementTypeName() {
         return "ZnRing";
     }
-    
-    
-    private final static XMLInputOutput<Module> xmlIO = ZnRing.make(2);
-
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public int hashCode() {
         return 37*basicHash + modulus;
     }
 
-    
     private ZnRing(int modulus) {
         this.modulus = modulus;
         this.field = NumberTheory.isPrime(modulus);

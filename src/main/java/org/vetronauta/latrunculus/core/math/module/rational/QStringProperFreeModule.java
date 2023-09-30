@@ -223,12 +223,6 @@ public final class QStringProperFreeModule
         int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
         return QStringProperFreeModule.make(dimension);
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return QStringProperFreeModule.nullModule;
-    }
-    
 
     public String getElementTypeName() {
         return "QStringFreeModule";

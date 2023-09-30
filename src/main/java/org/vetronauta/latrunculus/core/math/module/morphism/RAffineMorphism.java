@@ -216,14 +216,6 @@ public final class RAffineMorphism extends RAbstractMorphism {
         
         return new RAffineMorphism(a0, b0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new RAffineMorphism(0, 0);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "RAffineMorphism";

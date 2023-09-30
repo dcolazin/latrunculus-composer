@@ -139,14 +139,6 @@ public final class ConjugationMorphism extends ModuleMorphism {
         int dim = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0);
         return new ConjugationMorphism(dim);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new ConjugationMorphism(0);
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ConjugationMorphism";

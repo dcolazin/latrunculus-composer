@@ -170,12 +170,6 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
         return "ZnStringRing";
     }
 
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return new ZnStringRing(2);
-    }
-    
-
     public int hashCode() {
         return 37*basicHash + modulus;
     }

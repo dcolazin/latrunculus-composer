@@ -204,21 +204,9 @@ public final class CRing extends NumberRing implements CFreeModule {
         return CRing.ring;
     }
 
-
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return CRing.ring;
-    }
-
-
     public String getElementTypeName() {
         return "CRing";
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInput() {
-        return CRing.ring;
-    }
-    
 
     public int hashCode() {
         return basicHash;

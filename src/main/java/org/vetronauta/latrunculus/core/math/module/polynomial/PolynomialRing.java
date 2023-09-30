@@ -478,14 +478,6 @@ public final class PolynomialRing
         }
     }
     
-    
-    private final static XMLInputOutput<Module> xmlIO = PolynomialRing.make(ZRing.ring, "X");
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-
-    
     public String getElementTypeName() {
         return "PolynomialRing";
     }

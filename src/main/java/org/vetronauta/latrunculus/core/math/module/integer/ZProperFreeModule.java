@@ -237,12 +237,6 @@ public final class ZProperFreeModule
     public String getElementTypeName() {
         return "ZFreeModule";
     }
-
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return ZProperFreeModule.nullModule;
-    }    
-
     
     public int hashCode() {
         return 37*basicHash + getDimension();

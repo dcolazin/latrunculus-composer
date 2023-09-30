@@ -156,15 +156,6 @@ public final class FoldingMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new FoldingMorphism(new RElement[] { new RElement(0), new RElement(0) });
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "FoldingMorphism";

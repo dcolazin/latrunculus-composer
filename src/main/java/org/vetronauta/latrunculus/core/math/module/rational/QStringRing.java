@@ -153,12 +153,6 @@ public final class QStringRing
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
         return QStringRing.ring;
     }
-    
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return QStringRing.ring;
-    }
-    
 
     public String getElementTypeName() {
         return "QStringRing";

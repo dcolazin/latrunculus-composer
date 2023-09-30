@@ -229,14 +229,6 @@ public final class ZnAffineMorphism extends ZnAbstractMorphism {
         
         return new ZnAffineMorphism(a0, b0, modulus0);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new ZnAffineMorphism(0, 0, 2);
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "ZnAffineMorphism";

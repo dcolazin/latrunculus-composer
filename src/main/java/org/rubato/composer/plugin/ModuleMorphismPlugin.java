@@ -31,7 +31,7 @@ public abstract class ModuleMorphismPlugin implements Plugin {
         Dispatcher.getDispatcher().addModuleMorphism(getPrototype());
     }
     
-    public abstract ModuleMorphism getPrototype();
+    public abstract Class<? extends ModuleMorphism> getPrototype();
     
     public JMorphismType getJMorphismType(JMorphismContainer container) {
         return null;

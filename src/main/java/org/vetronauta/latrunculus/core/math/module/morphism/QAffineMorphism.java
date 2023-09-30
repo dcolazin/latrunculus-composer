@@ -211,14 +211,6 @@ public class QAffineMorphism extends QAbstractMorphism {
         
         return new QAffineMorphism(aValue, bValue);
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO = new QAffineMorphism(new Rational(0), new Rational(0));
-    
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "QAffineMorphism";

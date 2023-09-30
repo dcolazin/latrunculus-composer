@@ -165,15 +165,6 @@ public class PolynomialMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new PolynomialMorphism(new PolynomialElement("X", new ZElement(0)));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "PolynomialMorphism";

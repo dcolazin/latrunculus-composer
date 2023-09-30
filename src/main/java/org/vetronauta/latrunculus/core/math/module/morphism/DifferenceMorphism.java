@@ -192,15 +192,6 @@ public final class DifferenceMorphism extends ModuleMorphism {
             return null;
         }
     }
-    
-    
-    private static final XMLInputOutput<ModuleMorphism> xmlIO =
-        new DifferenceMorphism(getIdentityMorphism(ZRing.ring), getIdentityMorphism(ZRing.ring));
-
-    public static XMLInputOutput<ModuleMorphism> getXMLInputOutput() {
-        return xmlIO;
-    }
-    
 
     public String getElementTypeName() {
         return "DifferenceMorphism";

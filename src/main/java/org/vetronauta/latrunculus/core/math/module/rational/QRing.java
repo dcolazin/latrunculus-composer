@@ -213,12 +213,6 @@ public final class QRing extends NumberRing implements QFreeModule {
     public String getElementTypeName() {
         return "QRing";
     }
-    
-
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return QRing.ring;
-    }
-    
 
     public int hashCode() {
         return basicHash;

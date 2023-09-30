@@ -379,12 +379,6 @@ public final class ProductRing
     public String getElementTypeName() {
         return "ProductRing";
     }
-    
-
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return new ProductRing(null);
-    }
-    
 
     public int hashCode() {
         if (hashcode == 0) {

@@ -293,15 +293,6 @@ public final class PolynomialProperFreeModule
         }
     }
     
-    
-    private final static PolynomialFreeModule xmlIO =
-        PolynomialProperFreeModule.make(ZRing.ring, "X", 0);
-    
-    public static XMLInputOutput<Module> getXMLInputOutput() {
-        return xmlIO;
-    }
-
-    
     public String getElementTypeName() {
         return "PolynomialFreeModule";
     }
