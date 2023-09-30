@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.writer;
 
+import lombok.RequiredArgsConstructor;
 import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -66,12 +67,15 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.WORD;
 /**
  * @author vetronauta
  */
+@RequiredArgsConstructor
 public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<ModuleElement> {
 
     //TODO extract common logic
 
+    private final ModuleDefinitionXmlWriter definitionWriter;
+
     public void toXML(Module module, XMLWriter writer) {
-        //TODO call another handler
+        definitionWriter.toXML(module, writer);
     }
 
     @Override

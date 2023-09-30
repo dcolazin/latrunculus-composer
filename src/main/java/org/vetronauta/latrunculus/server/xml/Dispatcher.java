@@ -120,7 +120,7 @@ public class Dispatcher {
     private final HashMap<String, Class<? extends ModuleElement>> elements = new HashMap<>();
     private final HashMap<String,XMLInputOutput<MorphismMap>> morphismMaps = new HashMap<>();
 
-    private LatrunculusXmlReader<ModuleElement> moduleReader; //TODO constructor
+    private LatrunculusXmlReader<ModuleElement> moduleReader; //TODO constructor and a DefinitionModuleReader
 
     public static Dispatcher getDispatcher() {
         return DISPATCHER;
