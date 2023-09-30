@@ -27,7 +27,6 @@ import org.rubato.base.RubatoException;
 import org.rubato.logeo.functions.Function;
 import org.rubato.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;

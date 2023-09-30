@@ -32,10 +32,15 @@ import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 
-public class SourceRubette extends AbstractRubette {    
+public class SourceRubette extends AbstractRubette {
+
+    //TODO rubette writer
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
     
     public SourceRubette() {
         setInCount(0);
@@ -146,7 +151,7 @@ public class SourceRubette extends AbstractRubette {
     public void toXML(XMLWriter writer) {
         writer.empty(REFRESHABLE, VALUE_ATTR, refreshable?TRUE_VALUE:FALSE_VALUE);
         if (denotator != null) {
-            denotator.toXML(writer);
+            definitionXmlWriter.toXML(denotator, writer);
         }
     }
     

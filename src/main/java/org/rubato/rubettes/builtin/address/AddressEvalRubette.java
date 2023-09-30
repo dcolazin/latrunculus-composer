@@ -61,7 +61,6 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
@@ -76,15 +75,18 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 /**
  * 
  * @author Gérard Milmeister
  */
-public final class AddressEvalRubette
-        extends AbstractRubette 
-        implements ActionListener {
+public final class AddressEvalRubette extends AbstractRubette implements ActionListener {
+
+    //TODO writer for rubettes and properties
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public AddressEvalRubette() {
         setInCount(1);
@@ -527,26 +529,26 @@ public final class AddressEvalRubette
         }
         return name;
     }
-    
-    
-    private final static String EVALTYPE = "EvalType"; //$NON-NLS-1$
+
+
+    private static final String EVALTYPE = "EvalType"; //$NON-NLS-1$
     
     public void toXML(XMLWriter writer) {
         writer.empty(EVALTYPE, VALUE_ATTR, evalType);
         if (evalType == EVAL_TYPE_ELEMENT) {
-            moduleElement.toXML(writer);
+            definitionXmlWriter.toXML(moduleElement, writer);
         }
         else if (evalType == EVAL_TYPE_LIST) {
             if (outputForm != null) {
                 writer.writeFormRef(outputForm);
-                module.toXML(writer);
+                definitionXmlWriter.toXML(module, writer);
                 for (ModuleElement el : elements) {
-                    el.toXML(writer);
+                    definitionXmlWriter.toXML(el, writer);
                 }
             }
         }
         else if (evalType == EVAL_TYPE_CHANGE) {
-            morphism.toXML(writer);
+            definitionXmlWriter.toXML(morphism, writer);
         }
         else if (evalType == EVAL_TYPE_INPUT) {
             if (outputForm != null) {

@@ -40,7 +40,6 @@ import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
@@ -49,11 +48,16 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 
 public class SimpleRubette extends AbstractRubette implements ActionListener {    
-    
+
+    //TODO rubette writer
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
+
     public SimpleRubette() {
         setInCount(0);
         setOutCount(1);
@@ -322,7 +326,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     
     public void toXML(XMLWriter writer) {
         if (denotator != null) {
-            denotator.toXML(writer);
+            definitionXmlWriter.toXML(denotator, writer);
         }
     }
     

@@ -27,7 +27,6 @@ import org.rubato.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;

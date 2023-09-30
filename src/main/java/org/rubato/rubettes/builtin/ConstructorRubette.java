@@ -33,7 +33,6 @@ import org.rubato.base.*;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;

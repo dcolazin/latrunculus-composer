@@ -41,11 +41,14 @@ import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
-public class ModuleMapRubette
-        extends AbstractRubette
-        implements ActionListener {    
+public class ModuleMapRubette extends AbstractRubette implements ActionListener {
+
+    //TODO rubette writer
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
     
     public ModuleMapRubette() {
         setInCount(1);
@@ -260,7 +263,7 @@ public class ModuleMapRubette
                 }
                 writer.empty(PATH, VALUE_ATTR, buf.toString());
                 if (morphism != null) {
-                    morphism.toXML(writer);
+                    definitionXmlWriter.toXML(morphism, writer);
                 }
             }
         }

@@ -9,9 +9,14 @@ import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 public class InputCompositionOperation extends AbstractOperation {
+
+	//TODO rubette writer
+	private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 	
 	private Denotator composition;
 	private Denotator modifiedComposition;
@@ -82,7 +87,7 @@ public class InputCompositionOperation extends AbstractOperation {
 	
 	public void toXML(XMLWriter writer) {
 		super.toXML(writer);
-		this.composition.toXML(writer);
+		definitionXmlWriter.toXML(composition, writer);
 	}
 	
 	private void fromXML(XMLReader reader, Element element) {

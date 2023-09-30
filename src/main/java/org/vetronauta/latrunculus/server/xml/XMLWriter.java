@@ -386,7 +386,7 @@ public class XMLWriter {
      */
     public void writeModule(String name, Module module) {
         openBlock(DEFINE_MODULE, NAME_ATTR, name);
-        module.toXML(this);
+        definitionWriter.toXML(module, this);
         closeBlock();
     }
     
@@ -408,7 +408,7 @@ public class XMLWriter {
      */
     public void writeModuleMorphism(String name, ModuleMorphism morphism) {
         openBlock(DEFINE_MODULE_MORPHISM, NAME_ATTR, name);
-        morphism.toXML(this);
+        definitionWriter.toXML(morphism, this);
         closeBlock();
     }
     
@@ -421,7 +421,7 @@ public class XMLWriter {
             // Only write the form itself
             // Subforms are automatically written, if they have been
             // registered as non-builtin
-            form.toXML(this);
+            definitionWriter.toXML(form, this);
 //            Object[] forms = form.getDependencies().toArray();
 //            for (int i = forms.length-1; i >= 0; i--) {
 //                Form f = (Form)forms[i];
@@ -448,7 +448,7 @@ public class XMLWriter {
      */
     public void writeForms(List<Form> forms) {
         for (Form f : forms) {
-            f.toXML(this);
+            definitionWriter.toXML(f, this);
         }
     }
 
@@ -464,7 +464,7 @@ public class XMLWriter {
                 if (d.getName() != null && !denoOccurrences.contains(d.getNameString())) {
                     denoOccurrences.add(d.getNameString());
                     if (!rep.isBuiltin(denotator)) {
-                        d.toXML(this);
+                        definitionWriter.toXML(d, this);
                     }
                 }
             }
@@ -491,7 +491,7 @@ public class XMLWriter {
             empty(DENOTATOR, REF_ATTR, name);
         }
         else {
-            d.toXML(this);
+            definitionWriter.toXML(d, this);
         }
     }    
     

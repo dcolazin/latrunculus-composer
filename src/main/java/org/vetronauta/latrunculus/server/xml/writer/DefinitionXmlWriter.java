@@ -15,7 +15,10 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
  */
 public interface DefinitionXmlWriter {
 
-    //TODO "Definition" interface to just expone one method
+    //TODO "Definition" interface to just expose one method
+
+    //TODO implement chain of responsibility pattern to have a chain of definition writer
+    //TODO do the same for the a Definition reader
 
     void toXML(Module object, XMLWriter writer);
     void toXML(ModuleMorphism object, XMLWriter writer);

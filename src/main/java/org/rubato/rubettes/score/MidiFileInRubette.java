@@ -38,9 +38,14 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
 
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 public class MidiFileInRubette extends AbstractRubette {
+
+    //TODO rubette writer
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public MidiFileInRubette() {
         setInCount(0);
@@ -273,7 +278,9 @@ public class MidiFileInRubette extends AbstractRubette {
         writer.empty(FILE, NAME_ATTR, writer.toRelativePath(getMidiFileName()));
         writer.empty(TEMPO_FACTOR, VALUE_ATTR, getTempoFactor());
         writer.empty(STORE_DENOTATOR, VALUE_ATTR, storeDenotator?TRUE_VALUE:FALSE_VALUE);
-        if (storeDenotator && score != null) score.toXML(writer);
+        if (storeDenotator && score != null) {
+            definitionXmlWriter.toXML(score, writer);
+        }
     }
     
     

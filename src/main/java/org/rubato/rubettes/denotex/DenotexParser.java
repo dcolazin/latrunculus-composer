@@ -16,7 +16,6 @@ import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;

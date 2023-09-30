@@ -29,7 +29,6 @@ import javax.swing.event.CaretListener;
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.rubato.math.matrix.*;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;

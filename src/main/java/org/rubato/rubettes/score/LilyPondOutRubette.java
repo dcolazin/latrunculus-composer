@@ -31,7 +31,6 @@ import javax.swing.*;
 import org.rubato.base.*;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;

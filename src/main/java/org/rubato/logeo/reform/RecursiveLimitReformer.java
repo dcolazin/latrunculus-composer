@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;

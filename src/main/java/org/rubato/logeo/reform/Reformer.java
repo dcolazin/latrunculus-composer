@@ -22,7 +22,6 @@ package org.rubato.logeo.reform;
 import java.util.HashMap;
 
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;

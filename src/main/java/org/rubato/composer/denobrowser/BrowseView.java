@@ -24,7 +24,6 @@ import javax.swing.JScrollBar;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;

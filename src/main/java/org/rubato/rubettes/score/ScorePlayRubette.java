@@ -38,7 +38,6 @@ import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.rubato.base.Repository;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;

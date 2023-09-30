@@ -34,7 +34,6 @@ import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
-import org.rubato.math.yoneda.*;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;

@@ -29,7 +29,6 @@ import org.rubato.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;

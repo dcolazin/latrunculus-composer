@@ -26,7 +26,6 @@ import javax.swing.*;
 import org.rubato.base.*;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;

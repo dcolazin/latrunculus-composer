@@ -36,7 +36,6 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
-import org.rubato.math.yoneda.*;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
@@ -48,6 +47,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 /**
@@ -56,6 +57,9 @@ import org.w3c.dom.Element;
  * @author Florian Thalmann
  */
 public class WallpaperRubette extends AbstractRubette implements ActionListener {
+
+	//TODO rubette writer
+	private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 	
 	private PowerForm inputForm = null;
 	private SimpleFormFinder simpleFormFinder;
@@ -458,7 +462,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 				writer.openBlock(MORPHISM,
 					R_FROM, this.morphismsTable.getRangeFrom(currentMorphism),
 					R_TO, this.morphismsTable.getRangeTo(currentMorphism));
-				currentMorphism.toXML(writer);
+				definitionXmlWriter.toXML(currentMorphism, writer);
 				List<List<Integer>> currentElementPaths
 					= this.morphismsTable.getCoordinates(currentMorphism);
 				for (int j = 0; j < currentElementPaths.size(); j++) {

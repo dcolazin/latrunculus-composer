@@ -31,7 +31,6 @@ import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
-import org.rubato.math.yoneda.*;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;

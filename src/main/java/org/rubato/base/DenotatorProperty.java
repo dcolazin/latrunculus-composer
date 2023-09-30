@@ -28,11 +28,14 @@ import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
-public class DenotatorProperty
-        extends RubetteProperty
-        implements ActionListener {
+public class DenotatorProperty extends RubetteProperty implements ActionListener {
+
+    //TODO the writer for Rubettes and properties?
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public DenotatorProperty(String key, String name, Denotator value) {
         super(key, name);
@@ -107,7 +110,7 @@ public class DenotatorProperty
     public void toXML(XMLWriter writer) {
         writer.openBlock(getKey());
         if (value != null) {
-            value.toXML(writer);
+            definitionXmlWriter.toXML(value, writer);
         }
         writer.closeBlock();
     }

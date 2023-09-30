@@ -43,6 +43,8 @@ import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
+import org.vetronauta.latrunculus.server.xml.writer.DefinitionXmlWriter;
 import org.w3c.dom.Element;
 
 
@@ -52,9 +54,10 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
-public class DisplayRubette
-        extends AbstractRubette
-        implements ActionListener {    
+public class DisplayRubette extends AbstractRubette implements ActionListener {
+
+    //TODO rubette writer
+    private final DefinitionXmlWriter definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public DisplayRubette() {
         setInCount(1);
@@ -141,7 +144,7 @@ public class DisplayRubette
                 PrintStream ps = new PrintStream(bs);
                 if (isXML) {
                     XMLWriter writer = new XMLWriter(ps);
-                    input.toXML(writer);
+                    definitionXmlWriter.toXML(input, writer);
                 }
                 else {
                     input.display(ps);

@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.rubato.math.arith.*;
-import org.rubato.math.yoneda.*;
 import org.rubato.base.Repository;
 
 public final class DenotexParser {
