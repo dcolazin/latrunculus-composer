@@ -35,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialElement extends RingElement implements PolynomialFreeElement {
+public final class PolynomialElement<R extends RingElement<R>> extends RingElement<PolynomialElement<R>> implements PolynomialFreeElement<PolynomialElement<R>,R> {
 
     /**
      * Constructs a polynomial in a specified ring with given coefficents.
@@ -87,21 +87,9 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
     
     public boolean isZero() {
         return (coefficients.length == 1 && coefficients[0].isZero());
-    }  
-    
-    
-    public PolynomialElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            return sum((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
     }
-
     
-    public PolynomialElement sum(PolynomialElement element)
+    public PolynomialElement<R> sum(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             try {
@@ -135,20 +123,8 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            add((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
 
-    
-    public void add(PolynomialElement element)
+    public void add(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             try {
@@ -184,19 +160,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         }
     }
     
-    
-    public PolynomialElement difference(ModuleElement element) 
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            return difference((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public PolynomialElement difference(PolynomialElement element)
+    public PolynomialElement<R> difference(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             try {
@@ -232,19 +196,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         }
     }
     
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            subtract((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public void subtract(PolynomialElement element)
+    public void subtract(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             try {
@@ -281,7 +233,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
     }
 
     
-    public PolynomialElement negated() {
+    public PolynomialElement<R> negated() {
         RingElement[] newCoefficients = new RingElement[coefficients.length];
         for (int i = 0; i < coefficients.length; i++) {
             newCoefficients[i] = (RingElement)coefficients[i].negated();
@@ -299,8 +251,8 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         }
     }
     
-    
-    public PolynomialElement scaled(RingElement element)
+    //TODO FIX!!! the element should be in R, but this is a notion of algebra...
+    public PolynomialElement<R> scaled(PolynomialElement<R> element)
             throws DomainException {
         if (ring.getCoefficientRing().hasElement(element)) {
             return product(element);
@@ -309,9 +261,9 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             throw new DomainException(ring.getCoefficientRing(), element.getRing());
         }
     }
-    
 
-    public void scale(RingElement element)
+    //TODO FIX!!! the element should be in R, but this is a notion of algebra...
+    public void scale(PolynomialElement<R> element)
             throws DomainException {
         if (ring.getCoefficientRing().hasElement(element)) {
             multiply(element);
@@ -321,32 +273,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         }
     }
     
-
-    public PolynomialElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            return product((PolynomialElement)element);
-        }
-        else {
-            if (getRing().getCoefficientRing().hasElement(element)) {                
-                RingElement[] newCoefficients = new RingElement[coefficients.length];
-                for (int i = 0; i < coefficients.length; i++) {
-                    newCoefficients[i] = coefficients[i].product(element);                    
-                }
-                PolynomialElement res = new PolynomialElement();
-                res.setPolynomialRing(getRing());
-                res.setCoefficients(newCoefficients);
-                res.normalize();
-                return res;
-            }
-            else {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
-        }
-    }
-
-    
-    public PolynomialElement product(PolynomialElement element)
+    public PolynomialElement<R> product(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             if (isZero()) { return this; }
@@ -354,7 +281,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             RingElement[] newCoefficients = new RingElement[getDegree()+element.getDegree()+1];
             int i, j;
             for (i = 0; i < newCoefficients.length; i++) {
-                newCoefficients[i] = ring.getCoefficientRing().getZero();
+                newCoefficients[i] = (RingElement) ring.getCoefficientRing().getZero();
             }
             for (i = 0; i <= getDegree(); i++) {
                 for (j = 0; j <= element.getDegree(); j++) {
@@ -372,28 +299,8 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof PolynomialElement) {
-            multiply((PolynomialElement)element);
-        }
-        else {
-            if (getRing().getCoefficientRing().hasElement(element)) {                
-                for (int i = 0; i < coefficients.length; i++) {
-                    coefficients[i].multiply(element);                    
-                }
-                normalize();
-            }
-            else {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
-        }
-    }
-
     
-    public void multiply(PolynomialElement element)
+    public void multiply(PolynomialElement<R> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             int d0 = Math.max(getDegree(), 0);
@@ -401,7 +308,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             RingElement[] newCoefficients = new RingElement[d0+d1+1];
             int i, j;
             for (i = 0; i < newCoefficients.length; i++) {
-                newCoefficients[i] = ring.getCoefficientRing().getZero();
+                newCoefficients[i] = (RingElement) ring.getCoefficientRing().getZero();
             }
             for (i = 0; i <= d0; i++) {
                 for (j = 0; j <= d1; j++) {
@@ -443,19 +350,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
         }
     }
     
-
-    public PolynomialElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof PolynomialElement) {
-            return quotient((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-    
-    public PolynomialElement quotient(PolynomialElement element)
+    public PolynomialElement<R> quotient(PolynomialElement<R> element)
             throws DomainException, DivisionException {
         if (getRing().equals(element.getRing())) {
             PolynomialElement[] remainder = new PolynomialElement[1];
@@ -471,20 +366,8 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
             throw new DomainException(getRing(), element.getRing());
         }
     }
-    
-    
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof PolynomialElement) {
-            divide((PolynomialElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-    
 
-    public void divide(PolynomialElement element)
+    public void divide(PolynomialElement<R> element)
             throws DomainException, DivisionException {
         if (getRing().equals(element.getRing())) {
             PolynomialElement[] remainder = new PolynomialElement[1];
@@ -554,7 +437,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
                     RingElement q1 = p[pi].quotient(q[qdeg]);
                     quotient[quotientdeg] = q1;
                     for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = p[i].difference(q1.product(q[j]));
+                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
                     }
                     pi--;
                     quotientdeg--;
@@ -598,7 +481,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
                     RingElement q1 = p[pi].quotient(q[qdeg]);
                     quotient[quotientdeg] = q1;
                     for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = p[i].difference(q1.product(q[j]));
+                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
                     }
                     pi--;
                     quotientdeg--;
@@ -636,7 +519,7 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
                 while (pi >= qdeg) {
                     RingElement q1 = p[pi].quotient(q[qdeg]);
                     for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = p[i].difference(q1.product(q[j]));
+                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
                     }
                     pi--;
                 }

@@ -42,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnRing extends Ring implements ZnFreeModule {
+public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElement> {
 
     /**
      * Constructs a ring of integers mod <code>modulus</code>.
@@ -125,9 +125,9 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     }
 
     
-    public ZnElement createElement(List<ModuleElement> elements) {
+    public ZnElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (ZnElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         else {
             return null;
@@ -135,7 +135,7 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public ZnElement cast(ModuleElement element) {
         if (element instanceof ZElement) {
             return cast((ZElement)element);
         }
@@ -152,7 +152,7 @@ public final class ZnRing extends Ring implements ZnFreeModule {
             return cast((CElement)element);
         }
         else if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return (ZnElement) element.cast(this);
         }
         else {
             return null;
@@ -205,7 +205,7 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     }
 
     
-    public RingElement parseString(String s) {
+    public ZnElement parseString(String s) {
     	try {
     		int value = Integer.parseInt(TextUtils.unparenthesize(s));
         	return new ZnElement(value, modulus);

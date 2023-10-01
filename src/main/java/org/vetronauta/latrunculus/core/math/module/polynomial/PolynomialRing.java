@@ -40,9 +40,7 @@ import java.util.Vector;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialRing
-        extends Ring
-        implements PolynomialFreeModule {
+public final class PolynomialRing<R extends RingElement<R>> extends Ring<PolynomialElement<R>> implements PolynomialFreeModule<PolynomialElement<R>,R> {
 
     public static PolynomialRing make(Ring coefficientRing, String indeterminate) {
         if (coefficientRing instanceof PolynomialRing) {
@@ -93,7 +91,7 @@ public final class PolynomialRing
     }
     
     
-    public Ring getCoefficientRing() {
+    public Ring<R> getCoefficientRing() {
         return coefficientRing;
     }
     
@@ -180,7 +178,7 @@ public final class PolynomialRing
     }
 
 
-    public PolynomialElement createElement(List<ModuleElement> elements) {
+    public PolynomialElement<R> createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() == 1) {
             if (hasElement(elements.get(0))) {
                 return (PolynomialElement)elements.get(0);

@@ -38,7 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZRing extends NumberRing implements ZFreeModule {
+public final class ZRing extends NumberRing<ZElement> implements ZFreeModule<ZElement> {
 
     /**
      * The unique instance of the ring of integers.
@@ -105,9 +105,9 @@ public final class ZRing extends NumberRing implements ZFreeModule {
     }
 
 
-    public ZElement createElement(List<ModuleElement> elements) {
+    public ZElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (ZElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         else {
             return null;

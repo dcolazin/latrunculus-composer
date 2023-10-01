@@ -37,11 +37,11 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
  * 
  * @author Gérard Milmeister
  */
-public abstract class StringRing extends Ring {
+public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
 
-    public abstract StringElement getZero();
+    public abstract R getZero();
     
-    public abstract StringElement getOne();
+    public abstract R getOne();
     
     public ModuleMorphism getIdentityMorphism() {
         return ModuleMorphism.getIdentityMorphism(this);
@@ -53,9 +53,9 @@ public abstract class StringRing extends Ring {
     
     public abstract boolean hasElement(ModuleElement e);
     
-    public StringElement createElement(List<ModuleElement> elements) {
+    public R createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (StringElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         else {
             return null;

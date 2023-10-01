@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over integers.
@@ -27,6 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface ZFreeModule extends FreeModule {
+public interface ZFreeModule<E extends ModuleElement<E,ZElement>> extends FreeModule<E,ZElement> {
 
 }

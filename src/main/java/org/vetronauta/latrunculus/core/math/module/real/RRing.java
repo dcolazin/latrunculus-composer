@@ -40,7 +40,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RRing extends NumberRing implements RFreeModule {
+public final class RRing extends NumberRing<RElement> implements RFreeModule<RElement> {
 
     /**
      * The unique instance of the ring of reals.
@@ -107,9 +107,9 @@ public final class RRing extends NumberRing implements RFreeModule {
     }
 
 
-    public RElement createElement(List<ModuleElement> elements) {
+    public RElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (RElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         else {
             return null;
@@ -117,7 +117,7 @@ public final class RRing extends NumberRing implements RFreeModule {
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public RElement cast(ModuleElement element) {
         if (element instanceof ZElement) {
             return cast((ZElement)element);
         }
@@ -128,13 +128,13 @@ public final class RRing extends NumberRing implements RFreeModule {
             return cast((QElement)element);
         }
         else if (element instanceof RElement) {
-            return element;
+            return (RElement) element;
         }
         else if (element instanceof CElement) {
             return cast((CElement)element);
         }
         else if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return (RElement) element.cast(this);
         }
         else {
             return null;
@@ -172,7 +172,7 @@ public final class RRing extends NumberRing implements RFreeModule {
     }
     
     
-    public RingElement parseString(String string) {
+    public RElement parseString(String string) {
     	try {
     		double value = Double.parseDouble(TextUtils.unparenthesize(string));
         	return new RElement(value);

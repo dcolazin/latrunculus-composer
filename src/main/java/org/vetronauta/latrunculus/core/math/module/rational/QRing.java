@@ -39,7 +39,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QRing extends NumberRing implements QFreeModule {
+public final class QRing extends NumberRing<QElement> implements QFreeModule<QElement> {
 
     /**
      * The unique instance of the ring of rationals.
@@ -116,9 +116,9 @@ public final class QRing extends NumberRing implements QFreeModule {
     }
 
     
-    public QElement createElement(List<ModuleElement> elements) {
+    public QElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (QElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         else {
             return null;

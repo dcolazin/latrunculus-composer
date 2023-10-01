@@ -37,9 +37,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeModule
-		extends ProperFreeModule
-		implements ZFreeModule {
+public final class ZProperFreeModule extends ProperFreeModule<ZProperFreeElement,ZElement> implements ZFreeModule<ZProperFreeElement> {
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
 
@@ -57,19 +55,19 @@ public final class ZProperFreeModule
     }
     
     
-    public ZFreeElement getZero() {
+    public ZProperFreeElement getZero() {
         int[] res = new int[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = 0;
         }
-        return ZProperFreeElement.make(res);
+        return (ZProperFreeElement) ZProperFreeElement.make(res); //TODO do not cast
     }
     
     
-    public ZFreeElement getUnitElement(int i) {
+    public ZProperFreeElement getUnitElement(int i) {
         int[] v = new int[getDimension()];
         v[i] = 1;
-        return ZProperFreeElement.make(v);
+        return (ZProperFreeElement) ZProperFreeElement.make(v); //TODO do not cast
     }
     
 
@@ -115,12 +113,12 @@ public final class ZProperFreeModule
     }
 
     
-    public ZFreeElement createElement(List<ModuleElement> elements) {
+    public ZProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         int[] values = new int[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(ZRing.ring);
@@ -130,17 +128,17 @@ public final class ZProperFreeModule
             values[i] = ((ZElement)castElement).getValue();
         }
 
-        return ZProperFreeElement.make(values);
+        return (ZProperFreeElement) ZProperFreeElement.make(values); //TODO do not cast
     }
     
    
-    public ZFreeElement cast(ModuleElement element) {
+    public ZProperFreeElement cast(ModuleElement element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
-                return (ZFreeElement)element.cast(this);
+                return (ZProperFreeElement)element.cast(this);
             }
             else if (element instanceof ZProperFreeElement) {
-                return (ZFreeElement)element;
+                return (ZProperFreeElement)element;
             }
             else {   
                 int[] elements = new int[getDimension()];
@@ -151,7 +149,7 @@ public final class ZProperFreeModule
                     }
                     elements[i] = ((ZElement)castElement).getValue();
                 }
-                return ZProperFreeElement.make(elements);
+                return (ZProperFreeElement) ZProperFreeElement.make(elements);
             }
         }
         else {
@@ -166,7 +164,7 @@ public final class ZProperFreeModule
     }
 
     
-    public ZFreeElement parseString(String string) {
+    public ZProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != getDimension()) {
@@ -182,7 +180,7 @@ public final class ZProperFreeModule
                     return null;
                 }
             }
-            return ZProperFreeElement.make(values);
+            return (ZProperFreeElement) ZProperFreeElement.make(values);
         }
     }
     
@@ -227,6 +225,6 @@ public final class ZProperFreeModule
         super(dimension);
     }
 
-    
-    private final static int basicHash = "ZFreeModule".hashCode();    
+
+    private static final int basicHash = "ZFreeModule".hashCode();
 }

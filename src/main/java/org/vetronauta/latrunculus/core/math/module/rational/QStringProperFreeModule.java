@@ -38,9 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringProperFreeModule
-		extends ProperFreeModule
-		implements QStringFreeModule {
+public final class QStringProperFreeModule extends ProperFreeModule<QStringProperFreeElement,QStringElement> implements QStringFreeModule<QStringProperFreeElement> {
 
     public static final QStringProperFreeModule nullModule = new QStringProperFreeModule(0);
 
@@ -58,23 +56,23 @@ public final class QStringProperFreeModule
     }
     
     
-    public ModuleElement getZero() {
+    public QStringProperFreeElement getZero() {
         QString[] res = new QString[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = QString.getZero();
         }
-        return QStringProperFreeElement.make(res);
+        return (QStringProperFreeElement) QStringProperFreeElement.make(res); //TODO do not cast
     }
     
     
-    public ModuleElement getUnitElement(int i) {
+    public QStringProperFreeElement getUnitElement(int i) {
         QString[] v = new QString[getDimension()];
         assert(i >= 0 && i < getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v[j] = QString.getZero();
         }
         v[i] = QString.getOne();
-        return QStringProperFreeElement.make(v);
+        return (QStringProperFreeElement) QStringProperFreeElement.make(v);
     }
     
 
@@ -120,12 +118,12 @@ public final class QStringProperFreeModule
     }
 
     
-    public ModuleElement createElement(List<ModuleElement> elements) {
+    public QStringProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         QString[] values = new QString[getDimension()];        
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
@@ -138,14 +136,14 @@ public final class QStringProperFreeModule
             i++;
         }
 
-        return QStringProperFreeElement.make(values);
+        return (QStringProperFreeElement) QStringProperFreeElement.make(values);
     }
     
    
-    public ModuleElement cast(ModuleElement element) {
+    public QStringProperFreeElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             QStringRing ring = QStringRing.ring;
-            List<ModuleElement> elementList = new LinkedList<ModuleElement>();
+            List<ModuleElement<?,?>> elementList = new LinkedList<>();
             for (int i = 0; i < getDimension(); i++) {
                 ModuleElement e = ring.cast(element.getComponent(i));
                 if (e != null) {
@@ -167,10 +165,10 @@ public final class QStringProperFreeModule
     }
 
     
-    public ModuleElement parseString(String string) {
+    public QStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return QStringProperFreeElement.make(new QString[0]);
+            return (QStringProperFreeElement) QStringProperFreeElement.make(new QString[0]);
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -186,7 +184,7 @@ public final class QStringProperFreeModule
                         return null;
                     }
                 }
-                return QStringProperFreeElement.make(qstrings);
+                return (QStringProperFreeElement) QStringProperFreeElement.make(qstrings);
             }            
         }
         else {

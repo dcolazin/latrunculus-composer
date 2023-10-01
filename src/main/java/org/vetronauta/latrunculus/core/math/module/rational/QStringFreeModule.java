@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over QString.
@@ -27,5 +28,5 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface QStringFreeModule extends FreeModule {
+public interface QStringFreeModule<E extends ModuleElement<E,QStringElement>> extends FreeModule<E,QStringElement> {
 }

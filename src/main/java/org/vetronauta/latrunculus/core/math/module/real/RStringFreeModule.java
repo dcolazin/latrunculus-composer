@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over RString.
@@ -27,5 +28,5 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface RStringFreeModule extends FreeModule {
+public interface RStringFreeModule<E extends ModuleElement<E,RStringElement>> extends FreeModule<E,RStringElement> {
 }

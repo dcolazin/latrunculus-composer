@@ -116,7 +116,7 @@ public final class Address {
      * @return null if the minimal ring could not be found
      */
     public static Ring getMinRing(Collection<Ring> rings) {
-        Pair<Module,Module> ringPair = new Pair<Module,Module>();
+        Pair<Module<?,?>,Module<?,?>> ringPair = new Pair<>();
         Ring minRing = null;
         for (Ring ring : rings) {
             if (minRing == null) {
@@ -139,7 +139,7 @@ public final class Address {
      * Returns the minimal ring of the two rings in <code>ringPair</code>.
      * Each pair is cached for later lookup.
      */
-    private static Ring getMinRing(Pair<Module,Module> ringPair) {
+    private static Ring getMinRing(Pair<Module<?,?>,Module<?,?>> ringPair) {
         Ring ring = ringOrder.get(ringPair);
         if (ring == null) {
             ring = getMinRing((Ring)ringPair.first, (Ring)ringPair.second);
@@ -221,7 +221,7 @@ public final class Address {
             }
             int len = ring1.getFactorCount();
             Ring[] factors = new Ring[len];
-            Pair<Module,Module> ringPair = new Pair<Module,Module>(); 
+            Pair<Module<?,?>,Module<?,?>> ringPair = new Pair<>();
             for (int i = 0; i < len; i++) {
                 ringPair.first = ring1.getFactor(i);
                 ringPair.second = pRing.getFactor(i);
@@ -263,7 +263,7 @@ public final class Address {
 
     
     private static Ring getMinStringRing(StringRing ring1, Ring ring2) {
-        Pair<Module,Module> ringPair = new Pair<Module,Module>();
+        Pair<Module<?,?>,Module<?,?>> ringPair = new Pair<>();
         if (ring2 instanceof PolynomialRing) {
             ringPair.first = ring1.getFactorRing();
             ringPair.second = ((PolynomialRing)ring2).getCoefficientRing();
@@ -291,6 +291,6 @@ public final class Address {
      */
     private Address() { /* pure static class */ }
     
-    private static HashMap<Pair<Module,Module>,Ring> ringOrder = new HashMap<Pair<Module,Module>,Ring>();
+    private static HashMap<Pair<Module<?,?>,Module<?,?>>,Ring> ringOrder = new HashMap<>();
 }
 

@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over rationals.
@@ -27,6 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface QFreeModule extends FreeModule {
+public interface QFreeModule<E extends ModuleElement<E,QElement>> extends FreeModule<E,QElement> {
 
 }

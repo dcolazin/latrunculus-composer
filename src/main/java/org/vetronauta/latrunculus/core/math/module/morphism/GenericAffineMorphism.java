@@ -231,9 +231,9 @@ public final class GenericAffineMorphism extends ModuleMorphism {
                 try {
                     for (int i = 0; i < codim; i++) {
                         for (int j = 0; j < dim; j++) {
-                            res.A[i][j] = A[i][j].sum(m.A[i][j]);
+                            res.A[i][j] = (RingElement) A[i][j].sum(m.A[i][j]);
                         }
-                        res.b[i] = b[i].sum(m.b[i]);
+                        res.b[i] = (RingElement) b[i].sum(m.b[i]);
                     }
                 }
                 catch (DomainException e) {
@@ -260,9 +260,9 @@ public final class GenericAffineMorphism extends ModuleMorphism {
                 try {
                     for (int i = 0; i < codim; i++) {
                         for (int j = 0; j < dim; j++) {
-                            res.A[i][j] = A[i][j].difference(m.A[i][j]);
+                            res.A[i][j] = (RingElement) A[i][j].difference(m.A[i][j]);
                         }
-                        res.b[i] = b[i].difference(m.b[i]);
+                        res.b[i] = (RingElement) b[i].difference(m.b[i]);
                     }
                 }
                 catch (DomainException e) {
@@ -330,9 +330,9 @@ public final class GenericAffineMorphism extends ModuleMorphism {
         b = new RingElement[codim];
         for (int i = 0; i < codim; i++) {
             for (int j = 0 ; j < dim; j++) {
-                A[i][j] = ring.getZero();                
+                A[i][j] = (RingElement) ring.getZero();
             }
-            b[i] = ring.getZero();
+            b[i] = (RingElement) ring.getZero();
         }
     }
 

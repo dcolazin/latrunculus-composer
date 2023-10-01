@@ -33,7 +33,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class RestrictedModule implements Module {
+public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElement<R>> implements Module<RestrictedElement<B,R>,R> {
 
     /**
      * Creates a new scalar-restricted module based on <code>module</code>
@@ -73,7 +73,7 @@ public class RestrictedModule implements Module {
     }
     
     
-    public ModuleElement getZero() {
+    public RestrictedElement<B, R> getZero() {
         return RestrictedElement.getZero(this);
     }
 
@@ -149,7 +149,7 @@ public class RestrictedModule implements Module {
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public RestrictedElement cast(ModuleElement element) {
         ModuleElement res = module.cast(element);
         if (res == null) {
             return null;
@@ -163,7 +163,7 @@ public class RestrictedModule implements Module {
     }
 
     
-    public ModuleElement createElement(List<ModuleElement> elements) {
+    public RestrictedElement createElement(List<ModuleElement<?, ?>> elements) {
         ModuleElement res = module.createElement(elements);
         if (res != null) {
             try {
@@ -178,8 +178,8 @@ public class RestrictedModule implements Module {
         }
     }
 
-    
-    public ModuleElement parseString(String string) {
+
+    public RestrictedElement parseString(String string) {
         throw new UnsupportedOperationException("Not implemented");
     }
 

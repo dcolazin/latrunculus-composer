@@ -72,7 +72,7 @@ public class GenericBasisMorphism extends ModuleMorphism {
             throws MappingException {
         if (inDomain(x)) {
             FreeElement v = (FreeElement)x;
-            ModuleElement res = fit[0].deepCopy();
+            ModuleElement res = (ModuleElement) fit[0].deepCopy();
             try {
                 for (int i = 0; i < v.getLength(); i++) {
                     ModuleElement tmp = fit[i+1].scaled(v.getRingElement(i));

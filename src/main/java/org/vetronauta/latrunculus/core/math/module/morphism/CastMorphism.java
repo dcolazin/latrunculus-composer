@@ -61,7 +61,7 @@ public abstract class CastMorphism extends ModuleMorphism {
      */
     public static ModuleMorphism make(Ring domain, Ring codomain) {
         // check if the required morphism is in the cache
-        Pair<Module,Module> pair = Pair.makePair((Module)domain, (Module)codomain);
+        Pair<Module<?,?>,Module<?,?>> pair = Pair.makePair(domain, codomain);
         ModuleMorphism morphism = castingMorphisms.get(pair);
         if (morphism == null) {
             // if not, try to create it
@@ -270,7 +270,7 @@ public abstract class CastMorphism extends ModuleMorphism {
         return "CastMorphism["+getDomain()+","+getCodomain()+"]";
     }
     
-    private static HashMap<Pair<Module,Module>,ModuleMorphism> castingMorphisms = new HashMap<>();
+    private static HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> castingMorphisms = new HashMap<>();
 
     public String getElementTypeName() {
         return "CastMorphism";

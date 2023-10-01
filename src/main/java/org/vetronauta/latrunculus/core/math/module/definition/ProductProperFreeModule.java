@@ -33,9 +33,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductProperFreeModule
-		extends ProperFreeModule
-		implements ProductFreeModule {
+public final class ProductProperFreeModule extends ProperFreeModule<ProductProperFreeElement,ProductElement> implements ProductFreeModule<ProductProperFreeElement,ProductElement> {
 
     public static FreeModule make(Ring[] rings, int dimension) {
         dimension = (dimension < 0)?0:dimension;
@@ -63,19 +61,19 @@ public final class ProductProperFreeModule
     }
 
     
-    public ProductFreeElement getZero() {
+    public ProductProperFreeElement getZero() {
         ProductElement[] res = new ProductElement[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = ring.getZero();
         }
-        return ProductProperFreeElement.make(ring, res);
+        return (ProductProperFreeElement) ProductProperFreeElement.make(ring, res);
     }
 
 
     public ProductProperFreeElement getUnitElement(int i) {
         ProductElement[] v = new ProductElement[getDimension()];
         for (int j = 0; j < getDimension(); j++) {
-            v[j] = (ProductElement)getZero();
+            v[j] = ProductElement.make(new RingElement[getDimension()]);
         }
         v[i] = getRing().getOne();
         return (ProductProperFreeElement)ProductProperFreeElement.make(getRing(), v);
@@ -144,13 +142,13 @@ public final class ProductProperFreeModule
     }
 
     
-    public ProductFreeElement createElement(List<ModuleElement> elements) {
+    public ProductProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
         ProductElement[] components = new ProductElement[getDimension()];
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof ProductElement) {
@@ -166,7 +164,7 @@ public final class ProductProperFreeModule
                 return null;
             }
         }
-        return ProductProperFreeElement.make(getRing(), components);
+        return (ProductProperFreeElement) ProductProperFreeElement.make(getRing(), components);
     }
 
     
@@ -208,7 +206,7 @@ public final class ProductProperFreeModule
     }
 
     
-    public ProductFreeElement parseString(String string) {
+    public ProductProperFreeElement parseString(String string) {
         ArrayList<String> m = parse(TextUtils.unparenthesize(string));
         if (m.size() != getDimension()) {
             return null;
@@ -222,7 +220,7 @@ public final class ProductProperFreeModule
             }
             components[i] = (ProductElement)element;
         }
-        return ProductProperFreeElement.make(getRing(), components);
+        return (ProductProperFreeElement) ProductProperFreeElement.make(getRing(), components);
     }
     
     

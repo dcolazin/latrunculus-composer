@@ -38,9 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeModule
-		extends ProperFreeModule
-		implements ZnStringFreeModule {
+public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringProperFreeElement,ZnStringElement> implements ZnStringFreeModule<ZnStringProperFreeElement> {
 
     public static ZnStringFreeModule make(int dimension, int modulus) {
         dimension = (dimension < 0)?0:dimension;
@@ -53,22 +51,22 @@ public final class ZnStringProperFreeModule
     }
     
     
-    public ModuleElement getZero() {
+    public ZnStringProperFreeElement getZero() {
         ZnString[] res = new ZnString[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = ZnString.getZero(modulus);
         }
-        return ZnStringProperFreeElement.make(res, modulus);
+        return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(res, modulus); //TODO do not cast
     }
     
     
-    public ModuleElement getUnitElement(int i) {
+    public ZnStringProperFreeElement getUnitElement(int i) {
         ZnString[] v = new ZnString[getDimension()];
         for (int j = 0; j < getDimension(); j++) {
             v[j] = ZnString.getZero(modulus);
         }
         v[i] = ZnString.getOne(modulus);
-        return ZnStringProperFreeElement.make(v, modulus);
+        return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(v, modulus);
     }
     
 
@@ -121,12 +119,12 @@ public final class ZnStringProperFreeModule
     }
 
     
-    public ModuleElement createElement(List<ModuleElement> elements) {
+    public ZnStringProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         ZnString[] values = new ZnString[getDimension()];        
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
@@ -138,14 +136,14 @@ public final class ZnStringProperFreeModule
             }
         }
 
-        return ZnStringProperFreeElement.make(values, modulus);
+        return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(values, modulus);
     }
     
    
-    public ModuleElement cast(ModuleElement element) {
+    public ZnStringProperFreeElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             Ring ring = getRing();
-            List<ModuleElement> elementList = new LinkedList<ModuleElement>();
+            List<ModuleElement<?,?>> elementList = new LinkedList<>();
             for (int i = 0; i < getDimension(); i++) {
                 ModuleElement e = ring.cast(element.getComponent(i));
                 if (e != null) {
@@ -173,10 +171,10 @@ public final class ZnStringProperFreeModule
     }
 
     
-    public ModuleElement parseString(String string) {
+    public ZnStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return ZnStringProperFreeElement.make(new ZnString[0], getModulus());
+            return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(new ZnString[0], getModulus());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -192,7 +190,7 @@ public final class ZnStringProperFreeModule
                         return null;
                     }
                 }
-                return ZnStringProperFreeElement.make(zstrings, getModulus());
+                return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(zstrings, getModulus());
             }            
         }
         else {
@@ -239,6 +237,6 @@ public final class ZnStringProperFreeModule
     }
 
     private int modulus;
-    
-    private final static int basicHash = "ZnStringFreeModule".hashCode();    
+
+    private static final int basicHash = "ZnStringFreeModule".hashCode();
 }

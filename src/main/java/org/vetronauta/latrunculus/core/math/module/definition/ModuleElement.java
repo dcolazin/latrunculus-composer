@@ -45,6 +45,7 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
+    //TODO find better names for those methods
     E scaled(R element) throws DomainException;
 
     /**

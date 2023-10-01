@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over ZnString.
@@ -27,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface ZnStringFreeModule extends FreeModule {
+public interface ZnStringFreeModule<E extends ModuleElement<E,ZnStringElement>> extends FreeModule<E,ZnStringElement> {
     
     int getModulus();
 }

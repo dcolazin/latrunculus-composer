@@ -38,7 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeModule extends ProperFreeModule implements RStringFreeModule {
+public final class RStringProperFreeModule extends ProperFreeModule<RStringProperFreeElement,RStringElement> implements RStringFreeModule<RStringProperFreeElement> {
 
     public static final RStringProperFreeModule nullModule = new RStringProperFreeModule(0);
 
@@ -56,22 +56,22 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
     }
     
     
-    public ModuleElement getZero() {
+    public RStringProperFreeElement getZero() {
         RString[] res = new RString[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = RString.getZero();
         }
-        return RStringProperFreeElement.make(res);
+        return (RStringProperFreeElement) RStringProperFreeElement.make(res); //TODO not cast
     }
     
     
-    public ModuleElement getUnitElement(int i) {
+    public RStringProperFreeElement getUnitElement(int i) {
         RString[] v = new RString[getDimension()];
         for (int j = 0; j < getDimension(); j++) {
             v[j] = RString.getZero();
         }
         v[i] = RString.getOne();
-        return RStringProperFreeElement.make(v);
+        return (RStringProperFreeElement) RStringProperFreeElement.make(v);
     }
     
 
@@ -117,12 +117,12 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
     }
 
     
-    public ModuleElement createElement(List<ModuleElement> elements) {
+    public RStringProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         RString[] values = new RString[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
@@ -134,14 +134,14 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
             }
         }
 
-        return RStringProperFreeElement.make(values);
+        return (RStringProperFreeElement) RStringProperFreeElement.make(values);
     }
     
    
-    public ModuleElement cast(ModuleElement element) {
+    public RStringProperFreeElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             RStringRing ring = RStringRing.ring;
-            List<ModuleElement> elementList = new LinkedList<>();
+            List<ModuleElement<?,?>> elementList = new LinkedList<>();
             for (int i = 0; i < getDimension(); i++) {
                 ModuleElement e = ring.cast(element.getComponent(i));
                 if (e != null) {
@@ -163,10 +163,10 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
     }
 
     
-    public ModuleElement parseString(String string) {
+    public RStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return RStringProperFreeElement.make(new RString[0]);
+            return (RStringProperFreeElement) RStringProperFreeElement.make(new RString[0]);
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -182,7 +182,7 @@ public final class RStringProperFreeModule extends ProperFreeModule implements R
                         return null;
                     }
                 }
-                return RStringProperFreeElement.make(rstrings);
+                return (RStringProperFreeElement) RStringProperFreeElement.make(rstrings);
             }            
         }
         else {

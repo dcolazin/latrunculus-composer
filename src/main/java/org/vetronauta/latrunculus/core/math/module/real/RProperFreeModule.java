@@ -38,9 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeModule
-		extends ProperFreeModule
-		implements RFreeModule {
+public final class RProperFreeModule extends ProperFreeModule<RProperFreeElement,RElement> implements RFreeModule<RProperFreeElement> {
 
     public static final RProperFreeModule nullModule = new RProperFreeModule(0);  
     
@@ -116,12 +114,12 @@ public final class RProperFreeModule
     }
 
     
-    public RFreeElement createElement(List<ModuleElement> elements) {
+    public RProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         double[] values = new double[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(RRing.ring);
@@ -131,17 +129,17 @@ public final class RProperFreeModule
             values[i] = ((RElement)castElement).getValue();
         }
 
-        return RProperFreeElement.make(values);
+        return (RProperFreeElement) RProperFreeElement.make(values);
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public RProperFreeElement cast(ModuleElement element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
-                return element.cast(this);
+                return (RProperFreeElement) element.cast(this);
             }
             else if (element instanceof RProperFreeElement) {
-                return element;
+                return (RProperFreeElement) element;
             }
             else {   
                 double[] elements = new double[getDimension()];
@@ -152,7 +150,7 @@ public final class RProperFreeModule
                     }
                     elements[i] = ((RElement)castElement).getValue();
                 }
-                return RProperFreeElement.make(elements);
+                return (RProperFreeElement) RProperFreeElement.make(elements);
             }
         }
         else {
@@ -167,7 +165,7 @@ public final class RProperFreeModule
     }
 
     
-    public ModuleElement parseString(String string) {
+    public RProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != getDimension()) {
@@ -183,7 +181,7 @@ public final class RProperFreeModule
                     return null;
                 }
             }
-            return RProperFreeElement.make(values);
+            return (RProperFreeElement) RProperFreeElement.make(values);
         }
     }
     

@@ -51,7 +51,7 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
      */
     public static ModuleMorphism make(Module domain, Module codomain) {
         // check if the required morphism is in the cache
-        Pair<Module,Module> pair = Pair.makePair(domain, codomain);
+        Pair<Module<?,?>,Module<?,?>> pair = Pair.makePair(domain, codomain);
         ModuleMorphism morphism = canonicalMorphisms.get(pair);
         if (morphism == null) {
             // if not, try to create it
@@ -187,7 +187,7 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
                 if (!domain.hasElement(x)) {
                     throw new MappingException("CanonicalMorphism.map: ", x, this);
                 }
-                FreeElement e = ((FreeElement)x).resize(codim);
+                FreeElement<?,?> e = ((FreeElement)x).resize(codim);
                 LinkedList<ModuleElement> elements = new LinkedList<ModuleElement>();
                 for (RingElement element : e) {
                     elements.add(ringMorphism.map(element));
@@ -237,5 +237,5 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
     }
     
 
-    private static HashMap<Pair<Module,Module>,ModuleMorphism> canonicalMorphisms = new HashMap<Pair<Module,Module>,ModuleMorphism>();
+    private static HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> canonicalMorphisms = new HashMap<>();
 }

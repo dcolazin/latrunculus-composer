@@ -43,9 +43,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialProperFreeModule
-		extends ProperFreeModule
-		implements PolynomialFreeModule {
+public final class PolynomialProperFreeModule extends ProperFreeModule implements PolynomialFreeModule {
 
     public static PolynomialFreeModule make(Ring coefficientRing, String indeterminate, int dimension) {
         dimension = (dimension < 0)?0:dimension;

@@ -38,9 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeModule
-		extends ProperFreeModule
-		implements QFreeModule {
+public final class QProperFreeModule extends ProperFreeModule<QProperFreeElement,QElement> implements QFreeModule<QProperFreeElement> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
 
@@ -119,12 +117,12 @@ public final class QProperFreeModule
     }
 
     
-    public QProperFreeElement createElement(List<ModuleElement> elements) {
+    public QProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         Rational[] values = new Rational[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(QRing.ring);
@@ -138,13 +136,13 @@ public final class QProperFreeModule
     }
 
 
-    public ModuleElement cast(ModuleElement element) {
+    public QProperFreeElement cast(ModuleElement element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
-                return element.cast(this);
+                return (QProperFreeElement) element.cast(this);
             }
             else if (element instanceof QProperFreeElement) {
-                return element;
+                return (QProperFreeElement) element;
             }
             else {   
                 Rational[] elements = new Rational[getDimension()];
@@ -155,7 +153,7 @@ public final class QProperFreeModule
                     }
                     elements[i] = ((QElement)castElement).getValue();
                 }
-                return QProperFreeElement.make(elements);
+                return (QProperFreeElement) QProperFreeElement.make(elements);
             }
         }
         else {
@@ -170,7 +168,7 @@ public final class QProperFreeModule
     }
 
     
-    public ModuleElement parseString(String string) {
+    public QProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != getDimension()) {
@@ -186,7 +184,7 @@ public final class QProperFreeModule
                     return null;
                 }
             }
-            return QProperFreeElement.make(values);
+            return (QProperFreeElement) QProperFreeElement.make(values);
         }
     }
     
