@@ -691,60 +691,6 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
         return list;
     }
     
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     * @return a power denotator or null if parsing failed
-     */
-    public static PowerDenotator fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(POWER_TYPE_VALUE));
-        
-        if (!element.hasAttribute(FORM_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%2.", POWER_TYPE_VALUE, DENOTATOR, FORM_ATTR);
-            return null;                                                
-        }
-        String formName = element.getAttribute(FORM_ATTR);
-        Form form = reader.getForm(formName);
-        if (form == null) {
-            reader.setError("Form with name %%1 does not exist.", formName);
-            return null;
-        }
-        if (!(form instanceof PowerForm)) {
-            reader.setError("Form with name %%1 is not a form of type %%2.", formName, POWER_TYPE_VALUE);
-            return null;
-        }
-        PowerForm powerForm = (PowerForm)form;
-        
-        NameDenotator name = null;
-        if (element.hasAttribute(NAME_ATTR)) {
-            String nameString = element.getAttribute(NAME_ATTR);
-            name = NameDenotator.make(nameString);            
-        }
-        
-        LinkedList<Denotator> factorList = new LinkedList<Denotator>();
-        Element childElement = XMLReader.getChild(element, DENOTATOR);
-
-        while (childElement != null) {
-            Denotator denotator = reader.parseDenotator(childElement);
-            if (denotator == null) {
-                return null;
-            }
-            else {
-                factorList.add(denotator);
-            }
-            childElement = XMLReader.getNextSibling(childElement, DENOTATOR);
-        }
-        
-        try {
-            PowerDenotator denotator = new PowerDenotator(name, powerForm, factorList);
-            return denotator;
-        }
-        catch (Exception e) {
-            reader.setError(e.getMessage());
-            return null;
-        }
-    }
-    
-    
     protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");

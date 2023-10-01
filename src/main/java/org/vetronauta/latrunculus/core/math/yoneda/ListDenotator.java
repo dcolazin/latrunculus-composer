@@ -31,19 +31,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.LIST_TYPE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * List denotator class.
@@ -681,61 +673,8 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         }
         return list;
     }
-
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     * 
-     * @return a list denotator or null if parsing failed
-     */
-    public static ListDenotator fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(LIST_TYPE_VALUE));
-        
-        if (!element.hasAttribute(FORM_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", LIST_TYPE_VALUE, DENOTATOR, FORM_ATTR);
-            return null;                                                
-        }
-        String formName = element.getAttribute(FORM_ATTR);
-        Form form = reader.getForm(formName);
-        if (form == null) {
-            reader.setError("Form with name %%1 does not exist.", formName);
-            return null;
-        }
-        if (!(form instanceof ListForm)) {
-            reader.setError("Form with name %%1 is not a form of type %%2.", formName, LIST_TYPE_VALUE);
-            return null;
-        }
-        ListForm listForm = (ListForm)form;
-        
-        NameDenotator name = null;
-        if (element.hasAttribute(NAME_ATTR)) {
-            String nameString = element.getAttribute(NAME_ATTR);
-            name = NameDenotator.make(nameString);            
-        }
-        
-        LinkedList<Denotator> factorList = new LinkedList<Denotator>();
-        Element childElement = XMLReader.getChild(element, DENOTATOR);
-
-        while (childElement != null) {
-            Denotator denotator = reader.parseDenotator(childElement);
-            if (denotator == null) {
-                return null;
-            }
-            factorList.add(denotator);
-            childElement = XMLReader.getNextSibling(childElement, DENOTATOR);
-        }
-        
-        try {
-            ListDenotator denotator = new ListDenotator(name, listForm, factorList);
-            return denotator;
-        }
-        catch (Exception e) {
-            reader.setError(e.getMessage());
-            return null;
-        }
-    }
     
-    
-        protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
+    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");

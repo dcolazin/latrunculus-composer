@@ -676,7 +676,7 @@ public final class SimpleDenotator extends Denotator {
 
     /**
      * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     * 
+     *
      * @return a simple denotator or null if parsing failed
      */
     public static SimpleDenotator fromXML(XMLReader reader, Element element) {
@@ -685,7 +685,7 @@ public final class SimpleDenotator extends Denotator {
         // read the form
         if (!element.hasAttribute(FORM_ATTR)) {
             reader.setError("Type %%1 of element <%2> is missing attribute %%3.", SIMPLE_TYPE_VALUE, DENOTATOR, FORM_ATTR);
-            return null;                                                
+            return null;
         }
         String formName = element.getAttribute(FORM_ATTR);
         Form form = reader.getForm(formName);
@@ -702,9 +702,9 @@ public final class SimpleDenotator extends Denotator {
         NameDenotator name = null;
         if (element.hasAttribute(NAME_ATTR)) {
             String nameString = element.getAttribute(NAME_ATTR);
-            name = NameDenotator.make(nameString);            
+            name = NameDenotator.make(nameString);
         }
-        
+
         // read the coordinate (MorphismMap)
         MorphismMap map;
         CompoundMorphism cm;
@@ -712,12 +712,12 @@ public final class SimpleDenotator extends Denotator {
         Element childElement = XMLReader.getChild(element, MORPHISM_MAP);
         if (childElement != null) {
             map = reader.parseMorphismMap(childElement);
-            
+
             if (map == null) {
                 return null;
             }
             if (map instanceof ModuleMorphismMap) {
-                ModuleMorphismMap mm = (ModuleMorphismMap)map; 
+                ModuleMorphismMap mm = (ModuleMorphismMap)map;
                 fcm = cm = new CompoundMorphism(mm.getDomain(), mm.getCodomain(), mm);
             }
             else {
@@ -729,12 +729,12 @@ public final class SimpleDenotator extends Denotator {
             childElement = XMLReader.getChild(childElement, MORPHISM_MAP);
             if (childElement != null) {
                 map = reader.parseMorphismMap(childElement);
-                
+
                 if (map == null) {
                     return null;
                 }
                 if (map instanceof ModuleMorphismMap) {
-                    ModuleMorphismMap mm = (ModuleMorphismMap)map; 
+                    ModuleMorphismMap mm = (ModuleMorphismMap)map;
                     fcm = new CompoundMorphism(mm.getDomain(), mm.getCodomain(), mm);
                 }
                 else {
@@ -747,10 +747,10 @@ public final class SimpleDenotator extends Denotator {
         }
         else {
             reader.setError("Missing element <%1>.", MORPHISM_MAP);
-            return null;            
+            return null;
         }
     }
-    
+
     
     @Override
     protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
@@ -820,6 +820,13 @@ public final class SimpleDenotator extends Denotator {
         ModuleMorphismMap map = getModuleMorphismMap();
         return (map.getDomain().equals(getAddress()) &&
                 map.getCodomain().equals(getSimpleForm().getModule()));
+    }
+
+    @Unsafe
+    @Internal
+    public static SimpleDenotator _make_unsafe(NameDenotator name, SimpleForm form,
+                                               YonedaMorphism coordinate, YonedaMorphism frameCoordinate) {
+        return new SimpleDenotator(name, form, coordinate, frameCoordinate);
     }
     
     

@@ -58,7 +58,7 @@ public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReade
         this.moduleMorphismReader = new DefaultModuleMorphismReader();
         this.moduleElementReader = new DefaultModuleElementXmlReader();
         this.morphismMapReader = new DefaultMorphismMapXmlReader();
-        this.denotatorReader = null;
+        this.denotatorReader = new DefaultDenotatorXmlReader();
         this.yonedaMorphismReader = null;
         this.diagramReader = null;
         this.formReader = null;

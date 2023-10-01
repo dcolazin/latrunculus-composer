@@ -43,6 +43,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.DenotatorReference;
+import org.vetronauta.latrunculus.core.math.yoneda.DenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
@@ -54,6 +55,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.server.xml.reader.DefaultDenotatorXmlReader;
+import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -64,6 +67,9 @@ import org.xml.sax.*;
  * @author Gérard Milmeister
  */
 public final class XMLReader implements RubatoDictionary {
+
+    //TODO proper chain of responsibility
+    private final LatrunculusXmlReader<Denotator> denotatorXmlReader = new DefaultDenotatorXmlReader();
 
     /**
      * Creates an XMLReader from the given <code>file</code>.
@@ -581,31 +587,15 @@ public final class XMLReader implements RubatoDictionary {
               
         // case 2: a type is given
         String type = denotatorNode.getAttribute(TYPE_ATTR);
-        Denotator denotator;
-        // dispatch according to type 
-        if (type.equals("simple")) { //$NON-NLS-1$
-            denotator = SimpleDenotator.fromXML(this, denotatorNode);
+        // dispatch according to type
+        Class<? extends Denotator> denotatorClass = DenotatorTypeEnum.classOf(type);
+        Denotator denotator = denotatorXmlReader.fromXML(denotatorNode, denotatorClass, this);
+        if (denotator != null) {
+            return denotator;
         }
-        else if (type.equals("limit")) { //$NON-NLS-1$
-            denotator = LimitDenotator.fromXML(this, denotatorNode);
-        }
-        else if (type.equals("colimit")) { //$NON-NLS-1$
-            denotator = ColimitDenotator.fromXML(this, denotatorNode);
-        }
-        else if (type.equals("list")) { //$NON-NLS-1$
-            denotator = ListDenotator.fromXML(this, denotatorNode);
-        }
-        else if (type.equals("power")) { //$NON-NLS-1$
-            denotator = PowerDenotator.fromXML(this, denotatorNode);
-        }
-        else {
-            // not a known type
-            setError("Attribute %%1 of element <%2> has invalid value %%3",
-                     TYPE_ATTR, DENOTATOR, type);
-            return null;
-        }
-        
-        return denotator;
+        // not a known type
+        setError("Attribute %%1 of element <%2> has invalid value %%3", TYPE_ATTR, DENOTATOR, type);
+        return null;
     }
 
 
