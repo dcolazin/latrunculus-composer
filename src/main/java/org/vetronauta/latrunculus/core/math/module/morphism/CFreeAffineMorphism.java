@@ -25,14 +25,8 @@ import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Arrays;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.COLUMNS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.ROWS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in a free <i>C</i>-module.
@@ -213,91 +207,6 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
     
     public String toString() {
         return "CFreeAffineMorphism["+getDomain().getDimension()+","+getCodomain().getDimension()+"]";
-    }
-
-    
-    private final static String A_ATTR = "A";
-    private final static String B_ATTR = "b";
-
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-
-        if (!element.hasAttribute(ROWS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), ROWS_ATTR);
-            return null;
-        }
-        int rows;
-        try {
-            rows = Integer.parseInt(element.getAttribute(ROWS_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", ROWS_ATTR, getElementTypeName());
-            return null;
-        }
-
-        if (!element.hasAttribute(COLUMNS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), COLUMNS_ATTR);
-            return null;
-        }
-        int columns;
-        try {
-            columns = Integer.parseInt(element.getAttribute(COLUMNS_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", COLUMNS_ATTR, getElementTypeName());
-            return null;
-        }
-        
-        final int numberCount = rows*columns;
-        Element aElement = XMLReader.getChild(element, A_ATTR);
-        if (aElement == null) {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), A_ATTR);
-            return null;            
-        }
-        String[] numbers = aElement.getTextContent().trim().split(",");
-        if (numbers.length != numberCount) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 complex numbers.", A_ATTR, numberCount);
-            return null;
-        }
-
-        CMatrix A0 = new CMatrix(rows, columns);
-        try {
-            int n = 0;
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    A0.set(i, j, Complex.parseComplex(numbers[n]));
-                    n++;
-                }
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 complex numbers.", A_ATTR, numberCount);
-            return null;            
-        }
-
-        Element bElement = XMLReader.getChild(element, "b");
-        if (bElement == null) {
-            reader.setError("Type %%1 is missing child of type <b>.", getElementTypeName());
-            return null;            
-        }
-        numbers = bElement.getTextContent().trim().split(",");
-        if (numbers.length != rows) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 complex numbers.", B_ATTR, rows);
-            return null;
-        }
-        
-        Complex b0[]= new Complex[rows];
-        try {
-            for (int i = 1; i <= rows; i++) {
-                b0[i] = Complex.parseComplex(numbers[i]);
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 complex numbers.", B_ATTR, rows);
-            return null;            
-        }
-        
-        return new CFreeAffineMorphism(A0, b0);
     }
 
     public String getElementTypeName() {

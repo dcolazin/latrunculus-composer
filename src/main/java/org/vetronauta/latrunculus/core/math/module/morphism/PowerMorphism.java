@@ -20,12 +20,6 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.POWER_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism that represents an iterated arbitrary morphism.
@@ -157,40 +151,6 @@ public final class PowerMorphism extends ModuleMorphism {
     
     public String toString() {
         return "PowerMorphism["+f+","+exponent+"]";
-    }
-
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(POWER_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), POWER_ATTR);
-            return null;
-        }
-        int power;
-        try {
-            power = Integer.parseInt(element.getAttribute(POWER_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", POWER_ATTR, getElementTypeName());
-            return null;
-        }
-        Element childElement = XMLReader.getChild(element, MODULE_MORPHISM);
-        if (childElement != null) {
-            ModuleMorphism f0 = reader.parseModuleMorphism(childElement);
-            if (f0 == null) {
-                return null;
-            }
-            try {
-                return make(f0, power);
-            }
-            catch (CompositionException e) {
-                reader.setError(e.getMessage());
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE_MORPHISM);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

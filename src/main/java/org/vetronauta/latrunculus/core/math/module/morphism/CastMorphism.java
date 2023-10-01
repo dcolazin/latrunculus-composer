@@ -37,13 +37,8 @@ import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.HashMap;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism that casts elements from a ring to another ring.
@@ -274,44 +269,6 @@ public abstract class CastMorphism extends ModuleMorphism {
     public String toString() {
         return "CastMorphism["+getDomain()+","+getCodomain()+"]";
     }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Module m1;
-        Module m2;
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            m1 = reader.parseModule(childElement);
-            if (m1 == null) {
-                return null;
-            }
-            childElement = XMLReader.getNextSibling(childElement, MODULE);
-            if (childElement != null) {
-                m2 = reader.parseModule(childElement);
-                if (m2 == null) {
-                    return null;
-                }
-                if (!(m1 instanceof Ring && m2 instanceof Ring)) {
-                    reader.setError("Cannot create an cast morphism from %1 to %2.", m1.toString(), m2.toString());                        
-                    return null;
-                }
-                ModuleMorphism m = make((Ring)m1, (Ring)m2);
-                if (m == null) {
-                    reader.setError("Cannot create a cast morphism from %1 to %2.", m1.toString(), m2.toString());                        
-                }
-                return m;
-            }
-            else {
-                reader.setError("Type %%1 is missing second child <%2>.", getElementTypeName(), MODULE);
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing element <%2>.", getElementTypeName(), MODULE);
-            return null;            
-        }
-    }
-
     
     private static HashMap<Pair<Module,Module>,ModuleMorphism> castingMorphisms = new HashMap<>();
 

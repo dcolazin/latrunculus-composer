@@ -23,13 +23,6 @@ import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in <i>Zn</i>.
@@ -164,56 +157,6 @@ public final class ZnAffineMorphism extends ZnAbstractMorphism {
     
     public String toString() {
         return "ZnAffineMorphism("+getModulus()+")["+a+","+b+"]";
-    }
-
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(A_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), A_ATTR);
-            return null;            
-        }
-        if (!element.hasAttribute(B_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), B_ATTR);
-            return null;            
-        }
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), MODULUS_ATTR);
-            return null;            
-        }
-
-        int a0;
-        int b0;
-        int modulus0;
-
-        try {
-            modulus0 = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (modulus0 < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName());
-            return null;                                    
-        }
-
-        try {
-            a0 = Integer.parseInt(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", A_ATTR, getElementTypeName());
-            return null;            
-        }
-
-        try {
-            b0 = Integer.parseInt(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", B_ATTR, getElementTypeName());
-            return null;            
-        }
-        
-        return new ZnAffineMorphism(a0, b0, modulus0);
     }
 
     public String getElementTypeName() {

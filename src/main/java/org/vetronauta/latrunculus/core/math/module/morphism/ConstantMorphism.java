@@ -22,12 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Constant mappings between modules.
@@ -135,39 +129,6 @@ public final class ConstantMorphism extends ModuleMorphism {
     
     public String toString() {
         return "ConstantMorphism["+getValue()+"]";
-    }
-
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Module domain = null;
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            domain = reader.parseModule(childElement);
-            if (domain == null) {
-                return null;
-            }
-            childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-        }
-        else {
-            childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        }
-        
-        if (childElement != null) {
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (domain == null) {
-                return new ConstantMorphism(moduleElement);
-            }
-            else {
-                return new ConstantMorphism(domain, moduleElement);
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

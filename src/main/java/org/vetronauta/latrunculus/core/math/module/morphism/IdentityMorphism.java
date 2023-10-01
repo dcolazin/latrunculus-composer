@@ -21,11 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Identity mappings on a module.
@@ -106,7 +101,7 @@ public final class IdentityMorphism extends ModuleMorphism {
 
     public int compareTo(ModuleMorphism object) {
         if (object instanceof IdentityMorphism) {
-            return ((IdentityMorphism)object).getDomain().compareTo(getDomain());
+            return object.getDomain().compareTo(getDomain());
         }
         else {
             return super.compareTo(object);
@@ -126,23 +121,6 @@ public final class IdentityMorphism extends ModuleMorphism {
     
     public String toString() {
         return "IdentityMorphism["+getDomain()+"]";
-    }
-
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module module = reader.parseModule(childElement);
-            if (module == null) {
-                return null;
-            }
-            return new IdentityMorphism(module);
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

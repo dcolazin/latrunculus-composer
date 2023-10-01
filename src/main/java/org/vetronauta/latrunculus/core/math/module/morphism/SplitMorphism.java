@@ -35,15 +35,9 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * A split morphism describes a morphism from a free module into itself,
@@ -231,47 +225,6 @@ public class SplitMorphism extends ModuleMorphism {
         }
         buf.append("]");
         return buf.toString();
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module domain = reader.parseModule(childElement);
-            if (domain == null) {
-                return null;
-            }
-            if (!(domain instanceof FreeModule)) {
-                reader.setError("Module in type %%1 must be a free module.", getElementTypeName());
-                return null;
-            }
-            LinkedList<ModuleMorphism> morphismList = new LinkedList<ModuleMorphism>();
-            childElement = XMLReader.getNextSibling(childElement, MODULE_MORPHISM);
-            if (childElement == null) {
-                reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_MORPHISM);
-                return null;
-            }
-            while (childElement != null) {
-                ModuleMorphism m = reader.parseModuleMorphism(childElement);
-                if (m == null) {
-                    return null;
-                }
-                morphismList.add(m);
-                childElement = XMLReader.getNextSibling(childElement, MODULE_MORPHISM);
-            }
-            ModuleMorphism res = SplitMorphism.make((FreeModule)domain, morphismList);
-            if (res == null) {
-                reader.setError("Cannot create a split morphism.");
-                return null;
-            }
-            else {
-                return res;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

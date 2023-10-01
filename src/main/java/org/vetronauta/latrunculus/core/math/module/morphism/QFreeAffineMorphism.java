@@ -21,16 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Arrays;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.COLUMNS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.ROWS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in a free <i>Q</i>-module.
@@ -184,87 +176,6 @@ public final class QFreeAffineMorphism extends QFreeAbstractMorphism {
     
     public String toString() {
         return "QFreeAffineMorphism["+getDomain().getDimension()+","+getCodomain().getDimension()+"]";
-    }
-
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-
-        if (!element.hasAttribute(ROWS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), ROWS_ATTR);
-            return null;
-        }
-        int rows;
-        try {
-            rows = Integer.parseInt(element.getAttribute(ROWS_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", ROWS_ATTR, getElementTypeName());
-            return null;
-        }
-
-        if (!element.hasAttribute(COLUMNS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), COLUMNS_ATTR);
-            return null;
-        }
-        int columns;
-        try {
-            columns = Integer.parseInt(element.getAttribute(COLUMNS_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", COLUMNS_ATTR, getElementTypeName());
-            return null;
-        }
-        
-        final int numberCount = rows*columns;
-        Element aElement = XMLReader.getChild(element, A_ATTR);
-        if (aElement == null) {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), A_ATTR);
-            return null;            
-        }
-        String[] numbers = aElement.getTextContent().trim().split(",");
-        if (numbers.length != numberCount) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 rational numbers.", A_ATTR, numberCount);
-            return null;
-        }
-
-        QMatrix A0 = new QMatrix(rows, columns);
-        try {
-            int n = 0;
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    A0.set(i, j, Rational.parseRational(numbers[n]));
-                    n++;
-                }
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 rational numbers.", A_ATTR, numberCount);
-            return null;            
-        }
-
-        Element bElement = XMLReader.getChild(element, B_ATTR);
-        if (bElement == null) {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), B_ATTR);
-            return null;            
-        }
-        numbers = bElement.getTextContent().trim().split(",");
-        if (numbers.length != rows) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 rational numbers.", B_ATTR, rows);
-            return null;
-        }
-        
-        Rational b0[]= new Rational[rows];
-        try {
-            for (int i = 0; i < rows; i++) {
-                b0[i] = Rational.parseRational(numbers[i]);
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Element <%1> must have a comma-separated list with %2 rational numbers.", B_ATTR, rows);
-            return null;            
-        }
-        
-        return new QFreeAffineMorphism(A0, b0);
     }
 
     public String getElementTypeName() {

@@ -22,14 +22,8 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism that represents the folding of a set of ModuleElements.
@@ -113,39 +107,6 @@ public final class FoldingMorphism extends ModuleMorphism {
         }
         buf.append("]");
         return buf.toString();
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ModuleElement> elements0 = new LinkedList<ModuleElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            elements0.add(moduleElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                elements0.add(moduleElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ModuleElement[] newElements = new ModuleElement[elements0.size()];
-            int i = 0;
-            for (ModuleElement e : elements0) { 
-                newElements[i++] = e;
-            }
-            ModuleMorphism result = new FoldingMorphism(newElements);
-            return result;
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

@@ -19,18 +19,11 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.ORDERING_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * These are generalized projections, i.e., factors of a product ring
@@ -200,47 +193,6 @@ public class ReorderMorphism extends ModuleMorphism {
         }
         res.append("}]");
         return res.toString();
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(ORDERING_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), ORDERING_ATTR);
-            return null;
-        }
-        String[] values = element.getAttribute(ORDERING_ATTR).split(",");
-        int[] order = new int[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                order[i] = Integer.parseInt(values[i]);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%1 in type %%2 must be a comma-separated list of integers.", ORDERING_ATTR, getElementTypeName());
-                return null;
-            }
-        }
-        
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module m = reader.parseModule(childElement);
-            if (m == null) {
-                return null;
-            }
-            if (m instanceof ProductRing) {
-                return make((ProductRing)m, order);
-            }
-            else if (m instanceof Ring) {
-                return make((Ring)m, order.length);
-            }
-            else {
-                reader.setError("The module in type %%2 must be a ring.", getElementTypeName());
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

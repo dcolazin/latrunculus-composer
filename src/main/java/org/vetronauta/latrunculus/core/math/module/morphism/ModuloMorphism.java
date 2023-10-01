@@ -26,12 +26,6 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The function that takes an element <i>i</i> in <i>Z^d</i> 
@@ -166,22 +160,6 @@ public class ModuloMorphism extends ModuleMorphism {
     
     public String toString() {
         return "ModuloMorphism["+getDimension()+","+getModulus()+"]";
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        int dimension0 = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0);
-        if (dimension0 < 0) {
-            reader.setError("Dimension in type %%1 must be > 0.", getElementTypeName());
-            return null;
-        }
-        int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2);
-        if (modulus0 < 2) {
-            reader.setError("Modulus in type %%1 must be > 1.", getElementTypeName());
-            return null;
-        }
-        
-        return make(dimension0, modulus0);
     }
 
     public String getElementTypeName() {

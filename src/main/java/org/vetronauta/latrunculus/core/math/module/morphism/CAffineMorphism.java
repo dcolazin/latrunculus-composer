@@ -23,12 +23,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Affine morphism in <i>C</i>.
@@ -167,37 +161,6 @@ public final class CAffineMorphism extends CAbstractMorphism {
     
     public String toString() {
         return "CAffineMorphism["+a+","+b+"]";
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute("a")) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), A_ATTR);
-            return null;            
-        }
-        if (!element.hasAttribute("b")) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), B_ATTR);
-            return null;            
-        }
-
-        Complex a0;
-        Complex b0;
-        try {
-            a0 = Complex.parseComplex(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a complex number.", A_ATTR, getElementTypeName());
-            return null;            
-        }
-        try {
-            b0 = Complex.parseComplex(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a complex number.", B_ATTR, getElementTypeName());
-            return null;            
-        }
-        
-        return new CAffineMorphism(a0, b0);
     }
 
     public String getElementTypeName() {

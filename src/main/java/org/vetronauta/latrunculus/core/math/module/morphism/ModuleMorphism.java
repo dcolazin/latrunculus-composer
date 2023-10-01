@@ -23,21 +23,15 @@ import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.Dispatcher;
-import org.vetronauta.latrunculus.server.xml.XMLInput;
 
 import java.io.Serializable;
 
 /**
  * The abstract base class for morphisms in modules.
- * Any new type (subclass) of ModuleMorphism must be registered
- * with a dispatcher for reading from XML
- * (in the init method of {@link Dispatcher}).
- * 
  * @author Gérard Milmeister
  */
 public abstract class ModuleMorphism
-    implements Comparable<ModuleMorphism>, Cloneable, Serializable, XMLInput<ModuleMorphism>, MathDefinition {
+    implements Comparable<ModuleMorphism>, Cloneable, Serializable, MathDefinition {
 
     /**
      * Creates a new morphism with <code>domain</code>
@@ -232,7 +226,7 @@ public abstract class ModuleMorphism
      * Returns true iff the composition <code>f</code>*<code>g</code>
      * is possible.
      */
-    public static final boolean composable(ModuleMorphism f, ModuleMorphism g) {
+    public static boolean composable(ModuleMorphism f, ModuleMorphism g) {
         return f.getDomain().equals(g.getCodomain());
     }
     

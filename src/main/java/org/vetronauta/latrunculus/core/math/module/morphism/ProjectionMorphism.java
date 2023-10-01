@@ -19,16 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * A projection from a ProductRing to one its factors.
@@ -117,37 +111,6 @@ public class ProjectionMorphism extends ModuleMorphism {
     
     public String toString() {
         return "ProductProjectMorphism["+getDomain()+","+index+"]";
-    }
-
-    
-    private final static String INDEX_ATTR = "index";
-
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(INDEX_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), INDEX_ATTR);
-            return null;
-        }
-        int index0 = XMLReader.getIntAttribute(element, INDEX_ATTR, 0);
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module m = reader.parseModule(childElement);
-            if (m == null) {
-                return null;
-            }
-            if (m instanceof ProductRing) {
-                ProjectionMorphism pm = make((ProductRing)m, index0);
-                return pm;
-            }
-            else {
-                reader.setError("The module in type %%1 must be a product ring.", getElementTypeName());
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

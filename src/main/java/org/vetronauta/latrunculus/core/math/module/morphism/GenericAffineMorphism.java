@@ -24,15 +24,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 
 /**
@@ -320,63 +314,6 @@ public final class GenericAffineMorphism extends ModuleMorphism {
 
     public String toString() {
         return "GenericAffineMorphism["+getDomain()+","+getCodomain()+"]";
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        Element m = XMLReader.getChild(element, MODULE);
-        if (m == null) {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE);
-            return null;            
-        }
-        Module domain = reader.parseModule(m);
-        if (domain == null) {
-            return null;
-        }
-        m = XMLReader.getNextSibling(m, MODULE);
-        if (m == null) {
-            reader.setError("Type %%1 is missing second child of type <%2>.", getElementTypeName(), MODULE);
-            return null;            
-        }
-        Module codomain = reader.parseModule(m);
-        if (codomain == null) {
-            return null;
-        }
-        if (!codomain.getRing().equals(domain.getRing())) {
-            reader.setError("Domain and codomain must be modules over the same ring.");
-            return null;
-        }
-        Ring ring0 = domain.getRing();
-        int dim0 = domain.getDimension();
-        int codim0 = codomain.getDimension();
-        int n = 0;
-        int count = dim0*codim0+codim0;
-        LinkedList<RingElement> ringElements = new LinkedList<RingElement>();
-        m = XMLReader.getNextSibling(m, MODULE_ELEMENT);
-        while (m != null) {
-            ModuleElement e = reader.parseModuleElement(m);
-            if (e == null || !ring0.hasElement(e)) {
-                reader.setError("Wrong element type.");
-                return null;
-            }
-            ringElements.add((RingElement)e);
-            m = XMLReader.getNextSibling(m, MODULE_ELEMENT);
-            n++;
-        }
-        if (n != count) {
-            reader.setError("Wrong number of elements.");
-            return null;
-        }
-        GenericAffineMorphism res = new GenericAffineMorphism(ring0, dim0, codim0);
-        Iterator<RingElement> iter = ringElements.iterator();
-        for (int i = 0; i < codim0; i++) {
-            for (int j = 0; j < dim0; j++) {
-                res.setMatrix(i, j, iter.next());
-            }
-        }
-        for (int i = 0; i < codim0; i++) {
-            res.setVector(i, iter.next());
-        }
-        return res;
     }
 
     public String getElementTypeName() {

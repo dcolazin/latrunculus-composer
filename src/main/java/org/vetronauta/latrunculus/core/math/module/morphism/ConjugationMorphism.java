@@ -22,11 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.module.complex.CFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.
@@ -118,16 +113,6 @@ public final class ConjugationMorphism extends ModuleMorphism {
     
     public String toString() {
         return "ConjugationMorphism["+getDomain().getDimension()+"]";
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(DIMENSION_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), DIMENSION_ATTR);
-            return null;
-        }
-        int dim = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0);
-        return new ConjugationMorphism(dim);
     }
 
     public String getElementTypeName() {

@@ -22,11 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism that represents the product of two morphisms with
@@ -162,35 +157,6 @@ public final class ProductMorphism extends ModuleMorphism {
     
     public String toString() {
         return "ProductMorphism["+f+","+g+"]";
-    }
-    
-    public ModuleMorphism fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_MORPHISM);
-        if (childElement != null) {
-            ModuleMorphism f0 = reader.parseModuleMorphism(childElement);
-            Element el = XMLReader.getNextSibling(childElement, MODULE_MORPHISM);
-            if (el == null) {
-                reader.setError("Type %%1 is missing second child of type <%2>.", getElementTypeName(), MODULE_MORPHISM);
-                return null;                
-            }
-            ModuleMorphism g0 = reader.parseModuleMorphism(el);
-            if (f0 == null || g0 == null) {
-                return null;
-            }
-            try {
-                ModuleMorphism morphism = ProductMorphism.make(f0, g0);
-                return morphism;
-            }
-            catch (CompositionException e) {
-                reader.setError("Cannot take the product of the two morphisms %1 and %2.", f0, g0);
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_MORPHISM);
-            return null;
-        }
     }
 
     public String getElementTypeName() {
