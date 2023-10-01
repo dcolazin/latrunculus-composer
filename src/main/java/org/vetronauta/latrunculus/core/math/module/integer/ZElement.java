@@ -26,11 +26,6 @@ import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 
 /**
@@ -393,24 +388,6 @@ public final class ZElement extends RingElement implements ZFreeElement {
     
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (element.hasAttribute(VALUE_ATTR)) {
-            try {
-                int val = Integer.parseInt(element.getAttribute(VALUE_ATTR));
-                return new ZElement(val);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%1 of type %%2 must be an integer.", VALUE_ATTR, getElementTypeName());
-                return null;                    
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), VALUE_ATTR);
-            return null;                
-        }
     }
 
     public String getElementTypeName() {

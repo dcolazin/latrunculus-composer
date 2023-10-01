@@ -22,14 +22,9 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements with components from arbitrary modules.
@@ -430,38 +425,6 @@ public final class DirectSumElement implements ModuleElement {
             }
         }
         return true;
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ModuleElement> elements = new LinkedList<>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            elements.add(moduleElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                elements.add(moduleElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ModuleElement[] coefficients = new ModuleElement[elements.size()];
-            int i = 0;
-            for (ModuleElement e : elements) {
-                coefficients[i++] = e;
-            }
-            return new DirectSumElement(coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

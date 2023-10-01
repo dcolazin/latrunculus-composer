@@ -23,15 +23,8 @@ import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
-import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a product ring.
@@ -580,49 +573,6 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            // ProductElement has children (i.e., factors)
-            LinkedList<RingElement> elements = new LinkedList<RingElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof RingElement)) {
-                reader.setError("Type %%1 must have ring element children.", getElementTypeName());
-                return null;
-            }
-            elements.add((RingElement)moduleElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof RingElement)) {
-                    reader.setError("Type %%1 must have ring element children.", getElementTypeName());
-                    return null;
-                }
-                elements.add((RingElement)moduleElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            RingElement[] factors0 = new RingElement[elements.size()];
-            int i = 0;
-            for (RingElement e : elements) {
-                factors0[i++] = e;
-            }
-            ProductElement result = new ProductElement(factors0);
-            return result;
-        }
-        else {
-            reader.setError("There must be at least 2 <%1> elements in type %%2.", MODULE, getElementTypeName());
-            return null;
-        }
-        
     }
 
     public String getElementTypeName() {

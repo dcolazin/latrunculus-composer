@@ -28,14 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a ring of polynomials.
@@ -956,60 +948,6 @@ public final class PolynomialElement extends RingElement implements PolynomialFr
     
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-
-
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(INDETERMINATE_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), INDETERMINATE_ATTR);
-            return null;                
-        }
-        String indeterminate = element.getAttribute(INDETERMINATE_ATTR);
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<RingElement> elements = new LinkedList<RingElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof RingElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "RingElement");
-                return null;                    
-            }
-            RingElement ringElement = (RingElement)moduleElement;
-            Ring ring0 = ringElement.getRing();
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof RingElement)) {
-                    reader.setError("Type %%1 must have children of a subtype of %%2.", getElementTypeName(), "RingElement");
-                    return null;                    
-                }
-                ringElement = (RingElement)moduleElement;
-                if (!ring0.hasElement(ringElement)) {
-                    reader.setError("Type %%1 must have children all of the same type.", getElementTypeName());
-                    return null;                                            
-                }
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            RingElement[] coeffs = new RingElement[elements.size()];
-            int i = 0;
-            for (RingElement e : elements) {
-                coeffs[i++] = e;
-            }
-            PolynomialElement result = new PolynomialElement(indeterminate, coeffs);
-            return result;
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

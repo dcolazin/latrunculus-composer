@@ -27,11 +27,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
 
 /**
  * Elements in a free module of rationals.
@@ -444,28 +439,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
             }
         }
         return Folding.fold(res);
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(VALUES_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), VALUES_ATTR);
-            return null;
-        }
-        
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        Rational[] rationalValues = new Rational[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                rationalValues[i] = Rational.parseRational(values[i]);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Values in type %%1 must be a comma-separated list of rationals.", getElementTypeName());
-                return null;
-            }
-        }
-        
-        return QProperFreeElement.make(rationalValues);
     }
 
     public String getElementTypeName() {

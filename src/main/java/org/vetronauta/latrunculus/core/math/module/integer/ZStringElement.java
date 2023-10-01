@@ -29,17 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.WORD;
 
 /**
  * Elements of the ring of strings with integer factors.
@@ -404,66 +396,6 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
 
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, WORD);
-        if (childElement != null) {
-            LinkedList<Integer> factors = new LinkedList<>();
-            LinkedList<String> words = new LinkedList<>();
-            String factor;
-            int i;
-
-            if (!childElement.hasAttribute(FACTOR_ATTR)) {
-                reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                return null;
-            }                        
-            factor = childElement.getAttribute(FACTOR_ATTR);
-            try {
-                i = Integer.parseInt(factor);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%2 must be an integer.", FACTOR_ATTR);
-                return null;                
-            }
-            factors.add(i);
-            words.add(childElement.getTextContent());
-            Element next = XMLReader.getNextSibling(childElement, WORD);
-            while (next != null) {
-                if (!next.hasAttribute(FACTOR_ATTR)) {
-                    reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                    return null;
-                }            
-                factor = childElement.getAttribute(FACTOR_ATTR);
-                try {
-                    i = Integer.parseInt(factor);
-                }
-                catch (NumberFormatException e) {
-                    reader.setError("Attribute %%1 must be an integer.", FACTOR_ATTR);
-                    return null;                
-                }
-                factors.add(i);
-                words.add(next.getTextContent());
-                next = XMLReader.getNextSibling(next, WORD);
-            }
-            int[] factorArray = new int[factors.size()];
-            String[] wordArray = new String[factors.size()];
-            int j = 0;
-            Iterator<Integer> fiter = factors.iterator();
-            Iterator<String> witer = words.iterator();
-            while (fiter.hasNext()) {
-                factorArray[j] = fiter.next();
-                wordArray[j] = witer.next();
-                j++;
-            }
-            ZString zstring = new ZString(wordArray, factorArray);
-            return new ZStringElement(zstring);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), WORD);
-            return null;            
-        }        
     }
 
     public String getElementTypeName() {

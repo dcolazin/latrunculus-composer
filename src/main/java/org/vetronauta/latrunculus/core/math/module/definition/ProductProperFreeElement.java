@@ -22,15 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in the free module over a product ring.
@@ -464,65 +455,6 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
             res[i] = elements[i].fold(new ModuleElement[] { elements[i] });
         }
         return Folding.fold(res);
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement;
-        
-        // get product ring
-        childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("Type %%1 must have a first child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
-        Module module0 = reader.parseModule(childElement);
-        if (module0 == null || !(module0 instanceof ProductRing)) {
-            reader.setError("Module in %%1 must be a product ring.", getElementTypeName());
-            return null;
-        }
-        ProductRing productRing = (ProductRing)module0;
-        
-        // get components
-        childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ProductElement> elements = new LinkedList<ProductElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ProductElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "ProductElement");
-                return null;                    
-            }
-            ProductElement productElement = (ProductElement)moduleElement;
-            elements.add(productElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ProductElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "ProductElement");
-                    return null;                    
-                }
-                productElement = (ProductElement)moduleElement;
-                elements.add(productElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ProductElement[] components = new ProductElement[elements.size()];
-            Iterator<ProductElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                components[i++] = iter.next();
-            }
-            return ProductProperFreeElement.make(productRing, components);            
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;            
-        }
     }
 
     public String getElementTypeName() {

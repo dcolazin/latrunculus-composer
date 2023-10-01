@@ -30,14 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in the free module of QString.
@@ -421,49 +413,6 @@ public final class QStringProperFreeElement extends ProperFreeElement implements
 
     public double[] fold(ModuleElement[] elements) {
         throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<QStringElement> elements = new LinkedList<QStringElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof QStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "QStringElement");
-                return null;                    
-            }
-            QStringElement ringElement = (QStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof QStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "QStringElement");
-                    return null;                    
-                }
-                ringElement = (QStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            QString[] coefficients = new QString[elements.size()];
-            Iterator<QStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
-            }
-            return QStringProperFreeElement.make(coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

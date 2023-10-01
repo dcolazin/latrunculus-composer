@@ -27,14 +27,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 
 /**
@@ -419,49 +411,6 @@ public final class ZStringProperFreeElement extends ProperFreeElement implements
 
     public double[] fold(ModuleElement[] elements) {
         throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ZStringElement> elements = new LinkedList<ZStringElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ZStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "ZStringElement");
-                return null;                    
-            }
-            ZStringElement ringElement = (ZStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ZStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "ZStringElement");
-                    return null;                    
-                }
-                ringElement = (ZStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ZString[] coefficients = new ZString[elements.size()];
-            Iterator<ZStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
-            }
-            return ZStringProperFreeElement.make(coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     public String getElementTypeName() {

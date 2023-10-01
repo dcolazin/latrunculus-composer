@@ -27,12 +27,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
 
 /**
  * Elements in a free module over integers mod <i>n</i>.
@@ -457,44 +451,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             }
         }
         return Folding.fold(res);
-    }
-    
-    public ModuleElement fromXML(XMLReader xmlReader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(VALUES_ATTR)) {
-            xmlReader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), VALUES_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            xmlReader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), MODULUS_ATTR);            
-            return null;
-        }
-        
-        int mod;
-        try {
-            mod = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (mod < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            xmlReader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName());
-            return null;                                    
-        }
-
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        int[] intValues = new int[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                intValues[i] = Integer.parseInt(values[i]);
-            }
-            catch (NumberFormatException e) {
-                xmlReader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName());
-                return null;
-            }
-        }
-        
-        return ZnProperFreeElement.make(intValues, mod);
     }
 
     public String getElementTypeName() {

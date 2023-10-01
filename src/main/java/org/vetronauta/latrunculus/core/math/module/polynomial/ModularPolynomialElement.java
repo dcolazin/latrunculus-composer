@@ -27,10 +27,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 /**
  * Elements in a ring of polynomials.
@@ -499,34 +495,6 @@ public final class ModularPolynomialElement extends RingElement implements Modul
     
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-    
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        element = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (element == null) {
-            reader.setError("Type %%1 is missing child of type %%1.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
-        Module m = reader.parseModule(element);
-        if (m != null && m instanceof ModularPolynomialRing) {
-            element = XMLReader.getNextSibling(element, MODULE_ELEMENT);
-            ModuleElement e = reader.parseModuleElement(element);
-            if (e != null && e instanceof PolynomialElement) {
-                try {
-                    return new ModularPolynomialElement((ModularPolynomialRing)m, (PolynomialElement)e);                    
-                }
-                catch (IllegalArgumentException ex) {
-                    reader.setError(ex.getMessage());
-                }
-            }
-            else {
-                reader.setError("Type %%1 is missing child of type %%1.", getElementTypeName(), "ModularPolynomialRing");
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type %%1.", getElementTypeName(), "PolynomialElement");
-        }
-        return null;
     }
 
     public String getElementTypeName() {

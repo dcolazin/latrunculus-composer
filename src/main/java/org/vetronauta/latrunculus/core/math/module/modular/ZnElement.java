@@ -26,12 +26,6 @@ import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * Elements in the ring of integers mod <i>n</i>.
@@ -388,41 +382,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     
     public ModuleElement cast(Module module) {
         return module.cast(this);
-    }
-
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(VALUE_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), VALUE_ATTR);
-            return null;                
-        }
-        
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), MODULUS_ATTR);
-            return null;                
-        }
-
-        int mod;
-        
-        try {
-            mod = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (mod < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", MODULUS_ATTR, getElementTypeName());
-            return null;                                    
-        }
-
-        try {
-            int val = Integer.parseInt(element.getAttribute(VALUE_ATTR));
-            return new ZnElement(val, mod);
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", VALUE_ATTR, getElementTypeName());
-            return null;                    
-        }
     }
 
     public String getElementTypeName() {

@@ -21,12 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Elements in a restricted module. Instances are created using
@@ -216,45 +210,6 @@ public class RestrictedElement implements ModuleElement {
     
     public String toString() {
         return "RestrictedElement["+getModule()+","+moduleElement+"]";
-    }
-
-    public ModuleElement fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module module0 = reader.parseModule(childElement);
-            if (module0 == null) {
-                return null;
-            }
-            if (!(module0 instanceof RestrictedModule)) {
-                reader.setError("Module in type %%1 must be of type %%2.", getElementTypeName(), "RestrictedModule");
-                return null;
-            }
-            RestrictedModule rmodule = (RestrictedModule)module0;
-            childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            if (childElement != null) {
-                ModuleElement el = reader.parseModuleElement(childElement);
-                if (el == null) {
-                    return null;
-                }
-                RestrictedElement relement = null;
-                try {
-                    relement = make(rmodule, el);
-                }
-                catch (DomainException e) {
-                    reader.setError(e);
-                }
-                return relement;
-            }
-            else {
-                reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-                return null;                
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
     }
 
     public String getElementTypeName() {
