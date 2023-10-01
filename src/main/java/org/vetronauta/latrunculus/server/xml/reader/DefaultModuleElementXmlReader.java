@@ -168,7 +168,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return null;
     }
 
-    public ModuleElement readCElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readCElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
@@ -186,7 +186,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readZElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
@@ -204,7 +204,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readZnElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZnElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUE_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUE_ATTR);
@@ -239,7 +239,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readQElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readQElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
@@ -257,7 +257,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readRElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readRElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
@@ -275,7 +275,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readCProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readCProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
@@ -297,7 +297,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return CProperFreeElement.make(complexValues);
     }
 
-    public ModuleElement readZProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             Element child = XMLReader.getChild(element, BASE64);
@@ -326,7 +326,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return ZProperFreeElement.make(intValues);
     }
 
-    public ModuleElement readZnProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZnProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
@@ -364,7 +364,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return ZnProperFreeElement.make(intValues, mod);
     }
 
-    public ModuleElement readZStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZStringElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {
@@ -424,7 +424,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readZnStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZnStringElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(MODULUS_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), MODULUS_ATTR);
@@ -501,7 +501,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readQStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readQStringElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {
@@ -561,7 +561,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readRStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readRStringElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {
@@ -621,7 +621,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readZStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -664,7 +664,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readZnStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readZnStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
@@ -708,7 +708,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readQStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readQStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -751,7 +751,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readRStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readRStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -794,7 +794,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readQProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readQProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
@@ -816,7 +816,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return QProperFreeElement.make(rationalValues);
     }
 
-    public ModuleElement readRProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readRProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
@@ -838,7 +838,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return RProperFreeElement.make(doubleValues);
     }
 
-    public ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -870,7 +870,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readProductElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readProductElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -913,7 +913,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
 
     }
 
-    public ModuleElement readProductProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readProductProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement;
 
@@ -972,7 +972,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readPolynomialElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readPolynomialElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(INDETERMINATE_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), INDETERMINATE_ATTR);
@@ -1025,7 +1025,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
@@ -1068,7 +1068,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readModularPolynomialElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readModularPolynomialElement(Element element, Class<?> clazz, XMLReader reader) {
         element = XMLReader.getChild(element, MODULE_ELEMENT);
         if (element == null) {
             reader.setError("Type %%1 is missing child of type %%1.", getElementTypeName(clazz), MODULE_ELEMENT);
@@ -1096,7 +1096,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return null;
     }
 
-    public ModuleElement readModularPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readModularPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
             LinkedList<ModularPolynomialElement> elements = new LinkedList<ModularPolynomialElement>();
@@ -1138,7 +1138,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    public ModuleElement readRestrictedElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readRestrictedElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE);
         if (childElement != null) {

@@ -24,8 +24,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,8 +32,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 
 /**
@@ -253,20 +249,6 @@ public final class AutoListMorphismMap implements MorphismMap {
         }
         return true;
     }
-
-    public MorphismMap fromXML(XMLReader reader, Element element) {
-        ArrayList<Denotator> newList = new ArrayList<>();
-        Element child = XMLReader.getChild(element, DENOTATOR);
-        while (child != null) {
-            Denotator denotator = reader.parseDenotator(child);
-            if (denotator != null) {
-                newList.add(denotator);
-            }
-            child = XMLReader.getNextSibling(element, DENOTATOR);
-        }
-        return new AutoListMorphismMap(newList);
-    }
-    
     
     public String getElementTypeName() {
         return "ListMorphismMap";

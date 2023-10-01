@@ -26,14 +26,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDEX_ATTR;
 
 /**
  * Morphism map containing a morphism and an index (for type colimit).
@@ -158,21 +153,6 @@ public final class IndexMorphismMap implements MorphismMap {
             return null;
         }
     }
-
-    public MorphismMap fromXML(XMLReader reader, Element element) {
-        int i = XMLReader.getIntAttribute(element, INDEX_ATTR, 0);
-        Element child = XMLReader.getChild(element, DENOTATOR);
-        if (child == null) {
-            reader.setError("Expected element of type <%1>", DENOTATOR);
-            return null;
-        }
-        Denotator denotator = reader.parseDenotator(child);
-        if (denotator == null) {
-            return null;
-        }
-        return new IndexMorphismMap(i, denotator);
-    }
-    
     
     public String getElementTypeName() {
         return "IndexMorphismMap";

@@ -32,7 +32,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLInput;
 
 /**
  * The implementation or "formula" of a morphism.
@@ -42,7 +41,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInput;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<MorphismMap>, Serializable, XMLInput<MorphismMap>, MathDefinition {
+public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<MorphismMap>, Serializable, MathDefinition {
 
     /**
      * Evaluates the map at an element.

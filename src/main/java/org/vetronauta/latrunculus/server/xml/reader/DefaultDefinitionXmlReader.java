@@ -47,7 +47,7 @@ public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReade
     private final LatrunculusXmlReader<Module> moduleReader;
     private final LatrunculusXmlReader<ModuleMorphism> moduleMorphismReader;
     private final LatrunculusXmlReader<ModuleElement> moduleElementReader;
-    private final LatrunculusXmlReader<MorphismMap> moduleMapReader;
+    private final LatrunculusXmlReader<MorphismMap> morphismMapReader;
     private final LatrunculusXmlReader<Denotator> denotatorReader;
     private final LatrunculusXmlReader<YonedaMorphism> yonedaMorphismReader;
     private final LatrunculusXmlReader<Diagram> diagramReader;
@@ -57,7 +57,7 @@ public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReade
         this.moduleReader = new DefaultModuleXmlReader();
         this.moduleMorphismReader = new DefaultModuleMorphismReader();
         this.moduleElementReader = new DefaultModuleElementXmlReader();
-        this.moduleMapReader = null;
+        this.morphismMapReader = new DefaultMorphismMapXmlReader();
         this.denotatorReader = null;
         this.yonedaMorphismReader = null;
         this.diagramReader = null;
@@ -78,7 +78,7 @@ public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReade
             return (R) moduleElementReader.fromXML(element, (Class<? extends ModuleElement>) clazz, reader);
         }
         if (MorphismMap.class.isAssignableFrom(clazz)) {
-            return (R) moduleMapReader.fromXML(element, (Class<? extends MorphismMap>) clazz, reader);
+            return (R) morphismMapReader.fromXML(element, (Class<? extends MorphismMap>) clazz, reader);
         }
         if (Denotator.class.isAssignableFrom(clazz)) {
             return (R) denotatorReader.fromXML(element, (Class<? extends Denotator>) clazz, reader);

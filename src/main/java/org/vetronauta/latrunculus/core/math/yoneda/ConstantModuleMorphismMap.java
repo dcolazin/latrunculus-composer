@@ -26,15 +26,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.IdentityHashMap;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Morphism map containing a constant module morphism.
@@ -237,26 +230,6 @@ public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
 
     public String toString() {
         return "ConstantModuleMorphismMap["+moduleElement+"]";
-    }
-    
-    public MorphismMap fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("<%1> of type %%2 is missing child element <%3>.", MORPHISM_MAP, getElementTypeName(), MODULE);
-            return null;
-        }
-        Module dom = reader.parseModule(childElement);
-        childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-        if (childElement == null) {
-            reader.setError("<%1> of type %%2 is missing child element <%3>.", MORPHISM_MAP, getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
-        ModuleElement mElement = reader.parseModuleElement(childElement);
-        if (mElement == null) { return null; }
-        
-        return new ConstantModuleMorphismMap(dom, mElement);
     }
 
     public String getElementTypeName() {
