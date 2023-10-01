@@ -21,18 +21,13 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM;
-
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
 
 /**
  * Morphism of an "object" that is not representable.
@@ -197,12 +192,6 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
         return "ProperIdentityMorphism["+diagram+","+Form.typeToString(type)+"]";
     }
 
-    public YonedaMorphism fromXML(XMLReader reader, Element element) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    
     public String getElementTypeName() {
         return "ProperIdentityMorphism";
     }

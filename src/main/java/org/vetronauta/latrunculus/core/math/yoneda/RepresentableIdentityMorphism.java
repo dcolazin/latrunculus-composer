@@ -25,14 +25,9 @@ import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 /**
  * Identity morphism representing a module "object".
@@ -189,35 +184,6 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     public String toString() {
         return "RepresentableIdentityMorphism["+module+"]";
     }
-    
-    public YonedaMorphism fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, MODULE);
-        if (child == null) {
-            reader.setError("Expected element of type <%1>", MODULE);
-            return null;
-        }
-        Module m = reader.parseModule(child);
-        if (m == null) {
-            return null;
-        }
-        ModuleElement l = null;
-        ModuleElement h = null;
-        child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
-        if (child != null) {
-            l = reader.parseModuleElement(child);
-            if (l != null) {
-                child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
-                h = reader.parseModuleElement(child);
-            }
-        }
-        if (l == null || h == null) {
-            return new RepresentableIdentityMorphism(m);
-        }
-        else {
-            return new RepresentableIdentityMorphism(m, l, h);
-        }
-    }
-    
     
     public String getElementTypeName() {
         return "RepresentableIdentityMorphism"; //$NON-NLS-1$

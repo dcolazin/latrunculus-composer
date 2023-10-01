@@ -26,8 +26,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -228,17 +226,10 @@ public final class CompoundMorphism extends YonedaMorphism {
         return "CompoundMorphism["+domain+","+codomain+","+map+"]";
     }
 
-    public YonedaMorphism fromXML(XMLReader reader, Element element) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    
     public String getElementTypeName() {
         return "CompoundMorphism";
     }
-    
-    
+
     public int hashCode() {
         int hash = 7;
         hash = 37*hash + domain.hashCode();
