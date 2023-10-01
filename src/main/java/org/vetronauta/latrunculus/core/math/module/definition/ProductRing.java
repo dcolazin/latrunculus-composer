@@ -20,18 +20,12 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Products over rings.
@@ -342,32 +336,6 @@ public final class ProductRing
         m.add(s.substring(lastpos,pos));
         return m;
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("Missing element <%1> in type %%2.", MODULE, getElementTypeName());
-        }
-        LinkedList<Ring> factors0 = new LinkedList<Ring>();
-        while (childElement != null) {
-            Module module = reader.parseModule(childElement);
-            if (module == null || !(module instanceof Ring)) {
-                reader.setError("Module in %%1 must be a ring.", getElementTypeName());
-                return null;
-            }
-            factors0.add((Ring)module);
-            childElement = XMLReader.getNextSibling(childElement, MODULE);
-        }
-        if (factors0.size() < 2) {
-            reader.setError("There must be at least 2 elements <%1> in type %%2.", MODULE, getElementTypeName());
-            return null;
-        }
-        else {
-            return ProductRing.make(factors0);
-        }
-    }
-
     
     public String getElementTypeName() {
         return "ProductRing";

@@ -97,7 +97,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
     //TODO asserts vs proper checks
 
     @Override
-    public <S extends ModuleMorphism> ModuleMorphism fromXML(Element element, Class<S> clazz, XMLReader reader) {
+    public ModuleMorphism fromXML(Element element, Class<? extends ModuleMorphism> clazz, XMLReader reader) {
         if (CAffineMorphism.class.isAssignableFrom(clazz)) {
             return readCAffineMorphism(element, clazz, reader);
         }

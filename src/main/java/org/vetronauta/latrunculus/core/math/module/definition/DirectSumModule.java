@@ -22,16 +22,10 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Module with arbitrary modules as components.
@@ -330,46 +324,7 @@ public final class DirectSumModule implements Module {
         buf.append("]");
         return buf.toString();
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            LinkedList<Module> elements = new LinkedList<Module>();
-            Module module = reader.parseModule(childElement);
-            if (module == null) {
-                return null;
-            }
-            elements.add(module);
-            Element next = XMLReader.getNextSibling(childElement, MODULE);
-            while (next != null) {
-                module = reader.parseModule(next);
-                if (module == null) {
-                    return null;
-                }
-                elements.add(module);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            Module[] coefficients = new Module[elements.size()];
-            int i = 0;
-            for (Module m : elements) {
-                coefficients[i++] = m;
-            }
-            try {
-                return new DirectSumModule(coefficients);
-            }
-            catch (IllegalArgumentException e) {
-                reader.setError(e.getMessage());
-                return null;
-            }
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE_ELEMENT);
-            return null;
-        }
-    }
 
-    
     public String getElementTypeName() {
         return "DirectSumModule";
     }

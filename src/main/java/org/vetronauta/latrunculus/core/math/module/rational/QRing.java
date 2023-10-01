@@ -30,12 +30,8 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The field of rationals.
@@ -194,12 +190,6 @@ public final class QRing extends NumberRing implements QFreeModule {
     		return null;
     	}
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        return QRing.ring;
-    }
-    
     
     public String getElementTypeName() {
         return "QRing";

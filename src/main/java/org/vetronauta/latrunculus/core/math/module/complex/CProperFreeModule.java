@@ -28,14 +28,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The free modules over complex numbers.
@@ -206,12 +201,6 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
     
     public String toVisualString() {
         return "C^"+getDimension();
-    }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        return CProperFreeModule.make(dimension);
     }
     
     public String getElementTypeName() {

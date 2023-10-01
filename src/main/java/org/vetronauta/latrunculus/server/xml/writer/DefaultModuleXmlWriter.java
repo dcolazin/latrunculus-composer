@@ -39,6 +39,7 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
@@ -161,13 +162,12 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((ModularPolynomialRing) object, writer);
             return;
         }
-        if (object instanceof PolynomialFreeModule) {
-            write((PolynomialFreeModule) object, writer);
+        if (object instanceof PolynomialRing) {
+            write((PolynomialRing) object, writer);
             return;
         }
-        if (object instanceof PolynomialRing) {
-            //TODO why this should be false?
-            write((PolynomialRing) object, writer);
+        if (object instanceof PolynomialProperFreeModule) {
+            write((PolynomialProperFreeModule) object, writer);
         }
     }
 
@@ -284,7 +284,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         writer.closeBlock();
     }
 
-    private void write(PolynomialFreeModule module, XMLWriter writer) {
+    private void write(PolynomialProperFreeModule module, XMLWriter writer) {
         writer.openBlockWithType(MODULE, module.getElementTypeName(), INDETERMINATE_ATTR, module.getIndeterminate(), DIMENSION_ATTR, module.getDimension());
         definitionXmlWriter.toXML(module.getCoefficientRing(), writer);
         writer.closeBlock();

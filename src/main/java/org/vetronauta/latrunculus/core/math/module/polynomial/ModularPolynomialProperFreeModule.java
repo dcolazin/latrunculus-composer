@@ -26,15 +26,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
 
 /**
  * Free modules over modular polynomials.
@@ -250,29 +245,6 @@ public final class ModularPolynomialProperFreeModule
     
     public String toVisualString() {
         return "("+getRing()+")^"+getDimension();
-    }
-
-    public Module fromXML(XMLReader reader, Element element) {
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            ModuleElement me = reader.parseModuleElement(childElement);
-            if (me == null) {
-                reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(), "PolynomialElement");
-                return null;
-            }
-            if (!(me instanceof PolynomialElement)) {
-                reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(), "PolynomialElement");
-                return null;                
-            }
-            PolynomialElement pe = (PolynomialElement)me;
-            ModularPolynomialFreeModule mpfm = ModularPolynomialProperFreeModule.make(pe, dimension);
-            return mpfm;
-        }
-        else {
-            reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(), "Ring");
-            return null;                        
-        }
     }
 
     public String getElementTypeName() {

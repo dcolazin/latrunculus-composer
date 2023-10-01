@@ -27,16 +27,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over ZnStringRing.
@@ -214,13 +208,6 @@ public final class ZnStringProperFreeModule
 
     public String toVisualString() {
         return "Z_"+getModulus()+"-String)^"+getDimension();
-    }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
-        return ZnStringProperFreeModule.make(dimension, modulus0);
     }
 
     public String getElementTypeName() {

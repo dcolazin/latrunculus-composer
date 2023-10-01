@@ -29,15 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over integers mod <i>n</i>.
@@ -217,47 +211,6 @@ public final class ZnProperFreeModule
     
     public int getModulus() {
         return modulus;
-    }
-
-
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-
-        if (!element.hasAttribute(DIMENSION_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), DIMENSION_ATTR);
-            return null;                
-        }
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), MODULUS_ATTR);
-            return null;                
-        }
-
-        int dimension;
-        try {
-            dimension = Integer.parseInt(element.getAttribute(DIMENSION_ATTR));                
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", DIMENSION_ATTR, getElementTypeName());
-            return null;                                    
-        }
-        if (dimension < 0) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer >= 0.", DIMENSION_ATTR, getElementTypeName());
-            return null;                                                    
-        }
-
-        int mod;
-        try {
-            mod = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (mod < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName());
-            return null;                                    
-        }
-
-        return ZnProperFreeModule.make(dimension, mod);
     }
     
     

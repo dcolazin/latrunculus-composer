@@ -33,13 +33,8 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The ring of integers mod <i>n</i>.
@@ -219,30 +214,6 @@ public final class ZnRing extends Ring implements ZnFreeModule {
     		return null;
     	}
     }
-    
-    public Module fromXML(XMLReader xmlReader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (element.hasAttribute(MODULUS_ATTR)) {
-            int mod;
-            try {
-                mod = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-                if (mod < 2) {
-                    throw new NumberFormatException();
-                }
-            }
-            catch (NumberFormatException e) {
-                xmlReader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName());
-                return null;                                    
-            }
-
-            return ZnRing.make(mod);
-        }
-        else {
-            xmlReader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), MODULUS_ATTR);
-            return null;
-        }            
-    }
-    
     
     public String getElementTypeName() {
         return "ZnRing";

@@ -25,14 +25,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 
 /**
  * The ring of polynomials with coefficients in a specified ring
@@ -290,18 +286,6 @@ public final class ModularPolynomialRing
         else {
             return null;
         }
-    }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        element = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (element != null) {
-            ModuleElement m = reader.parseModuleElement(element);
-            if (m != null && m instanceof PolynomialElement) {
-                return new ModularPolynomialRing((PolynomialElement)m);
-            }
-        }
-        reader.setError("Type %%1 is missing child of type %%2.", getElementTypeName(), "PolynomialElement");
-        return null;
     }
     
     public String getElementTypeName() {

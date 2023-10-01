@@ -27,17 +27,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The ring of polynomials with coefficients in a specified ring.
@@ -440,36 +435,7 @@ public final class PolynomialRing
             return null;
         }
     }
-    
-    
-    private final static String INDETERMINATE_ATTR = "indeterminate";
 
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!element.hasAttribute(INDETERMINATE_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), INDETERMINATE_ATTR);
-            return null;                
-        }
-        String indeterminate0 = element.getAttribute(INDETERMINATE_ATTR);
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module module = reader.parseModule(childElement);
-            if (module == null) {
-                return null;
-            }
-            if (!(module instanceof Ring)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(), "Ring");
-                return null;                    
-            }
-            Ring ring = (Ring)module;
-            return new PolynomialRing(ring, indeterminate0);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
-    }
-    
     public String getElementTypeName() {
         return "PolynomialRing";
     }

@@ -22,16 +22,10 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over a product ring.
@@ -268,43 +262,6 @@ public final class ProductProperFreeModule
     public String toVisualString() {
         return "("+getRing().toVisualString()+")"+"^"+getDimension();
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-
-        if (!element.hasAttribute(DIMENSION_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(), DIMENSION_ATTR);
-            return null;                
-        }
-
-        int dimension;
-        try {
-            dimension = Integer.parseInt(element.getAttribute(DIMENSION_ATTR));                
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", DIMENSION_ATTR, getElementTypeName());
-            return null;                                    
-        }
-        if (dimension < 0) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer >= 0.", DIMENSION_ATTR, getElementTypeName());
-            return null;                                                    
-        }
-
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("Type %%1 must have a child of type <%2>.", getElementTypeName(), MODULE);
-            return null;
-        }
-        Module module = reader.parseModule(childElement);
-        if (module == null || !(module instanceof ProductRing)) {
-            reader.setError("Module in %%1 must be a product ring.", getElementTypeName());
-            return null;
-        }
-        ProductRing productRing = (ProductRing)module;
-        
-        return ProductProperFreeModule.make(productRing, dimension);
-    }
-    
     
     public String getElementTypeName() {
         return "ProductFreeModule";

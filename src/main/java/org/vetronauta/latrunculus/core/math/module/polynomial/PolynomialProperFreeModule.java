@@ -249,37 +249,7 @@ public final class PolynomialProperFreeModule
     public String toVisualString() {
         return "("+getRing().toVisualString()+")^"+getDimension();
     }
-    
-    
-    private final static String INDETERMINATE_ATTR = "indeterminate";
 
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        if (!(element.hasAttribute("indeterminate"))) {
-            reader.setError("Type %%1 must have attribute %%2.", getElementTypeName(), INDETERMINATE_ATTR);
-        }
-        String indeterminate = element.getAttribute(INDETERMINATE_ATTR);
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module module = reader.parseModule(childElement);
-            if (module == null) {
-                return null;
-            }
-            if (!(module instanceof Ring)) {
-                reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(), "Ring");
-                return null;                
-            }
-            Ring rng = (Ring)module;
-            PolynomialFreeModule pfm = PolynomialProperFreeModule.make(rng, indeterminate, dimension);
-            return pfm;
-        }
-        else {
-            reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(), "Ring");
-            return null;                        
-        }
-    }
-    
     public String getElementTypeName() {
         return "PolynomialFreeModule";
     }

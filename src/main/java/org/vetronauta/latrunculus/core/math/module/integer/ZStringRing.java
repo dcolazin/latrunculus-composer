@@ -22,15 +22,10 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * The ring of ZString.
@@ -130,12 +125,6 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
             return new ZStringElement(string);
         }
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        return ZStringRing.ring;
-    }
-    
     
     public String getElementTypeName() {
         return "ZStringRing";

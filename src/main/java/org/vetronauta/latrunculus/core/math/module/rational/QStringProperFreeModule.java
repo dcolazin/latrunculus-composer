@@ -27,15 +27,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Free modules over QStringRing.
@@ -208,12 +203,6 @@ public final class QStringProperFreeModule
     public String toVisualString() {
         return "(C-String)^"+getDimension();
     }
-    
-    public Module fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName()));
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        return QStringProperFreeModule.make(dimension);
-    }
 
     public String getElementTypeName() {
         return "QStringFreeModule";
@@ -243,6 +232,6 @@ public final class QStringProperFreeModule
         super(dimension);
     }
 
-    
-    private final static int basicHash = "QStringFreeModule".hashCode();    
+
+    private static final int basicHash = "QStringFreeModule".hashCode();
 }
