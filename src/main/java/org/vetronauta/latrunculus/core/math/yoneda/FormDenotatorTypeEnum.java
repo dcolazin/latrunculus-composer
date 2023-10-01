@@ -22,18 +22,18 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 /**
  * @author vetronauta
  */
-public enum DenotatorTypeEnum {
+public enum FormDenotatorTypeEnum {
 
     SIMPLE, LIMIT, COLIMIT, LIST, POWER;
 
-    public static Class<? extends Denotator> classOf(String type) {
+    public static Class<? extends Denotator> denotatorClassOf(String type) {
         if (type == null) {
             return null;
         }
-        return classOf(DenotatorTypeEnum.valueOf(type.toUpperCase()));
+        return denotatorClassOf(FormDenotatorTypeEnum.valueOf(type.toUpperCase()));
     }
 
-    public static Class<? extends Denotator> classOf(DenotatorTypeEnum type) {
+    public static Class<? extends Denotator> denotatorClassOf(FormDenotatorTypeEnum type) {
         if (type == null) {
             return null;
         }
@@ -43,6 +43,27 @@ public enum DenotatorTypeEnum {
             case COLIMIT: return ColimitDenotator.class;
             case LIST: return ListDenotator.class;
             case POWER: return PowerDenotator.class;
+        }
+        return null;
+    }
+
+    public static Class<? extends Form> formClassOf(String type) {
+        if (type == null) {
+            return null;
+        }
+        return formClassOf(FormDenotatorTypeEnum.valueOf(type.toUpperCase()));
+    }
+
+    public static Class<? extends Form> formClassOf(FormDenotatorTypeEnum type) {
+        if (type == null) {
+            return null;
+        }
+        switch (type) {
+            case SIMPLE: return SimpleForm.class;
+            case LIMIT: return LimitForm.class;
+            case COLIMIT: return ColimitForm.class;
+            case LIST: return ListForm.class;
+            case POWER: return PowerForm.class;
         }
         return null;
     }

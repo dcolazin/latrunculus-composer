@@ -61,7 +61,7 @@ public class DefaultDefinitionXmlReader implements LatrunculusRestrictedXmlReade
         this.denotatorReader = new DefaultDenotatorXmlReader();
         this.yonedaMorphismReader = new DefaultYonedaMorphismXmlReader();
         this.diagramReader = new DefaultDiagramXmlReader();
-        this.formReader = null;
+        this.formReader = new DefaultFormXmlReader();
     }
     
     @Override

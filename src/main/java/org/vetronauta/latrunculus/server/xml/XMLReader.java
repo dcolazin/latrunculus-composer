@@ -19,46 +19,73 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
-import static org.rubato.util.TextUtils.replaceStrings;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.io.*;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.zip.GZIPInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
+import org.rubato.rubettes.builtin.MacroRubette;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.rubettes.builtin.MacroRubette;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.DenotatorReference;
-import org.vetronauta.latrunculus.core.math.yoneda.DenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.reader.DefaultDenotatorXmlReader;
-import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
-import org.w3c.dom.*;
-import org.xml.sax.*;
+import org.vetronauta.latrunculus.server.xml.reader.DefaultDefinitionXmlReader;
+import org.vetronauta.latrunculus.server.xml.reader.LatrunculusRestrictedXmlReader;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.zip.GZIPInputStream;
+
+import static org.rubato.util.TextUtils.replaceStrings;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.CLASS_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DEFINE_MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DEFINE_MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DEFINE_MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.NETWORK;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.REF_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.ROOT_ELEMENT;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.RUBETTE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 
 /**
@@ -69,7 +96,7 @@ import org.xml.sax.*;
 public final class XMLReader implements RubatoDictionary {
 
     //TODO proper chain of responsibility
-    private final LatrunculusXmlReader<Denotator> denotatorXmlReader = new DefaultDenotatorXmlReader();
+    private final LatrunculusRestrictedXmlReader<MathDefinition> definitionReader = new DefaultDefinitionXmlReader();
 
     /**
      * Creates an XMLReader from the given <code>file</code>.
@@ -588,8 +615,8 @@ public final class XMLReader implements RubatoDictionary {
         // case 2: a type is given
         String type = denotatorNode.getAttribute(TYPE_ATTR);
         // dispatch according to type
-        Class<? extends Denotator> denotatorClass = DenotatorTypeEnum.classOf(type);
-        Denotator denotator = denotatorXmlReader.fromXML(denotatorNode, denotatorClass, this);
+        Class<? extends Denotator> denotatorClass = FormDenotatorTypeEnum.denotatorClassOf(type);
+        Denotator denotator = definitionReader.fromXML(denotatorNode, denotatorClass, Denotator.class, this);
         if (denotator != null) {
             return denotator;
         }
@@ -637,29 +664,13 @@ public final class XMLReader implements RubatoDictionary {
               
         // case 2: a type is given
         String type = formNode.getAttribute(TYPE_ATTR);
-        Form form;
-        // dispatch according to type 
-        if (type.equals("simple")) { //$NON-NLS-1$
-            form = SimpleForm.fromXML(this, formNode);
-        }
-        else if (type.equals("limit")) { //$NON-NLS-1$
-            form = LimitForm.fromXML(this, formNode);
-        }
-        else if (type.equals("colimit")) { //$NON-NLS-1$
-            form = ColimitForm.fromXML(this, formNode);
-        }
-        else if (type.equals("list")) { //$NON-NLS-1$
-            form = ListForm.fromXML(this, formNode);
-        }
-        else if (type.equals("power")) { //$NON-NLS-1$
-            form = PowerForm.fromXML(this, formNode);
-        }
-        else {
-            setError("Attribute %%1 of element <%2> has invalid value %%3",
-                     TYPE_ATTR, FORM, type);
+        Class<? extends Form> formClass = FormDenotatorTypeEnum.formClassOf(type);
+        if (formClass == null) {
+            setError("Attribute %%1 of element <%2> has invalid value %%3", TYPE_ATTR, FORM, type);
             return null;
         }
-        
+        Form form = definitionReader.fromXML(formNode, formClass, Form.class, this);
+
         // put the parsed form into the <code>forms</code> hashtable
         if (form != null) {
             String name = form.getNameString();

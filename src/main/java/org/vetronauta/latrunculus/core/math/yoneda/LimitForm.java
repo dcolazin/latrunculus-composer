@@ -21,10 +21,9 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -32,14 +31,6 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.LABEL;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.LABELS;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.LIMIT_TYPE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.POS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Limit form class.
@@ -187,8 +178,8 @@ public final class LimitForm extends Form {
         }
     }
 
-    
-    private void setLabels(HashMap<String,Integer> labels) {
+    @Internal
+    public void setLabels(HashMap<String,Integer> labels) { //TODO find a better way to keep this private
         if (labels == null) {
             labelMap = null;
             reverseLabelMap = null;
@@ -273,64 +264,6 @@ public final class LimitForm extends Form {
     public Map<String, Integer> getLabelMap() {
         return labelMap;
     }
-
-
-
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     *
-     * @return a limit form or null if parsing failed
-     */
-    public static LimitForm fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(LIMIT_TYPE_VALUE));
-        if (!element.hasAttribute(NAME_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", LIMIT_TYPE_VALUE, FORM, NAME_ATTR);
-            return null;                                                
-        }
-
-        HashMap<String,Integer> labels = null;
-        Element childElement;
-        
-        childElement = XMLReader.getChild(element, LABELS);
-        if (childElement != null) {
-            labels = new HashMap<String,Integer>();
-            childElement = XMLReader.getChild(childElement, LABEL);
-            while (childElement != null) {
-                String label = XMLReader.getStringAttribute(childElement, NAME_ATTR);
-                int pos = XMLReader.getIntAttribute(childElement, POS_ATTR, 0);
-                labels.put(label, pos);
-                childElement = XMLReader.getNextSibling(childElement, LABEL);
-            }
-        }
-        
-        childElement = XMLReader.getChild(element, FORM);
-        if (childElement == null) {
-            reader.setError("Type %%1 of element <%2> is missing elements of type <%2>.", LIMIT_TYPE_VALUE, FORM);
-            return null;
-        }
-        
-        LinkedList<Form> forms = new LinkedList<Form>();
-        boolean references = false;
-        while (childElement != null) {
-            Form form = reader.parseForm(childElement);
-            if (form == null) {
-                return null;
-            }
-            forms.add(form);
-            if (form instanceof FormReference) {
-                references = true;
-            }
-            childElement = XMLReader.getNextSibling(childElement, FORM);
-        }
-                
-        LimitForm limitForm = new LimitForm(NameDenotator.make(element.getAttribute("name")), forms);
-        limitForm.setLabels(labels);
-        if (references) {
-            reader.addFormToBeResolved(limitForm);
-        }
-        return limitForm;
-    }
-    
         
     /**
      * Returns a default denotator of this limit form.

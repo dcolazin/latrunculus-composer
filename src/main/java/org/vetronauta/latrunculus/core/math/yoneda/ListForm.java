@@ -23,17 +23,10 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.LIST_TYPE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * List form class.
@@ -146,38 +139,7 @@ public class ListForm extends Form {
         }
         return list;
     }
-    
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     * 
-     * @return a list form or null if parsing failed
-     */
-    public static ListForm fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(LIST_TYPE_VALUE));
-        if (!element.hasAttribute(NAME_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", LIST_TYPE_VALUE, FORM, NAME_ATTR);
-            return null;                                                
-        }
 
-        Element childElement = XMLReader.getChild(element, FORM);
-        if (childElement == null) {
-            reader.setError("Type %%1 of element <%2> is missing elements of type <%2>.", LIST_TYPE_VALUE, FORM);
-            return null;
-        }
-        
-        Form form = reader.parseForm(childElement);
-        if (form == null) {
-            return null;
-        }
-        
-        ListForm listForm = new ListForm(NameDenotator.make(element.getAttribute("name")), form);
-        if (form instanceof FormReference) {
-            reader.addFormToBeResolved(listForm);
-        }
-        return listForm;
-    }
-    
-        
     /**
      * Returns a default denotator of this list form.
      */

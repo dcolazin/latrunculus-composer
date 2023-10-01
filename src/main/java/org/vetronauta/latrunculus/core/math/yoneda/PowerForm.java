@@ -23,17 +23,10 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.POWER_TYPE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Power form class.
@@ -151,37 +144,6 @@ public final class PowerForm extends Form {
         }
         return list;
     }
-
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     * 
-     * @return a power form or null if parsing failed
-     */
-    public static PowerForm fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(POWER_TYPE_VALUE));
-        if (!element.hasAttribute(NAME_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", POWER_TYPE_VALUE, FORM, NAME_ATTR);
-            return null;                                                
-        }
-
-        Element childElement = XMLReader.getChild(element, FORM);
-        if (childElement == null) {
-            reader.setError("Type %%1 of element <%2> is missing element <%2>.", POWER_TYPE_VALUE, FORM);
-            return null;
-        }
-        
-        Form form = reader.parseForm(childElement);
-        if (form == null) {
-            return null;
-        }
-                
-        PowerForm powerForm = new PowerForm(NameDenotator.make(element.getAttribute("name")), form);
-        if (form instanceof FormReference) {
-            reader.addFormToBeResolved(powerForm);
-        }
-        return powerForm;
-    }
-    
         
     /**
      * Returns a default denotator of this power form.
