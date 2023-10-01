@@ -23,8 +23,6 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -341,12 +339,6 @@ public final class FormDiagram extends Diagram {
         return list;
     }
 
-    public Diagram fromXML(XMLReader reader, Element element) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    
     public String getElementTypeName() {
         return "FormDiagram";
     }

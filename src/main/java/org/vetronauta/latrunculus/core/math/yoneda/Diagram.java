@@ -26,7 +26,6 @@ import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.server.xml.XMLInput;
 
 /**
  * Abstract base class for diagrams.
@@ -36,7 +35,7 @@ import org.vetronauta.latrunculus.server.xml.XMLInput;
  * @author Stefan Göller
  */
 
-public abstract class Diagram implements Yoneda, XMLInput<Diagram>, MathDefinition {
+public abstract class Diagram implements Yoneda, MathDefinition {
 
     /**
      * Returns the vertex at position <code>i</code>.

@@ -21,12 +21,13 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import java.util.*;
-
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Math diagram class (vertexes are morphisms).
@@ -43,7 +44,7 @@ public class MathDiagram extends Diagram {
     public MathDiagram(YonedaMorphism vertex) {
         this(1);
         vertexes.add(1, vertex);
-        arrows.add(1, new ArrayList<YonedaMorphism>());
+        arrows.add(1, new ArrayList<>());
     }
 
     
@@ -52,10 +53,10 @@ public class MathDiagram extends Diagram {
      */
     public MathDiagram(List<YonedaMorphism> vertexes) {
         int size = vertexes.size();
-        this.vertexes = new ArrayList<YonedaMorphism>(vertexes);
-        this.arrows = new ArrayList<ArrayList<YonedaMorphism>>(size*size);
+        this.vertexes = new ArrayList<>(vertexes);
+        this.arrows = new ArrayList<>(size*size);
         for (int i = 0; i < size*size; i++) {
-            this.arrows.add(new ArrayList<YonedaMorphism>());
+            this.arrows.add(new ArrayList<>());
         }
     }
     
@@ -323,19 +324,7 @@ public class MathDiagram extends Diagram {
     public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
         return list;
     }
-    
 
-    public void toXML(XMLWriter writer) {
-
-    }
-    
-    
-    public Diagram fromXML(XMLReader reader, Element element) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    
     public String getElementTypeName() {
         return "MathDiagram";
     }
