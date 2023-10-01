@@ -39,7 +39,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringElement extends StringElement implements ZStringFreeElement {
+public final class ZStringElement extends StringElement<ZStringElement> implements ZStringFreeElement<ZStringElement> {
 
     /**
      * Constructs a ZStringElement from an ordinary String <code>string</code>.
@@ -100,67 +100,19 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
             return false;
         }
     }
-    
-    
-    public ModuleElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            return sum((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public ZStringElement sum(ZStringElement element) {
-        return new ZStringElement((ZString)getValue().sum(element.getValue()));        
+        return new ZStringElement(getValue().sum(element.getValue()));
     }
-
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            add((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void add(ZStringElement element) {
         zstringify();
         value.add(element.getValue());        
     }
 
-
-    public ModuleElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            return difference((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-        
-
     public ZStringElement difference(ZStringElement element) {
         return new ZStringElement((ZString)getValue().difference(element.getValue()));
     }
-        
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            subtract((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public void subtract(ZStringElement element) {
         zstringify();
@@ -168,8 +120,8 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
 
 
-    public ModuleElement negated() {
-        return new ZStringElement((ZString)getValue().negated());
+    public ZStringElement negated() {
+        return new ZStringElement(getValue().negated());
     }
 
     
@@ -179,42 +131,20 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
 
 
-    public ModuleElement scaled(RingElement element)
+    public ZStringElement scaled(ZStringElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(ZStringElement element)
             throws DomainException {
         multiply(element);
-    }
-    
-
-    public RingElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            return product((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
     }
 
     
     public ZStringElement product(ZStringElement element) {
         return new ZStringElement((ZString)getValue().product(element.getValue()));
-    }
-
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            multiply((ZStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
     }
 
     
@@ -223,7 +153,7 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
 
     
-    public RingElement inverse() {
+    public ZStringElement inverse() {
         throw new InverseException("Inverse of "+this+" does not exist.");
     }
 
@@ -233,7 +163,7 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
 
 
-    public RingElement quotient(RingElement element)
+    public ZStringElement quotient(ZStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof ZStringElement) {
             // TODO: implement division where possible
@@ -245,7 +175,7 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
     
     
-    public void divide(RingElement element)
+    public void divide(ZStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof ZStringElement) {
             // TODO: implement division where possible
@@ -336,12 +266,12 @@ public final class ZStringElement extends StringElement implements ZStringFreeEl
     }
 
     @Override
-    public RingElement deepCopy() {
+    public ZStringElement deepCopy() {
         if (simpleString != null) {
             return new ZStringElement(simpleString);
         }
         else {
-            return new ZStringElement((ZString)getValue().deepCopy());
+            return new ZStringElement(getValue().deepCopy());
         }
     }
 

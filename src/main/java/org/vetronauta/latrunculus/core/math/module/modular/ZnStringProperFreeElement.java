@@ -35,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeElement extends ProperFreeElement implements ZnStringFreeElement {
+public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringProperFreeElement,ZnStringElement> implements ZnStringFreeElement<ZnStringProperFreeElement> {
 
     public static ZnStringFreeElement make(ZnString[] v, int modulus) {
         if (v == null || v.length == 0) {
@@ -69,18 +69,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
         }
         return true;
     }
-       
-
-    public ModuleElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            return sum((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public ZnStringProperFreeElement sum(ZnStringProperFreeElement element)
             throws DomainException {
@@ -96,18 +84,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
         }
     }
     
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            add((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void add(ZnStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength() && modulus == element.getModulus()) {
@@ -119,18 +95,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-
-    public ModuleElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            return difference((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public ZnStringProperFreeElement difference(ZnStringProperFreeElement element)
             throws DomainException {
@@ -145,18 +109,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            subtract((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     public void subtract(ZnStringProperFreeElement element)
             throws DomainException {
@@ -169,18 +121,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public ModuleElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            return productCW((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public ZnStringProperFreeElement productCW(ZnStringProperFreeElement element)
             throws DomainException {
@@ -196,18 +136,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
         }
     }
     
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringProperFreeElement) {
-            multiplyCW((ZnStringProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
     public void multiplyCW(ZnStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength() && modulus == element.getModulus()) {
@@ -221,10 +149,10 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
     }
     
 
-    public ModuleElement negated() {
+    public ZnStringProperFreeElement negated() {
         ZnString[] res = new ZnString[getLength()];
         for (int i = 0; i < getLength(); i++) {
-            res[i] = (ZnString)value[i].negated();
+            res[i] = value[i].negated();
         }
         return new ZnStringProperFreeElement(res, modulus);
     }
@@ -235,18 +163,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             value[i].negate();
         }
     }
-    
-    
-    public ModuleElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            return scaled((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
-    }
-    
 
     public ZnStringProperFreeElement scaled(ZnStringElement element)
             throws DomainException {
@@ -262,18 +178,6 @@ public final class ZnStringProperFreeElement extends ProperFreeElement implement
             throw new DomainException(this.getModule().getRing(), element.getRing());
         }
     }
-    
-    
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            scale((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
-    }
-
     
     public void scale(ZnStringElement element)
             throws DomainException {

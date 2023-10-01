@@ -31,7 +31,9 @@ import java.io.Serializable;
  * 
  * @author Gérard Milmeister
  */
-public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable, Comparable<ModuleElement>, MathDefinition {
+public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends DeepCopyable<ModuleElement<E,R>>, Serializable, Comparable<ModuleElement<?,?>>, MathDefinition {
+
+    //TODO null checks!
 
     /**
      * Returns true iff this element is zero.
@@ -43,7 +45,7 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    ModuleElement scaled(RingElement element) throws DomainException;
+    E scaled(R element) throws DomainException;
 
     /**
      * Multiplies this element with <code>element</code>.
@@ -51,7 +53,7 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    void scale(RingElement element) throws DomainException;
+    void scale(R element) throws DomainException;
 
     /**
      * Returns the length of the element.
@@ -61,14 +63,14 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
     /**
      * Returns the <code>i</code>-th component element.
      */
-    ModuleElement getComponent(int i);
+    ModuleElement<?,R> getComponent(int i);
 
     /**
      * Returns the sum of this module element and <code>element</code>.
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    ModuleElement sum(ModuleElement element) throws DomainException;
+    E sum(E element) throws DomainException;
 
     /**
      * Adds <code>element</code> to this module element.
@@ -76,14 +78,14 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    void add(ModuleElement element) throws DomainException;
+    void add(E element) throws DomainException;
 
     /**
      * Returns the difference of this module element and <code>element</code>.
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    ModuleElement difference(ModuleElement element) throws DomainException;
+    E difference(E element) throws DomainException;
 
     /**
      * Subtracts <code>element</code> from this module element.
@@ -91,12 +93,12 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    void subtract(ModuleElement element) throws DomainException;
+    void subtract(E element) throws DomainException;
     
     /**
      * Returns the negative of this module element.
      */
-    ModuleElement negated();
+    E negated();
 
     /**
      * Negate this module element.
@@ -107,19 +109,20 @@ public interface ModuleElement extends DeepCopyable<ModuleElement>, Serializable
     /**
      * Fold <code>elements</code> assuming they are of this same type.
      */
-    double[] fold(ModuleElement[] elements);
+    //TODO proper signature
+    double[] fold(ModuleElement<?,?>[] elements);
 
     /**
      * Returns the module that this module element is an element of.
      */
-    Module getModule();
+    Module<E,R> getModule();
 
     /**
      * Tries to cast this element to an element in the given module.
      * @return a new module element in the required module
      *         and null if the cast cannot be performed. 
      */
-    ModuleElement cast(Module module);
+    <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module);
 
     /**
      * Returns a string representation of this module element.

@@ -29,24 +29,18 @@ import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
  * 
  * @author Gérard Milmeister
  */
-public abstract class Ring implements FreeModule {
+public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> {
 
-    
-    /**
-     * Returns the zero element of this ring.
-     */
-    public abstract RingElement getZero();
-    
     /**
      * Returns the unit element of this ring.
      */
-    public abstract RingElement getOne();
+    public abstract R getOne();
         
     /**
      * Returns the unit vector with 1 at position <code>i</code>.
      * In the case of rings, this is simple the unit.
      */
-    public RingElement getUnitElement(int i) {
+    public R getUnitElement(int i) {
         return getOne();
     }
 
@@ -73,7 +67,7 @@ public abstract class Ring implements FreeModule {
     /**
      * Returns the corresponding free module of dimension <code>dim</code>.
      */
-    public abstract FreeModule getFreeModule(int dimension);
+    public abstract FreeModule<?,R> getFreeModule(int dimension);
 
     /**
      * Here, the dimension of a ring as a module is 1.
@@ -85,7 +79,7 @@ public abstract class Ring implements FreeModule {
     /**
      * A ring has just one component module: itself.
      */
-    public Module getComponentModule(int i) {
+    public Ring<R> getComponentModule(int i) {
         return this;
     }   
 
@@ -99,20 +93,21 @@ public abstract class Ring implements FreeModule {
     /**
      * The underlying ring of a ring as a module is itself.
      */
-    public Ring getRing() {
+    public Ring<R> getRing() {
         return this;
     }
     
-    public abstract RingElement parseString(String s);
+    public abstract R parseString(String s);
 
     /**
      * Returns a morphism that translates by <code>element</code>.
      */
-    public ModuleMorphism getTranslation(ModuleElement element) {
+    public ModuleMorphism getTranslation(ModuleElement<?,?> element) {
         return TranslationMorphism.make(this, element);
     }
     
     public int compareTo(Module object) {
         return toString().compareTo(object.toString());
     }
+
 }

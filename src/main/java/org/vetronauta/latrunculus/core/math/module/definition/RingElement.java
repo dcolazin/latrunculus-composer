@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import lombok.extern.slf4j.Slf4j;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -36,32 +35,19 @@ import java.util.Iterator;
  * @author Gérard Milmeister
  */
 @Slf4j
-public abstract class RingElement implements FreeElement {
+public abstract class RingElement<R extends RingElement<R>> implements FreeElement<R,R> {
     
     /**
      * Returns true if this ring element is one.
      */
     public abstract boolean isOne();
-    
-    
-    public RingElement sum(RingElement element)
-            throws DomainException {
-        return (RingElement)sum((ModuleElement)element);
-    }
-    
-    
-    public RingElement difference(RingElement element)
-            throws DomainException {
-        return (RingElement)difference((ModuleElement)element);
-    }    
-    
+
     /**
      * Returns the product of this ring element with <code>element</code>.
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    public abstract RingElement product(RingElement element)
-        throws DomainException;
+    public abstract R product(R element) throws DomainException;
 
     
     /**
@@ -69,29 +55,16 @@ public abstract class RingElement implements FreeElement {
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    public abstract void multiply(RingElement element)
-        throws DomainException;
+    public abstract void multiply(R element) throws DomainException;
 
     
-    public ModuleElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RingElement) {
-            return product((RingElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
+    public R productCW(R element) throws DomainException {
+        return product(element);
     }
 
     
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RingElement) {
-            multiply((RingElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
+    public void multiplyCW(R element) throws DomainException {
+        multiply(element);
     }
     
     
@@ -104,7 +77,7 @@ public abstract class RingElement implements FreeElement {
     /**
      * Returns the inverse of this ring element, if it has an inverse.
      */
-    public abstract RingElement inverse();
+    public abstract R inverse();
     
     
     /**
@@ -118,8 +91,7 @@ public abstract class RingElement implements FreeElement {
      * <code>element</code>*<i>x</i> = <code>this</code>,
      * if it exists, otherwise a DivisionException is thrown. 
      */
-    public abstract RingElement quotient(RingElement element)
-        throws DomainException, DivisionException;
+    public abstract R quotient(R element) throws DomainException, DivisionException;
     
     
     /**
@@ -127,8 +99,7 @@ public abstract class RingElement implements FreeElement {
      * <code>element</code>*<i>x</i> = <code>this</code>, if it exists,
      * otherwise a DivisionException is thrown.
      */
-    public abstract void divide(RingElement element)
-        throws DomainException, DivisionException;
+    public abstract void divide(R element) throws DomainException, DivisionException;
 
 
     /**
@@ -136,18 +107,18 @@ public abstract class RingElement implements FreeElement {
      * <code>this</code>*<i>x</i> = <code>element</code>
      * exists.
      */
-    public abstract boolean divides(RingElement element);
+    public abstract boolean divides(RingElement<?> element);
 
     
     /**
      * Raises this ring element to the power <code>n</code>.
      */
-    public RingElement power(int n) {
+    public R power(int n) {
         if (n == 0) {
             return getRing().getOne();
         }
 
-        RingElement factor = this.deepCopy();
+        R factor = this.deepCopy();
         
         if (n < 0) {
             factor.invert();
@@ -160,7 +131,7 @@ public abstract class RingElement implements FreeElement {
             bpos--;
         }
 
-        RingElement result = getRing().getOne();
+        R result = getRing().getOne();
         try {
             while (bpos >= 0) {
                 result = result.product(result);
@@ -187,17 +158,17 @@ public abstract class RingElement implements FreeElement {
     }
     
     
-    public ModuleElement getComponent(int i) {
-        return this;
+    public R getComponent(int i) {
+        return (R) this;
     }
 
     
-    public RingElement getRingElement(int i) {
-        return this;
+    public R getRingElement(int i) {
+        return (R) this;
     }
 
     
-    public Iterator<RingElement> iterator() {
+    public Iterator<RingElement<R>> iterator() {
         return Collections.singleton(this).iterator();
     }
     
@@ -205,8 +176,8 @@ public abstract class RingElement implements FreeElement {
     /**
      * Returns the ring this element is a member of.
      */
-    public Ring getRing() {
-        return (Ring)getModule();
+    public Ring<R> getRing() {
+        return (Ring<R>) getModule();
     }
     
     
@@ -215,5 +186,5 @@ public abstract class RingElement implements FreeElement {
     }
 
     @Override
-    public abstract RingElement deepCopy();
+    public abstract R deepCopy();
 }

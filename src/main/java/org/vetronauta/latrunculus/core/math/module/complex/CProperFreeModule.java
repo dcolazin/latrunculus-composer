@@ -38,7 +38,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule extends ProperFreeModule implements CFreeModule {
+public final class CProperFreeModule extends ProperFreeModule<CProperFreeElement,CElement> implements CFreeModule<CProperFreeElement> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);  
        
@@ -62,23 +62,23 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
     }
 
     
-    public CFreeElement getZero() {
+    public CProperFreeElement getZero() {
         Complex[] res = new Complex[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = Complex.getZero();
         }
-        return CProperFreeElement.make(res);
+        return (CProperFreeElement) CProperFreeElement.make(res); //TODO do not cast
     }
 
     
-    public CFreeElement getUnitElement(int i) {
+    public CProperFreeElement getUnitElement(int i) {
         Complex[] v = new Complex[getDimension()];
         assert(i >= 0 && i < getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v[j] = Complex.getZero();
         }
         v[i] = Complex.getOne();
-        return CProperFreeElement.make(v);
+        return (CProperFreeElement) CProperFreeElement.make(v); //TODO do not cast
     }
     
 
@@ -124,13 +124,13 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
     }
 
     
-    public CFreeElement createElement(List<ModuleElement> elements) {
+    public CProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
         Complex[] values = new Complex[getDimension()];        
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(CRing.ring);
             if (castElement == null) {
@@ -139,17 +139,17 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
             values[i] = ((CElement)castElement).getValue();
         }
 
-        return CProperFreeElement.make(values);
+        return (CProperFreeElement) CProperFreeElement.make(values); //TODO do not cast
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public CProperFreeElement cast(ModuleElement<?,?> element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
                 return element.cast(this);
             }
             else if (element instanceof CProperFreeElement) {
-                return element;
+                return (CProperFreeElement) element;
             }
             else {   
                 Complex[] elements = new Complex[getDimension()];
@@ -160,7 +160,7 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
                     }
                     elements[i] = ((CElement)castElement).getValue();
                 }
-                return CProperFreeElement.make(elements);
+                return (CProperFreeElement) CProperFreeElement.make(elements); //TODO do not cast
             }
         }
         else {
@@ -175,7 +175,7 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
     }
 
     
-    public CFreeElement parseString(String string) {
+    public CProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != getDimension()) {
@@ -191,7 +191,7 @@ public final class CProperFreeModule extends ProperFreeModule implements CFreeMo
                     return null;
                 }
             }
-            return CProperFreeElement.make(values);
+            return (CProperFreeElement) CProperFreeElement.make(values); //TODO do not cast
         }
     }
 

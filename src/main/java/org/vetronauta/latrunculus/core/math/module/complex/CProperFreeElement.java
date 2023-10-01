@@ -34,12 +34,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeElement extends ProperFreeElement implements CFreeElement {
+public final class CProperFreeElement extends ProperFreeElement<CProperFreeElement,CElement> implements CFreeElement<CProperFreeElement> {
 
     /**
      * Creates a CFreeElement from an array of Complex.
      */
-    public static CFreeElement make(Complex[] v) {
+    public static CFreeElement<?> make(Complex[] v) {
         if (v.length == 1) {
             return new CElement(v[0]);
         }
@@ -48,17 +48,17 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-    
+    @Override
     public boolean isZero() {
-        for (int i = 0; i < value.length; i++) {
-            if (!value[i].isZero()) {
+        for (Complex complex : value) {
+            if (!complex.isZero()) {
                 return false;
             }
         }
         return true;
     }
-    
-    
+
+    @Override
     public CProperFreeElement conjugated() {
         Complex[] res = new Complex[value.length];
         for (int i = 0; i < value.length; i++) {
@@ -67,32 +67,15 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         return new CProperFreeElement(res);
     }
 
-
+    @Override
     public void conjugate() {
-        for (int i = 0; i < value.length; i++) {
-            value[i].conjugate();
+        for (Complex complex : value) {
+            complex.conjugate();
         }
     }
 
-
-    public CProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            return sum((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-
-    /**
-     * Returns the sum of this and <code>element</code>.
-     * 
-     * @throws DomainException if <code>element</code> is not in domain
-     */
-    public CProperFreeElement sum(CProperFreeElement element)
-            throws DomainException {
+    @Override
+    public CProperFreeElement sum(CProperFreeElement element) throws DomainException {
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             Complex[] res = new Complex[getLength()];
@@ -106,26 +89,8 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-        
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            add((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-
-    /**
-     * Adds <code>element</code> to this.
-     * This is a destructive operation.
-     * 
-     * @throws DomainException if <code>element</code> is not in domain
-     */
-    public void add(CProperFreeElement element)
-            throws DomainException {
+    @Override
+    public void add(CProperFreeElement element) throws DomainException {
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
@@ -136,21 +101,9 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public CProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            return difference((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
-    public CProperFreeElement difference(CProperFreeElement element)
-            throws DomainException {
+    @Override
+    public CProperFreeElement difference(CProperFreeElement element) throws DomainException {
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             Complex[] res = new Complex[getLength()];
@@ -163,25 +116,8 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            subtract((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
 
-    
-    /**
-     * Subtracts <code>element</code> from this.
-     * This is a destructive operation.
-     * 
-     * @throws DomainException if <code>element</code> is not in domain
-     */
+    @Override
     public void subtract(CProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -195,18 +131,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-    
-    public CProperFreeElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            return productCW((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-
+    @Override
     public CProperFreeElement productCW(CProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -221,19 +146,8 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CProperFreeElement) {
-            multiplyCW((CProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
 
-
+    @Override
     public void multiplyCW(CProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -247,7 +161,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
     
-    
+    @Override
     public CProperFreeElement negated() {
         Complex[] res = new Complex[getLength()];
         for (int i = 0; i < getLength(); i++) {
@@ -256,46 +170,24 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         return new CProperFreeElement(res);
     }
     
-
+    @Override
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
             value[i].negate();
         }
     }
-    
 
-    public CProperFreeElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            return scaled((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-    
-
+    @Override
     public CProperFreeElement scaled(CElement element) {
         Complex val = element.getValue();
-        Complex res[] = new Complex[getLength()];
+        Complex[] res = new Complex[getLength()];
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].product(val);
         }
         return new CProperFreeElement(res);        
     }
-    
-    
-    public void scale(RingElement element) 
-            throws DomainException {
-        if (element instanceof CElement) {
-            scale((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
 
-    
+    @Override
     public void scale(CElement element) {
         Complex val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
@@ -303,31 +195,30 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-    
+    @Override
     public CElement getComponent(int i) {
         assert(i < getLength());
         return new CElement(value[i]);
     }
 
-    
+    @Override
     public CElement getRingElement(int i) {
         assert(i < getLength());
         return new CElement(value[i]);
     }
 
-    
+    @Override
     public int getLength() {
         return value.length;
     }
     
-
+    @Override
     public CProperFreeModule getModule() {
         if (module == null) {
             module = (CProperFreeModule)CProperFreeModule.make(getLength());
         }
         return module;
     }
-    
 
     /**
      * Returns the array of Complex contained in this element.
@@ -335,8 +226,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
     public Complex[] getValue() {
         return value;
     }
-    
-    
+
     /**
      * Returns the Complex at index <code>i</code>.
      */
@@ -344,8 +234,8 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         return value[i];
     }
     
-
-    public CFreeElement resize(int n) {
+    @Override
+    public CFreeElement<?> resize(int n) {
         if (n == getLength()) {
             return this;
         }
@@ -362,7 +252,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
     
-
+    @Override
     public boolean equals(Object object) {
         if (object instanceof CProperFreeElement) {
             CProperFreeElement c = (CProperFreeElement)object;
@@ -383,7 +273,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
     
-
+    @Override
     public int compareTo(ModuleElement object) {
         if (object instanceof CProperFreeElement) {
             CProperFreeElement element = (CProperFreeElement)object;
@@ -406,12 +296,11 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
+    public <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module) {
         return module.cast(this);
     }
 
-    
+    @Override
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";
@@ -431,7 +320,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         }
     }
 
-    
+    @Override
     public String toString() {
         StringBuilder buf = new StringBuilder(30);
         buf.append("CFreeElement[");
@@ -448,8 +337,8 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         return buf.toString();
     }
     
-
-    public double[] fold(ModuleElement[] elements) {
+    @Override
+    public double[] fold(ModuleElement<?,?>[] elements) {
         double[][] res = new double[elements.length][getLength()*2];
         for (int i = 0; i < elements.length; i++) {
             Complex[] c = ((CProperFreeElement)elements[i]).getValue();
@@ -465,7 +354,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
         return "CFreeElement";
     }
     
-    
+    @Override
     public int hashCode() {
         int val = 11;
         for (int i = 0; i < getLength(); i++) {
@@ -484,7 +373,7 @@ public final class CProperFreeElement extends ProperFreeElement implements CFree
     private CProperFreeModule module = null;
 
     @Override
-    public ModuleElement deepCopy() {
+    public CProperFreeElement deepCopy() {
         Complex[] v = new Complex[getLength()];
         for (int i = 0; i < getLength(); i++) {
             v[i] = value[i].deepCopy();

@@ -29,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductProperFreeElement extends ProperFreeElement implements ProductFreeElement {
+public final class ProductProperFreeElement extends ProperFreeElement<ProductProperFreeElement,ProductElement> implements ProductFreeElement<ProductProperFreeElement,ProductElement> {
 
     /**
      * Creates a new product free element over the specified ring with given components.
@@ -66,19 +66,7 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
         }
         return true;
     }
-    
-    
-    public ProductProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            return sum((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
+
     /**
      * Returns the sum of this element with <code>element</code>.
      */
@@ -91,20 +79,8 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].sum(element.value[i]);
         }
-        return new ProductProperFreeElement(getRing(), res);        
+        return new ProductProperFreeElement(getRing(), res);
     }
-    
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            add((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     /**
      * Adds <code>element</code> to this this element.
@@ -118,18 +94,6 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
             value[i].add(element.value[i]);
         }        
     }
-    
-    
-    public ProductProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            return difference((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     /**
      * Returns the difference of this element and <code>element</code>.
@@ -145,18 +109,6 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
         }
         return new ProductProperFreeElement(getRing(), res);
     }
-    
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            subtract((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     /**
      * Subtracts <code>element</code> from this element.
@@ -170,19 +122,7 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
             value[i].subtract(element.value[i]);
         }        
     }
-    
-    
-    public ProductProperFreeElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            return productCW((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
+
     public ProductProperFreeElement productCW(ProductProperFreeElement element)
             throws DomainException {
         if (getModule().equals(element.getModule())) {
@@ -195,18 +135,6 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
         return new ProductProperFreeElement(getRing(), res);        
     }
     
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductProperFreeElement) {
-            multiplyCW((ProductProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
     public void multiplyCW(ProductProperFreeElement element)
             throws DomainException {
         if (!getModule().equals(element.getModule())) {
@@ -218,7 +146,7 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
     }
 
 
-    public ProductFreeElement negated() {
+    public ProductProperFreeElement negated() {
         ProductElement[] res = new ProductElement[getLength()];
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].negated();
@@ -232,18 +160,6 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
             value[i].negate();
         }
     }
-    
-
-    public ProductProperFreeElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            return scaled((ProductElement)element);
-        }
-        else {
-            throw new DomainException(ring, element.getRing());
-        }
-    }
-    
 
     /**
      * Returns this element scaled by <code>element</code>.
@@ -253,24 +169,12 @@ public final class ProductProperFreeElement extends ProperFreeElement implements
         if (!element.getRing().equals(getRing())) {
             throw new DomainException(ring, element.getRing());
         }
-        ProductElement res[] = new ProductElement[getLength()];
+        ProductElement[] res = new ProductElement[getLength()];
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].scaled(element);
         }
         return new ProductProperFreeElement(getRing(), res);        
     }
-    
-    
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            scale((ProductElement)element);
-        }
-        else {
-            throw new DomainException(ring, element.getRing());
-        }
-    }
-
     
     /**
      * Scales this element by </i>element</i>.

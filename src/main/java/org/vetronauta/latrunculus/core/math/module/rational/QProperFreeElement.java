@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * Elements in a free module of rationals.
@@ -34,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeElement extends ProperFreeElement implements QFreeElement {
+public final class QProperFreeElement extends ProperFreeElement<QProperFreeElement,QElement> implements QFreeElement<QProperFreeElement> {
 
     public static QFreeElement nullElement = new QProperFreeElement(new Rational[0]);
 
@@ -79,18 +78,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
         return true;
     }
     
-    
-    public QProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            return sum((QProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public QProperFreeElement sum(QProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -105,19 +92,7 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            add((QProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
 
-    
     public void add(QProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -130,18 +105,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public QProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            return difference((QProperFreeElement)element);            
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public QProperFreeElement difference(QProperFreeElement element)
             throws DomainException {
@@ -158,18 +121,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
         }
     }
     
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            subtract((QProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void subtract(QProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -181,18 +132,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public QProperFreeElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            return productCW((QProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public QProperFreeElement productCW(QProperFreeElement element)
             throws DomainException {
@@ -208,18 +147,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QProperFreeElement) {
-            multiplyCW((QProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void multiplyCW(QProperFreeElement element)
             throws DomainException {
@@ -250,18 +177,6 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
         }
     }
 
-    
-    public QProperFreeElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            return scaled((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getRing());
-        }
-    }
-    
-
     public QProperFreeElement scaled(QElement element) {
         Rational val = element.getValue();
         Rational res[] = new Rational[getLength()];
@@ -270,19 +185,7 @@ public final class QProperFreeElement extends ProperFreeElement implements QFree
         }
         return new QProperFreeElement(res);        
     }
-    
-    
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            scale((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getRing());
-        }
-    }
 
-    
     public void scale(QElement element) {
         Rational val = element.getValue();
         for (int i = 0; i < getLength(); i++) {

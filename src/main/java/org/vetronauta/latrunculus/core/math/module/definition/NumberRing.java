@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
  * 
  * @author Gérard Milmeister
  */
-public abstract class NumberRing extends Ring {
+public abstract class NumberRing<R extends RingElement<R>> extends Ring<R> {
 
     public int compareTo(Module object) {
         if (object instanceof NumberRing) {

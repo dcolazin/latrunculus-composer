@@ -27,5 +27,5 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
  * 
  * @author Gérard Milmeister
  */
-public interface QStringFreeElement extends FreeElement {
+public interface QStringFreeElement<E extends QStringFreeElement<E>> extends FreeElement<E,QStringElement> {
 }

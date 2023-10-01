@@ -31,12 +31,12 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
  * 
  * @author Gérard Milmeister
  */
-public interface Module extends Serializable, Comparable<Module>, MathDefinition {
+public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> extends Serializable, Comparable<Module<?,?>>, MathDefinition {
 
     /**
      * Returns the zero element in this module.
      */
-    ModuleElement getZero();
+    E getZero();
 
     /**
      * Returns the identity morphism in this module.
@@ -51,7 +51,7 @@ public interface Module extends Serializable, Comparable<Module>, MathDefinition
     /**
      * Returns the null-module corresponding to this module.
      */
-    Module getNullModule();
+    Module<?,R> getNullModule();
     
     /**
      * Returns true iff this is a null-module.
@@ -66,41 +66,41 @@ public interface Module extends Serializable, Comparable<Module>, MathDefinition
     /**
      * Returns the underlying ring of this module.
      */
-    Ring getRing();
+    Ring<R> getRing();
 
     /**
      * Returns the <code>i</code>-th component module.
      */
-    Module getComponentModule(int i);
+    Module<?,R> getComponentModule(int i);
 
     /**
      * Returns true iff <code>element</code> is an element of this module.
      */
-    boolean hasElement(ModuleElement element);
+    boolean hasElement(ModuleElement<?,?> element);
 
     /**
      * Returns a morphism that translates by <code>element</code>.
      */
-    ModuleMorphism getTranslation(ModuleElement element);
+    ModuleMorphism getTranslation(ModuleElement<?,?> element);
 
     /**
      * Casts <code>element</code> to an element in this module if possible.
      * @return null if cast is not possible
      */
-    ModuleElement cast(ModuleElement element);
+    E cast(ModuleElement<?,?> element);
     
     /**
      * Creates an element in this module from a list of module elements.
      * @return null if no element in this module can be created from
      *         the arguments.
      */
-    ModuleElement createElement(List<ModuleElement> elements);
+    E createElement(List<ModuleElement<?,?>> elements);
 
     /**
      * Creates an element in this module from a string representation.
      * @return null if the string is in the wrong format
      */
-    ModuleElement parseString(String string);
+    E parseString(String string);
 
     /**
      * Returns a human readable string representation of this module.

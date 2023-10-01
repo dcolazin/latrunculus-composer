@@ -32,7 +32,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class ProductElement extends RingElement implements ProductFreeElement {
+public class ProductElement extends RingElement<ProductElement> implements ProductFreeElement<ProductElement,ProductElement> {
 
     /**
      * Creates a new product element <i>e1</i>x<i>e1</i>.
@@ -94,18 +94,6 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         }
         return true;
     }
-    
-    
-    public ProductElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            return sum((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     /**
      * Returns the sum of this element and <code>element</code>.
@@ -117,47 +105,25 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         }
         RingElement newFactors[] = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
-            newFactors[i] = getValue(i).sum(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            newFactors[i] = (RingElement) currentValue.sum(element.getValue(i).cast(currentValue.getModule()));
         }
-        return new ProductElement(newFactors);            
+        return new ProductElement(newFactors);
     }
-
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            add((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     /**
      * Adds <code>element</code> to this element.
      */
-    public void add(ProductElement element)
-            throws DomainException {
+    public void add(ProductElement element) throws DomainException {
         if (!getModule().equals(element.getModule())) {
             throw new DomainException(this.getModule(), element.getModule());
         }
         for (int i = 0; i < getFactorCount(); i++) {
-            factors[i].add(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            currentValue = (RingElement) currentValue.sum(element.getValue(i).cast(currentValue.getModule()));
+            factors[i] = currentValue;
         }
     }
-
-
-    public ProductElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            return difference((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     /**
      * Returns the difference of this element and <code>element</code>.
@@ -167,24 +133,13 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         if (!getModule().equals(element.getModule())) {
             throw new DomainException(this.getModule(), element.getModule());
         }
-        RingElement newFactors[] = new RingElement[getFactorCount()];
+        RingElement[] newFactors = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
-            newFactors[i] = getValue(i).difference(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            newFactors[i] = (RingElement) currentValue.difference(element.getValue(i).cast(currentValue.getModule()));
         }
-        return new ProductElement(newFactors);            
+        return new ProductElement(newFactors);
     }
-    
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            subtract((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     /**
      * Subtracts <code>element</code> from this element.
@@ -195,7 +150,9 @@ public class ProductElement extends RingElement implements ProductFreeElement {
             throw new DomainException(this.getModule(), element.getModule());
         }
         for (int i = 0; i < getFactorCount(); i++) {
-            factors[i].subtract(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            currentValue = (RingElement) currentValue.difference(element.getValue(i).cast(currentValue.getModule()));
+            factors[i] = currentValue;
         }
     }
     
@@ -203,7 +160,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     public ProductElement negated() {
         RingElement[] newFactors = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
-            newFactors[i] = (RingElement)factors[i].negated();
+            newFactors[i] = factors[i].negated();
         }
         return new ProductElement(newFactors);
     }
@@ -216,56 +173,31 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     }
 
     
-    public ProductElement scaled(RingElement element)
+    public ProductElement scaled(ProductElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
-            throws DomainException {
+    public void scale(ProductElement element) throws DomainException {
         multiply(element);
     }
-    
-
-    public ProductElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            return product((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     /**
      * Returns the product of this element and <code>element</code>.
      */
-    public ProductElement product(ProductElement element)
-            throws DomainException {
+    public ProductElement product(ProductElement element) throws DomainException {
         if (!getModule().equals(element.getModule())) {
             throw new DomainException(this.getModule(), element.getModule());
         }
         RingElement newFactors[] = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
-            newFactors[i] = getValue(i).product(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            newFactors[i] = currentValue.product((RingElement) element.getValue(i).cast(currentValue.getModule()));
         }
-        return new ProductElement(newFactors);            
+        return new ProductElement(newFactors);
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ProductElement) {
-            multiply((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     /**
      * Multiplies this element with <code>element</code>.
      */
@@ -275,7 +207,9 @@ public class ProductElement extends RingElement implements ProductFreeElement {
             throw new DomainException(this.getModule(), element.getModule());
         }
         for (int i = 0; i < getFactorCount(); i++) {
-            factors[i].multiply(element.getValue(i));
+            RingElement currentValue = getValue(i);
+            currentValue = currentValue.product((RingElement) element.getValue(i).cast(currentValue.getModule()));
+            factors[i] = currentValue;
         }
     }
 
@@ -295,7 +229,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         for (int i = 0; i < newFactors.length; i++) {
             newFactors[i] = getValue(i).inverse();
         }
-        return ProductElement.make(newFactors);            
+        return ProductElement.make(newFactors);
     }
 
     
@@ -304,18 +238,6 @@ public class ProductElement extends RingElement implements ProductFreeElement {
             factors[i].invert();
         }
     }
-    
-
-    public ProductElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ProductElement) {
-            return quotient((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public ProductElement quotient(ProductElement element)
             throws DomainException, DivisionException {
@@ -325,26 +247,15 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         RingElement newFactors[] = new RingElement[getFactorCount()];
         try {
             for (int i = 0; i < newFactors.length; i++) {
-                newFactors[i] = getValue(i).quotient(element.getValue(i));
+                RingElement currentValue = getValue(i);
+                newFactors[i] = currentValue.quotient((RingElement) element.getValue(i).cast(currentValue.getModule()));
             }
         }
         catch (DivisionException e) {
             throw new DivisionException(this, element);
         }
-        return new ProductElement(newFactors);            
+        return new ProductElement(newFactors);
     }
-
-
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ProductElement) {
-            divide((ProductElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public void divide(ProductElement element)
             throws DomainException, DivisionException {
@@ -353,7 +264,9 @@ public class ProductElement extends RingElement implements ProductFreeElement {
         }
         try {
             for (int i = 0; i < getFactorCount(); i++) {
-                factors[i].divide(element.getValue(i));
+                RingElement currentValue = getValue(i);
+                currentValue = currentValue.quotient((RingElement) element.getValue(i).cast(currentValue.getModule()));
+                factors[i] = currentValue;
             }
         }
         catch (DivisionException e) {
@@ -362,11 +275,13 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     }
     
     
-    public boolean divides(RingElement element) {        
+    public boolean divides(RingElement<?> element) {
+        if (!(element instanceof ProductElement)) {
+            return false; //TODO is this correct?
+        }
         if (getModule().equals(element.getModule())) {
-            ProductElement e = (ProductElement)element;
             for (int i = 0; i < getFactorCount(); i++) {
-                if (!getValue(i).divides(e.getValue(i))) {
+                if (!(getValue(i)).divides(((ProductElement)element).getValue(i))) {
                     return false;
                 }
             }
@@ -448,7 +363,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     /**
      * Returns the factor at position <code>i</code> of this product element.
      */
-    public RingElement getFactor(int i) {
+    public RingElement<?> getFactor(int i) {
         return getValue(i);
     }
 
@@ -456,7 +371,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     /**
      * Returns the factor at position <code>i</code> of this product element.
      */
-    public RingElement getValue(int i) {
+    public RingElement<?> getValue(int i) {
         return factors[i];
     }
 
@@ -525,7 +440,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
 
     @Override
     public ProductElement deepCopy() {
-        RingElement[] newFactors = new RingElement[factors.length];
+        RingElement[] newFactors =  new RingElement[factors.length];
         for (int i = 0; i < factors.length; i++) {
             newFactors[i] = factors[i].deepCopy();
         }
@@ -594,7 +509,7 @@ public class ProductElement extends RingElement implements ProductFreeElement {
     }
 
     
-    private RingElement[] factors;
+    private RingElement<?>[] factors;
     private ProductRing   ring = null;
 
     private final static int basicHash = "ProductElement".hashCode();

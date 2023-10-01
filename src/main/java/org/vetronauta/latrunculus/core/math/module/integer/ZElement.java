@@ -34,7 +34,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZElement extends RingElement implements ZFreeElement {
+public final class ZElement extends RingElement<ZElement> implements ZFreeElement<ZElement> {
 
     /**
      * Constructs a ZElement with integer <code>value</code>.
@@ -53,65 +53,17 @@ public final class ZElement extends RingElement implements ZFreeElement {
         return value == 0;
     }
     
-    
-    public ZElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            return sum((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public ZElement sum(ZElement element) {
         return new ZElement(value+element.getValue());        
     }
-    
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            add((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public void add(ZElement element) {
         value += element.getValue();        
     }
     
-    
-    public ZElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            return difference((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public ZElement difference(ZElement element) {
         return new ZElement(value-element.getValue());        
     }
-    
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            subtract((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public void subtract(ZElement element) {
         value -= element.getValue();
@@ -128,26 +80,15 @@ public final class ZElement extends RingElement implements ZFreeElement {
     }
     
     
-    public ZElement scaled(RingElement element)
+    public ZElement scaled(ZElement element)
             throws DomainException{
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(ZElement element)
             throws DomainException {
         multiply(element);
-    }
-    
-
-    public ZElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            return product((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
     }
 
     
@@ -155,18 +96,6 @@ public final class ZElement extends RingElement implements ZFreeElement {
         return new ZElement(getValue()*element.getValue());
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ZElement) {
-            multiply((ZElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void multiply(ZElement element) {
         value *= element.getValue();
     }
@@ -177,7 +106,7 @@ public final class ZElement extends RingElement implements ZFreeElement {
     }
     
     
-    public RingElement inverse() {
+    public ZElement inverse() {
     	if (isInvertible()) {
     		return this;
     	}
@@ -195,17 +124,6 @@ public final class ZElement extends RingElement implements ZFreeElement {
     	    throw new InverseException("Inverse of "+this+" does not exist.");
         }
     }
-    
-    
-    public ZElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZElement) {
-            return quotient((ZElement)element);
-        }
-        else {
-            throw new DomainException(ZRing.ring, element.getRing());
-        }
-    }
 
 
     public ZElement quotient(ZElement element)
@@ -217,17 +135,6 @@ public final class ZElement extends RingElement implements ZFreeElement {
         }
         else {
             throw new DivisionException(this, element);
-        }
-    }
-
-
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZElement) {
-            divide((ZElement)element);
-        }
-        else {
-            throw new DomainException(ZRing.ring, element.getRing());
         }
     }
 
@@ -357,7 +264,7 @@ public final class ZElement extends RingElement implements ZFreeElement {
     }
 
     @Override
-    public RingElement deepCopy() {
+    public ZElement deepCopy() {
         return new ZElement(value);
     }
     

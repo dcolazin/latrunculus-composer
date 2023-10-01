@@ -28,15 +28,15 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public abstract class ProperFreeElement implements FreeElement {
+public abstract class ProperFreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> implements FreeElement<E,R> {
 
     public int compareTo(ModuleElement object) {
         return getModule().compareTo(object.getModule());
     }
     
     
-    public Iterator<RingElement> iterator() {
-        LinkedList<RingElement> elements = new LinkedList<>();
+    public Iterator<RingElement<R>> iterator() {
+        LinkedList<RingElement<R>> elements = new LinkedList<>();
         for (int i = 0; i < getLength(); i++) {
             elements.add(getRingElement(i));
         }

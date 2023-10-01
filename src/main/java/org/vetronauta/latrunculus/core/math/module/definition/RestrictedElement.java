@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
  * 
  * @author Gérard Milmeister
  */
-public class RestrictedElement implements ModuleElement {
+public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingElement<R>> implements ModuleElement<RestrictedElement<B,R>,R> {
 
     public static RestrictedElement make(RestrictedModule module, ModuleElement element)
             throws DomainException {
@@ -51,7 +51,7 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public ModuleElement scaled(RingElement element)
+    public RestrictedElement<B,R> scaled(R element)
             throws DomainException {
         if (module.getRestrictingMorphism().getDomain().hasElement(element)) {            
             ModuleElement res = null;
@@ -59,7 +59,7 @@ public class RestrictedElement implements ModuleElement {
                 res = module.getRestrictingMorphism().map(element);
             }
             catch (MappingException e) {}
-            return new RestrictedElement(module, this.moduleElement.scaled((RingElement)res));
+            return new RestrictedElement(module, this.moduleElement.scaled((R)res));
         }
         else {
             throw new DomainException(module.getRestrictingMorphism().getDomain().getRing(), element.getRing());
@@ -67,7 +67,7 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public void scale(RingElement element)
+    public void scale(R element)
             throws DomainException {
         if (module.getRestrictingMorphism().getDomain().hasElement(element)) {            
             ModuleElement res = null;
@@ -75,7 +75,7 @@ public class RestrictedElement implements ModuleElement {
                 res = module.getRestrictingMorphism().map(element);
             }
             catch (MappingException e) {}
-            this.moduleElement.scale((RingElement)res);
+            this.moduleElement.scale((R)res);
         }
         else {
             throw new DomainException(module.getRestrictingMorphism().getDomain().getRing(), element.getRing());
@@ -93,11 +93,10 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public ModuleElement sum(ModuleElement element)
+    public RestrictedElement<B,R> sum(RestrictedElement<B,R> element)
             throws DomainException {
         if (module.equals(element.getModule())) {
-            RestrictedElement relement = (RestrictedElement)element;
-            return new RestrictedElement(module, this.moduleElement.sum(relement.getUnrestrictedElement()));
+            return new RestrictedElement(module, this.moduleElement.sum(element.getUnrestrictedElement()));
         }
         else {
             throw new DomainException(module, element.getModule());
@@ -105,10 +104,10 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public void add(ModuleElement element)
+    public void add(RestrictedElement<B,R> element)
             throws DomainException {
         if (module.equals(element.getModule())) {
-            this.moduleElement.add(((RestrictedElement)element).getUnrestrictedElement());
+            this.moduleElement.add((element).getUnrestrictedElement());
         }
         else {
             throw new DomainException(module, element.getModule());
@@ -116,10 +115,10 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public ModuleElement difference(ModuleElement element)
+    public RestrictedElement<B,R> difference(RestrictedElement<B,R> element)
             throws DomainException {
         if (module.equals(element.getModule())) {            
-            return new RestrictedElement(module, this.moduleElement.difference(((RestrictedElement)element).getUnrestrictedElement()));
+            return new RestrictedElement(module, this.moduleElement.difference((element).getUnrestrictedElement()));
         }
         else {
             throw new DomainException(module, element.getModule());
@@ -127,10 +126,10 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public void subtract(ModuleElement element)
+    public void subtract(RestrictedElement<B,R> element)
             throws DomainException {
         if (module.equals(element.getModule())) {
-            this.moduleElement.subtract(((RestrictedElement)element).getUnrestrictedElement());
+            this.moduleElement.subtract((element).getUnrestrictedElement());
         }
         else {
             throw new DomainException(module, element.getModule());
@@ -138,7 +137,7 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public ModuleElement negated() {
+    public RestrictedElement<B,R> negated() {
         return new RestrictedElement(module, moduleElement.negated());
     }
 
@@ -158,7 +157,7 @@ public class RestrictedElement implements ModuleElement {
     }
 
     
-    public ModuleElement getUnrestrictedElement() {
+    public B getUnrestrictedElement() {
         return moduleElement;
     }
     
@@ -217,7 +216,7 @@ public class RestrictedElement implements ModuleElement {
     }
     
 
-    private RestrictedElement(RestrictedModule module, ModuleElement element) {
+    private RestrictedElement(RestrictedModule module, B element) {
         this.module = module;
         this.moduleElement = element;
     }
@@ -227,7 +226,7 @@ public class RestrictedElement implements ModuleElement {
     }
 
     private final RestrictedModule module;
-    private final ModuleElement    moduleElement;
+    private final B    moduleElement;
 
     @Override
     public ModuleElement deepCopy() {

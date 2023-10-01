@@ -41,7 +41,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringElement extends StringElement implements ZnStringFreeElement {
+public final class ZnStringElement extends StringElement<ZnStringElement> implements ZnStringFreeElement<ZnStringElement> {
 
     /**
      * Constructs a ZnStringElement from a <code>string</code> mod <code>modulus</code>.
@@ -94,74 +94,26 @@ public final class ZnStringElement extends StringElement implements ZnStringFree
     public boolean isZero() {
         return value.equals(ZnString.getZero(getModulus()));
     }
-       
-
-    public ModuleElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            return sum((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     public ZnStringElement sum(ZnStringElement element) {
-        return new ZnStringElement((ZnString)value.sum(element.getValue()));        
+        return new ZnStringElement(value.sum(element.getValue()));
     }
 
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            add((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void add(ZnStringElement element) {
         value.add(element.getValue());
     }
 
-    
-    public ModuleElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            return difference((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public ZnStringElement difference(ZnStringElement element) {
-        return new ZnStringElement((ZnString)value.difference(element.getValue()));
+        return new ZnStringElement(value.difference(element.getValue()));
     }
-
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            subtract((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public void subtract(ZnStringElement element) {
         value.subtract(element.getValue());
     }
 
 
-    public ModuleElement negated() {
-        return new ZnStringElement((ZnString)value.negated());
+    public ZnStringElement negated() {
+        return new ZnStringElement(value.negated());
     }
 
     
@@ -170,51 +122,27 @@ public final class ZnStringElement extends StringElement implements ZnStringFree
     }
 
     
-    public ModuleElement scaled(RingElement element)
+    public ZnStringElement scaled(ZnStringElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(ZnStringElement element)
             throws DomainException {
         multiply(element);
     }
     
-
-    public RingElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ZStringElement) {
-            return product((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
-    }
-
-    
     public ZnStringElement product(ZnStringElement element) {
-        return new ZnStringElement((ZnString)getValue().product(element.getValue()));
+        return new ZnStringElement(getValue().product(element.getValue()));
     }
-
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnStringElement) {
-            multiply((ZnStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule().getRing(), element.getRing());
-        }
-    }
-
     
     public void multiply(ZnStringElement element) {
         value.multiply(element.getValue());
     }
 
     
-    public RingElement inverse() {
+    public ZnStringElement inverse() {
         throw new InverseException("Inverse of "+this+" does not exist");
     }
 
@@ -224,7 +152,7 @@ public final class ZnStringElement extends StringElement implements ZnStringFree
     }
     
 
-    public RingElement quotient(RingElement element)
+    public ZnStringElement quotient(ZnStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof ZnStringElement) {
             // TODO: implement division where possible
@@ -236,7 +164,7 @@ public final class ZnStringElement extends StringElement implements ZnStringFree
     }
 
 
-    public void divide(RingElement element)
+    public void divide(ZnStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof ZnStringElement) {
             // TODO: implement division where possible
@@ -315,7 +243,7 @@ public final class ZnStringElement extends StringElement implements ZnStringFree
     }
 
     @Override
-    public RingElement deepCopy() {
+    public ZnStringElement deepCopy() {
         return new ZnStringElement((ZnString)value.deepCopy());
     }
     

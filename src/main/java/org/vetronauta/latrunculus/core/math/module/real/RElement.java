@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class RElement extends RingElement implements RFreeElement {
+public final class RElement extends RingElement<RElement> implements RFreeElement<RElement> {
 
     /**
      * Constructs an RElement with real number <code>value</code>.
@@ -52,67 +52,19 @@ public final class RElement extends RingElement implements RFreeElement {
         return value == 0.0;
     }
     
-    
-    public RElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            return sum((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
-    }
-
-    
     public RElement sum(RElement element) {
         return new RElement(value+element.getValue());            
     }
-
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            add((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
-    }
-
     
-    public final void add(RElement element) {
+    public void add(RElement element) {
         value += element.getValue();        
     }
 
-
-    public RElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            return difference((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
-    }
-
-
-    public final RElement difference(RElement element) {
+    public RElement difference(RElement element) {
         return new RElement(value-element.getValue());        
     }
     
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            subtract((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getModule());
-        }
-    }
-
-    
-    public final void subtract(RElement element) {
+    public void subtract(RElement element) {
         value -= element.getValue();        
     }
     
@@ -127,46 +79,22 @@ public final class RElement extends RingElement implements RFreeElement {
     }
 
     
-    public RElement scaled(RingElement element)
+    public RElement scaled(RElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(RElement element)
             throws DomainException {
         multiply(element);
     }
     
-
-    public RElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            return product((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-
-    
-    public final RElement product(RElement element) {
+    public RElement product(RElement element) {
         return new RElement(value*element.getValue());
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            multiply((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-
-    
-    public final void multiply(RElement element) {
+    public void multiply(RElement element) {
         value *= element.getValue();
     }
 
@@ -185,18 +113,6 @@ public final class RElement extends RingElement implements RFreeElement {
         value = 1/value;
     }
 
-
-    public RingElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof RElement) {
-            return quotient((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-    
-    
     public RElement quotient(RElement element)
             throws DivisionException {
         double v = element.getValue();
@@ -207,18 +123,6 @@ public final class RElement extends RingElement implements RFreeElement {
             throw new DivisionException(this, element);
         }
     }
-    
-    
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof RElement) {
-            divide((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-    
     
     public void divide(RElement element)
             throws DivisionException {
@@ -237,7 +141,7 @@ public final class RElement extends RingElement implements RFreeElement {
     }
 
     
-    public RingElement power(int n) {
+    public RElement power(int n) {
         if (n == 0) {
             return RRing.ring.getOne();
         }
@@ -346,7 +250,7 @@ public final class RElement extends RingElement implements RFreeElement {
     }
 
     @Override
-    public RingElement deepCopy() {
+    public RElement deepCopy() {
         return new RElement(value);
     }
     

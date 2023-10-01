@@ -27,19 +27,19 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
  * 
  * @author Gérard Milmeister
  */
-public interface FreeElement extends ModuleElement, Iterable<RingElement> {
+public interface FreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends ModuleElement<E,R>, Iterable<RingElement<R>> {
     
     /**
      * Returns the <code>i</code>-th ring component of this free element.
      */
-    RingElement getRingElement(int i);
+    RingElement<R> getRingElement(int i);
     
     /**
      * Returns the componentwise product of this module element and <code>element</code>.
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    ModuleElement productCW(ModuleElement element) throws DomainException;
+    E productCW(E element) throws DomainException;
 
     /**
      * Multiply this module element componentwise with <code>element</code>.
@@ -47,7 +47,7 @@ public interface FreeElement extends ModuleElement, Iterable<RingElement> {
      * 
      * @throws DomainException if <code>element</code> is not in domain
      */
-    void multiplyCW(ModuleElement element) throws DomainException;
+    void multiplyCW(E element) throws DomainException;
 
     /**
      * Returns this free element resized to length <code>n</code>.
@@ -56,6 +56,6 @@ public interface FreeElement extends ModuleElement, Iterable<RingElement> {
      * If the new length <code>n</code> is less than the old length,
      * the vector of values is simply truncated. 
      */
-    FreeElement resize(int n);
+    FreeElement<?,R> resize(int n);
 
 }

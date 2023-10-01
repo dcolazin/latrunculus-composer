@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeElement extends ProperFreeElement implements RFreeElement {
+public final class RProperFreeElement extends ProperFreeElement<RProperFreeElement,RElement> implements RFreeElement<RProperFreeElement> {
 
     public static RFreeElement nullElement = new RProperFreeElement(new double[0]);
     
@@ -60,18 +60,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
         return true;
     }
     
-    
-    public RProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            return sum((RProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
     public RProperFreeElement sum(RProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
@@ -85,18 +73,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            add((RProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     public void add(RProperFreeElement element)
             throws DomainException {
@@ -109,18 +85,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public RProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            return difference((RProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     public RProperFreeElement difference(RProperFreeElement element)
             throws DomainException {
@@ -130,23 +94,10 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
                 res[i] = value[i] - element.value[i];
             }
             return new RProperFreeElement(res);
-        }
-        else {
+        } else {
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            subtract((RProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
 
     public void subtract(RProperFreeElement element)
             throws DomainException {
@@ -154,17 +105,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
             for (int i = 0; i < getLength(); i++) {
                 value[i] -= element.value[i];
             }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public ModuleElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            return productCW((RProperFreeElement)element);
         }
         else {
             throw new DomainException(this.getModule(), element.getModule());
@@ -185,18 +125,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RProperFreeElement) {
-            multiplyCW((RProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void multiplyCW(RProperFreeElement element)
             throws DomainException {
@@ -225,18 +153,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
             value[i] = -value[i];
         }
     }
-    
-
-    public RProperFreeElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            return scaled((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-    
 
     public RProperFreeElement scaled(RElement element) {
         double val = element.getValue();
@@ -246,18 +162,6 @@ public final class RProperFreeElement extends ProperFreeElement implements RFree
         }
         return new RProperFreeElement(res);        
     }
-    
-    
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof RElement) {
-            scale((RElement)element);
-        }
-        else {
-            throw new DomainException(RRing.ring, element.getRing());
-        }
-    }
-
     
     public void scale(RElement element) {
         double val = element.getValue();

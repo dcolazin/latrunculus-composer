@@ -27,6 +27,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
  * 
  * @author Gérard Milmeister
  */
-public interface RFreeElement extends FreeElement {
+public interface RFreeElement<E extends RFreeElement<E>> extends FreeElement<E,RElement> {
 
 }

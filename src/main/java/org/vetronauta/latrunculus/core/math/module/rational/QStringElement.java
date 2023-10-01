@@ -42,7 +42,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringElement extends StringElement implements QStringFreeElement {
+public final class QStringElement extends StringElement<QStringElement> implements QStringFreeElement<QStringElement> {
 
     /**
      * Constructs a QStringElement from a QString <code>value</code>.
@@ -93,74 +93,27 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     public boolean isZero() {
         return value.equals(QString.getZero());
     }
-       
-
-    public ModuleElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            return sum((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getModule());
-        }
-    }
 
 
-    public final QStringElement sum(QStringElement element) {
+    public QStringElement sum(QStringElement element) {
         return new QStringElement((QString)getValue().sum(element.getValue()));        
     }
-
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            add((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getModule());
-        }
-    }
     
-    
-    public final void add(QStringElement element) {
+    public void add(QStringElement element) {
         value.add(element.getValue());        
     }
 
-
-    public ModuleElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            return difference((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getModule());
-        }
-    }
-        
-
-    public final QStringElement difference(QStringElement element) {
-        return new QStringElement((QString)getValue().difference(element.getValue()));
-    }
-        
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            subtract((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getModule());
-        }
+    public QStringElement difference(QStringElement element) {
+        return new QStringElement(getValue().difference(element.getValue()));
     }
 
-
-    public final void subtract(QStringElement element) {
+    public void subtract(QStringElement element) {
         value.subtract(element.getValue());
     }
 
 
-    public ModuleElement negated() {
-        return new QStringElement((QString)getValue().negated());
+    public QStringElement negated() {
+        return new QStringElement(getValue().negated());
     }
 
     
@@ -169,42 +122,20 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     }
 
 
-    public ModuleElement scaled(RingElement element)
+    public QStringElement scaled(QStringElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(QStringElement element)
             throws DomainException {
         multiply(element);
     }
-    
-
-    public RingElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            return product((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getRing());
-        }
-    }
 
     
-    public final QStringElement product(QStringElement element) {
-        return new QStringElement((QString)getValue().product(element.getValue()));
-    }
-
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof QStringElement) {
-            multiply((QStringElement)element);
-        }
-        else {
-            throw new DomainException(QStringRing.ring, element.getRing());
-        }
+    public QStringElement product(QStringElement element) {
+        return new QStringElement(getValue().product(element.getValue()));
     }
 
     
@@ -213,7 +144,7 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     }
 
     
-    public RingElement inverse() {
+    public QStringElement inverse() {
         throw new InverseException("Inverse of "+this+" does not exist");
     }
 
@@ -223,7 +154,7 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     }
 
     
-    public RingElement quotient(RingElement element)
+    public QStringElement quotient(QStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof QStringElement) {
             // TODO: implement division where possible
@@ -235,7 +166,7 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     }
 
 
-    public void divide(RingElement element)
+    public void divide(QStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof QStringElement) {
             // TODO: implement division where possible
@@ -309,7 +240,7 @@ public final class QStringElement extends StringElement implements QStringFreeEl
     }
 
     @Override
-    public RingElement deepCopy() {
+    public QStringElement deepCopy() {
         return new QStringElement((QString)getValue().deepCopy());
     }
 

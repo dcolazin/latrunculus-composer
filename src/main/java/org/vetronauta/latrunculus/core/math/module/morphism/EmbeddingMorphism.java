@@ -89,7 +89,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
         ModuleMorphism m = null;
         
         // check if the requested embedding is in the cache
-        Pair<Module,Module> pair = Pair.makePair(domain, codomain);
+        Pair<Module<?,?>,Module<?,?>> pair = Pair.makePair(domain, codomain);
         if ((m = embeddings.get(pair)) == null) {
             // try to create the embedding
             if (domain instanceof FreeModule && codomain instanceof FreeModule) {
@@ -261,7 +261,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
     /**
      * Creates an embedding of a ring in another ring.
      */
-    private final static EmbeddingMorphism makeRingEmbedding(final Ring domain, final Ring codomain) {
+    private static final EmbeddingMorphism makeRingEmbedding(final Ring domain, final Ring codomain) {
         EmbeddingMorphism m = null;
         // domain is ZnRing
         if (domain instanceof ZnRing) {
@@ -336,7 +336,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * Creates an embedding of a Z_n ring in another ring.
      * These are neither ring nor module homomorphisms.
      */
-    private final static EmbeddingMorphism makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
+    private static final EmbeddingMorphism makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
         EmbeddingMorphism m = null;
         if (codomain instanceof ZnRing) {
             // Zn -> Zm
@@ -395,7 +395,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
     /**
      * Creates an embedding of a free module in another free module.
      */
-    private final static EmbeddingMorphism makeFreeModuleEmbedding(final FreeModule domain, final FreeModule codomain) {
+    private static final EmbeddingMorphism makeFreeModuleEmbedding(final FreeModule domain, final FreeModule codomain) {
         // embeddings of free modules only if the dimension m of the codomain is
         // greater or equal than the dimension n of the domain.
         if (domain.getDimension() > codomain.getDimension()) {            
@@ -539,7 +539,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
                         try {
-                            FreeElement fe = ((FreeElement)element).resize(codim);
+                            FreeElement<?,?> fe = ((FreeElement)element).resize(codim);
                             LinkedList<ModuleElement> elements = new LinkedList<ModuleElement>();
                             for (RingElement e : fe) {
                                 elements.add(ringMorphism.map(e));
@@ -568,7 +568,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param index the index of the codomain factor where the ring should be embedded
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    public final static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain, final int index) {
+    public static final EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain, final int index) {
         if (domain instanceof ProductRing) {
             return makeProductRingEmbedding((ProductRing)domain, codomain);
         }
@@ -582,7 +582,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 RingElement[] factors0 = new RingElement[len];
                 try {
                     for (int i = 0; i < len; i++) {
-                        factors0[i] = factors[i].getZero();
+                        factors0[i] = (RingElement) factors[i].getZero();
                     }
                     factors0[index] = (RingElement)morphism.map(r);
                     return ProductElement.make(factors0);
@@ -723,7 +723,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing ring, final PolynomialRing polyRing) {
+    private final static EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -783,5 +783,5 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
     }
 
     
-    private static HashMap<Pair<Module,Module>,ModuleMorphism> embeddings = new HashMap<Pair<Module,Module>,ModuleMorphism>();
+    private static HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> embeddings = new HashMap<>();
 }

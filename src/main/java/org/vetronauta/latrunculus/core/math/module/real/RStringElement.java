@@ -39,7 +39,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringElement extends StringElement implements RStringFreeElement {
+public final class RStringElement extends StringElement<RStringElement> implements RStringFreeElement<RStringElement> {
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
@@ -90,64 +90,20 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     public boolean isZero() {
         return value.equals(RString.getZero());
     }
-       
-
-    public ModuleElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            return sum((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
 
     public RStringElement sum(RStringElement element) {
         return new RStringElement((RString)getValue().sum(element.getValue()));        
     }
 
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            add((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void add(RStringElement element) {
         value.add(element.getValue());        
     }
 
 
-    public ModuleElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            return difference((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-        
 
     public RStringElement difference(RStringElement element) {
         return new RStringElement((RString)getValue().difference(element.getValue()));
-    }
-        
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            subtract((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
     }
 
 
@@ -156,7 +112,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     }
 
 
-    public ModuleElement negated() {
+    public RStringElement negated() {
         return new RStringElement((RString)getValue().negated());
     }
 
@@ -166,26 +122,15 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     }
 
 
-    public ModuleElement scaled(RingElement element)
+    public RStringElement scaled(RStringElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(RStringElement element)
             throws DomainException {
         multiply(element);
-    }
-    
-
-    public RingElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            return product((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
     }
 
     
@@ -193,24 +138,12 @@ public final class RStringElement extends StringElement implements RStringFreeEl
         return new RStringElement(getValue().product(element.getValue()));
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof RStringElement) {
-            multiply((RStringElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void multiply(RStringElement element) {
         value.multiply(element.getValue());
     }
 
     
-    public RingElement inverse() {
+    public RStringElement inverse() {
         throw new InverseException("Inverse of "+this+" does not exist.");
     }
 
@@ -220,7 +153,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     }
 
     
-    public RingElement quotient(RingElement element)
+    public RStringElement quotient(RStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof RStringElement) {
             // TODO: implement division where possible
@@ -232,7 +165,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     }
 
 
-    public void divide(RingElement element)
+    public void divide(RStringElement element)
             throws DomainException, DivisionException {
         if (element instanceof RStringElement) {
             // TODO: implement division where possible
@@ -306,7 +239,7 @@ public final class RStringElement extends StringElement implements RStringFreeEl
     }
 
     @Override
-    public RingElement deepCopy() {
+    public RStringElement deepCopy() {
         return new RStringElement(getValue().deepCopy());
     }
 

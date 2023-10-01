@@ -34,7 +34,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class QElement extends RingElement implements QFreeElement {
+public final class QElement extends RingElement<QElement> implements QFreeElement<QElement> {
 
     /**
      * Constructs a QElement with rational number <code>value</code>.
@@ -68,66 +68,18 @@ public final class QElement extends RingElement implements QFreeElement {
     public boolean isZero() {
         return value.isZero();
     }
-    
 
-    public QElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            return sum((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
-    }
-
-    
     public QElement sum(QElement element) {
         return new QElement(value.sum(element.getValue()));
     }
 
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            add((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
-    }
-
-    
     public void add(QElement element) {
         value.add(element.getValue());        
     }
 
-        
-    public QElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            return difference((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
-    }
-
-    
     public QElement difference(QElement element) {
         return new QElement(value.difference(element.getValue()));
     }
-
-        
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            subtract((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
-    }
-
     
     public void subtract(QElement element) {
         value.subtract(element.getValue());        
@@ -144,42 +96,19 @@ public final class QElement extends RingElement implements QFreeElement {
     }
 
     
-    public QElement scaled(RingElement element)
+    public QElement scaled(QElement element)
             throws DomainException {
         return product(element);
     }
 
     
-    public void scale(RingElement element)
+    public void scale(QElement element)
             throws DomainException {
         multiply(element);
     }
-
-    
-    public QElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            return product((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
-    }
-
     
     public QElement product(QElement element) {
         return new QElement(value.product(element.getValue())); 
-    }
-
-    
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof QElement) {
-            multiply((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getModule());
-        }
     }
 
 
@@ -201,18 +130,6 @@ public final class QElement extends RingElement implements QFreeElement {
     public void invert() {
         value.invert();
     }
-    
-
-    public QElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof QElement) {
-            return quotient((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getRing());
-        }
-    }
-
 
     public QElement quotient(QElement element)
             throws DivisionException {
@@ -224,18 +141,6 @@ public final class QElement extends RingElement implements QFreeElement {
             throw new DivisionException(this, element);
         }
     }
-
-
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof QElement) {
-            divide((QElement)element);
-        }
-        else {
-            throw new DomainException(QRing.ring, element.getRing());
-        }
-    }
-
     
     public void divide(QElement element)
             throws DivisionException {
@@ -354,7 +259,7 @@ public final class QElement extends RingElement implements QFreeElement {
     }
 
     @Override
-    public RingElement deepCopy() {
+    public QElement deepCopy() {
         return new QElement(new Rational(value));
     }
     

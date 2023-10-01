@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * The interface for elements in the free modules of complex numbers.
@@ -27,12 +29,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
  * 
  * @author Gérard Milmeister
  */
-public interface CFreeElement extends FreeElement {
+public interface CFreeElement<E extends ModuleElement<E,CElement>> extends FreeElement<E,CElement> {
 
     /**
      * Returns the conjugate of this element.
      */
-    CFreeElement conjugated();
+    E conjugated();
 
     /**
      * Conjugates this element.

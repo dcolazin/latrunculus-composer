@@ -39,54 +39,55 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CRing extends NumberRing implements CFreeModule {
+public final class CRing extends NumberRing<CElement> implements CFreeModule<CElement> {
 
     /**
      * The unique instance of the ring of complex numbers.
      */
     public static final CRing ring = new CRing();
 
+    @Override
     public CElement getZero() {
         return new CElement(0);
     }
 
-
+    @Override
     public CElement getOne() {
         return new CElement(1);
     }
     
-    
+    @Override
     public CElement getUnitElement(int i) {
         return getOne();
     }
-    
-    
-    public CFreeModule getNullModule() {
+
+    @Override
+    public CFreeModule<?> getNullModule() {
         return CProperFreeModule.nullModule;
     }
-    
 
+    @Override
     public boolean isField() {
         return true;
     }
-    
-    
+
+    @Override
     public boolean isVectorSpace() {
         return true;
     }
 
-    
+    @Override
     public ModuleMorphism getIdentityMorphism() {
         return ModuleMorphism.getIdentityMorphism(this);
     }
 
-
-    public boolean hasElement(ModuleElement element) {
+    @Override
+    public boolean hasElement(ModuleElement<?,?> element) {
         return (element instanceof CElement);
     }
     
-
-    public CFreeModule getFreeModule(int dimension) {
+    @Override
+    public CFreeModule<?> getFreeModule(int dimension) {
         return CProperFreeModule.make(dimension);
     }
 
@@ -95,7 +96,6 @@ public final class CRing extends NumberRing implements CFreeModule {
         return (this == object);
     }
 
-    
     public int compareTo(Module object) {
         if (this == object) {
             return 0;
@@ -105,8 +105,8 @@ public final class CRing extends NumberRing implements CFreeModule {
         }
     }
 
-
-    public CElement createElement(List<ModuleElement> elements) {        
+    @Override
+    public CElement createElement(List<ModuleElement<?,?>> elements) {
         if (!elements.isEmpty()) {
             return (CElement)elements.get(0).cast(this);
         }
@@ -115,8 +115,8 @@ public final class CRing extends NumberRing implements CFreeModule {
         }
     }
     
-
-    public CElement cast(ModuleElement element) {
+    @Override
+    public CElement cast(ModuleElement<?,?> element) {
         if (element instanceof ZElement) {
             return cast((ZElement)element);
         }
@@ -198,9 +198,9 @@ public final class CRing extends NumberRing implements CFreeModule {
     protected int getNumberRingOrder() {
         return 400;
     }
-    
 
-    private final static int basicHash = "CRing".hashCode();
+
+    private static final int basicHash = "CRing".hashCode();
 
     private CRing() { /* not allowed */ }
 }

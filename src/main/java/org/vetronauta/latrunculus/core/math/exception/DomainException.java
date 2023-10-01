@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.exception;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 
 /**
@@ -29,7 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
  * part of. The <i>received</i> module is the domain that the actual element is
  * part of.
  */
-public final class DomainException extends RubatoException {
+public final class DomainException extends LatrunculusRuntimeException {
+
+    //TODO temporary hack, this should not be an unchecked exception!
     
     /**
      * Creates a DomainException.

@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
  * 
  * @author Gérard Milmeister
  */
-public abstract class ProperFreeModule implements FreeModule {
+public abstract class ProperFreeModule<E extends ModuleElement<E,R>, R extends RingElement<R>> implements FreeModule<E,R> {
 
     public ProperFreeModule(int dimension) {
         dimension = (dimension < 0)?0:dimension;

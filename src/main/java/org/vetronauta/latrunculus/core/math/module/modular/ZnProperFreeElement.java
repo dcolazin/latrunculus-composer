@@ -34,7 +34,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElement {
+public class ZnProperFreeElement extends ProperFreeElement<ZnProperFreeElement,ZnElement> implements ZnFreeElement<ZnProperFreeElement> {
 
     public static ZnFreeElement make(int[] v, int modulus) {
         assert(v != null);
@@ -59,19 +59,7 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
         }
         return true;
     }
-    
-    
-    public ZnProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            return sum((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
+
     public ZnProperFreeElement sum(ZnProperFreeElement element)
             throws DomainException {
         if (getModulus() == element.getModulus() &&
@@ -86,18 +74,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            add((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void add(ZnProperFreeElement element)
             throws DomainException {
@@ -111,18 +87,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-
-    
-    public ZnProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            return difference((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public ZnProperFreeElement difference(ZnProperFreeElement element)
             throws DomainException {
@@ -139,18 +103,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
         }
     }
     
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            subtract((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
     public void subtract(ZnProperFreeElement element)
             throws DomainException {
         if (getModulus() == element.getModulus() &&
@@ -163,18 +115,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-
-    
-    public ModuleElement productCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            return productCW((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public ZnProperFreeElement productCW(ZnProperFreeElement element)
             throws DomainException {
@@ -190,18 +130,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnProperFreeElement) {
-            multiplyCW((ZnProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
     
     public void multiplyCW(ZnProperFreeElement element)
             throws DomainException {
@@ -232,18 +160,6 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
         }
     }
 
-    
-    public ZnProperFreeElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            return scaled((ZnElement)element);
-        }
-        else {
-            throw new DomainException(getModule().getRing(), element.getRing());
-        }
-    }
-    
-
     public ZnProperFreeElement scaled(ZnElement element)
             throws DomainException {
         if (getModulus() == element.getModulus()) {
@@ -258,19 +174,7 @@ public class ZnProperFreeElement extends ProperFreeElement implements ZnFreeElem
             throw new DomainException(getModule().getRing(), element.getRing());
         }
     }
-    
-    
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            scale((ZnElement)element);
-        }
-        else {
-            throw new DomainException(getModule().getRing(), element.getRing());
-        }
-    }
 
-    
     public void scale(ZnElement element)
             throws DomainException {
         if (getModulus() == element.getModulus()) {

@@ -37,9 +37,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductRing
-        extends Ring
-        implements ProductFreeModule {
+public final class ProductRing extends Ring<ProductElement> implements ProductFreeModule<ProductElement,ProductElement> {
     
     /**
      * Creates a new product ring <i>r1</i>x<i>r2</i>.
@@ -126,7 +124,7 @@ public final class ProductRing
     public ProductElement getZero() {
         RingElement[] val = new RingElement[getFactorCount()];
         for (int i = 0; i < getFactorCount(); i++) {
-            val[i] = getFactor(i).getZero();
+            val[i] = (RingElement) getFactor(i).getZero();
         }
         return ProductElement.make(val);
     }
@@ -212,12 +210,12 @@ public final class ProductRing
     }
 
 
-    public ProductElement createElement(List<ModuleElement> elements) {
+    public ProductElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getFactorCount()) {
             return null;
         }
         RingElement[] ringElements = new RingElement[getFactorCount()];
-        Iterator<ModuleElement> iter = elements.iterator();        
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getFactorCount(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof RingElement) {

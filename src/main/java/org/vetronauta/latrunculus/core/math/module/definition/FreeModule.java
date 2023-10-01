@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
  * 
  * @author Gérard Milmeister
  */
-public interface FreeModule extends Module {
+public interface FreeModule<E extends ModuleElement<E,R>, R extends RingElement<R>> extends Module<E,R> {
 
     /**
      * Returns true if this free module is a vector space.
@@ -37,7 +37,7 @@ public interface FreeModule extends Module {
     /**
      * Returns the unit vector with 1 at position <code>i</code>.
      */
-    ModuleElement getUnitElement(int i);
+    E getUnitElement(int i);
     
     /**
      * Returns a module morphism that projects the free module

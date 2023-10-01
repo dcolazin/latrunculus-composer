@@ -22,6 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
@@ -142,7 +143,7 @@ public final class SimpleForm extends Form {
         try {
             res = new SimpleDenotator(null, this, getModule().getZero());
         }
-        catch (RubatoException e) {
+        catch (DomainException e) {
             e.printStackTrace();
         }
         return res;
@@ -157,7 +158,7 @@ public final class SimpleForm extends Form {
         try {
             res = new SimpleDenotator(null, this, address, getModule().getZero());
         }
-        catch (RubatoException e) {
+        catch (DomainException e) {
             e.printStackTrace();
         }
         return res;

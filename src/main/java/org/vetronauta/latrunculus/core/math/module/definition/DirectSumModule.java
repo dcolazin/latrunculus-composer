@@ -33,13 +33,13 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class DirectSumModule implements Module {
+public final class DirectSumModule<R extends RingElement<R>> implements Module<DirectSumElement<R>,R> {
 
     /**
      * Creates a direct sum with the given <code>components</code>.
      * All components must be modules of the same ring.
      */
-    public static DirectSumModule make(Module ... components) {
+    public static DirectSumModule make(Module... components) {
         if (components.length < 1) {
             throw new IllegalArgumentException("There must be at least one component module.");
         }
@@ -127,7 +127,7 @@ public final class DirectSumModule implements Module {
     }
     
 
-    public DirectSumElement createElement(List<ModuleElement> elements) {        	
+    public DirectSumElement<R> createElement(List<ModuleElement<?,?>> elements) {
 	   if (elements.size() < getDimension()) {
 	       return null;
 	   }

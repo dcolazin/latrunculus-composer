@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnElement extends RingElement implements ZnFreeElement {
+public final class ZnElement extends RingElement<ZnElement> implements ZnFreeElement<ZnElement> {
 
     /**
      * Constructs a ZnElement <code>value</code> mod <code>modulus</code>.
@@ -52,18 +52,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     public boolean isZero() {
         return value == 0;
     }
-
-    
-    public ZnElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            return sum((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public ZnElement sum(ZnElement element)
             throws DomainException {
@@ -75,18 +63,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
         }
     }
     
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            add((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void add(ZnElement element)
             throws DomainException {
         if (getModulus() == element.getModulus()) {
@@ -97,18 +73,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
         }
     }
     
-    
-    public ZnElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            return difference((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public ZnElement difference(ZnElement element)
             throws DomainException {
         if (getModulus() == element.getModulus()) {
@@ -118,18 +82,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
             throw new DomainException(this.getModule(), element.getModule());            
         }
     }
-    
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            subtract((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public void subtract(ZnElement element)
             throws DomainException {
@@ -152,28 +104,16 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     }
 
     
-    public ZnElement scaled(RingElement element)
+    public ZnElement scaled(ZnElement element)
             throws DomainException {
         return product(element);
     }
     
 
-    public void scale(RingElement element)
+    public void scale(ZnElement element)
             throws DomainException {
         multiply(element);
     }
-    
-
-    public ZnElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            return product((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
     
     public ZnElement product(ZnElement element)
             throws DomainException {
@@ -185,18 +125,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
         }
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ZnElement) {
-            multiply((ZnElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
     public void multiply(ZnElement element)
             throws DomainException {
         if (getModulus() == element.getModulus()) {
@@ -218,7 +146,7 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
         }
     }
     
-    public RingElement inverse() {
+    public ZnElement inverse() {
         int v = NumberTheory.inverseMod(value, modulus);
         return new ZnElement(v, modulus);
     }
@@ -227,18 +155,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     public void invert() {
         value = NumberTheory.inverseMod(value, modulus);
     }
-    
-    
-    public RingElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZnElement) {
-            return quotient((ZnElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
 
     public ZnElement quotient(ZnElement element)
             throws DivisionException {
@@ -250,18 +166,6 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
             throw new DivisionException(this, element);
         }
     }
-
-
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZnElement) {
-            divide((ZnElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
 
     public void divide(ZnElement element)
             throws DivisionException {
@@ -280,7 +184,7 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     }
 
     
-    public RingElement power(int n) {
+    public ZnElement power(int n) {
         return new ZnElement(NumberTheory.powerMod(value, modulus, n), modulus);
     }
     
@@ -356,7 +260,7 @@ public final class ZnElement extends RingElement implements ZnFreeElement {
     }
 
     @Override
-    public RingElement deepCopy() {
+    public ZnElement deepCopy() {
         return new ZnElement(value, modulus);
     }
     

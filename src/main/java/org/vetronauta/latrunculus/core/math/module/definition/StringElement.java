@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
  * 
  * @author Gérard Milmeister
  */
-abstract public class StringElement extends RingElement {
+public abstract class StringElement<R extends RingElement<R>> extends RingElement<R> {
 
     /**
      * Convenience method for getting the string in a <code>StringElement</code>.

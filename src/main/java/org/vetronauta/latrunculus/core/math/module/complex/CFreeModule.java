@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over complex numbers.
@@ -27,6 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
  * 
  * @author Gérard Milmeister
  */
-public interface CFreeModule extends FreeModule {
+public interface CFreeModule<E extends ModuleElement<E,CElement>> extends FreeModule<E,CElement> {
 
 }

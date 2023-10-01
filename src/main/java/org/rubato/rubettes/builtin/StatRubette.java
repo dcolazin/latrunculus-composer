@@ -131,7 +131,7 @@ public class StatRubette extends AbstractRubette {
         if (denoList.size() > 0) {
             Iterator<Denotator> iter = denoList.iterator();
             Denotator d = iter.next();
-            ModuleElement cur = ((SimpleDenotator)d).getElement().deepCopy();
+            ModuleElement cur = (ModuleElement) ((SimpleDenotator)d).getElement().deepCopy();
             try {
                 while (iter.hasNext()) {
                     d = iter.next();
@@ -165,7 +165,7 @@ public class StatRubette extends AbstractRubette {
                 // compute mean
                 iter = denoList.iterator();
                 d = iter.next();
-                cur = ((SimpleDenotator)d).getElement().deepCopy();
+                cur = (ModuleElement) ((SimpleDenotator)d).getElement().deepCopy();
                 while (iter.hasNext()) {
                     d = iter.next();
                     ModuleElement m = ((SimpleDenotator)d).getElement();
@@ -203,7 +203,7 @@ public class StatRubette extends AbstractRubette {
         if (denoList.size() > 0) {
             Iterator<Denotator> iter = denoList.iterator();
             Denotator d = iter.next();
-            ModuleElement cur = ((SimpleDenotator)d).getElement().deepCopy();
+            ModuleElement cur = (ModuleElement) ((SimpleDenotator)d).getElement().deepCopy();
             try {
                 while (iter.hasNext()) {
                     d = iter.next();

@@ -35,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class CElement extends RingElement implements CFreeElement {
+public final class CElement extends RingElement<CElement> implements CFreeElement<CElement> {
 
     private final Complex value;
 
@@ -62,183 +62,93 @@ public final class CElement extends RingElement implements CFreeElement {
         this.value = new Complex(x, y);
     }
 
-    
+    @Override
     public boolean isOne() {
         return value.isOne();
     }
-    
-    
+
+    @Override
     public boolean isZero() {
         return value.isZero();
     }
 
-    
-    public CElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            return sum((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-
-    
+    @Override
     public CElement sum(CElement element) {
         return new CElement(value.sum(element.getValue()));
     }
-
     
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            add((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-
-    
+    @Override
     public void add(CElement element) {
         value.add(element.getValue());
     }
-    
 
-    public CElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            return difference((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-
-
+    @Override
     public CElement difference(CElement element) {
         return new CElement(value.difference(element.getValue()));
     }
     
-
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            subtract((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-
-
+    @Override
     public void subtract(CElement element) {
         value.subtract(element.getValue());        
     }
     
-    
+    @Override
     public CElement negated() {
         return new CElement(value.neg());
     }
 
-
+    @Override
     public void negate() {
         value.negate();
     }
     
-
+    @Override
     public CElement conjugated() {
         return new CElement(value.conjugated());
     }
 
-
+    @Override
     public void conjugate() {
         value.conjugate();
     }
 
-
-    public CElement scaled(RingElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            return product(element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-    
-
-    public void scale(RingElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            multiply(element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-    
-
-    public CElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            return product((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
+    @Override
+    public CElement scaled(CElement element) {
+        return product(element);
     }
 
-    
+    @Override
+    public void scale(CElement element) {
+        multiply(element);
+    }
+
+    @Override
     public CElement product(CElement element) {
         return new CElement(value.product(element.getValue()));
     }
 
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof CElement) {
-            multiply((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getModule());
-        }
-    }
-
-    
+    @Override
     public void multiply(CElement element) {
         value.multiply(element.getValue());
     }
 
-    
+    @Override
     public boolean isInvertible() {
         return !isZero();
     }
     
-    
+    @Override
     public CElement inverse() {
     	return new CElement(value.inverse());
     }
     
-
+    @Override
     public void invert() {
         value.invert();
     }
     
-    
-    public CElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof CElement) {
-            return quotient((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getRing());
-        }
-    }
-
-
-    public CElement quotient(CElement element)
-            throws DivisionException {
+    @Override
+    public CElement quotient(CElement element) throws DivisionException {
         Complex c = element.getValue();
         if (!c.isZero()) {
             return new CElement(getValue().quotient(c));
@@ -248,20 +158,8 @@ public final class CElement extends RingElement implements CFreeElement {
         }
     }
 
-
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof CElement) {
-            divide((CElement)element);
-        }
-        else {
-            throw new DomainException(CRing.ring, element.getRing());
-        }
-    }
-
-
-    public void divide(CElement element)
-            throws DivisionException {
+    @Override
+    public void divide(CElement element) throws DivisionException {
         Complex c = element.getValue();
         if (!c.isZero()) {
             value.divide(c);
@@ -271,11 +169,10 @@ public final class CElement extends RingElement implements CFreeElement {
         }
     }
 
-
-    public boolean divides(RingElement element) {
+    @Override
+    public boolean divides(RingElement<?> element) {
         return element instanceof CElement && !getValue().isZero();
     }
-
 
     @Override
     public CElement power(int n) {
@@ -316,7 +213,7 @@ public final class CElement extends RingElement implements CFreeElement {
         return new CElement(result);
     }
     
-    
+    @Override
     public CRing getModule() {
         return CRing.ring;
     }

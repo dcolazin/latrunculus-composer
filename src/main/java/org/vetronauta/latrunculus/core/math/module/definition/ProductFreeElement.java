@@ -25,7 +25,7 @@ package org.vetronauta.latrunculus.core.math.module.definition;
  * 
  * @author Gérard Milmeister
  */
-public interface ProductFreeElement extends FreeElement {
+public interface ProductFreeElement<E extends ProductFreeElement<E,R>, R extends RingElement<R>> extends FreeElement<E,R> {
 
     /**
      * Returns the number of factors of the underlying product ring.
