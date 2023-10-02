@@ -20,14 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * The interface for free modules over modular polynomials.
  * 
  * @author Gérard Milmeister
  */
-public interface ModularPolynomialFreeModule extends FreeModule {
+public interface ModularPolynomialFreeModule<E extends ModularPolynomialFreeElement<E,B>, B extends RingElement<B>> extends FreeModule<E,ModularPolynomialElement<B>> {
     
     /**
      * Returns the ring of the coefficients of the polynomials.

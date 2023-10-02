@@ -37,9 +37,9 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ModularPolynomialRing
-        extends Ring
-        implements ModularPolynomialFreeModule {
+public final class ModularPolynomialRing<B extends RingElement<B>>
+        extends Ring<ModularPolynomialElement<B>>
+        implements ModularPolynomialFreeModule<ModularPolynomialElement<B>,B> {
 
     public static ModularPolynomialRing make(PolynomialElement modulus) {
         if (modulus.getCoefficientRing().isField()) {
@@ -91,7 +91,7 @@ public final class ModularPolynomialRing
     }
     
     
-    public Ring getCoefficientRing() {
+    public Ring<ModularPolynomialElement<B>> getCoefficientRing() {
         return coefficientRing;
     }
     
@@ -187,7 +187,7 @@ public final class ModularPolynomialRing
     }
 
 
-    public ModularPolynomialElement createElement(List<ModuleElement> elements) {
+    public ModularPolynomialElement createElement(List<ModuleElement<?,?>> elements) {
         if (elements.size() == 1) {
             if (hasElement(elements.get(0))) {
                 return (ModularPolynomialElement)elements.get(0);
@@ -312,7 +312,7 @@ public final class ModularPolynomialRing
     }
     
     
-    private Ring              coefficientRing;
+    private Ring<ModularPolynomialElement<B>>              coefficientRing; //TODO is this correct?
     private Ring              baseRing;
     private String            indeterminate;
     private PolynomialElement modulus;

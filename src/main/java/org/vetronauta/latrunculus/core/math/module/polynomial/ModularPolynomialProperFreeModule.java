@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -36,9 +37,9 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ModularPolynomialProperFreeModule
-		extends ProperFreeModule
-		implements ModularPolynomialFreeModule {
+public final class ModularPolynomialProperFreeModule<B extends RingElement<B>>
+        extends ProperFreeModule<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>>
+        implements ModularPolynomialFreeModule<ModularPolynomialProperFreeElement<B>,B> {
 
     public static ModularPolynomialFreeModule make(PolynomialElement modulus, int dimension) {
         dimension = (dimension < 0)?0:dimension;
@@ -56,22 +57,22 @@ public final class ModularPolynomialProperFreeModule
     }
 
     
-    public ModularPolynomialFreeElement getZero() {
+    public ModularPolynomialProperFreeElement<B> getZero() {
         ModularPolynomialElement[] res = new ModularPolynomialElement[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = ring.getZero();
         }
-        return ModularPolynomialProperFreeElement.make(ring, res);
+        return (ModularPolynomialProperFreeElement<B>) ModularPolynomialProperFreeElement.make(ring, res);
     }
     
     
-    public ModularPolynomialFreeElement getUnitElement(int i) {
+    public ModularPolynomialProperFreeElement<B> getUnitElement(int i) {
         ModularPolynomialElement[] v = new ModularPolynomialElement[getDimension()];
         for (int j = 0; j < getDimension(); j++) {
             v[j] = getRing().getZero();
         }
         v[i] = getRing().getOne();
-        return ModularPolynomialProperFreeElement.make(getRing(), v);
+        return (ModularPolynomialProperFreeElement<B>) ModularPolynomialProperFreeElement.make(getRing(), v);
     }
     
 
@@ -146,12 +147,12 @@ public final class ModularPolynomialProperFreeModule
     }
 
     
-    public ModularPolynomialProperFreeElement createElement(List<ModuleElement> elements) {
+    public ModularPolynomialProperFreeElement<B> createElement(List<ModuleElement<?,?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
         ModularPolynomialElement[] values = new ModularPolynomialElement[getDimension()];
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             values[i] = ring.cast(iter.next());
             if (values[i] == null) {

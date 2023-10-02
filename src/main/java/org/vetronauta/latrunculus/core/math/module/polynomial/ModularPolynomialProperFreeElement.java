@@ -32,7 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ModularPolynomialProperFreeElement extends ProperFreeElement implements ModularPolynomialFreeElement {
+public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> extends ProperFreeElement<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>> implements ModularPolynomialFreeElement<ModularPolynomialProperFreeElement<B>,B> {
 
     public static ModularPolynomialFreeElement make(ModularPolynomialRing ring, ModularPolynomialElement[] v) {
         if (v.length == 1) {
@@ -43,7 +43,6 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }
     }
 
-    
     public boolean isZero() {
         for (int i = 0; i < value.length; i++) {
             if (!value[i].isZero()) {
@@ -52,20 +51,8 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }
         return true;
     }
-    
-    
-    public ModularPolynomialProperFreeElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            return sum((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
 
-    
-    public ModularPolynomialProperFreeElement sum(ModularPolynomialProperFreeElement element)
+    public ModularPolynomialProperFreeElement<B> sum(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -84,19 +71,7 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }
     }
     
-
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            add((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public void add(ModularPolynomialProperFreeElement element)
+    public void add(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -113,19 +88,7 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }
     }
     
-
-    public ModularPolynomialProperFreeElement difference(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            return difference((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public ModularPolynomialProperFreeElement difference(ModularPolynomialProperFreeElement element)
+    public ModularPolynomialProperFreeElement<B> difference(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -143,20 +106,8 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
 
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            subtract((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-
-    public void subtract(ModularPolynomialProperFreeElement element)
+    public void subtract(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -173,19 +124,7 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }        
     }
     
-    
-    public ModularPolynomialProperFreeElement productCW(ModuleElement element) 
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            return productCW((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public ModularPolynomialProperFreeElement productCW(ModularPolynomialProperFreeElement element)
+    public ModularPolynomialProperFreeElement<B> productCW(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -203,20 +142,8 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-    
-    
-    public void multiplyCW(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            multiplyCW((ModularPolynomialProperFreeElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public void multiplyCW(ModularPolynomialProperFreeElement element)
+
+    public void multiplyCW(ModularPolynomialProperFreeElement<B> element)
             throws DomainException {
         if (getLength() == element.getLength()) {
             try {
@@ -234,7 +161,7 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
     }
     
 
-    public ModularPolynomialProperFreeElement negated() {
+    public ModularPolynomialProperFreeElement<B> negated() {
         ModularPolynomialElement[] res = new ModularPolynomialElement[getLength()];
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].negated();
@@ -249,8 +176,8 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
         }
     }
     
-    
-    public ModularPolynomialProperFreeElement scaled(RingElement element)
+    //TODO should have parameter B?, implement algebra
+    public ModularPolynomialProperFreeElement<B> scaled(ModularPolynomialElement<B> element)
             throws DomainException {
         try {
             ModularPolynomialElement res[] = new ModularPolynomialElement[getLength()];
@@ -263,9 +190,9 @@ public final class ModularPolynomialProperFreeElement extends ProperFreeElement 
             throw new DomainException(this.getModule().getRing(), element.getRing());
         }
     }
-    
 
-    public void scale(RingElement element)
+    //TODO should have parameter B?, implement algebra
+    public void scale(ModularPolynomialElement<B> element)
             throws DomainException {
         try {
             for (int i = 0; i < getLength(); i++) {

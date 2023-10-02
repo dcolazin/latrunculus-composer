@@ -232,7 +232,7 @@ public abstract class NoteGenerator {
 			
 			//this takes a lot of time compared to the other operations
 			return this.createSpecificNoteDenotator(coordinates);
-		} catch (RubatoException e) {
+		} catch (DomainException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -250,7 +250,7 @@ public abstract class NoteGenerator {
 			
 			//this takes a lot of time compared to the other operations
 			return this.createSpecificNoteDenotator(coordinates);
-		} catch (RubatoException e) {
+		} catch (DomainException e) {
 			e.printStackTrace();
 			return null;
 		}

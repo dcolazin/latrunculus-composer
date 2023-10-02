@@ -34,7 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.rational.QRing;
  * 
  * @author Gérard Milmeister
  */
-public final class ModularPolynomialElement extends RingElement implements ModularPolynomialFreeElement {
+public final class ModularPolynomialElement<B extends RingElement<B>> extends RingElement<ModularPolynomialElement<B>>
+        implements ModularPolynomialFreeElement<ModularPolynomialElement<B>,B> {
 
     /**
      * Constructs a modular polynomial in a specified ring with the given coefficents.
@@ -72,21 +73,9 @@ public final class ModularPolynomialElement extends RingElement implements Modul
     
     public boolean isZero() {
         return polynomial.isZero();
-    }  
-    
-    
-    public ModularPolynomialElement sum(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            return sum((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
     }
-
     
-    public ModularPolynomialElement sum(ModularPolynomialElement element)
+    public ModularPolynomialElement<B> sum(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             PolynomialElement p = polynomial.sum(element.polynomial);
@@ -97,19 +86,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         }
     }
     
-    
-    public void add(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            add((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public void add(ModularPolynomialElement element)
+    public void add(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             polynomial = polynomial.sum(element.polynomial);
@@ -120,19 +97,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         }
     }
     
-    
-    public ModularPolynomialElement difference(ModuleElement element) 
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            return difference((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public ModularPolynomialElement difference(ModularPolynomialElement element)
+    public ModularPolynomialElement<B> difference(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             PolynomialElement p = polynomial.difference(element.polynomial);
@@ -143,19 +108,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         }
     }
     
-    
-    public void subtract(ModuleElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            subtract((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    
-    public void subtract(ModularPolynomialElement element)
+    public void subtract(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             polynomial = polynomial.difference(element.polynomial);
@@ -167,7 +120,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
     }
 
     
-    public ModularPolynomialElement negated() {
+    public ModularPolynomialElement<B> negated() {
         PolynomialElement p = polynomial.negated();
         return new ModularPolynomialElement(ring, modulus, p, one);
     }
@@ -178,8 +131,8 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         normalize();
     }
     
-    
-    public ModularPolynomialElement scaled(RingElement element)
+    //TODO this should have parameter B; yet again the algebra vs module definition
+    public ModularPolynomialElement<B> scaled(ModularPolynomialElement<B> element)
             throws DomainException {
         if (ring.getCoefficientRing().hasElement(element)) {
             return product(element);
@@ -188,9 +141,9 @@ public final class ModularPolynomialElement extends RingElement implements Modul
             throw new DomainException(ring.getCoefficientRing(), element.getRing());
         }
     }
-    
 
-    public void scale(RingElement element)
+    //TODO this should have parameter B; yet again the algebra vs module definition
+    public void scale(ModularPolynomialElement<B> element)
             throws DomainException {
         if (ring.getCoefficientRing().hasElement(element)) {
             multiply(element);
@@ -200,25 +153,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         }
     }
     
-
-    public ModularPolynomialElement product(RingElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            return product((ModularPolynomialElement)element);
-        }
-        else {
-            try {
-                PolynomialElement p = polynomial.product(element);
-                return new ModularPolynomialElement(ring, modulus, p, one);
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
-        }
-    }
-
-    
-    public ModularPolynomialElement product(ModularPolynomialElement element)
+    public ModularPolynomialElement<B> product(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             PolynomialElement p = polynomial.product(element.polynomial);
@@ -228,26 +163,8 @@ public final class ModularPolynomialElement extends RingElement implements Modul
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
-
-
-    public void multiply(RingElement element)
-            throws DomainException {
-        if (element instanceof ModularPolynomialElement) {
-            multiply((ModularPolynomialElement)element);
-        }
-        else {
-            try {
-                polynomial = polynomial.product(element);
-                normalize();
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
-        }
-    }
-
     
-    public void multiply(ModularPolynomialElement element)
+    public void multiply(ModularPolynomialElement<B> element)
             throws DomainException {
         if (getRing().equals(element.getRing())) {
             polynomial = polynomial.product(element.polynomial);
@@ -299,19 +216,7 @@ public final class ModularPolynomialElement extends RingElement implements Modul
         throw new InverseException("Inverse of "+this+" does not exist");
     }
     
-
-    public ModularPolynomialElement quotient(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ModularPolynomialElement) {
-            return quotient((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-    
-    public ModularPolynomialElement quotient(ModularPolynomialElement element)
+    public ModularPolynomialElement<B> quotient(ModularPolynomialElement<B> element)
             throws DomainException, DivisionException {
         if (getRing().equals(element.getRing())) {
             try {
@@ -325,20 +230,8 @@ public final class ModularPolynomialElement extends RingElement implements Modul
             throw new DomainException(getRing(), element.getRing());
         }
     }
-    
-    
-    public void divide(RingElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ModularPolynomialElement) {
-            divide((ModularPolynomialElement)element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-    
 
-    public void divide(ModularPolynomialElement element)
+    public void divide(ModularPolynomialElement<B> element)
             throws DomainException, DivisionException {
         if (getRing().equals(element.getRing())) {
             try {

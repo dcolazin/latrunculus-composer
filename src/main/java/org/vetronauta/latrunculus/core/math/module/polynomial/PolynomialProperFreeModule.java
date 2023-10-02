@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -43,7 +44,8 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialProperFreeModule extends ProperFreeModule implements PolynomialFreeModule {
+public final class PolynomialProperFreeModule<B extends RingElement<B>> extends ProperFreeModule<PolynomialProperFreeElement<B>,PolynomialElement<B>>
+        implements PolynomialFreeModule<PolynomialProperFreeElement<B>,B> {
 
     public static PolynomialFreeModule make(Ring coefficientRing, String indeterminate, int dimension) {
         dimension = (dimension < 0)?0:dimension;
@@ -66,23 +68,23 @@ public final class PolynomialProperFreeModule extends ProperFreeModule implement
     }
 
     
-    public PolynomialFreeElement getZero() {
+    public PolynomialProperFreeElement<B> getZero() {
         PolynomialElement[] res = new PolynomialElement[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             res[i] = ring.getZero();
         }
-        return PolynomialProperFreeElement.make(ring, res);
+        return (PolynomialProperFreeElement<B>) PolynomialProperFreeElement.make(ring, res);
     }
     
     
-    public PolynomialFreeElement getUnitElement(int i) {
+    public PolynomialProperFreeElement<B> getUnitElement(int i) {
         PolynomialElement[] v = new PolynomialElement[getDimension()];
         assert(i >= 0 && i < getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v[j] = getRing().getZero();
         }
         v[i] = getRing().getOne();
-        return PolynomialProperFreeElement.make(getRing(), v);
+        return (PolynomialProperFreeElement<B>) PolynomialProperFreeElement.make(getRing(), v);
     }
     
 
@@ -147,12 +149,12 @@ public final class PolynomialProperFreeModule extends ProperFreeModule implement
     }
 
     
-    public PolynomialProperFreeElement createElement(List<ModuleElement> elements) {
+    public PolynomialProperFreeElement<B> createElement(List<ModuleElement<?,?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
         PolynomialElement[] values = new PolynomialElement[getDimension()];
-        Iterator<ModuleElement> iter = elements.iterator();
+        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             values[i] = ring.cast(iter.next());
             if (values[i] == null) {
