@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.AllArgsConstructor;
+import org.vetronauta.latrunculus.core.math.exception.DivisionException;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +32,9 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
+public final class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
 
-    private int value;
+    private final int value;
 
     @Override
     public int compareTo(ArithmeticInteger arithmeticInteger) {
@@ -61,12 +63,27 @@ public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
 
     @Override
     public ArithmeticInteger deepCopy() {
-        return new ArithmeticInteger(value);
+        return this;
     }
 
     @Override
     public boolean isZero() {
         return value == 0;
+    }
+
+    @Override
+    public boolean isOne() {
+        return value == 1;
+    }
+
+    @Override
+    public boolean isInvertible() {
+        return (value == 1 || value == -1);
+    }
+
+    @Override
+    public boolean divides(ArithmeticNumber<?> y) {
+        return (y instanceof ArithmeticInteger) && !this.isZero() && (value % ((ArithmeticInteger) y).value == 0);
     }
 
     @Override
@@ -87,6 +104,28 @@ public class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
     @Override
     public ArithmeticInteger neg() {
         return new ArithmeticInteger(-value);
+    }
+
+    @Override
+    public ArithmeticInteger inverse() {
+        if (isInvertible()) {
+            return this;
+        }
+        throw new InverseException(this);
+    }
+
+    @Override
+    public ArithmeticInteger quotient(ArithmeticInteger other) throws DivisionException {
+        if (other.value != 0 && value % other.value == 0) {
+            return new ArithmeticInteger(value/ other.value);
+        } else {
+            throw new DivisionException(this, other);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 
     @Override

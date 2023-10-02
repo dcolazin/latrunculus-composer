@@ -21,6 +21,8 @@ package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +33,10 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @Getter
-public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
+public final class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
 
-    private int value;
-    private int modulus;
+    private final int value;
+    private final int modulus;
 
     public ArithmeticModulus(int value, int modulus) {
         this.value = NumberTheory.mod(value, modulus);
@@ -68,12 +70,32 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
 
     @Override
     public ArithmeticModulus deepCopy() {
-        return new ArithmeticModulus(value, modulus);
+        return this;
     }
 
     @Override
     public boolean isZero() {
         return intValue() == 0;
+    }
+
+    @Override
+    public boolean isOne() {
+        return intValue() == 1;
+    }
+
+    @Override
+    public boolean isInvertible() {
+        try {
+            NumberTheory.inverseMod(value, modulus); //TODO is there a faster way?
+            return true;
+        } catch (ZeroDivisorException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean divides(ArithmeticNumber<?> y) {
+        return (y instanceof ArithmeticModulus) && NumberTheory.gcd(value, modulus) == 1;
     }
 
     @Override
@@ -94,6 +116,20 @@ public class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
     @Override
     public ArithmeticModulus neg() {
         return new ArithmeticModulus(-value, modulus);
+    }
+
+    @Override
+    public ArithmeticModulus inverse() {
+        try {
+            return new ArithmeticModulus(NumberTheory.inverseMod(value, modulus), modulus);
+        } catch (ZeroDivisorException e) {
+            throw new InverseException(this, e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d%%%d", value, modulus);
     }
 
     @Override

@@ -116,6 +116,7 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
     /**
      * Returns the module that this module element is an element of.
      */
+    //TODO do we really want this?
     Module<E,R> getModule();
 
     /**
@@ -123,6 +124,7 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
      * @return a new module element in the required module
      *         and null if the cast cannot be performed. 
      */
+    //TODO is it really necessary to have this, when most of the time is module.cast(this) ?
     <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module);
 
     /**

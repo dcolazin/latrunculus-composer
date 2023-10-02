@@ -36,4 +36,8 @@ public class LatrunculusRuntimeException extends RuntimeException {
         super(th);
     }
 
+    public LatrunculusRuntimeException(String message, Throwable th) {
+        super(message, th);
+    }
+
 }

@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.AllArgsConstructor;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
+public final class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
 
-    private double value;
+    private final double value;
 
     @Override
     public int compareTo(ArithmeticDouble arithmeticDouble) {
@@ -61,12 +62,27 @@ public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
 
     @Override
     public ArithmeticDouble deepCopy() {
-        return new ArithmeticDouble(value);
+        return this;
     }
 
     @Override
     public boolean isZero() {
         return value == 0.0;
+    }
+
+    @Override
+    public boolean isOne() {
+        return value == 1.0;
+    }
+
+    @Override
+    public boolean isInvertible() {
+        return value != 0.0;
+    }
+
+    @Override
+    public boolean divides(ArithmeticNumber<?> y) {
+        return (y instanceof ArithmeticDouble) && !this.isZero();
     }
 
     @Override
@@ -87,6 +103,19 @@ public class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
     @Override
     public ArithmeticDouble neg() {
         return new ArithmeticDouble(-value);
+    }
+
+    @Override
+    public ArithmeticDouble inverse() {
+        if (value == 0) {
+            throw  new InverseException(this);
+        }
+        return new ArithmeticDouble(1/value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 
     @Override

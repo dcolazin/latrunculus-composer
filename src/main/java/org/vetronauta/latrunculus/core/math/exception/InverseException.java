@@ -19,14 +19,24 @@
 
 package org.vetronauta.latrunculus.core.math.exception;
 
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * Indicates that the inverse of a RingElement does not exist.
  * @see RingElement
  */
-public final class InverseException extends RuntimeException {
-    
+public final class InverseException extends LatrunculusRuntimeException {
+
+    public InverseException(ArithmeticNumber<?> number, Throwable th) {
+        super(String.format("%s has no inverse", number), th);
+    }
+
+    public InverseException(ArithmeticNumber<?> number) {
+        super(String.format("%s has no inverse", number));
+    }
+
     public InverseException(String message) {
         super(message);
     }   

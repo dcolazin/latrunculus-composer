@@ -26,7 +26,7 @@ package org.vetronauta.latrunculus.core.math.arith.number;
  */
 public final class Complex extends ArithmeticNumber<Complex> {
 
-    private double real;
+    private double real; //TODO make those immutable
     private double imag;
 
     /**
@@ -367,7 +367,17 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return real == 1.0 && imag == 0.0;
     }
 
-    
+    @Override
+    public boolean isInvertible() {
+        return !isZero();
+    }
+
+    @Override
+    public boolean divides(ArithmeticNumber<?> y) {
+        return (y instanceof Complex) && !this.isZero();
+    }
+
+
     /**
      * Returns the real part of this number.
      */

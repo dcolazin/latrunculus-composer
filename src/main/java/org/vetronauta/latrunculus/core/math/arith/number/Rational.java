@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.arith.number;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 
 /**
  * Rational number arithmetic.
@@ -32,7 +33,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;
 
-    private int num;
+    private int num; //TODO make those immutable
     private int denom;
 
     /**
@@ -183,6 +184,16 @@ public final class Rational extends ArithmeticNumber<Rational> {
      */
     public boolean isOne() {
         return num == 1 && denom == 1;
+    }
+
+    @Override
+    public boolean isInvertible() {
+        return !isZero();
+    }
+
+    @Override
+    public boolean divides(ArithmeticNumber<?> y) {
+        return (y instanceof Rational) && !this.isZero();
     }
 
     @Override
@@ -391,7 +402,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
     public Rational inverse() {
         Rational r = new Rational();
         if (num == 0) {
-            throw new ArithmeticException();
+            throw new InverseException(this);
         }
         if (num < 0) {
             r.num = -denom;

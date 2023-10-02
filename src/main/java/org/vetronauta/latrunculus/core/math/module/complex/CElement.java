@@ -23,7 +23,6 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -32,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 /**
  * Elements in the field of complex numbers.
  * @see CRing
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class CElement extends RingElement<CElement> implements CFreeElement<CElement> {

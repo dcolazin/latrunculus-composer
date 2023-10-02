@@ -1,6 +1,7 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 
 /**
  * Ring elements available to be used in a <code>RingString</code> class.
@@ -10,6 +11,9 @@ public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
         extends Number implements Comparable<T>, DeepCopyable<T> {
 
     public abstract boolean isZero();
+    public abstract boolean isOne();
+    public abstract boolean isInvertible();
+    public abstract boolean divides(ArithmeticNumber<?> y);
 
     /**
      * pure sum between this number and the parameter
@@ -27,8 +31,22 @@ public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
     public abstract T product(T y);
 
     /**
+     * pure quotient between this number and the parameter
+     */
+    public T quotient(T y) throws DivisionException {
+        return this.product(y.inverse());
+    }
+
+    /**
      * pure negation of this number
      */
     public abstract T neg();
+
+    /**
+     * pure inversion of this number
+     */
+    public abstract T inverse();
+
+    public abstract String toString();
 
 }
