@@ -119,7 +119,7 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
     public ZProperFreeElement productCW(ZProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            int res[] = new int[getLength()];
+            int[] res = new int[getLength()];
             for (int i = 0; i < getLength(); i++) {
                 res[i] = value[i]*element.value[i];
             }

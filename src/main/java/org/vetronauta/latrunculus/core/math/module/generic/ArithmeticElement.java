@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.generic;
 
+import lombok.Getter;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -28,9 +29,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
+import java.lang.reflect.Array;
+
 /**
  * @author vetronauta
  */
+@Getter
 public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElement<ArithmeticElement<T>> {
 
     private T value;
@@ -41,7 +45,18 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
 
     @Override
     public FreeElement<?, ArithmeticElement<T>> resize(int n) {
-        throw new LatrunculusUnsupportedException(); //TODO
+        if (n == 1) {
+            return this;
+        }
+        T[] array = (T[]) Array.newInstance(value.getClass(), n);
+        T zero = value.difference(value); //TODO getRing...
+        if (array.length > 0) {
+            array[0] = value;
+        }
+        for (int i = 1; i < array.length; i++) {
+            array[i] = zero;
+        }
+        return new ArithmeticMultiElement<>(array);
     }
 
     @Override

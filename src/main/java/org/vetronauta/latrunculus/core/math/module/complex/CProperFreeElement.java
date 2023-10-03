@@ -36,6 +36,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  */
 public final class CProperFreeElement extends ProperFreeElement<CProperFreeElement,CElement> implements CFreeElement<CProperFreeElement> {
 
+    private final Complex[]         value;
+    private CProperFreeModule module = null;
+
     /**
      * Creates a CFreeElement from an array of Complex.
      */
@@ -363,10 +366,6 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
     private CProperFreeElement(Complex[] value) {
         this.value = value;
     }
-   
-    
-    private final Complex[]         value;
-    private CProperFreeModule module = null;
 
     @Override
     public CProperFreeElement deepCopy() {
