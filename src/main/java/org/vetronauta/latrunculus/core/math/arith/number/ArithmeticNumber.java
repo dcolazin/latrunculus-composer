@@ -10,9 +10,14 @@ import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
         extends Number implements Comparable<T>, DeepCopyable<T> {
 
+    //TODO mutable versions to improve array/matrix operations
+
     public abstract boolean isZero();
+
     public abstract boolean isOne();
+
     public abstract boolean isInvertible();
+
     public abstract boolean divides(ArithmeticNumber<?> y);
 
     /**

@@ -222,7 +222,7 @@ public final class SComplex extends SNumber {
                 int e = ((SInteger)n).getInt();
                 Complex res = new Complex(1);
                 while (e > 0) {
-                    res.multiply(c);
+                    res = res.product(c);
                     e--;
                 }
                 return new SComplex(res); 

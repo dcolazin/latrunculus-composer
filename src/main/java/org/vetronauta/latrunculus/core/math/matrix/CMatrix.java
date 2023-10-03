@@ -328,7 +328,7 @@ public class CMatrix extends Matrix {
             for (j = i+1; j < n; j++) {
                 Complex f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (k = i; k < 2*n; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
@@ -340,12 +340,12 @@ public class CMatrix extends Matrix {
         for (i = n-1; i >= 0; i--) {
             Complex f = m[p[i]][i];
             for (k = i; k < 2*n; k++) {
-                m[p[i]][k].divide(f);
+                m[p[i]][k] = m[p[i]][k].quotient(f);
             }
             for (j = i-1; j >= 0; j--) {
                 f = m[p[j]][i];
                 for (k = i; k < 2*n; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
@@ -582,7 +582,7 @@ public class CMatrix extends Matrix {
         
         Complex dot = Complex.getZero();
         for (int r = 0; r < rows; r++) {
-            dot.add(coefficients[r][0].product(m.coefficients[r][0]));
+            dot = dot.sum(coefficients[r][0].product(m.coefficients[r][0]));
         }
         return dot;
     }
@@ -675,13 +675,13 @@ public class CMatrix extends Matrix {
                 coefficients[max_ind] = tmp;
                 // divide row i by max_val
                 for (int k = 0; k < n; k++) {
-                    coefficients[i][k].divide(max_val);
+                    coefficients[i][k] = coefficients[i][k].quotient(max_val);
                 }
                 for (int u = 0; u < m; u++) {
                     if (u != i) {
                         Complex v = new Complex(coefficients[u][j]);
                         for (int k = 0; k < n; k++) {
-                            coefficients[u][k].subtract(v.product(coefficients[i][k]));
+                            coefficients[u][k] = coefficients[u][k].difference(v.product(coefficients[i][k]));
                         }
                     }
                 }
@@ -739,7 +739,7 @@ public class CMatrix extends Matrix {
             for (int c = 0; c < m.columns; c++) {
                 Complex sum = Complex.getZero();
                 for (int i = 0; i < columns; i++) {
-                    sum.add(coefficients[r][i].product(m.coefficients[i][c]));
+                    sum = sum.sum(coefficients[r][i].product(m.coefficients[i][c]));
                 }
                 product.coefficients[r][c] = sum;
             }
@@ -760,7 +760,7 @@ public class CMatrix extends Matrix {
         for (int r = 0; r < rows; r++) {
 	        sum = Complex.getZero();
 	        for (int c = 0; c < columns; c++) {
-		        sum.add(coefficients[r][c].product(vector[c]));
+                sum = sum.sum(coefficients[r][c].product(vector[c]));
             }
 	        res[r] = sum;
         }
@@ -805,20 +805,20 @@ public class CMatrix extends Matrix {
             if (maxval == 0.0) return Complex.getZero();
             if (maxpos != i) {
                 t = p[maxpos]; p[maxpos] = p[i]; p[i] = t;
-                factor.multiply(new Complex(-1));
+                factor = factor.product(new Complex(-1));
             }
             
             for (j = i+1; j < rows; j++) {
                 Complex f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (int k = i; k < columns; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
         
         Complex det = Complex.getOne();
         for (i = 0; i < rows; i++) {
-            det.multiply(m[p[i]][i]);
+            det = det.product(m[p[i]][i]);
         }
         
         return factor.product(det);
@@ -846,7 +846,7 @@ public class CMatrix extends Matrix {
         Complex euclidean = Complex.getZero();
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                euclidean.add(coefficients[r][c].product(coefficients[r][c]));
+                euclidean = euclidean.sum(coefficients[r][c].product(coefficients[r][c]));
             }
         }        
         return euclidean;
@@ -860,7 +860,7 @@ public class CMatrix extends Matrix {
         Complex sum = Complex.getZero();
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                sum.add(coefficients[r][c]);
+                sum = sum.sum(coefficients[r][c]);
             }
         }
         return sum;

@@ -26,8 +26,8 @@ package org.vetronauta.latrunculus.core.math.arith.number;
  */
 public final class Complex extends ArithmeticNumber<Complex> {
 
-    private double real; //TODO make those immutable
-    private double imag;
+    private final double real;
+    private final double imag;
 
     /**
      * Creates the complex number 0+i0.
@@ -184,24 +184,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return new Complex(real+x, imag);
     }
 
-
-    /**
-     * Adds the complex number <code>c</code> to this number.
-     */
-    public void add(Complex c) {
-        real += c.real;
-        imag += c.imag;
-    }
-
-    
-    /**
-     * Adds the real number <code>x</code> to this number.
-     */
-    public void add(double x) {
-        real += x;
-    }
-
-    
     /**
      * Returns the difference of this number and <code>c</code>.
      */
@@ -218,16 +200,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return new Complex(real-x, imag);
     }
 
-    
-    /**
-     * Subtracts the complex number <code>c</code> from this number.
-     */
-    public void subtract(Complex c) {
-        real -= c.real;
-        imag -= c.imag;
-    }
-
-    
     /**
      * Returns the product of this number and <code>c</code>.
      */
@@ -244,18 +216,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return new Complex(x*real, x*imag);
     }
 
-    
-    /**
-     * Multiplies this number with <code>c</code>.
-     */
-    public void multiply(Complex c) {
-        double newr = real*c.real-imag*c.imag;
-        double newi = real*c.imag+imag*c.real;
-        real = newr;
-        imag = newi;
-    }
-    
-    
     /**
      * Returns the quotient of this number by <code>c</code>.
      */
@@ -276,28 +236,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return new Complex(newr, newi);
     }
 
-    
-    /**
-     * Divides this number by <code>c</code>.
-     */
-    public void divide(Complex c) {
-        double d = c.real*c.real+c.imag*c.imag;
-        double newr = (real*c.real+imag*c.imag)/d;
-        double newi = (imag*c.real-real*c.imag)/d;
-        real = newr;
-        imag = newi;
-    }
-
-    
-    /**
-     * Divides this number by <code>x</code>.
-     */
-    public void divide(double x) {
-        real = real/x;
-        imag = imag/x;
-    }
-
-    
     /**
      * Returns the inverse of this number.
      */
@@ -306,17 +244,6 @@ public final class Complex extends ArithmeticNumber<Complex> {
         return new Complex(real/d, -imag/d);
     }
 
-    
-    /**
-     * Inverts this number.
-     */
-    public void invert() {
-        double d = real*real+imag*imag;
-        real = real/d;
-        imag = -imag/d;
-    }
-
-    
     /**
      * Returns the negative of this number.
      */
@@ -327,29 +254,11 @@ public final class Complex extends ArithmeticNumber<Complex> {
 
     
     /**
-     * Negates this number.
-     */
-    public void negate() {
-        real = -real;
-        imag = -imag;
-    }
-
-    
-    /**
      * Returns the conjugate of this number.
      */
     public Complex conjugated() {
         return new Complex(real, -imag);
     }
-
-    
-    /**
-     * Conjugates this number.
-     */
-    public void conjugate() {
-        imag = -imag;
-    }
-
 
     /**
      * Returns true iff this number is 0+i0.
@@ -456,8 +365,7 @@ public final class Complex extends ArithmeticNumber<Complex> {
         double b1 = arg();
         Complex c1 = c.product(Math.log(a1)).exp();
         Complex c2 = new Complex(0, b1).product(c).exp();
-        c1.multiply(c2);
-        return c1;
+        return c1.product(c2);
     }
     
     
@@ -466,15 +374,15 @@ public final class Complex extends ArithmeticNumber<Complex> {
      */
     public Complex sin() {       
         Complex a = new Complex(0, 1);
-        a.multiply(this);
+        a = a.product(this);
         a = a.exp();
 
         Complex b = new Complex(0, -1);
-        b.multiply(this);
+        b = b.product(this);
         b = b.exp();
-        
-        a.subtract(b);
-        a.divide(new Complex(0, 2));
+
+        a = a.difference(b);
+        a = a.quotient(new Complex(0, 2));
         
         return a;
     }
@@ -485,15 +393,15 @@ public final class Complex extends ArithmeticNumber<Complex> {
      */
     public Complex cos() {       
         Complex a = new Complex(0, 1);
-        a.multiply(this);
+        a = a.product(this);
         a = a.exp();
 
         Complex b = new Complex(0, -1);
-        b.multiply(this);
+        b = b.product(this);
         b = b.exp();
-        
-        a.add(b);
-        a.divide(new Complex(2, 0));
+
+        a = a.sum(b);
+        a = a.quotient(new Complex(2, 0));
         
         return a;
     }
@@ -504,16 +412,16 @@ public final class Complex extends ArithmeticNumber<Complex> {
      */
     public Complex tan() {       
         Complex a = new Complex(0, 2);
-        a.multiply(this);
+        a = a.product(this);
         a = a.exp();        
 
         Complex b = new Complex(a);
         
-        a.real--;
-        b.real++;
+        a = a.difference(1);
+        b = b.sum(1);
         
-        b.multiply(new Complex(0, 1));
-        a.divide(b);
+        b = b.product(new Complex(0, 1));
+        a = a.quotient(b);
         
         return a;
     }
@@ -524,13 +432,13 @@ public final class Complex extends ArithmeticNumber<Complex> {
      */
     public Complex asin() {
         Complex a = this.product(this);
-        a.negate();
-        a.add(1);
+        a = a.neg();
+        a = a.sum(1);
         a = a.sqrt();
-        a.add(this.product(new Complex(0, 1)));
+        a = a.sum(this.product(new Complex(0, 1)));
         a = a.log();
-        a.multiply(new Complex(0,1));
-        a.negate();
+        a = a.product(new Complex(0,1));
+        a = a.neg();
         return a;
     }
     
@@ -540,13 +448,13 @@ public final class Complex extends ArithmeticNumber<Complex> {
      */
     public Complex acos() {
         Complex a = this.product(this);
-        a.negate();
-        a.add(1);
+        a = a.neg();
+        a = a.sum(1);
         a = a.sqrt();
-        a.add(this.product(new Complex(0, 1)));
+        a = a.sum(this.product(new Complex(0, 1)));
         a = a.log();
-        a.multiply(new Complex(0,1));
-        a.add(Math.PI/2);
+        a = a.product(new Complex(0,1));
+        a = a.sum(Math.PI/2);
         return a;
     }
     

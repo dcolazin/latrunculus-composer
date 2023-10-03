@@ -69,8 +69,8 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
 
     @Override
     public void conjugate() {
-        for (Complex complex : value) {
-            complex.conjugate();
+        for (int i = 0; i < value.length; i++) {
+            value[i] = value[i].conjugated();
         }
     }
 
@@ -94,7 +94,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
-                value[i].add(v[i]);
+                value[i] = value[i].sum(v[i]);
             }
         }
         else {
@@ -123,7 +123,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
-                value[i].subtract(v[i]);
+                value[i] = value[i].difference(v[i]);
             }
         }
         else {
@@ -153,7 +153,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         if (getLength() == element.getLength()) {
             Complex[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
-                value[i].multiply(v[i]);
+                value[i] = value[i].product(v[i]);
             }
         }
         else {
@@ -173,7 +173,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
     @Override
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
-            value[i].negate();
+            value[i] = value[i].neg();
         }
     }
 
@@ -191,7 +191,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
     public void scale(CElement element) {
         Complex val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
-            value[i].multiply(val);
+            value[i] = value[i].product(val);
         }
     }
 

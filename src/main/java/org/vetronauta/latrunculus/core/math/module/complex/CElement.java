@@ -36,7 +36,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  */
 public final class CElement extends RingElement<CElement> implements CFreeElement<CElement> {
 
-    private final Complex value;
+    private Complex value;
 
     /**
      * Constructs a CElement with complex number <code>value</code>.
@@ -78,7 +78,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
     
     @Override
     public void add(CElement element) {
-        value.add(element.getValue());
+        value = value.sum(element.getValue());
     }
 
     @Override
@@ -88,7 +88,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
     
     @Override
     public void subtract(CElement element) {
-        value.subtract(element.getValue());        
+        value = value.difference(element.getValue());
     }
     
     @Override
@@ -98,7 +98,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
 
     @Override
     public void negate() {
-        value.negate();
+        value = value.neg();
     }
     
     @Override
@@ -108,7 +108,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
 
     @Override
     public void conjugate() {
-        value.conjugate();
+        value = value.conjugated();
     }
 
     @Override
@@ -128,7 +128,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
 
     @Override
     public void multiply(CElement element) {
-        value.multiply(element.getValue());
+        value = value.product(element.getValue());
     }
 
     @Override
@@ -143,7 +143,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
     
     @Override
     public void invert() {
-        value.invert();
+        value = value.inverse();
     }
     
     @Override
@@ -161,7 +161,7 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
     public void divide(CElement element) throws DivisionException {
         Complex c = element.getValue();
         if (!c.isZero()) {
-            value.divide(c);
+            value = value.quotient(c);
         }
         else {
             throw new DivisionException(this, element);

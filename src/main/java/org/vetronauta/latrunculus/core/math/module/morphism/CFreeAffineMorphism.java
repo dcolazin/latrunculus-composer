@@ -61,7 +61,7 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
         Complex[] res;
         res = A.product(rv);
         for (int i = 0; i < res.length; i++) {
-            res[i].add(b[i]);
+            res[i] = res[i].sum(b[i]);
         }
         return res;
     }
@@ -100,7 +100,7 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
                 CMatrix resA = A.product(qm.A);
                 Complex[] resb = A.product(qm.b);
                 for (int i = 0; i < resb.length; i++) {
-                    resb[i].add(b[i]);
+                    resb[i] = resb[i].sum(b[i]);
                 }
                 return new CFreeAffineMorphism(resA, resb);
             }

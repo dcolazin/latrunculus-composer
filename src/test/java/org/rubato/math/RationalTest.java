@@ -19,9 +19,11 @@
 
 package org.rubato.math;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.exception.InverseException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -134,10 +136,7 @@ class RationalTest {
         r = r2.inverse();
         assertEquals(new Rational(-5*11*13, 3*7), r);
         r = new Rational(0, 5);
-        try {
-            r = r.inverse();
-            fail("Should raise an ArithmeticException");
-        } catch (ArithmeticException e) { /* continue */ }
+        Assertions.assertThrows(InverseException.class, () -> r.inverse());
     }
 
     @Test
