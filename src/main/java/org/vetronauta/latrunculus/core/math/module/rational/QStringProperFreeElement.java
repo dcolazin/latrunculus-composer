@@ -272,11 +272,6 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";

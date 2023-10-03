@@ -304,11 +304,6 @@ public final class CElement extends RingElement<CElement> implements CFreeElemen
         return Folding.fold(res);
     }
 
-
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "CElement";
     }

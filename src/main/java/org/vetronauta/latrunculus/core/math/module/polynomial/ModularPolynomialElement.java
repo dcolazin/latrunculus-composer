@@ -385,11 +385,6 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "ModularPolynomialElement";
     }

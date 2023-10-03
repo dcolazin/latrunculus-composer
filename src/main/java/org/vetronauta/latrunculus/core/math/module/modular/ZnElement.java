@@ -283,11 +283,6 @@ public final class ZnElement extends RingElement<ZnElement> implements ZnFreeEle
         return res;
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "ZnElement";
     }

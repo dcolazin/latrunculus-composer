@@ -296,10 +296,6 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         }
     }
 
-    public <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module) {
-        return module.cast(this);
-    }
-
     @Override
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {

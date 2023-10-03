@@ -311,11 +311,6 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";

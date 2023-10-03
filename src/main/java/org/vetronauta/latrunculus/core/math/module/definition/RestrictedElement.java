@@ -163,9 +163,9 @@ public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingEleme
     
     
     public ModuleElement cast(Module module) {
-        ModuleElement res = moduleElement.cast(module);
+        ModuleElement res = module.cast(moduleElement);
         if (res == null) {
-            return res;
+            return null;
         }
         else {
             return new RestrictedElement(this.module, res);

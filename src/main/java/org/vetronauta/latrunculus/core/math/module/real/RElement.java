@@ -278,11 +278,6 @@ public final class RElement extends RingElement<RElement> implements RFreeElemen
         return res;
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "RElement";
     }

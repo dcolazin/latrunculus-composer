@@ -269,11 +269,6 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";

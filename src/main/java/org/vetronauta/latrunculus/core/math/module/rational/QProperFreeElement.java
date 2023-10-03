@@ -287,11 +287,6 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             return super.compareTo(object);
         }
     }
-
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
     
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {

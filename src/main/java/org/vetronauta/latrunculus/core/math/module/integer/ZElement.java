@@ -292,11 +292,6 @@ public final class ZElement extends RingElement<ZElement> implements ZFreeElemen
         return res;
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "ZElement";
     }

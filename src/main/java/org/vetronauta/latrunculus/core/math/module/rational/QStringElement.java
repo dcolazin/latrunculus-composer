@@ -272,11 +272,6 @@ public final class QStringElement extends StringElement<QStringElement> implemen
         }
         return map;
     }
-    
-
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
 
     public String getElementTypeName() {
         return "QStringElement";

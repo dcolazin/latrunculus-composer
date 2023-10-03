@@ -271,11 +271,6 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";

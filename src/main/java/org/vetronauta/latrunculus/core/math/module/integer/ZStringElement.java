@@ -322,11 +322,6 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
         }
         return map;
     }
-    
-
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
 
     public String getElementTypeName() {
         return "ZStringElement";

@@ -287,11 +287,6 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
         return res;
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "QElement";
     }

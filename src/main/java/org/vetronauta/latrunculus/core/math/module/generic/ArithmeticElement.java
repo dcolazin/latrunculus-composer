@@ -100,11 +100,6 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     }
 
     @Override
-    public <R extends ModuleElement<R, S>, S extends RingElement<S>> R cast(Module<R, S> module) {
-        return module.cast(this);
-    }
-
-    @Override
     public String stringRep(boolean... parens) {
         return parens.length > 0 ? TextUtils.parenthesize(value.toString()) : value.toString();
     }

@@ -485,11 +485,6 @@ public class ProductElement extends RingElement<ProductElement> implements Produ
         return Folding.fold(res);
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "ProductElement";
     }

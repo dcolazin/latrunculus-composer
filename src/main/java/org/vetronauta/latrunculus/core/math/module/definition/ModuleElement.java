@@ -125,7 +125,9 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
      *         and null if the cast cannot be performed. 
      */
     //TODO is it really necessary to have this, when most of the time is module.cast(this) ?
-    <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module);
+    default <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module) {
+        return module.cast(this);
+    }
 
     /**
      * Returns a string representation of this module element.

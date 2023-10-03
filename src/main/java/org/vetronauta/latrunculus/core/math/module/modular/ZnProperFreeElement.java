@@ -297,11 +297,6 @@ public class ZnProperFreeElement extends ProperFreeElement<ZnProperFreeElement,Z
         }
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String stringRep(boolean ... parens) {
         if (getLength() == 0) {
             return "Null";

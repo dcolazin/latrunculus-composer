@@ -828,11 +828,6 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
-
     public String getElementTypeName() {
         return "PolynomialElement";
     }

@@ -266,11 +266,6 @@ public final class RStringElement extends StringElement<RStringElement> implemen
         }
         return map;
     }
-    
-
-    public ModuleElement cast(Module module) {
-        return module.cast(this);
-    }
 
     public String getElementTypeName() {
         return "RStringElement";
