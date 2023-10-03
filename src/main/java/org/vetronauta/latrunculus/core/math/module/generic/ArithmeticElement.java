@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -37,9 +38,10 @@ import java.lang.reflect.Array;
 @Getter
 public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElement<ArithmeticElement<T>> {
 
+    @NonNull
     private T value;
 
-    public ArithmeticElement(T value) {
+    public ArithmeticElement(@NonNull T value) {
         this.value = value;
     }
 
@@ -65,32 +67,32 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     }
 
     @Override
-    public ArithmeticElement<T> scaled(ArithmeticElement<T> element) {
+    public ArithmeticElement<T> scaled(@NonNull ArithmeticElement<T> element) {
         return product(element);
     }
 
     @Override
-    public void scale(ArithmeticElement<T> element) {
+    public void scale(@NonNull ArithmeticElement<T> element) {
         multiply(element);
     }
 
     @Override
-    public ArithmeticElement<T> sum(ArithmeticElement<T> element) {
+    public ArithmeticElement<T> sum(@NonNull ArithmeticElement<T> element) {
         return new ArithmeticElement<>(value.sum(element.value));
     }
 
     @Override
-    public void add(ArithmeticElement<T> element) {
+    public void add(@NonNull ArithmeticElement<T> element) {
         value = value.sum(element.value);
     }
 
     @Override
-    public ArithmeticElement<T> difference(ArithmeticElement<T> element) {
+    public ArithmeticElement<T> difference(@NonNull ArithmeticElement<T> element) {
         return new ArithmeticElement<>(value.difference(element.value));
     }
 
     @Override
-    public void subtract(ArithmeticElement<T> element) {
+    public void subtract(@NonNull ArithmeticElement<T> element) {
         value = value.difference(element.value);
     }
 
@@ -125,12 +127,12 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     }
 
     @Override
-    public ArithmeticElement<T> product(ArithmeticElement<T> element) {
+    public ArithmeticElement<T> product(@NonNull  ArithmeticElement<T> element) {
         return new ArithmeticElement<>(value.product(element.value));
     }
 
     @Override
-    public void multiply(ArithmeticElement<T> element) {
+    public void multiply(@NonNull ArithmeticElement<T> element) {
         value = value.product(element.value);
     }
 
@@ -150,17 +152,17 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     }
 
     @Override
-    public ArithmeticElement<T> quotient(ArithmeticElement<T> element) throws DivisionException {
+    public ArithmeticElement<T> quotient(@NonNull ArithmeticElement<T> element) throws DivisionException {
         return new ArithmeticElement<>(value.quotient(element.value));
     }
 
     @Override
-    public void divide(ArithmeticElement<T> element) throws DivisionException {
+    public void divide(@NonNull ArithmeticElement<T> element) throws DivisionException {
         value = value.quotient(element.value);
     }
 
     @Override
-    public boolean divides(RingElement<?> element) {
+    public boolean divides(@NonNull RingElement<?> element) {
         return (element instanceof ArithmeticElement) && (value.divides(((ArithmeticElement<?>) element).value));
     }
 
@@ -168,5 +170,34 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     public ArithmeticElement<T> deepCopy() {
         return new ArithmeticElement<>(value.deepCopy());
     }
+
+    @Override
+    public int compareTo(ModuleElement object) {
+        if (object instanceof ArithmeticElement) {
+            return value.compareTo(((ArithmeticElement<?>)object).value);
+        }
+        return super.compareTo(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        } else if (object instanceof ArithmeticElement) {
+            return getValue().equals(((ArithmeticElement<?>)object).getValue());
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ArithmeticElement<%s>[%s]", value.getClass().getSimpleName(), value);
+    }
+
 
 }
