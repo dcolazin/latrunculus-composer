@@ -40,9 +40,7 @@ public class QAffineMorphism extends QAbstractMorphism {
 
     
     public Rational mapValue(Rational r) {
-        Rational res = r.product(a);
-        res.add(b);
-        return res;
+        return r.product(a).sum(b);
     }
 
     

@@ -74,7 +74,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
     }
 
     public void add(QElement element) {
-        value.add(element.getValue());        
+        value = value.sum(element.getValue());
     }
 
     public QElement difference(QElement element) {
@@ -82,7 +82,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
     }
     
     public void subtract(QElement element) {
-        value.subtract(element.getValue());        
+        value = value.difference(element.getValue());
     }
 
     
@@ -92,7 +92,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
 
     
     public void negate() {
-        value.negate();
+        value = value.neg();
     }
 
     
@@ -113,7 +113,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
 
 
     public void multiply(QElement element) {
-        value.multiply(element.getValue());
+        value = value.product(element.getValue());
     }
 
 
@@ -128,7 +128,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
 
 
     public void invert() {
-        value.invert();
+        value = value.inverse();
     }
 
     public QElement quotient(QElement element)
@@ -146,7 +146,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
             throws DivisionException {
         Rational r = element.getValue();
         if (!r.isZero()) {
-            value.divide(r);
+            value = value.quotient(r);
         }
         else {
             throw new DivisionException(this, element);

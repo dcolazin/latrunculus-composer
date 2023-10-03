@@ -30,16 +30,12 @@ import org.vetronauta.latrunculus.core.math.exception.InverseException;
  */
 public final class Rational extends ArithmeticNumber<Rational> {
 
+    //TODO quantization should be changed at factory level, not at class level
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
     private static int DEFAULT_QUANT = 128*3*5;
 
-    private int num; //TODO make those immutable
-    private int denom;
-
-    /**
-     * Private constructor for internal purposes only.
-     */
-    private Rational() { /* do nothing */ }
+    private final int num;
+    private final int denom;
 
     /**
      * Creates a new rational number <code>n</code>/1.
@@ -56,9 +52,14 @@ public final class Rational extends ArithmeticNumber<Rational> {
      * @param d is the denominator
      */
     public Rational(int n, int d) {
-        num = n;
-        denom = d;
-        reduce();
+        int g = NumberTheory.gcd(n, d);
+        if (d > 0) {
+            num = n/g;
+            denom = d/g;
+        } else {
+            num = -n/g;
+            denom = -d/g;
+        }
     }
 
 
@@ -77,9 +78,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
      * Converts <code>d</code> with quantization <code>quant</code>.
      */
     public Rational(double d, int quant) {
-        num = (int)Math.round(d*quant);
-        denom = quant;
-        reduce();
+        this((int)Math.round(d*quant), quant);
     }
 
 
@@ -88,9 +87,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
      * Converts <code>d</code> with default quantization.
      */
     public Rational(double d) {
-        num = (int)Math.round(d*DEFAULT_QUANT);
-        denom = DEFAULT_QUANT;
-        reduce();
+        this((int)Math.round(d*DEFAULT_QUANT), DEFAULT_QUANT);
     }
 
 
@@ -112,39 +109,10 @@ public final class Rational extends ArithmeticNumber<Rational> {
         long q = (numerator*qu)/denominator;
         long s = (numerator*qu)%denominator;
         if (s*2 > denominator) q++;
-        num = sign*(int)q;
-        denom = quant;
-        reduce();
+        Rational newRational = new Rational(sign*(int)q, quant); //TODO hack...
+        num = newRational.num;
+        denom = newRational.denom;
     }
-
-
-    /**
-     * Creates a new rational from its string representation <code>s</code>.
-     * @param s has the format "n/d" where n and d are integers
-     */
-    public Rational(String s) {
-        int divpos = s.indexOf("/");
-        if (divpos > -1) {
-            try {
-                num = Integer.parseInt(s.substring(0, divpos));
-                denom = Integer.parseInt(s.substring(divpos + 1));
-                reduce();
-            }
-            catch (Exception e) {
-                throw new NumberFormatException();
-            }
-        }
-        else {
-            try {
-                num = Integer.parseInt(s);
-                denom = 1;
-            }
-            catch (Exception e) {
-                throw new NumberFormatException();
-            }
-        }
-    }
-
 
     /**
      * Returns the rational 0/1.
@@ -221,25 +189,6 @@ public final class Rational extends ArithmeticNumber<Rational> {
         return new Rational(num + n * denom, denom);
     }
 
-
-    /**
-     * Adds <code>r</code> to this number.
-     */
-    public void add(Rational r) {
-        num = num * r.denom + denom * r.num;
-        denom = denom * r.denom;
-        reduce();
-    }
-
-
-    /**
-     * Adds the integer <code>n</code> to this number.
-     */
-    public void add(int n) {
-        num = num + n * denom;
-    }
-
-
     /**
      * Returns the difference of this number and <code>r</code>.
      */
@@ -256,34 +205,12 @@ public final class Rational extends ArithmeticNumber<Rational> {
         return new Rational(num - n * denom, denom);
     }
 
-
-    /**
-     * Subtracts <code>r</code> from this number.
-     */
-    public void subtract(Rational r) {
-        num = num * r.denom - denom * r.num;
-        denom = denom * r.denom;
-        reduce();
-    }
-
-
-    /**
-     * Subtracts the integer <code>n</code> from this number.
-     */
-    public void subtract(int n) {
-        num = num - n * denom;
-    }
-
-
     /**
      * Returns the product of this number and <code>r</code>.
      */
     public Rational product(Rational r) {
         int g = NumberTheory.gcd(r.denom, num) * NumberTheory.gcd(r.num, denom);
-        Rational newr = new Rational();
-        newr.num = num * r.num / g;
-        newr.denom = denom * r.denom / g;
-        return newr;
+        return new Rational(num * r.num / g, denom * r.denom / g); //TODO do not recheck gcd
     }
 
 
@@ -292,32 +219,8 @@ public final class Rational extends ArithmeticNumber<Rational> {
      */
     public Rational product(int n) {
         int g = NumberTheory.gcd(n, denom);
-        Rational r = new Rational();
-        r.num = num * n / g;
-        r.denom = denom / g;
-        return r;
+        return new Rational(num * n / g, denom / g); //TODO do not recheck gcd
     }
-
-
-    /**
-     * Multiplies this number with <code>r</code>.
-     */
-    public void multiply(Rational r) {
-        int g = NumberTheory.gcd(r.denom, num) * NumberTheory.gcd(r.num, denom);
-        num = num * r.num / g;
-        denom = denom * r.denom / g;
-    }
-
-
-    /**
-     * Multiplies this number with the integer <code>n</code>.
-     */
-    public void multiply(int n) {
-        int g = NumberTheory.gcd(n, denom);
-        num = num * n / g;
-        denom = denom / g;
-    }
-
 
     /**
      * Returns the quotient of this number and <code>r</code>.
@@ -333,10 +236,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
             n = -n;
             d = -d;
         }
-        Rational newr = new Rational();
-        newr.num = n;
-        newr.denom = d;
-        return newr;
+        return new Rational(n,d); //TODO avoid rechecking gcd
     }
 
 
@@ -354,85 +254,20 @@ public final class Rational extends ArithmeticNumber<Rational> {
             m = -m;
             d = -d;
         }
-        Rational r = new Rational();
-        r.num = m;
-        r.denom = d;
-        return r;
+        return new Rational(m,d); //TODO avoid rechecking gcd
     }
-
-
-    /**
-     * Divides this number by <code>r</code>.
-     */
-    public void divide(Rational r) {
-        int g = NumberTheory.gcd(r.denom, denom) * NumberTheory.gcd(r.num, num);
-        num = num * r.denom / g;
-        System.out.println(denom);
-        denom = denom * r.num / g;
-        if (denom == 0) {
-            throw new ArithmeticException();
-        }
-        if (denom < 0) {
-            num = -num;
-            denom = -denom;
-        }
-    }
-
-
-    /**
-     * Divides this number by the integer <code>n</code>.
-     */
-    public void divide(int x) {
-        int g = NumberTheory.gcd(x, num);
-        num = num / g;
-        denom = denom * x / g;
-        if (denom == 0) {
-            throw new ArithmeticException();
-        }
-        if (denom < 0) {
-            num = -num;
-            denom = -denom;
-        }
-    }
-
 
     /**
      * Returns the inverse of this rational.
      */
     public Rational inverse() {
-        Rational r = new Rational();
         if (num == 0) {
             throw new InverseException(this);
         }
         if (num < 0) {
-            r.num = -denom;
-            r.denom = -num;
-        }
-        else {
-            r.num = denom;
-            r.denom = num;
-        }
-        return r;
-    }
-
-
-    /**
-     * Inverts this rational.
-     */
-    public void invert() {
-        int t;
-        if (num == 0) {
-            throw new ArithmeticException();
-        }
-        if (num < 0) {
-            t = num;
-            num = -denom;
-            denom = -t;
-        }
-        else {
-            t = num;
-            num = denom;
-            denom = t;
+            return new Rational(-denom,-num); //TODO avoid check gcd
+        } else {
+            return new Rational(denom,num); //TODO avoid check gcd
         }
     }
 
@@ -442,13 +277,6 @@ public final class Rational extends ArithmeticNumber<Rational> {
     @Override
     public Rational neg() {
         return new Rational(-num, denom);
-    }
-
-    /**
-     * Negates this rational.
-     */
-    public void negate() {
-        num = -num;
     }
 
     /**
@@ -472,15 +300,11 @@ public final class Rational extends ArithmeticNumber<Rational> {
      * Returns the absolute value of this rational.
      */
     public Rational abs() {
-        Rational res = new Rational();
         if (num < 0) {
-            res.num = -num;
+            return new Rational(-num,denom); //TODO avoid check denominator
+        } else {
+            return this;
         }
-        else {
-            res.num = num;
-        }
-        res.denom = denom;
-        return res;
     }
     
     
@@ -514,7 +338,26 @@ public final class Rational extends ArithmeticNumber<Rational> {
      * Returns the rational correspoding to its string representation <code>s</code>.
      */
     public static Rational parseRational(String s) {
-        return new Rational(TextUtils.unparenthesize(s));
+        String unparenthesized = TextUtils.unparenthesize(s);
+        int divpos = unparenthesized.indexOf("/");
+        if (divpos > -1) {
+            try {
+                int n = Integer.parseInt(unparenthesized.substring(0, divpos));
+                int d = Integer.parseInt(unparenthesized.substring(divpos + 1));
+                return new Rational(n,d);
+            }
+            catch (Exception e) {
+                throw new NumberFormatException();
+            }
+        }
+        else {
+            try {
+                return new Rational(Integer.parseInt(s));
+            }
+            catch (Exception e) {
+                throw new NumberFormatException();
+            }
+        }
     }
 
     
@@ -536,10 +379,7 @@ public final class Rational extends ArithmeticNumber<Rational> {
 
 
     public Rational deepCopy() {
-        Rational res = new Rational();
-        res.num = num;
-        res.denom = denom;
-        return res;
+        return this;
     }
 
 
@@ -582,20 +422,6 @@ public final class Rational extends ArithmeticNumber<Rational> {
     public static int getDefaultQuantization() {
         return DEFAULT_QUANT;
     }
-    
-    
-    /**
-     * Reduces numerator and denominator to least values
-     * and ensure that denominator is always positive.
-     */
-    private void reduce() {
-        int g = NumberTheory.gcd(num, denom);
-        num = num / g;
-        denom = denom / g;
-        if (denom < 0) {
-            denom = -denom;
-            num = -num;
-        }
-    }
+
 
 }

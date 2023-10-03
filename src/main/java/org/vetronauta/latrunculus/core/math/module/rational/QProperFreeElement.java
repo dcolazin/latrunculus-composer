@@ -98,7 +98,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
         if (getLength() == element.getLength()) {
             Rational[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
-                value[i].add(v[i]);
+                value[i] = value[i].sum(v[i]);
             }
         }
         else {
@@ -125,7 +125,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].subtract(element.value[i]);
+                value[i] = value[i].difference(element.value[i]);
             }        
         }
         else {
@@ -153,7 +153,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
         if (getLength() == element.getLength()) {
             Rational[] v = element.getValue();
             for (int i = 0; i < getLength(); i++) {
-                value[i].multiply(v[i]);
+                value[i] = value[i].product(v[i]);
             }
         }
         else {
@@ -173,7 +173,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
 
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
-            value[i].negate();
+            value[i] = value[i].neg();
         }
     }
 
@@ -189,7 +189,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
     public void scale(QElement element) {
         Rational val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
-            value[i].multiply(val);
+            value[i] = value[i].product(val);
         }
     }
 

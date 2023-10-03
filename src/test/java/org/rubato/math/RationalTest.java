@@ -59,10 +59,10 @@ class RationalTest {
     @Test
     void testRationalAdd() {
         r = new Rational(r1);
-        r.add(r2);
+        r = r.sum(r2);
         assertEquals(new Rational(1803, 5005), r);
         r = new Rational(r1);
-        r.add(5);
+        r = r.sum(5);
         assertEquals(new Rational(415, 77), r);
     }
 
@@ -77,10 +77,10 @@ class RationalTest {
     @Test
     void testRationalSubtract() {
         r = new Rational(r1);
-        r.subtract(r2);
+        r = r.difference(r2);
         assertEquals(new Rational(2097, 5005), r);
         r = new Rational(r1);
-        r.subtract(5);
+        r = r.difference(5);
         assertEquals(new Rational(-355, 77), r);
     }
 
@@ -95,10 +95,10 @@ class RationalTest {
     @Test
     void testRationalMultiply() {
         r = new Rational(r1);
-        r.multiply(r2);
+        r = r.product(r2);
         assertEquals(new Rational(-18, 1573), r);
         r = new Rational(r1);
-        r.multiply(-5);
+        r = r.product(-5);
         assertEquals(new Rational(-150, 77), r);
     }
 
@@ -117,14 +117,14 @@ class RationalTest {
     @Test
     void testRationalDivide() {
         r = new Rational(r1);
-        r.divide(r2);
+        r = r.quotient(r2);
         assertEquals(new Rational(-650, 49), r);
         r = new Rational(r1);
-        r.divide(-5);
+        r = r.quotient(-5);
         assertEquals(new Rational(-6, 77), r);
         try {
             r = new Rational(r1);
-            r.divide(0);
+            r = r.quotient(0);
             fail("Should raise an ArithmeticException");
         } catch (ArithmeticException e) { /* continue */ }
     }
@@ -142,16 +142,13 @@ class RationalTest {
     @Test
     void testRationalInvert() {
         r = new Rational(r1);
-        r.invert();
+        r = r.inverse();
         assertEquals(new Rational(7*11, 2*3*5), r);
         r = new Rational(r2);
-        r.invert();
+        r = r.inverse();
         assertEquals(new Rational(-5*11*13, 3*7), r);
         r = new Rational(0, 5);
-        try {
-            r.invert();
-            fail("Should raise an ArithmeticException");
-        } catch (ArithmeticException e) { /* continue */ }		 
+        Assertions.assertThrows(InverseException.class, () -> r.inverse());
     }
 
     @Test
@@ -194,7 +191,7 @@ class RationalTest {
 
     @Test
     void testRationalToString() {
-        String s = new Rational("60/-154").toString();
+        String s = Rational.parseRational("60/-154").toString();
         assertEquals("-30/77", s);
     }
 

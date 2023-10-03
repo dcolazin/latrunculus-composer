@@ -209,7 +209,7 @@ public final class SRational extends SNumber {
                 int e = ((SInteger)n).getInt();
                 Rational res = new Rational(1);
                 while (e > 0) {
-                    res.multiply(q);
+                    res = res.product(q);
                     e--;
                 }
                 return new SRational(res); 

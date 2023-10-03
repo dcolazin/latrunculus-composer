@@ -302,7 +302,7 @@ public class QMatrix extends Matrix {
             for (j = i+1; j < n; j++) {
                 Rational f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (k = i; k < 2*n; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
@@ -314,12 +314,12 @@ public class QMatrix extends Matrix {
         for (i = n-1; i >= 0; i--) {
             Rational f = m[p[i]][i];
             for (k = i; k < 2*n; k++) {
-                m[p[i]][k].divide(f);
+                m[p[i]][k] = m[p[i]][k].quotient(f);
             }
             for (j = i-1; j >= 0; j--) {
                 f = m[p[j]][i];
                 for (k = i; k < 2*n; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
@@ -551,7 +551,7 @@ public class QMatrix extends Matrix {
         
         Rational dot = Rational.getZero();
         for (int r = 0; r < rows; r++) {
-            dot.add(coefficients[r][0].product(m.coefficients[r][0]));
+            dot = dot.sum(coefficients[r][0].product(m.coefficients[r][0]));
         }
         return dot;
     }
@@ -644,13 +644,13 @@ public class QMatrix extends Matrix {
                 coefficients[max_ind] = tmp;
                 // divide row i by max_val
                 for (int k = 0; k < n; k++) {
-                    coefficients[i][k].divide(max_val);
+                    coefficients[i][k] = coefficients[i][k].quotient(max_val);
                 }
                 for (int u = 0; u < m; u++) {
                     if (u != i) {
                         Rational v = new Rational(coefficients[u][j]);
                         for (int k = 0; k < n; k++) {
-                            coefficients[u][k].subtract(v.product(coefficients[i][k]));
+                            coefficients[u][k] = coefficients[u][k].difference(v.product(coefficients[i][k]));
                         }
                     }
                 }
@@ -708,7 +708,7 @@ public class QMatrix extends Matrix {
             for (int c = 0; c < m.columns; c++) {
                 Rational sum = Rational.getZero();
                 for (int i = 0; i < columns; i++) {
-                    sum.add(coefficients[r][i].product(m.coefficients[i][c]));
+                    sum = sum.sum(coefficients[r][i].product(m.coefficients[i][c]));
                 }
                 product.coefficients[r][c] = sum;
             }
@@ -729,7 +729,7 @@ public class QMatrix extends Matrix {
         for (int r = 0; r < rows; r++) {
 	        sum = Rational.getZero();
 	        for (int c = 0; c < columns; c++) {
-		        sum.add(coefficients[r][c].product(vector[c]));
+		        sum = sum.sum(coefficients[r][c].product(vector[c]));
             }
 	        res[r] = sum;
         }
@@ -774,20 +774,20 @@ public class QMatrix extends Matrix {
             if (maxval.isZero()) return Rational.getZero();
             if (maxpos != i) {
                 t = p[maxpos]; p[maxpos] = p[i]; p[i] = t;
-                factor.multiply(new Rational(-1));
+                factor = factor.product(new Rational(-1));
             }
             
             for (j = i+1; j < rows; j++) {
                 Rational f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (int k = i; k < columns; k++) {
-                    m[p[j]][k].subtract(f.product(m[p[i]][k]));
+                    m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
         
         Rational det = Rational.getOne();
         for (i = 0; i < rows; i++) {
-            det.multiply(m[p[i]][i]);
+            det = det.product(m[p[i]][i]);
         }
         
         return factor.product(det);
@@ -816,7 +816,7 @@ public class QMatrix extends Matrix {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
                 Rational s = coefficients[r][c];
-                euclidean.add(s.product(s));
+                euclidean = euclidean.sum(s.product(s));
             }
         }        
         return euclidean;
@@ -830,7 +830,7 @@ public class QMatrix extends Matrix {
         Rational sum = Rational.getZero();
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                sum.add(coefficients[r][c]);
+                sum = sum.sum(coefficients[r][c]);
             }
         }
         return sum;
