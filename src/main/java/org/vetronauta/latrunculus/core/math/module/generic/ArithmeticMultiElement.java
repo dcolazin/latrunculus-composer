@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -35,8 +34,10 @@ import java.util.Objects;
  * @author vetronauta
  */
 @Getter
-public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
-        extends ProperFreeElement<ArithmeticMultiElement<T>, ArithmeticElement<T>> {
+public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends ArithmeticNumber<N>>
+        extends ProperFreeElement<ArithmeticMultiElement<T,N>, T> {
+
+    //TODO make it abstract and have a N[] array instead of a T[] one
 
     private final T[] value;
 
@@ -47,15 +48,8 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
         this.value = value;
     }
 
-    public static <I extends ArithmeticNumber<I>> FreeElement<?, ArithmeticElement<I>> make(I[] array) {
-        if (array.length == 1) {
-            return new ArithmeticElement<>(array[0]);
-        }
-        return new ArithmeticMultiElement<>(array);
-    }
-
     @Override
-    public ModuleElement<ArithmeticMultiElement<T>, ArithmeticElement<T>> deepCopy() {
+    public ArithmeticMultiElement<T,N> deepCopy() {
         T[] v = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < getLength(); i++) {
             v[i] = value[i].deepCopy();
@@ -64,15 +58,15 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public RingElement<ArithmeticElement<T>> getRingElement(int i) {
+    public T getRingElement(int i) {
         if (i >= value.length) {
             throw new IndexOutOfBoundsException(String.format("Cannot access index %d for MultiElement of length %d", i, value.length));
         }
-        return new ArithmeticElement<>(value[i]);
+        return value[i].deepCopy();
     }
 
     @Override
-    public ArithmeticMultiElement<T> productCW(ArithmeticMultiElement<T> element) throws DomainException {
+    public ArithmeticMultiElement<T,N> productCW(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -84,7 +78,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public void multiplyCW(ArithmeticMultiElement<T> element) throws DomainException {
+    public void multiplyCW(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -94,36 +88,39 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public FreeElement<?, ArithmeticElement<T>> resize(int n) {
+    public FreeElement<?, T> resize(int n) {
         if (n == value.length) {
             return this;
+        }
+        if (n == 1) {
+            return value[0];
         }
         T[] res = Arrays.copyOf(value, n);
         T zero = res[0].difference(res[0]); //TODO getRing might be useful for this...
         for (int i = value.length; i < n; i++) {
             res[i] = zero;
         }
-        return ArithmeticMultiElement.make(res);
+        return new ArithmeticMultiElement<>(res);
     }
 
     @Override
     public boolean isZero() {
-        return Arrays.stream(value).allMatch(ArithmeticNumber::isZero);
+        return Arrays.stream(value).allMatch(ArithmeticElement::isZero);
     }
 
     @Override
-    public ArithmeticMultiElement<T> scaled(ArithmeticElement<T> element) throws DomainException {
+    public ArithmeticMultiElement<T,N> scaled(T element) throws DomainException {
         T[] res = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < res.length; i++) {
-            res[i] = res[i].product(element.getValue());
+            res[i] = res[i].product(element);
         }
         return new ArithmeticMultiElement<>(res);
     }
 
     @Override
-    public void scale(ArithmeticElement<T> element) throws DomainException {
+    public void scale(T element) throws DomainException {
         for (int i = 0; i < value.length; i++) {
-            value[i] = value[i].product(element.getValue());
+            value[i] = value[i].product(element);
         }
     }
 
@@ -133,12 +130,12 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public ModuleElement<?, ArithmeticElement<T>> getComponent(int i) {
+    public ModuleElement<?, T> getComponent(int i) {
         return getRingElement(i);
     }
 
     @Override
-    public ArithmeticMultiElement<T> sum(ArithmeticMultiElement<T> element) throws DomainException {
+    public ArithmeticMultiElement<T,N> sum(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -150,7 +147,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public void add(ArithmeticMultiElement<T> element) throws DomainException {
+    public void add(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -160,7 +157,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public ArithmeticMultiElement<T> difference(ArithmeticMultiElement<T> element) throws DomainException {
+    public ArithmeticMultiElement<T,N> difference(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -172,7 +169,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public void subtract(ArithmeticMultiElement<T> element) throws DomainException {
+    public void subtract(ArithmeticMultiElement<T,N> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -182,10 +179,10 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public ArithmeticMultiElement<T> negated() {
+    public ArithmeticMultiElement<T,N> negated() {
         T[] res = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].neg();
+            res[i] = value[i].negated();
         }
         return new ArithmeticMultiElement<>(res);
     }
@@ -194,7 +191,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     public void negate() {
         T[] res = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < getLength(); i++) {
-            value[i] = value[i].neg();
+            value[i] = value[i].negated();
         }
     }
 
@@ -204,7 +201,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     }
 
     @Override
-    public Module<ArithmeticMultiElement<T>, ArithmeticElement<T>> getModule() {
+    public Module<ArithmeticMultiElement<T,N>, T> getModule() {
         return null; //TODO
     }
 
@@ -227,7 +224,7 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
         if (!(object instanceof ArithmeticMultiElement)) {
             return false;
         }
-        ArithmeticMultiElement<?> otherElement = (ArithmeticMultiElement<?>) object;
+        ArithmeticMultiElement<?,?> otherElement = (ArithmeticMultiElement<?,?>) object;
         if (getLength() == otherElement.getLength()) {
             for (int i = 0; i < getLength(); i++) {
                 if (!Objects.equals(value[i], otherElement.value[i])) {
