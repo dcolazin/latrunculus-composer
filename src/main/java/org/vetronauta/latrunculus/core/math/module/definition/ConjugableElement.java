@@ -17,19 +17,14 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.complex;
-
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+package org.vetronauta.latrunculus.core.math.module.definition;
 
 /**
- * The interface for elements in the free modules of complex numbers.
- * @see CFreeModule
- * 
+ * The interface for elements that have a conjugate.
+ *
  * @author Gérard Milmeister
  */
-public interface CFreeElement<E extends ModuleElement<E,CElement>> extends FreeElement<E,CElement> {
+public interface ConjugableElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends ModuleElement<E,R> {
 
     /**
      * Returns the conjugate of this element.

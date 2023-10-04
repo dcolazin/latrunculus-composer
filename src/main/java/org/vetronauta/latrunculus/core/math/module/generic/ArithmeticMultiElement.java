@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.generic;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -28,10 +29,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author vetronauta
  */
+@Getter
 public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
         extends ProperFreeElement<ArithmeticMultiElement<T>, ArithmeticElement<T>> {
 
@@ -209,4 +212,33 @@ public class ArithmeticMultiElement<T extends ArithmeticNumber<T>>
     public String stringRep(boolean... parens) {
         return null; //TODO
     }
+
+    @Override
+    public int hashCode() {
+        int val = 11;
+        for (int i = 0; i < getLength(); i++) {
+            val = value[i].hashCode()*17+val;
+        }
+        return val;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof ArithmeticMultiElement)) {
+            return false;
+        }
+        ArithmeticMultiElement<?> otherElement = (ArithmeticMultiElement<?>) object;
+        if (getLength() == otherElement.getLength()) {
+            for (int i = 0; i < getLength(); i++) {
+                if (!Objects.equals(value[i], otherElement.value[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }

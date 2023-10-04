@@ -23,7 +23,6 @@ import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
@@ -37,6 +36,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
@@ -336,7 +336,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * Creates an embedding of a Z_n ring in another ring.
      * These are neither ring nor module homomorphisms.
      */
-    private static final EmbeddingMorphism makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
+    private static EmbeddingMorphism makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
         EmbeddingMorphism m = null;
         if (codomain instanceof ZnRing) {
             // Zn -> Zm
@@ -395,7 +395,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
     /**
      * Creates an embedding of a free module in another free module.
      */
-    private static final EmbeddingMorphism makeFreeModuleEmbedding(final FreeModule domain, final FreeModule codomain) {
+    private static EmbeddingMorphism makeFreeModuleEmbedding(final FreeModule domain, final FreeModule codomain) {
         // embeddings of free modules only if the dimension m of the codomain is
         // greater or equal than the dimension n of the domain.
         if (domain.getDimension() > codomain.getDimension()) {            
@@ -524,7 +524,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // C^n to C^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return ((CFreeElement)element).resize(codim);
+                        return ((ArithmeticMultiElement)element).resize(codim);
                     }
                 };
             }
@@ -540,7 +540,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                     public ModuleElement mapValue(ModuleElement element) {
                         try {
                             FreeElement<?,?> fe = ((FreeElement)element).resize(codim);
-                            LinkedList<ModuleElement> elements = new LinkedList<ModuleElement>();
+                            LinkedList<ModuleElement> elements = new LinkedList<>();
                             for (RingElement e : fe) {
                                 elements.add(ringMorphism.map(e));
                             }

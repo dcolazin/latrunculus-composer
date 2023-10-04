@@ -154,32 +154,27 @@ public final class Address {
      */
     private static Ring getMinRing(Ring ring1, Ring ring2) {
         if (ring1 instanceof NumberRing && ring2 instanceof NumberRing) {
-            return (ring1.compareTo(ring2) < 0)?ring1:ring2;
+            if (ring1 instanceof ZnRing || ring2 instanceof ZnRing) {
+                return ZRing.ring;
+            }
+            return (ring1.compareTo(ring2) < 0) ? ring1 : ring2;
         }
-        else if (ring1 instanceof ZnRing && ring2 instanceof NumberRing) {
-            return ZRing.ring;
-        }
-        else if (ring1 instanceof NumberRing && ring2 instanceof ZnRing) {
-            return ZRing.ring;
-        }
-        else if (ring1 instanceof NumberRing || ring1 instanceof ZnRing) {
+        if (ring1 instanceof NumberRing) {
             return getMinNumberRing(ring1, ring2);
         }
-        else if (ring2 instanceof NumberRing || ring2 instanceof ZnRing) {
+        if (ring2 instanceof NumberRing) {
             return getMinNumberRing(ring2, ring1);
         }
-        else if (ring1 instanceof ProductRing) {
+        if (ring1 instanceof ProductRing) {
             return getMinProductRing((ProductRing)ring1, ring2);
         }
-        else if (ring1 instanceof PolynomialRing) {
+        if (ring1 instanceof PolynomialRing) {
             return getMinPolynomialRing((PolynomialRing)ring1, ring2);
         }
-        else if (ring1 instanceof StringRing) {
+        if (ring1 instanceof StringRing) {
             return getMinStringRing((StringRing)ring1, ring2);
         }
-        else {
-            return null;
-        }
+        return null;
     }
     
     

@@ -81,6 +81,11 @@ public final class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
     }
 
     @Override
+    public boolean isFieldElement() {
+        return true;
+    }
+
+    @Override
     public boolean divides(ArithmeticNumber<?> y) {
         return (y instanceof ArithmeticDouble) && !this.isZero();
     }

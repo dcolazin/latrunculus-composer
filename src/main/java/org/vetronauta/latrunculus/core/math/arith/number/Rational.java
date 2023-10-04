@@ -160,6 +160,11 @@ public final class Rational extends ArithmeticNumber<Rational> {
     }
 
     @Override
+    public boolean isFieldElement() {
+        return true;
+    }
+
+    @Override
     public boolean divides(ArithmeticNumber<?> y) {
         return (y instanceof Rational) && !this.isZero();
     }

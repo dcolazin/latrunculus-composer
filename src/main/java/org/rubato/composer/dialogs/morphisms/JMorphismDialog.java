@@ -41,9 +41,10 @@ import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
 import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
@@ -398,7 +399,7 @@ public class JMorphismDialog
      */
     private void fillMorphismType(JComboBox comboBox) {
         setMorphism(null);        
-        ArrayList<String> items = new ArrayList<String>();
+        ArrayList<String> items = new ArrayList<>();
         if (domain != null && codomain != null) {
             items.add(CONSTANT_TYPE);
             items.add(CANONICAL_TYPE);
@@ -409,7 +410,6 @@ public class JMorphismDialog
             Ring domainRing = domain.getRing();
             if (domainRing.equals(codomain.getRing())) {
                 if (domainRing instanceof NumberRing ||
-                    domainRing instanceof ZnRing ||
                     domainRing instanceof PolynomialRing ||
                     domainRing instanceof ModularPolynomialRing) {
                     items.add(AFFINE_TYPE);

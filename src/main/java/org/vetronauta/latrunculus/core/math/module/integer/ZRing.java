@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
@@ -38,7 +39,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZRing extends NumberRing<ZElement> implements ZFreeModule<ZElement> {
+public final class ZRing extends Ring<ZElement> implements ZFreeModule<ZElement>, NumberRing {
 
     /**
      * The unique instance of the ring of integers.
@@ -94,14 +95,16 @@ public final class ZRing extends NumberRing<ZElement> implements ZFreeModule<ZEl
         return this == object;
     }
 
-    
+
+    @Override
     public int compareTo(Module object) {
-        if (this == object) {
+        if (object == this) {
             return 0;
         }
-        else {
-            return super.compareTo(object);
+        if (object instanceof NumberRing) {
+            return order((NumberRing) object);
         }
+        return super.compareTo(object);
     }
 
 
@@ -190,7 +193,7 @@ public final class ZRing extends NumberRing<ZElement> implements ZFreeModule<ZEl
     }
 
     
-    protected int getNumberRingOrder() {
+    public int getNumberRingOrder() {
         return 100;
     }
 

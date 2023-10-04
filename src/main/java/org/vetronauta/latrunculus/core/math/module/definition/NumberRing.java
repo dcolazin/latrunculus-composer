@@ -19,39 +19,25 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import lombok.NonNull;
 
 /**
- * Subclasses of this abstract class are the rings of integers,
+ * Subclasses of this abstract class are the rings of modular integers, integers,
  * rationals, reals and complex numbers. They are ordered in
  * the way just given.
  * 
  * @author Gérard Milmeister
  */
-public abstract class NumberRing<R extends RingElement<R>> extends Ring<R> {
+public interface NumberRing {
 
-    public int compareTo(Module object) {
-        if (object instanceof NumberRing) {
-            return compareTo((NumberRing)object); 
-        }
-        else if (object instanceof ZnRing) {
-            return 1; 
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    /**
-     * Compares this number ring with the number ring <code>r</code>.
-     */
-    public int compareTo(NumberRing r) {
-        return getNumberRingOrder()-r.getNumberRingOrder();
+    default int order(@NonNull NumberRing object) {
+        return getNumberRingOrder() - object.getNumberRingOrder();
     }
 
     /**
      * Returns a number that indicates the position in
      * the order of rings.
      */
-    protected abstract int getNumberRingOrder();
+    int getNumberRingOrder();
+
 }

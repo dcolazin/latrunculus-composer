@@ -166,6 +166,10 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
         return (element instanceof ArithmeticElement) && (value.divides(((ArithmeticElement<?>) element).value));
     }
 
+    public boolean isFieldElement() {
+        return value.isFieldElement();
+    }
+
     @Override
     public ArithmeticElement<T> deepCopy() {
         return new ArithmeticElement<>(value.deepCopy());
@@ -174,7 +178,10 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     @Override
     public int compareTo(ModuleElement object) {
         if (object instanceof ArithmeticElement) {
-            return value.compareTo(((ArithmeticElement<?>)object).value);
+            Object otherValue = ((ArithmeticElement<?>)object).value;
+            if (value.getClass().isAssignableFrom(otherValue.getClass())) {
+                return value.compareTo((T) otherValue);
+            }
         }
         return super.compareTo(object);
     }

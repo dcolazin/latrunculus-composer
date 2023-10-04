@@ -82,6 +82,11 @@ public final class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger>
     }
 
     @Override
+    public boolean isFieldElement() {
+        return false;
+    }
+
+    @Override
     public boolean divides(ArithmeticNumber<?> y) {
         return (y instanceof ArithmeticInteger) && !this.isZero() && (value % ((ArithmeticInteger) y).value == 0);
     }

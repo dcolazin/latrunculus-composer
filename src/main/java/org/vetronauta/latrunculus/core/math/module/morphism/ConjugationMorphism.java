@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
@@ -38,8 +38,8 @@ public final class ConjugationMorphism extends ModuleMorphism {
     
     public ModuleElement map(ModuleElement x)
             throws MappingException {
-        if (x instanceof CFreeElement) {
-            CFreeElement c = (CFreeElement)x;
+        if (x instanceof ConjugableElement) {
+            ConjugableElement c = (ConjugableElement)x;
             if (c.getLength() == dimension) {
                 return c.conjugated();
             }

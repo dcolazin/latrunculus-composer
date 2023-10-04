@@ -23,9 +23,12 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -38,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule extends ProperFreeModule<CProperFreeElement,CElement> implements CFreeModule<CProperFreeElement> {
+public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);  
        
@@ -48,8 +51,8 @@ public final class CProperFreeModule extends ProperFreeModule<CProperFreeElement
      * @param dimension the dimension of the free module over C,
      *                  if < 0, assumed to be 0
      */
-    public static CFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static FreeModule<?,ArithmeticElement<Complex>> make(int dimension) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }
@@ -143,7 +146,7 @@ public final class CProperFreeModule extends ProperFreeModule<CProperFreeElement
     }
 
     
-    public CProperFreeElement cast(ModuleElement<?,?> element) {
+    public ArithmeticMultiElement<Complex> cast(ModuleElement<?,?> element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
                 return element.cast(this);

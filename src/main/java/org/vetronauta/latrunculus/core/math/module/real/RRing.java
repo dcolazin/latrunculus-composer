@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -40,7 +40,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RRing extends NumberRing<RElement> implements RFreeModule<RElement> {
+public final class RRing extends Ring<RElement> implements RFreeModule<RElement>, NumberRing {
 
     /**
      * The unique instance of the ring of reals.
@@ -96,14 +96,16 @@ public final class RRing extends NumberRing<RElement> implements RFreeModule<REl
         return this == object;
     }
 
-    
+
+    @Override
     public int compareTo(Module object) {
-        if (this == object) {
+        if (object == this) {
             return 0;
         }
-        else {
-            return super.compareTo(object);
+        if (object instanceof NumberRing) {
+            return order((NumberRing) object);
         }
+        return super.compareTo(object);
     }
 
 
@@ -191,7 +193,7 @@ public final class RRing extends NumberRing<RElement> implements RFreeModule<REl
     }
     
     
-    protected int getNumberRingOrder() {
+    public int getNumberRingOrder() {
         return 300;
     }
 

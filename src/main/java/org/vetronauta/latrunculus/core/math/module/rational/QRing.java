@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -39,7 +40,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QRing extends NumberRing<QElement> implements QFreeModule<QElement> {
+public final class QRing extends Ring<QElement> implements QFreeModule<QElement>, NumberRing {
 
     /**
      * The unique instance of the ring of rationals.
@@ -105,16 +106,16 @@ public final class QRing extends NumberRing<QElement> implements QFreeModule<QEl
         return this == object;
     }
 
-    
+    @Override
     public int compareTo(Module object) {
-        if (this == object) {
+        if (object == this) {
             return 0;
         }
-        else {
-            return super.compareTo(object);
+        if (object instanceof NumberRing) {
+            return order((NumberRing) object);
         }
+        return super.compareTo(object);
     }
-
     
     public QElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
@@ -200,7 +201,7 @@ public final class QRing extends NumberRing<QElement> implements QFreeModule<QEl
     }
     
     
-    protected int getNumberRingOrder() {
+    public int getNumberRingOrder() {
         return 200;
     }
     

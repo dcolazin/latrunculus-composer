@@ -64,7 +64,7 @@ public class SplitMorphism extends ModuleMorphism {
                 return getIdentityMorphism(module);
             }
             else if (info[ALL_CONSTANT]) {
-                LinkedList<ModuleElement> resList = new LinkedList<ModuleElement>();
+                LinkedList<ModuleElement> resList = new LinkedList<>();
                 for (ModuleMorphism m : morphisms) {
                     Module domain = m.getDomain();
                     int dim = domain.getDimension();
@@ -87,7 +87,7 @@ public class SplitMorphism extends ModuleMorphism {
                         return new SplitMorphism(module, morphisms);
                     }
                 }
-                return makeZFreeMorphism(((ZFreeModule)module).getDimension(), morphisms);
+                return makeZFreeMorphism(module.getDimension(), morphisms);
             }
             else if (module instanceof ZnFreeModule) {
                 for (ModuleMorphism m : morphisms) {
@@ -96,7 +96,7 @@ public class SplitMorphism extends ModuleMorphism {
                         return new SplitMorphism(module, morphisms);
                     }
                 }
-                return makeZnFreeMorphism(((ZnFreeModule)module).getDimension(),
+                return makeZnFreeMorphism(module.getDimension(),
                                           ((ZnFreeModule)module).getModulus(), morphisms);
             }
             else if (module instanceof QFreeModule) {
@@ -106,7 +106,7 @@ public class SplitMorphism extends ModuleMorphism {
                         return new SplitMorphism(module, morphisms);
                     }
                 }
-                return makeQFreeMorphism(((QFreeModule)module).getDimension(), morphisms);
+                return makeQFreeMorphism(module.getDimension(), morphisms);
             }
             else if (module instanceof RFreeModule) {
                 for (ModuleMorphism m : morphisms) {
@@ -115,7 +115,7 @@ public class SplitMorphism extends ModuleMorphism {
                         return new SplitMorphism(module, morphisms);
                     }
                 }
-                return makeRFreeMorphism(((RFreeModule)module).getDimension(), morphisms);
+                return makeRFreeMorphism(module.getDimension(), morphisms);
             }
             else if (module instanceof CFreeModule) {
                 for (ModuleMorphism m : morphisms) {
@@ -124,7 +124,7 @@ public class SplitMorphism extends ModuleMorphism {
                         return new SplitMorphism(module, morphisms);
                     }
                 }
-                return makeCFreeMorphism(((CFreeModule)module).getDimension(), morphisms);
+                return makeCFreeMorphism((module).getDimension(), morphisms);
             }
             else {
                 return new SplitMorphism(module, morphisms);

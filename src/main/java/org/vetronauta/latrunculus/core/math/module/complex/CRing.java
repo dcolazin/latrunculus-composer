@@ -22,9 +22,12 @@ package org.vetronauta.latrunculus.core.math.module.complex;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -39,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CRing extends NumberRing<CElement> implements CFreeModule<CElement> {
+public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     /**
      * The unique instance of the ring of complex numbers.
@@ -47,33 +50,8 @@ public final class CRing extends NumberRing<CElement> implements CFreeModule<CEl
     public static final CRing ring = new CRing();
 
     @Override
-    public CElement getZero() {
-        return new CElement(0);
-    }
-
-    @Override
-    public CElement getOne() {
-        return new CElement(1);
-    }
-    
-    @Override
-    public CElement getUnitElement(int i) {
-        return getOne();
-    }
-
-    @Override
-    public CFreeModule<?> getNullModule() {
+    public CProperFreeModule getNullModule() {
         return CProperFreeModule.nullModule;
-    }
-
-    @Override
-    public boolean isField() {
-        return true;
-    }
-
-    @Override
-    public boolean isVectorSpace() {
-        return true;
     }
 
     @Override
@@ -87,22 +65,13 @@ public final class CRing extends NumberRing<CElement> implements CFreeModule<CEl
     }
     
     @Override
-    public CFreeModule<?> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
         return CProperFreeModule.make(dimension);
     }
 
     
     public boolean equals(Object object) {
         return (this == object);
-    }
-
-    public int compareTo(Module object) {
-        if (this == object) {
-            return 0;
-        }
-        else {
-            return super.compareTo(object);
-        }
     }
 
     @Override
@@ -194,13 +163,25 @@ public final class CRing extends NumberRing<CElement> implements CFreeModule<CEl
         return basicHash;
     }
 
+    @Override
+    public int compareTo(Module object) {
+        if (object == this) {
+            return 0;
+        }
+        if (object instanceof NumberRing) {
+            return order((NumberRing) object);
+        }
+        return super.compareTo(object);
+    }
     
-    protected int getNumberRingOrder() {
+    public int getNumberRingOrder() {
         return 400;
     }
 
 
     private static final int basicHash = "CRing".hashCode();
 
-    private CRing() { /* not allowed */ }
+    private CRing() {
+        super(new CElement(0), new CElement(1));
+    }
 }

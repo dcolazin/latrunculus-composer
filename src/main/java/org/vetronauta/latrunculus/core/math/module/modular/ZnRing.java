@@ -42,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElement> {
+public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElement>, NumberRing {
 
     /**
      * Constructs a ring of integers mod <code>modulus</code>.
@@ -111,17 +111,15 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
         }
     }
 
-
+    @Override
     public int compareTo(Module object) {
-        if (object instanceof ZnRing) {
-            return getModulus()-((ZnRing)object).getModulus();
+        if (object == this) {
+            return 0;
         }
-        else if (object instanceof NumberRing) {
-            return -1;
+        if (object instanceof NumberRing) {
+            return order((NumberRing) object);
         }
-        else {
-            return super.compareTo(object);
-        }
+        return super.compareTo(object);
     }
 
     
@@ -233,4 +231,9 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
 
     private int     modulus;
     private boolean field;
+
+    @Override
+    public int getNumberRingOrder() {
+        return -100;
+    }
 }

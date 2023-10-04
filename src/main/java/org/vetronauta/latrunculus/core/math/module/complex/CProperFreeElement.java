@@ -22,11 +22,11 @@ package org.vetronauta.latrunculus.core.math.module.complex;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
  * Elements in the free modules of complex numbers.
@@ -34,187 +34,35 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeElement extends ProperFreeElement<CProperFreeElement,CElement> implements CFreeElement<CProperFreeElement> {
+public final class CProperFreeElement extends ArithmeticMultiElement<Complex> implements ConjugableElement<ArithmeticMultiElement<Complex>,ArithmeticElement<Complex>> {
 
-    private final Complex[]         value;
     private CProperFreeModule module = null;
+
+    private CProperFreeElement(Complex[] value) {
+        super(value);
+    }
 
     /**
      * Creates a CFreeElement from an array of Complex.
      */
-    public static CFreeElement<?> make(Complex[] v) {
-        if (v.length == 1) {
-            return new CElement(v[0]);
-        }
-        else {
-            return new CProperFreeElement(v);
-        }
+    public static FreeElement<?, ArithmeticElement<Complex>> make(Complex[] v) { //TODO remove
+        return ArithmeticMultiElement.make(v);
     }
 
-    @Override
-    public boolean isZero() {
-        for (Complex complex : value) {
-            if (!complex.isZero()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public CProperFreeElement conjugated() {
-        Complex[] res = new Complex[value.length];
-        for (int i = 0; i < value.length; i++) {
-            res[i] = value[i].conjugated();
+        Complex[] res = new Complex[getValue().length];
+        for (int i = 0; i < getValue().length; i++) {
+            res[i] = getValue()[i].conjugated();
         }
         return new CProperFreeElement(res);
     }
 
-    @Override
-    public void conjugate() {
-        for (int i = 0; i < value.length; i++) {
-            value[i] = value[i].conjugated();
-        }
+    public void conjugate() { //TODO hack
+        CProperFreeElement conj = this.conjugated();
+        subtract(this);
+        add(conj);
     }
 
-    @Override
-    public CProperFreeElement sum(CProperFreeElement element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            Complex[] res = new Complex[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].sum(v[i]);
-            }
-            return new CProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    @Override
-    public void add(CProperFreeElement element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].sum(v[i]);
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    @Override
-    public CProperFreeElement difference(CProperFreeElement element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            Complex[] res = new Complex[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].difference(v[i]);
-            }
-            return new CProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    @Override
-    public void subtract(CProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].difference(v[i]);
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    @Override
-    public CProperFreeElement productCW(CProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            Complex[] res = new Complex[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].product(v[i]);
-            }
-            return new CProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    @Override
-    public void multiplyCW(CProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Complex[] v = element.getValue();
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].product(v[i]);
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    @Override
-    public CProperFreeElement negated() {
-        Complex[] res = new Complex[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].neg();
-        }
-        return new CProperFreeElement(res);
-    }
-    
-    @Override
-    public void negate() {
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = value[i].neg();
-        }
-    }
-
-    @Override
-    public CProperFreeElement scaled(CElement element) {
-        Complex val = element.getValue();
-        Complex[] res = new Complex[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].product(val);
-        }
-        return new CProperFreeElement(res);        
-    }
-
-    @Override
-    public void scale(CElement element) {
-        Complex val = element.getValue();
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = value[i].product(val);
-        }
-    }
-
-    @Override
-    public CElement getComponent(int i) {
-        assert(i < getLength());
-        return new CElement(value[i]);
-    }
-
-    @Override
-    public CElement getRingElement(int i) {
-        assert(i < getLength());
-        return new CElement(value[i]);
-    }
-
-    @Override
-    public int getLength() {
-        return value.length;
-    }
-    
     @Override
     public CProperFreeModule getModule() {
         if (module == null) {
@@ -223,59 +71,6 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         return module;
     }
 
-    /**
-     * Returns the array of Complex contained in this element.
-     */
-    public Complex[] getValue() {
-        return value;
-    }
-
-    /**
-     * Returns the Complex at index <code>i</code>.
-     */
-    public Complex getValue(int i) {
-        return value[i];
-    }
-    
-    @Override
-    public CFreeElement<?> resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            Complex[] values = new Complex[n];
-            for (int i = 0; i < minlen; i++) {
-                values[i] = new Complex(getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values[i] = Complex.getZero();
-            }
-            return CProperFreeElement.make(values);
-        }
-    }
-    
-    @Override
-    public boolean equals(Object object) {
-        if (object instanceof CProperFreeElement) {
-            CProperFreeElement c = (CProperFreeElement)object;
-            if (getLength() == c.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (value[i] != c.value[i]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-    
     @Override
     public int compareTo(ModuleElement object) {
         if (object instanceof CProperFreeElement) {
@@ -286,7 +81,7 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int c = value[i].compareTo(element.value[i]);
+                    int c = getValue()[i].compareTo(element.getValue()[i]);
                     if (c != 0) {
                         return c;
                     }
@@ -305,10 +100,10 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
             return "Null";
         }
         else {
-            StringBuilder res = new StringBuilder(value[0].toString());
+            StringBuilder res = new StringBuilder(getValue()[0].toString());
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i]);
+                res.append(getValue()[i]);
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -326,10 +121,10 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(getValue()[i]);
             }
         }
         buf.append("]");
@@ -352,27 +147,5 @@ public final class CProperFreeElement extends ProperFreeElement<CProperFreeEleme
     public String getElementTypeName() {
         return "CFreeElement";
     }
-    
-    @Override
-    public int hashCode() {
-        int val = 11;
-        for (int i = 0; i < getLength(); i++) {
-            val = value[i].hashCode()*17+val;            
-        }
-        return val;
-    }
 
-    
-    private CProperFreeElement(Complex[] value) {
-        this.value = value;
-    }
-
-    @Override
-    public CProperFreeElement deepCopy() {
-        Complex[] v = new Complex[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            v[i] = value[i].deepCopy();
-        }
-        return new CProperFreeElement(v);
-    }
 }

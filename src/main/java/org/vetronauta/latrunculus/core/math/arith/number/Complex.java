@@ -282,6 +282,11 @@ public final class Complex extends ArithmeticNumber<Complex> {
     }
 
     @Override
+    public boolean isFieldElement() {
+        return true;
+    }
+
+    @Override
     public boolean divides(ArithmeticNumber<?> y) {
         return (y instanceof Complex) && !this.isZero();
     }

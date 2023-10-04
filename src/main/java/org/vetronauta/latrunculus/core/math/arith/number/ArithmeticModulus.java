@@ -94,6 +94,11 @@ public final class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus>
     }
 
     @Override
+    public boolean isFieldElement() {
+        return NumberTheory.isPrime(modulus);
+    }
+
+    @Override
     public boolean divides(ArithmeticNumber<?> y) {
         return (y instanceof ArithmeticModulus) && NumberTheory.gcd(value, modulus) == 1;
     }
