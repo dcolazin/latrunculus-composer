@@ -19,10 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.arith;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Various functions for folding a set of real numbers to a real interval.
  */
-public class Folding {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class Folding {
 
     private static void swap(double[] elements, int[] perm, int a, int b) {
         double t1;
@@ -162,12 +166,12 @@ public class Folding {
     }
 
     public static double foldElement(double x, double value, double low, double high) {
-        return phi(high, high, low, low, x, -1, 1, -1, 1, value);
+        return phi(x, value, low, high);
     }
 
     public static void foldElements(
         double[] x,
-        double value[],
+        double[] value,
         double[] low,
         double[] high,
         double[] res) {
@@ -176,31 +180,18 @@ public class Folding {
         }
     }
 
-    private static double phi(
-        double o,
-        double op,
-        double u,
-        double up,
-        double t,
-        double a,
-        double b,
-        double h,
-        double l,
-        double x) {
-        double v;
-        double ta, tb;
-        double P2;
-        v = Math.atan((b - a) * (x - l) / (h - l) + a);
-        ta = Math.atan(a);
-        tb = Math.atan(b);
-        P2 = Math.PI / 2;
-        if (v <= ta)
-            return (up - u) * (v + P2) / (P2 + ta) + u;
-        else if (ta < v && v <= 0)
-            return - (t - up) * (v - ta) / ta + up;
-        else if (0 < v && v <= tb)
-            return (op - t) * v / tb + t;
-        else
-            return (o - op) * (v - tb) / (P2 - tb) + op;
+    private static double phi(double x, double value, double low, double high) {
+        double v = Math.atan(-value);
+        double quarterPi = Math.PI / 4;
+        if (v <= -quarterPi) {
+            return low;
+        }
+        if (v <= 0) {
+            return (x - low) * (v + quarterPi) / quarterPi + low;
+        }
+        if (v <= quarterPi) {
+            return (high - x) * v / quarterPi + x;
+        }
+        return high;
     }
 }
