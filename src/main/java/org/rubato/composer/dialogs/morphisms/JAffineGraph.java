@@ -25,6 +25,9 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -450,8 +453,8 @@ class JAffineGraph
             px[i] = x;
             py[i] = y;
         }
-        public abstract Number getX(int i);
-        public abstract Number getY(int i);
+        public abstract ArithmeticNumber<?> getX(int i);
+        public abstract ArithmeticNumber<?> getY(int i);
     }
 
     public class RConfiguration extends Configuration {
@@ -467,11 +470,11 @@ class JAffineGraph
             double[] v = { px[0], py[0]};
             return v;
         }
-        public Number getX(int i) {
-            return Double.valueOf(px[i]);
+        public ArithmeticDouble getX(int i) {
+            return new ArithmeticDouble(px[i]);
         }
-        public Number getY(int i) {
-            return Double.valueOf(py[i]);
+        public ArithmeticDouble getY(int i) {
+            return new ArithmeticDouble(py[i]);
         }
     }
     
@@ -496,11 +499,11 @@ class JAffineGraph
             int[] v = { ipx[0], ipy[0]};
             return v;
         }
-        public Number getX(int i) {
-            return Integer.valueOf(ipx[i]);
+        public ArithmeticInteger getX(int i) {
+            return new ArithmeticInteger(ipx[i]);
         }
-        public Number getY(int i) {
-            return Integer.valueOf(ipy[i]);
+        public ArithmeticInteger getY(int i) {
+            return new ArithmeticInteger(ipy[i]);
         }
     }
     
@@ -525,10 +528,10 @@ class JAffineGraph
             Rational[] v = { qpx[0], qpy[0]};
             return v;
         }
-        public Number getX(int i) {
+        public Rational getX(int i) {
             return qpx[i];
         }
-        public Number getY(int i) {
+        public Rational getY(int i) {
             return qpy[i];
         }
     }

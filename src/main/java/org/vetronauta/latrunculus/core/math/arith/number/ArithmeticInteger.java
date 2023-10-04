@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class ArithmeticInteger extends ArithmeticNumber<ArithmeticInteger> {
+public final class ArithmeticInteger implements ArithmeticNumber<ArithmeticInteger> {
 
     private final int value;
 

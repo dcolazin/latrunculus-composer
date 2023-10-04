@@ -7,53 +7,66 @@ import org.vetronauta.latrunculus.core.math.exception.DivisionException;
  * Ring elements available to be used in a <code>RingString</code> class.
  * @author vetronauta
  */
-public abstract class ArithmeticNumber<T extends ArithmeticNumber<T>>
-        extends Number implements Comparable<T>, DeepCopyable<T> {
+public interface ArithmeticNumber<T extends ArithmeticNumber<T>> extends Comparable<T>, DeepCopyable<T> {
 
     //TODO mutable versions to improve array/matrix operations
 
-    public abstract boolean isZero();
+    boolean isZero();
 
-    public abstract boolean isOne();
+    boolean isOne();
 
-    public abstract boolean isInvertible();
+    boolean isInvertible();
 
-    public abstract boolean isFieldElement();
+    boolean isFieldElement();
 
-    public abstract boolean divides(ArithmeticNumber<?> y);
+    boolean divides(ArithmeticNumber<?> y);
 
     /**
      * pure sum between this number and the parameter
      */
-    public abstract T sum(T y);
+    T sum(T y);
 
     /**
      * pure difference between this number and the parameter
      */
-    public abstract T difference(T y);
+    T difference(T y);
 
     /**
      * pure product between this number and the parameter
      */
-    public abstract T product(T y);
+    T product(T y);
 
     /**
      * pure quotient between this number and the parameter
      */
-    public T quotient(T y) throws DivisionException {
+    default T quotient(T y) throws DivisionException {
         return this.product(y.inverse());
     }
 
     /**
      * pure negation of this number
      */
-    public abstract T neg();
+    T neg();
 
     /**
      * pure inversion of this number
      */
-    public abstract T inverse();
+    T inverse();
 
-    public abstract String toString();
+    int intValue();
+
+    long longValue();
+
+    float floatValue();
+
+    double doubleValue();
+
+    default byte byteValue() {
+        return (byte) this.intValue();
+    }
+
+    default short shortValue() {
+        return (short) this.intValue();
+    }
 
 }

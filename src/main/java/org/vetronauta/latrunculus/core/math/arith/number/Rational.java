@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.exception.InverseException;
  * 
  * @author Gérard Milmeister
  */
-public final class Rational extends ArithmeticNumber<Rational> {
+public final class Rational implements ArithmeticNumber<Rational> {
 
     //TODO quantization should be changed at factory level, not at class level
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;

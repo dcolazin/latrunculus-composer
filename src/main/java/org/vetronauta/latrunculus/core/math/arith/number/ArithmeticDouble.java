@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class ArithmeticDouble extends ArithmeticNumber<ArithmeticDouble> {
+public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble> {
 
     private final double value;
 

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @Getter
-public final class ArithmeticModulus extends ArithmeticNumber<ArithmeticModulus> {
+public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModulus> {
 
     private final int value;
     private final int modulus;

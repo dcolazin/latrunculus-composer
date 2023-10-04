@@ -27,6 +27,9 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
@@ -372,23 +375,23 @@ class JGraphSelect
         public int getSize() {
             return px.size();
         }
-        public abstract Number getX(int i);
-        public abstract Number getY(int i);
+        public abstract ArithmeticNumber<?> getX(int i);
+        public abstract ArithmeticNumber<?> getY(int i);
     }
 
     public class RConfiguration extends Configuration {
-        public Number getX(int i) {
-            return Double.valueOf(px.get(i));
+        public ArithmeticDouble getX(int i) {
+            return new ArithmeticDouble(px.get(i));
         }
-        public Number getY(int i) {
-            return Double.valueOf(py.get(i));
+        public ArithmeticDouble getY(int i) {
+            return new ArithmeticDouble(py.get(i));
         }
     }
     
     
     public class ZConfiguration extends Configuration {
-        ArrayList<Integer> ipx = new ArrayList<Integer>();
-        ArrayList<Integer> ipy = new ArrayList<Integer>();
+        ArrayList<Integer> ipx = new ArrayList<>();
+        ArrayList<Integer> ipy = new ArrayList<>();
         
         public void setPoint(int i, double x, double y) {
             int ix = (int)Math.round(x);
@@ -409,11 +412,11 @@ class JGraphSelect
             ipy.remove(i);
             super.removePoint(i);
         }
-        public Number getX(int i) {
-            return ipx.get(i);
+        public ArithmeticInteger getX(int i) {
+            return new ArithmeticInteger(ipx.get(i));
         }
-        public Number getY(int i) {
-            return ipy.get(i);
+        public ArithmeticInteger getY(int i) {
+            return new ArithmeticInteger(ipy.get(i));
         }
     }
     
@@ -446,10 +449,10 @@ class JGraphSelect
             qpy.remove(i);
             super.removePoint(i);
         }
-        public Number getX(int i) {
+        public Rational getX(int i) {
             return qpx.get(i);
         }
-        public Number getY(int i) {
+        public Rational getY(int i) {
             return qpy.get(i);
         }
     }

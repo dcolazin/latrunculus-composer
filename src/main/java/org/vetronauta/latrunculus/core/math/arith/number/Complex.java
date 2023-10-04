@@ -24,7 +24,7 @@ package org.vetronauta.latrunculus.core.math.arith.number;
  * 
  * @author Gérard Milmeister
  */
-public final class Complex extends ArithmeticNumber<Complex> {
+public final class Complex implements ArithmeticNumber<Complex> {
 
     private final double real;
     private final double imag;
