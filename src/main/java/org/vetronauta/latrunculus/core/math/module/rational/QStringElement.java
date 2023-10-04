@@ -184,7 +184,7 @@ public final class QStringElement extends StringElement<QStringElement> implemen
     }
 
 
-    public Module getModule() {
+    public RStringRing getRing() {
         return RStringRing.ring;
     }
 

@@ -183,7 +183,7 @@ public final class RStringElement extends StringElement<RStringElement> implemen
     }
 
 
-    public Module getModule() {
+    public RStringRing getRing() {
         return RStringRing.ring;
     }
 

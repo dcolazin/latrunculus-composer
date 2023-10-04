@@ -462,7 +462,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the integer contained in a ZElement denotator.
      */
     public int getInteger() {
-        return ((ZElement)getElement()).getValue();
+        return ((ZElement)getElement()).getValue().intValue();
     }
 
 

@@ -30,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
@@ -55,11 +54,6 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
 
     @Override
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    @Override
     public boolean hasElement(ModuleElement<?,?> element) {
         return (element instanceof CElement);
     }
@@ -69,7 +63,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
         return CProperFreeModule.make(dimension);
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         return (this == object);
     }
@@ -79,9 +73,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
         if (!elements.isEmpty()) {
             return (CElement)elements.get(0).cast(this);
         }
-        else {
-            return null;
-        }
+        return null;
     }
     
     @Override
@@ -111,7 +103,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     
     public CElement cast(ZElement element) {
-        return new CElement(element.getValue());
+        return new CElement(element.getValue().intValue());
     }
 
     

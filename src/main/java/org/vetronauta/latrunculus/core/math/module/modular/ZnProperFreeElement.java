@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -44,6 +45,20 @@ public class ZnProperFreeElement extends ProperFreeElement<ZnProperFreeElement,Z
         }
         else if (v.length == 1) {
             return new ZnElement(v[0], modulus);
+        }
+        else {
+            return new ZnProperFreeElement(v, modulus);
+        }
+    }
+
+    public static ZnFreeElement make(ArithmeticInteger[] v, int modulus) {
+        assert(v != null);
+        assert(modulus > 1);
+        if (v.length == 0) {
+            return new ZnProperFreeElement(new int[0], modulus);
+        }
+        else if (v.length == 1) {
+            return new ZnElement(v[0].intValue(), modulus);
         }
         else {
             return new ZnProperFreeElement(v, modulus);
@@ -365,6 +380,13 @@ public class ZnProperFreeElement extends ProperFreeElement<ZnProperFreeElement,Z
         return val;
     }
 
+    private ZnProperFreeElement(ArithmeticInteger[] value, int modulus) {
+        this.value = new int[value.length];
+        this.modulus = modulus;
+        for (int i = 0; i < getLength(); i++) {
+            this.value[i] = NumberTheory.mod(value[i].intValue(), modulus);
+        }
+    }
     
     private ZnProperFreeElement(int[] value, int modulus) {
         this.value = new int[value.length];

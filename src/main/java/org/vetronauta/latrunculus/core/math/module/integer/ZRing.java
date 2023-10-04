@@ -20,14 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
@@ -39,58 +41,34 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZRing extends Ring<ZElement> implements ZFreeModule<ZElement>, NumberRing {
+public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {
+
+    private ZRing() {
+        super(new ZElement(0), new ZElement(1));
+    }
+
 
     /**
      * The unique instance of the ring of integers.
      */
     public static final ZRing ring = new ZRing();
 
-    public ZElement getZero() {
-        return new ZElement(0);
-    }
-
-    
-    public ZElement getOne() {
-        return new ZElement(1);
-    }
-
-    
-    public ZElement getUnitElement(int i) {
-        return getOne();
-    }
-
-    
-    public ZFreeModule getNullModule() {
+    @Override
+    public ZProperFreeModule getNullModule() {
         return ZProperFreeModule.nullModule;
     }
     
-    
-    public boolean isField() {
-        return false;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return false;
-    }
-
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
+    @Override
+    public boolean hasElement(ModuleElement<?,?> element) {
         return (element instanceof ZElement);
     }
 
     
-    public ZFreeModule getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<ArithmeticInteger>> getFreeModule(int dimension) {
         return ZProperFreeModule.make(dimension);
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         return this == object;
     }
@@ -110,11 +88,9 @@ public final class ZRing extends Ring<ZElement> implements ZFreeModule<ZElement>
 
     public ZElement createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return (ZElement) elements.get(0).cast(this);
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
     
@@ -200,5 +176,4 @@ public final class ZRing extends Ring<ZElement> implements ZFreeModule<ZElement>
     
     private final static int basicHash = "ZRing".hashCode();
 
-    private ZRing() { /* not allowed */ }
 }

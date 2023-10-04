@@ -53,7 +53,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 				ZElement voiceElement = (ZElement)currentNote.getElement(voicePath).deepCopy();
 				Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);
 				currentNote.setFactor(5, currentLayer);
-				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), voiceElement.getValue());
+				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), voiceElement.getValue().intValue());
 				newMacroScore.appendFactor(this.createNodeDenotator(currentNote, currentMacroScore));
 			}
 		} catch (RubatoException e) { e.printStackTrace(); }

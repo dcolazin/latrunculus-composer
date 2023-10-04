@@ -72,7 +72,7 @@ public class ModuloMorphism extends ModuleMorphism {
             throws MappingException {
         if (dimension == 1) {
             if (x instanceof ZElement) {
-                return new ZnElement(((ZElement)x).getValue(), modulus);
+                return new ZnElement(((ZElement)x).getValue().intValue(), modulus);
             }
         }
         else if (x instanceof ZProperFreeElement) {

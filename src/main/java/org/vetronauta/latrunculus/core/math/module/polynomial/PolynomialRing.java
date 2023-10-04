@@ -187,7 +187,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         RingElement[] coeffs = new RingElement[elements.size()];
         int i = 0;
         for (ModuleElement e : elements) {
-            coeffs[i] = (RingElement)getCoefficientRing().cast(e);
+            coeffs[i] = getCoefficientRing().cast(e);
             if (coeffs[i] == null) {
                 return null;
             }
@@ -279,7 +279,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         ArrayList<String> m = parse(TextUtils.unparenthesize(string));
         int[] exp = new int[1];
         ModuleElement[] factor = new ModuleElement[1];
-        Vector<ModuleElement> terms = new Vector<ModuleElement>(30);
+        Vector<ModuleElement> terms = new Vector<>(30);
         terms.setSize(1);
         int maxexp = 0;
         try {
@@ -290,7 +290,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
                         terms.setSize(exp[0] + 1);
                     }
                     if (terms.get(exp[0]) != null) {
-                        ((RingElement) terms.get(exp[0])).add(factor[0]);
+                        (terms.get(exp[0])).add(factor[0]);
                     } else {
                         terms.set(exp[0], factor[0]);
                     }
@@ -320,7 +320,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         int pos = 0;
         int lastpos = 0;
         int level = 0;
-        ArrayList<String> m = new ArrayList<String>();
+        ArrayList<String> m = new ArrayList<>();
         while (pos < s.length()) {
             if (s.charAt(pos) == '(') {
                 pos++;

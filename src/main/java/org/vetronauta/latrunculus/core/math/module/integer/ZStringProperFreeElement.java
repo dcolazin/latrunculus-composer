@@ -20,13 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 
 /**
@@ -68,7 +71,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             ZString res[] = new ZString[getLength()];
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (ZString)value[i].sum(element.value[i]);
+                res[i] = value[i].sum(element.value[i]);
             }
             return new ZStringProperFreeElement(res);
         }
@@ -94,7 +97,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             ZString res[] = new ZString[getLength()];
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (ZString)value[i].difference(element.value[i]);
+                res[i] = value[i].difference(element.value[i]);
             }
             return new ZStringProperFreeElement(res);        
         }
@@ -120,7 +123,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             ZString res[] = new ZString[getLength()];
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (ZString)value[i].product(element.value[i]);
+                res[i] = value[i].product(element.value[i]);
             }
             return new ZStringProperFreeElement(res);
         }
@@ -161,7 +164,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         ZString val = element.getValue();
         ZString res[] = new ZString[getLength()];
         for (int i = 0; i < getLength(); i++) {
-            res[i] = (ZString)value[i].product(val);
+            res[i] = value[i].product(val);
         }
         return new ZStringProperFreeElement(res);        
     }
@@ -191,7 +194,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     }
     
 
-    public Module getModule() {
+    public Module getModule() { //TODO this is wrong, the meaning of getModule is different from usual getModules types
         if (module == null) {
             module = ZProperFreeModule.make(getLength());
         }
@@ -332,7 +335,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
 
 
     private ZString[]   value;
-    private ZFreeModule module = null;
+    private FreeModule<?,ArithmeticElement<ArithmeticInteger>> module = null;
 
     @Override
     public ModuleElement deepCopy() {

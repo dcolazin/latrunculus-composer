@@ -26,8 +26,8 @@ import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 import java.lang.reflect.Array;
@@ -37,6 +37,8 @@ import java.lang.reflect.Array;
  */
 @Getter
 public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElement<ArithmeticElement<T>> {
+
+    //TODO ditch ArithmeticNumbers and just use ArithmeticElements, making this class abstract but with most methods already implemented
 
     @NonNull
     private T value;
@@ -112,13 +114,17 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
     }
 
     @Override
-    public Module<ArithmeticElement<T>, ArithmeticElement<T>> getModule() {
+    public Ring<ArithmeticElement<T>> getRing() {
         throw new LatrunculusUnsupportedException(); //TODO
     }
 
     @Override
     public String stringRep(boolean... parens) {
-        return parens.length > 0 ? TextUtils.parenthesize(value.toString()) : value.toString();
+        String representation = value.toString();
+        if (parens.length > 0 && !Character.isDigit(representation.charAt(0))) {
+            return TextUtils.parenthesize(representation);
+        }
+        return representation;
     }
 
     @Override
@@ -206,5 +212,8 @@ public class ArithmeticElement<T extends ArithmeticNumber<T>> extends RingElemen
         return String.format("ArithmeticElement<%s>[%s]", value.getClass().getSimpleName(), value);
     }
 
+    public String getElementTypeName() {
+        return value.getClass().getSimpleName();
+    }
 
 }

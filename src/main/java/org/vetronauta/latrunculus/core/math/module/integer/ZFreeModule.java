@@ -19,15 +19,16 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * The interface for free modules over integers.
- * @see ZFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
-public interface ZFreeModule<E extends ModuleElement<E,ZElement>> extends FreeModule<E,ZElement> {
+public interface ZFreeModule<E extends ModuleElement<E, ArithmeticElement<ArithmeticInteger>>> extends FreeModule<E,ArithmeticElement<ArithmeticInteger>> {
 
 }

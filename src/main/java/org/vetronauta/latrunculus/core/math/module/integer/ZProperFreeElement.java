@@ -19,12 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
+import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 import java.util.Arrays;
 
@@ -34,15 +39,13 @@ import java.util.Arrays;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeElement,ZElement> implements ZFreeElement<ZProperFreeElement> {
+public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticInteger> {
 
-    public static ZFreeElement nullElement = new ZProperFreeElement(new int[0]);
+    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ArithmeticInteger[0]);
 
-    private final int[] value;
     private ZProperFreeModule module;
 
-    public static ZFreeElement make(int[] v) {
-        assert(v != null);
+    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull int[] v) {
         if (v.length == 0) {
             return nullElement;
         }
@@ -50,205 +53,18 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
             return new ZElement(v[0]);
         }
         else {
-            return new ZProperFreeElement(v);
+            return new ZProperFreeElement((ArithmeticInteger[]) Arrays.stream(v).mapToObj(ArithmeticInteger::new).toArray());
         }
     }
 
-    
-    public boolean isZero() {
-        for (int i = 0; i < value.length; i++) {
-            if (value[i] != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public ZProperFreeElement sum(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            int res[] = new int[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i] + element.value[i];
-            }
-            return new ZProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void add(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] += element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public ZProperFreeElement difference(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            int res[] = new int[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i] - element.value[i];
-            }
-            return new ZProperFreeElement(res);        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public void subtract(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] -= element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public ZProperFreeElement productCW(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            int[] res = new int[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i]*element.value[i];
-            }
-            return new ZProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void multiplyCW(ZProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] *= element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public ZProperFreeElement negated() {
-        int[] res = new int[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = -value[i];
-        }
-        return new ZProperFreeElement(res);
-    }
-
-    
-    public void negate() {
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = -value[i];
-        }
-    }
-
-    public ZProperFreeElement scaled(ZElement element) {
-        int val = element.getValue();
-        int res[] = new int[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i]*val;
-        }
-        return new ZProperFreeElement(res);        
-    }
-
-    public void scale(ZElement element) {
-        int val = element.getValue();
-        for (int i = 0; i < getLength(); i++) {
-            value[i] *= val;
-        }
-    }
-
-    
-    public ZElement getComponent(int i) {
-        assert(i < getLength());
-        return new ZElement(value[i]);
-    }
-    
-
-    public ZElement getRingElement(int i) {
-        assert(i < getLength());
-        return new ZElement(value[i]);
-    }
-    
-
-    public int getLength() {
-        return value.length;
-    }
-    
-
+    @Override
     public ZProperFreeModule getModule() {
         if (module == null) {
             module = (ZProperFreeModule)ZProperFreeModule.make(getLength());
         }
         return module;
     }
-    
 
-    public int[] getValue() {
-        return value;
-    }
-    
-
-    public int getValue(int i) {
-        return value[i];
-    }
-    
-
-    public ZFreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            int[] values = new int[n];
-            for (int i = 0; i < minlen; i++) {
-                values[i] = getValue(i);
-            }
-            for (int i = minlen; i < n; i++) {
-                values[i] = 0;
-            }
-            return ZProperFreeElement.make(values);
-        }
-    }
-    
-
-    public boolean equals(Object object) {
-        if (object instanceof ZProperFreeElement) {
-            ZProperFreeElement e = (ZProperFreeElement) object;
-            if (getLength() == e.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (value[i] != e.value[i]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
-    
     public int compareTo(ModuleElement object) {
         if (object instanceof ZProperFreeElement) {
             ZProperFreeElement element = (ZProperFreeElement)object;
@@ -258,7 +74,7 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int d = value[i]-element.value[i];
+                    int d = getValue()[i].intValue()-element.getValue()[i].intValue();
                     if (d != 0) {
                         return d;
                     }
@@ -277,10 +93,10 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(value[0]);
+            res.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i]);
+                res.append(getValue()[i]);
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -298,10 +114,10 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(getValue()[i]);
             }
         }
         buf.append("]");
@@ -318,7 +134,7 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZProperFreeElement)elements[i]).getValue()[j];
+                res[i][j] = ((ZProperFreeElement)elements[i]).getValue()[j].intValue();
             }
         }
         return Folding.fold(res);
@@ -332,18 +148,14 @@ public final class ZProperFreeElement extends ProperFreeElement<ZProperFreeEleme
     public int hashCode() {
         int val = 0;
         for (int i = 0; i < getLength(); i++) {
-            val ^= value[i];
+            val ^= getValue()[i].intValue();
         }
         return val;
     }
     
 
-    private ZProperFreeElement(int[] value) {
-        this.value = value;
+    private ZProperFreeElement(ArithmeticInteger[] value) {
+        super(value);
     }
 
-    @Override
-    public ModuleElement deepCopy() {
-        return new ZProperFreeElement(Arrays.copyOf(value, value.length));
-    }
 }

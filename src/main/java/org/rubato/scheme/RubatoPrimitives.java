@@ -750,7 +750,7 @@ abstract class RubatoPrimitives {
     
     protected static SExpr moduleElementToSExpr(ModuleElement element) {
         if (element instanceof ZElement) {
-            return new SInteger(((ZElement)element).getValue());
+            return new SInteger(((ZElement)element).getValue().intValue());
         }
         else if (element instanceof ZnElement) {
             return new SInteger(((ZnElement)element).getValue());

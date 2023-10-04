@@ -40,15 +40,9 @@ public abstract class ZFreeAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            int[] v;
-            if (x instanceof ZProperFreeElement) {
-                v = ((ZProperFreeElement) x).getValue();
-            }
-            else {
-                v = new int[x.getLength()];
-                for (int i = 0; i < x.getLength(); i++) {
-                    v[i] = ((ZElement) x.getComponent(i)).getValue();
-                }
+            int[] v = new int[x.getLength()];
+            for (int i = 0; i < x.getLength(); i++) {
+                v[i] = ((ZElement) x.getComponent(i)).getValue().intValue();
             }
             return ZProperFreeElement.make(mapValue(v));
         }

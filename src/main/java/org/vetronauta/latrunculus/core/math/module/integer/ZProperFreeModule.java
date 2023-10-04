@@ -20,11 +20,15 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 
@@ -37,12 +41,12 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeModule extends ProperFreeModule<ZProperFreeElement,ZElement> implements ZFreeModule<ZProperFreeElement> {
+public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ArithmeticInteger>, ArithmeticElement<ArithmeticInteger>> {
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
 
-    public static ZFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static FreeModule<?,ArithmeticElement<ArithmeticInteger>> make(int dimension) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }
@@ -53,8 +57,7 @@ public final class ZProperFreeModule extends ProperFreeModule<ZProperFreeElement
             return new ZProperFreeModule(dimension);
         }
     }
-    
-    
+
     public ZProperFreeElement getZero() {
         int[] res = new int[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
@@ -119,7 +122,7 @@ public final class ZProperFreeModule extends ProperFreeModule<ZProperFreeElement
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        int[] values = new int[getDimension()];
+        ArithmeticInteger[] values = new ArithmeticInteger[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(ZRing.ring);
             if (castElement == null) {
@@ -140,8 +143,8 @@ public final class ZProperFreeModule extends ProperFreeModule<ZProperFreeElement
             else if (element instanceof ZProperFreeElement) {
                 return (ZProperFreeElement)element;
             }
-            else {   
-                int[] elements = new int[getDimension()];
+            else {
+                ArithmeticInteger[] elements = new ArithmeticInteger[getDimension()];
                 for (int i = 0; i < getDimension(); i++) {
                     ModuleElement castElement = element.getComponent(i).cast(ZRing.ring);
                     if (castElement == null) {

@@ -182,7 +182,7 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     }
 
 
-    public Module getModule() {
+    public ZnStringRing getRing() {
         if (module == null) {
             module = ZnStringRing.make(modulus);
         }
@@ -283,5 +283,5 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
    
     private ZnString value;
     private int      modulus;
-    private Module   module = null;
+    private ZnStringRing   module = null;
 }

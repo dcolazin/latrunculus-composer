@@ -105,7 +105,7 @@ public final class ZAffineMorphism extends ZAbstractMorphism {
     public ModuleMorphism scaled(RingElement element)
             throws CompositionException {
         if (element instanceof ZElement) {
-            int s = ((ZElement)element).getValue();
+            int s = ((ZElement)element).getValue().intValue();
             if (s == 0) {
                 return getConstantMorphism(element);
             }

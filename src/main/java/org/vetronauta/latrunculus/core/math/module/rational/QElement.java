@@ -198,7 +198,7 @@ public final class QElement extends RingElement<QElement> implements QFreeElemen
     }
     
     
-    public QRing getModule() {
+    public QRing getRing() {
         return QRing.ring;
     }
 

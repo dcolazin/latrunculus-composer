@@ -37,7 +37,7 @@ public abstract class ZAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            int v = ((ZElement) x.getComponent(0)).getValue();
+            int v = ((ZElement) x.getComponent(0)).getValue().intValue();
             return new ZElement(mapValue(v));
         }
         else {

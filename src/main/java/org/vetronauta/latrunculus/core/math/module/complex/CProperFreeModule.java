@@ -43,7 +43,7 @@ import java.util.List;
  */
 public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
 
-    public static final CProperFreeModule nullModule = new CProperFreeModule(0);  
+    public static final CProperFreeModule nullModule = new CProperFreeModule(0);
        
     /**
      * Constructs a free module over complex numbers with given <code>dimension</code>.
@@ -64,7 +64,6 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
         }
     }
 
-    
     public CProperFreeElement getZero() {
         Complex[] res = new Complex[getDimension()];
         for (int i = 0; i < getDimension(); i++) {

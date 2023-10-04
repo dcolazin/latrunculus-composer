@@ -30,9 +30,9 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 	@Override
 	public void run(RunInfo runInfo) {
 		PowerDenotator score = (PowerDenotator)this.getInput(0);
-		Map<Double,Integer> occurrences = new TreeMap<Double,Integer>();
-		Map<Double,Double> avgLoudnesses = new TreeMap<Double,Double>();
-		Map<Double,Double> avgDurations = new TreeMap<Double,Double>();
+		Map<Double,Integer> occurrences = new TreeMap<>();
+		Map<Double,Double> avgLoudnesses = new TreeMap<>();
+		Map<Double,Double> avgDurations = new TreeMap<>();
 		double maxOnset = 0;
 		double maxDuration = 0;
 		double rateFactor = ((DoubleProperty)this.getProperty("rateFactor")).getDouble();
@@ -41,7 +41,7 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 			for (Denotator currentNote : score.getFactors()) {
 				double currentOnset = ((RElement)currentNote.getElement(new int[]{0,0})).getValue();
 				double currentPitch = ((QElement)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
-				double currentLoudness = ((ZElement)currentNote.getElement(new int[]{2,0})).getValue();
+				double currentLoudness = ((ZElement)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
 				double currentDuration = ((RElement)currentNote.getElement(new int[]{3,0})).getValue();
 				
 				maxOnset = Math.max(maxOnset, currentOnset);

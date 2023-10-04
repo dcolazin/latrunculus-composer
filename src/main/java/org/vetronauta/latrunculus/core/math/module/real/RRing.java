@@ -145,7 +145,7 @@ public final class RRing extends Ring<RElement> implements RFreeModule<RElement>
 
     
     public RElement cast(ZElement element) {
-        return new RElement(element.getValue());
+        return new RElement(element.getValue().intValue());
     }
 
     

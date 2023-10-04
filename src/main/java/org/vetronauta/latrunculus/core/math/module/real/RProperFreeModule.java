@@ -40,10 +40,10 @@ import java.util.List;
  */
 public final class RProperFreeModule extends ProperFreeModule<RProperFreeElement,RElement> implements RFreeModule<RProperFreeElement> {
 
-    public static final RProperFreeModule nullModule = new RProperFreeModule(0);  
+    public static final RProperFreeModule nullModule = new RProperFreeModule(0);
     
     public static RFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }

@@ -20,13 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.QString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -193,7 +196,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     }
     
 
-    public Module getModule() {
+    public Module getModule() { //TODO the return values of this method for the string are different than usual
         if (module == null) {
             module = ZProperFreeModule.make(getLength());
         }
@@ -334,7 +337,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
 
 
     private final QString[]   value;
-    private ZFreeModule module = null;
+    private FreeModule<?, ArithmeticElement<ArithmeticInteger>> module = null;
 
     @Override
     public ModuleElement deepCopy() {

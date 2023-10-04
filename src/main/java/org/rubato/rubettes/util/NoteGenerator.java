@@ -365,7 +365,7 @@ public abstract class NoteGenerator {
 	public int getLayer(LimitDenotator node) {
 		//TODO:NEW: LAYER IN NOTE!!!!!!!
 		try {
-			return ((ZElement)node.getElement(new int[]{2,0})).getValue();
+			return ((ZElement)node.getElement(new int[]{2,0})).getValue().intValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return -1;

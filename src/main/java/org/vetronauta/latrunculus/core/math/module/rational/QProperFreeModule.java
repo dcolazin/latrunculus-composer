@@ -43,7 +43,7 @@ public final class QProperFreeModule extends ProperFreeModule<QProperFreeElement
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
 
     public static QFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }

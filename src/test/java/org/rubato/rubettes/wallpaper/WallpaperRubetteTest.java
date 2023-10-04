@@ -61,6 +61,8 @@ import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -103,12 +105,12 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(0));
-		assertTrue(((RElement)this.denotator.getElement(new int[]{0,0,0})).getValue() == 1);
+		assertEquals(1, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
-		assertTrue(((RElement)this.denotator.getElement(new int[]{0,0,0})).getValue() == 2);
-		assertTrue(((QElement)this.denotator.getElement(new int[]{0,1,0})).getValue().equals(new Rational(3)));
+		assertEquals(2, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
+		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(3));
 	}
 
 	@Test
@@ -116,12 +118,12 @@ class WallpaperRubetteTest {
 		this.morphisms.add(new ZAffineMorphism(2, 1));
 		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ZElement(3));
 		((LimitDenotator)this.denotator.getFactor(0)).setFactor(2, newLoudness);
-		
-		assertTrue(((ZElement)this.denotator.getElement(new int[]{0,2,0})).getValue() == 3);
+
+		assertEquals(3, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(2), 0, 1, this.createSimplePaths(2, 2));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(2));
-		assertTrue(((ZElement)this.denotator.getElement(new int[]{0,2,0})).getValue() == 7);
+		assertEquals(7, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 	}
 
 	@Test
@@ -130,7 +132,7 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(1), 1, 3, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
-		assertTrue(this.denotator.getFactorCount() == 3);
+		assertEquals(3, this.denotator.getFactorCount());
 		this.assertDenotatorFactor(0, 1, 2);
 		this.assertDenotatorFactor(1, 4, 5);
 		this.assertDenotatorFactor(2, 10, 11);
@@ -143,7 +145,7 @@ class WallpaperRubetteTest {
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(1, 1));
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
-		assertTrue(this.denotator.getFactorCount() == 4);
+		assertEquals(4, this.denotator.getFactorCount());
 		this.assertDenotatorFactor(0, 0, 0);
 		this.assertDenotatorFactor(1, 0, 1);
 		this.assertDenotatorFactor(2, 1, 2);
@@ -181,7 +183,7 @@ class WallpaperRubetteTest {
 		}
 
 		assertTrue(this.rubette.getTempInputForm().equals(this.scoreForm));
-		assertTrue(this.denotator.getFactorCount() == 6);
+		assertEquals(6, this.denotator.getFactorCount());
 		this.assertDenotatorFactor(0, 1, 2);
 		this.assertDenotatorFactor(1, 2, 3);
 		this.assertDenotatorFactor(2, 4, 5);
@@ -197,7 +199,7 @@ class WallpaperRubetteTest {
 		this.rubette.addMorphism(this.morphisms.get(0), 2, 3, this.createSimplePaths(1, 1));
 		this.rubette.addMorphism(this.morphisms.get(1), 1, 4, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
-		assertTrue(this.denotator.getFactorCount() == 8);
+		assertEquals(8, this.denotator.getFactorCount());
 		this.assertDenotatorFactor(0, 1, 11);
 		this.assertDenotatorFactor(1, 1, 23);
 		this.assertDenotatorFactor(2, 4, 23);
@@ -235,22 +237,22 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertTrue(((RElement)factor.getElement(new int[]{0,0})).getValue() == onsetValue);
-		assertTrue(((QElement)factor.getElement(new int[]{1,0})).getValue().equals(new Rational(pitchValue)));
+		assertEquals(((RElement) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
+		assertEquals(((QElement) factor.getElement(new int[]{1, 0})).getValue(), new Rational(pitchValue));
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
-		assertTrue(((RElement)this.denotator.getElement(new int[]{0,0,0})).getValue() == 0);
-		assertTrue(((QElement)this.denotator.getElement(new int[]{0,1,0})).getValue().equals(new Rational(0)));
-		assertTrue(((ZElement)this.denotator.getElement(new int[]{0,2,0})).getValue() == 0);
-		assertTrue(((RElement)this.denotator.getElement(new int[]{0,3,0})).getValue() == 0);
+		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
+		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
+		assertEquals(0, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 3, 0})).getValue());
 	}
 
 	@Test
 	void testJSelectMorphismElements() {
 		JSelectSimpleForms selectElements = new JSelectSimpleForms(this.rubette, null);
-		assertTrue(selectElements.getElements() == null);
-		assertTrue(selectElements.getNumberOfFormBoxes() == 0);
+		assertNull(selectElements.getElements());
+		assertEquals(0, selectElements.getNumberOfFormBoxes());
 		//test automatic elements
 		selectElements.setMorphism(this.morphisms.get(1));
 		List<List<Integer>> coordinatePaths = new ArrayList<List<Integer>>();
@@ -258,8 +260,8 @@ class WallpaperRubetteTest {
 		coordinatePaths.add(this.createPath(1));
 		coordinatePaths.add(this.createPath(0));
 		coordinatePaths.add(this.createPath(1));
-		assertTrue(selectElements.getNumberOfFormBoxes() == 4);
-		assertTrue(selectElements.getElements().equals(coordinatePaths));
+		assertEquals(4, selectElements.getNumberOfFormBoxes());
+		assertEquals(selectElements.getElements(), coordinatePaths);
 		//test set and get
 		coordinatePaths = new ArrayList<List<Integer>>();
 		coordinatePaths.add(this.createPath(2));
@@ -267,7 +269,7 @@ class WallpaperRubetteTest {
 		coordinatePaths.add(this.createPath(2));
 		coordinatePaths.add(this.createPath(3));
 		selectElements.setElements(coordinatePaths);
-		assertTrue(selectElements.getElements().equals(coordinatePaths));
+		assertEquals(selectElements.getElements(), coordinatePaths);
 		selectElements.dispose();
 	}
 
@@ -282,21 +284,21 @@ class WallpaperRubetteTest {
 		this.rubette.addMorphism(morphism, 0, 2, coordinates);
 		JWallpaperView view = new JWallpaperView(this.rubette.getMorphismsTable());
 		List<List<Integer>> indices = view.getIndices(false, domainDim, coordinates);
-		assertTrue(indices.equals(this.createSimplePaths(0, 1)));
+		assertEquals(indices, this.createSimplePaths(0, 1));
 		this.rubette.getView();
 	}
 	
 	private List<List<Integer>> createSimplePaths(int... paths) {
 		List<List<Integer>> pathList = new ArrayList<>();
-		for (int i = 0; i < paths.length; i++) {
-			pathList.add(this.createPath(paths[i]));
+		for (int path : paths) {
+			pathList.add(this.createPath(path));
 		}
 		return pathList;
 	}
 	
 	private List<Integer> createPath(int path) {
 		List<Integer> newPath = new ArrayList<>();
-		newPath.add(new Integer(path));
+		newPath.add(path);
 		return newPath;
 	}
 

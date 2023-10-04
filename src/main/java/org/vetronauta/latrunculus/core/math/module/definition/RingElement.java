@@ -57,12 +57,12 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
      */
     public abstract void multiply(R element) throws DomainException;
 
-    
+    @Override
     public R productCW(R element) throws DomainException {
         return product(element);
     }
 
-    
+    @Override
     public void multiplyCW(R element) throws DomainException {
         multiply(element);
     }
@@ -153,21 +153,22 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
      * Returns the length of this ring element.
      * @return always 1
      */
+    @Override
     public int getLength() {
         return 1;
     }
     
-    
+    @Override
     public R getComponent(int i) {
         return (R) this;
     }
 
-    
+    @Override
     public R getRingElement(int i) {
         return (R) this;
     }
 
-    
+    @Override
     public Iterator<RingElement<R>> iterator() {
         return Collections.singleton(this).iterator();
     }
@@ -176,11 +177,14 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
     /**
      * Returns the ring this element is a member of.
      */
-    public Ring<R> getRing() {
-        return (Ring<R>) getModule();
+    public abstract Ring<R> getRing();
+
+    @Override
+    public Ring<R> getModule() {
+        return getRing();
     }
     
-    
+    @Override
     public int compareTo(ModuleElement object) {
         return getModule().compareTo(object.getModule());
     }

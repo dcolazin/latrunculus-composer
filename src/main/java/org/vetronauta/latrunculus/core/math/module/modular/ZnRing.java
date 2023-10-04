@@ -159,7 +159,7 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
 
     
     public ZnElement cast(ZElement element) {
-        return new ZnElement(element.getValue(), modulus);
+        return new ZnElement(element.getValue().intValue(), modulus);
     }
 
     

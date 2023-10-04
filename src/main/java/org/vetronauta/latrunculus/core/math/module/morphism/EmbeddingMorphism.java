@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
@@ -38,7 +39,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -274,7 +274,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> Q
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new QElement(((ZElement)element).getValue());
+                        return new QElement(((ZElement)element).getValue().intValue());
                     }
                 };
             }
@@ -282,7 +282,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> R
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new RElement(((ZElement)element).getValue());
+                        return new RElement(((ZElement)element).getValue().intValue());
                     }
                 };                
             }
@@ -290,7 +290,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new CElement(((ZElement)element).getValue());
+                        return new CElement(((ZElement)element).getValue().intValue());
                     }
                 };
             }
@@ -412,7 +412,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z^n -> Z^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return ((ZFreeElement)element).resize(codim);
+                        return ((ArithmeticMultiElement)element).resize(codim);
                     }
                 };
             }
@@ -420,7 +420,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z^n to Q^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        ZProperFreeElement e = (ZProperFreeElement)((ZFreeElement)element).resize(codim);
+                        ZProperFreeElement e = (ZProperFreeElement)((ArithmeticMultiElement)element).resize(codim);
                         return QProperFreeElement.make(e.getValue());
                     }
                 };
@@ -429,11 +429,11 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z^n to R^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        ZProperFreeElement e = (ZProperFreeElement)((ZFreeElement)element).resize(codim);
-                        int[] v_from = e.getValue();
+                        ZProperFreeElement e = (ZProperFreeElement)((ArithmeticMultiElement)element).resize(codim);
+                        ArithmeticInteger[] v_from = e.getValue();
                         double[] v_to = new double[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
-                            v_to[i] = v_from[i];
+                            v_to[i] = v_from[i].intValue();
                         }
                         return RProperFreeElement.make(v_to);
                     }
@@ -443,11 +443,11 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z^n to C^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        ZProperFreeElement e = (ZProperFreeElement)((ZFreeElement)element).resize(codim);
-                        int[] v_from = e.getValue();
+                        ZProperFreeElement e = (ZProperFreeElement)((ArithmeticMultiElement)element).resize(codim);
+                        ArithmeticInteger[] v_from = e.getValue();
                         Complex[] v_to = new Complex[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
-                            v_to[i] = new Complex(v_from[i]);
+                            v_to[i] = new Complex(v_from[i].intValue());
                         }
                         return CProperFreeElement.make(v_to);
                     }

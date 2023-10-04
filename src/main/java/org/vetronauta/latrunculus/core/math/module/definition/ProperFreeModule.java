@@ -33,8 +33,8 @@ import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
  */
 public abstract class ProperFreeModule<E extends ModuleElement<E,R>, R extends RingElement<R>> implements FreeModule<E,R> {
 
-    public ProperFreeModule(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    protected ProperFreeModule(int dimension) {
+        dimension = Math.max(dimension, 0);
         this.dimension = dimension;
     }
     

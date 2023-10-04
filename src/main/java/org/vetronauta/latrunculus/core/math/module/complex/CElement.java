@@ -74,12 +74,8 @@ public final class CElement extends ArithmeticElement<Complex> implements Conjug
         return Folding.fold(res);
     }
 
-    public String getElementTypeName() {
-        return "CElement";
-    }
-
     @Override
-    public CRing getModule() {
+    public CRing getRing() {
         return CRing.ring;
     }
 

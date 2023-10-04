@@ -51,7 +51,7 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public ModuleMorphism getIdentityMorphism() {
+    public final ModuleMorphism getIdentityMorphism() {
         return ModuleMorphism.getIdentityMorphism(this);
     }
 

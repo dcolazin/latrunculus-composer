@@ -193,7 +193,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     }
 
     
-    public Module getModule() {
+    public ZStringRing getRing() {
         return ZStringRing.ring;
     }
 

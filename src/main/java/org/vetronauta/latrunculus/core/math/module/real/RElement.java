@@ -180,7 +180,7 @@ public final class RElement extends RingElement<RElement> implements RFreeElemen
     }
         
 
-    public Module getModule() {
+    public RRing getRing() {
         return RRing.ring;
     }
 

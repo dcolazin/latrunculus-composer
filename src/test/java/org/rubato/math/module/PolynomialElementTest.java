@@ -2,7 +2,9 @@ package org.rubato.math.module;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
@@ -20,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class PolynomialElementTest {
 
-    private PolynomialRing<ZElement> intPolRing;
+    private PolynomialRing<ArithmeticElement<ArithmeticInteger>> intPolRing;
     private PolynomialRing<RElement> realPolRing;
     private PolynomialRing<QElement> ratPolRing;
     
-    private PolynomialElement<ZElement> i0, i1;
+    private PolynomialElement<ArithmeticElement<ArithmeticInteger>> i0, i1;
     private PolynomialElement<RElement> r0, r1;
     private PolynomialElement<QElement> q0, q1;
     
-    private PolynomialElement<ZElement> ia, ib, ic, id;
+    private PolynomialElement<ArithmeticElement<ArithmeticInteger>> ia, ib, ic, id;
     private PolynomialElement<RElement> ra, rb, rc, rd;
     private PolynomialElement<QElement> qa, qb, qc, qd;
 

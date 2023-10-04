@@ -367,7 +367,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
         return new ModularPolynomialElement(ring, modulus, polynomial.deepCopy(), one);
     }
     
-    public String stringRep(boolean ... parens) {
+    public String stringRep(boolean... parens) {
         return polynomial.stringRep(parens);
     }
 

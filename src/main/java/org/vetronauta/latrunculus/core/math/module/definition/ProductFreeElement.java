@@ -36,4 +36,5 @@ public interface ProductFreeElement<E extends ProductFreeElement<E,R>, R extends
      * Returns the underlying product ring.
      */
     ProductRing getRing();
+
 }

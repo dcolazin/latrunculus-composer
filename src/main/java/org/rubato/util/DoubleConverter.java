@@ -100,7 +100,7 @@ public abstract class DoubleConverter {
 
     private static DoubleConverter zconverter = new DoubleConverter() {
         public double toDouble(ModuleElement x) {
-            return ((ZElement)x).getValue();
+            return ((ZElement)x).getValue().doubleValue();
         }
         public ModuleElement fromDouble(double x) {
             return new ZElement((int)Math.round(x));

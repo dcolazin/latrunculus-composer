@@ -116,7 +116,6 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
     /**
      * Returns the module that this module element is an element of.
      */
-    //TODO do we really want this?
     Module<E,R> getModule();
 
     /**

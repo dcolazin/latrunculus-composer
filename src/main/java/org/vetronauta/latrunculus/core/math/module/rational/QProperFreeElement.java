@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -51,18 +52,18 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
     }
 
     
-    public static QFreeElement make(int[] v) {
+    public static QFreeElement make(ArithmeticInteger[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
         }
         else if (v.length == 1) {
-            return new QElement(v[0]);
+            return new QElement(v[0].intValue());
         }
         else {
             Rational[] values = new Rational[v.length];
             for (int i = 0; i < v.length; i++) {
-                values[i] = new Rational(v[i]);
+                values[i] = new Rational(v[i].intValue());
             }
             return new QProperFreeElement(values);
         }

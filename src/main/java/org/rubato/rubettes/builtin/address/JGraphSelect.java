@@ -61,8 +61,8 @@ class JGraphSelect
         if (ring instanceof ZRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                int[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0], p[1]);
+                ArithmeticInteger[] p = ((ZProperFreeElement)m).getValue();
+                config.addPoint(p[0].intValue(), p[1].intValue());
             }
         }
         else if (ring instanceof QRing) {
@@ -90,8 +90,8 @@ class JGraphSelect
         else if (ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                int[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0], p[1]);
+                ArithmeticInteger[] p = ((ZProperFreeElement)m).getValue();
+                config.addPoint(p[0].intValue(), p[1].intValue());
             }
         }
         else {

@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
@@ -189,7 +190,7 @@ public final class ZnElement extends RingElement<ZnElement> implements ZnFreeEle
     }
     
     
-    public Module getModule() {
+    public Ring<ZnElement> getModule() {
         if (module == null) {
             module = ZnRing.make(modulus);
         }
@@ -205,8 +206,13 @@ public final class ZnElement extends RingElement<ZnElement> implements ZnFreeEle
     public ZnElement getRingElement(int i) {
         return this;
     }
-    
-    
+
+    @Override
+    public Ring<ZnElement> getRing() {
+        return getModule();
+    }
+
+
     public int getValue() {
         return value;
     }

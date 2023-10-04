@@ -264,10 +264,10 @@ class JAffineMorphismType
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     ZElement v = (ZElement)getValue(i, j);
-                    vA[i][j] = v.getValue();
+                    vA[i][j] = v.getValue().intValue();
                 }
                 ZElement v = (ZElement)getValue(i);
-                b[i] = v.getValue();
+                b[i] = v.getValue().intValue();
             }
             ZMatrix A = new ZMatrix(vA);
             morphism = ZFreeAffineMorphism.make(A, b);
