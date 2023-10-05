@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
+import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -29,13 +30,25 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZElement extends ArithmeticElement<ArithmeticInteger> {
+public final class ZElement extends ArithmeticElement<ZElement, ArithmeticInteger> {
 
     /**
      * Constructs a ZElement with integer <code>value</code>.
      */
     public ZElement(int value) {
         super(new ArithmeticInteger(value));
+    }
+
+    /**
+     * Constructs a ZElement with integer <code>value</code>.
+     */
+    public ZElement(ArithmeticInteger value) {
+        super(value);
+    }
+
+    @Override
+    protected ZElement valueOf(@NonNull ArithmeticInteger value) {
+        return new ZElement(value);
     }
 
     @Override

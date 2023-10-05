@@ -41,11 +41,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ArithmeticInteger>, ArithmeticElement<ArithmeticInteger>> {
+public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZElement>, ZElement> {
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
 
-    public static FreeModule<?,ArithmeticElement<ArithmeticInteger>> make(int dimension) {
+    public static FreeModule<?,ZElement> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;

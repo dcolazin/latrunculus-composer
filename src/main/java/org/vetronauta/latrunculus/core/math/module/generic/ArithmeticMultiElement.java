@@ -42,7 +42,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,?>>
     private final T[] value;
 
     public ArithmeticMultiElement(T[] value) {
-        if (value == null || value.length < 1) {
+        if (value == null || value.length < 0 || value.length == 1) {
             throw new IllegalArgumentException("MultiElement must have length > 1");
         }
         this.value = value;

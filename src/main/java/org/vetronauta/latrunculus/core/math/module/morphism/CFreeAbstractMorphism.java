@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
  */
 public abstract class CFreeAbstractMorphism extends ModuleMorphism {
 
-    public CFreeAbstractMorphism(int domDim, int codomDim) {
+    protected CFreeAbstractMorphism(int domDim, int codomDim) {
         super(CProperFreeModule.make(domDim), CProperFreeModule.make(codomDim));
     }
 
@@ -41,15 +41,9 @@ public abstract class CFreeAbstractMorphism extends ModuleMorphism {
     public final ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            Complex[] rv;
-            if (x instanceof CProperFreeElement) {
-                rv = ((CProperFreeElement) x).getValue();
-            }
-            else {
-                rv = new Complex[x.getLength()];
-                for (int i = 0; i < x.getLength(); i++) {
-                    rv[i] = ((CElement) x.getComponent(i)).getValue();
-                }
+            Complex[] rv = new Complex[x.getLength()];
+            for (int i = 0; i < x.getLength(); i++) {
+                rv[i] = ((CElement) x.getComponent(i)).getValue();
             }
             return CProperFreeElement.make(mapValue(rv));
         }

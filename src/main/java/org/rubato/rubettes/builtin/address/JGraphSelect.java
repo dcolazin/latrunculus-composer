@@ -32,9 +32,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
@@ -61,8 +63,8 @@ class JGraphSelect
         if (ring instanceof ZRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                ArithmeticInteger[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0].intValue(), p[1].intValue());
+                ZElement[] p = ((ZProperFreeElement)m).getValue();
+                config.addPoint(p[0].getValue().intValue(), p[1].getValue().intValue());
             }
         }
         else if (ring instanceof QRing) {
@@ -83,15 +85,15 @@ class JGraphSelect
         else if (ring instanceof CRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                Complex[] p = ((CProperFreeElement)m).getValue();
-                config.addPoint(p[0].abs(), p[1].abs());
+                CElement[] p = ((CProperFreeElement)m).getValue();
+                config.addPoint(p[0].getValue().abs(), p[1].getValue().abs());
             }
         }
         else if (ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                ArithmeticInteger[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0].intValue(), p[1].intValue());
+                ZElement[] p = ((ZProperFreeElement)m).getValue();
+                config.addPoint(p[0].getValue().intValue(), p[1].getValue().intValue());
             }
         }
         else {

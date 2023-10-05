@@ -19,16 +19,15 @@
 
 package org.vetronauta.latrunculus.core.math.module.complex;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 
 /**
  * The interface for free modules over complex numbers.
  *
  * @author Gérard Milmeister
  */
-public interface CFreeModule<E extends ModuleElement<E, ArithmeticElement<Complex>>> extends FreeModule<E,ArithmeticElement<Complex>> {
+public interface CFreeModule<E extends ModuleElement<E, ZElement>> extends FreeModule<E,ZElement> {
 
 }

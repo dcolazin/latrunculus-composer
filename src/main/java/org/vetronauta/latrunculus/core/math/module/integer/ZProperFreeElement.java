@@ -23,15 +23,9 @@ import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-
-import java.util.Arrays;
 
 /**
  * Elements in a free module over integers.
@@ -39,13 +33,13 @@ import java.util.Arrays;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticInteger> {
+public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
 
-    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ArithmeticInteger[0]);
+    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ZElement[0]);
 
     private ZProperFreeModule module;
 
-    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull int[] v) {
+    public static FreeElement<?, ZElement> make(@NonNull int[] v) {
         if (v.length == 0) {
             return nullElement;
         }
@@ -53,8 +47,36 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
             return new ZElement(v[0]);
         }
         else {
-            return new ZProperFreeElement((ArithmeticInteger[]) Arrays.stream(v).mapToObj(ArithmeticInteger::new).toArray());
+            return new ZProperFreeElement(toElementArray(v));
         }
+    }
+
+    public static FreeElement<?, ZElement> make(@NonNull ArithmeticInteger[] v) {
+        if (v.length == 0) {
+            return nullElement;
+        }
+        else if (v.length == 1) {
+            return new ZElement(v[0]);
+        }
+        else {
+            return new ZProperFreeElement(toElementArray(v));
+        }
+    }
+
+    private static ZElement[] toElementArray(int[] v) {
+        ZElement[] elements = new ZElement[v.length];
+        for (int i = 0; i < v.length; i++) {
+            elements[i] = new ZElement(v[i]);
+        }
+        return elements;
+    }
+
+    private static ZElement[] toElementArray(ArithmeticInteger[] v) {
+        ZElement[] elements = new ZElement[v.length];
+        for (int i = 0; i < v.length; i++) {
+            elements[i] = new ZElement(v[i]);
+        }
+        return elements;
     }
 
     @Override
@@ -74,7 +96,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int d = getValue()[i].intValue()-element.getValue()[i].intValue();
+                    int d = getValue()[i].getValue().intValue()-element.getValue()[i].getValue().intValue();
                     if (d != 0) {
                         return d;
                     }
@@ -134,7 +156,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZProperFreeElement)elements[i]).getValue()[j].intValue();
+                res[i][j] = ((ZProperFreeElement)elements[i]).getValue()[j].getValue().intValue();
             }
         }
         return Folding.fold(res);
@@ -148,13 +170,13 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
     public int hashCode() {
         int val = 0;
         for (int i = 0; i < getLength(); i++) {
-            val ^= getValue()[i].intValue();
+            val ^= getValue()[i].getValue().intValue();
         }
         return val;
     }
     
 
-    private ZProperFreeElement(ArithmeticInteger[] value) {
+    private ZProperFreeElement(ZElement[] value) {
         super(value);
     }
 

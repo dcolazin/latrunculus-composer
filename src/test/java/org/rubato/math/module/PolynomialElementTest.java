@@ -22,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class PolynomialElementTest {
 
-    private PolynomialRing<ArithmeticElement<ArithmeticInteger>> intPolRing;
+    private PolynomialRing<ZElement> intPolRing;
     private PolynomialRing<RElement> realPolRing;
     private PolynomialRing<QElement> ratPolRing;
     
-    private PolynomialElement<ArithmeticElement<ArithmeticInteger>> i0, i1;
+    private PolynomialElement<ZElement> i0, i1;
     private PolynomialElement<RElement> r0, r1;
     private PolynomialElement<QElement> q0, q1;
     
-    private PolynomialElement<ArithmeticElement<ArithmeticInteger>> ia, ib, ic, id;
+    private PolynomialElement<ZElement> ia, ib, ic, id;
     private PolynomialElement<RElement> ra, rb, rc, rd;
     private PolynomialElement<QElement> qa, qb, qc, qd;
 

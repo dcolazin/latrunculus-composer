@@ -208,7 +208,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(CProperFreeElement element, XMLWriter writer) {
         String s = "";
-        Complex[] value = element.getValue();
+        CElement[] value = element.getValue();
         if (value.length > 0) {
             s += value[0];
             for (int i = 1; i < value.length; i++) {

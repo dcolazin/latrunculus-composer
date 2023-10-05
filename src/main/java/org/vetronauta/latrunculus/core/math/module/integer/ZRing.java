@@ -41,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {
+public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing {
 
     private ZRing() {
         super(new ZElement(0), new ZElement(1));
@@ -64,7 +64,7 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
     }
 
     
-    public FreeModule<?, ArithmeticElement<ArithmeticInteger>> getFreeModule(int dimension) {
+    public FreeModule<?, ZElement> getFreeModule(int dimension) {
         return ZProperFreeModule.make(dimension);
     }
 

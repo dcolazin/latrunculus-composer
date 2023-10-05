@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  * @author Gérard Milmeister
  */
 public final class CElement extends ArithmeticElement<CElement,Complex>
-        implements ConjugableElement<CElement> {
+        implements ConjugableElement<CElement,CElement> {
 
     /**
      * Constructs a CElement with complex number <code>value</code>.

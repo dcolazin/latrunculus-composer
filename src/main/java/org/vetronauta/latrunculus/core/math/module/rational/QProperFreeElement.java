@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 
 /**
  * Elements in a free module of rationals.
@@ -52,18 +53,18 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
     }
 
     
-    public static QFreeElement make(ArithmeticInteger[] v) {
+    public static QFreeElement make(ZElement[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
         }
         else if (v.length == 1) {
-            return new QElement(v[0].intValue());
+            return new QElement(v[0].getValue().intValue());
         }
         else {
             Rational[] values = new Rational[v.length];
             for (int i = 0; i < v.length; i++) {
-                values[i] = new Rational(v[i].intValue());
+                values[i] = new Rational(v[i].getValue().intValue());
             }
             return new QProperFreeElement(values);
         }

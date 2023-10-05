@@ -335,7 +335,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
 
 
     private ZString[]   value;
-    private FreeModule<?,ArithmeticElement<ArithmeticInteger>> module = null;
+    private FreeModule<?,ZElement> module = null;
 
     @Override
     public ModuleElement deepCopy() {

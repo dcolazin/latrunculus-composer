@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeElement extends ArithmeticMultiElement<CElement> implements ConjugableElement<CProperFreeElement> {
+public final class CProperFreeElement extends ArithmeticMultiElement<CElement> implements ConjugableElement<ArithmeticMultiElement<CElement>,CElement> {
 
     private CProperFreeModule module = null;
 
@@ -49,6 +49,16 @@ public final class CProperFreeElement extends ArithmeticMultiElement<CElement> i
             return new CElement(v[0]);
         }
         return new CProperFreeElement(toElementArray(v));
+    }
+
+    /**
+     * Creates a CFreeElement from an array of Complex.
+     */
+    public static FreeElement<?, CElement> make(CElement[] v) { //TODO generalize as possible
+        if (v.length == 1) {
+            return v[0].deepCopy();
+        }
+        return new CProperFreeElement(v);
     }
 
     private static CElement[] toElementArray(Complex[] v) {

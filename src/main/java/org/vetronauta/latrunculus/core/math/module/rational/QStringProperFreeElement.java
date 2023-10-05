@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -337,7 +338,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
 
 
     private final QString[]   value;
-    private FreeModule<?, ArithmeticElement<ArithmeticInteger>> module = null;
+    private FreeModule<?, ZElement> module = null; //TODO why not QElement?
 
     @Override
     public ModuleElement deepCopy() {
