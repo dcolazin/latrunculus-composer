@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -41,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
+public final class CRing extends ArithmeticRing<CElement> implements NumberRing {
 
     /**
      * The unique instance of the ring of complex numbers.
@@ -59,7 +60,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
     
     @Override
-    public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
+    public FreeModule<?, CElement> getFreeModule(int dimension) {
         return CProperFreeModule.make(dimension);
     }
 
@@ -71,59 +72,25 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     @Override
     public CElement createElement(List<ModuleElement<?,?>> elements) {
         if (!elements.isEmpty()) {
-            return (CElement)elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         return null;
     }
     
     @Override
     public CElement cast(ModuleElement<?,?> element) {
-        if (element instanceof ZElement) {
-            return cast((ZElement)element);
+        if (element instanceof ArithmeticElement) {
+            return cast(((ArithmeticElement<?, ?>) element).getValue());
         }
-        else if (element instanceof ZnElement) {
-            return cast((ZnElement)element);
+        if (element instanceof DirectSumElement) {
+            return element.cast(this);
         }
-        else if (element instanceof QElement) {
-            return cast((QElement)element);
-        }
-        else if (element instanceof RElement) {
-            return cast((RElement)element);
-        }
-        else if (element instanceof CElement) {
-            return cast((CElement)element);
-        }
-        else if (element instanceof DirectSumElement) {
-            return (CElement)element.cast(this);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
     
-    public CElement cast(ZElement element) {
-        return new CElement(element.getValue().intValue());
-    }
-
-    
-    public CElement cast(ZnElement element) {
-        return new CElement(element.getValue());
-    }
-    
-    
-    public CElement cast(QElement element) {
-        return new CElement(element.getValue().doubleValue());
-    }
-
-    
-    public CElement cast(RElement element) {
-        return new CElement(element.getValue());
-    }
-
-    
-    public CElement cast(CElement element) {
-        return element;
+    public CElement cast(ArithmeticNumber<?> element) {
+        return new CElement(element.doubleValue());
     }
 
     

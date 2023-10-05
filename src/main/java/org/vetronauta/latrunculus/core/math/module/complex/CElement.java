@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.complex;
 
+import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
@@ -31,13 +32,19 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  *
  * @author Gérard Milmeister
  */
-public final class CElement extends ArithmeticElement<Complex> implements ConjugableElement<ArithmeticElement<Complex>,ArithmeticElement<Complex>> {
+public final class CElement extends ArithmeticElement<CElement,Complex>
+        implements ConjugableElement<CElement> {
 
     /**
      * Constructs a CElement with complex number <code>value</code>.
      */
     public CElement(Complex value) {
         super(value);
+    }
+
+    @Override
+    protected CElement valueOf(@NonNull Complex value) {
+        return new CElement(value);
     }
 
     /**
@@ -60,8 +67,8 @@ public final class CElement extends ArithmeticElement<Complex> implements Conjug
 
     public void conjugate() { //TODO hack
         Complex conj = getValue().conjugated();
-        subtract(new ArithmeticElement<>(getValue()));
-        add(new ArithmeticElement<>(conj));
+        subtract(new CElement(getValue()));
+        add(new CElement(conj));
     }
 
     public double[] fold(ModuleElement[] elements) {

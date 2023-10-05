@@ -25,7 +25,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
@@ -34,23 +33,34 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeElement extends ArithmeticMultiElement<Complex> implements ConjugableElement<ArithmeticMultiElement<Complex>,ArithmeticElement<Complex>> {
+public final class CProperFreeElement extends ArithmeticMultiElement<CElement> implements ConjugableElement<CProperFreeElement> {
 
     private CProperFreeModule module = null;
 
-    private CProperFreeElement(Complex[] value) {
+    private CProperFreeElement(CElement[] value) {
         super(value);
     }
 
     /**
      * Creates a CFreeElement from an array of Complex.
      */
-    public static FreeElement<?, ArithmeticElement<Complex>> make(Complex[] v) { //TODO remove
-        return ArithmeticMultiElement.make(v);
+    public static FreeElement<?, CElement> make(Complex[] v) { //TODO generalize as possible
+        if (v.length == 1) {
+            return new CElement(v[0]);
+        }
+        return new CProperFreeElement(toElementArray(v));
+    }
+
+    private static CElement[] toElementArray(Complex[] v) {
+        CElement[] elements = new CElement[v.length];
+        for (int i = 0; i < v.length; i++) {
+            elements[i] = new CElement(v[i]);
+        }
+        return elements;
     }
 
     public CProperFreeElement conjugated() {
-        Complex[] res = new Complex[getValue().length];
+        CElement[] res = new CElement[getValue().length];
         for (int i = 0; i < getValue().length; i++) {
             res[i] = getValue()[i].conjugated();
         }
@@ -135,10 +145,10 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> im
     public double[] fold(ModuleElement<?,?>[] elements) {
         double[][] res = new double[elements.length][getLength()*2];
         for (int i = 0; i < elements.length; i++) {
-            Complex[] c = ((CProperFreeElement)elements[i]).getValue();
+            CElement[] c = ((CProperFreeElement)elements[i]).getValue();
             for (int j = 0; j < getLength(); j++) {
-                res[i][2*j] = c[j].getReal();
-                res[i][2*j+1] = c[j].getImag();
+                res[i][2*j] = c[j].getValue().getReal();
+                res[i][2*j+1] = c[j].getValue().getImag();
             }
         }
         return Folding.fold(res);

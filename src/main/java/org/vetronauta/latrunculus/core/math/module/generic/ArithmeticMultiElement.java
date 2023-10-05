@@ -34,8 +34,8 @@ import java.util.Objects;
  * @author vetronauta
  */
 @Getter
-public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends ArithmeticNumber<N>>
-        extends ProperFreeElement<ArithmeticMultiElement<T,N>, T> {
+public class ArithmeticMultiElement<T extends ArithmeticElement<T,?>>
+        extends ProperFreeElement<ArithmeticMultiElement<T>, T> {
 
     //TODO make it abstract and have a N[] array instead of a T[] one
 
@@ -49,7 +49,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> deepCopy() {
+    public ArithmeticMultiElement<T> deepCopy() {
         T[] v = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < getLength(); i++) {
             v[i] = value[i].deepCopy();
@@ -66,7 +66,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> productCW(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public ArithmeticMultiElement<T> productCW(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -78,7 +78,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public void multiplyCW(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public void multiplyCW(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -109,7 +109,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> scaled(T element) throws DomainException {
+    public ArithmeticMultiElement<T> scaled(T element) throws DomainException {
         T[] res = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < res.length; i++) {
             res[i] = res[i].product(element);
@@ -135,7 +135,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> sum(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public ArithmeticMultiElement<T> sum(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -147,7 +147,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public void add(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public void add(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -157,7 +157,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> difference(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public ArithmeticMultiElement<T> difference(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -169,7 +169,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public void subtract(ArithmeticMultiElement<T,N> element) throws DomainException {
+    public void subtract(ArithmeticMultiElement<T> element) throws DomainException {
         if (getLength() != element.getLength()) {
             throw new DomainException(this.getModule(), element.getModule());
         }
@@ -179,7 +179,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public ArithmeticMultiElement<T,N> negated() {
+    public ArithmeticMultiElement<T> negated() {
         T[] res = Arrays.copyOf(value, value.length); //TODO is there a better way?
         for (int i = 0; i < getLength(); i++) {
             res[i] = value[i].negated();
@@ -201,7 +201,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
     }
 
     @Override
-    public Module<ArithmeticMultiElement<T,N>, T> getModule() {
+    public Module<ArithmeticMultiElement<T>, T> getModule() {
         return null; //TODO
     }
 
@@ -224,7 +224,7 @@ public class ArithmeticMultiElement<T extends ArithmeticElement<T,N>, N extends 
         if (!(object instanceof ArithmeticMultiElement)) {
             return false;
         }
-        ArithmeticMultiElement<?,?> otherElement = (ArithmeticMultiElement<?,?>) object;
+        ArithmeticMultiElement<?> otherElement = (ArithmeticMultiElement<?>) object;
         if (getLength() == otherElement.getLength()) {
             for (int i = 0; i < getLength(); i++) {
                 if (!Objects.equals(value[i], otherElement.value[i])) {

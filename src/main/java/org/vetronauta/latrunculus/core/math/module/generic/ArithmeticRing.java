@@ -33,10 +33,10 @@ import java.util.List;
  * @author vetronauta
  */
 @RequiredArgsConstructor
-public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<ArithmeticElement<T>> {
+public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
 
-    private final ArithmeticElement<T> zero;
-    private final ArithmeticElement<T> one;
+    private final ArithmeticElement<T,?> zero;
+    private final ArithmeticElement<T,?> one;
 
     //TODO proper consturctor
 
@@ -46,7 +46,7 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public ArithmeticElement<T> getZero() {
+    public T getZero() {
         return zero.deepCopy();
     }
 
@@ -56,7 +56,7 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public Module<?, ArithmeticElement<T>> getNullModule() {
+    public Module<?, T> getNullModule() {
         return null; //TODO
     }
 
@@ -66,12 +66,12 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public ArithmeticElement<T> cast(ModuleElement<?, ?> element) {
+    public T cast(ModuleElement<?, ?> element) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticElement<T> createElement(List<ModuleElement<?, ?>> elements) {
+    public T createElement(List<ModuleElement<?, ?>> elements) {
         return null; //TODO
     }
 
@@ -81,7 +81,7 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public ArithmeticElement<T> getOne() {
+    public T getOne() {
         return one.deepCopy();
     }
 
@@ -91,12 +91,12 @@ public class ArithmeticRing<T extends ArithmeticNumber<T>> extends Ring<Arithmet
     }
 
     @Override
-    public FreeModule<?, ArithmeticElement<T>> getFreeModule(int dimension) {
+    public FreeModule<?, T> getFreeModule(int dimension) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticElement<T> parseString(String s) {
+    public T parseString(String s) {
         return null; //TODO
     }
 }

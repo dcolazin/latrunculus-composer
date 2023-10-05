@@ -24,7 +24,7 @@ package org.vetronauta.latrunculus.core.math.module.definition;
  *
  * @author Gérard Milmeister
  */
-public interface ConjugableElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends ModuleElement<E,R> {
+public interface ConjugableElement<E> {
 
     /**
      * Returns the conjugate of this element.

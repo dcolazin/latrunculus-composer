@@ -38,6 +38,8 @@ import java.lang.reflect.Array;
 @Getter
 public abstract class ArithmeticElement<T extends ArithmeticElement<T,N>, N extends ArithmeticNumber<N>> extends RingElement<T> {
 
+    //TODO ditch ArithmeticNumber and just use ArithmeticElement?
+
     @NonNull
     private N value;
 

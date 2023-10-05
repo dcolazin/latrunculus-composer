@@ -41,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
+public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<CElement>, CElement> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);
        
@@ -51,7 +51,7 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
      * @param dimension the dimension of the free module over C,
      *                  if < 0, assumed to be 0
      */
-    public static FreeModule<?,ArithmeticElement<Complex>> make(int dimension) {
+    public static FreeModule<?,CElement> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -145,7 +145,7 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
     }
 
     
-    public ArithmeticMultiElement<Complex> cast(ModuleElement<?,?> element) {
+    public ArithmeticMultiElement<CElement> cast(ModuleElement<?,?> element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
                 return element.cast(this);
