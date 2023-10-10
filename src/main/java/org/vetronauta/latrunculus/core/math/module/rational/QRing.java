@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -40,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QRing extends Ring<QElement> implements QFreeModule<QElement>, NumberRing {
+public final class QRing extends ArithmeticRing<QElement> implements NumberRing {
 
     /**
      * The unique instance of the ring of rationals.

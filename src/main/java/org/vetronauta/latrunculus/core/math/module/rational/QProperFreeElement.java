@@ -24,9 +24,11 @@ import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 
 /**
@@ -35,11 +37,15 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeElement extends ProperFreeElement<QProperFreeElement,QElement> implements QFreeElement<QProperFreeElement> {
+public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
 
-    public static QFreeElement nullElement = new QProperFreeElement(new Rational[0]);
+    public static final QProperFreeElement nullElement = new QProperFreeElement(new QElement[0]);
 
-    public static QFreeElement make(Rational[] v) {
+    private QProperFreeElement(QElement[] array) {
+        super(array);
+    }
+
+    public static FreeElement<?, QElement> make(Rational[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
@@ -48,12 +54,19 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             return new QElement(v[0]);
         }
         else {
-            return new QProperFreeElement(v);
+            return new QProperFreeElement(toElementArray(v));
         }
     }
 
-    
-    public static QFreeElement make(ZElement[] v) {
+    private static QElement[] toElementArray(Rational[] v) {
+        QElement[] elements = new QElement[v.length];
+        for (int i = 0; i < v.length; i++) {
+            elements[i] = new QElement(v[i]);
+        }
+        return elements;
+    }
+
+    public static FreeElement<?, QElement> make(ZElement[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
@@ -66,150 +79,9 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             for (int i = 0; i < v.length; i++) {
                 values[i] = new Rational(v[i].getValue().intValue());
             }
-            return new QProperFreeElement(values);
+            return new QProperFreeElement(toElementArray(values));
         }
     }
-
-    
-    public boolean isZero() {
-        for (int i = 0; i < value.length; i++) {
-            if (!value[i].isZero()) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public QProperFreeElement sum(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Rational[] v = element.getValue();
-            Rational res[] = new Rational[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].sum(v[i]);
-            }
-            return new QProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public void add(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Rational[] v = element.getValue();
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].sum(v[i]);
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public QProperFreeElement difference(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Rational[] v = element.getValue();
-            Rational res[] = new Rational[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].difference(v[i]);
-            }
-            return new QProperFreeElement(res);        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void subtract(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].difference(element.value[i]);
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public QProperFreeElement productCW(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Rational[] v = element.getValue();
-            Rational res[] = new Rational[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].product(v[i]);
-            }
-            return new QProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void multiplyCW(QProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            Rational[] v = element.getValue();
-            for (int i = 0; i < getLength(); i++) {
-                value[i] = value[i].product(v[i]);
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public QProperFreeElement negated() {
-        Rational[] res = new Rational[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].neg();
-        }
-        return new QProperFreeElement(res);
-    }
-    
-
-    public void negate() {
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = value[i].neg();
-        }
-    }
-
-    public QProperFreeElement scaled(QElement element) {
-        Rational val = element.getValue();
-        Rational res[] = new Rational[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].product(val);
-        }
-        return new QProperFreeElement(res);        
-    }
-
-    public void scale(QElement element) {
-        Rational val = element.getValue();
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = value[i].product(val);
-        }
-    }
-
-    
-    public QElement getComponent(int i) {
-        return new QElement(value[i]);
-    }
-
-    
-    public QElement getRingElement(int i) {
-        return new QElement(value[i]);
-    }
-
-    
-    public int getLength() {
-        return value.length;
-    }
-
     
     public QProperFreeModule getModule() {
         if (module == null) {
@@ -217,56 +89,6 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
         }
         return module;
     }
-
-    
-    public Rational[] getValue() {
-        return value;
-    }
-
-
-    public Rational getValue(int i) {
-        return value[i];
-    }
-    
-   
-    public QFreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            Rational[] values = new Rational[n];
-            for (int i = 0; i < minlen; i++) {
-                values[i] = new Rational(getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values[i] = Rational.getZero();
-            }
-            return QProperFreeElement.make(values);
-        }
-    }
-    
-
-    public boolean equals(Object object) {
-        if (object instanceof QProperFreeElement) {
-            QProperFreeElement e = (QProperFreeElement)object;
-            if (getLength() == e.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (!value[i].equals(e.value[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;                
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
 
     public int compareTo(ModuleElement object) {
         if (object instanceof QProperFreeElement) {
@@ -277,7 +99,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int c = value[i].compareTo(element.value[i]);
+                    int c = getValue()[i].compareTo(element.getValue()[i]);
                     if (c != 0) {
                         return c;
                     }
@@ -295,10 +117,10 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
             return "Null";
         }
         else {
-            StringBuilder res = new StringBuilder(value[0].toString());
+            StringBuilder res = new StringBuilder(getValue()[0].toString());
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i]);
+                res.append(getValue()[i]);
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -309,33 +131,31 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
         }
     }
 
-    
     public String toString() {
         StringBuilder buf = new StringBuilder(30);
         buf.append("QFreeElement[");
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(getValue()[i]);
             }
         }
         buf.append("]");
         return buf.toString();
     }
 
-    
     public double[] fold(ModuleElement[] elements) {
         double[][] res = new double[elements.length][];
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            Rational[] r = ((QProperFreeElement)elements[i]).getValue();
+            QElement[] r = ((QProperFreeElement)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; i < elements.length; j++) {
-                res[i][j] = r[j].doubleValue();
+                res[i][j] = r[j].getValue().doubleValue();
             }
         }
         return Folding.fold(res);
@@ -344,31 +164,7 @@ public final class QProperFreeElement extends ProperFreeElement<QProperFreeEleme
     public String getElementTypeName() {
         return "QFreeElement";
     }
-    
-    
-    public int hashCode() {
-        int hash = 7;
-        for (int i = 0; i < getLength(); i++) {
-            hash = 37*hash + value[i].hashCode();
-        }
-        return hash;
-    }
 
-    
-    private QProperFreeElement(Rational[] value) {
-        this.value = value;
-    }
-
-
-    private Rational[]        value;
     private QProperFreeModule module = null;
 
-    @Override
-    public ModuleElement deepCopy() {
-        Rational[] v = new Rational[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            v[i] = value[i].deepCopy();
-        }
-        return new QProperFreeElement(v);
-    }
 }

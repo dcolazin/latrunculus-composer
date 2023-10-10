@@ -110,7 +110,7 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
     /**
      * Fold <code>elements</code> assuming they are of this same type.
      */
-    //TODO proper signature
+    //TODO proper signature; moreover, should be this notion be in Module/Ring and not in ModuleElement?
     double[] fold(ModuleElement<?,?>[] elements);
 
     /**

@@ -23,9 +23,12 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 
@@ -38,11 +41,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeModule extends ProperFreeModule<QProperFreeElement,QElement> implements QFreeModule<QProperFreeElement> {
+public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<QElement>,QElement> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
 
-    public static QFreeModule make(int dimension) {
+    public static FreeModule<?, QElement> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -230,5 +233,5 @@ public final class QProperFreeModule extends ProperFreeModule<QProperFreeElement
     }
 
 
-    private final static int basicHash = "QFreeModule".hashCode();
+    private static final int basicHash = "QFreeModule".hashCode();
 }
