@@ -21,7 +21,9 @@ package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.exception.ModulusException;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 
 import java.util.Arrays;
@@ -105,16 +107,19 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
 
     @Override
     public ArithmeticModulus sum(ArithmeticModulus other) {
+        assertModulusIsSame(other);
         return new ArithmeticModulus(value + other.value, modulus);
     }
 
     @Override
     public ArithmeticModulus difference(ArithmeticModulus other) {
+        assertModulusIsSame(other);
         return new ArithmeticModulus(value - other.value, modulus);
     }
 
     @Override
     public ArithmeticModulus product(ArithmeticModulus other) {
+        assertModulusIsSame(other);
         return new ArithmeticModulus(value * other.value, modulus);
     }
 
@@ -159,6 +164,12 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
 
     public static List<ArithmeticModulus> toList(List<Integer> list, int m) {
         return list.stream().map(i -> new ArithmeticModulus(i, m)).collect(Collectors.toList());
+    }
+
+    private void assertModulusIsSame(ArithmeticModulus other) {
+        if (modulus != other.getModulus()) {
+            throw new ModulusException(this, other);
+        }
     }
 
 }

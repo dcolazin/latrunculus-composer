@@ -753,7 +753,7 @@ abstract class RubatoPrimitives {
             return new SInteger(((ZElement)element).getValue().intValue());
         }
         else if (element instanceof ZnElement) {
-            return new SInteger(((ZnElement)element).getValue());
+            return new SInteger(((ZnElement)element).getValue().getValue());
         }
         else if (element instanceof QElement) {
             return SRational.make(((QElement)element).getValue());

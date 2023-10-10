@@ -109,7 +109,7 @@ public final class ZnAffineMorphism extends ZnAbstractMorphism {
     public ModuleMorphism scaled(RingElement element)
             throws CompositionException {
         if (element instanceof ZnElement && ((ZnElement)element).getModulus() == getModulus()) {
-            int s = ((ZnElement)element).getValue();
+            int s = ((ZnElement)element).getValue().getValue();
             if (s == 0) {
                 return getConstantMorphism(element);
             }

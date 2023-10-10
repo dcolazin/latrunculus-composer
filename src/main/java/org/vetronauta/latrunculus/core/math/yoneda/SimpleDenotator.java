@@ -470,7 +470,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the modular integer contained in a ZnElement denotator.
      */
     public int getModInteger() {
-        return ((ZnElement)getElement()).getValue();
+        return ((ZnElement)getElement()).getValue().intValue();
     }    
     
     

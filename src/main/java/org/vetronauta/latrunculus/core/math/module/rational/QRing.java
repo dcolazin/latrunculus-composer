@@ -158,7 +158,7 @@ public final class QRing extends Ring<QElement> implements QFreeModule<QElement>
 
     
     public QElement cast(ZnElement element) {
-        return new QElement(element.getValue(), 1);
+        return new QElement(element.getValue().getValue(), 1);
     }
     
     

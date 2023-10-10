@@ -342,7 +342,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Zm
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ZnElement(((ZnElement)element).getValue(), ((ZnRing)codomain).getModulus());
+                    return new ZnElement(((ZnElement)element).getValue().getValue(), ((ZnRing)codomain).getModulus());
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -352,7 +352,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Z
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ZElement(((ZnElement)element).getValue());
+                    return new ZElement(((ZnElement)element).getValue().getValue());
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -362,7 +362,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Q
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new QElement(((ZnElement)element).getValue());
+                    return new QElement(((ZnElement)element).getValue().getValue());
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -372,7 +372,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> R
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new RElement(((ZnElement)element).getValue());
+                    return new RElement(((ZnElement)element).getValue().getValue());
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -382,7 +382,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> C
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new CElement(((ZnElement)element).getValue());
+                    return new CElement(((ZnElement)element).getValue().getValue());
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }

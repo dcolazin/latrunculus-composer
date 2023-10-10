@@ -22,10 +22,12 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
@@ -39,10 +41,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnProperFreeModule extends ProperFreeModule<ZnProperFreeElement,ZnElement> implements ZnFreeModule<ZnProperFreeElement> {
+public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZnElement>,ZnElement> {
 
-    public static ZnFreeModule make(int dimension, int modulus) {
-        dimension = (dimension < 0)?0:dimension;
+    public static FreeModule<?, ZnElement> make(int dimension, int modulus) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return new ZnProperFreeModule(0, modulus);
         }
@@ -135,7 +137,7 @@ public final class ZnProperFreeModule extends ProperFreeModule<ZnProperFreeEleme
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((ZnElement)castElement).getValue();
+            values[i] = ((ZnElement)castElement).getValue().getValue();
         }
 
         return (ZnProperFreeElement) ZnProperFreeElement.make(values, getModulus()); //TODO do not cast
@@ -158,7 +160,7 @@ public final class ZnProperFreeModule extends ProperFreeModule<ZnProperFreeEleme
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((ZnElement)castElement).getValue();
+                    elements[i] = ((ZnElement)castElement).getValue().getValue();
                 }
                 return (ZnProperFreeElement) ZnProperFreeElement.make(elements, modulus);
             }

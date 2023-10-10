@@ -81,7 +81,7 @@ public abstract class DoubleConverter {
             this.modulus = modulus;
         }
         public double toDouble(ModuleElement x) {
-            return ((ZnElement)x).getValue();
+            return ((ZnElement)x).getValue().doubleValue();
         }
         public ModuleElement fromDouble(double x) {
             return new ZnElement((int)Math.round(x), modulus);

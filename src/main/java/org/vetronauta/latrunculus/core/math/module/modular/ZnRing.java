@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
@@ -42,7 +43,12 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElement>, NumberRing {
+public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRing {
+
+    private ZnRing(int modulus) {
+        super(new ZnElement(0, modulus), new ZnElement(1, modulus));
+        this.modulus = modulus;
+    }
 
     /**
      * Constructs a ring of integers mod <code>modulus</code>.
@@ -51,54 +57,23 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
         assert(modulus > 1);
         return new ZnRing(modulus);
     }
-    
-    
-    public ZnElement getZero() {
-        return new ZnElement(0, modulus);
+
+    @Override
+    public ZnProperFreeModule getNullModule() {
+        return (ZnProperFreeModule) ZnProperFreeModule.make(0, modulus);
     }
 
-    
-    public ZnElement getOne() {
-        return new ZnElement(1, modulus);
-    }
-
-    
-    public ZnElement getUnitElement(int i) {
-        return getOne();
-    }
-
-    
-    public Module getNullModule() {
-        return ZnProperFreeModule.make(0, modulus);
-    }
-    
-    
-    public boolean isField() {
-        return field;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return isField();
-    }
-
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
+    @Override
+    public boolean hasElement(ModuleElement<?,?> element) {
         return (element instanceof ZnElement) &&
         	    (((ZnElement)element).getModulus() == modulus);
     }
 
     
-    public FreeModule getFreeModule(int dimension) {
-        return ZnProperFreeModule.make(dimension, modulus);
+    public ZnProperFreeModule getFreeModule(int dimension) {
+        return (ZnProperFreeModule) ZnProperFreeModule.make(dimension, modulus);
     }
 
-    
     public boolean equals(Object object) {
         if (object == this) {
             return true;
@@ -168,7 +143,7 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
             return element;
         }
         else {
-            return new ZnElement(element.getValue(), modulus);
+            return new ZnElement(element.getValue().getValue(), modulus);
         }
     }
     
@@ -221,16 +196,10 @@ public final class ZnRing extends Ring<ZnElement> implements ZnFreeModule<ZnElem
         return 37*basicHash + modulus;
     }
 
-    private ZnRing(int modulus) {
-        this.modulus = modulus;
-        this.field = NumberTheory.isPrime(modulus);
-    }
 
-    
-    private final static int basicHash = "ZnRing".hashCode();
+    private static final int basicHash = "ZnRing".hashCode();
 
     private int     modulus;
-    private boolean field;
 
     @Override
     public int getNumberRingOrder() {

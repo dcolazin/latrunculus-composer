@@ -320,10 +320,10 @@ class JAffineMorphismType
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     ZnElement v = (ZnElement)getValue(i, j);
-                    vA[i][j] = v.getValue();
+                    vA[i][j] = v.getValue().getValue();
                 }
                 ZnElement v = (ZnElement)getValue(i);
-                b[i] = v.getValue();
+                b[i] = v.getValue().getValue();
             }
             ZnMatrix A = new ZnMatrix(vA, ((ZnRing)ring).getModulus());
             morphism = ZnFreeAffineMorphism.make(A, b);

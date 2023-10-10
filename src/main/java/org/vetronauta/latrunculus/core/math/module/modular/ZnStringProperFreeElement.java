@@ -212,7 +212,7 @@ public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringP
 
     public Module getModule() {
         if (module == null) {
-            module = ZnProperFreeModule.make(getLength(), modulus);
+            module = (ZnProperFreeModule) ZnProperFreeModule.make(getLength(), modulus);
         }
         return module;
     }
@@ -360,7 +360,7 @@ public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringP
 
     private ZnString[]   value;
     private int          modulus;
-    private ZnFreeModule module = null;
+    private ZnProperFreeModule module = null;
 
     @Override
     public ModuleElement deepCopy() {

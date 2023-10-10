@@ -39,7 +39,7 @@ public abstract class ZnAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            int v = ((ZnElement) x.getComponent(0)).getValue();
+            int v = ((ZnElement) x.getComponent(0)).getValue().getValue();
             return new ZnElement(mapValue(v), modulus);
         }
         else {

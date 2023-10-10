@@ -38,7 +38,7 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     private final ArithmeticElement<T,?> zero;
     private final ArithmeticElement<T,?> one;
 
-    //TODO proper consturctor
+    //TODO proper consturctor or make abstract?
 
     @Override
     public boolean isVectorSpace() {
