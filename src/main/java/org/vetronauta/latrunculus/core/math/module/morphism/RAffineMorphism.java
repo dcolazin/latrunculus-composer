@@ -108,7 +108,7 @@ public final class RAffineMorphism extends RAbstractMorphism {
     public ModuleMorphism scaled(RingElement element)
         throws CompositionException {
         if (element instanceof RElement) {
-            double s = ((RElement)element).getValue();
+            double s = ((RElement)element).getValue().doubleValue();
             if (s == 0.0) {
                 return getConstantMorphism(element);
             }

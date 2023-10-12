@@ -478,7 +478,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the double contained in an RElement denotator.
      */
     public double getReal() {
-        return ((RElement)getElement()).getValue();
+        return ((RElement)getElement()).getValue().doubleValue();
     }
     
     

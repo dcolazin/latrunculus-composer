@@ -39,10 +39,10 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 		
 		try {
 			for (Denotator currentNote : score.getFactors()) {
-				double currentOnset = ((RElement)currentNote.getElement(new int[]{0,0})).getValue();
+				double currentOnset = ((RElement)currentNote.getElement(new int[]{0,0})).getValue().doubleValue();
 				double currentPitch = ((QElement)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
 				double currentLoudness = ((ZElement)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
-				double currentDuration = ((RElement)currentNote.getElement(new int[]{3,0})).getValue();
+				double currentDuration = ((RElement)currentNote.getElement(new int[]{3,0})).getValue().doubleValue();
 				
 				maxOnset = Math.max(maxOnset, currentOnset);
 				maxDuration = Math.max(maxDuration, currentDuration);

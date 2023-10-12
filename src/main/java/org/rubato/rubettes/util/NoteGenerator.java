@@ -416,7 +416,7 @@ public abstract class NoteGenerator {
 	
 	public Double getDoubleValue(Denotator note, int[] elementPath) {
 		try {
-			return ((RElement)note.getElement(elementPath).cast(RRing.ring)).getValue();
+			return ((RElement)note.getElement(elementPath).cast(RRing.ring)).getValue().doubleValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return null;

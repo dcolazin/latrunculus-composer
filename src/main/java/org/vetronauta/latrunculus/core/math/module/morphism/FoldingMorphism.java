@@ -58,7 +58,7 @@ public final class FoldingMorphism extends ModuleMorphism {
     public double mapValue(ModuleElement element) {
         RElement res = (RElement)map(element);
         if (res != null) {
-            return res.getValue();
+            return res.getValue().doubleValue();
         }
         else {
             return 0;

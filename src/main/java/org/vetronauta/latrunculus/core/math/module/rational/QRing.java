@@ -123,7 +123,7 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
     
     
     public QElement cast(RElement element) {
-        return new QElement(new Rational(element.getValue()));
+        return new QElement(new Rational(element.getValue().doubleValue()));
     }
 
     

@@ -138,7 +138,7 @@ public class ObjectGenerator {
 			} else if (valuePath.getEndForm().getType() == Form.SIMPLE) {
 				SimpleDenotator simple = (SimpleDenotator)denotator.get(valuePath.toIntArray());
 				if (simple != null) {
-					return ((RElement)simple.getElement().cast(RRing.ring)).getValue();
+					return ((RElement)simple.getElement().cast(RRing.ring)).getValue().doubleValue();
 				}
 				return null;
 			}
@@ -156,7 +156,7 @@ public class ObjectGenerator {
 				element = element.getComponent(i);
 			}
 		}
-		return ((RElement)element.cast(RRing.ring)).getValue();
+		return ((RElement)element.cast(RRing.ring)).getValue().doubleValue();
 	}
 	
 	/**
@@ -397,8 +397,8 @@ public class ObjectGenerator {
 			}
 			return ProductElement.make(factors).cast(productElement.getModule());
 		} else if (currentDimension > 1) {
-			double[] values = ((RProperFreeElement)currentElement.cast(RProperFreeModule.make(currentDimension))).getValue();
-			values[elementPath[elementPath.length-1]] = value;
+			RElement[] values = ((RProperFreeElement)currentElement.cast(RProperFreeModule.make(currentDimension))).getValue();
+			values[elementPath[elementPath.length-1]] = new RElement(value);
 			return RProperFreeElement.make(values).cast(currentElement.getModule());
 		} else {
 			return new RElement(value).cast(currentElement.getModule());

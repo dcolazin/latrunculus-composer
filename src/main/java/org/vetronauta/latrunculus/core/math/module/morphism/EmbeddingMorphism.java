@@ -322,7 +322,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // R -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new CElement(((RElement)element).getValue());
+                        return new CElement(((RElement)element).getValue().doubleValue());
                     }
                 };
             }
@@ -508,10 +508,10 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
                         RProperFreeElement e = (RProperFreeElement)((RFreeElement)element).resize(codim);
-                        double[] v_from = e.getValue();
+                        RElement[] v_from = e.getValue();
                         Complex[] v_to = new Complex[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
-                            v_to[i] = new Complex(v_from[i]);
+                            v_to[i] = new Complex(v_from[i].getValue().doubleValue());
                         }
                         return CProperFreeElement.make(v_to);
                     }

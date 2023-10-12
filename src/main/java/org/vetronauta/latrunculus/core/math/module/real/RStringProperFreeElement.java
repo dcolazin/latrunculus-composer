@@ -23,6 +23,7 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.RString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
@@ -331,7 +332,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
 
     private RString[]   value;
-    private RFreeModule module = null;
+    private FreeModule<?,RElement> module = null;
 
     @Override
     public ModuleElement deepCopy() {

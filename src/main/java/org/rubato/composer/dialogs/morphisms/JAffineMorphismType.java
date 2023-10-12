@@ -292,10 +292,10 @@ class JAffineMorphismType
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     RElement v = (RElement)getValue(i, j);
-                    vA[i][j] = v.getValue();
+                    vA[i][j] = v.getValue().doubleValue();
                 }
                 RElement v = (RElement)getValue(i);
-                b[i] = v.getValue();
+                b[i] = v.getValue().doubleValue();
             }
             RMatrix A = new RMatrix(vA);
             morphism = RFreeAffineMorphism.make(A, b);

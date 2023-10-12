@@ -40,6 +40,7 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -79,8 +80,8 @@ class JGraphSelect
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                double[] p = ((RProperFreeElement)m).getValue();
-                config.addPoint(p[0], p[1]);
+                RElement[] p = ((RProperFreeElement)m).getValue();
+                config.addPoint(p[0].getValue().doubleValue(), p[1].getValue().doubleValue());
             }
         }
         else if (ring instanceof CRing) {

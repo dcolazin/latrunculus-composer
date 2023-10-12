@@ -154,7 +154,7 @@ public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRin
 
     
     public ZnElement cast(RElement element) {
-        return new ZnElement((int)Math.round(element.getValue()), modulus);
+        return new ZnElement((int)Math.round(element.getValue().doubleValue()), modulus);
     }
 
     

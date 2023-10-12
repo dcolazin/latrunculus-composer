@@ -91,7 +91,7 @@ public abstract class DoubleConverter {
     
     private static DoubleConverter rconverter = new DoubleConverter() {
         public double toDouble(ModuleElement x) {
-            return ((RElement)x).getValue();
+            return ((RElement)x).getValue().doubleValue();
         }
         public ModuleElement fromDouble(double x) {
             return new RElement(x);

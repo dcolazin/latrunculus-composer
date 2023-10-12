@@ -21,11 +21,10 @@ package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
  * Elements in a free module over reals.
@@ -33,11 +32,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeElement extends ProperFreeElement<RProperFreeElement,RElement> implements RFreeElement<RProperFreeElement> {
+public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
 
-    public static RFreeElement nullElement = new RProperFreeElement(new double[0]);
+    public static RProperFreeElement nullElement = new RProperFreeElement(new double[0]);
     
-    public static RFreeElement make(double[] v) {
+    public static FreeElement<?, RElement> make(double[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
@@ -49,199 +48,26 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
             return new RProperFreeElement(v);
         }
     }
-    
 
-    public boolean isZero() {
-        for (int i = 0; i < value.length; i++) {
-            if (value[i] != 0.0) {
-                return false;
-            }
+    public static FreeElement<?, RElement> make(RElement[] v) {
+        assert(v != null);
+        if (v.length == 0) {
+            return nullElement;
         }
-        return true;
-    }
-    
-    public RProperFreeElement sum(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            double[] res = new double[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i] + element.value[i];
-            }
-            return new RProperFreeElement(res);
+        else if (v.length == 1) {
+            return v[0];
         }
         else {
-            throw new DomainException(this.getModule(), element.getModule());
+            return new RProperFreeElement(v);
         }
     }
-
-    public void add(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] += element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public RProperFreeElement difference(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            double[] res = new double[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i] - element.value[i];
-            }
-            return new RProperFreeElement(res);
-        } else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public void subtract(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] -= element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-
-    public RProperFreeElement productCW(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            double[] res = new double[getLength()];
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i] * element.value[i];
-            }
-            return new RProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void multiplyCW(RProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value[i] *= element.value[i];
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    
-    public RProperFreeElement negated() {
-        double[] res = new double[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = -value[i];
-        }
-        return new RProperFreeElement(res);
-    }
-    
-
-    public void negate() {
-        for (int i = 0; i < getLength(); i++) {
-            value[i] = -value[i];
-        }
-    }
-
-    public RProperFreeElement scaled(RElement element) {
-        double val = element.getValue();
-        double res[] = new double[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i]*val;
-        }
-        return new RProperFreeElement(res);        
-    }
-    
-    public void scale(RElement element) {
-        double val = element.getValue();
-        for (int i = 0; i < getLength(); i++) {
-            value[i] *= val;
-        }
-    }
-
-    
-    public RElement getComponent(int i) {
-        return new RElement(value[i]); 
-    }
-    
-
-    public RElement getRingElement(int i) {
-        return new RElement(value[i]); 
-    }
-    
-
-    public int getLength() {
-        return value.length;
-    }
-    
 
     public Module getModule() {
         if (module == null) {
-            module = RProperFreeModule.make(getLength());
+            module = (RProperFreeModule) RProperFreeModule.make(getLength());
         }
         return module;
     }
-    
-
-    public double[] getValue() {
-        return value;
-    }
-    
-    
-    public double getValue(int i) {
-        return value[i];
-    }
-    
-
-    public RFreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            double[] values = new double[n];
-            for (int i = 0; i < minlen; i++) {
-                values[i] = getValue(i);
-            }
-            for (int i = minlen; i < n; i++) {
-                values[i] = 0;
-            }
-            return RProperFreeElement.make(values);
-        }
-    }
-    
-
-    public boolean equals(Object object) {
-        if (object instanceof RProperFreeElement) {
-            RProperFreeElement e = (RProperFreeElement)object;
-            if (getLength() == e.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (value[i] != e.value[i]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-    
 
     public int compareTo(ModuleElement object) {
         if (object instanceof RProperFreeElement) {
@@ -255,7 +81,7 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    double d = value[i]-element.value[i];
+                    double d = getValue()[i].difference(element.getValue()[i]).getValue().doubleValue();
                     if (d < 0) {
                         return -1;
                     }
@@ -277,10 +103,10 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(value[0]);
+            res.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i]);
+                res.append(getValue()[i]);
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -298,10 +124,10 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(getValue()[0]);
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(getValue()[i]);
             }
         }
         buf.append("]");
@@ -314,7 +140,11 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            res[i] = ((RProperFreeElement)elements[i]).getValue();
+            res[i] = new double[elements.length];
+            RElement[] r = ((RProperFreeElement)elements[i]).getValue();
+            for (int j = 0; i < elements.length; j++) {
+                res[i][j] = r[j].getValue().doubleValue();
+            }
         }
         return Folding.fold(res);
     }
@@ -323,32 +153,23 @@ public final class RProperFreeElement extends ProperFreeElement<RProperFreeEleme
         return "RFreeElement";
     }
     
-    
-    public int hashCode() {
-        int val = 0;
-        long v;
-        for (int i = 0; i < getLength(); i++) {
-            v = Double.doubleToLongBits(value[i]);
-            val ^= (int) (v ^ (v >>> 32));
-        }
-        return val;
-    }
-
-    
     private RProperFreeElement(double[] value) {
-        this.value = value;
+        super(toElementArray(value));
+    }
+
+    private RProperFreeElement(RElement[] value) {
+        super(value);
+    }
+
+    private static RElement[] toElementArray(double[] v) {
+        RElement[] elements = new RElement[v.length];
+        for (int i = 0; i < v.length; i++) {
+            elements[i] = new RElement(v[i]);
+        }
+        return elements;
     }
 
     
-    private double[]    value;
-    private RFreeModule module = null;
+    private RProperFreeModule module = null;
 
-    @Override
-    public ModuleElement deepCopy() {
-        double[] v = new double[getLength()];
-        for (int i = 0; i < getLength(); i++) {
-            v[i] = value[i];
-        }
-        return new RProperFreeElement(v);
-    }
 }

@@ -22,10 +22,13 @@ package org.vetronauta.latrunculus.core.math.module.real;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 
@@ -38,11 +41,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeModule extends ProperFreeModule<RProperFreeElement,RElement> implements RFreeModule<RProperFreeElement> {
+public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<RElement>,RElement> {
 
     public static final RProperFreeModule nullModule = new RProperFreeModule(0);
     
-    public static RFreeModule make(int dimension) {
+    public static FreeModule<?, RElement> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -126,7 +129,7 @@ public final class RProperFreeModule extends ProperFreeModule<RProperFreeElement
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((RElement)castElement).getValue();
+            values[i] = ((RElement)castElement).getValue().doubleValue();
         }
 
         return (RProperFreeElement) RProperFreeElement.make(values);
@@ -148,7 +151,7 @@ public final class RProperFreeModule extends ProperFreeModule<RProperFreeElement
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((RElement)castElement).getValue();
+                    elements[i] = ((RElement)castElement).getValue().doubleValue();
                 }
                 return (RProperFreeElement) RProperFreeElement.make(elements);
             }

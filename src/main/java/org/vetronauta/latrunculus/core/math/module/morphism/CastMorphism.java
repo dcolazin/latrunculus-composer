@@ -135,7 +135,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // R -> Q
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new QElement(new Rational(((RElement)element).getValue()));
+                        return new QElement(new Rational(((RElement)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -143,7 +143,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // R -> Z
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ZElement((int)Math.round(((RElement)element).getValue()));
+                        return new ZElement((int)Math.round(((RElement)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -152,7 +152,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 final int modulus = ((ZnRing)codomain).getModulus();
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ZnElement((int)Math.round(((RElement)element).getValue()), modulus);
+                        return new ZnElement((int)Math.round(((RElement)element).getValue().doubleValue()), modulus);
                     }
                 };
             }

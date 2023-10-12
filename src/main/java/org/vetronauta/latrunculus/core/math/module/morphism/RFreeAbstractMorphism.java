@@ -40,16 +40,10 @@ public abstract class RFreeAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            double[] v;
-            if (x instanceof RProperFreeElement) {
-                v = ((RProperFreeElement) x).getValue();
-            }
-            else {
-                v = new double[x.getLength()];
+            double[] v = new double[x.getLength()];
                 for (int i = 0; i < x.getLength(); i++) {
-                    v[i] = ((RElement) x.getComponent(i)).getValue();
+                    v[i] = ((RElement) x.getComponent(i)).getValue().doubleValue();
                 }
-            }
             return RProperFreeElement.make(mapValue(v));
         }
         else {

@@ -759,7 +759,7 @@ abstract class RubatoPrimitives {
             return SRational.make(((QElement)element).getValue());
         }
         else if (element instanceof RElement) {
-            return SReal.make(((RElement)element).getValue());
+            return SReal.make(((RElement)element).getValue().doubleValue());
         }
         else if (element instanceof CElement) {
             return new SComplex(((CElement)element).getValue());

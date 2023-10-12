@@ -38,7 +38,7 @@ public abstract class RAbstractMorphism extends ModuleMorphism {
     public final ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            double v = ((RElement) x.getComponent(0)).getValue();
+            double v = ((RElement) x.getComponent(0)).getValue().doubleValue();
             return new RElement(mapValue(v));
         }
         else {

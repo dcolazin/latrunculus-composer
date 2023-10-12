@@ -130,7 +130,7 @@ public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing 
 
     
     public ZElement cast(RElement element) {
-        return new ZElement((int)Math.round(element.getValue()));
+        return new ZElement((int)Math.round(element.getValue().doubleValue()));
     }
 
     

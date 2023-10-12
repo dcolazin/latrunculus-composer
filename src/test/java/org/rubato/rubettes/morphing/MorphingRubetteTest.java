@@ -126,7 +126,7 @@ class MorphingRubetteTest {
 	}
 	
 	private double getDuration(Denotator denotator) throws RubatoException {
-		return ((RElement)denotator.getElement(new int[]{3,0})).getValue();
+		return ((RElement)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
 	}
 
 }

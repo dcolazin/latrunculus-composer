@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -40,58 +41,25 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RRing extends Ring<RElement> implements RFreeModule<RElement>, NumberRing {
+public final class RRing extends ArithmeticRing<RElement> implements NumberRing {
 
     /**
      * The unique instance of the ring of reals.
      */
     public static final RRing ring = new RRing();
-
-    public RElement getZero() {
-        return new RElement(0);
-    }
-
-
-    public RElement getOne() {
-        return new RElement(1);
-    }
-
-
-    public RElement getUnitElement(int i) {
-        return getOne();
-    }
-
     
     public Module getNullModule() {
         return RProperFreeModule.nullModule;
     }
     
-    
-    public boolean isField() {
-        return true;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return true;
-    }
-
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
     public boolean hasElement(ModuleElement element) {
         return (element instanceof RElement);
     }
 
-    
     public FreeModule getFreeModule(int dimension) {
         return RProperFreeModule.make(dimension);
     }
 
-    
     public boolean equals(Object object) {
         return this == object;
     }
@@ -197,8 +165,10 @@ public final class RRing extends Ring<RElement> implements RFreeModule<RElement>
         return 300;
     }
 
-    
-    private final static int basicHash = "RRing".hashCode();
 
-    private RRing() { /* not allowed */ }
+    private static final int basicHash = "RRing".hashCode();
+
+    private RRing() {
+        super(new RElement(0), new RElement(1));
+    }
 }

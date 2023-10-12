@@ -139,11 +139,11 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		double minOnset, maxOnset;
 		int[] onsetPath = {0,0};
 		Iterator<Denotator> notes = score.iterator();
-		double currentOnset = ((RElement)notes.next().getElement(onsetPath)).getValue();
+		double currentOnset = ((RElement)notes.next().getElement(onsetPath)).getValue().doubleValue();
 		minOnset = currentOnset;
 		maxOnset = currentOnset;
 		while (notes.hasNext()) {
-			currentOnset = ((RElement)notes.next().getElement(onsetPath)).getValue();
+			currentOnset = ((RElement)notes.next().getElement(onsetPath)).getValue().doubleValue();
 			minOnset = Math.min(currentOnset, minOnset);
 			maxOnset = Math.max(currentOnset, maxOnset);
 		}
@@ -161,8 +161,8 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		int[] durationPath = {3,0};
 		while (notes.hasNext()) {
 			LimitDenotator currentNote = (LimitDenotator) notes.next();
-			double currentOnset = ((RElement)currentNote.getElement(onsetPath)).getValue();
-			double currentDuration = ((RElement)currentNote.getElement(durationPath)).getValue();
+			double currentOnset = ((RElement)currentNote.getElement(onsetPath)).getValue().doubleValue();
+			double currentDuration = ((RElement)currentNote.getElement(durationPath)).getValue().doubleValue();
 			
 			//System.out.print(currentOnset+" "+currentDuration+", ");
 			//correct onset offset (move score to position 0)
@@ -259,12 +259,12 @@ public class MorphingRubette extends SimpleAbstractRubette {
 	
 	private PowerDenotator getBasicMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws RubatoException {
 		int[] positionPath = {0,0}; //onset for now...
-		PowerDenotator partialMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<Denotator>());
+		PowerDenotator partialMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<>());
 		Iterator<Denotator> keys = neighborMap.keySet().iterator();
 		while (keys.hasNext()) {
 			Denotator currentDenotator = keys.next();
 			Denotator currentNeighbor = neighborMap.get(currentDenotator);
-			double currentOnset = ((RElement)currentDenotator.getElement(positionPath)).getValue();
+			double currentOnset = ((RElement)currentDenotator.getElement(positionPath)).getValue().doubleValue();
 			double position = currentOnset/this.newDuration;
 			double factor = position; //1-probablility that denotator is present
 			if (complementSet.contains(currentDenotator)) {
@@ -281,12 +281,12 @@ public class MorphingRubette extends SimpleAbstractRubette {
 	private PowerDenotator getAdditionalMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws RubatoException {
 		int[] positionPath = {0,0}; //onset for now...
 		Iterator<Denotator> keys = neighborMap.keySet().iterator();
-		PowerDenotator additionalMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<Denotator>());
+		PowerDenotator additionalMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<>());
 		while (keys.hasNext()) {
 			Denotator currentDenotator = keys.next();
 			if (!complementSet.contains(currentDenotator)) {
 				Denotator currentNeighbor = neighborMap.get(currentDenotator);
-				double currentOnset = ((RElement)currentDenotator.getElement(positionPath)).getValue();
+				double currentOnset = ((RElement)currentDenotator.getElement(positionPath)).getValue().doubleValue();
 				double position = currentOnset/this.newDuration;
 				double factor = 1-position; //1-probablility that denotator is present
 				//System.out.println(position + " " + factor);
