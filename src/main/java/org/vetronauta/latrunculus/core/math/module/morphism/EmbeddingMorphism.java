@@ -36,7 +36,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
@@ -403,7 +402,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
         EmbeddingMorphism m = null;
         
         // Free modules over number rings        
-        if (domain instanceof ZFreeModule) {
+        if (domain.checkRingElement(ZElement.class)) {
             // Z^n -> ?
             if (codomain instanceof ZProperFreeModule) {
                 // Z^n -> Z^m

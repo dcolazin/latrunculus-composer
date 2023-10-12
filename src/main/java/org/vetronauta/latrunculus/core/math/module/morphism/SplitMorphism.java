@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
@@ -53,7 +53,7 @@ public class SplitMorphism extends ModuleMorphism {
      * Creates a split morphism over <code>module</code> with
      * the given list of morphisms.
      */
-    public static ModuleMorphism make(FreeModule module, List<ModuleMorphism> morphisms) {
+    public static ModuleMorphism make(FreeModule<?,?> module, List<ModuleMorphism> morphisms) {
         boolean info[] = new boolean[3];
         if (checkMorphisms(module, morphisms, info)) {
             if (morphisms.size() == 1) {
@@ -64,7 +64,7 @@ public class SplitMorphism extends ModuleMorphism {
                 return getIdentityMorphism(module);
             }
             else if (info[ALL_CONSTANT]) {
-                LinkedList<ModuleElement> resList = new LinkedList<>();
+                LinkedList<ModuleElement<?,?>> resList = new LinkedList<>();
                 for (ModuleMorphism m : morphisms) {
                     Module domain = m.getDomain();
                     int dim = domain.getDimension();
@@ -80,7 +80,7 @@ public class SplitMorphism extends ModuleMorphism {
                 }
                 return getConstantMorphism(module, module.createElement(resList));
             }
-            else if (module instanceof ZFreeModule) {
+            else if (module.checkRingElement(ZElement.class)) {
                 for (ModuleMorphism m : morphisms) {
                     if (!(m instanceof ZFreeAffineMorphism) &&
                         !(m instanceof ZAffineMorphism)) {
