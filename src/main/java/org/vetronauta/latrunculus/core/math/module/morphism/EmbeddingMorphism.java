@@ -20,11 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
@@ -518,7 +515,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 };
             }
         }
-        else if (domain instanceof CFreeModule) {
+        else if (domain.checkRingElement(CElement.class)) {
             // C^n -> ?
             if (codomain instanceof CProperFreeModule) {
                 // C^n to C^m

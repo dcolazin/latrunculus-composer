@@ -205,6 +205,6 @@ public class JSelectForm extends JPanel implements ActionListener {
     private static final String FORM = Messages.getString("JSelectForm.form");
     private static final String CREATE_BUTTON = Messages.getString("JSelectForm.create");
     private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip");
-    private static final String SELECT_BUTTON = Messages.getString("JSelectForm.select"); }
+    private static final String SELECT_BUTTON = Messages.getString("JSelectForm.select");
     private static final String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip");
 }

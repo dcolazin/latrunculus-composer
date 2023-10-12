@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -117,7 +117,7 @@ public class SplitMorphism extends ModuleMorphism {
                 }
                 return makeRFreeMorphism(module.getDimension(), morphisms);
             }
-            else if (module instanceof CFreeModule) {
+            else if (module.checkRingElement(CElement.class)) {
                 for (ModuleMorphism m : morphisms) {
                     if (!(m instanceof CFreeAffineMorphism) &&
                         !(m instanceof CAffineMorphism)) {

@@ -41,26 +41,22 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -791,11 +787,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 return false;
             }
             else {
-                return (module instanceof RFreeModule ||
-                        module instanceof QFreeModule ||
-                        module instanceof ZFreeModule ||
-                        module instanceof ZnFreeModule ||
-                        module instanceof CFreeModule);
+                return FreeUtils.isUsualFree(module);
             }            
         }
         else {
@@ -918,7 +910,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     
     // Message strings
     private static final String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror");
-    private static final String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");  
+    private static final String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");
     private static final String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); 
     private static final String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); 
     private static final String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror");     

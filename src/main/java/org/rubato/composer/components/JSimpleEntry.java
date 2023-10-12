@@ -19,20 +19,15 @@
 
 package org.rubato.composer.components;
 
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringFreeModule;
 
 import javax.swing.JPanel;
@@ -43,12 +38,7 @@ import java.awt.event.ActionListener;
 public abstract class JSimpleEntry extends JPanel {
 
     public static JSimpleEntry make(Module<?,?> module) {
-        if ( (module instanceof FreeModule && (
-                module.checkRingElement(ZElement.class) ||
-                module.checkRingElement(ZnElement.class) ||
-                module.checkRingElement(QElement.class) ||
-                module.checkRingElement(RElement.class) ||
-                module.checkRingElement(CElement.class))) ||
+        if ( FreeUtils.isUsualFree(module) ||
             module instanceof ZStringFreeModule ||
             module instanceof RStringFreeModule ||
             module instanceof QStringFreeModule ||

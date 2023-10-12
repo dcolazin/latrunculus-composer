@@ -105,11 +105,11 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(0));
-		assertEquals(1, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
+		assertEquals(1, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
-		assertEquals(2, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
+		assertEquals(2, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(3));
 	}
 
@@ -242,10 +242,10 @@ class WallpaperRubetteTest {
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
-		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
+		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
 		assertEquals(0, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
-		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 3, 0})).getValue());
+		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
 	}
 
 	@Test
