@@ -51,7 +51,7 @@ class JAffineGraphDialog extends JDialog implements ActionListener {
 
     
     public JAffineGraphDialog(Frame frame, Ring ring) {
-        super(frame, Messages.getString("JAffineGraphDialog.designtrafo"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JAffineGraphDialog.designtrafo"), true); 
         this.ring = ring;
         createLayout();
     }
@@ -84,13 +84,13 @@ class JAffineGraphDialog extends JDialog implements ActionListener {
         
         Box coordBox = new Box(BoxLayout.X_AXIS);
         coordBox.add(Box.createHorizontalStrut(10));
-        coordBox.add(new JLabel(" x : ")); //$NON-NLS-1$
-        xField = new JTextField("0"); //$NON-NLS-1$
+        coordBox.add(new JLabel(" x : ")); 
+        xField = new JTextField("0"); 
         xField.setEditable(false);
         coordBox.add(xField);
         coordBox.add(Box.createHorizontalStrut(10));
-        coordBox.add(new JLabel(" y : ")); //$NON-NLS-1$
-        yField = new JTextField("0"); //$NON-NLS-1$
+        coordBox.add(new JLabel(" y : ")); 
+        yField = new JTextField("0"); 
         yField.setEditable(false);
         coordBox.add(yField);
         coordBox.add(Box.createHorizontalStrut(10));
@@ -100,11 +100,11 @@ class JAffineGraphDialog extends JDialog implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(Box.createGlue());
-        applyButton = new JButton(Messages.getString("JAffineGraphDialog.apply")); //$NON-NLS-1$
+        applyButton = new JButton(Messages.getString("JAffineGraphDialog.apply")); 
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        cancelButton = new JButton(Messages.getString("JAffineGraphDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JAffineGraphDialog.cancel")); 
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         buttonBox.add(Box.createGlue());        

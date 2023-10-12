@@ -59,7 +59,7 @@ public class RealArithRubette extends AbstractRubette {
     
     public void run(RunInfo runInfo) {
         if (vm == null) {
-            addError(Messages.getString("RealArithRubette.novalidexpression")); //$NON-NLS-1$
+            addError(Messages.getString("RealArithRubette.novalidexpression")); 
             return;
         }
         SimpleForm resForm = realForm;
@@ -84,11 +84,11 @@ public class RealArithRubette extends AbstractRubette {
                     values[i] = ((SimpleDenotator)d).getModInteger();                    
                 }
                 else {
-                    addError(Messages.getString("RealArithRubette.inputnotreal"), i); //$NON-NLS-1$
+                    addError(Messages.getString("RealArithRubette.inputnotreal"), i); 
                 }
             }
             else {
-                addError(Messages.getString("RealArithRubette.inputnotreal"), i); //$NON-NLS-1$
+                addError(Messages.getString("RealArithRubette.inputnotreal"), i); 
             }
         }
         if (!hasErrors()) {
@@ -125,7 +125,7 @@ public class RealArithRubette extends AbstractRubette {
     
     
     public String getName() {
-        return "RealArith"; //$NON-NLS-1$
+        return "RealArith"; 
     }
 
     
@@ -147,12 +147,12 @@ public class RealArithRubette extends AbstractRubette {
             box.add(inSlider);
             
             JPanel resultPanel = new JPanel();
-            resultPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("RealArithRubette.resulttype"))); //$NON-NLS-1$
+            resultPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("RealArithRubette.resulttype"))); 
             ButtonGroup group = new ButtonGroup();
-            final JRadioButton realButton = new JRadioButton(Messages.getString("RealArithRubette.real")); //$NON-NLS-1$
+            final JRadioButton realButton = new JRadioButton(Messages.getString("RealArithRubette.real")); 
             group.add(realButton);
             resultPanel.add(realButton);
-            JRadioButton booleanButton = new JRadioButton(Messages.getString("RealArithRubette.boolean")); //$NON-NLS-1$
+            JRadioButton booleanButton = new JRadioButton(Messages.getString("RealArithRubette.boolean")); 
             resultPanel.add(booleanButton);
             group.add(booleanButton);
             realButton.setSelected(isResultReal);
@@ -173,7 +173,7 @@ public class RealArithRubette extends AbstractRubette {
             JScrollPane scrollPane = new JScrollPane(exprTextArea);
             properties.add(scrollPane, BorderLayout.CENTER);
             
-            infoLabel = new JLabel(" "); //$NON-NLS-1$
+            infoLabel = new JLabel(" "); 
             infoLabel.setForeground(Color.RED);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             properties.add(infoLabel, BorderLayout.SOUTH);
@@ -183,11 +183,11 @@ public class RealArithRubette extends AbstractRubette {
     
     
     public boolean applyProperties() {
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" "); 
         int newInCount = inSlider.getInValue();
         String expr = exprTextArea.getText().trim();
         if (expr.length() == 0) {
-            infoLabel.setText(Messages.getString("RealArithRubette.noexpression")); //$NON-NLS-1$
+            infoLabel.setText(Messages.getString("RealArithRubette.noexpression")); 
             return false;
         }
         boolean ok = compile(expr, newInCount);
@@ -205,7 +205,7 @@ public class RealArithRubette extends AbstractRubette {
     
     
     public void revertProperties() {
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" "); 
         inSlider.setInValue(getInCount());
         exprTextArea.setText(expressionString);
         compile(expressionString, getInCount());
@@ -224,12 +224,12 @@ public class RealArithRubette extends AbstractRubette {
     
     
     public String getInTip(int i) {
-        return TextUtils.replaceStrings(Messages.getString("RealArithRubette.intip"), i); //$NON-NLS-1$
+        return TextUtils.replaceStrings(Messages.getString("RealArithRubette.intip"), i); 
     }
 
     
     public String getOutTip(int i) {
-        return Messages.getString("RealArithRubette.outtip"); //$NON-NLS-1$
+        return Messages.getString("RealArithRubette.outtip"); 
     }
     
 
@@ -238,11 +238,11 @@ public class RealArithRubette extends AbstractRubette {
     }
     
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String EXPRESSION  = "Expression"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
-    private final static String RES_ATTR    = "res"; //$NON-NLS-1$
-    private final static String EXPR_ATTR   = "expr"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String EXPRESSION  = "Expression"; 
+    private final static String NUMBER_ATTR = "number"; 
+    private final static String RES_ATTR    = "res"; 
+    private final static String EXPR_ATTR   = "expr"; 
     
     
     public void toXML(XMLWriter writer) {
@@ -287,7 +287,7 @@ public class RealArithRubette extends AbstractRubette {
     private JPanel            properties = null;
     private JTextArea         exprTextArea = null;
     private JLabel            infoLabel = null;
-    private String            expressionString = ""; //$NON-NLS-1$
+    private String            expressionString = ""; 
     private double[]          values = null;
     private JConnectorSliders inSlider = null;
     private ArithCompiler     compiler = null;
@@ -300,10 +300,10 @@ public class RealArithRubette extends AbstractRubette {
     private static final ImageIcon  icon;
     
     static {
-        icon = Icons.loadIcon(RealArithRubette.class, "/images/rubettes/builtin/arithicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(RealArithRubette.class, "/images/rubettes/builtin/arithicon.png"); 
         Repository rep = Repository.systemRepository();
-        realForm = (SimpleForm)rep.getForm("SReal"); //$NON-NLS-1$
-        trueDeno = rep.getDenotator("True"); //$NON-NLS-1$
-        falseDeno = rep.getDenotator("False");         //$NON-NLS-1$
+        realForm = (SimpleForm)rep.getForm("SReal"); 
+        trueDeno = rep.getDenotator("True"); 
+        falseDeno = rep.getDenotator("False");         
     }
 }

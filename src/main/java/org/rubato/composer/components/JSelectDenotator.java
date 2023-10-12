@@ -92,12 +92,12 @@ public class JSelectDenotator extends JPanel implements ActionListener {
         StringBuilder buf = new StringBuilder(30);
         if (label == null) {
             buf.append(SELECT_DENOTATOR);
-            buf.append(": "); //$NON-NLS-1$
+            buf.append(": "); 
         }
         else {
-            buf.append("["); //$NON-NLS-1$
+            buf.append("["); 
             buf.append(label);
-            buf.append("] "); //$NON-NLS-1$
+            buf.append("] "); 
         }
         if (form != null) {
             buf.append(form.getNameString());
@@ -182,14 +182,14 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     private void updateDenotatorLabel() {
         String name;
         if (denotator == null) {
-            name = " "; //$NON-NLS-1$
+            name = " "; 
         }
         else {
             name = denotator.getNameString();
             if (name.length() == 0) {
                 name += ANONYMOUS;
             }
-            name += " : "+denotator.getForm().getNameString(); //$NON-NLS-1$
+            name += " : "+denotator.getForm().getNameString(); 
         }
         denotatorLabel.setText(name);
     }
@@ -197,7 +197,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
 
     private ActionEvent       actionEvent  = null;
     private EventListenerList listenerList = new EventListenerList();
-    private final static String EMPTY_STRING = ""; //$NON-NLS-1$
+    private final static String EMPTY_STRING = ""; 
 
     public void addActionListener(ActionListener l) {
         listenerList.add(ActionListener.class, l);
@@ -233,10 +233,10 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     
     private RubatoDictionary dict = null;
     
-    private final static String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); //$NON-NLS-1$
-    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); //$NON-NLS-1$
-    private final static String SELECT_BUTTON = Messages.getString("JSelectDenotator.select"); //$NON-NLS-1$
-    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectDenotator.selecttip"); //$NON-NLS-1$
-    private final static String ANONYMOUS = Messages.getString("JSelectDenotator.anonymous"); //$NON-NLS-1$
-    private final static String SELECT_DENOTATOR = Messages.getString("JSelectDenotator.selectdenotator"); //$NON-NLS-1$ 
+    private final static String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); 
+    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); 
+    private final static String SELECT_BUTTON = Messages.getString("JSelectDenotator.select"); 
+    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectDenotator.selecttip"); 
+    private final static String ANONYMOUS = Messages.getString("JSelectDenotator.anonymous"); 
+    private final static String SELECT_DENOTATOR = Messages.getString("JSelectDenotator.selectdenotator");  
 }

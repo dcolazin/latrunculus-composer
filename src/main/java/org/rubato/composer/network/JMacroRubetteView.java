@@ -43,12 +43,12 @@ public class JMacroRubetteView extends JNetwork {
     
     
     public String getName() {
-        return getJNetworkName()+"/"+getModel().getName(); //$NON-NLS-1$
+        return getJNetworkName()+"/"+getModel().getName(); 
     }
     
     
     private String getJNetworkName() {
-        return (jnetwork == null)?"proto":jnetwork.getName(); //$NON-NLS-1$
+        return (jnetwork == null)?"proto":jnetwork.getName(); 
     }
     
     
@@ -120,10 +120,10 @@ public class JMacroRubetteView extends JNetwork {
     
     private JNetwork jnetwork;
     
-    private static final String MACROINPUT_ERROR  = Messages.getString("JMacroRubetteView.macroinputerror"); //$NON-NLS-1$
-    private static final String MACROOUTPUT_ERROR = Messages.getString("JMacroRubetteView.macrooutputerror"); //$NON-NLS-1$
-    private static final String NOTADDINPUT_ERROR   = Messages.getString("JMacroRubetteView.notaddinputerror"); //$NON-NLS-1$
-    private static final String NOTADDOUTPUT_ERROR  = Messages.getString("JMacroRubetteView.notaddoutputerror");     //$NON-NLS-1$
-    private static final String CREATENOTE          = Messages.getString("JMacroRubetteView.createnote"); //$NON-NLS-1$
-    private static final String CLOSENETWORK        = Messages.getString("JMacroRubetteView.closenetwork"); //$NON-NLS-1$
+    private static final String MACROINPUT_ERROR  = Messages.getString("JMacroRubetteView.macroinputerror"); 
+    private static final String MACROOUTPUT_ERROR = Messages.getString("JMacroRubetteView.macrooutputerror"); 
+    private static final String NOTADDINPUT_ERROR   = Messages.getString("JMacroRubetteView.notaddinputerror"); 
+    private static final String NOTADDOUTPUT_ERROR  = Messages.getString("JMacroRubetteView.notaddoutputerror");     
+    private static final String CREATENOTE          = Messages.getString("JMacroRubetteView.createnote"); 
+    private static final String CLOSENETWORK        = Messages.getString("JMacroRubetteView.closenetwork"); 
 }

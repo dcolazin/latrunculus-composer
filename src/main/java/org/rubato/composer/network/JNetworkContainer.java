@@ -63,7 +63,7 @@ public class JNetworkContainer extends JPanel {
     
     
     public String newName() {
-        return "Untitled #"+(networkCounter++); //$NON-NLS-1$
+        return "Untitled #"+(networkCounter++); 
     }
 
     
@@ -202,5 +202,5 @@ public class JNetworkContainer extends JPanel {
     private ArrayList<JNetwork> jnetworks;
     private int          networkCounter = 1;
     
-    private final static String NAMEUSED_ERROR = Messages.getString("JNetworkContainer.nameused"); //$NON-NLS-1$
+    private final static String NAMEUSED_ERROR = Messages.getString("JNetworkContainer.nameused"); 
 }

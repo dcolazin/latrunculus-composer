@@ -97,7 +97,7 @@ public class SetRubette extends AbstractRubette {
                 }
                 else {
                     if (!d.getPowerForm().getForm().equals(baseForm)) {
-                        addError(Messages.getString("SetRubette.wrongbaseform"), i); //$NON-NLS-1$
+                        addError(Messages.getString("SetRubette.wrongbaseform"), i); 
                     }
                     else {
                         denoList.add(d);
@@ -122,7 +122,7 @@ public class SetRubette extends AbstractRubette {
             return (PowerDenotator)d;
         }
         else {
-            addError(Messages.getString("SetRubette.notpowererror"), i); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.notpowererror"), i); 
             return null;
         }
     }
@@ -130,7 +130,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doUnion(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.novalidinput")); 
             return null;
         }
         PowerDenotator res = null;
@@ -146,7 +146,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doIntersection(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.novalidinput")); 
             return null;
         }
         PowerDenotator res = null;
@@ -162,7 +162,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doSymmetric(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.novalidinput")); 
             return null;
         }
         PowerDenotator res = null;
@@ -178,7 +178,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doDifference(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.novalidinput")); 
             return null;
         }
         PowerDenotator res = null;
@@ -195,11 +195,11 @@ public class SetRubette extends AbstractRubette {
     private Denotator doAddElements() {
         Denotator d = getInput(0);
         if (d == null) {
-            addError(Messages.getString("SetRubette.notnull")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.notnull")); 
             return null;
         }
         else if (!(d instanceof PowerDenotator)) {
-            addError(Messages.getString("SetRubette.powerdeno")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.powerdeno")); 
             return null;
         }
         PowerDenotator p = (PowerDenotator)d;
@@ -213,7 +213,7 @@ public class SetRubette extends AbstractRubette {
                     denoList.add(di);
                 }
                 else {
-                    addError(Messages.getString("SetRubette.wrongform"), i+1); //$NON-NLS-1$
+                    addError(Messages.getString("SetRubette.wrongform"), i+1); 
                 }
             }
         }
@@ -244,12 +244,12 @@ public class SetRubette extends AbstractRubette {
                 return DenoFactory.makeDenotator(baseForm, denoList);
             }
             else {
-                addError(Messages.getString("SetRubette.basenotpower")); //$NON-NLS-1$
+                addError(Messages.getString("SetRubette.basenotpower")); 
                 return null;
             }
         }
         else {
-            addError(Messages.getString("SetRubette.notpower")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.notpower")); 
             return null;
         }
     }
@@ -263,7 +263,7 @@ public class SetRubette extends AbstractRubette {
                 List<Denotator> factors = d.getFactors();
                 Iterator<Denotator> iter = factors.iterator();
                 if (!iter.hasNext()) {
-                    addError(Messages.getString("SetRubette.onefactor")); //$NON-NLS-1$
+                    addError(Messages.getString("SetRubette.onefactor")); 
                     return null;                    
                 }
                 else {
@@ -281,12 +281,12 @@ public class SetRubette extends AbstractRubette {
                 }
             }
             else {
-                addError(Messages.getString("SetRubette.basenotpower")); //$NON-NLS-1$
+                addError(Messages.getString("SetRubette.basenotpower")); 
                 return null;
             }
         }
         else {
-            addError(Messages.getString("SetRubette.notpower")); //$NON-NLS-1$
+            addError(Messages.getString("SetRubette.notpower")); 
             return null;
         }
     }
@@ -298,7 +298,7 @@ public class SetRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Set"; //$NON-NLS-1$
+        return "Set"; 
     }
 
     
@@ -346,7 +346,7 @@ public class SetRubette extends AbstractRubette {
             inSlider.setInValue(getInCount());
             properties.add(inSlider, BorderLayout.NORTH);
             
-            JLabel opLabel = new JLabel(Messages.getString("SetRubette.operation")+": "); //$NON-NLS-1$ //$NON-NLS-2$
+            JLabel opLabel = new JLabel(Messages.getString("SetRubette.operation")+": ");  
             properties.add(opLabel, BorderLayout.WEST);
             
             opSelect = new JComboBox();
@@ -378,7 +378,7 @@ public class SetRubette extends AbstractRubette {
 
     
     public String getShortDescription() {
-        return "Performs a set operation on its input denotators"; //$NON-NLS-1$
+        return "Performs a set operation on its input denotators"; 
     }
 
     
@@ -388,25 +388,25 @@ public class SetRubette extends AbstractRubette {
     
 
     public String getLongDescription() {
-        return "The Set Rubette performs a set operation, e.g., "+ //$NON-NLS-1$
-               "union or intersection, on its input denotators."; //$NON-NLS-1$
+        return "The Set Rubette performs a set operation, e.g., "+ 
+               "union or intersection, on its input denotators."; 
     }
 
 
     public String getInTip(int i) {
-        return "Input denotator #"+i; //$NON-NLS-1$
+        return "Input denotator #"+i; 
     }
 
 
     public String getOutTip(int i) {
-        return "Output denotator"; //$NON-NLS-1$
+        return "Output denotator"; 
     }
 
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
-    private final static String OPERATION   = "Operation"; //$NON-NLS-1$
-    private final static String OP_ATTR     = "op"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String NUMBER_ATTR = "number"; 
+    private final static String OPERATION   = "Operation"; 
+    private final static String OP_ATTR     = "op"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(OPERATION, OP_ATTR, op);
@@ -453,16 +453,16 @@ public class SetRubette extends AbstractRubette {
     private static final int INTERALL     = 6;
 
     private static final String[] opNames = {
-            Messages.getString("SetRubette.union"), //$NON-NLS-1$
-            Messages.getString("SetRubette.intersection"), //$NON-NLS-1$
-            Messages.getString("SetRubette.difference"), //$NON-NLS-1$
-            Messages.getString("SetRubette.symdiff"), //$NON-NLS-1$
-            Messages.getString("SetRubette.addelement"), //$NON-NLS-1$
-            Messages.getString("SetRubette.unionall"), //$NON-NLS-1$
-            Messages.getString("SetRubette.interall") //$NON-NLS-1$
+            Messages.getString("SetRubette.union"), 
+            Messages.getString("SetRubette.intersection"), 
+            Messages.getString("SetRubette.difference"), 
+            Messages.getString("SetRubette.symdiff"), 
+            Messages.getString("SetRubette.addelement"), 
+            Messages.getString("SetRubette.unionall"), 
+            Messages.getString("SetRubette.interall") 
     };
 
     static {
-       icon = Icons.loadIcon(SetRubette.class, "/images/rubettes/builtin/seticon.png"); //$NON-NLS-1$
+       icon = Icons.loadIcon(SetRubette.class, "/images/rubettes/builtin/seticon.png"); 
     }
 }

@@ -57,12 +57,12 @@ public class SplitRubette
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
         if (input == null) {
-            addError(Messages.getString("SplitRubette.inputnull")); //$NON-NLS-1$
+            addError(Messages.getString("SplitRubette.inputnull"));
             return;
         }
         
         if (form == null) {
-            addError(Messages.getString("SplitRubette.noform")); //$NON-NLS-1$
+            addError(Messages.getString("SplitRubette.noform"));
             return;
         }        
         
@@ -71,7 +71,7 @@ public class SplitRubette
         }
         
         if (!input.getForm().equals(form)) {
-            addError(Messages.getString("SplitRubette.wrongform")); //$NON-NLS-1$
+            addError(Messages.getString("SplitRubette.wrongform"));
             return;
         }
     
@@ -88,7 +88,7 @@ public class SplitRubette
 
     
     public String getName() {
-        return "Split"; //$NON-NLS-1$
+        return "Split";
     }
 
     
@@ -174,7 +174,7 @@ public class SplitRubette
 
 
     public String getInTip(int i) {
-        return "Input denotator"; //$NON-NLS-1$
+        return "Input denotator";
     }
 
 
@@ -183,7 +183,7 @@ public class SplitRubette
             return outTip[i];
         }
         else {
-            return "Output denotator"; //$NON-NLS-1$
+            return "Output denotator";
         }
     }
 
@@ -191,7 +191,7 @@ public class SplitRubette
     public boolean set(LimitForm limitForm, int[] selected) {
         if (limitForm != null) {
             form = limitForm;
-            formName = form.getNameString()+": "+form.getTypeString(); //$NON-NLS-1$
+            formName = form.getNameString()+": "+form.getTypeString();
 
             if (selected != null && selected.length <= 8) {
                 selectedForms = selected;
@@ -227,7 +227,7 @@ public class SplitRubette
     }
     
     
-    private final static String SELECTED = "Selected"; //$NON-NLS-1$
+    private final static String SELECTED = "Selected";
     
     public void toXML(XMLWriter writer) {
         if (form != null) {
@@ -274,7 +274,7 @@ public class SplitRubette
     private FormListModel formListModel = null;
     private int[]         selectedForms = null;
     private LimitForm     form = null;
-    private String        formName = " "; //$NON-NLS-1$
+    private String        formName = " ";
     private String[]      outTip;
     private static final  ImageIcon icon;
 
@@ -305,6 +305,6 @@ public class SplitRubette
     }
     
     static {
-        icon = Icons.loadIcon(SplitRubette.class, "/images/rubettes/builtin/spliticon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(SplitRubette.class, "/images/rubettes/builtin/spliticon.png");
     }
 }

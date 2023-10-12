@@ -77,7 +77,7 @@ public final class JRubette extends JPanel
         wy += nameLabel.getHeight()+5;
 
         if (model.hasInfo()) {
-            infoLabel = new JLabel("", SwingConstants.CENTER); //$NON-NLS-1$
+            infoLabel = new JLabel("", SwingConstants.CENTER); 
             infoLabel.setText(getInfo());
             infoLabel.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, infoLabel.getPreferredSize().height);
             add(infoLabel);
@@ -85,8 +85,8 @@ public final class JRubette extends JPanel
         }
 
         if (model.hasProperties()) {
-            JButton propertiesButton = new JButton(Messages.getString("JRubette.properties")); //$NON-NLS-1$
-            propertiesButton.setToolTipText(Messages.getString("JRubette.propertiestooltip")); //$NON-NLS-1$
+            JButton propertiesButton = new JButton(Messages.getString("JRubette.properties")); 
+            propertiesButton.setToolTipText(Messages.getString("JRubette.propertiestooltip")); 
             propertiesButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, propertiesButton.getPreferredSize().height);
             propertiesButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -98,8 +98,8 @@ public final class JRubette extends JPanel
         }
 
         if (model.hasView()) {
-            JButton viewButton = new JButton(Messages.getString("JRubette.view")); //$NON-NLS-1$
-            viewButton.setToolTipText(Messages.getString("JRubette.viewtooltip")); //$NON-NLS-1$
+            JButton viewButton = new JButton(Messages.getString("JRubette.view")); 
+            viewButton.setToolTipText(Messages.getString("JRubette.viewtooltip")); 
             viewButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, viewButton.getPreferredSize().height);
             viewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -111,8 +111,8 @@ public final class JRubette extends JPanel
         }
         
         if (model.getRubette() instanceof MacroRubette) {
-            JButton openButton = new JButton(Messages.getString("JRubette.open")); //$NON-NLS-1$
-            openButton.setToolTipText(Messages.getString("JRubette.opentooltip")); //$NON-NLS-1$
+            JButton openButton = new JButton(Messages.getString("JRubette.open")); 
+            openButton.setToolTipText(Messages.getString("JRubette.opentooltip")); 
             openButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, openButton.getPreferredSize().height);
             openButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -133,7 +133,7 @@ public final class JRubette extends JPanel
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        setToolTipText(""); //$NON-NLS-1$
+        setToolTipText(""); 
     }
 
 
@@ -195,7 +195,7 @@ public final class JRubette extends JPanel
         buttonPanel.setLayout(new GridLayout(1, 1, 5, 5));
         buttonPanel.setBorder(emptyBorder);
         
-        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); //$NON-NLS-1$
+        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); 
         hideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.setVisible(false);
@@ -222,7 +222,7 @@ public final class JRubette extends JPanel
         buttonsPanel.setLayout(new GridLayout(1,3,5,5));
         buttonsPanel.setBorder(emptyBorder);
         
-        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); //$NON-NLS-1$
+        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); 
         hideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.setVisible(false);
@@ -231,7 +231,7 @@ public final class JRubette extends JPanel
         hideButton.setToolTipText("Hide properties window");
         buttonsPanel.add(hideButton);
         
-        JButton revertButton = new JButton(Messages.getString("JRubette.revert")); //$NON-NLS-1$
+        JButton revertButton = new JButton(Messages.getString("JRubette.revert")); 
         revertButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 model.getRubette().revertProperties();
@@ -240,7 +240,7 @@ public final class JRubette extends JPanel
         revertButton.setToolTipText("Revert properties to previous values");
         buttonsPanel.add(revertButton);
         
-        JButton applyButton = new JButton(Messages.getString("JRubette.apply")); //$NON-NLS-1$
+        JButton applyButton = new JButton(Messages.getString("JRubette.apply")); 
         applyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 applyProperties(false);
@@ -249,7 +249,7 @@ public final class JRubette extends JPanel
         applyButton.setToolTipText("Apply properties");
         buttonsPanel.add(applyButton);
         
-        JButton applyAndHideButton = new JButton(Messages.getString("JRubette.applyandhide")); //$NON-NLS-1$
+        JButton applyAndHideButton = new JButton(Messages.getString("JRubette.applyandhide")); 
         applyAndHideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 applyProperties(true);
@@ -274,11 +274,11 @@ public final class JRubette extends JPanel
         if (getJNetwork() instanceof JMacroRubetteView) {
             Rubette rubette = getModel().getRubette();
             if (rubette instanceof MacroInputRubette) {
-                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeinprop")); //$NON-NLS-1$
+                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeinprop")); 
                 return false;
             }
             if (rubette instanceof MacroOutputRubette) {
-                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeoutprop"));  //$NON-NLS-1$
+                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeoutprop"));  
                 return false;
             }
         }
@@ -728,7 +728,7 @@ public final class JRubette extends JPanel
           }
       }
       else {
-          return model.getName()+": "+model.getShortDescription(); //$NON-NLS-1$
+          return model.getName()+": "+model.getShortDescription(); 
       }
     }
     
@@ -754,35 +754,35 @@ public final class JRubette extends JPanel
         item = new JMenuTitleItem(getRubetteName());
         popup.add(item);
         popup.addSeparator();
-        item = new JMenuItem(Messages.getString("JRubette.rename")); //$NON-NLS-1$
+        item = new JMenuItem(Messages.getString("JRubette.rename")); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     rename();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JRubette.remove")); //$NON-NLS-1$
+        item = new JMenuItem(Messages.getString("JRubette.remove")); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeRubette();
                 }
             });
         popup.add(item);
-        item = new JMenuItem("Duplicate"); //$NON-NLS-1$
+        item = new JMenuItem("Duplicate"); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     duplicate();
                 }
             });
         popup.add(item);
-        item = new JMenuItem("Move to Front"); //$NON-NLS-1$
+        item = new JMenuItem("Move to Front"); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     toFront();
                 }
             });
         popup.add(item);
-        item = new JMenuItem("Move to Back"); //$NON-NLS-1$
+        item = new JMenuItem("Move to Back"); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     toBack();
@@ -790,7 +790,7 @@ public final class JRubette extends JPanel
             });
         popup.add(item);
         if (getModel().canPassThrough()) {
-            item = new JMenuItem("Pass Through"); //$NON-NLS-1$
+            item = new JMenuItem("Pass Through"); 
             item.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         togglePassThrough();
@@ -799,7 +799,7 @@ public final class JRubette extends JPanel
             popup.add(item);
         }
         if (getModel().getRubette() instanceof MacroRubette) {
-            item = new JMenuItem(Messages.getString("JRubette.open")); //$NON-NLS-1$
+            item = new JMenuItem(Messages.getString("JRubette.open")); 
             item.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         openNetwork();
@@ -908,14 +908,14 @@ public final class JRubette extends JPanel
     public void refresh() {
         nameLabel.setText(model.getName());
         if (viewDialog != null) {
-            viewDialog.setTitle(getJNetwork().getName()+" - "+ //$NON-NLS-1$
-                                model.getName()+" - "+ //$NON-NLS-1$
-                                Messages.getString("JRubette.viewtitle")); //$NON-NLS-1$
+            viewDialog.setTitle(getJNetwork().getName()+" - "+ 
+                                model.getName()+" - "+ 
+                                Messages.getString("JRubette.viewtitle")); 
         }
         if (propertiesDialog != null) {
-            propertiesDialog.setTitle(getJNetwork().getName()+" - "+ //$NON-NLS-1$
-                                      model.getName()+" - "+ //$NON-NLS-1$
-                                      Messages.getString("JRubette.propertiestitle")); //$NON-NLS-1$
+            propertiesDialog.setTitle(getJNetwork().getName()+" - "+ 
+                                      model.getName()+" - "+ 
+                                      Messages.getString("JRubette.propertiestitle")); 
         }
         if (model.hasInfo()) {
             infoLabel.setText(getInfo());
@@ -942,7 +942,7 @@ public final class JRubette extends JPanel
     
     private String getInfo() {
         String s = model.getInfo();
-        return (s == null || s.length() == 0)?Messages.getString("JRubette.info"):s;  //$NON-NLS-1$
+        return (s == null || s.length() == 0)?Messages.getString("JRubette.info"):s;  
     }
     
     

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 class Messages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/denobrowser/messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "bundles/composer/denobrowser/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 

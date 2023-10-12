@@ -118,7 +118,7 @@ public final class UserPreferences {
     
     
     public void setCurrentDirectory(File file) {
-        String path = "."; //$NON-NLS-1$
+        String path = "."; 
         if (file != null && file.isDirectory()) {
             path = file.getAbsolutePath();
         }
@@ -127,13 +127,13 @@ public final class UserPreferences {
     
     
     public File getCurrentDirectory() {
-        String path = preferences.get(PREF_DIR_CURRENT, "."); //$NON-NLS-1$
+        String path = preferences.get(PREF_DIR_CURRENT, "."); 
         File file = new File(path);
         if (file.isDirectory() && file.canRead()) {
             return file;
         }
         else {
-            return new File("."); //$NON-NLS-1$
+            return new File("."); 
         }
     }
     
@@ -188,15 +188,15 @@ public final class UserPreferences {
     
     private static UserPreferences userPreferences = new UserPreferences();
     
-    private static final String PREF_WINDOW_MAXIMIZED = "window.maximized"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_ASK       = "window.ask"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_X         = "window.x"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_Y         = "window.y"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_WIDTH     = "window.width"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_HEIGHT    = "window.height"; //$NON-NLS-1$
-    private static final String PREF_WINDOW_SAVEGEO   = "window.saveGeometry"; //$NON-NLS-1$
-    private static final String PREF_LINKS_ZIGZAG     = "links.zigzag"; //$NON-NLS-1$
-    private static final String PREF_DIR_CURRENT      = "dir.current"; //$NON-NLS-1$
-    private static final String PREF_DEFAULT_QUANT    = "rational.quant"; //$NON-NLS-1$
-    private static final String PREF_SHOW_PROGRESS    = "run.showprogress"; //$NON-NLS-1$
+    private static final String PREF_WINDOW_MAXIMIZED = "window.maximized"; 
+    private static final String PREF_WINDOW_ASK       = "window.ask"; 
+    private static final String PREF_WINDOW_X         = "window.x"; 
+    private static final String PREF_WINDOW_Y         = "window.y"; 
+    private static final String PREF_WINDOW_WIDTH     = "window.width"; 
+    private static final String PREF_WINDOW_HEIGHT    = "window.height"; 
+    private static final String PREF_WINDOW_SAVEGEO   = "window.saveGeometry"; 
+    private static final String PREF_LINKS_ZIGZAG     = "links.zigzag"; 
+    private static final String PREF_DIR_CURRENT      = "dir.current"; 
+    private static final String PREF_DEFAULT_QUANT    = "rational.quant"; 
+    private static final String PREF_SHOW_PROGRESS    = "run.showprogress"; 
 }

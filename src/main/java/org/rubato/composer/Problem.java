@@ -58,7 +58,7 @@ public class Problem {
     
     
     public String toString() {
-        return jnetwork+":"+jrubette+": "+msg; //$NON-NLS-1$ //$NON-NLS-2$
+        return jnetwork+":"+jrubette+": "+msg;  
     }
     
     

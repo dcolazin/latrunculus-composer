@@ -38,7 +38,7 @@ public class ListPowerFormEntry
         setLayout(new BorderLayout());
         this.type = type;
         selectForm = new JSelectForm(dict);
-        selectForm.setBorder(makeTitledBorder(Messages.getString("ListPowerFormEntry.baseform"))); //$NON-NLS-1$
+        selectForm.setBorder(makeTitledBorder(Messages.getString("ListPowerFormEntry.baseform")));
         selectForm.addActionListener(this);
         add(selectForm, BorderLayout.CENTER);
     }

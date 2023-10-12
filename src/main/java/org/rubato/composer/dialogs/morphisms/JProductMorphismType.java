@@ -36,7 +36,7 @@ class JProductMorphismType extends JMorphismType implements ActionListener {
         this.container = container;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(JMorphismDialog.createTitle("f(x) = g(x) * h(x)")); //$NON-NLS-1$
+        add(JMorphismDialog.createTitle("f(x) = g(x) * h(x)")); 
 
         add(Box.createVerticalStrut(10));
         

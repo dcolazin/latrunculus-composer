@@ -37,7 +37,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 
 public class Composer implements WindowStateListener {
 
-    private static String version = "0.1"; //$NON-NLS-1$
+    private static String version = "0.1";
     
     protected JComposer       frame;
     protected Splash          splash;
@@ -50,8 +50,8 @@ public class Composer implements WindowStateListener {
     
     
     public Composer(String[] args) {
-        logger = Logger.getLogger("org.rubato.composer.composer"); //$NON-NLS-1$
-        logger.info("Starting Rubato Composer"); //$NON-NLS-1$
+        logger = Logger.getLogger("org.rubato.composer.composer");
+        logger.info("Starting Rubato Composer");
         this.args = args;
     }
 
@@ -144,7 +144,7 @@ public class Composer implements WindowStateListener {
     protected void handleArgs() {
         boolean opening = false;
         for (String arg : args) {
-            if (arg.endsWith(".rbo")) { //$NON-NLS-1$
+            if (arg.endsWith(".rbo")) {
                 // open project file
                 File file = new File(arg);
                 if (file.canRead()) {
@@ -153,11 +153,11 @@ public class Composer implements WindowStateListener {
                     break;
                 }
                 else {
-                    frame.showErrorDialog(Messages.getString("Composer.couldnotopen"), arg); //$NON-NLS-1$
+                    frame.showErrorDialog(Messages.getString("Composer.couldnotopen"), arg);
                     break;
                 }
             }
-            else if (arg.startsWith("--")) { //$NON-NLS-1$
+            else if (arg.startsWith("--")) {
             }
         }
         if (!opening) {

@@ -266,7 +266,7 @@ class Select2DPanel
         
         c.gridwidth = 1;
         c.weightx = 0.0;
-        label = new JLabel(" x min:"); //$NON-NLS-1$
+        label = new JLabel(" x min:"); 
         layout.setConstraints(label, c);
         extentBox.add(label);
         
@@ -277,7 +277,7 @@ class Select2DPanel
         extentBox.add(xminField);
         
         c.weightx = 0.0;
-        label = new JLabel(" x max:"); //$NON-NLS-1$
+        label = new JLabel(" x max:"); 
         layout.setConstraints(label, c);
         extentBox.add(label);
         
@@ -290,7 +290,7 @@ class Select2DPanel
         
         c.gridwidth = 1;
         c.weightx = 0.0;
-        label = new JLabel(" y min:"); //$NON-NLS-1$
+        label = new JLabel(" y min:"); 
         layout.setConstraints(label, c);
         extentBox.add(label);
         
@@ -301,7 +301,7 @@ class Select2DPanel
         extentBox.add(yminField);
         
         c.weightx = 0.0;
-        label = new JLabel(" y max:"); //$NON-NLS-1$
+        label = new JLabel(" y max:"); 
         layout.setConstraints(label, c);
         extentBox.add(label);
         
@@ -329,7 +329,7 @@ class Select2DPanel
         
         c.gridwidth = 1;
         c.weightx = 0.0;
-        label = new JLabel(" x:"); //$NON-NLS-1$
+        label = new JLabel(" x:"); 
         layout.setConstraints(label, c);
         pointerBox.add(label);
         
@@ -342,7 +342,7 @@ class Select2DPanel
         
         c.gridwidth = 1;
         c.weightx = 0.0;
-        label = new JLabel(" y:"); //$NON-NLS-1$
+        label = new JLabel(" y:"); 
         layout.setConstraints(label, c);
         pointerBox.add(label);
         
@@ -510,7 +510,7 @@ class Select2DPanel
         if (path.length > 0) {
             buf.append(path[0]);
             for (int i = 1; i < path.length; i++) {
-                buf.append(","); //$NON-NLS-1$
+                buf.append(","); 
                 buf.append(path[i]);
             }
         }
@@ -523,7 +523,7 @@ class Select2DPanel
         if (p.length() == 0) {
             return new int[0];
         }
-        String[] strings = pathString.trim().split(","); //$NON-NLS-1$
+        String[] strings = pathString.trim().split(","); 
         int[] path = new int[strings.length];
         for (int i = 0; i < path.length; i++) {
             try {
@@ -563,17 +563,17 @@ class Select2DPanel
     }
     
     
-    private final static String EXTENT    = "Extent"; //$NON-NLS-1$
-    private final static String XMIN      = "xmin"; //$NON-NLS-1$
-    private final static String XMAX      = "xmax"; //$NON-NLS-1$
-    private final static String YMIN      = "ymin"; //$NON-NLS-1$
-    private final static String YMAX      = "ymax"; //$NON-NLS-1$
-    private final static String XPATH     = "XPath"; //$NON-NLS-1$
-    private final static String YPATH     = "YPath"; //$NON-NLS-1$
-    private final static String POINT     = "Point"; //$NON-NLS-1$
-    private final static String SELECTION = "Selection"; //$NON-NLS-1$
-    private final static String X_ATTR    = "X"; //$NON-NLS-1$
-    private final static String Y_ATTR    = "Y"; //$NON-NLS-1$
+    private final static String EXTENT    = "Extent"; 
+    private final static String XMIN      = "xmin"; 
+    private final static String XMAX      = "xmax"; 
+    private final static String YMIN      = "ymin"; 
+    private final static String YMAX      = "ymax"; 
+    private final static String XPATH     = "XPath"; 
+    private final static String YPATH     = "YPath"; 
+    private final static String POINT     = "Point"; 
+    private final static String SELECTION = "Selection"; 
+    private final static String X_ATTR    = "X"; 
+    private final static String Y_ATTR    = "Y"; 
     
     public void toXML(XMLWriter writer) {
         WindowConfig config = model.getWindowConfig();
@@ -605,7 +605,7 @@ class Select2DPanel
         // parse extent
         Element child = XMLReader.getChild(element, EXTENT);
         if (child == null) {
-            reader.setError("Missing element <%1>", EXTENT); //$NON-NLS-1$
+            reader.setError("Missing element <%1>", EXTENT); 
             return null;
         }
 
@@ -700,18 +700,18 @@ class Select2DPanel
     // Strings (tooltips, titles...)
     //
     
-    private final static String NEWSEL_TIP      = Messages.getString("Select2DPanel.createnewselectiontip"); //$NON-NLS-1$
-    private final static String SELSEL_TIP      = Messages.getString("Select2DPanel.selectselectiontip"); //$NON-NLS-1$
-    private final static String ADD_TIP         = Messages.getString("Select2DPanel.addselpt"); //$NON-NLS-1$
-    private final static String REMOVE_TIP      = Messages.getString("Select2DPanel.remselpt"); //$NON-NLS-1$
-    private final static String MOVE_TIP        = Messages.getString("Select2DPanel.move"); //$NON-NLS-1$
-    private final static String IDENTIFY_TIP    = Messages.getString("Select2DPanel.identify"); //$NON-NLS-1$
-    private final static String ZOOM_TIP        = Messages.getString("Select2DPanel.windowzoomtip"); //$NON-NLS-1$
-    private final static String AUTO_ZOOM_TIP   = Messages.getString("Select2DPanel.zoom"); //$NON-NLS-1$
-    private final static String XAXISTREE_TITLE = Messages.getString("Select2DPanel.xaxis"); //$NON-NLS-1$
-    private final static String YAXISTREE_TITLE = Messages.getString("Select2DPanel.yaxis"); //$NON-NLS-1$;
-    private final static String EXTENT_TITLE    = Messages.getString("Select2DPanel.extent"); //$NON-NLS-1$;
-    private final static String POINTER_TITLE   = Messages.getString("Select2DPanel.pointer"); //$NON-NLS-1$;    
+    private final static String NEWSEL_TIP      = Messages.getString("Select2DPanel.createnewselectiontip"); 
+    private final static String SELSEL_TIP      = Messages.getString("Select2DPanel.selectselectiontip"); 
+    private final static String ADD_TIP         = Messages.getString("Select2DPanel.addselpt"); 
+    private final static String REMOVE_TIP      = Messages.getString("Select2DPanel.remselpt"); 
+    private final static String MOVE_TIP        = Messages.getString("Select2DPanel.move"); 
+    private final static String IDENTIFY_TIP    = Messages.getString("Select2DPanel.identify"); 
+    private final static String ZOOM_TIP        = Messages.getString("Select2DPanel.windowzoomtip"); 
+    private final static String AUTO_ZOOM_TIP   = Messages.getString("Select2DPanel.zoom"); 
+    private final static String XAXISTREE_TITLE = Messages.getString("Select2DPanel.xaxis"); 
+    private final static String YAXISTREE_TITLE = Messages.getString("Select2DPanel.yaxis"); ;
+    private final static String EXTENT_TITLE    = Messages.getString("Select2DPanel.extent"); ;
+    private final static String POINTER_TITLE   = Messages.getString("Select2DPanel.pointer"); ;    
     
     //
     // Icons

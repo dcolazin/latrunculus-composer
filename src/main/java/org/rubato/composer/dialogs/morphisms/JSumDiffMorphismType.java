@@ -38,7 +38,7 @@ class JSumDiffMorphismType extends JMorphismType implements ActionListener {
         this.sum = sum;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(JMorphismDialog.createTitle("f(x) = g(x) "+(sum?"+":"-")+" h(x)")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        add(JMorphismDialog.createTitle("f(x) = g(x) "+(sum?"+":"-")+" h(x)"));   //$NON-NLS-3$ //$NON-NLS-4$
 
         add(Box.createVerticalStrut(10));
         

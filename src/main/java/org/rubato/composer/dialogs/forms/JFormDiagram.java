@@ -55,13 +55,13 @@ public class JFormDiagram
         
         c.gridx = 0;
         c.gridy = 0;
-        JLabel fromLabel = new JLabel(Messages.getString("JFormDiagram.from")+":"); //$NON-NLS-1$ //$NON-NLS-2$
+        JLabel fromLabel = new JLabel(Messages.getString("JFormDiagram.from")+":");  
         gridbag.setConstraints(fromLabel, c);
         lists.add(fromLabel);
         
         c.gridx = 2;
         c.gridy = 0;
-        JLabel toLabel = new JLabel(Messages.getString("JFormDiagram.to")+":"); //$NON-NLS-1$ //$NON-NLS-2$
+        JLabel toLabel = new JLabel(Messages.getString("JFormDiagram.to")+":");  
         gridbag.setConstraints(toLabel, c);
         lists.add(toLabel);
 
@@ -110,64 +110,64 @@ public class JFormDiagram
         buttonBox.setLayout(gridbag);
         buttonBox.setBorder(BorderFactory.createEmptyBorder(5, 5, 2, 5));
         
-        addButton = new JButton(Messages.getString("JFormDiagram.add")); //$NON-NLS-1$
-        addButton.setToolTipText(Messages.getString("JFormDiagram.addtip")); //$NON-NLS-1$
+        addButton = new JButton(Messages.getString("JFormDiagram.add")); 
+        addButton.setToolTipText(Messages.getString("JFormDiagram.addtip")); 
         addButton.addActionListener(this);
         gridbag.setConstraints(addButton, c);
         buttonBox.add(addButton);
         
-        addNewButton = new JButton(Messages.getString("JFormDiagram.addnew")); //$NON-NLS-1$
-        addNewButton.setToolTipText(Messages.getString("JFormDiagram.addnewtip")); //$NON-NLS-1$
+        addNewButton = new JButton(Messages.getString("JFormDiagram.addnew")); 
+        addNewButton.setToolTipText(Messages.getString("JFormDiagram.addnewtip")); 
         addNewButton.addActionListener(this);
         gridbag.setConstraints(addNewButton, c);
         buttonBox.add(addNewButton);
         
-        removeButton = new JButton(Messages.getString("JFormDiagram.remove")); //$NON-NLS-1$
-        removeButton.setToolTipText(Messages.getString("JFormDiagram.removetip")); //$NON-NLS-1$
+        removeButton = new JButton(Messages.getString("JFormDiagram.remove")); 
+        removeButton.setToolTipText(Messages.getString("JFormDiagram.removetip")); 
         removeButton.addActionListener(this);
         removeButton.setEnabled(false);
         gridbag.setConstraints(removeButton, c);
         buttonBox.add(removeButton);
         
-        upButton = new JButton(Messages.getString("JFormDiagram.up")); //$NON-NLS-1$
-        upButton.setToolTipText(Messages.getString("JFormDiagram.uptip")); //$NON-NLS-1$
+        upButton = new JButton(Messages.getString("JFormDiagram.up")); 
+        upButton.setToolTipText(Messages.getString("JFormDiagram.uptip")); 
         upButton.addActionListener(this);
         upButton.setEnabled(false);
         c.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(upButton, c);
         buttonBox.add(upButton);
 
-        JLabel labelLabel = new JLabel(Messages.getString("JFormDiagram.label")+": "); //$NON-NLS-1$ //$NON-NLS-2$
+        JLabel labelLabel = new JLabel(Messages.getString("JFormDiagram.label")+": ");  
         labelLabel.setHorizontalAlignment(JLabel.RIGHT);
         c.gridwidth = 1;
         gridbag.setConstraints(labelLabel, c);
         buttonBox.add(labelLabel);
         
         labelField = new JTextField();
-        labelField.setToolTipText(Messages.getString("JFormDiagram.labeltip")); //$NON-NLS-1$
+        labelField.setToolTipText(Messages.getString("JFormDiagram.labeltip")); 
         c.gridwidth = 2;
         gridbag.setConstraints(labelField, c);
         buttonBox.add(labelField);
         
 
-        downButton = new JButton(Messages.getString("JFormDiagram.down"));   //$NON-NLS-1$
-        downButton.setToolTipText(Messages.getString("JFormDiagram.downtip")); //$NON-NLS-1$
+        downButton = new JButton(Messages.getString("JFormDiagram.down"));   
+        downButton.setToolTipText(Messages.getString("JFormDiagram.downtip")); 
         downButton.addActionListener(this);
         downButton.setEnabled(false);
         c.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(downButton, c);
         buttonBox.add(downButton);
         
-        setMorphButton = new JButton(Messages.getString("JFormDiagram.setmorph"));        //$NON-NLS-1$
-        setMorphButton.setToolTipText(Messages.getString("JFormDiagram.setmorphtip")); //$NON-NLS-1$
+        setMorphButton = new JButton(Messages.getString("JFormDiagram.setmorph"));        
+        setMorphButton.setToolTipText(Messages.getString("JFormDiagram.setmorphtip")); 
         setMorphButton.addActionListener(this);
         setMorphButton.setEnabled(false);
         c.gridwidth = 2;
         gridbag.setConstraints(setMorphButton, c);
         buttonBox.add(setMorphButton);
         
-        removeMorphButton = new JButton(Messages.getString("JFormDiagram.remmorph")); //$NON-NLS-1$
-        removeMorphButton.setToolTipText(Messages.getString("JFormDiagram.remmorphtip")); //$NON-NLS-1$
+        removeMorphButton = new JButton(Messages.getString("JFormDiagram.remmorph")); 
+        removeMorphButton.setToolTipText(Messages.getString("JFormDiagram.remmorphtip")); 
         removeMorphButton.addActionListener(this);
         removeMorphButton.setEnabled(false);
         c.gridwidth = 2;
@@ -182,7 +182,7 @@ public class JFormDiagram
         fromModel.clear();
         toModel.clear();
         selectedIndex = -1;
-        labelField.setText(""); //$NON-NLS-1$
+        labelField.setText(""); 
         updateButtons();
     }
     
@@ -302,7 +302,7 @@ public class JFormDiagram
         }
         fromModel.addForm(info);
         toModel.addForm(info);
-        labelField.setText(""); //$NON-NLS-1$
+        labelField.setText(""); 
         int size = fromModel.getSize();
         boolean[][] newMorphMatrix = new boolean[size][size];
         for (int i = 0; i <  size-1; i++) {
@@ -371,20 +371,20 @@ public class JFormDiagram
             this.form = form;
             this.label = label;
             StringBuilder buf = new StringBuilder(30);
-            buf.append("<html>"); //$NON-NLS-1$
+            buf.append("<html>"); 
             if (label != null) {
-                buf.append("["); //$NON-NLS-1$
+                buf.append("["); 
                 buf.append(label);
-                buf.append("]"); //$NON-NLS-1$
+                buf.append("]"); 
             }
-            buf.append("<b>"); //$NON-NLS-1$
+            buf.append("<b>"); 
             buf.append(form.getNameString());
-            buf.append("</b>"); //$NON-NLS-1$
-            buf.append(": "); //$NON-NLS-1$
-            buf.append("<i>"); //$NON-NLS-1$
+            buf.append("</b>"); 
+            buf.append(": "); 
+            buf.append("<i>"); 
             buf.append(form.getTypeString());
-            buf.append("</i>"); //$NON-NLS-1$
-            buf.append("</html>"); //$NON-NLS-1$
+            buf.append("</i>"); 
+            buf.append("</html>"); 
             name = buf.toString();
         }
         
@@ -421,7 +421,7 @@ public class JFormDiagram
             setFont(PLAIN_FONT);
             setEnabled(list.isEnabled());
             setText(value.toString());
-            setBorder((cellHasFocus)?UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder); //$NON-NLS-1$
+            setBorder((cellHasFocus)?UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder); 
             return this;
         }
     }
@@ -482,5 +482,5 @@ public class JFormDiagram
     protected boolean[][] morphMatrix = new boolean[0][0];
     
     private final static int  DIAGRAM_WIDTH = 100;
-    protected final static Font PLAIN_FONT = Font.decode("Sans-PLAIN"); //$NON-NLS-1$
+    protected final static Font PLAIN_FONT = Font.decode("Sans-PLAIN"); 
 }

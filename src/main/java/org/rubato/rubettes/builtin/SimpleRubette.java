@@ -92,10 +92,10 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     public void setForm(SimpleForm f) {
         form = f;
         if (f == null) {
-            name = " "; //$NON-NLS-1$
+            name = " ";
         }
         else {
-            name = form.getNameString()+": "+form.getTypeString(); //$NON-NLS-1$
+            name = form.getNameString()+": "+form.getTypeString();
         }
     }    
     
@@ -122,7 +122,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
 
     
     public String getName() {
-        return "Simple"; //$NON-NLS-1$
+        return "Simple";
     }
 
     
@@ -148,15 +148,15 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
             ButtonGroup buttonGroup = new ButtonGroup();
             Box addressButtonBox = Box.createHorizontalBox();
             addressButtonBox.add(Box.createHorizontalGlue());
-            nonNullButton = new JRadioButton(Messages.getString("SimpleRubette.nonnull")); //$NON-NLS-1$
+            nonNullButton = new JRadioButton(Messages.getString("SimpleRubette.nonnull"));
             buttonGroup.add(nonNullButton);
             addressButtonBox.add(nonNullButton);
             addressButtonBox.add(Box.createHorizontalStrut(10));
-            nullButton = new JRadioButton(Messages.getString("SimpleRubette.null")); //$NON-NLS-1$
+            nullButton = new JRadioButton(Messages.getString("SimpleRubette.null"));
             buttonGroup.add(nullButton);
             addressButtonBox.add(nullButton);
             addressButtonBox.add(Box.createHorizontalGlue());
-            addressButtonBox.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(), Messages.getString("SimpleRubette.addresstype"))); //$NON-NLS-1$
+            addressButtonBox.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(), Messages.getString("SimpleRubette.addresstype")));
             if (denotator != null) {
                 if (denotator.getModuleMorphismMap() instanceof ConstantModuleMorphismMap) {
                     nullButton.setSelected(true);
@@ -187,7 +187,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
             
             // element and morphism panel            
             valuePanel = new JPanel();
-            valuePanel.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(), Messages.getString("SimpleRubette.value"))); //$NON-NLS-1$
+            valuePanel.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(), Messages.getString("SimpleRubette.value")));
             valuePanel.setLayout(new BorderLayout());
             fillValuePanel();
             middlePanel.add(valuePanel, BorderLayout.CENTER);
@@ -203,7 +203,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
             
             properties.add(middlePanel, BorderLayout.CENTER);
             
-            infoLabel = new JLabel(" "); //$NON-NLS-1$
+            infoLabel = new JLabel(" ");
             infoLabel.setForeground(Color.RED);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             properties.add(infoLabel, BorderLayout.SOUTH);
@@ -240,7 +240,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     
     protected void addressAction() {
         denotator = null;
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" ");
         fillValuePanel();
         getJDialog(properties).pack();
     }
@@ -248,7 +248,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         denotator = null;
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" ");
         form = (SimpleForm)selector.getForm();
         if (form != null) {
             fillValuePanel();
@@ -258,12 +258,12 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
 
     
     public boolean applyProperties() {
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" ");
         ModuleElement element = null;
         ModuleMorphism morphism = null;
         NameDenotator nameDenotator = null;
         if (selector.getForm() == null) {
-            infoLabel.setText(Messages.getString("SimpleRubette.noform")); //$NON-NLS-1$
+            infoLabel.setText(Messages.getString("SimpleRubette.noform"));
             return false;
         }
         if (simpleEntry != null) {
@@ -279,7 +279,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
             }
         }
         if (element == null && morphism == null) {
-            infoLabel.setText(Messages.getString("SimpleRubette.wrongformat")); //$NON-NLS-1$
+            infoLabel.setText(Messages.getString("SimpleRubette.wrongformat"));
         }
         else {
             setForm((SimpleForm)selector.getForm());
@@ -293,7 +293,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
                 assert(denotator.check());
             }
             catch (DomainException e) {
-                throw new AssertionError("This should never happen!"); //$NON-NLS-1$
+                throw new AssertionError("This should never happen!");
             }
         }
         return (element != null || morphism != null);
@@ -331,7 +331,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     
     
     public String getOutTip(int i) {
-        return Messages.getString("SimpleRubette.storeddenotator"); //$NON-NLS-1$
+        return Messages.getString("SimpleRubette.storeddenotator");
     }
 
     
@@ -357,7 +357,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
 
     
     private JPanel          properties    = null;
-    private JLabel          emptyLabel    = new JLabel(Messages.getString("SimpleRubette.novalue")); //$NON-NLS-1$
+    private JLabel          emptyLabel    = new JLabel(Messages.getString("SimpleRubette.novalue"));
     private SimpleForm      form          = null;
     private JSelectForm     selector;
     private JSimpleEntry    simpleEntry   = null;
@@ -366,12 +366,12 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     private JLabel          infoLabel;
     private JRadioButton    nonNullButton;
     private JRadioButton    nullButton;
-    private String          name          = " "; //$NON-NLS-1$
+    private String          name          = " ";
     private JTextField      nameField;
     private SimpleDenotator denotator     = null;
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(SimpleRubette.class, "/images/rubettes/builtin/simpleicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(SimpleRubette.class, "/images/rubettes/builtin/simpleicon.png");
     }
 }

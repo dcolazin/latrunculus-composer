@@ -51,19 +51,19 @@ public class JSimpleDenotatorEntry
         Box addressButtonBox = Box.createHorizontalBox();
         addressButtonBox.add(Box.createHorizontalGlue());
         
-        nonNullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.nonnull")); //$NON-NLS-1$
+        nonNullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.nonnull")); 
         nonNullButton.addActionListener(this);
         buttonGroup.add(nonNullButton);
         addressButtonBox.add(nonNullButton);
         addressButtonBox.add(Box.createHorizontalStrut(10));
         
-        nullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.null")); //$NON-NLS-1$
+        nullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.null")); 
         nullButton.addActionListener(this);
         buttonGroup.add(nullButton);
         addressButtonBox.add(nullButton);
         addressButtonBox.add(Box.createHorizontalGlue());
         
-        addressButtonBox.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.addresstype"))); //$NON-NLS-1$
+        addressButtonBox.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.addresstype"))); 
 
         nullButton.setSelected(true);
         
@@ -71,7 +71,7 @@ public class JSimpleDenotatorEntry
         
         // element and morphism panel            
         valuePanel = new JPanel();
-        valuePanel.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.value"))); //$NON-NLS-1$
+        valuePanel.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.value"))); 
         valuePanel.setLayout(new BorderLayout());
         fillValuePanel();
         add(valuePanel, BorderLayout.CENTER);
@@ -105,7 +105,7 @@ public class JSimpleDenotatorEntry
                 }
             }
             catch (DomainException e) {
-                throw new AssertionError("This should never happen!"); //$NON-NLS-1$
+                throw new AssertionError("This should never happen!"); 
             }
         }
         return denotator;

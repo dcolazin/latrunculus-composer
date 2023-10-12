@@ -19,32 +19,32 @@
 
 package org.rubato.composer.components;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.util.LinkedList;
+import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-
-import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.util.LinkedList;
 
 public class JSimpleNumberEntry
         extends JSimpleEntry
@@ -68,7 +68,7 @@ public class JSimpleNumberEntry
             c.weightx = 0.0;
             c.fill = GridBagConstraints.NONE;
             c.gridwidth = GridBagConstraints.RELATIVE;
-            JLabel label = (dim == 1)?new JLabel(getSymbol(module)+":"):new JLabel("#"+i+" "+getSymbol(module)+":");     //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            JLabel label = (dim == 1)?new JLabel(getSymbol(module)+":"):new JLabel("#"+i+" "+getSymbol(module)+":");       //$NON-NLS-3$ //$NON-NLS-4$
             gbl.setConstraints(label, c);
             add(label);
             
@@ -93,7 +93,7 @@ public class JSimpleNumberEntry
     
     public void clear() {
         for (int i = 0; i < inputFields.length; i++) {
-            inputFields[i].setText("");  //$NON-NLS-1$
+            inputFields[i].setText("");  
         }
     }
     
@@ -126,42 +126,34 @@ public class JSimpleNumberEntry
     }
 
     
-    public static String getSymbol(Module module) {
-        String s = "";  //$NON-NLS-1$
-        if (module instanceof ZFreeModule) {
-            s = "Z"; //$NON-NLS-1$
-        }
-        else if (module instanceof ZnFreeModule) {
-            s = "Z"+((ZnRing)module.getRing()).getModulus(); //$NON-NLS-1$
-        }
-        else if (module instanceof RFreeModule) {
-            s = "R"; //$NON-NLS-1$
-        }
-        else if (module instanceof CFreeModule) {
-            s = "C"; //$NON-NLS-1$
-        }
-        else if (module instanceof QFreeModule) {
-            s = "Q"; //$NON-NLS-1$
-        }
-        else if (module instanceof ZStringRing) {
-            s = "Z-String"; //$NON-NLS-1$
-        }
-        else if (module instanceof ZnStringRing) {
-            s = "Z_"+((ZnRing)module.getRing()).getModulus()+"-String"; //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        else if (module instanceof RStringRing) {
-            s = "R-String"; //$NON-NLS-1$
-        }
-        else if (module instanceof QStringRing) {
-            s = "Q-String"; //$NON-NLS-1$
-        }
-        else if (module instanceof PolynomialRing) {
-            PolynomialRing r = (PolynomialRing)module;
-            s = getSymbol(r.getCoefficientRing())+"["+r.getIndeterminate()+"]"; //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        else if (module instanceof ModularPolynomialRing) {
-            ModularPolynomialRing r = (ModularPolynomialRing)module;
-            s = getSymbol(r.getCoefficientRing())+"["+r.getIndeterminate()+"]/("+r.getModulus().stringRep()+")"; //$NON-NLS-1$ //$NON-NLS-2$
+    public static String getSymbol(Module<?,?> module) {
+        String s = "";  
+        if (module instanceof FreeModule) {
+            if (module.checkRingElement(ZElement.class)) {
+                s = "Z"; 
+            } else if (module.checkRingElement(ZnElement.class)) {
+                s = "Z" + ((ZnRing) module.getRing()).getModulus(); 
+            } else if (module.checkRingElement(RElement.class)) {
+                s = "R"; 
+            } else if (module.checkRingElement(CElement.class)) {
+                s = "C"; 
+            } else if (module.checkRingElement(QElement.class)) {
+                s = "Q"; 
+            } else if (module instanceof ZStringRing) {
+                s = "Z-String"; 
+            } else if (module instanceof ZnStringRing) {
+                s = "Z_" + ((ZnRing) module.getRing()).getModulus() + "-String";
+            } else if (module instanceof RStringRing) {
+                s = "R-String"; 
+            } else if (module instanceof QStringRing) {
+                s = "Q-String"; 
+            } else if (module instanceof PolynomialRing) {
+                PolynomialRing r = (PolynomialRing) module;
+                s = getSymbol(r.getCoefficientRing()) + "[" + r.getIndeterminate() + "]";  
+            } else if (module instanceof ModularPolynomialRing) {
+                ModularPolynomialRing r = (ModularPolynomialRing) module;
+                s = getSymbol(r.getCoefficientRing()) + "[" + r.getIndeterminate() + "]/(" + r.getModulus().stringRep() + ")";  
+            }
         }
         return s;
     }

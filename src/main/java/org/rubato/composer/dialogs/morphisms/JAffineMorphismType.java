@@ -89,7 +89,7 @@ class JAffineMorphismType
         for (int i = 0; i < rows; i++) {
             matrixPanel.add(new JLabel(Integer.toString(i+1), SwingConstants.CENTER));
             for (int j = 0; j < cols; j++) {
-                String s = i==j?"1":"0"; //$NON-NLS-1$ //$NON-NLS-2$
+                String s = i==j?"1":"0";  
                 matrixEntries[i][j] = new JTextField(s, 5);
                 matrixEntries[i][j].addCaretListener(this);
                 matrixEntries[i][j].addFocusListener(this);
@@ -108,7 +108,7 @@ class JAffineMorphismType
         vectorPanel.add(new JLabel("b", SwingConstants.CENTER));
         vectorEntries = new JTextField[rows];
         for (int i = 0; i < rows; i++) {
-            vectorEntries[i] = new JTextField("0", 5); //$NON-NLS-1$
+            vectorEntries[i] = new JTextField("0", 5); 
             vectorEntries[i].addCaretListener(this);
             vectorEntries[i].addFocusListener(this);
             vectorEntries[i].setToolTipText("v["+(i+1)+"]");
@@ -137,7 +137,7 @@ class JAffineMorphismType
              ring instanceof ZRing || ring instanceof ZnRing ||
              ring instanceof CRing)
             && rows == 2 && cols == 2) {
-            graphButton = new JButton(Messages.getString("JAffineMorphism.graphical")); //$NON-NLS-1$
+            graphButton = new JButton(Messages.getString("JAffineMorphism.graphical")); 
             graphButton.addActionListener(this);
             add(graphButton, BorderLayout.SOUTH);
         }

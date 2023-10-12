@@ -49,23 +49,23 @@ public class JMorphismEntry extends JPanel implements ActionListener {
         
         Box box = Box.createHorizontalBox();
         
-        selectButton = new JButton(Messages.getString("JMorphismEntry.select")); //$NON-NLS-1$
-        selectButton.setToolTipText(Messages.getString("JMorphismEntry.selectMorph")); //$NON-NLS-1$
+        selectButton = new JButton(Messages.getString("JMorphismEntry.select")); 
+        selectButton.setToolTipText(Messages.getString("JMorphismEntry.selectMorph")); 
         selectButton.addActionListener(this);
         box.add(selectButton);
         
         box.add(Box.createHorizontalStrut(10));
 
-        editButton = new JButton(Messages.getString("JMorphismEntry.editbutton")); //$NON-NLS-1$
-        editButton.setToolTipText(Messages.getString("JMorphismEntry.edittooltip")); //$NON-NLS-1$
+        editButton = new JButton(Messages.getString("JMorphismEntry.editbutton")); 
+        editButton.setToolTipText(Messages.getString("JMorphismEntry.edittooltip")); 
         editButton.addActionListener(this);
         editButton.setEnabled(morphism != null);
         box.add(editButton);
 
         box.add(Box.createHorizontalStrut(10));
 
-        createButton = new JButton(Messages.getString("JMorphismEntry.create")); //$NON-NLS-1$
-        createButton.setToolTipText(Messages.getString("JMorphismEntry.createMorph")); //$NON-NLS-1$
+        createButton = new JButton(Messages.getString("JMorphismEntry.create")); 
+        createButton.setToolTipText(Messages.getString("JMorphismEntry.createMorph")); 
         createButton.addActionListener(this);
         box.add(createButton);
         
@@ -223,5 +223,5 @@ public class JMorphismEntry extends JPanel implements ActionListener {
 
     private EventListenerList listenerList = new EventListenerList();
     
-    private final static String EMPTY_STRING = ""; //$NON-NLS-1$
+    private final static String EMPTY_STRING = ""; 
 }

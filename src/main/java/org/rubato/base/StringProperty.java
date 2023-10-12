@@ -102,7 +102,7 @@ public class StringProperty
     private String fillStringToLength(String val, int minLength) {
         String res = val;
         for (int i = val.length(); i < minLength; i++) {
-            res += "X"; //$NON-NLS-1$
+            res += "X"; 
         }
         return res;
     }

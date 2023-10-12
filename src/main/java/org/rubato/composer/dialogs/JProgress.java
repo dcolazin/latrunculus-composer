@@ -29,7 +29,7 @@ import javax.swing.border.EmptyBorder;
 public class JProgress extends JDialog {
 
     public JProgress(Frame frame, Component comp) {
-        super(frame, "Running ...", false); //$NON-NLS-1$
+        super(frame, "Running ...", false); 
         createLayout();
         setLocationRelativeTo(comp);
     }

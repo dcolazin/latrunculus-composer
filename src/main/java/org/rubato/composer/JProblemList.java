@@ -54,7 +54,7 @@ public class JProblemList extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        clearButton = new JButton(Messages.getString("JProblemList.clear")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JProblemList.clear")); 
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clearProblems();

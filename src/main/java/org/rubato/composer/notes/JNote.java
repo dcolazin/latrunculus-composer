@@ -167,7 +167,7 @@ public class JNote
     private JPopupMenu createPopupMenu() {
         JPopupMenu popup = new JPopupMenu();
         JMenuItem item;
-        item = new JMenuItem(Messages.getString("JNote.remove")); //$NON-NLS-1$
+        item = new JMenuItem(Messages.getString("JNote.remove")); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeJNote();
@@ -175,7 +175,7 @@ public class JNote
             });
         popup.add(item);
         if (titleField.isVisible()) {
-            item = new JMenuItem(Messages.getString("JNote.removetitle")); //$NON-NLS-1$
+            item = new JMenuItem(Messages.getString("JNote.removetitle")); 
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeTitle();
@@ -183,7 +183,7 @@ public class JNote
             });
         }
         else {
-            item = new JMenuItem(Messages.getString("JNote.addtitle")); //$NON-NLS-1$
+            item = new JMenuItem(Messages.getString("JNote.addtitle")); 
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     addTitle();
@@ -191,14 +191,14 @@ public class JNote
             });
         }
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNote.bgcolor")); //$NON-NLS-1$
+        item = new JMenuItem(Messages.getString("JNote.bgcolor")); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     changeBackgroundColor();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNote.fgcolor")); //$NON-NLS-1$
+        item = new JMenuItem(Messages.getString("JNote.fgcolor")); 
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     changeForegroundColor();
@@ -243,7 +243,7 @@ public class JNote
         if (colorChooser == null) {
             colorChooser = new JColorChooser();
         }
-        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosefgcolor"), fgColor); //$NON-NLS-1$
+        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosefgcolor"), fgColor); 
         if (color != null) {
             setForegroundColor(color);
         }        
@@ -268,7 +268,7 @@ public class JNote
         if (colorChooser == null) {
             colorChooser = new JColorChooser();
         }
-        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosebgcolor"), fgColor); //$NON-NLS-1$
+        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosebgcolor"), fgColor); 
         if (color != null) {
             setBackgroundColor(color);
         }        
@@ -328,5 +328,5 @@ public class JNote
     private final static Border    emptyBorder = BorderFactory.createEmptyBorder();
     private final static Border    marginBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
     private final static Border    lineBorder = BorderFactory.createLineBorder(Color.BLACK);
-    private final static Font      titleFont = new Font("sans", Font.BOLD, 16); //$NON-NLS-1$
+    private final static Font      titleFont = new Font("sans", Font.BOLD, 16); 
 }

@@ -36,7 +36,7 @@ class JConstMorphismType extends JMorphismType implements ActionListener {
         this.container = container;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        add(JMorphismDialog.createTitle("f(x) = c")); //$NON-NLS-1$
+        add(JMorphismDialog.createTitle("f(x) = c")); 
         add(Box.createVerticalStrut(10));
         simpleEntry = JSimpleEntry.make(container.getCodomain());
         simpleEntry.addActionListener(this);

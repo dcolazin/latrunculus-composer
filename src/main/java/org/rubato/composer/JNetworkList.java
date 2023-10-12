@@ -44,7 +44,7 @@ public class JNetworkList extends JPanel {
                 }
             });
         add(new JScrollPane(networkList), BorderLayout.CENTER);
-        newButton = new JButton(Messages.getString("JNetworkList.newnetwork")); //$NON-NLS-1$
+        newButton = new JButton(Messages.getString("JNetworkList.newnetwork")); 
         add(newButton, BorderLayout.SOUTH);
     }
     

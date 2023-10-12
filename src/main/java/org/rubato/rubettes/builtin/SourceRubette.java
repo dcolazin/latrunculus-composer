@@ -65,7 +65,7 @@ public class SourceRubette extends AbstractRubette {
                 setDenotator(d);
             }
             else {
-                addError(Messages.getString("SourceRubette.namenotavailable"), s); //$NON-NLS-1$
+                addError(Messages.getString("SourceRubette.namenotavailable"), s); 
                 return;
             }
         }
@@ -86,7 +86,7 @@ public class SourceRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Source"; //$NON-NLS-1$
+        return "Source"; 
     }
 
     
@@ -102,8 +102,8 @@ public class SourceRubette extends AbstractRubette {
             selector = new JSelectDenotator(Repository.systemRepository());
             selector.setDenotator(denotator);
             properties.add(selector, BorderLayout.CENTER);
-            refreshBox = new JCheckBox(Messages.getString("SourceRubette.selfrefreshable")); //$NON-NLS-1$
-            refreshBox.setToolTipText(Messages.getString("SourceRubette.selfrefreshtooltip")); //$NON-NLS-1$
+            refreshBox = new JCheckBox(Messages.getString("SourceRubette.selfrefreshable")); 
+            refreshBox.setToolTipText(Messages.getString("SourceRubette.selfrefreshtooltip")); 
             refreshBox.setSelected(refreshable);
             properties.add(refreshBox, BorderLayout.SOUTH);
         }
@@ -140,17 +140,17 @@ public class SourceRubette extends AbstractRubette {
 
     
     public String getShortDescription() {
-        return Messages.getString("SourceRubette.containsdenotator"); //$NON-NLS-1$
+        return Messages.getString("SourceRubette.containsdenotator"); 
     }
 
     
     public String getLongDescription() {
-        return "The Source Rubette stores a denotator."; //$NON-NLS-1$
+        return "The Source Rubette stores a denotator."; 
     }
     
     
     public String getOutTip(int i) {
-        return Messages.getString("SourceRubette.storeddenotator"); //$NON-NLS-1$
+        return Messages.getString("SourceRubette.storeddenotator"); 
     }
 
     
@@ -187,10 +187,10 @@ public class SourceRubette extends AbstractRubette {
     private void setDenotator(Denotator d) {
         denotator = d;
         if (d == null) {
-            name = " "; //$NON-NLS-1$
+            name = " "; 
         }
         else {
-            name = d.getNameString()+": "+d.getForm().getNameString(); //$NON-NLS-1$
+            name = d.getNameString()+": "+d.getForm().getNameString(); 
         }
         setOutput(0, denotator);
     }
@@ -210,12 +210,12 @@ public class SourceRubette extends AbstractRubette {
     private Denotator        denotator = null;
     private JSelectDenotator selector;
     private JCheckBox        refreshBox;
-    private String           name = " "; //$NON-NLS-1$
+    private String           name = " "; 
     private boolean          refreshable = false;
     private static final ImageIcon icon;
     private static final Repository rep = Repository.systemRepository();
 
     static {
-        icon = Icons.loadIcon(SourceRubette.class, "/images/rubettes/builtin/sourceicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(SourceRubette.class, "/images/rubettes/builtin/sourceicon.png"); 
     }
 }

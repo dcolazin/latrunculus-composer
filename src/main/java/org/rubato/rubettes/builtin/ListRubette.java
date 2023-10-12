@@ -217,7 +217,7 @@ public class ListRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "List"; //$NON-NLS-1$
+        return "List"; 
     }
 
     
@@ -301,30 +301,30 @@ public class ListRubette extends AbstractRubette {
     
 
     public String getShortDescription() {
-        return "Performs a list operation on its input denotators"; //$NON-NLS-1$
+        return "Performs a list operation on its input denotators"; 
     }
 
     
     public String getLongDescription() {
-        return "The List Rubette performs a list operation, e.g., "+ //$NON-NLS-1$
-               "concatenation, on its input denotators."; //$NON-NLS-1$
+        return "The List Rubette performs a list operation, e.g., "+ 
+               "concatenation, on its input denotators."; 
     }
 
 
     public String getInTip(int i) {
-        return "Input denotator #"+i; //$NON-NLS-1$
+        return "Input denotator #"+i; 
     }
 
 
     public String getOutTip(int i) {
-        return "Output denotator"; //$NON-NLS-1$
+        return "Output denotator"; 
     }
 
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
-    private final static String OPERATION   = "Operation"; //$NON-NLS-1$
-    private final static String OP_ATTR     = "op"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String NUMBER_ATTR = "number"; 
+    private final static String OPERATION   = "Operation"; 
+    private final static String OP_ATTR     = "op"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(OPERATION, OP_ATTR, op);
@@ -377,6 +377,6 @@ public class ListRubette extends AbstractRubette {
     };
 
     static {
-       icon = Icons.loadIcon(ListRubette.class, "/images/rubettes/builtin/listicon.png"); //$NON-NLS-1$
+       icon = Icons.loadIcon(ListRubette.class, "/images/rubettes/builtin/listicon.png"); 
     }
 }

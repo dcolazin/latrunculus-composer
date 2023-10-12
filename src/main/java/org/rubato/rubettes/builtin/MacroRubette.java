@@ -58,7 +58,7 @@ public class MacroRubette extends AbstractRubette {
             try {
                 rubette.run(runInfo);
                 if (rubette.hasErrors()) {
-                    addError(Messages.getString("MacroRubette.error")); //$NON-NLS-1$
+                    addError(Messages.getString("MacroRubette.error"));
                 }
                 else {
                     rubette.updateView();
@@ -140,7 +140,7 @@ public class MacroRubette extends AbstractRubette {
     
     
     public String getInfo() {
-        return info==null?"":info;         //$NON-NLS-1$
+        return info==null?"":info;
     }
     
     
@@ -193,7 +193,7 @@ public class MacroRubette extends AbstractRubette {
             return inputRubette.getOutTip(i);
         }
         else {
-            return ""; //$NON-NLS-1$
+            return "";
         }
     }
 
@@ -203,20 +203,20 @@ public class MacroRubette extends AbstractRubette {
             return outputRubette.getInTip(i);
         }
         else {
-            return ""; //$NON-NLS-1$
+            return "";
         }
     }
     
     
-    private final static String INFO  = "Info"; //$NON-NLS-1$
-    private final static String SHORT = "ShortDescription"; //$NON-NLS-1$
-    private final static String LONG  = "LongDescription"; //$NON-NLS-1$
+    private final static String INFO  = "Info";
+    private final static String SHORT = "ShortDescription";
+    private final static String LONG  = "LongDescription";
 
     
     public void toXML(XMLWriter writer) {
         if (getInfo().length() > 0) {
             writer.openBlock(INFO);
-            writer.writeTextNode("\n"+getInfo()+"\n"); //$NON-NLS-1$ //$NON-NLS-2$
+            writer.writeTextNode("\n"+getInfo()+"\n");  
             writer.closeBlock();
         }
         else {
@@ -224,7 +224,7 @@ public class MacroRubette extends AbstractRubette {
         }
         if (getShortDescription().length() > 0) {
             writer.openBlock(SHORT);
-            writer.writeTextNode("\n"+getShortDescription()+"\n"); //$NON-NLS-1$ //$NON-NLS-2$
+            writer.writeTextNode("\n"+getShortDescription()+"\n");  
             writer.closeBlock();
         }
         else {
@@ -232,7 +232,7 @@ public class MacroRubette extends AbstractRubette {
         }
         if (getLongDescription().length() > 0) {
             writer.openBlock(LONG);
-            writer.writeTextNode("\n"+getLongDescription()+"\n"); //$NON-NLS-1$ //$NON-NLS-2$
+            writer.writeTextNode("\n"+getLongDescription()+"\n");  
             writer.closeBlock();
         }
         else {
@@ -265,10 +265,10 @@ public class MacroRubette extends AbstractRubette {
     }
     
     
-    private String name      = "MacroRubette"; //$NON-NLS-1$
+    private String name      = "MacroRubette";
     private String info      = null;
-    private String shortDesc = ""; //$NON-NLS-1$
-    private String longDesc  = ""; //$NON-NLS-1$
+    private String shortDesc = "";
+    private String longDesc  = "";
     
     private NetworkModel       networkModel  = null;
     private MacroInputRubette  inputRubette  = null;
@@ -277,6 +277,6 @@ public class MacroRubette extends AbstractRubette {
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(MacroRubette.class, "/images/rubettes/builtin/neticon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(MacroRubette.class, "/images/rubettes/builtin/neticon.png");
     }
 }

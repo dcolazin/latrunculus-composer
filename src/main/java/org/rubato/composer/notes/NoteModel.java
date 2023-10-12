@@ -106,12 +106,12 @@ public class NoteModel {
     }
     
     
-    private final static String FG_ATTR = "fg"; //$NON-NLS-1$
-    private final static String BG_ATTR = "bg"; //$NON-NLS-1$
-    private final static String W_ATTR  = "w"; //$NON-NLS-1$
-    private final static String H_ATTR  = "h"; //$NON-NLS-1$
-    private final static String TITLE   = "Title"; //$NON-NLS-1$
-    private final static String TEXT    = "Text"; //$NON-NLS-1$
+    private final static String FG_ATTR = "fg";
+    private final static String BG_ATTR = "bg";
+    private final static String W_ATTR  = "w";
+    private final static String H_ATTR  = "h";
+    private final static String TITLE   = "Title";
+    private final static String TEXT    = "Text";
 
     
     public void toXML(XMLWriter writer) {
@@ -145,7 +145,7 @@ public class NoteModel {
             title = XMLReader.getText(child).trim(); 
         }
         
-        String text = ""; //$NON-NLS-1$
+        String text = "";
         child = XMLReader.getChild(noteElement, TEXT);
         if (child != null) {
             text = XMLReader.getText(child);            

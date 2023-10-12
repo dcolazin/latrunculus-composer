@@ -76,7 +76,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
         if (input == null) {
-            addError(Messages.getString("DisplayRubette.inputnotset")); //$NON-NLS-1$
+            addError(Messages.getString("DisplayRubette.inputnotset")); 
         }
     }
 
@@ -94,7 +94,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
 
     
     public String getName() {
-        return "Display"; //$NON-NLS-1$
+        return "Display"; 
     }
 
     
@@ -111,7 +111,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
             display.setEditable(false);
             display.setBorder(textBorder);
             JScrollPane scrollPane = new JScrollPane(display);
-            scrollPane.setBorder(makeTitledBorder("Denotator")); //$NON-NLS-1$
+            scrollPane.setBorder(makeTitledBorder("Denotator")); 
             view.add(scrollPane, BorderLayout.CENTER);
             
             ButtonGroup buttonGroup = new ButtonGroup();
@@ -161,7 +161,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
                 display.setText(bs.toString());
             }
             else {
-                display.setText(Messages.getString("DisplayRubette.nodenotator")); //$NON-NLS-1$
+                display.setText(Messages.getString("DisplayRubette.nodenotator")); 
             }
         }
     }
@@ -184,7 +184,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     
     
     public String getInTip(int i) {
-        return Messages.getString("DisplayRubette.intip"); //$NON-NLS-1$
+        return Messages.getString("DisplayRubette.intip"); 
     }
 
     
@@ -228,6 +228,6 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     private static final Border textBorder = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
     
     static {
-        icon = Icons.loadIcon(DisplayRubette.class, "/images/rubettes/builtin/displayicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(DisplayRubette.class, "/images/rubettes/builtin/displayicon.png"); 
     }
 }

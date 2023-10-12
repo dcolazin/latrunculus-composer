@@ -211,9 +211,9 @@ class Select2DDialog
     
     private static Repository rep = Repository.systemRepository();
 
-    private static final String SELECTFORM_TITLE = Messages.getString("Select2DDialog.inputform"); //$NON-NLS-1$
-    private static final String BUTTONBOX_TITLE  = Messages.getString("Select2DDialog.selections"); //$NON-NLS-1$
-    private static final String ADDSEL_BUTTON    = Messages.getString("Select2DDialog.add"); //$NON-NLS-1$
-    private static final String REMOVESEL_BUTTON = Messages.getString("Select2DDialog.remove"); //$NON-NLS-1$
-    private static final String SELTAB_TITLE     = Messages.getString("Select2DDialog.seltabtitle"); //$NON-NLS-1$
+    private static final String SELECTFORM_TITLE = Messages.getString("Select2DDialog.inputform");
+    private static final String BUTTONBOX_TITLE  = Messages.getString("Select2DDialog.selections");
+    private static final String ADDSEL_BUTTON    = Messages.getString("Select2DDialog.add");
+    private static final String REMOVESEL_BUTTON = Messages.getString("Select2DDialog.remove");
+    private static final String SELTAB_TITLE     = Messages.getString("Select2DDialog.seltabtitle");
 }

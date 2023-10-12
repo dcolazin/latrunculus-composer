@@ -40,7 +40,7 @@ public class LimitColimitFormEntry
         this.type = type;
         setLayout(new BorderLayout());
         formDiagram = new JFormDiagram(dict);
-        formDiagram.setBorder(makeTitledBorder(Messages.getString("LimitColimitFormEntry.diagram"))); //$NON-NLS-1$
+        formDiagram.setBorder(makeTitledBorder(Messages.getString("LimitColimitFormEntry.diagram"))); 
         add(formDiagram, BorderLayout.CENTER);
     }
     

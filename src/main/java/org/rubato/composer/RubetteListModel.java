@@ -35,7 +35,7 @@ class RubetteListModel extends DefaultListModel {
     
     public RubetteListModel() {
         super();
-        groups.put("Core", true); //$NON-NLS-1$
+        groups.put("Core", true); 
     }
     
     
@@ -154,7 +154,7 @@ final class RubetteInfo implements Comparable<RubetteInfo> {
     
     public RubetteInfo(String group) {
         this.rubette = null;
-        this.name = ""; //$NON-NLS-1$
+        this.name = ""; 
         this.group = group;
     }
     

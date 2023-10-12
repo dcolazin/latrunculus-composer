@@ -248,11 +248,11 @@ public final class Address {
         }
         else if (ring2 instanceof ProductRing) {
             // TODO: not yet implemented
-            throw new UnsupportedOperationException("Not implemented"); //$NON-NLS-1$
+            throw new UnsupportedOperationException("Not implemented");
         }
         else {
             // TODO: not yet implemented
-            throw new UnsupportedOperationException("Not implemented"); //$NON-NLS-1$
+            throw new UnsupportedOperationException("Not implemented");
         }
     }
 
@@ -276,7 +276,7 @@ public final class Address {
         }
         else {
             // TODO: not yet implemented
-            throw new UnsupportedOperationException("Not implemented"); //$NON-NLS-1$
+            throw new UnsupportedOperationException("Not implemented");
         }
     }
 

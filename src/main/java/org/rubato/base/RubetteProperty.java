@@ -88,7 +88,7 @@ public abstract class RubetteProperty
     
     public abstract RubetteProperty clone();
  
-    protected static String VALUE_ATTR = "value";  //$NON-NLS-1$
+    protected static String VALUE_ATTR = "value";  
     
     private String key;
     private String name;

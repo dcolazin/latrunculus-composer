@@ -50,10 +50,10 @@ class JCompositionMorphismType
     private void layoutPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         StringBuilder buf = new StringBuilder(20);
-        buf.append("x"); //$NON-NLS-1$
+        buf.append("x"); 
         for (int i = 0; i < morphismCount; i++) {
-            buf.append(")"); //$NON-NLS-1$
-            buf.insert(0, "f"+(i+1)+"("); //$NON-NLS-1$ //$NON-NLS-2$
+            buf.append(")"); 
+            buf.insert(0, "f"+(i+1)+"(");  
         }
         add(JMorphismDialog.createTitle(buf.toString()));
         
@@ -63,8 +63,8 @@ class JCompositionMorphismType
         morphismCountSpinner = new JSpinner();
         morphismCountSpinner.setValue(morphismCount);
         morphismCountSpinner.addChangeListener(this);
-        morphismCountSpinner.setToolTipText(Messages.getString("JCompositionMorphism.setcompnumber")); //$NON-NLS-1$
-        morphismCountPanel.setBorder(makeTitledBorder(Messages.getString("JCompositionMorphism.compnumber"))); //$NON-NLS-1$
+        morphismCountSpinner.setToolTipText(Messages.getString("JCompositionMorphism.setcompnumber")); 
+        morphismCountPanel.setBorder(makeTitledBorder(Messages.getString("JCompositionMorphism.compnumber"))); 
         morphismCountPanel.add(morphismCountSpinner);        
         add(morphismCountPanel);
         
@@ -73,7 +73,7 @@ class JCompositionMorphismType
             morphisms[i] = new JMorphismEntry(null, null);
             morphisms[i].addActionListener(this);
             morphisms[i].setName(Integer.toString(i));
-            morphisms[i].setBorder(makeTitledBorder("f"+(i+1)+"(x)")); //$NON-NLS-1$ //$NON-NLS-2$
+            morphisms[i].setBorder(makeTitledBorder("f"+(i+1)+"(x)"));  
             add(morphisms[i]);
         }
         morphisms[0].setDomain(container.getDomain());

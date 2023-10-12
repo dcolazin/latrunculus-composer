@@ -183,16 +183,16 @@ public class BrowseView
     	Denotator[] denos = new Denotator[coll.size()];
     	coll.toArray(denos);
     	
-    	Form scoreForm = rep.getForm("Score"); //$NON-NLS-1$
-    	Form noteForm = rep.getForm("Note"); //$NON-NLS-1$
+    	Form scoreForm = rep.getForm("Score"); 
+    	Form noteForm = rep.getForm("Note"); 
     	Denotator score1 = scoreForm.createDefaultDenotator();
-    	score1.setNameString("Score1"); //$NON-NLS-1$
+    	score1.setNameString("Score1"); 
     	Denotator note1 = noteForm.createDefaultDenotator();
-    	note1.setNameString("Note1"); //$NON-NLS-1$
+    	note1.setNameString("Note1"); 
     	denos = new Denotator[] { score1, note1 };
     	
     	BrowseView view = new BrowseView(denos);
-        JFrame frame = new JFrame("Test BrowseView"); //$NON-NLS-1$
+        JFrame frame = new JFrame("Test BrowseView"); 
         frame.setContentPane(view);
         frame.pack();
         frame.setSize(500, 300);

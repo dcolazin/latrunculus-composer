@@ -30,7 +30,7 @@ import javax.swing.*;
 public final class JNewMacroRubetteDialog extends JDialog implements ActionListener {
 
     public JNewMacroRubetteDialog(Frame frame) {
-        super(frame, Messages.getString("JNewMacroRubetteDialog.newmacrorubette"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JNewMacroRubetteDialog.newmacrorubette"), true); 
         setLayout(new BorderLayout());
         
         JPanel topPanel = new JPanel();
@@ -38,21 +38,21 @@ public final class JNewMacroRubetteDialog extends JDialog implements ActionListe
         
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BorderLayout());
-        namePanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.name"))); //$NON-NLS-1$
+        namePanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.name"))); 
         nameField = new JTextField();
         namePanel.add(nameField, BorderLayout.CENTER);
         topPanel.add(namePanel);
         
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
-        infoPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.info"))); //$NON-NLS-1$
+        infoPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.info"))); 
         infoField = new JTextField();
         infoPanel.add(infoField, BorderLayout.CENTER);
         topPanel.add(infoPanel);
         
         JPanel shortDescPanel = new JPanel();
         shortDescPanel.setLayout(new BorderLayout());
-        shortDescPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.shortdescription"))); //$NON-NLS-1$
+        shortDescPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.shortdescription"))); 
         shortDescField = new JTextField();
         shortDescPanel.add(shortDescField, BorderLayout.CENTER);
         topPanel.add(shortDescPanel);
@@ -60,7 +60,7 @@ public final class JNewMacroRubetteDialog extends JDialog implements ActionListe
         
         JPanel longDescPanel = new JPanel();
         longDescPanel.setLayout(new BorderLayout());
-        longDescPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.longdescription"))); //$NON-NLS-1$
+        longDescPanel.setBorder(makeTitledBorder(Messages.getString("JNewMacroRubetteDialog.longdescription"))); 
         longDescArea = new JTextArea();
         longDescArea.setWrapStyleWord(true);
         longDescArea.setLineWrap(true);
@@ -74,10 +74,10 @@ public final class JNewMacroRubetteDialog extends JDialog implements ActionListe
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        cancelButton = new JButton(Messages.getString("JNewMacroRubetteDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JNewMacroRubetteDialog.cancel")); 
         cancelButton.addActionListener(this);
         buttonPanel.add(cancelButton);
-        okButton = new JButton(Messages.getString("JNewMacroRubetteDialog.ok")); //$NON-NLS-1$
+        okButton = new JButton(Messages.getString("JNewMacroRubetteDialog.ok")); 
         okButton.addActionListener(this);
         buttonPanel.add(okButton);
         bottomPanel.add(buttonPanel);

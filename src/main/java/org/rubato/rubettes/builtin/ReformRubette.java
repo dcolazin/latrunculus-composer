@@ -80,7 +80,7 @@ public class ReformRubette extends AbstractRubette {
     
 
     public String getName() {
-        return "Reform"; //$NON-NLS-1$
+        return "Reform"; 
     }
 
     
@@ -136,13 +136,13 @@ public class ReformRubette extends AbstractRubette {
 
 
     public String getInTip(int i) {
-        return "Input denotator"; //$NON-NLS-1$
+        return "Input denotator"; 
     }
 
 
     public String getOutTip(int i) {
         if (outputForm == null) {
-            return "Output denotator"; //$NON-NLS-1$
+            return "Output denotator"; 
         }
         else {
             return TextUtils.replaceStrings("Output dennotator of form %%1", outputForm.getNameString());
@@ -176,6 +176,6 @@ public class ReformRubette extends AbstractRubette {
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(ReformRubette.class, "/images/rubettes/builtin/reformicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(ReformRubette.class, "/images/rubettes/builtin/reformicon.png"); 
     }
 }

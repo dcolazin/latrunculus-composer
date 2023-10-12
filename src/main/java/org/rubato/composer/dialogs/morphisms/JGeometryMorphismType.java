@@ -38,11 +38,11 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
         morphismsPanel = new JPanel();
         morphismsPanel.setLayout(new BoxLayout(morphismsPanel, BoxLayout.Y_AXIS));
         buttonBox = new Box(BoxLayout.X_AXIS);
-        applyButton = new JButton(Messages.getString("JGeometryMorphism.apply")); //$NON-NLS-1$
+        applyButton = new JButton(Messages.getString("JGeometryMorphism.apply")); 
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         buttonBox.add(Box.createHorizontalGlue());
-        addButton = new JButton(Messages.getString("JGeometryMorphism.add")); //$NON-NLS-1$
+        addButton = new JButton(Messages.getString("JGeometryMorphism.add")); 
         addButton.addActionListener(this);
         buttonBox.add(addButton);
         morphismsPanel.add(buttonBox);        
@@ -110,7 +110,7 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
                    }
                } 
             });
-            removeButton = new JButton(Messages.getString("JGeometryMorphism.remove")); //$NON-NLS-1$
+            removeButton = new JButton(Messages.getString("JGeometryMorphism.remove")); 
             removeButton.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
                    morphismsList.remove(geo);
@@ -127,34 +127,34 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
             comboBox.setSelectedItem(type);
             building = false;
             add(Box.createHorizontalStrut(10));
-            if (type.equals(Messages.getString("JGeometryMorphism.rotation")) || type.equals(Messages.getString("JGeometryMorphism.reflection")) || //$NON-NLS-1$ //$NON-NLS-2$
-                type.equals(Messages.getString("JGeometryMorphism.hshearing")) || type.equals(Messages.getString("JGeometryMorphism.vshearing"))) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (type.equals(Messages.getString("JGeometryMorphism.rotation")) || type.equals(Messages.getString("JGeometryMorphism.reflection")) ||  
+                type.equals(Messages.getString("JGeometryMorphism.hshearing")) || type.equals(Messages.getString("JGeometryMorphism.vshearing"))) {  
                 add(Box.createHorizontalStrut(10));
-                add(new JLabel(Messages.getString("JGeometryMorphism.degrees")+":")); //$NON-NLS-1$ //$NON-NLS-2$
+                add(new JLabel(Messages.getString("JGeometryMorphism.degrees")+":"));  
                 add(Box.createHorizontalStrut(10));
-                deg = new JTextField("0", 5); //$NON-NLS-1$
+                deg = new JTextField("0", 5); 
                 deg.addKeyListener(this);
                 add(deg);
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.translation"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.translation"))) { 
                 add(Box.createHorizontalStrut(10));
-                add(new JLabel(" x:")); //$NON-NLS-1$
+                add(new JLabel(" x:")); 
                 add(Box.createHorizontalStrut(10));
-                x = new JTextField("0", 5); //$NON-NLS-1$
+                x = new JTextField("0", 5); 
                 x.addKeyListener(this);
                 add(x);
                 add(Box.createHorizontalStrut(10));
-                add(new JLabel(" y:")); //$NON-NLS-1$
+                add(new JLabel(" y:")); 
                 add(Box.createHorizontalStrut(10));
-                y = new JTextField("0", 5); //$NON-NLS-1$
+                y = new JTextField("0", 5); 
                 y.addKeyListener(this);
                 add(y);                
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.scaling"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.scaling"))) { 
                 add(Box.createHorizontalStrut(10));
-                add(new JLabel(Messages.getString("JGeometryMorphism.factor")+":")); //$NON-NLS-1$ //$NON-NLS-2$
+                add(new JLabel(Messages.getString("JGeometryMorphism.factor")+":"));  
                 add(Box.createHorizontalStrut(10));
-                factor = new JTextField("1", 5); //$NON-NLS-1$
+                factor = new JTextField("1", 5); 
                 factor.addKeyListener(this);
                 add(factor);
             }
@@ -178,7 +178,7 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
             return matrix;
         }
         private void computeTrafo() {
-            if (type.equals(Messages.getString("JGeometryMorphism.rotation"))) { //$NON-NLS-1$
+            if (type.equals(Messages.getString("JGeometryMorphism.rotation"))) { 
                 double r = getValue(deg);
                 double c = Math.cos(r/180.0*Math.PI);
                 double s = Math.sin(r/180.0*Math.PI);
@@ -188,7 +188,7 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
                 matrix.set(1, 0, s);
                 matrix.set(1, 1, c);
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.reflection"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.reflection"))) { 
                 double r = getValue(deg);
                 double c = Math.cos(2.0*r*Math.PI/180.0);
                 double s = Math.sin(2.0*r*Math.PI/180.0);
@@ -198,24 +198,24 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
                 matrix.set(1, 0, s);
                 matrix.set(1, 1, -c);
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.translation"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.translation"))) { 
                 matrix = RMatrix.getUnitMatrix(3);
                 matrix.set(0, 2, getValue(x));
                 matrix.set(1, 2, getValue(y));
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.scaling"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.scaling"))) { 
                 double s = getValue(factor);
                 matrix = RMatrix.getUnitMatrix(3);
                 matrix.set(0, 0, s);
                 matrix.set(1, 1, s);
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.hshearing"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.hshearing"))) { 
                 double r = getValue(deg);
                 double t = Math.tan(r*Math.PI/180.0); 
                 matrix = RMatrix.getUnitMatrix(3);
                 matrix.set(0, 1, t);
             }
-            else if (type.equals(Messages.getString("JGeometryMorphism.vshearing"))) { //$NON-NLS-1$
+            else if (type.equals(Messages.getString("JGeometryMorphism.vshearing"))) { 
                 double r = getValue(deg);
                 double t = Math.tan(r*Math.PI/180.0); 
                 matrix = RMatrix.getUnitMatrix(3);
@@ -229,13 +229,13 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
                 v = Double.parseDouble(s);
             }
             catch (NumberFormatException e) {
-                f.setText("0"); //$NON-NLS-1$
+                f.setText("0"); 
             }
             return v;
         }
         protected JComboBox  comboBox;
         private JButton    removeButton;
-        protected String   type = Messages.getString("JGeometryMorphism.rotation"); //$NON-NLS-1$
+        protected String   type = Messages.getString("JGeometryMorphism.rotation"); 
         private JTextField x;
         private JTextField y;
         private JTextField factor;
@@ -255,11 +255,11 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
     protected ArrayList<JGeometry> morphismsList = new ArrayList<JGeometry>();
     
     protected final String[] types = {
-            Messages.getString("JGeometryMorphism.rotation"), //$NON-NLS-1$
-            Messages.getString("JGeometryMorphism.translation"), //$NON-NLS-1$
-            Messages.getString("JGeometryMorphism.reflection"), //$NON-NLS-1$
-            Messages.getString("JGeometryMorphism.scaling"), //$NON-NLS-1$
-            Messages.getString("JGeometryMorphism.vshearing"), //$NON-NLS-1$
-            Messages.getString("JGeometryMorphism.hshearing") //$NON-NLS-1$
+            Messages.getString("JGeometryMorphism.rotation"), 
+            Messages.getString("JGeometryMorphism.translation"), 
+            Messages.getString("JGeometryMorphism.reflection"), 
+            Messages.getString("JGeometryMorphism.scaling"), 
+            Messages.getString("JGeometryMorphism.vshearing"), 
+            Messages.getString("JGeometryMorphism.hshearing") 
     };
 }

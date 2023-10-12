@@ -115,7 +115,7 @@ public class FormProperty
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         FormProperty property = clone();
-        Element child = XMLReader.getChild(element, "Form"); //$NON-NLS-1$
+        Element child = XMLReader.getChild(element, "Form"); 
         if (child == null) {
             property.setForm(null);
         }

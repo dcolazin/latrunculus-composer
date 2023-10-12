@@ -76,7 +76,7 @@ public class SelectFormRubette extends AbstractRubette {
     
 
     public String getName() {
-        return "SelectForm"; //$NON-NLS-1$
+        return "SelectForm"; 
     }
 
     
@@ -149,7 +149,7 @@ public class SelectFormRubette extends AbstractRubette {
 
 
     public String getInTip(int i) {
-        return "Input denotator"; //$NON-NLS-1$
+        return "Input denotator"; 
     }
 
 

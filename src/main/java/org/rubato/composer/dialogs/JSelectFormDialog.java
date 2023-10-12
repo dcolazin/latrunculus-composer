@@ -89,7 +89,7 @@ public final class JSelectFormDialog extends JDialog {
     
     
     private JSelectFormDialog(Frame frame, Component comp) {
-        super(frame, Messages.getString("JSelectFormDialog.selectform"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JSelectFormDialog.selectform"), true); 
         createContents();
         setLocationRelativeTo(comp);
         installEscapeKey(this);
@@ -97,12 +97,12 @@ public final class JSelectFormDialog extends JDialog {
     
     
     private JSelectFormDialog(Frame frame, Component comp, ArrayList<Integer> types) {
-        super(frame, Messages.getString("JSelectFormDialog.selectform"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JSelectFormDialog.selectform"), true); 
         createContents();
-        String s = Messages.getString("JSelectFormDialog.type")+": "+Form.typeToString(types.get(0));  //$NON-NLS-1$ //$NON-NLS-2$
+        String s = Messages.getString("JSelectFormDialog.type")+": "+Form.typeToString(types.get(0));   
         
         for (int i = 1; i < types.size(); i++) {
-            s += ", "+Form.typeToString(types.get(i)); //$NON-NLS-1$
+            s += ", "+Form.typeToString(types.get(i)); 
         }
         infoLabel.setText(s);
         setLocationRelativeTo(comp);
@@ -140,7 +140,7 @@ public final class JSelectFormDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 5, 5));
         
-        cancelButton = new JButton(Messages.getString("JSelectFormDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JSelectFormDialog.cancel")); 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancel();
@@ -148,7 +148,7 @@ public final class JSelectFormDialog extends JDialog {
         });
         buttonPanel.add(cancelButton);
         
-        okButton = new JButton(Messages.getString("JSelectFormDialog.ok")); //$NON-NLS-1$
+        okButton = new JButton(Messages.getString("JSelectFormDialog.ok")); 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok();
@@ -220,7 +220,7 @@ public final class JSelectFormDialog extends JDialog {
         
         public FormInfo(Form f) {
             form = f;
-            name = f.getNameString()+": "+f.getTypeString(); //$NON-NLS-1$
+            name = f.getNameString()+": "+f.getTypeString(); 
         }
         
         public int compareTo(FormInfo object) {

@@ -43,7 +43,7 @@ public class JMessageLog extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        clearButton = new JButton(Messages.getString("JMessageLog.clear")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JMessageLog.clear"));
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clearMessages();
@@ -56,15 +56,15 @@ public class JMessageLog extends JPanel {
                 checkAction();
             }
         };
-        infoCheck = new JCheckBox(Messages.getString("JMessageLog.info")); //$NON-NLS-1$
+        infoCheck = new JCheckBox(Messages.getString("JMessageLog.info"));
         infoCheck.addActionListener(checkListener);
         infoCheck.setSelected(true);
         buttonPanel.add(infoCheck);
-        warningCheck = new JCheckBox(Messages.getString("JMessageLog.warnings")); //$NON-NLS-1$
+        warningCheck = new JCheckBox(Messages.getString("JMessageLog.warnings"));
         warningCheck.addActionListener(checkListener);
         warningCheck.setSelected(true);
         buttonPanel.add(warningCheck);
-        errorCheck = new JCheckBox(Messages.getString("JMessageLog.errors")); //$NON-NLS-1$
+        errorCheck = new JCheckBox(Messages.getString("JMessageLog.errors"));
         errorCheck.addActionListener(checkListener);        
         errorCheck.setSelected(true);
         buttonPanel.add(errorCheck);
@@ -101,7 +101,7 @@ public class JMessageLog extends JPanel {
     private JCheckBox        warningCheck;
     private JCheckBox        infoCheck;
     protected boolean[]        checks = { true, true, true };
-    protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy/HH:mm:ss"); //$NON-NLS-1$
+    protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy/HH:mm:ss");
     
     
     private class MessageCellRenderer
@@ -119,7 +119,7 @@ public class JMessageLog extends JPanel {
                                                       boolean cellHasFocus) {
             Message msg = (Message)value;
             Color fg = JComposer.statusColor[msg.type];
-            setText(dateFormat.format(msg.date)+" - "+msg.msg); //$NON-NLS-1$
+            setText(dateFormat.format(msg.date)+" - "+msg.msg);
             setBackground(isSelected ? fg: Color.WHITE);
             setForeground(isSelected ? Color.WHITE: fg);
             return this;
@@ -171,7 +171,7 @@ public class JMessageLog extends JPanel {
         }
         
         public String toString() {
-            return date+": "+msg; //$NON-NLS-1$
+            return date+": "+msg;
         }
         
         public Date   date;

@@ -72,7 +72,7 @@ public final class JDenotatorDialog
     
     
     public JDenotatorDialog(Frame frame, boolean modal, boolean nameRequired, Form form) {
-        super(frame, Messages.getString("JDenotatorDialog.createdenotator"), modal); //$NON-NLS-1$
+        super(frame, Messages.getString("JDenotatorDialog.createdenotator"), modal);
         setLayout(new BorderLayout(5, 5));
         this.form = form;
         this.nameRequired = nameRequired;
@@ -118,7 +118,7 @@ public final class JDenotatorDialog
         // buttons
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         
-        clearButton = new JButton(Messages.getString("JDenotatorDialog.clear")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JDenotatorDialog.clear"));
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clear();
@@ -127,7 +127,7 @@ public final class JDenotatorDialog
         buttonBox.add(clearButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        createButton = new JButton(Messages.getString("JDenotatorDialog.create")); //$NON-NLS-1$
+        createButton = new JButton(Messages.getString("JDenotatorDialog.create"));
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 create();
@@ -136,7 +136,7 @@ public final class JDenotatorDialog
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        cancelButton = new JButton(Messages.getString("JDenotatorDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JDenotatorDialog.cancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -241,12 +241,12 @@ public final class JDenotatorDialog
                 // denotator has been given a name
                 denotator = denotatorEntry.getDenotator(name);
                 if (denotator == null) {
-                    setInfo(Messages.getString("JDenotatorDialog.nocreatedenotator")); //$NON-NLS-1$
+                    setInfo(Messages.getString("JDenotatorDialog.nocreatedenotator"));
                 }
                 else {
                     if (rep.getDenotator(NameDenotator.make(name)) != null) {
                         denotator = null;
-                        setInfo(Messages.getString("JDenotatorDialog.nameexists"));                             //$NON-NLS-1$
+                        setInfo(Messages.getString("JDenotatorDialog.nameexists"));
                     }
                     else {
                         denotator = rep.register(denotator);
@@ -256,13 +256,13 @@ public final class JDenotatorDialog
             else if (nameRequired) {
                 // denotator must have a name but has not been given one
                 denotator = null;
-                setInfo(Messages.getString("JDenotatorDialog.musthavename"));                             //$NON-NLS-1$
+                setInfo(Messages.getString("JDenotatorDialog.musthavename"));
             }
             else {
                 // anonymous denotator
                 denotator = denotatorEntry.getDenotator(null);
                 if (denotator == null) {
-                    setInfo(Messages.getString("JDenotatorDialog.nocreatedenotator")); //$NON-NLS-1$
+                    setInfo(Messages.getString("JDenotatorDialog.nocreatedenotator"));
                 }
             }
         }
@@ -289,7 +289,7 @@ public final class JDenotatorDialog
             denotatorEntry.clear();
         }
         clearInfo();
-        nameField.setText(""); //$NON-NLS-1$
+        nameField.setText("");
         updateButtonState();
         pack();
     }
@@ -319,8 +319,8 @@ public final class JDenotatorDialog
 
     private DenotatorEntry denotatorEntry = null;
 
-    private final static Border formBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.form")); //$NON-NLS-1$
-    private final static Border nameBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.name")); //$NON-NLS-1$
+    private final static Border formBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.form"));
+    private final static Border nameBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.name"));
 
     private final static Repository rep = Repository.systemRepository();
 }

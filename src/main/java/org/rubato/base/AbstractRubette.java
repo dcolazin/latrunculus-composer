@@ -58,7 +58,7 @@ public abstract class AbstractRubette implements Rubette {
      * Rubette list, if this Rubette is selected in the list.
      */
     public String getLongDescription() {
-        return Messages.getString("AbstractRubette.nodescription")+getName()+"."; //$NON-NLS-1$//$NON-NLS-2$
+        return Messages.getString("AbstractRubette.nodescription")+getName()+"."; 
     }
 
     /**
@@ -186,8 +186,8 @@ public abstract class AbstractRubette implements Rubette {
      */
     public final void addError(Exception e) {
         String s = e.getMessage().trim();
-        if (!s.substring(s.length()-1).equals(".")) { //$NON-NLS-1$
-            s += "."; //$NON-NLS-1$
+        if (!s.substring(s.length()-1).equals(".")) { 
+            s += "."; 
         }
         errors.add(s);
     }

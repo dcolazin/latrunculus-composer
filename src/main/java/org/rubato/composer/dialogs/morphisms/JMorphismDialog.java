@@ -19,39 +19,19 @@
 
 package org.rubato.composer.dialogs.morphisms;
 
-import static org.rubato.composer.Utilities.installEnterKey;
-import static org.rubato.composer.Utilities.installEscapeKey;
-import static org.rubato.composer.Utilities.makeTitledBorder;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.*;
-
 import org.rubato.base.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.vetronauta.latrunculus.core.math.module.complex.CFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -79,6 +59,38 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import static org.rubato.composer.Utilities.installEnterKey;
+import static org.rubato.composer.Utilities.installEscapeKey;
+import static org.rubato.composer.Utilities.makeTitledBorder;
 
 /**
  * ModuleMorphism creator dialog.
@@ -95,7 +107,7 @@ public class JMorphismDialog
     
     
     public JMorphismDialog(Frame frame, boolean naming, ModuleMorphism morphism) {
-        super(frame, Messages.getString("JMorphismDialog.dialogtitle"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JMorphismDialog.dialogtitle"), true); 
         this.domain   = morphism.getDomain();
         this.codomain = morphism.getCodomain();
         this.naming   = naming;
@@ -105,7 +117,7 @@ public class JMorphismDialog
     
     
     public JMorphismDialog(Frame frame, boolean modal, boolean naming, Module domain, Module codomain) {
-        super(frame, Messages.getString("JMorphismDialog.createmorphism"), modal); //$NON-NLS-1$
+        super(frame, Messages.getString("JMorphismDialog.createmorphism"), modal); 
         this.domain   = domain;
         this.codomain = codomain;
         this.naming   = naming;
@@ -200,7 +212,7 @@ public class JMorphismDialog
         
         // buttons
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        clearButton = new JButton(Messages.getString("JMorphismDialog.clear")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JMorphismDialog.clear")); 
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clear();
@@ -209,7 +221,7 @@ public class JMorphismDialog
         buttonBox.add(clearButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        createButton = new JButton(Messages.getString("JMorphismDialog.create")); //$NON-NLS-1$
+        createButton = new JButton(Messages.getString("JMorphismDialog.create")); 
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 create();
@@ -218,7 +230,7 @@ public class JMorphismDialog
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        cancelButton = new JButton(Messages.getString("JMorphismDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JMorphismDialog.cancel")); 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -321,10 +333,10 @@ public class JMorphismDialog
             morphismType.setSelectedItem(AFFINE_TYPE);
         }
         else if (m instanceof GenericAffineMorphism) {
-            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); 
         }
         else {
-            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); 
         }
         selectMorphismType();
         if (jmorphismType != null) {
@@ -350,7 +362,7 @@ public class JMorphismDialog
         if (naming) {
             String name = nameField.getText().trim();
             if (name.length() == 0) {
-                JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.namenotempty"), Messages.getString("JMorphismDialog.nameerror"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+                JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.namenotempty"), Messages.getString("JMorphismDialog.nameerror"), JOptionPane.ERROR_MESSAGE);  
                 return;
             }
             else {
@@ -373,7 +385,7 @@ public class JMorphismDialog
     public void clear() {
         fillMorphismType(morphismType);
         if (naming) {
-            nameField.setText(""); //$NON-NLS-1$
+            nameField.setText(""); 
         }
         if (domainEntry != null) {
             domainEntry.clear();
@@ -435,6 +447,7 @@ public class JMorphismDialog
                     for (Ring ring : ((ProductRing)domain).getFactors()) {
                         if (ring.equals(codomain)) {
                             ok = true;
+                            break;
                         }
                     }
                     if (ok) {
@@ -442,18 +455,18 @@ public class JMorphismDialog
                     }
                 }
             }
-            if (domain instanceof CFreeModule && domain.equals(codomain)) {
-                items.add(CONJUGATION_TYPE);
-            }
-            if (domain instanceof RFreeModule && codomain instanceof RFreeModule &&
-                domain.getDimension() == 2 && codomain.getDimension() == 2) {
-                items.add(GEOMETRY_TYPE);
-            }
-            if (domain instanceof FreeModule && domain.equals(codomain)) {
-                items.add(SPLIT_TYPE);
-            }
-            if (domain instanceof ZFreeModule && codomain instanceof ZnFreeModule) {
-                if (((ZFreeModule)domain).getDimension() == ((ZnFreeModule)codomain).getDimension()) {
+            if (domain instanceof FreeModule) {
+                if (domain.checkRingElement(CElement.class) && domain.equals(codomain)) {
+                    items.add(CONJUGATION_TYPE);
+                }
+                if (domain.checkRingElement(RElement.class) && codomain instanceof RFreeModule &&
+                        domain.getDimension() == 2 && codomain.getDimension() == 2) {
+                    items.add(GEOMETRY_TYPE);
+                }
+                if (domain.equals(codomain)) {
+                    items.add(SPLIT_TYPE);
+                }
+                if (domain.checkRingElement(ZElement.class) && codomain instanceof FreeModule && codomain.checkRingElement(ZnElement.class) && (domain.getDimension() == codomain.getDimension())) {
                     items.add(MODULO_TYPE);
                 }
             }
@@ -507,14 +520,14 @@ public class JMorphismDialog
             else if (selectedType.equals(CANONICAL_TYPE)) {
                 setMorphism(CanonicalMorphism.make(domain, codomain));
                 if (morphism == null) {
-                    setError(Messages.getString("JMorphismDialog.cannotcreatecanonical")); //$NON-NLS-1$
+                    setError(Messages.getString("JMorphismDialog.cannotcreatecanonical")); 
                 }
                 else {
                     setResult(morphism.toString());
                 }                
             }
             else if (selectedType.equals(MODULO_TYPE)) {
-                int dim = ((ZFreeModule)domain).getDimension();
+                int dim = domain.getDimension();
                 int mod = ((ZnFreeModule)codomain).getModulus();
                 setMorphism(ModuloMorphism.make(dim, mod));
                 setResult(morphism.toString());
@@ -578,7 +591,7 @@ public class JMorphismDialog
                     }
                 }
                 if (!isplugin) {
-                    setError(Messages.getString("JMorphismDialog.nyi")); //$NON-NLS-1$
+                    setError(Messages.getString("JMorphismDialog.nyi")); 
                 }
             }
         }
@@ -644,32 +657,32 @@ public class JMorphismDialog
     private static final PluginManager pluginManager = PluginManager.getManager();
     
     private static final Border domainBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.domain")); //$NON-NLS-1$
+        makeTitledBorder(Messages.getString("JMorphismDialog.domain")); 
     private static final Border codomainBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.codomain")); //$NON-NLS-1$
+        makeTitledBorder(Messages.getString("JMorphismDialog.codomain")); 
     private static final Border nameBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.name")); //$NON-NLS-1$
+        makeTitledBorder(Messages.getString("JMorphismDialog.name")); 
     private static final Border morphismTypeBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.morphismtype")); //$NON-NLS-1$
+        makeTitledBorder(Messages.getString("JMorphismDialog.morphismtype")); 
     
-    private static final String AFFINE_TYPE      = Messages.getString("JMorphismDialog.affine"); //$NON-NLS-1$
-    private static final String CANONICAL_TYPE   = Messages.getString("JMorphismDialog.canonical");    //$NON-NLS-1$
-    private static final String COMPOSITION_TYPE = Messages.getString("JMorphismDialog.composition"); //$NON-NLS-1$
-    private static final String CONJUGATION_TYPE = Messages.getString("JMorphismDialog.conjugation"); //$NON-NLS-1$
-    private static final String CONSTANT_TYPE    = Messages.getString("JMorphismDialog.constant"); //$NON-NLS-1$
-    private static final String DIFFERENCE_TYPE  = Messages.getString("JMorphismDialog.difference"); //$NON-NLS-1$
-    private static final String GEOMETRY_TYPE    = Messages.getString("JMorphismDialog.geometry"); //$NON-NLS-1$
-    private static final String IDENTITY_TYPE    = Messages.getString("JMorphismDialog.identity"); //$NON-NLS-1$
-    private static final String MODULO_TYPE      = Messages.getString("JMorphismDialog.modulo"); //$NON-NLS-1$
-    private static final String NONE_TYPE        = Messages.getString("JMorphismDialog.none"); //$NON-NLS-1$
-    private static final String POLYNOMIAL_TYPE  = Messages.getString("JMorphismDialog.polynomial"); //$NON-NLS-1$
-    private static final String POWER_TYPE       = Messages.getString("JMorphismDialog.power"); //$NON-NLS-1$
-    private static final String PRODUCT_TYPE     = Messages.getString("JMorphismDialog.product"); //$NON-NLS-1$
-    private static final String PROJECTION_TYPE  = Messages.getString("JMorphismDialog.projection"); //$NON-NLS-1$
-    private static final String REORDER_TYPE     = Messages.getString("JMorphismDialog.reorder"); //$NON-NLS-1$
-    private static final String SCALED_TYPE      = Messages.getString("JMorphismDialog.scaled"); //$NON-NLS-1$
-    private static final String SHUFFLE_TYPE     = Messages.getString("JMorphismDialog.shuffle"); //$NON-NLS-1$
-    private static final String SPLIT_TYPE       = Messages.getString("JMorphismDialog.split"); //$NON-NLS-1$
-    private static final String SUM_TYPE         = Messages.getString("JMorphismDialog.sum"); //$NON-NLS-1$
-    private static final String TRANSLATION_TYPE = Messages.getString("JMorphismDialog.translation"); //$NON-NLS-1$
+    private static final String AFFINE_TYPE      = Messages.getString("JMorphismDialog.affine"); 
+    private static final String CANONICAL_TYPE   = Messages.getString("JMorphismDialog.canonical");    
+    private static final String COMPOSITION_TYPE = Messages.getString("JMorphismDialog.composition"); 
+    private static final String CONJUGATION_TYPE = Messages.getString("JMorphismDialog.conjugation"); 
+    private static final String CONSTANT_TYPE    = Messages.getString("JMorphismDialog.constant"); 
+    private static final String DIFFERENCE_TYPE  = Messages.getString("JMorphismDialog.difference"); 
+    private static final String GEOMETRY_TYPE    = Messages.getString("JMorphismDialog.geometry"); 
+    private static final String IDENTITY_TYPE    = Messages.getString("JMorphismDialog.identity"); 
+    private static final String MODULO_TYPE      = Messages.getString("JMorphismDialog.modulo"); 
+    private static final String NONE_TYPE        = Messages.getString("JMorphismDialog.none"); 
+    private static final String POLYNOMIAL_TYPE  = Messages.getString("JMorphismDialog.polynomial"); 
+    private static final String POWER_TYPE       = Messages.getString("JMorphismDialog.power"); 
+    private static final String PRODUCT_TYPE     = Messages.getString("JMorphismDialog.product"); 
+    private static final String PROJECTION_TYPE  = Messages.getString("JMorphismDialog.projection"); 
+    private static final String REORDER_TYPE     = Messages.getString("JMorphismDialog.reorder"); 
+    private static final String SCALED_TYPE      = Messages.getString("JMorphismDialog.scaled"); 
+    private static final String SHUFFLE_TYPE     = Messages.getString("JMorphismDialog.shuffle"); 
+    private static final String SPLIT_TYPE       = Messages.getString("JMorphismDialog.split"); 
+    private static final String SUM_TYPE         = Messages.getString("JMorphismDialog.sum"); 
+    private static final String TRANSLATION_TYPE = Messages.getString("JMorphismDialog.translation"); 
 }

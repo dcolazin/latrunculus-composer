@@ -119,8 +119,8 @@ public class XMLWriter {
      * else is done.
      */
     public void open() {
-        out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
-        out.println("<Rubato>"); //$NON-NLS-1$
+        out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); 
+        out.println("<Rubato>"); 
         indent++;
     }
     
@@ -130,7 +130,7 @@ public class XMLWriter {
      */
     public void close() {
         indent--;
-        out.println("</Rubato>"); //$NON-NLS-1$
+        out.println("</Rubato>"); 
         out.close();
     }
     
@@ -148,7 +148,7 @@ public class XMLWriter {
         out.print(TAG_OPEN+element);
         if (attributes != null) {
             out.print(SPACE);
-            out.print(attributes.trim().replaceAll("&", "&amp;").replaceAll("<", "&lt;")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            out.print(attributes.trim().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));   //$NON-NLS-3$ //$NON-NLS-4$
         }
         out.println(TAG_CLOSE);
         indent++;
@@ -196,7 +196,7 @@ public class XMLWriter {
      */    
     public void openBlockWithType(String element, String type, Object ... attrs) {
         StringBuilder buf = new StringBuilder(attrs.length*15);
-        buf.append("type"+ EQUALS_SYMBOL + DQUOTE_SYMBOL); //$NON-NLS-1$
+        buf.append("type"+ EQUALS_SYMBOL + DQUOTE_SYMBOL); 
         buf.append(type);
         buf.append(DQUOTE_SYMBOL);
         int i = 0;
@@ -250,7 +250,7 @@ public class XMLWriter {
         out.print(TAG_OPEN+element);
         if (attributes.length() > 0) {
             out.print(SPACE);
-            out.print(attributes.replaceAll("&", "&amp;").replaceAll("<", "&lt;")); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
+            out.print(attributes.replaceAll("&", "&amp;").replaceAll("<", "&lt;")); //$NON-NLS-3$//$NON-NLS-4$
         }
         out.print(TAG_CLOSE);
         elementStack.add(0, element);
@@ -264,7 +264,7 @@ public class XMLWriter {
         indent--;
         printIndent();
         String element = elementStack.removeFirst();
-        out.println("</"+element+">"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.println("</"+element+">");  
     }
     
     
@@ -273,7 +273,7 @@ public class XMLWriter {
      */
     public void closeInline() {
         String element = elementStack.removeFirst();
-        out.println("</"+element+">"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.println("</"+element+">");  
     }
         
 
@@ -282,7 +282,7 @@ public class XMLWriter {
      */
     public void empty(String element) {
         printIndent();
-        out.println("<"+element+"/>"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.println("<"+element+"/>");  
     }
     
     
@@ -297,21 +297,21 @@ public class XMLWriter {
         while (i < attrs.length) {
             String attr = attrs[i].toString();
             String value = attrs[i+1].toString();
-            buf.append(" "); //$NON-NLS-1$
+            buf.append(" "); 
             buf.append(attr);
-            buf.append("="); //$NON-NLS-1$
-            buf.append("\""); //$NON-NLS-1$
+            buf.append("="); 
+            buf.append("\""); 
             buf.append(toXMLText(value));
-            buf.append("\""); //$NON-NLS-1$
+            buf.append("\""); 
             i += 2;
         }
         String attributes = buf.toString().trim();
-        out.print("<"+element); //$NON-NLS-1$
+        out.print("<"+element); 
         if (attributes.length() > 0) {
-            out.print(" "); //$NON-NLS-1$
+            out.print(" "); 
             out.print(attributes);
         }
-        out.println("/>"); //$NON-NLS-1$
+        out.println("/>"); 
     }
     
     
@@ -363,9 +363,9 @@ public class XMLWriter {
      */
     public String toXMLText(String text) {
         String res = text;
-        res = res.replaceAll("&", "&amp;"); //$NON-NLS-1$ //$NON-NLS-2$
-        res = res.replaceAll("<", "&lt;"); //$NON-NLS-1$ //$NON-NLS-2$
-        res = res.replaceAll("\"", "&quot;"); //$NON-NLS-1$ //$NON-NLS-2$
+        res = res.replaceAll("&", "&amp;");  
+        res = res.replaceAll("<", "&lt;");  
+        res = res.replaceAll("\"", "&quot;");  
         return res;
     }
     

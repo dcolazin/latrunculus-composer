@@ -57,7 +57,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
             c.weightx = 0.0;
             c.fill = GridBagConstraints.NONE;
             c.gridwidth = GridBagConstraints.RELATIVE;
-            JLabel label = (dim == 1)?new JLabel(""):new JLabel(Messages.getString("JSimpleProductEntry.value")+" #"+i+":"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            JLabel label = (dim == 1)?new JLabel(""):new JLabel(Messages.getString("JSimpleProductEntry.value")+" #"+i+":");   //$NON-NLS-3$ //$NON-NLS-4$
             gbl.setConstraints(label, c);
             add(label);
             c.weightx = 1.0;
@@ -95,7 +95,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
             c.weightx = 0.0;
             c.fill = GridBagConstraints.NONE;
             c.gridwidth = GridBagConstraints.RELATIVE;
-            JLabel label = new JLabel("#"+i+":"); //$NON-NLS-1$ //$NON-NLS-2$
+            JLabel label = new JLabel("#"+i+":");  
             gbl.setConstraints(label, c);
             valuePanel.add(label);
             c.weightx = 1.0;

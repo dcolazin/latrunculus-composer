@@ -71,6 +71,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
@@ -206,7 +207,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         else {
             try {
-                LinkedList<Denotator> denoList = new LinkedList<Denotator>();
+                LinkedList<Denotator> denoList = new LinkedList<>();
                 for (ModuleElement e : elements) {
                     denoList.add(input.at(e));
                 }
@@ -288,7 +289,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 else {
                     if (list.get(0) instanceof SimpleDenotator) {
                         try {
-                            LinkedList<Denotator> reslist = new LinkedList<Denotator>();
+                            LinkedList<Denotator> reslist = new LinkedList<>();
                             for (Denotator d : list) {
                                 reslist.add(input.at(((SimpleDenotator)d).getElement()));
                             }
@@ -326,7 +327,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
 
     
     public String getName() {
-        return "AddressEval"; //$NON-NLS-1$
+        return "AddressEval"; 
     }
 
     
@@ -334,7 +335,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         AddressEvalRubette rubette = new AddressEvalRubette();
         rubette.moduleElement = moduleElement;
         if (elements != null) {
-            rubette.elements = new LinkedList<ModuleElement>(elements);
+            rubette.elements = new LinkedList<>(elements);
         }
         rubette.evalType = evalType;
         rubette.outputForm = outputForm;
@@ -357,9 +358,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             
             JPanel evalTypeSelectPanel = new JPanel();
             evalTypeSelectPanel.setLayout(new BorderLayout());
-            evalTypeSelectPanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.evaltype"))); //$NON-NLS-1$
+            evalTypeSelectPanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.evaltype"))); 
             evalTypeSelect = new JComboBox(evalTypes);
-            evalTypeSelect.setToolTipText(Messages.getString("AddressEvalRubette.evaltypetooltip")); //$NON-NLS-1$
+            evalTypeSelect.setToolTipText(Messages.getString("AddressEvalRubette.evaltypetooltip")); 
             evalTypeSelect.setEditable(false);
             evalTypeSelect.setSelectedIndex(evalType);
             evalTypeSelect.addActionListener(this);
@@ -517,42 +518,42 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     
     
     public String getShortDescription() {
-        return "Evaluates input denotator at a given address"; //$NON-NLS-1$
+        return "Evaluates input denotator at a given address"; 
     }
     
     
     public String getLongDescription() {
-        return "The AddressEval Rubette evaluates the input "+ //$NON-NLS-1$
-               "denotator at one or more addresses specified "+ //$NON-NLS-1$
-               "in the properties."; //$NON-NLS-1$
+        return "The AddressEval Rubette evaluates the input "+ 
+               "denotator at one or more addresses specified "+ 
+               "in the properties."; 
     }
 
     
     public String getInTip(int i) {
         if (i == 0) {
            if (outputForm == null) {
-               return Messages.getString("AddressEvalRubette.inputdeno"); //$NON-NLS-1$
+               return Messages.getString("AddressEvalRubette.inputdeno"); 
            }
            else {
-               return TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.inputdenotator"), outputForm.getForm(0).getNameString()); //$NON-NLS-1$
+               return TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.inputdenotator"), outputForm.getForm(0).getNameString()); 
            }
         }
         else {
-            return Messages.getString("AddressEvalRubette.evaldenotator"); //$NON-NLS-1$
+            return Messages.getString("AddressEvalRubette.evaldenotator"); 
         }
     }
     
     
     public String getOutTip(int i) {
-        String name = Messages.getString("AddressEvalRubette.outputdeno"); //$NON-NLS-1$
+        String name = Messages.getString("AddressEvalRubette.outputdeno"); 
         if (outputForm != null) {
-            name = TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.outputdenotator"), outputForm.getNameString()); //$NON-NLS-1$
+            name = TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.outputdenotator"), outputForm.getNameString()); 
         }
         return name;
     }
 
 
-    private static final String EVALTYPE = "EvalType"; //$NON-NLS-1$
+    private static final String EVALTYPE = "EvalType"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(EVALTYPE, VALUE_ATTR, evalType);
@@ -571,10 +572,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         else if (evalType == EVAL_TYPE_CHANGE) {
             definitionXmlWriter.toXML(morphism, writer);
         }
-        else if (evalType == EVAL_TYPE_INPUT) {
-            if (outputForm != null) {
+        else if (evalType == EVAL_TYPE_INPUT && (outputForm != null)) {
                 writer.writeFormRef(outputForm);
-            }
+
         }
     }
     
@@ -587,7 +587,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
 
         if (child == null) {
             // there must be a type
-            reader.setError(Messages.getString("AddressEvalRubette.missingelement"), EVALTYPE); //$NON-NLS-1$
+            reader.setError(Messages.getString("AddressEvalRubette.missingelement"), EVALTYPE); 
             return null;
         }
         
@@ -606,7 +606,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 }                
             }
             else {
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT); 
             }
         }
         else if (t == EVAL_TYPE_LIST) {
@@ -615,26 +615,23 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (child == null) {
                 // no output form has been given
                 // there must be an output form
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), FORM); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), FORM); 
                 return null;
             }
             // get output form
             Form oform = reader.parseAndResolveForm(child);
-            if (oform == null) {
-                return null;
-            }
             child = XMLReader.getNextSibling(child, MODULE);
             if (child == null) {
                 // no module has been given
                 // there must be a module
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE); 
                 return null;
             }
             Module module0 = reader.parseModule(child);
             if (module0 == null) {
                 return null;
             }
-            LinkedList<ModuleElement> list = new LinkedList<ModuleElement>();
+            LinkedList<ModuleElement> list = new LinkedList<>();
             child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
             while (child != null) {
                 ModuleElement e = reader.parseModuleElement(child);
@@ -642,7 +639,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     return null;
                 }
                 if (!module0.hasElement(e)) {
-                    reader.setError(Messages.getString("AddressEvalRubette.wrongmodule"), e.getModule(), module0); //$NON-NLS-1$
+                    reader.setError(Messages.getString("AddressEvalRubette.wrongmodule"), e.getModule(), module0); 
                     return null;
                 }
                 list.add(e);
@@ -660,7 +657,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (child == null) {
                 // no module morphism has been given
                 // there must be a module morphism
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM); //$NON-NLS-1$
+                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM); 
                 return null;
             }
             ModuleMorphism morphism0 = reader.parseModuleMorphism(child);
@@ -677,9 +674,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             child = XMLReader.getNextSibling(child, FORM);
             if (child != null) {
                 oform = reader.parseAndResolveForm(child);
-                if (oform == null) {
-                    return null;
-                }
             }
             newRubette = new AddressEvalRubette();
             newRubette.evalType = t;
@@ -700,8 +694,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         if (type == EVAL_TYPE_ELEMENT) {
             Module m = (module == null)? ZRing.ring:module;
             elementEntry = new JModuleElementEntry(m);
-            elementEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.moduleelement"))); //$NON-NLS-1$
-            elementEntry.setToolTipText(Messages.getString("AddressEvalRubette.selectelement")); //$NON-NLS-1$
+            elementEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.moduleelement"))); 
+            elementEntry.setToolTipText(Messages.getString("AddressEvalRubette.selectelement")); 
             if (moduleElement != null) {
                 elementEntry.setModuleElement(moduleElement);
             }
@@ -709,9 +703,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         else if (type == EVAL_TYPE_LIST) {
             Box box = Box.createVerticalBox();
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), Form.POWER, Form.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); //$NON-NLS-1$
-            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); //$NON-NLS-1$
+            outputFormSelect = new JSelectForm(Repository.systemRepository(), Yoneda.POWER, Yoneda.LIST);
+            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
+            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
             if (outputForm != null) {
                 outputFormSelect.setForm(outputForm);
             }
@@ -720,14 +714,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             Module m = (module == null)?ZRing.ring:module;
             
             listModuleEntry = new JModuleEntry();
-            listModuleEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementmodule"))); //$NON-NLS-1$
+            listModuleEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementmodule"))); 
             listModuleEntry.setModule(m);
             listModuleEntry.addActionListener(this);
             box.add(listModuleEntry);
             
             elementList = new JModuleElementList(m);
-            elementList.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementlist"))); //$NON-NLS-1$
-            elementList.setToolTipText(Messages.getString("AddressEvalRubette.elementlisttooltip")); //$NON-NLS-1$
+            elementList.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementlist"))); 
+            elementList.setToolTipText(Messages.getString("AddressEvalRubette.elementlisttooltip")); 
             if (elements != null) {
                 elementList.addElements(elements);
             }
@@ -736,14 +730,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             
             box = Box.createHorizontalBox();
             box.add(Box.createHorizontalGlue());
-            basisButton = new JButton(Messages.getString("AddressEvalRubette.basisvectors")); //$NON-NLS-1$
-            basisButton.setToolTipText(Messages.getString("AddressEvalRubette.basistooltip")); //$NON-NLS-1$
+            basisButton = new JButton(Messages.getString("AddressEvalRubette.basisvectors")); 
+            basisButton.setToolTipText(Messages.getString("AddressEvalRubette.basistooltip")); 
             basisButton.addActionListener(this);
             basisButton.setEnabled(module instanceof FreeModule);                
             box.add(basisButton);
             box.add(Box.createHorizontalStrut(5));
-            graphButton = new JButton(Messages.getString("AddressEvalRubette.graphical")); //$NON-NLS-1$
-            graphButton.setToolTipText(Messages.getString("AddressEvalRubette.graphtooltip")); //$NON-NLS-1$
+            graphButton = new JButton(Messages.getString("AddressEvalRubette.graphical")); 
+            graphButton.setToolTipText(Messages.getString("AddressEvalRubette.graphtooltip")); 
             graphButton.addActionListener(this);
             box.add(graphButton);
             box.add(Box.createHorizontalGlue());
@@ -756,14 +750,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (morphism != null) {
                 morphismEntry.setMorphism(morphism);
             }
-            morphismEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.changemorph"))); //$NON-NLS-1$
-            morphismEntry.setToolTipText(Messages.getString("AddressEvalRubette.changemorphtooltip")); //$NON-NLS-1$
+            morphismEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.changemorph"))); 
+            morphismEntry.setToolTipText(Messages.getString("AddressEvalRubette.changemorphtooltip")); 
             addressPanel.add(morphismEntry, BorderLayout.CENTER);
         }
         else if (type == EVAL_TYPE_INPUT) {
             Box box = Box.createVerticalBox();
             JPanel typePanel = new JPanel();
-            typePanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.resulttype"))); //$NON-NLS-1$
+            typePanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.resulttype"))); 
             ButtonGroup group = new ButtonGroup();
             simpleButton = new JRadioButton(SIMPLE);
             group.add(simpleButton);
@@ -777,9 +771,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             typePanel.add(listButton);
             box.add(typePanel);            
             
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), Form.POWER, Form.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); //$NON-NLS-1$
-            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); //$NON-NLS-1$
+            outputFormSelect = new JSelectForm(Repository.systemRepository(), Yoneda.POWER, Yoneda.LIST);
+            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
+            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
             if (outputForm != null) {
                 outputFormSelect.setForm(outputForm);
             }
@@ -795,7 +789,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             return true;
         }
         else if (module instanceof FreeModule) {
-            if (((FreeModule)module).getDimension() != 2) {
+            if (module.getDimension() != 2) {
                 return false;
             }
             else {
@@ -917,36 +911,36 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private final static int EVAL_TYPE_INPUT   = 4;
     
     private final static String[] evalTypes = {
-        Messages.getString("AddressEvalRubette.evalnull"), //$NON-NLS-1$
-        Messages.getString("AddressEvalRubette.evalelement"), //$NON-NLS-1$
-        Messages.getString("AddressEvalRubette.evalllist"), //$NON-NLS-1$
-        Messages.getString("AddressEvalRubette.changeaddress"), //$NON-NLS-1$
-        Messages.getString("AddressEvalRubette.evalinput") //$NON-NLS-1$
+        Messages.getString("AddressEvalRubette.evalnull"), 
+        Messages.getString("AddressEvalRubette.evalelement"), 
+        Messages.getString("AddressEvalRubette.evalllist"), 
+        Messages.getString("AddressEvalRubette.changeaddress"), 
+        Messages.getString("AddressEvalRubette.evalinput") 
     };
     
     // Message strings
-    private final static String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror"); //$NON-NLS-1$ 
-    private final static String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform"); //$NON-NLS-1$ 
-    private final static String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); //$NON-NLS-1$
-    private final static String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); //$NON-NLS-1$
-    private final static String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror"); //$NON-NLS-1$    
-    private final static String LISTNOTSET_ERROR    = Messages.getString("AddressEvalRubette.listnotset"); //$NON-NLS-1$
-    private final static String OUTPUTFORMNOTSET_ERROR = Messages.getString("AddressEvalRubette.outputformnotset"); //$NON-NLS-1$
-    private final static String MORPHISMNOTSET_ERROR = Messages.getString("AddressEvalRubette.morphismnotset"); //$NON-NLS-1$
-    private final static String ADDRESSMORPHISM_ERROR = Messages.getString("AddressEvalRubette.addressmorphismerror"); //$NON-NLS-1$
-    private final static String NOMODULE_ERROR      = Messages.getString("AddressEvalRubette.modnotset"); //$NON-NLS-1$
-    private final static String NOELEMENT_ERROR     = Messages.getString("AddressEvalRubette.modelnotset"); //$NON-NLS-1$
-    private final static String NOOUTPUTFORM_ERROR  = Messages.getString("AddressEvalRubette.oformnotset"); //$NON-NLS-1$
-    private final static String NOELEMENTS_ERROR    = Messages.getString("AddressEvalRubette.noellist"); //$NON-NLS-1$
-    private final static String NOMORPHISM_ERROR    = Messages.getString("AddressEvalRubette.modmorphnotset"); //$NON-NLS-1$
-    private final static String INPUT2WRONGTYPE_ERROR = Messages.getString("AddressEvalRubette.secinputwrongtype"); //$NON-NLS-1$
-    private final static String INPUT2NOTSET_ERROR  = Messages.getString("AddressEvalRubette.secinputnull"); //$NON-NLS-1$
-    private final static String SIMPLE              = Messages.getString("AddressEvalRubette.simple"); //$NON-NLS-1$
-    private final static String LISTORPOWER         = Messages.getString("AddressEvalRubette.listorpower"); //$NON-NLS-1$
+    private final static String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror");  
+    private final static String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");  
+    private final static String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); 
+    private final static String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); 
+    private final static String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror");     
+    private final static String LISTNOTSET_ERROR    = Messages.getString("AddressEvalRubette.listnotset"); 
+    private final static String OUTPUTFORMNOTSET_ERROR = Messages.getString("AddressEvalRubette.outputformnotset"); 
+    private final static String MORPHISMNOTSET_ERROR = Messages.getString("AddressEvalRubette.morphismnotset"); 
+    private final static String ADDRESSMORPHISM_ERROR = Messages.getString("AddressEvalRubette.addressmorphismerror"); 
+    private final static String NOMODULE_ERROR      = Messages.getString("AddressEvalRubette.modnotset"); 
+    private final static String NOELEMENT_ERROR     = Messages.getString("AddressEvalRubette.modelnotset"); 
+    private final static String NOOUTPUTFORM_ERROR  = Messages.getString("AddressEvalRubette.oformnotset"); 
+    private final static String NOELEMENTS_ERROR    = Messages.getString("AddressEvalRubette.noellist"); 
+    private final static String NOMORPHISM_ERROR    = Messages.getString("AddressEvalRubette.modmorphnotset"); 
+    private final static String INPUT2WRONGTYPE_ERROR = Messages.getString("AddressEvalRubette.secinputwrongtype"); 
+    private final static String INPUT2NOTSET_ERROR  = Messages.getString("AddressEvalRubette.secinputnull"); 
+    private final static String SIMPLE              = Messages.getString("AddressEvalRubette.simple"); 
+    private final static String LISTORPOWER         = Messages.getString("AddressEvalRubette.listorpower"); 
 
     private final static ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(AddressEvalRubette.class, "/images/rubettes/builtin/address/addressicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(AddressEvalRubette.class, "/images/rubettes/builtin/address/addressicon.png"); 
     }
 }

@@ -42,14 +42,14 @@ class JPolyMorphismType extends JMorphismType implements ActionListener {
         Ring domain = (Ring)container.getDomain();
         String indeterminate = getIndeterminate(domain);
         
-        PolynomialRing polynomialRing = PolynomialRing.make(domain, indeterminate); //$NON-NLS-1$
+        PolynomialRing polynomialRing = PolynomialRing.make(domain, indeterminate); 
         simpleEntry = JSimpleEntry.make(polynomialRing);
         add(simpleEntry);
         
         add(Box.createVerticalStrut(5));
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); //$NON-NLS-1$
+        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); 
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         add(buttonBox);

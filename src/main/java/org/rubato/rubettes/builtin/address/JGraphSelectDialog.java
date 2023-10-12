@@ -53,7 +53,7 @@ class JGraphSelectDialog extends JDialog implements ActionListener {
 
     
     public JGraphSelectDialog(Frame frame, Ring ring, List<ModuleElement> elements) {
-        super(frame, Messages.getString("JGraphSelectDialog.selectgraph"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JGraphSelectDialog.selectgraph"), true);
         this.ring = ring;
         createLayout(elements);
     }
@@ -81,13 +81,13 @@ class JGraphSelectDialog extends JDialog implements ActionListener {
         
         Box coordBox = new Box(BoxLayout.X_AXIS);
         coordBox.add(Box.createHorizontalStrut(10));
-        coordBox.add(new JLabel(" x : ")); //$NON-NLS-1$
-        xField = new JTextField("0"); //$NON-NLS-1$
+        coordBox.add(new JLabel(" x : "));
+        xField = new JTextField("0");
         xField.setEditable(false);
         coordBox.add(xField);
         coordBox.add(Box.createHorizontalStrut(10));
-        coordBox.add(new JLabel(" y : ")); //$NON-NLS-1$
-        yField = new JTextField("0"); //$NON-NLS-1$
+        coordBox.add(new JLabel(" y : "));
+        yField = new JTextField("0");
         yField.setEditable(false);
         coordBox.add(yField);
         coordBox.add(Box.createHorizontalStrut(10));
@@ -97,11 +97,11 @@ class JGraphSelectDialog extends JDialog implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(Box.createGlue());
-        applyButton = new JButton(Messages.getString("JGraphSelectDialog.apply")); //$NON-NLS-1$
+        applyButton = new JButton(Messages.getString("JGraphSelectDialog.apply"));
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        cancelButton = new JButton(Messages.getString("JGraphSelectDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JGraphSelectDialog.cancel"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         buttonBox.add(Box.createGlue());        

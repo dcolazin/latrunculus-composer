@@ -35,13 +35,13 @@ public class JSchemeEditor
         implements ActionListener, KeyListener, Observer {
 
     public JSchemeEditor(Frame frame) {
-        super(frame, Messages.getString("JSchemeEditor.schemeeditor"), false); //$NON-NLS-1$
+        super(frame, Messages.getString("JSchemeEditor.schemeeditor"), false); 
         setLayout(new BorderLayout());
 
         rep = Repository.systemRepository();
         rep.addObserver(this);
         
-        textFont = Font.decode("monospaced"); //$NON-NLS-1$
+        textFont = Font.decode("monospaced"); 
         
         codeArea = new JTextArea(30, 80);
         codeArea.setFont(textFont);
@@ -63,8 +63,8 @@ public class JSchemeEditor
         
         buttonBox.add(Box.createHorizontalGlue());
 
-        saveButton = new JButton(Messages.getString("JSchemeEditor.savebutton")); //$NON-NLS-1$
-        saveButton.setToolTipText(Messages.getString("JSchemeEditor.savetooltip")); //$NON-NLS-1$
+        saveButton = new JButton(Messages.getString("JSchemeEditor.savebutton")); 
+        saveButton.setToolTipText(Messages.getString("JSchemeEditor.savetooltip")); 
         saveButton.addActionListener(this);
         buttonBox.add(saveButton);
 
@@ -92,7 +92,7 @@ public class JSchemeEditor
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
         if (src == saveButton) {
-            errorArea.setText(" "); //$NON-NLS-1$
+            errorArea.setText(" "); 
             String error = rep.setSchemeCode(codeArea.getText());
             if (error != null) {
                 errorArea.setForeground(Color.RED);
@@ -100,7 +100,7 @@ public class JSchemeEditor
             }
             else {
                 errorArea.setForeground(Color.GREEN);
-                errorArea.setText(Messages.getString("JSchemeEditor.savedmsg")); //$NON-NLS-1$
+                errorArea.setText(Messages.getString("JSchemeEditor.savedmsg")); 
             }
         }
     }

@@ -68,7 +68,7 @@ public class MacroInputRubette
 
     
     public String getName() {
-        return "MacroInput"; //$NON-NLS-1$
+        return "MacroInput"; 
     }
 
     
@@ -149,7 +149,7 @@ public class MacroInputRubette
 
     public String getOutTip(int i) {
         if (i >= labels.length || labels[i] == null || labels[i].length() == 0) {
-            return "Network input denotator #"+i; //$NON-NLS-1$
+            return "Network input denotator #"+i; 
         }
         else {
             return labels[i];
@@ -171,7 +171,7 @@ public class MacroInputRubette
         int outCount = outSlider.getOutValue();
         if (outCount > 0) {
             outPanel.setLayout(gbl);
-            outPanel.setBorder(makeTitledBorder("Input labels")); //$NON-NLS-1$
+            outPanel.setBorder(makeTitledBorder("Input labels")); 
             outTextFields = new JTextField[outCount];
             labels = new String[outCount];
             c.ipadx = 10;
@@ -179,7 +179,7 @@ public class MacroInputRubette
                 c.weightx = 0.0;
                 c.fill = GridBagConstraints.NONE;
                 c.gridwidth = GridBagConstraints.RELATIVE;
-                JLabel label = new JLabel("#"+i); //$NON-NLS-1$
+                JLabel label = new JLabel("#"+i); 
                 gbl.setConstraints(label, c);
                 outPanel.add(label);
                 c.weightx = 1.0;
@@ -193,15 +193,15 @@ public class MacroInputRubette
     }
     
     
-    private final static String LABELS     = "Labels"; //$NON-NLS-1$
-    private final static String LABEL      = "Label"; //$NON-NLS-1$
-    private final static String COUNT_ATTR = "count"; //$NON-NLS-1$
+    private final static String LABELS     = "Labels"; 
+    private final static String LABEL      = "Label"; 
+    private final static String COUNT_ATTR = "count"; 
 
     
     public void toXML(XMLWriter writer) {
         writer.openBlock(LABELS, COUNT_ATTR, getOutCount());
         for (int i = 0; i < getOutCount(); i++) {
-            String s = labels[i]==null?"":labels[i].trim(); //$NON-NLS-1$
+            String s = labels[i]==null?"":labels[i].trim(); 
             writer.empty(LABEL, NAME_ATTR, s);
         }
         writer.closeBlock();
@@ -236,6 +236,6 @@ public class MacroInputRubette
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(MacroInputRubette.class, "/images/rubettes/builtin/inputicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(MacroInputRubette.class, "/images/rubettes/builtin/inputicon.png"); 
     }
 }

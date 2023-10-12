@@ -191,26 +191,26 @@ public class JPowerListDenotatorEntry
         // button box
         Box buttonBox = Box.createHorizontalBox();
         buttonBox.add(Box.createHorizontalGlue());
-        addButton = new JButton(Messages.getString("JPowerListDenotatorEntry.add")); //$NON-NLS-1$
+        addButton = new JButton(Messages.getString("JPowerListDenotatorEntry.add")); 
         addButton.addActionListener(this);
         buttonBox.add(addButton);
         buttonBox.add(Box.createHorizontalStrut(5));
-        addNewButton = new JButton(Messages.getString("JPowerListDenotatorEntry.addnew")); //$NON-NLS-1$
+        addNewButton = new JButton(Messages.getString("JPowerListDenotatorEntry.addnew")); 
         addNewButton.addActionListener(this);
         buttonBox.add(addNewButton);
         buttonBox.add(Box.createHorizontalStrut(5));
-        removeButton = new JButton(Messages.getString("JPowerListDenotatorEntry.remove")); //$NON-NLS-1$
+        removeButton = new JButton(Messages.getString("JPowerListDenotatorEntry.remove")); 
         removeButton.setEnabled(false);
         removeButton.addActionListener(this);
         buttonBox.add(removeButton);
         if (isList) {
             buttonBox.add(Box.createHorizontalStrut(5));
-            upButton = new JButton(Messages.getString("JPowerListDenotatorEntry.up")); //$NON-NLS-1$
+            upButton = new JButton(Messages.getString("JPowerListDenotatorEntry.up")); 
             upButton.setEnabled(false);
             upButton.addActionListener(this);
             buttonBox.add(upButton);
             buttonBox.add(Box.createHorizontalStrut(5));
-            downButton = new JButton(Messages.getString("JPowerListDenotatorEntry.down")); //$NON-NLS-1$
+            downButton = new JButton(Messages.getString("JPowerListDenotatorEntry.down")); 
             downButton.setEnabled(false);
             downButton.addActionListener(this);
             buttonBox.add(downButton);
@@ -230,7 +230,7 @@ public class JPowerListDenotatorEntry
             display.setCaretPosition(0);
         }
         else {
-            display.setText(""); //$NON-NLS-1$
+            display.setText(""); 
         }
     }
     

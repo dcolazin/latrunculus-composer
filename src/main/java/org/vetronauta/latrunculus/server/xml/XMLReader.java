@@ -243,7 +243,7 @@ public final class XMLReader implements RubatoDictionary {
         denotators      = new HashMap<String, Denotator>();
         networks        = new LinkedList<NetworkModel>();
         rubettes        = new LinkedList<Rubette>();
-        schemeCode      = ""; //$NON-NLS-1$
+        schemeCode      = ""; 
 
         formsToBeResolved = new LinkedList<Form>();
         denosToBeResolved = new LinkedList<Denotator>();
@@ -357,7 +357,7 @@ public final class XMLReader implements RubatoDictionary {
             String moduleClass = moduleNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> cls = Class.forName(moduleClass);
-                Method method = cls.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
+                Method method = cls.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); 
                 return (Module)method.invoke(cls, new Object[] { this, moduleNode });
             }
             catch (ClassNotFoundException e) {
@@ -502,7 +502,7 @@ public final class XMLReader implements RubatoDictionary {
             String morphismClass = morphismNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> c = Class.forName(morphismClass);
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); //$NON-NLS-1$
+                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); 
                 return (ModuleMorphism)m.invoke(c, new Object[] { this, morphismNode });
             }
             catch (ClassNotFoundException e) {
@@ -725,7 +725,7 @@ public final class XMLReader implements RubatoDictionary {
      * The parsed rubette is put into the <i>rubette</i> list.
      */
     private void parseRubetteDefinition(Element rubetteNode) {
-        String name = rubetteNode.getAttribute("name"); //$NON-NLS-1$
+        String name = rubetteNode.getAttribute("name"); 
         if (name.length() == 0) {
             setError("Rubette must have a name");
         }
@@ -851,7 +851,7 @@ public final class XMLReader implements RubatoDictionary {
      */
     public static String getStringAttribute(Element element, String attr) {
         String value = element.getAttribute(attr);
-        return value.replaceAll("&lt;", "<").replaceAll("&amp;", "&"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return value.replaceAll("&lt;", "<").replaceAll("&amp;", "&");   //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     
@@ -924,7 +924,7 @@ public final class XMLReader implements RubatoDictionary {
      */
     public void printModules() {
         for (Map.Entry<String,Module> entry : modules.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); //$NON-NLS-1$
+            System.out.println(entry.getKey()+": "+entry.getValue()); 
         }
     }
     
@@ -934,7 +934,7 @@ public final class XMLReader implements RubatoDictionary {
      */
     public void printElements() {
         for (Map.Entry<String,ModuleElement> entry : elements.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); //$NON-NLS-1$
+            System.out.println(entry.getKey()+": "+entry.getValue()); 
         }
     }
     
@@ -944,7 +944,7 @@ public final class XMLReader implements RubatoDictionary {
      */
     public void printForms() {
         for (Map.Entry<String,Form> entry : forms.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); //$NON-NLS-1$
+            System.out.println(entry.getKey()+": "+entry.getValue()); 
         }
     }
     
@@ -954,7 +954,7 @@ public final class XMLReader implements RubatoDictionary {
      */
     public void printDenotators() {
         for (Map.Entry<String,Denotator> entry : denotators.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); //$NON-NLS-1$
+            System.out.println(entry.getKey()+": "+entry.getValue()); 
         }
     }
 
@@ -1142,7 +1142,7 @@ public final class XMLReader implements RubatoDictionary {
         if (path.length() > 0) {
             if (path.charAt(0) != '/') {
                 if (file != null) {
-                    res = file.getParent()+"/"+path; //$NON-NLS-1$
+                    res = file.getParent()+"/"+path; 
                 }
             }
         }

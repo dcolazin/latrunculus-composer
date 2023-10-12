@@ -209,14 +209,14 @@ public class JModuleElementList
 
     private Module          module;
 
-    private final static String ADD        = Messages.getString("JModuleElementList.add"); //$NON-NLS-1$
-    private final static String REMOVE     = Messages.getString("JModuleElementList.remove"); //$NON-NLS-1$
-    private final static String CLEAR      = Messages.getString("JModuleElementList.clear"); //$NON-NLS-1$
-    private final static String UP         = Messages.getString("JModuleElementList.up"); //$NON-NLS-1$
-    private final static String DOWN       = Messages.getString("JModuleElementList.down"); //$NON-NLS-1$
-    private final static String ADD_TIP    = Messages.getString("JModuleElementList.addtooltip"); //$NON-NLS-1$
-    private final static String REMOVE_TIP = Messages.getString("JModuleElementList.removetooltip"); //$NON-NLS-1$
-    private final static String CLEAR_TIP  = Messages.getString("JModuleElementList.cleartooltip"); //$NON-NLS-1$
-    private final static String UP_TIP     = Messages.getString("JModuleElementList.uptip"); //$NON-NLS-1$
-    private final static String DOWN_TIP   = Messages.getString("JModuleElementList.downtip"); //$NON-NLS-1$
+    private final static String ADD        = Messages.getString("JModuleElementList.add"); 
+    private final static String REMOVE     = Messages.getString("JModuleElementList.remove"); 
+    private final static String CLEAR      = Messages.getString("JModuleElementList.clear"); 
+    private final static String UP         = Messages.getString("JModuleElementList.up"); 
+    private final static String DOWN       = Messages.getString("JModuleElementList.down"); 
+    private final static String ADD_TIP    = Messages.getString("JModuleElementList.addtooltip"); 
+    private final static String REMOVE_TIP = Messages.getString("JModuleElementList.removetooltip"); 
+    private final static String CLEAR_TIP  = Messages.getString("JModuleElementList.cleartooltip"); 
+    private final static String UP_TIP     = Messages.getString("JModuleElementList.uptip"); 
+    private final static String DOWN_TIP   = Messages.getString("JModuleElementList.downtip"); 
 }

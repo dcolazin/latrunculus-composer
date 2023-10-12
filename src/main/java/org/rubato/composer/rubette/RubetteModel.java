@@ -256,7 +256,7 @@ public class RubetteModel {
     
     
     public String toString() {
-        return "RubetteModel["+getName()+"]"; //$NON-NLS-1$ //$NON-NLS-2$
+        return "RubetteModel["+getName()+"]";  
     }
 
 }

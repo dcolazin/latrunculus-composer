@@ -215,7 +215,7 @@ public class NetworkModel {
     public static NetworkModel fromXML(XMLReader reader, Element networkElement) {
         String name = networkElement.getAttribute(NAME_ATTR).trim();
         if (name.length() == 0) {
-            reader.setError(Messages.getString("NetworkModel.missingattr"), NETWORK, NAME_ATTR); //$NON-NLS-1$
+            reader.setError(Messages.getString("NetworkModel.missingattr"), NETWORK, NAME_ATTR); 
             return null;
         }
         else {
@@ -233,7 +233,7 @@ public class NetworkModel {
                 int y = XMLReader.getIntAttribute(child, Y_ATTR, 0);
                 Rubette rubette = manager.getRubetteByClassName(rubClass);
                 if (rubette == null) {
-                    reader.setError(Messages.getString("NetworkModel.classnotavailable"), rubClass); //$NON-NLS-1$
+                    reader.setError(Messages.getString("NetworkModel.classnotavailable"), rubClass); 
                 }
                 else {
                     rubette = rubette.fromXML(reader, child);
@@ -269,7 +269,7 @@ public class NetworkModel {
                     destModel.setInLink(link);
                 }
                 else {
-                    reader.setError(Messages.getString("NetworkModel.cannotlink"), //$NON-NLS-1$
+                    reader.setError(Messages.getString("NetworkModel.cannotlink"), 
                                     srcModel == null?"unknown":srcModel.getName(), srcPos,
                                     destModel== null?"unknown":destModel.getName(), destPos);
                 }
@@ -343,20 +343,20 @@ public class NetworkModel {
     
     public String toString() {
         StringBuilder buf = new StringBuilder(30);
-        buf.append("NetworkModel["); //$NON-NLS-1$
+        buf.append("NetworkModel["); 
         buf.append(getName());
         for (RubetteModel rubette : rubettes) {
-            buf.append(","); //$NON-NLS-1$
+            buf.append(","); 
             buf.append(rubette);
         }
-        buf.append("]"); //$NON-NLS-1$
+        buf.append("]"); 
         return buf.toString();
     }       
     
     
     private JNetwork  jnetwork;
     private String    name;
-    private String    info = ""; //$NON-NLS-1$
+    private String    info = ""; 
     private ArrayList<RubetteModel> rubettes = new ArrayList<RubetteModel>();
     private ArrayList<RubetteModel> roots = new ArrayList<RubetteModel>();
     private ArrayList<RubetteModel> coroots = new ArrayList<RubetteModel>();

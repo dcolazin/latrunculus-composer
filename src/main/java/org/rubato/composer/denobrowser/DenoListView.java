@@ -52,8 +52,8 @@ public class DenoListView
     	denoNames = new String[0];
     	parent = null;
     	list.setListData(denoNames);
-    	formLabel.setText(" "); //$NON-NLS-1$
-    	typeLabel.setText(" "); //$NON-NLS-1$
+    	formLabel.setText(" ");
+    	typeLabel.setText(" ");
     }
 
     public void setDenotators(Denotator p, Denotator[] denos) {
@@ -75,13 +75,13 @@ public class DenoListView
         c.weighty = 0.0;
         c.ipadx = 4;
         c.ipady = 4;
-        formLabel = new JLabel(" "); //$NON-NLS-1$
+        formLabel = new JLabel(" ");
         formLabel.setHorizontalAlignment(SwingConstants.CENTER);
         formLabel.setBorder(BorderFactory.createEtchedBorder());
         gridbag.setConstraints(formLabel, c);
         add(formLabel);
 
-        typeLabel = new JLabel(" "); //$NON-NLS-1$
+        typeLabel = new JLabel(" ");
         typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         typeLabel.setBorder(BorderFactory.createEtchedBorder());
         gridbag.setConstraints(typeLabel, c);
@@ -130,20 +130,20 @@ public class DenoListView
 
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd.equals("clear")) { //$NON-NLS-1$
-			System.out.println("clear"); //$NON-NLS-1$
+		if (cmd.equals("clear")) {
+			System.out.println("clear");
 		}
-		else if (cmd.equals("edit")) { //$NON-NLS-1$
-			System.out.println("edit"); //$NON-NLS-1$
+		else if (cmd.equals("edit")) {
+			System.out.println("edit");
 		}
-		else if (cmd.equals("set")) { //$NON-NLS-1$
-			System.out.println("set"); //$NON-NLS-1$
+		else if (cmd.equals("set")) {
+			System.out.println("set");
 		}
-		else if (cmd.equals("add_new")) { //$NON-NLS-1$
+		else if (cmd.equals("add_new")) {
 			listener.addNew(getLevel(), parent);
 		}
-		else if (cmd.equals("add_existing")) { //$NON-NLS-1$
-			System.out.println("add_existing"); //$NON-NLS-1$
+		else if (cmd.equals("add_existing")) {
+			System.out.println("add_existing");
 		}
 	}
 
@@ -152,7 +152,7 @@ public class DenoListView
 		for (int i = 0; i < names.length; i++) {
 			String name = denos[i].getNameString();
 			if (name.length() == 0) {
-                name = Messages.getString("DenoListView.anonymous"); //$NON-NLS-1$
+                name = Messages.getString("DenoListView.anonymous");
             }
 			names[i] = name;
 		}
@@ -163,7 +163,7 @@ public class DenoListView
 		formLabel.setText(d.getForm().getNameString());
 		String typeName = d.getForm().getTypeString();
 		if (d.getForm().getType() == Form.SIMPLE) {
-			typeName += ": "+((SimpleForm)d.getForm()).getModule(); //$NON-NLS-1$
+			typeName += ": "+((SimpleForm)d.getForm()).getModule();
 		}
 		typeLabel.setText(typeName);
 	}
@@ -172,25 +172,25 @@ public class DenoListView
 		JPopupMenu popup = new JPopupMenu();
 		JMenuItem menuItem;
 		if (d.getForm().getType() == Form.SIMPLE) {
-			menuItem = new JMenuItem(Messages.getString("DenoListView.edit")); //$NON-NLS-1$
+			menuItem = new JMenuItem(Messages.getString("DenoListView.edit"));
 			menuItem.addActionListener(this);
-			menuItem.setActionCommand("edit"); //$NON-NLS-1$
+			menuItem.setActionCommand("edit");
 			popup.add(menuItem);
 		}
 		else {
-			menuItem = new JMenuItem(Messages.getString("DenoListView.clear")); //$NON-NLS-1$
+			menuItem = new JMenuItem(Messages.getString("DenoListView.clear"));
 			menuItem.addActionListener(this);
-			menuItem.setActionCommand("clear"); //$NON-NLS-1$
+			menuItem.setActionCommand("clear");
 			popup.add(menuItem);
 
-			menuItem = new JMenuItem(Messages.getString("DenoListView.set")); //$NON-NLS-1$
+			menuItem = new JMenuItem(Messages.getString("DenoListView.set"));
 			menuItem.addActionListener(this);
-			menuItem.setActionCommand("set"); //$NON-NLS-1$
+			menuItem.setActionCommand("set");
 			popup.add(menuItem);
 		}
-		menuItem = new JMenuItem(Messages.getString("DenoListView.register")); //$NON-NLS-1$
+		menuItem = new JMenuItem(Messages.getString("DenoListView.register"));
 		menuItem.addActionListener(this);
-		menuItem.setActionCommand("register"); //$NON-NLS-1$
+		menuItem.setActionCommand("register");
 		popup.add(menuItem);
 
 		popup.show(list, x, y);
@@ -204,13 +204,13 @@ public class DenoListView
 			case Form.POWER:
 			case Form.LIST: {
 				Form subForm = form.getForm(0);
-				menuItem = new JMenuItem(Messages.getString("DenoListView.addnew")+subForm.getNameString()); //$NON-NLS-1$
+				menuItem = new JMenuItem(Messages.getString("DenoListView.addnew")+subForm.getNameString());
 				menuItem.addActionListener(this);
-				menuItem.setActionCommand("add_new"); //$NON-NLS-1$
+				menuItem.setActionCommand("add_new");
 				popup.add(menuItem);
-				menuItem = new JMenuItem(Messages.getString("DenoListView.addexisting")+subForm.getNameString()); //$NON-NLS-1$
+				menuItem = new JMenuItem(Messages.getString("DenoListView.addexisting")+subForm.getNameString());
 				menuItem.addActionListener(this);
-				menuItem.setActionCommand("add_existing"); //$NON-NLS-1$
+				menuItem.setActionCommand("add_existing");
 				popup.add(menuItem);
 			}
 		}
@@ -231,7 +231,7 @@ public class DenoListView
     	coll.toArray(denos);
     	
     	DenoListView lv = new DenoListView(null, denos, 0);
-        JFrame frame = new JFrame("Test ListView"); //$NON-NLS-1$
+        JFrame frame = new JFrame("Test ListView");
         frame.getContentPane().add(lv);
         frame.pack();
         frame.setSize(300, 400);

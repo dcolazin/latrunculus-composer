@@ -186,7 +186,7 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
     
     public String getElementTypeName() {
-        return "RepresentableIdentityMorphism"; //$NON-NLS-1$
+        return "RepresentableIdentityMorphism";
     }
     
     

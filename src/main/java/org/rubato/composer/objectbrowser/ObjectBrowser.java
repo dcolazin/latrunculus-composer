@@ -55,7 +55,7 @@ public class ObjectBrowser
         implements ListSelectionListener, ActionListener, Observer {
 
     public ObjectBrowser(Frame frame) {
-        super(frame, Messages.getString("ObjectBrowser.objectbrowser"), false); //$NON-NLS-1$
+        super(frame, Messages.getString("ObjectBrowser.objectbrowser"), false);
         createLayout();
         installEscapeKey(this);
         rep.addObserver(this);
@@ -74,18 +74,18 @@ public class ObjectBrowser
                 selectedType = typeList.getSelectedIndex();
                 updateObjectList();
                 objectList.setSelectedIndex(0);
-                objectListBorder.setTitle(Messages.getString("ObjectBrowser.objects")+" - "+typeStrings[selectedType]); //$NON-NLS-1$ //$NON-NLS-2$
+                objectListBorder.setTitle(Messages.getString("ObjectBrowser.objects")+" - "+typeStrings[selectedType]);  
                 repaint();
             }
             else if (src == objectList) {
                 ListItem item = (ListItem)objectList.getSelectedValue();
                 if (item != null) {
-                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview")+" - "+item.name); //$NON-NLS-1$ //$NON-NLS-2$
+                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview")+" - "+item.name);  
                     objectView.setText(item.toDisplay());
                     objectView.setCaretPosition(0);
                 }
                 else {
-                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview")); //$NON-NLS-1$
+                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview"));
                     objectView.setText(null);
                 }
                 repaint();
@@ -120,7 +120,7 @@ public class ObjectBrowser
         typeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         typeList.addListSelectionListener(this);
         scrollPane = new JScrollPane(typeList);
-        scrollPane.setBorder(makeTitledBorder(Messages.getString("ObjectBrowser.objecttype"))); //$NON-NLS-1$
+        scrollPane.setBorder(makeTitledBorder(Messages.getString("ObjectBrowser.objecttype")));
         listPanel.add(scrollPane);
         
         objectList = new JList();
@@ -128,7 +128,7 @@ public class ObjectBrowser
         objectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         objectList.addListSelectionListener(this);
         scrollPane = new JScrollPane(objectList);
-        objectListBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objects")); //$NON-NLS-1$
+        objectListBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objects"));
         scrollPane.setBorder(objectListBorder);
         listPanel.add(scrollPane);
         
@@ -141,7 +141,7 @@ public class ObjectBrowser
         objectView.setEditable(false);
         objectView.setFocusable(false);
         scrollPane = new JScrollPane(objectView);
-        objectViewBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objectview")); //$NON-NLS-1$
+        objectViewBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objectview"));
         objectPanel.setBorder(objectViewBorder);
         objectPanel.add(scrollPane, BorderLayout.CENTER);
         
@@ -149,7 +149,7 @@ public class ObjectBrowser
                
         Box buttonBox = Box.createHorizontalBox();
         buttonBox.add(Box.createHorizontalGlue());
-        editButton = new JButton(Messages.getString("ObjectBrowser.editbutton")); //$NON-NLS-1$
+        editButton = new JButton(Messages.getString("ObjectBrowser.editbutton"));
         editButton.addActionListener(this);
         editButton.setEnabled(false);
         buttonBox.add(editButton);
@@ -314,7 +314,7 @@ public class ObjectBrowser
             form = f;
         }
         public String toString() {
-            return "<html>"+name+": <i>"+form.getTypeString()+"</i></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            return "<html>"+name+": <i>"+form.getTypeString()+"</i></html>";   //$NON-NLS-3$
         }
         public String toDisplay() {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -332,7 +332,7 @@ public class ObjectBrowser
             denotator = d;
         }
         public String toString() {
-            return "<html>"+name+": <i>"+denotator.getForm().getNameString()+"</i></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            return "<html>"+name+": <i>"+denotator.getForm().getNameString()+"</i></html>";   //$NON-NLS-3$
         }
         public String toDisplay() {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -350,7 +350,7 @@ public class ObjectBrowser
             this.exp = exp;
         }
         public String toString() {
-            return "<html>"+name+"</html>"; //$NON-NLS-1$ //$NON-NLS-2$
+            return "<html>"+name+"</html>";  
         }
         public String toDisplay() {
             return exp.toString();
@@ -379,11 +379,11 @@ public class ObjectBrowser
     private final static int SCHEME          = 5;
     
     private final static String[] typeStrings = {
-        Messages.getString("ObjectBrowser.modules"), //$NON-NLS-1$
-        Messages.getString("ObjectBrowser.moduleelements"), //$NON-NLS-1$
-        Messages.getString("ObjectBrowser.modulemorphisms"), //$NON-NLS-1$
-        Messages.getString("ObjectBrowser.forms"), //$NON-NLS-1$
-        Messages.getString("ObjectBrowser.denotators"), //$NON-NLS-1$
-        Messages.getString("ObjectBrowser.schemeobjects") //$NON-NLS-1$
+        Messages.getString("ObjectBrowser.modules"),
+        Messages.getString("ObjectBrowser.moduleelements"),
+        Messages.getString("ObjectBrowser.modulemorphisms"),
+        Messages.getString("ObjectBrowser.forms"),
+        Messages.getString("ObjectBrowser.denotators"),
+        Messages.getString("ObjectBrowser.schemeobjects")
     };
 }

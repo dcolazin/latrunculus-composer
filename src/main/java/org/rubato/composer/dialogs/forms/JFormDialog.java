@@ -66,14 +66,14 @@ public class JFormDialog
 
     
     public JFormDialog(Frame frame, boolean modal, TempDictionary dict, boolean toplevel) {
-        super(frame, Messages.getString("JFormDialog.createform"), modal); //$NON-NLS-1$
+        super(frame, Messages.getString("JFormDialog.createform"), modal);
         this.dict = dict;
         this.toplevel = toplevel;
         setLayout(new BorderLayout(5, 5));
 
         JPanel selectTypePanel = new JPanel();
         selectTypePanel.setLayout(new BorderLayout());
-        selectTypePanel.setBorder(makeTitledBorder(Messages.getString("JFormDialog.type"))); //$NON-NLS-1$
+        selectTypePanel.setBorder(makeTitledBorder(Messages.getString("JFormDialog.type")));
         selectType = new JComboBox();
         selectType.addItem(simpleType);
         selectType.addItem(limitType);
@@ -81,7 +81,7 @@ public class JFormDialog
         selectType.addItem(listType);
         selectType.addItem(powerType);        
         selectType.addActionListener(this);
-        selectType.setToolTipText(Messages.getString("JFormDialog.typetip")); //$NON-NLS-1$
+        selectType.setToolTipText(Messages.getString("JFormDialog.typetip"));
         selectTypePanel.add(selectType, BorderLayout.CENTER);
         add(selectTypePanel, BorderLayout.NORTH);
 
@@ -97,8 +97,8 @@ public class JFormDialog
         nameFieldBg = nameField.getBackground();
         nameField.addCaretListener(this);
         nameBox.add(nameField);
-        nameBox.setBorder(makeTitledBorder(Messages.getString("JFormDialog.name"))); //$NON-NLS-1$
-        nameBox.setToolTipText(Messages.getString("JFormDialog.nametip")); //$NON-NLS-1$
+        nameBox.setBorder(makeTitledBorder(Messages.getString("JFormDialog.name")));
+        nameBox.setToolTipText(Messages.getString("JFormDialog.nametip"));
         bottomBox.add(nameBox);
         bottomBox.add(Box.createVerticalStrut(5));
         
@@ -110,19 +110,19 @@ public class JFormDialog
         bottomBox.add(Box.createVerticalStrut(5));
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        clearButton = new JButton(Messages.getString("JFormDialog.clear")); //$NON-NLS-1$
-        clearButton.setToolTipText(Messages.getString("JFormDialog.cleartip")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JFormDialog.clear"));
+        clearButton.setToolTipText(Messages.getString("JFormDialog.cleartip"));
         clearButton.addActionListener(this);
         buttonBox.add(clearButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        createButton = new JButton(Messages.getString("JFormDialog.create")); //$NON-NLS-1$
-        createButton.setToolTipText(Messages.getString("JFormDialog.createtip")); //$NON-NLS-1$
+        createButton = new JButton(Messages.getString("JFormDialog.create"));
+        createButton.setToolTipText(Messages.getString("JFormDialog.createtip"));
         createButton.addActionListener(this);
         createButton.setEnabled(false);
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        cancelButton = new JButton(Messages.getString("JFormDialog.cancel")); //$NON-NLS-1$
-        cancelButton.setToolTipText(Messages.getString("JFormDialog.canceltip")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JFormDialog.cancel"));
+        cancelButton.setToolTipText(Messages.getString("JFormDialog.canceltip"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         bottomBox.add(buttonBox);
@@ -225,7 +225,7 @@ public class JFormDialog
     public void clear() {
         resultForm = null;
         formEntry.clear();
-        nameField.setText(""); //$NON-NLS-1$
+        nameField.setText("");
         pack();
     }
 
@@ -250,7 +250,7 @@ public class JFormDialog
                 else {
                     // form with this name already exists
                     nameField.setBackground(ERROR_BG_COLOR);
-                    setInfo(Messages.getString("JFormDialog.formexists")); //$NON-NLS-1$
+                    setInfo(Messages.getString("JFormDialog.formexists"));
                 }
             }
             else {
@@ -274,7 +274,7 @@ public class JFormDialog
                 else {
                     // form with this name already exists
                     nameField.setBackground(ERROR_BG_COLOR);
-                    setInfo(Messages.getString("JFormDialog.formexists")); //$NON-NLS-1$
+                    setInfo(Messages.getString("JFormDialog.formexists"));
                 }
             }
         }
@@ -299,11 +299,11 @@ public class JFormDialog
     }
     
 
-    private final static Type simpleType  = new Type("Simple", Form.SIMPLE);  //$NON-NLS-1$
-    private final static Type limitType   = new Type("Limit", Form.LIMIT);  //$NON-NLS-1$
-    private final static Type colimitType = new Type("Colimit", Form.COLIMIT);  //$NON-NLS-1$
-    private final static Type listType    = new Type("List", Form.LIST);  //$NON-NLS-1$
-    private final static Type powerType   = new Type("Power", Form.POWER);  //$NON-NLS-1$
+    private final static Type simpleType  = new Type("Simple", Form.SIMPLE);
+    private final static Type limitType   = new Type("Limit", Form.LIMIT);
+    private final static Type colimitType = new Type("Colimit", Form.COLIMIT);
+    private final static Type listType    = new Type("List", Form.LIST);
+    private final static Type powerType   = new Type("Power", Form.POWER);
     
     private JTextField  nameField;
     private JStatusline statusline;

@@ -81,7 +81,7 @@ public class Link {
     
     
     public String toString() {
-        return "Link["+src+","+srcPos+","+dest+","+destPos+"]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        return "Link["+src+","+srcPos+","+dest+","+destPos+"]";   //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     }
 
     

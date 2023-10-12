@@ -55,7 +55,7 @@ public final class JModuleDialog
 
     
     public JModuleDialog(Frame frame, boolean modal, boolean naming) {
-        super(frame, Messages.getString("JModuleDialog.createmodule"), modal); //$NON-NLS-1$        
+        super(frame, Messages.getString("JModuleDialog.createmodule"), modal);
         this.naming = naming;
         
         setLayout(new BorderLayout(0, 5));
@@ -72,11 +72,11 @@ public final class JModuleDialog
         if (naming) {
             nameok = false;
             Box nameBox = new Box(BoxLayout.X_AXIS);
-            JLabel nameLabel = new JLabel(Messages.getString("JModuleDialog.name")+":"); //$NON-NLS-1$ //$NON-NLS-2$
+            JLabel nameLabel = new JLabel(Messages.getString("JModuleDialog.name")+":");  
             nameBox.add(nameLabel);
             nameBox.add(Box.createHorizontalStrut(10));
             nameField = new JTextField();
-            nameField.setToolTipText(Messages.getString("JModuleDialog.modulenametooltip")); //$NON-NLS-1$
+            nameField.setToolTipText(Messages.getString("JModuleDialog.modulenametooltip"));
             nameField.addCaretListener(this);
             nameBox.add(nameField);
             bottomBox.add(nameBox);
@@ -84,14 +84,14 @@ public final class JModuleDialog
         }
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        createButton = new JButton(Messages.getString("JModuleDialog.create")); //$NON-NLS-1$
-        createButton.setToolTipText(Messages.getString("JModuleDialog.createtooltip")); //$NON-NLS-1$
+        createButton = new JButton(Messages.getString("JModuleDialog.create"));
+        createButton.setToolTipText(Messages.getString("JModuleDialog.createtooltip"));
         createButton.addActionListener(this);
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        cancelButton = new JButton(Messages.getString("JModuleDialog.cancel")); //$NON-NLS-1$
-        cancelButton.setToolTipText(Messages.getString("JModuleDialog.canceltooltip")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JModuleDialog.cancel"));
+        cancelButton.setToolTipText(Messages.getString("JModuleDialog.canceltooltip"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         bottomBox.add(buttonBox);
@@ -114,7 +114,7 @@ public final class JModuleDialog
     
     public void reset() {
         if (naming) {
-            nameField.setText(""); //$NON-NLS-1$
+            nameField.setText("");
         }
         if (selectModule != null) {
             selectModule.clear();
@@ -132,7 +132,7 @@ public final class JModuleDialog
             if (naming) {
                 String name = nameField.getText().trim();
                 if (name.length() == 0) {
-                    JOptionPane.showMessageDialog(this, Messages.getString("JModuleDialog.namenotempty"), Messages.getString("JModuleDialog.nameerror"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+                    JOptionPane.showMessageDialog(this, Messages.getString("JModuleDialog.namenotempty"), Messages.getString("JModuleDialog.nameerror"), JOptionPane.ERROR_MESSAGE);  
                     return;
                 }
 

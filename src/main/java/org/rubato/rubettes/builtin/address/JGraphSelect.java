@@ -119,7 +119,7 @@ class JGraphSelect
             return config.getX(current).toString();
         }
         else {
-            return ""; //$NON-NLS-1$
+            return ""; 
         }
     }
     
@@ -129,7 +129,7 @@ class JGraphSelect
             return config.getY(current).toString();
         }
         else {
-            return ""; //$NON-NLS-1$
+            return ""; 
         }
     }
     
@@ -346,7 +346,7 @@ class JGraphSelect
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i] == ActionListener.class) {
                 if (actionEvent == null) {
-                    actionEvent = new ActionEvent(this, 0, ""); //$NON-NLS-1$
+                    actionEvent = new ActionEvent(this, 0, ""); 
                 }
                 ((ActionListener)listeners[i+1]).actionPerformed(actionEvent);
             }

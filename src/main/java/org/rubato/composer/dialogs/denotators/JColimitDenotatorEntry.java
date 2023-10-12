@@ -101,7 +101,7 @@ public class JColimitDenotatorEntry
         
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setLayout(new BorderLayout());
-        String title = form.hasLabels()?Messages.getString("JColimitDenotatorEntry.label"):Messages.getString("JColimitDenotatorEntry.index"); //$NON-NLS-1$ //$NON-NLS-2$
+        String title = form.hasLabels()?Messages.getString("JColimitDenotatorEntry.label"):Messages.getString("JColimitDenotatorEntry.index");  
         comboBoxPanel.setBorder(makeTitledBorder(title));
         comboBox = new JComboBox();
         for (int i = 0; i < formCount; i++) {

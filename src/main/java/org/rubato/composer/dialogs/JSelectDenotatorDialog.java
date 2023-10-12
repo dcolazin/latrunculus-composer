@@ -87,7 +87,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
         createContents();
         setLocationRelativeTo(comp);
         installEscapeKey(this);
@@ -95,18 +95,18 @@ public final class JSelectDenotatorDialog extends JDialog {
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp, int type) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
         createContents();
-        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.type")+": "+type); //$NON-NLS-1$ //$NON-NLS-2$
+        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.type")+": "+type);  
         setLocationRelativeTo(comp);
         installEscapeKey(this);
     }
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp, Form form) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); //$NON-NLS-1$
+        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
         createContents();
-        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.form")+": "+form.getNameString()); //$NON-NLS-1$ //$NON-NLS-2$
+        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.form")+": "+form.getNameString());  
         setLocationRelativeTo(comp);
         installEscapeKey(this);
     }
@@ -115,7 +115,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     private void createContents() {
         setLayout(new BorderLayout());
 
-        infoLabel = new JLabel(" "); //$NON-NLS-1$
+        infoLabel = new JLabel(" "); 
         infoLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         add(infoLabel, BorderLayout.NORTH);
         
@@ -143,7 +143,7 @@ public final class JSelectDenotatorDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 5, 5));
         
-        cancelButton = new JButton(Messages.getString("JSelectDenotatorDialog.cancel")); //$NON-NLS-1$
+        cancelButton = new JButton(Messages.getString("JSelectDenotatorDialog.cancel")); 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancel();
@@ -151,7 +151,7 @@ public final class JSelectDenotatorDialog extends JDialog {
         });
         buttonPanel.add(cancelButton);
         
-        okButton = new JButton(Messages.getString("JSelectDenotatorDialog.ok")); //$NON-NLS-1$
+        okButton = new JButton(Messages.getString("JSelectDenotatorDialog.ok")); 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok();
@@ -223,7 +223,7 @@ public final class JSelectDenotatorDialog extends JDialog {
         
         public DenotatorInfo(Denotator d) {
             denotator = d;
-            name = d.getNameString()+":"+d.getForm().getNameString(); //$NON-NLS-1$
+            name = d.getNameString()+":"+d.getForm().getNameString(); 
         }
         
         public int compareTo(DenotatorInfo object) {

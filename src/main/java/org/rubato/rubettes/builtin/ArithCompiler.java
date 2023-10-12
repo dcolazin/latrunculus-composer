@@ -113,7 +113,7 @@ public class ArithCompiler {
         nextToken(currentToken);
         
         if (currentToken.isEOS()) {
-            setError(Messages.getString("ArithCompiler.emptyexpression")); //$NON-NLS-1$
+            setError(Messages.getString("ArithCompiler.emptyexpression"));
             return false;
         }
 
@@ -128,11 +128,11 @@ public class ArithCompiler {
             return false;
         }
         else if (!currentToken.isEOS()) {
-            setError(Messages.getString("ArithCompiler.extraneoustokens")); //$NON-NLS-1$
+            setError(Messages.getString("ArithCompiler.extraneoustokens"));
             return false;
         }
         else if (nrArgs >= 0 && vm.getNrArgs() > nrArgs){
-            setError(Messages.getString("ArithCompiler.toomanyparams")); //$NON-NLS-1$
+            setError(Messages.getString("ArithCompiler.toomanyparams"));
             return false;
         }
         else {
@@ -177,11 +177,11 @@ public class ArithCompiler {
             int op = (currentToken.type == Token.PLUS)?ArithVM.PLUS:ArithVM.MINUS;
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseTerm()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                 return false;
             }
             vm.compileOp(op);
@@ -200,11 +200,11 @@ public class ArithCompiler {
             int op = (currentToken.type == Token.TIMES)?ArithVM.TIMES:ArithVM.DIV;
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseFactor()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror")+nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror")+nextPos);
                 return false;
             }
             vm.compileOp(op);
@@ -228,15 +228,15 @@ public class ArithCompiler {
         else if (currentToken.type == Token.LPAREN) {
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseExpr()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                 return false;
             }
             if (currentToken.isEOS() || currentToken.type != Token.RPAREN) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             nextToken(currentToken);
@@ -253,7 +253,7 @@ public class ArithCompiler {
                 nextToken(currentToken);
                 if (currentToken.type == Token.RPAREN) {
                     if (!vm.compileId(id, nrArgs)) {
-                        setError(Messages.getString("ArithCompiler.funapperror"), nextPos); //$NON-NLS-1$
+                        setError(Messages.getString("ArithCompiler.funapperror"), nextPos);
                         return false;                            
                     }
                     nextToken(currentToken);                    
@@ -263,7 +263,7 @@ public class ArithCompiler {
                     while (currentToken.type == Token.COMMA) {
                         nextToken(currentToken);
                         if (!parseExpr()) {
-                            setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                            setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                             return false;
                         }
                         nrArgs++;
@@ -271,12 +271,12 @@ public class ArithCompiler {
                     if (currentToken.type == Token.RPAREN) {
                         nextToken(currentToken);
                         if (!vm.compileId(id, nrArgs)) {
-                            setError(Messages.getString("ArithCompiler.funapperror"), nextPos); //$NON-NLS-1$
+                            setError(Messages.getString("ArithCompiler.funapperror"), nextPos);
                             return false;                            
                         }
                     }
                     else {
-                        setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                        setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                         return false;
                     }
                 }
@@ -289,7 +289,7 @@ public class ArithCompiler {
             }
             int ifpos = vm.compileIf();
             if (currentToken.type != Token.THEN) {
-                setError(Messages.getString("ArithCompiler.missingthen"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.missingthen"), nextPos);
                 return false;                
             }
             nextToken(currentToken);
@@ -298,7 +298,7 @@ public class ArithCompiler {
             }
             int jmppos = vm.compileThen(ifpos);
             if (currentToken.type != Token.ELSE) {
-                setError(Messages.getString("ArithCompiler.missingelse"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.missingelse"), nextPos);
                 return false;
             }
             nextToken(currentToken);
@@ -328,11 +328,11 @@ public class ArithCompiler {
         while (!currentToken.isEOS() && currentToken.type == Token.OR) {
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseBooleanTerm()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                 return false;
             }
             vm.compileOp(ArithVM.OR);
@@ -348,11 +348,11 @@ public class ArithCompiler {
         while (!currentToken.isEOS() && currentToken.type == Token.AND) {
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseBooleanFactor()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                 return false;
             }
             vm.compileOp(ArithVM.AND);
@@ -383,15 +383,15 @@ public class ArithCompiler {
         else if (currentToken.type == Token.LPAREN) {
             nextToken(currentToken);
             if (currentToken.isEOS()) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             if (!parseBooleanExpr()) {
-                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.syntaxerror"), nextPos);
                 return false;
             }
             if (currentToken.isEOS() || currentToken.type != Token.RPAREN) {
-                setError(Messages.getString("ArithCompiler.prematureending")); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.prematureending"));
                 return false;
             }
             nextToken(currentToken);
@@ -416,7 +416,7 @@ public class ArithCompiler {
             case Token.EQUALS: op = ArithVM.EQUALS; break;
             case Token.NEQ: op = ArithVM.NEQ; break;
             default: {
-                setError(Messages.getString("ArithCompiler.unknowncompop"), nextPos); //$NON-NLS-1$
+                setError(Messages.getString("ArithCompiler.unknowncompop"), nextPos);
                 return false;
             }
         }
@@ -632,11 +632,11 @@ public class ArithCompiler {
          */
         @Override
         public String toString() {
-            return "Token type="+type+ //$NON-NLS-1$
-                   " value="+value+ //$NON-NLS-1$
-                   " param="+param+ //$NON-NLS-1$
-                   " start="+start+ //$NON-NLS-1$
-                   " id="+id; //$NON-NLS-1$
+            return "Token type="+type+
+                   " value="+value+
+                   " param="+param+
+                   " start="+start+
+                   " id="+id;
         }
         
         private final static int LPAREN = 100;
@@ -696,10 +696,10 @@ public class ArithCompiler {
     private ArithVM vm = new ArithVM();
     
     static {
-        keywords.put("if",   Token.IF); //$NON-NLS-1$
-        keywords.put("then", Token.THEN); //$NON-NLS-1$
-        keywords.put("else", Token.ELSE); //$NON-NLS-1$
-        keywords.put("T",    Token.TRUE); //$NON-NLS-1$
-        keywords.put("F",    Token.FALSE); //$NON-NLS-1$
+        keywords.put("if",   Token.IF);
+        keywords.put("then", Token.THEN);
+        keywords.put("else", Token.ELSE);
+        keywords.put("T",    Token.TRUE);
+        keywords.put("F",    Token.FALSE);
     }
 }

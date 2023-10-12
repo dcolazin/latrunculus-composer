@@ -187,7 +187,7 @@ public class JComposer extends JFrame implements Observer {
         JMenuBar menuBar = new JMenuBar();
 
         // File menu
-        JMenu fileMenu = new JMenu(Messages.getString("JComposer.file")); //$NON-NLS-1$
+        JMenu fileMenu = new JMenu(Messages.getString("JComposer.file"));
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem newItem = new JMenuItem(newAction);
@@ -287,7 +287,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(editMenu);
         
         // Rubette menu
-        JMenu rubMenu = new JMenu(Messages.getString("JComposer.rubette")); //$NON-NLS-1$
+        JMenu rubMenu = new JMenu(Messages.getString("JComposer.rubette"));
         rubMenu.setMnemonic(KeyEvent.VK_R);
 
         JMenuItem addRubetteItem = new JMenuItem(addRubetteAction);
@@ -299,7 +299,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(rubMenu);
 
         // Network menu
-        JMenu netMenu = new JMenu(Messages.getString("JComposer.network")); //$NON-NLS-1$
+        JMenu netMenu = new JMenu(Messages.getString("JComposer.network"));
         netMenu.setMnemonic(KeyEvent.VK_N);
 
         JMenuItem newNetItem = new JMenuItem(newNetworkAction);
@@ -329,7 +329,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(netMenu);
 
         // Tools menu
-        JMenu toolsMenu = new JMenu(Messages.getString("JComposer.tools")); //$NON-NLS-1$
+        JMenu toolsMenu = new JMenu(Messages.getString("JComposer.tools"));
         toolsMenu.setMnemonic(KeyEvent.VK_T);
         
         JMenuItem moduleItem = new JMenuItem(moduleAction);
@@ -381,7 +381,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(toolsMenu);
         
         // Help menu
-        JMenu helpMenu = new JMenu(Messages.getString("JComposer.help")); //$NON-NLS-1$
+        JMenu helpMenu = new JMenu(Messages.getString("JComposer.help"));
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
         JMenuItem aboutItem = new JMenuItem(aboutAction);
@@ -399,7 +399,7 @@ public class JComposer extends JFrame implements Observer {
         bottomPanel.setBorder(BorderFactory.createLoweredBevelBorder());
         bottomPanel.setLayout(new BorderLayout());
         
-        statusBar = new JLabel(" "); //$NON-NLS-1$
+        statusBar = new JLabel(" ");
         statusBar.setBorder(BorderFactory.createLoweredBevelBorder());
         bottomPanel.add(statusBar, BorderLayout.SOUTH);
         
@@ -407,10 +407,10 @@ public class JComposer extends JFrame implements Observer {
         bottomPanel.add(bottomTabs, BorderLayout.CENTER);
         
         problemList = new JProblemList();
-        bottomTabs.addTab(Messages.getString("JComposer.problems"), problemList); //$NON-NLS-1$
+        bottomTabs.addTab(Messages.getString("JComposer.problems"), problemList);
         
         messageLog = new JMessageLog();
-        bottomTabs.addTab(Messages.getString("JComposer.messagelog"), messageLog); //$NON-NLS-1$
+        bottomTabs.addTab(Messages.getString("JComposer.messagelog"), messageLog);
         
         bottomPanel.setPreferredSize(new Dimension(0, 150));
         return bottomPanel;
@@ -427,12 +427,12 @@ public class JComposer extends JFrame implements Observer {
         
         rubetteList = new JRubetteList(this);
         rubetteList.addAddButtonAction(addRubetteAction);
-        rightTabs.addTab(Messages.getString("JComposer.rubettes"), rubetteList); //$NON-NLS-1$
+        rightTabs.addTab(Messages.getString("JComposer.rubettes"), rubetteList);
         
         networkList = new JNetworkList();
         networkList.addNewButtonAction(newNetworkAction);
         networkList.setShowAction(showNetworkAction);
-        rightTabs.addTab(Messages.getString("JComposer.networks"), networkList); //$NON-NLS-1$
+        rightTabs.addTab(Messages.getString("JComposer.networks"), networkList);
         
         rightPanel.setPreferredSize(new Dimension(200, 0));
         return rightPanel;
@@ -481,7 +481,7 @@ public class JComposer extends JFrame implements Observer {
         msg = TextUtils.replaceStrings(msg, objects);
         Frame frame = JOptionPane.getFrameForComponent(this);
         setStatusError(msg, objects);
-        JOptionPane.showMessageDialog(frame, msg, TITLE_STRING+": "+Messages.getString("JComposer.error"), JOptionPane.ERROR_MESSAGE);  //$NON-NLS-1$ //$NON-NLS-2$
+        JOptionPane.showMessageDialog(frame, msg, TITLE_STRING+": "+Messages.getString("JComposer.error"), JOptionPane.ERROR_MESSAGE);   
     }
     
     
@@ -535,7 +535,7 @@ public class JComposer extends JFrame implements Observer {
      * Clears the status bar.
      */
     public void clearStatus() {
-        statusBar.setText(" "); //$NON-NLS-1$
+        statusBar.setText(" ");
     }
 
     
@@ -545,10 +545,10 @@ public class JComposer extends JFrame implements Observer {
      */
     private void updateTitle(boolean changed) {
         if (currentFile == null) {
-            setTitle(TITLE_STRING+(changed?"*":"")); //$NON-NLS-1$ //$NON-NLS-2$
+            setTitle(TITLE_STRING+(changed?"*":""));  
         }
         else {
-            setTitle(TITLE_STRING+": "+currentFile.getName()+(changed?"*":"")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            setTitle(TITLE_STRING+": "+currentFile.getName()+(changed?"*":""));   //$NON-NLS-3$
         }
     }
     
@@ -566,7 +566,7 @@ public class JComposer extends JFrame implements Observer {
             return;
         }
         discardProject();
-        setStatusInfo(Messages.getString("JComposer.newprojectcreated")); //$NON-NLS-1$
+        setStatusInfo(Messages.getString("JComposer.newprojectcreated"));
     }
     
     
@@ -594,7 +594,7 @@ public class JComposer extends JFrame implements Observer {
     public boolean loseProject() {
         if (hasChanged && !networkContainer.isEmpty()) {
             // do we want to lose the current networks
-            int i = JOptionPane.showConfirmDialog(this, Messages.getString("JComposer.dosaveproject")); //$NON-NLS-1$
+            int i = JOptionPane.showConfirmDialog(this, Messages.getString("JComposer.dosaveproject"));
             if (i == JOptionPane.OK_OPTION) {
                 save();
                 return true;
@@ -641,7 +641,7 @@ public class JComposer extends JFrame implements Observer {
                 file = file.getCanonicalFile();
             }
             catch (IOException e) {
-                logger.warning("Could not get canonical filename of "+file); //$NON-NLS-1$
+                logger.warning("Could not get canonical filename of "+file);
                 return;
             }
 
@@ -652,7 +652,7 @@ public class JComposer extends JFrame implements Observer {
                 for (String error : reader.getErrors()) {
                     setStatusError(error);
                 }
-                showErrorDialog(Messages.getString("JComposer.couldnotloadfile"), file.getName()); //$NON-NLS-1$
+                showErrorDialog(Messages.getString("JComposer.couldnotloadfile"), file.getName());
             }
             else {
                 discardProject();
@@ -677,7 +677,7 @@ public class JComposer extends JFrame implements Observer {
                 
                 // register all parsed denotators and forms
                 if (!rep.register(reader.getForms(), reader.getDenotators())) {
-                    setStatusError(Messages.getString("JComposer.couldnotregister")); //$NON-NLS-1$
+                    setStatusError(Messages.getString("JComposer.couldnotregister"));
                     return;
                 }
                 
@@ -695,7 +695,7 @@ public class JComposer extends JFrame implements Observer {
                         addJNetwork(jnetwork, model.getName());
                     }
                     else {
-                        setStatusError(Messages.getString("JComposer.couldnotaddnetwork"), model.getName()); //$NON-NLS-1$
+                        setStatusError(Messages.getString("JComposer.couldnotaddnetwork"), model.getName());
                     }
                 }
                 currentFile = file;
@@ -705,15 +705,15 @@ public class JComposer extends JFrame implements Observer {
                 }
                 fileChooser.setCurrentDirectory(getCurrentDirectory());
                 messageLog.clearMessages();
-                setStatusInfo(Messages.getString("JComposer.projectedfileloaded"), currentFile.getName()); //$NON-NLS-1$
+                setStatusInfo(Messages.getString("JComposer.projectedfileloaded"), currentFile.getName());
                 setChanged(false);
                 recentFiles.activate(file);
             }
         }
         catch (IOException e) {
             // this should not happen
-            logger.warning(TextUtils.replaceStrings("Could not load file", file.getAbsoluteFile())); //$NON-NLS-1$
-            setStatusError(Messages.getString("JComposer.filenotfound"), file.getName()); //$NON-NLS-1$
+            logger.warning(TextUtils.replaceStrings("Could not load file", file.getAbsoluteFile()));
+            setStatusError(Messages.getString("JComposer.filenotfound"), file.getName());
         }
         setCursor(cursor);
     }
@@ -744,7 +744,7 @@ public class JComposer extends JFrame implements Observer {
                 else {
                     // register forms and denotators
                     if (!rep.register(reader.getForms(), reader.getDenotators())) {
-                        setStatusError("Could not register forms and denotators."); //$NON-NLS-1$
+                        setStatusError("Could not register forms and denotators.");
                         return;
                     }
 
@@ -757,17 +757,17 @@ public class JComposer extends JFrame implements Observer {
                             addJNetwork(jnetwork, model.getName());
                         }
                         else {
-                            setStatusError(Messages.getString("JComposer.couldnotaddnetwork"), model.getName()); //$NON-NLS-1$
+                            setStatusError(Messages.getString("JComposer.couldnotaddnetwork"), model.getName());
                         }
                     }
                     setCurrentDirectory(fileChooser.getCurrentDirectory());
                     setChanged(true);
-                    setStatusInfo(Messages.getString("JComposer.definitionsloaded"), selectedFile.getName()); //$NON-NLS-1$
+                    setStatusInfo(Messages.getString("JComposer.definitionsloaded"), selectedFile.getName());
                 }
             }
             catch (FileNotFoundException e) {
                 // this should not happen
-                setStatusError(Messages.getString("JComposer.filenotfound"), selectedFile.getName());                 //$NON-NLS-1$
+                setStatusError(Messages.getString("JComposer.filenotfound"), selectedFile.getName());
             }
         }
     }
@@ -815,7 +815,7 @@ public class JComposer extends JFrame implements Observer {
                 recentFiles.activate(currentFile);
             }
             catch (IOException e) {
-                setStatusError(Messages.getString("JComposer.couldnotsavefile"), currentFile.getName()); //$NON-NLS-1$
+                setStatusError(Messages.getString("JComposer.couldnotsavefile"), currentFile.getName());
             }
         }
     }
@@ -844,7 +844,7 @@ public class JComposer extends JFrame implements Observer {
             }
             if (selectedFile.exists()) {
                 // do we want to override an existing file?
-                String text = TextUtils.replaceStrings(Messages.getString("JComposer.wantoverwrite"), selectedFile.getName()); //$NON-NLS-1$
+                String text = TextUtils.replaceStrings(Messages.getString("JComposer.wantoverwrite"), selectedFile.getName());
                 int i = JOptionPane.showConfirmDialog(this, text); 
                 if (i != JOptionPane.OK_OPTION) {
                     return;
@@ -869,7 +869,7 @@ public class JComposer extends JFrame implements Observer {
            Rectangle r = getBounds();
            userPrefs.setGeometry(r.x, r.y, r.width, r.height);
         }
-        logger.info("Stopping Rubato Composer"); //$NON-NLS-1$
+        logger.info("Stopping Rubato Composer");
         System.exit(0);
     }
 
@@ -905,13 +905,13 @@ public class JComposer extends JFrame implements Observer {
     public void addJRubette() {
         JNetwork jnetwork = getCurrentJNetwork();
         if (jnetwork == null) {
-            setStatusError(Messages.getString("JComposer.novisiblenetwork")); //$NON-NLS-1$
+            setStatusError(Messages.getString("JComposer.novisiblenetwork"));
             return;
         }
         // there is visible network
         JRubette jrubette = rubetteList.getCurrentRubette();
         if (jrubette == null) {
-            setStatusError(Messages.getString("JComposer.norubetteselected")); //$NON-NLS-1$
+            setStatusError(Messages.getString("JComposer.norubetteselected"));
             return;
         }
         addJRubette(jnetwork, jrubette);
@@ -963,7 +963,7 @@ public class JComposer extends JFrame implements Observer {
     public void newJNetwork() {
         JNetwork jnetwork = networkContainer.newJNetwork();
         setChanged(true);
-        setStatusInfo(Messages.getString("JComposer.networkadded"), jnetwork.getName()); //$NON-NLS-1$
+        setStatusInfo(Messages.getString("JComposer.networkadded"), jnetwork.getName());
     }
     
     
@@ -1004,7 +1004,7 @@ public class JComposer extends JFrame implements Observer {
         String name = jnetwork.getName();
         networkContainer.removeJNetwork(jnetwork);
         setChanged(true);
-        setStatusInfo(Messages.getString("JComposer.networkremoved"), name); //$NON-NLS-1$
+        setStatusInfo(Messages.getString("JComposer.networkremoved"), name);
     }
     
     
@@ -1074,7 +1074,7 @@ public class JComposer extends JFrame implements Observer {
         problemList.addProblems(runner.getProblems());
         running = false;
         showProgressWindow(false);
-        logger.info("Finished running network"); //$NON-NLS-1$
+        logger.info("Finished running network");
         setEnabledAll(true);
         setCursor(cursor);
     }
@@ -1101,7 +1101,7 @@ public class JComposer extends JFrame implements Observer {
             running = true;
             resetProgressWindow(0);
             showProgressWindow(true);
-            logger.info("Started to run network"); //$NON-NLS-1$
+            logger.info("Started to run network");
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     runner.start();
@@ -1130,7 +1130,7 @@ public class JComposer extends JFrame implements Observer {
                 running = true;
                 resetProgressWindow(0);
                 showProgressWindow(true);
-                logger.info("Started to partially run network"); //$NON-NLS-1$
+                logger.info("Started to partially run network");
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         runner.start();
@@ -1340,10 +1340,10 @@ public class JComposer extends JFrame implements Observer {
         fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileFilter() {
             public boolean accept(File f) {
-                return f.isDirectory() || f.getName().endsWith(".rbo"); //$NON-NLS-1$
+                return f.isDirectory() || f.getName().endsWith(".rbo");
             }
             public String getDescription() {
-                return Messages.getString("JComposer.rubatofiles"); //$NON-NLS-1$
+                return Messages.getString("JComposer.rubatofiles");
             }
         });        
     }
@@ -1362,49 +1362,49 @@ public class JComposer extends JFrame implements Observer {
     
     // file actions
     
-    private Action newAction = new ComposerAction(Messages.getString("JComposer.new"), Icons.newIcon, Messages.getString("JComposer.newproject")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action newAction = new ComposerAction(Messages.getString("JComposer.new"), Icons.newIcon, Messages.getString("JComposer.newproject")) {  
         public void actionPerformed(ActionEvent e) {
             newProject();
         }
     };
 
 
-    private Action openAction = new ComposerAction(Messages.getString("JComposer.open"), Icons.openIcon, Messages.getString("JComposer.openproject")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action openAction = new ComposerAction(Messages.getString("JComposer.open"), Icons.openIcon, Messages.getString("JComposer.openproject")) {  
         public void actionPerformed(ActionEvent e) {
             open();
         }
     };
 
 
-    private Action addAction = new ComposerAction(Messages.getString("JComposer.adddefinitions"), Icons.addIcon, Messages.getString("JComposer.adddefinitionsfile")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action addAction = new ComposerAction(Messages.getString("JComposer.adddefinitions"), Icons.addIcon, Messages.getString("JComposer.adddefinitionsfile")) {  
         public void actionPerformed(ActionEvent e) {
             addDefinitions();
         }
     };
 
 
-    private Action revertAction = new ComposerAction(Messages.getString("JComposer.revert"), Icons.revertIcon, Messages.getString("JComposer.reverttofile")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action revertAction = new ComposerAction(Messages.getString("JComposer.revert"), Icons.revertIcon, Messages.getString("JComposer.reverttofile")) {  
         public void actionPerformed(ActionEvent e) {
             revert();
         }
     };
 
 
-    private Action saveAction = new ComposerAction(Messages.getString("JComposer.save"), Icons.saveIcon, "Save project") { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action saveAction = new ComposerAction(Messages.getString("JComposer.save"), Icons.saveIcon, "Save project") {  
         public void actionPerformed(ActionEvent e) {
             save();
         }
     };
 
 
-    private Action saveasAction = new ComposerAction(Messages.getString("JComposer.saveas"), Icons.saveasIcon, Messages.getString("JComposer.saveasnewfile")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action saveasAction = new ComposerAction(Messages.getString("JComposer.saveas"), Icons.saveasIcon, Messages.getString("JComposer.saveasnewfile")) {  
         public void actionPerformed(ActionEvent e) {
             saveas();
         }
     };
 
 
-    private Action quitAction = new ComposerAction(Messages.getString("JComposer.quit"), Icons.quitIcon, Messages.getString("JComposer.leavecomposer")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action quitAction = new ComposerAction(Messages.getString("JComposer.quit"), Icons.quitIcon, Messages.getString("JComposer.leavecomposer")) {  
         public void actionPerformed(ActionEvent e) {
             quit();
         }
@@ -1442,28 +1442,28 @@ public class JComposer extends JFrame implements Observer {
     };
 
     
-    private Action addRubetteAction = new ComposerAction(Messages.getString("JComposer.addrubette"), null, Messages.getString("JComposer.addnewinstance")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action addRubetteAction = new ComposerAction(Messages.getString("JComposer.addrubette"), null, Messages.getString("JComposer.addnewinstance")) {  
         public void actionPerformed(ActionEvent e) {
             addJRubette();
         }
     };
 
 
-    private Action newNetworkAction = new ComposerAction(Messages.getString("JComposer.newnetwork"), Icons.newnetIcon, Messages.getString("JComposer.createnewnetwork")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action newNetworkAction = new ComposerAction(Messages.getString("JComposer.newnetwork"), Icons.newnetIcon, Messages.getString("JComposer.createnewnetwork")) {  
         public void actionPerformed(ActionEvent e) {
             newJNetwork();
         }
     };
     
     
-    private Action closeNetworkAction = new ComposerAction(Messages.getString("JComposer.closenetwork"), Icons.closeIcon, Messages.getString("JComposer.closediscardnetwork")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action closeNetworkAction = new ComposerAction(Messages.getString("JComposer.closenetwork"), Icons.closeIcon, Messages.getString("JComposer.closediscardnetwork")) {  
         public void actionPerformed(ActionEvent e) {
             JNetwork jnetwork = getCurrentJNetwork();
             if (jnetwork != null && !jnetwork.isEmpty()) {
                 // network not empty
                 int res = JOptionPane.showOptionDialog(JComposer.this,
-                                                       Messages.getString("JComposer.shouldclosenetwork"), //$NON-NLS-1$
-                                                       Messages.getString("JComposer.closenetworktitle"), //$NON-NLS-1$
+                                                       Messages.getString("JComposer.shouldclosenetwork"),
+                                                       Messages.getString("JComposer.closenetworktitle"),
                                                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                                        null, null, null);
                 if (res != JOptionPane.YES_OPTION) {
@@ -1475,77 +1475,77 @@ public class JComposer extends JFrame implements Observer {
     };
     
     
-    private Action showNetworkAction = new ComposerAction(Messages.getString("JComposer.shownetwork"), null, Messages.getString("JComposer.shownetwork")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action showNetworkAction = new ComposerAction(Messages.getString("JComposer.shownetwork"), null, Messages.getString("JComposer.shownetwork")) {  
         public void actionPerformed(ActionEvent e) {
             showJNetwork(networkList.getCurrentNetwork());
         }
     };
 
     
-    private Action runAction = new ComposerAction(Messages.getString("JComposer.run"), Icons.runIcon, Messages.getString("JComposer.runnetwork")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action runAction = new ComposerAction(Messages.getString("JComposer.run"), Icons.runIcon, Messages.getString("JComposer.runnetwork")) {  
         public void actionPerformed(ActionEvent e) {
             startRun();
         }        
     };
     
     
-    private Action stopAction = new ComposerAction(Messages.getString("JComposer.stop"), Icons.stopIcon, Messages.getString("JComposer.stopnetwork")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action stopAction = new ComposerAction(Messages.getString("JComposer.stop"), Icons.stopIcon, Messages.getString("JComposer.stopnetwork")) {  
         public void actionPerformed(ActionEvent e) {
             runner.stop();
         }        
     };
 
 
-    private Action moduleAction = new ComposerAction(Messages.getString("JComposer.modulebuilder"), Icons.moduleIcon, Messages.getString("JComposer.createmodules")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action moduleAction = new ComposerAction(Messages.getString("JComposer.modulebuilder"), Icons.moduleIcon, Messages.getString("JComposer.createmodules")) {  
         public void actionPerformed(ActionEvent e) {
             showModuleBuilder();
         }        
     };
     
     
-    private Action moduleMorphismAction = new ComposerAction(Messages.getString("JComposer.morphismbuilder"), Icons.morphIcon, Messages.getString("JComposer.createmorphisms")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action moduleMorphismAction = new ComposerAction(Messages.getString("JComposer.morphismbuilder"), Icons.morphIcon, Messages.getString("JComposer.createmorphisms")) {  
         public void actionPerformed(ActionEvent e) {
             showModuleMorphismBuilder();
         }        
     };
 
     
-    private Action denotatorAction = new ComposerAction(Messages.getString("JComposer.denotatorbuilder"), Icons.denoIcon, Messages.getString("JComposer.createdenotators")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action denotatorAction = new ComposerAction(Messages.getString("JComposer.denotatorbuilder"), Icons.denoIcon, Messages.getString("JComposer.createdenotators")) {  
         public void actionPerformed(ActionEvent e) {
             showDenotatorBuilder();
         }        
     };
     
     
-    private Action formAction = new ComposerAction(Messages.getString("JComposer.formbuilder"), Icons.formIcon, Messages.getString("JComposer.createforms")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action formAction = new ComposerAction(Messages.getString("JComposer.formbuilder"), Icons.formIcon, Messages.getString("JComposer.createforms")) {  
         public void actionPerformed(ActionEvent e) {
             showFormBuilder();
         }        
     };
     
     
-    private Action browseAction = new ComposerAction(Messages.getString("JComposer.objectbrowser"), Icons.browseIcon, Messages.getString("JComposer.browseobjects")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action browseAction = new ComposerAction(Messages.getString("JComposer.objectbrowser"), Icons.browseIcon, Messages.getString("JComposer.browseobjects")) {  
         public void actionPerformed(ActionEvent e) {
             showObjectBrowser();
         }        
     };
     
     
-    private Action schemeAction = new ComposerAction(Messages.getString("JComposer.schemeinteraction"), Icons.schemeIcon, Messages.getString("JComposer.openschemeinteraction")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action schemeAction = new ComposerAction(Messages.getString("JComposer.schemeinteraction"), Icons.schemeIcon, Messages.getString("JComposer.openschemeinteraction")) {  
         public void actionPerformed(ActionEvent e) {
             showSchemeDialog();
         }        
     };
     
     
-    private Action schemeEditAction = new ComposerAction(Messages.getString("JComposer.schemeeditor"), Icons.schemeEditIcon, Messages.getString("JComposer.openschemeeditor")) {  //$NON-NLS-1$//$NON-NLS-2$
+    private Action schemeEditAction = new ComposerAction(Messages.getString("JComposer.schemeeditor"), Icons.schemeEditIcon, Messages.getString("JComposer.openschemeeditor")) {  
         public void actionPerformed(ActionEvent e) {
             showSchemeEditor();
         }        
     };
     
     
-    private Action prefAction = new ComposerAction(Messages.getString("JComposer.preferences"), Icons.prefIcon, Messages.getString("JComposer.editpreferences")) { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action prefAction = new ComposerAction(Messages.getString("JComposer.preferences"), Icons.prefIcon, Messages.getString("JComposer.editpreferences")) {  
         public void actionPerformed(ActionEvent e) {
             if (preferences == null) {
                 preferences = new JPreferences(JOptionPane.getFrameForComponent(JComposer.this));
@@ -1555,7 +1555,7 @@ public class JComposer extends JFrame implements Observer {
     };
     
     
-    private Action aboutAction = new ComposerAction(Messages.getString("JComposer.aboutrubato"), null, "") { //$NON-NLS-1$ //$NON-NLS-2$
+    private Action aboutAction = new ComposerAction(Messages.getString("JComposer.aboutrubato"), null, "") {  
         private Timer timer = null; 
         public void actionPerformed(ActionEvent e) {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -1583,7 +1583,7 @@ public class JComposer extends JFrame implements Observer {
                         splashPanel.add(splashLabel);
                         splashLabel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
 
-                        JTextArea messageArea = new JTextArea("Copyright (C) 2006 Gérard Milmeister"); //$NON-NLS-1$
+                        JTextArea messageArea = new JTextArea("Copyright (C) 2006 Gérard Milmeister");
                         messageArea.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
                         messageArea.setForeground(new Color(0.59f, 0.67f, 0.99f));
                         messageArea.setOpaque(false);
@@ -1714,13 +1714,13 @@ public class JComposer extends JFrame implements Observer {
     private JFileChooser fileChooser      = null;
 
     private static final Dimension PREFERRED_SIZE = new Dimension(900, 800);
-    private static final String    TITLE_STRING   = "Rubato Composer"; //$NON-NLS-1$
-    private static final String    EXTENSION      = "rbo"; //$NON-NLS-1$
-    private static final String    DOT_EXTENSION  = "."+EXTENSION; //$NON-NLS-1$
+    private static final String    TITLE_STRING   = "Rubato Composer";
+    private static final String    EXTENSION      = "rbo";
+    private static final String    DOT_EXTENSION  = "."+EXTENSION;
 
     private static final Repository rep = Repository.systemRepository();
     
-    private final Logger logger = Logger.getLogger("org.rubato.composer.jcomposer"); //$NON-NLS-1$
+    private final Logger logger = Logger.getLogger("org.rubato.composer.jcomposer");
     
     private static final long serialVersionUID = 7565581918838451751L;
 }

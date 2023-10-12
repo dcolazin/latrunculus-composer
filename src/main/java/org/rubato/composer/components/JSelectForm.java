@@ -69,7 +69,7 @@ public class JSelectForm extends JPanel implements ActionListener {
     public void setForm(Form f) {
         form = f;
         if (f != null) {
-            formLabel.setText(f.getNameString()+": "+f.getTypeString()); //$NON-NLS-1$
+            formLabel.setText(f.getNameString()+": "+f.getTypeString());
         }
         else {
             formLabel.clear();
@@ -140,7 +140,7 @@ public class JSelectForm extends JPanel implements ActionListener {
             Form res = dialog.getForm();
             if (res != null) {
                 form = res;
-                formLabel.setText(res.getNameString()+": "+res.getTypeString()); //$NON-NLS-1$
+                formLabel.setText(res.getNameString()+": "+res.getTypeString());
                 fireActionEvent();
             }
         }
@@ -160,7 +160,7 @@ public class JSelectForm extends JPanel implements ActionListener {
         }
         if (res != null) {
             form = res;
-            formLabel.setText(res.getNameString()+": "+res.getTypeString()); //$NON-NLS-1$
+            formLabel.setText(res.getNameString()+": "+res.getTypeString());
             fireActionEvent();
         }
     }
@@ -181,7 +181,7 @@ public class JSelectForm extends JPanel implements ActionListener {
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i] == ActionListener.class) {
                 if (actionEvent == null) {
-                    actionEvent = new ActionEvent(this, 0, ""); //$NON-NLS-1$
+                    actionEvent = new ActionEvent(this, 0, "");
                 }
                 ((ActionListener)listeners[i+1]).actionPerformed(actionEvent);
             }
@@ -202,9 +202,9 @@ public class JSelectForm extends JPanel implements ActionListener {
     
     private RubatoDictionary dict = null;
     
-    private final static String FORM = Messages.getString("JSelectForm.form"); //$NON-NLS-1$
-    private final static String CREATE_BUTTON = Messages.getString("JSelectForm.create"); //$NON-NLS-1$
-    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip"); //$NON-NLS-1$
-    private final static String SELECT_BUTTON = Messages.getString("JSelectForm.select"); //$NON-NLS-1$}
-    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip"); //$NON-NLS-1$
+    private final static String FORM = Messages.getString("JSelectForm.form");
+    private final static String CREATE_BUTTON = Messages.getString("JSelectForm.create");
+    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip");
+    private final static String SELECT_BUTTON = Messages.getString("JSelectForm.select"); }
+    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip");
 }

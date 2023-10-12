@@ -58,17 +58,17 @@ public class MuxRubette extends AbstractRubette {
                 if (n > getInCount()-2) { n = getInCount()-2; }
             }
             else {
-                addError(Messages.getString("MuxRubette.nonintegererror")); //$NON-NLS-1$
+                addError(Messages.getString("MuxRubette.nonintegererror")); 
                 return;
             }
         }
         else {
-            addError(Messages.getString("MuxRubette.nonintegererror")); //$NON-NLS-1$
+            addError(Messages.getString("MuxRubette.nonintegererror")); 
             return;            
         }
         Denotator output = getInput(n+1);
         if (output == null) {
-            addError(Messages.getString("MuxRubette.nullerror"), n+1); //$NON-NLS-1$
+            addError(Messages.getString("MuxRubette.nullerror"), n+1); 
             return;
         }
         setOutput(0, output);
@@ -81,7 +81,7 @@ public class MuxRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Mux"; //$NON-NLS-1$
+        return "Mux"; 
     }
 
     
@@ -140,21 +140,21 @@ public class MuxRubette extends AbstractRubette {
 
     public String getInTip(int i) {
         if (i == 0) {
-            return "Integer selector"; //$NON-NLS-1$
+            return "Integer selector"; 
         }
         else {
-            return "Input denotator #"+(i-1); //$NON-NLS-1$
+            return "Input denotator #"+(i-1); 
         }
     }
 
 
     public String getOutTip(int i) {
-        return "Output denotator"; //$NON-NLS-1$
+        return "Output denotator"; 
     }
 
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String NUMBER_ATTR = "number"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(INPUTS, NUMBER_ATTR, getInCount());
@@ -180,6 +180,6 @@ public class MuxRubette extends AbstractRubette {
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(MuxRubette.class, "/images/rubettes/builtin/muxicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(MuxRubette.class, "/images/rubettes/builtin/muxicon.png"); 
     }
 }

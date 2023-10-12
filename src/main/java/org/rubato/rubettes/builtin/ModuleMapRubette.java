@@ -105,7 +105,7 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
 
     
     public String getName() {
-        return "ModuleMap"; //$NON-NLS-1$
+        return "ModuleMap"; 
     }
 
     
@@ -231,7 +231,7 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
             return "Input form not set";
         }
         else {
-            return inputForm.getNameString()+": "+inputForm.getTypeString(); //$NON-NLS-1$
+            return inputForm.getNameString()+": "+inputForm.getTypeString(); 
         }
     }
     

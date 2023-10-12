@@ -83,7 +83,7 @@ public class JStatusline extends JTextField {
     
     
     public void clear() {
-        setText(""); //$NON-NLS-1$
+        setText("");
         timer.stop();
     }    
 

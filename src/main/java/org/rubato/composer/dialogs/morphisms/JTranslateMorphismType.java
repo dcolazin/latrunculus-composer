@@ -36,7 +36,7 @@ class JTranslateMorphismType extends JMorphismType implements ActionListener {
     public JTranslateMorphismType(JMorphismContainer container) {
         this.container = container;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(JMorphismDialog.createTitle("f(x) = x + c")); //$NON-NLS-1$
+        add(JMorphismDialog.createTitle("f(x) = x + c")); 
         
         add(Box.createVerticalStrut(10));
         
@@ -46,7 +46,7 @@ class JTranslateMorphismType extends JMorphismType implements ActionListener {
         add(Box.createVerticalStrut(5));
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); //$NON-NLS-1$
+        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); 
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         add(buttonBox);

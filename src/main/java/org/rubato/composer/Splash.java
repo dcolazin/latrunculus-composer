@@ -59,12 +59,12 @@ public class Splash {
         
         splashFrame.setContentPane(splashPanel);
         
-        messageArea = new JLabel(Messages.getString("Splash.loading")+" Rubato Composer..."); //$NON-NLS-1$ //$NON-NLS-2$
+        messageArea = new JLabel(Messages.getString("Splash.loading")+" Rubato Composer...");  
         messageArea.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
         messageArea.setForeground(new Color(0.59f, 0.67f, 0.99f));
         messageArea.setOpaque(false);
 
-        messageAreaShadow = new JLabel(Messages.getString("Splash.loading")+" Rubato Composer..."); //$NON-NLS-1$ //$NON-NLS-2$
+        messageAreaShadow = new JLabel(Messages.getString("Splash.loading")+" Rubato Composer...");  
         messageAreaShadow.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
         messageAreaShadow.setForeground(Color.BLACK);
         messageAreaShadow.setOpaque(false);

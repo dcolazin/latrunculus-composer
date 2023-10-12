@@ -65,7 +65,7 @@ public class ConstructorRubette extends AbstractRubette {
     
     public void run(RunInfo runInfo) {
         if (form == null) {
-            addError(Messages.getString("ConstructorRubette.noform")); //$NON-NLS-1$
+            addError(Messages.getString("ConstructorRubette.noform")); 
             return;            
         }
         switch (form.getType()) {
@@ -86,7 +86,7 @@ public class ConstructorRubette extends AbstractRubette {
                 break;
             }
             default: {
-                addError(Messages.getString("ConstructorRubette.formwrongtype")); //$NON-NLS-1$
+                addError(Messages.getString("ConstructorRubette.formwrongtype")); 
             }
         }
     }
@@ -124,7 +124,7 @@ public class ConstructorRubette extends AbstractRubette {
             Denotator d = getInput(i);
             if (d != null) {
                 if (hasInput) {
-                    addError(Messages.getString("ConstructorRubette.onlyonenonnullinput")); //$NON-NLS-1$
+                    addError(Messages.getString("ConstructorRubette.onlyonenonnullinput")); 
                     return;
                 }
                 inputDenotator = d;
@@ -133,7 +133,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (!hasInput) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); //$NON-NLS-1$
+            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
             return;
         }
         Denotator out = null;
@@ -157,7 +157,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (cds.size() == 0) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); //$NON-NLS-1$
+            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
             return;
         }
         Denotator out = null;
@@ -181,7 +181,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (cds.size() == 0) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); //$NON-NLS-1$
+            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
             return;
         }
         Denotator out = null;
@@ -202,7 +202,7 @@ public class ConstructorRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Constructor"; //$NON-NLS-1$
+        return "Constructor"; 
     }
 
     
@@ -275,19 +275,19 @@ public class ConstructorRubette extends AbstractRubette {
 
 
     public String getInTip(int i) {
-        return (inTip == null)?"Input denotator #"+i:inTip[i]; //$NON-NLS-1$
+        return (inTip == null)?"Input denotator #"+i:inTip[i]; 
     }
 
 
     public String getOutTip(int i) {
-        return "Output denotator"; //$NON-NLS-1$
+        return "Output denotator"; 
     }
 
 
     public boolean setForm(Form form) {
         if (form != null) {
             this.form = form;
-            formName = form.getNameString()+": "+form.getTypeString(); //$NON-NLS-1$
+            formName = form.getNameString()+": "+form.getTypeString(); 
             switch (form.getType()) {
                 case Form.LIST:
                 case Form.POWER: {
@@ -296,7 +296,7 @@ public class ConstructorRubette extends AbstractRubette {
                     setInCount(formCount);
                     inTip = new String[formCount];
                     for (int i = 0; i < formCount; i++) {
-                        inTip[i] = factorForm.getNameString()+": "+factorForm.getTypeString();  //$NON-NLS-1$
+                        inTip[i] = factorForm.getNameString()+": "+factorForm.getTypeString();  
                     }
                     break;
                 }
@@ -307,7 +307,7 @@ public class ConstructorRubette extends AbstractRubette {
                     inTip = new String[formCount];
                     for (int i = 0; i < formCount; i++) {
                         Form factorForm = form.getForm(i);
-                        inTip[i] = factorForm.getNameString()+": "+factorForm.getTypeString(); //$NON-NLS-1$
+                        inTip[i] = factorForm.getNameString()+": "+factorForm.getTypeString(); 
                     }
                     break;
                 }
@@ -347,11 +347,11 @@ public class ConstructorRubette extends AbstractRubette {
     private JPanel      properties = null;
     private JSelectForm formSelector = null;
     private Form        form = null;
-    private String      formName = " "; //$NON-NLS-1$
+    private String      formName = " "; 
     private String[]    inTip = null;
     private static final ImageIcon icon;
 
     static {
-        icon = Icons.loadIcon(ConstructorRubette.class, "/images/rubettes/builtin/constricon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(ConstructorRubette.class, "/images/rubettes/builtin/constricon.png"); 
     }
 }

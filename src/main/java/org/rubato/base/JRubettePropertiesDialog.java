@@ -52,7 +52,7 @@ public class JRubettePropertiesDialog extends JPanel {
             c.weighty = 0.0;
             c.anchor = GridBagConstraints.EAST;
             c.fill = GridBagConstraints.NONE;
-            JLabel label = new JLabel(property.getName()+":"); //$NON-NLS-1$
+            JLabel label = new JLabel(property.getName()+":");
             layout.setConstraints(label, c);
             panel.add(label);
 

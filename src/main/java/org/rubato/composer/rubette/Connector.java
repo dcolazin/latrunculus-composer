@@ -42,7 +42,7 @@ public class Connector {
     public final static int INPUT  = 0;
     public final static int OUTPUT = 1;
     
-    public final static String[] stateString = { "INPUT", "OUTPUT" }; //$NON-NLS-1$ //$NON-NLS-2$
+    public final static String[] stateString = { "INPUT", "OUTPUT" };  
 
     
     /**
@@ -187,7 +187,7 @@ public class Connector {
     
     
     public String toString() {
-        return "Connector["+jrubette+","+stateString[type]+","+pos+"]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return "Connector["+jrubette+","+stateString[type]+","+pos+"]";   //$NON-NLS-3$ //$NON-NLS-4$
     }
     
     

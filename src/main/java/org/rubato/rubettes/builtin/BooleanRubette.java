@@ -58,7 +58,7 @@ public final class BooleanRubette extends AbstractRubette {
 
     public void run(RunInfo runInfo) {
         if (!expression.hasCode()) {
-            addError(Messages.getString("BooleanRubette.novalidexpression")); //$NON-NLS-1$
+            addError(Messages.getString("BooleanRubette.novalidexpression")); 
             return;
         }
         for (int i = 0; i < getInCount(); i++) {
@@ -71,7 +71,7 @@ public final class BooleanRubette extends AbstractRubette {
                 values[i] = (n==0)?false:true;
             }
             else {
-                addError(Messages.getString("BooleanRubette.inputwrongform"), i, "Boolean"); //$NON-NLS-1$ //$NON-NLS-2$
+                addError(Messages.getString("BooleanRubette.inputwrongform"), i, "Boolean");  
             }
         }
         if (!hasErrors()) {
@@ -98,7 +98,7 @@ public final class BooleanRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Boolean"; //$NON-NLS-1$
+        return "Boolean"; 
     }
 
     
@@ -122,7 +122,7 @@ public final class BooleanRubette extends AbstractRubette {
             JScrollPane scrollPane = new JScrollPane(exprTextArea);
             properties.add(scrollPane, BorderLayout.CENTER);
             
-            infoLabel = new JLabel(" "); //$NON-NLS-1$
+            infoLabel = new JLabel(" "); 
             infoLabel.setForeground(Color.RED);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             properties.add(infoLabel, BorderLayout.SOUTH);
@@ -132,11 +132,11 @@ public final class BooleanRubette extends AbstractRubette {
     
     
     public boolean applyProperties() {
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" "); 
         int newInCount = inSlider.getInValue();
         String expr = exprTextArea.getText().trim();
         if (expr.length() == 0) {
-            infoLabel.setText(Messages.getString("BooleanRubette.noexpression")); //$NON-NLS-1$
+            infoLabel.setText(Messages.getString("BooleanRubette.noexpression")); 
             return false;
         }
         boolean ok = expression.parse(expr, newInCount);
@@ -154,7 +154,7 @@ public final class BooleanRubette extends AbstractRubette {
     
     
     public void revertProperties() {
-        infoLabel.setText(" "); //$NON-NLS-1$
+        infoLabel.setText(" "); 
         inSlider.setInValue(getInCount());
         exprTextArea.setText(expressionString);
     }
@@ -177,7 +177,7 @@ public final class BooleanRubette extends AbstractRubette {
 
     
     public String getOutTip(int i) {
-        return Messages.getString("BooleanRubette.result"); //$NON-NLS-1$
+        return Messages.getString("BooleanRubette.result"); 
     }
     
 
@@ -186,10 +186,10 @@ public final class BooleanRubette extends AbstractRubette {
     }
     
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String EXPRESSION  = "Expression"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
-    private final static String EXPR_ATTR   = "expr"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String EXPRESSION  = "Expression"; 
+    private final static String NUMBER_ATTR = "number"; 
+    private final static String EXPR_ATTR   = "expr"; 
     
     
     public void toXML(XMLWriter writer) {
@@ -217,7 +217,7 @@ public final class BooleanRubette extends AbstractRubette {
     private JPanel       properties = null;
     private JTextArea    exprTextArea = null;
     private JLabel       infoLabel = null;
-    private String       expressionString = ""; //$NON-NLS-1$
+    private String       expressionString = ""; 
     private Expression   expression;
     private boolean[]    values = null;
     private JConnectorSliders inSlider = null;
@@ -294,7 +294,7 @@ public final class BooleanRubette extends AbstractRubette {
         public void displayCode() {
             String s;
             for (int i = 0; i < code.length; i++) {
-                s = i+": "+code[i]; //$NON-NLS-1$
+                s = i+": "+code[i]; 
                 System.out.println(s);
             }
         }
@@ -317,7 +317,7 @@ public final class BooleanRubette extends AbstractRubette {
         private boolean[] stack = new boolean[30];
         private int[]     code = null;
         private ArrayList<Integer> newCode = null;
-        private String    error = ""; //$NON-NLS-1$
+        private String    error = ""; 
 
         private final static int C_OR = 50;
         private final static int C_AND = 51;
@@ -384,13 +384,13 @@ public final class BooleanRubette extends AbstractRubette {
             if (ch == 0) { return false; }
             if (ch == '#') {
                 if ((ch = nextChar()) == 0) {
-                    error = "Syntax error after \"#\"!"; //$NON-NLS-1$
+                    error = "Syntax error after \"#\"!"; 
                     return false;
                 }
                 if (Character.isDigit(ch)) {
                     int n = ch-'0';
                     if (n >= ins) {
-                        error = "Variable #"+n+" out of range!"; //$NON-NLS-1$ //$NON-NLS-2$
+                        error = "Variable #"+n+" out of range!";  
                         return false;
                     }
                     newCode.add(n);
@@ -413,12 +413,12 @@ public final class BooleanRubette extends AbstractRubette {
             }
             else if (ch =='(') {
                 if ((ch = nextChar()) == 0) {
-                    error = "Syntax error after \"(\"!"; //$NON-NLS-1$
+                    error = "Syntax error after \"(\"!"; 
                     return false;
                 }
                 parseExpr();
                 if (ch != ')') {
-                    error = "Missing \")\"!"; //$NON-NLS-1$
+                    error = "Missing \")\"!"; 
                     return false;
                 }
                 if (neg) {
@@ -427,7 +427,7 @@ public final class BooleanRubette extends AbstractRubette {
                 ch = nextChar();
                 return true;
             }
-            error = "Syntax error!"; //$NON-NLS-1$
+            error = "Syntax error!"; 
             return false;
         }
     }
@@ -439,10 +439,10 @@ public final class BooleanRubette extends AbstractRubette {
     private static final ImageIcon icon;
     
     static {
-        icon = Icons.loadIcon(BooleanRubette.class, "/images/rubettes/builtin/logicicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(BooleanRubette.class, "/images/rubettes/builtin/logicicon.png"); 
         Repository rep = Repository.systemRepository();
-        booleanForm = rep.getForm("Boolean"); //$NON-NLS-1$
-        trueDeno = rep.getDenotator("True"); //$NON-NLS-1$
-        falseDeno = rep.getDenotator("False");         //$NON-NLS-1$
+        booleanForm = rep.getForm("Boolean"); 
+        trueDeno = rep.getDenotator("True"); 
+        falseDeno = rep.getDenotator("False");         
     }
 }

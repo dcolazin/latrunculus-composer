@@ -363,8 +363,8 @@ public class StatRubette extends AbstractRubette {
     }
     
 
-    private final static String OPERATION   = "Operation"; //$NON-NLS-1$
-    private final static String OP_ATTR     = "op"; //$NON-NLS-1$
+    private final static String OPERATION   = "Operation";
+    private final static String OP_ATTR     = "op";
     
     public void toXML(XMLWriter writer) {
         writer.empty(OPERATION, OP_ATTR, op);
@@ -421,6 +421,6 @@ public class StatRubette extends AbstractRubette {
     };
     
     static {
-        icon = Icons.loadIcon(StatRubette.class, "/images/rubettes/builtin/staticon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(StatRubette.class, "/images/rubettes/builtin/staticon.png");
     }
 }

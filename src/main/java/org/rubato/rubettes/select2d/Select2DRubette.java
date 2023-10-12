@@ -97,7 +97,7 @@ public class Select2DRubette extends AbstractRubette {
 
     
     public String getName() {
-        return "Select2D"; //$NON-NLS-1$
+        return "Select2D"; 
     }
 
     
@@ -116,22 +116,22 @@ public class Select2DRubette extends AbstractRubette {
             return FORMNOTSET_INFO;
         }
         else {
-            return form.getNameString()+": "+form.getTypeString(); //$NON-NLS-1$
+            return form.getNameString()+": "+form.getTypeString(); 
         }
     }
     
     
     public String getShortDescription() {
-        return "Selects a subset of a denotator of "+ //$NON-NLS-1$
-               "type power or list"; //$NON-NLS-1$
+        return "Selects a subset of a denotator of "+ 
+               "type power or list"; 
     }
     
     
     public String getLongDescription() {
-        return "The Select2D Rubette selects a subset of "+ //$NON-NLS-1$
-               "a denotator of type power or list according "+ //$NON-NLS-1$
-               "to 2D graphical selection criteria specfied "+ //$NON-NLS-1$
-               "in the properties."; //$NON-NLS-1$
+        return "The Select2D Rubette selects a subset of "+ 
+               "a denotator of type power or list according "+ 
+               "to 2D graphical selection criteria specfied "+ 
+               "in the properties."; 
     }
     
     
@@ -173,20 +173,20 @@ public class Select2DRubette extends AbstractRubette {
     
     public String getInTip(int i) {
         if (form == null) {
-            return Messages.getString("Select2DRubette.inputdenotip"); //$NON-NLS-1$
+            return Messages.getString("Select2DRubette.inputdenotip"); 
         }
         else {
-            return Messages.getString("Select2DRubette.inputdenoformtip")+form.getNameString(); //$NON-NLS-1$
+            return Messages.getString("Select2DRubette.inputdenoformtip")+form.getNameString(); 
         }
     }
 
 
     public String getOutTip(int i) {
         if (form == null) {
-            return Messages.getString("Select2DRubette.outputdenotip"); //$NON-NLS-1$
+            return Messages.getString("Select2DRubette.outputdenotip"); 
         }
         else {
-            return Messages.getString("Select2DRubette.outputdenoformtip")+form.getNameString(); //$NON-NLS-1$
+            return Messages.getString("Select2DRubette.outputdenoformtip")+form.getNameString(); 
         }
     }
 
@@ -233,7 +233,7 @@ public class Select2DRubette extends AbstractRubette {
     }
     
     
-    private final static String SELECTION_PANEL = "SelectionPanel"; //$NON-NLS-1$
+    private final static String SELECTION_PANEL = "SelectionPanel"; 
     
     public void toXML(XMLWriter writer) {
         if (form != null) {
@@ -292,11 +292,11 @@ public class Select2DRubette extends AbstractRubette {
     
     private final static ImageIcon icon;
 
-    private final static String INPUTNULL_ERROR  = Messages.getString("Select2DRubette.inputnullerror"); //$NON-NLS-1$;
-    private final static String FORMNOTSET_ERROR = Messages.getString("Select2DRubette.formnotseterror"); //$NON-NLS-1$;
-    private final static String FORMNOTSET_INFO  = Messages.getString("Select2DRubette.noformsetinfo"); //$NON-NLS-1$;
+    private final static String INPUTNULL_ERROR  = Messages.getString("Select2DRubette.inputnullerror"); ;
+    private final static String FORMNOTSET_ERROR = Messages.getString("Select2DRubette.formnotseterror"); ;
+    private final static String FORMNOTSET_INFO  = Messages.getString("Select2DRubette.noformsetinfo"); ;
     
     static {
-        icon = Icons.loadIcon(Select2DRubette.class, "/images/rubettes/select2d/select2dicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(Select2DRubette.class, "/images/rubettes/select2d/select2dicon.png"); 
     }
 }

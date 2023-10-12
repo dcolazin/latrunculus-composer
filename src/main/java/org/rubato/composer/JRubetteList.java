@@ -79,16 +79,16 @@ public final class JRubetteList extends JPanel implements ActionListener {
         buttonPanel.setLayout(new GridLayout(3, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
-        addButton = new JButton(Messages.getString("JRubetteList.add")); //$NON-NLS-1$
+        addButton = new JButton(Messages.getString("JRubetteList.add")); 
         addButton.setEnabled(false);
         buttonPanel.add(addButton);
         
-        editButton = new JButton(Messages.getString("JRubetteList.edit")); //$NON-NLS-1$
+        editButton = new JButton(Messages.getString("JRubetteList.edit")); 
         editButton.setEnabled(false);
         editButton.addActionListener(this);
         buttonPanel.add(editButton);
         
-        removeButton = new JButton(Messages.getString("JRubetteList.remove")); //$NON-NLS-1$
+        removeButton = new JButton(Messages.getString("JRubetteList.remove")); 
         removeButton.setEnabled(false);
         removeButton.addActionListener(this);
         buttonPanel.add(removeButton);
@@ -128,7 +128,7 @@ public final class JRubetteList extends JPanel implements ActionListener {
             return null;
         }
         Rubette rubette = info.getRubette().newInstance();
-        String name = rubette.getName()+" #"+(nameCounter++); //$NON-NLS-1$
+        String name = rubette.getName()+" #"+(nameCounter++); 
         if (rubette instanceof MacroRubette) {
             ((MacroRubette)rubette).setName(name);
         }
@@ -139,7 +139,7 @@ public final class JRubetteList extends JPanel implements ActionListener {
     
     public JRubette createJRubette(Rubette rubette) {
         Rubette arubette = rubette.newInstance();
-        String name = arubette.getName()+" #"+(nameCounter++); //$NON-NLS-1$
+        String name = arubette.getName()+" #"+(nameCounter++); 
         if (arubette instanceof MacroRubette) {
             ((MacroRubette)arubette).setName(name);
         }
@@ -150,7 +150,7 @@ public final class JRubetteList extends JPanel implements ActionListener {
     
     public JRubette duplicate(Rubette rubette) {
         Rubette arubette = rubette.duplicate();
-        String name = arubette.getName()+" #"+(nameCounter++); //$NON-NLS-1$
+        String name = arubette.getName()+" #"+(nameCounter++); 
         if (arubette instanceof MacroRubette) {
             ((MacroRubette)arubette).setName(name);
         }

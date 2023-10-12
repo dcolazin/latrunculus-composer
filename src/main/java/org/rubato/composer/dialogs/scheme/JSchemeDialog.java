@@ -41,7 +41,7 @@ public class JSchemeDialog
         implements ActionListener, KeyListener, Observer {
 
     public JSchemeDialog(Frame frame) {
-        super(frame, Messages.getString("JSchemeDialog.schemeinteraction"), false); //$NON-NLS-1$
+        super(frame, Messages.getString("JSchemeDialog.schemeinteraction"), false); 
         setLayout(new BorderLayout());
 
         rep = Repository.systemRepository();
@@ -52,7 +52,7 @@ public class JSchemeDialog
         evaluator = new Evaluator(env);
         evaluator.setRunInfo(runInfo);
         
-        textFont = Font.decode("monospaced"); //$NON-NLS-1$
+        textFont = Font.decode("monospaced"); 
         
         outputArea = new JTextArea(15, 50);
         outputArea.setFont(textFont);
@@ -79,22 +79,22 @@ public class JSchemeDialog
         
         buttonBox.add(Box.createHorizontalGlue());
 
-        stopButton = new JButton(Messages.getString("JSchemeDialog.stopbutton")); //$NON-NLS-1$
-        stopButton.setToolTipText(Messages.getString("JSchemeDialog.stoptooltip")); //$NON-NLS-1$
+        stopButton = new JButton(Messages.getString("JSchemeDialog.stopbutton")); 
+        stopButton.setToolTipText(Messages.getString("JSchemeDialog.stoptooltip")); 
         stopButton.addActionListener(this);
         buttonBox.add(stopButton);
 
         buttonBox.add(Box.createHorizontalStrut(3));
 
-        clearButton = new JButton(Messages.getString("JSchemeDialog.clearbutton")); //$NON-NLS-1$
-        clearButton.setToolTipText(Messages.getString("JSchemeDialog.cleartooltip")); //$NON-NLS-1$
+        clearButton = new JButton(Messages.getString("JSchemeDialog.clearbutton")); 
+        clearButton.setToolTipText(Messages.getString("JSchemeDialog.cleartooltip")); 
         clearButton.addActionListener(this);
         buttonBox.add(clearButton);
 
         buttonBox.add(Box.createHorizontalStrut(3));
 
-        initButton = new JButton(Messages.getString("JSchemeDialog.initbutton")); //$NON-NLS-1$
-        initButton.setToolTipText(Messages.getString("JSchemeDialog.inittooltip")); //$NON-NLS-1$
+        initButton = new JButton(Messages.getString("JSchemeDialog.initbutton")); 
+        initButton.setToolTipText(Messages.getString("JSchemeDialog.inittooltip")); 
         initButton.addActionListener(this);
         buttonBox.add(initButton);
         
@@ -105,7 +105,7 @@ public class JSchemeDialog
         add(bottomPanel, BorderLayout.SOUTH);
         
         for (int i = 0; i < RING_SIZE; i++) {
-            ringBuffer[i] = ""; //$NON-NLS-1$
+            ringBuffer[i] = ""; 
         }
         ring_pos = 0;
         select_pos = 0;
@@ -151,7 +151,7 @@ public class JSchemeDialog
         }
         else if (res != null) {                
             outputArea.append(res.toString());
-            outputArea.append("\n"); //$NON-NLS-1$
+            outputArea.append("\n"); 
             outputArea.setCaretPosition(outputArea.getDocument().getLength()-1);
             ringBuffer[ring_pos] = inputArea.getText();
             ring_pos = (ring_pos+1) % RING_SIZE;
@@ -176,9 +176,9 @@ public class JSchemeDialog
         }
         else if (src == initButton) {
             int res = JOptionPane.showConfirmDialog(this,
-                                                    Messages.getString("JSchemeDialog.10")+ //$NON-NLS-1$
-                                                    Messages.getString("JSchemeDialog.11"), //$NON-NLS-1$
-                                                    Messages.getString("JSchemeDialog.12"), //$NON-NLS-1$
+                                                    Messages.getString("JSchemeDialog.10")+ 
+                                                    Messages.getString("JSchemeDialog.11"), 
+                                                    Messages.getString("JSchemeDialog.12"), 
                                                     JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION) {
                 env.resetGlobal();

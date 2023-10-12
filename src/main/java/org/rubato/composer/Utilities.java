@@ -37,15 +37,15 @@ public final class Utilities {
                 comp.setVisible(false);
             }
         };         
-        comp.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, "ESCAPE"); //$NON-NLS-1$
-        comp.getRootPane().getActionMap().put("ESCAPE", escapeAction); //$NON-NLS-1$
+        comp.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, "ESCAPE"); 
+        comp.getRootPane().getActionMap().put("ESCAPE", escapeAction); 
     }
 
     
     public static void installEnterKey(final JDialog comp, final Action action) {
         KeyStroke enterKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false);
-        comp.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKeyStroke, "ENTER"); //$NON-NLS-1$
-        comp.getRootPane().getActionMap().put("ENTER", action); //$NON-NLS-1$
+        comp.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKeyStroke, "ENTER"); 
+        comp.getRootPane().getActionMap().put("ENTER", action); 
     }
     
     
@@ -79,7 +79,7 @@ public final class Utilities {
     }
     
     
-    public final static String NULL_STRING = ""; //$NON-NLS-1$
+    public final static String NULL_STRING = ""; 
     
     public final static Color ERROR_BG_COLOR = new Color(1.0f, 0.6f, 0.0f);
    

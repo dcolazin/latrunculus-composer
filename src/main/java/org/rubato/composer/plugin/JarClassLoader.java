@@ -46,7 +46,7 @@ public class JarClassLoader extends URLClassLoader {
     
     public String getAttribute(String name) {
         try {
-            URL u = new URL("jar", "", url + "!/"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            URL u = new URL("jar", "", url + "!/");   //$NON-NLS-3$
             JarURLConnection uc = (JarURLConnection)u.openConnection();
             Attributes attr = uc.getMainAttributes();
             return (attr != null)?attr.getValue(name):null;
@@ -63,7 +63,7 @@ public class JarClassLoader extends URLClassLoader {
     public String[] getListAttribute(String name) {
         String attr = getAttribute(name);
         if (attr != null) {
-            String[] strings = attr.split(","); //$NON-NLS-1$
+            String[] strings = attr.split(","); 
             String[] res = new String[strings.length];
             for (int i = 0; i < strings.length; i++) {
                 res[i] = strings[i].trim();
@@ -79,7 +79,7 @@ public class JarClassLoader extends URLClassLoader {
             throws IOException {
         File file = new File(fileName);
         if (!file.canRead()) {
-            throw new IOException("Cannot read "+file.getCanonicalPath()); //$NON-NLS-1$
+            throw new IOException("Cannot read "+file.getCanonicalPath()); 
         }
         return file.toURI().toURL();
     }
@@ -88,7 +88,7 @@ public class JarClassLoader extends URLClassLoader {
     private static URL toURL(File file)
             throws IOException {
         if (!file.canRead()) {
-            throw new IOException("Cannot read "+file.getCanonicalPath()); //$NON-NLS-1$
+            throw new IOException("Cannot read "+file.getCanonicalPath()); 
         }
         return file.toURI().toURL();
     }

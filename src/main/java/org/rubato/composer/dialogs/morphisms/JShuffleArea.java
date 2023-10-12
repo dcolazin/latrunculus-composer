@@ -213,15 +213,15 @@ class JShuffleArea extends JPanel implements MouseListener, MouseMotionListener 
     private void updateToolTip(int x, int y) {
         int i = inLeftBox(x, y);
         if (i >= 0) {
-            setToolTipText("<html>Left component #"+i+ //$NON-NLS-1$
-                           "<br>Press mouse button 1 to create link"+ //$NON-NLS-1$
-                           "<br>Click mouse button 3 to remove link</html>"); //$NON-NLS-1$
+            setToolTipText("<html>Left component #"+i+ 
+                           "<br>Press mouse button 1 to create link"+ 
+                           "<br>Click mouse button 3 to remove link</html>"); 
         }
         else {
             i = inRightBox(x, y);
             if (i >= 0) {
-                setToolTipText("<html>Right component #"+i+ //$NON-NLS-1$
-                               "<br>Click mouse button 3 to remove link</html>"); //$NON-NLS-1$
+                setToolTipText("<html>Right component #"+i+ 
+                               "<br>Click mouse button 3 to remove link</html>"); 
             }
             else {
                 setToolTipText(null);
@@ -249,7 +249,7 @@ class JShuffleArea extends JPanel implements MouseListener, MouseMotionListener 
         for (int i = listeners.length-2; i>=0; i-=2) {
             if (listeners[i] == ActionListener.class) {
                 if (actionEvent == null) {
-                    actionEvent = new ActionEvent(this, 0, ""); //$NON-NLS-1$
+                    actionEvent = new ActionEvent(this, 0, ""); 
                 }
                 ((ActionListener)listeners[i+1]).actionPerformed(actionEvent);
             }

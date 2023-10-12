@@ -75,7 +75,7 @@ public class Runner implements Runnable {
             Rubette rubette = model.getRubette();
             rubette.clearErrors();
             try {
-                logger.info(TextUtils.replaceStrings("Running rubette %%1", model.getName())); //$NON-NLS-1$
+                logger.info(TextUtils.replaceStrings("Running rubette %%1", model.getName())); 
                 composer.addProgressMessage(TextUtils.replaceStrings("Running rubette %%1", model.getName()));
                 if (model.isPassThrough()) {
                     rubette.setOutput(0, rubette.getInput(0));
@@ -92,7 +92,7 @@ public class Runner implements Runnable {
             }
             catch (Exception e) {
                 e.printStackTrace();
-                addProblem(Messages.getString("Runner.exceptionproblem"), model); //$NON-NLS-1$
+                addProblem(Messages.getString("Runner.exceptionproblem"), model); 
             }
             composer.makeProgress(i+1);
         }
@@ -169,7 +169,7 @@ public class Runner implements Runnable {
     private RunnerRunInfo runInfo;
     private int           nrClicked = 0;     
     
-    private final Logger logger = Logger.getLogger("org.rubato.composer.runner"); //$NON-NLS-1$
+    private final Logger logger = Logger.getLogger("org.rubato.composer.runner"); 
     
     protected class RunnerRunInfo implements RunInfo {
         

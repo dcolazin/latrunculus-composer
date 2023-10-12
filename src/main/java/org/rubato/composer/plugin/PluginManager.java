@@ -49,10 +49,10 @@ public class PluginManager {
     
     
     public void addHomePluginDirectory() {
-        String home = System.getProperty("user.home"); //$NON-NLS-1$
-        String sep = System.getProperty("file.separator"); //$NON-NLS-1$
-        addSearchDirectory(home+sep+".rubato"+sep+"plugins"); //$NON-NLS-1$
-        addSearchDirectory(home+sep+"Rubato"+sep+"Plugins"); //$NON-NLS-1$
+        String home = System.getProperty("user.home"); 
+        String sep = System.getProperty("file.separator"); 
+        addSearchDirectory(home+sep+".rubato"+sep+"plugins"); 
+        addSearchDirectory(home+sep+"Rubato"+sep+"Plugins"); 
     }
     
     
@@ -75,13 +75,13 @@ public class PluginManager {
     private void loadPluginJar(File file) {
         try {
             JarClassLoader loader = new JarClassLoader(file, getClass().getClassLoader());
-            String[] plgs = loader.getListAttribute("Plugin"); //$NON-NLS-1$
+            String[] plgs = loader.getListAttribute("Plugin"); 
             for (String plugin : plgs) {
                 addPlugin(file, loader, plugin);
             }
         }
         catch (IOException e) {
-            setError(Messages.getString("PluginManager.couldnotloadfile"), file.getName()); //$NON-NLS-1$
+            setError(Messages.getString("PluginManager.couldnotloadfile"), file.getName()); 
         }
     }
     
@@ -100,25 +100,25 @@ public class PluginManager {
                         addPlugin((Plugin)obj);
                     }
                     else {
-                        setError(Messages.getString("PluginManager.notaplugin"), fileName, className); //$NON-NLS-1$
+                        setError(Messages.getString("PluginManager.notaplugin"), fileName, className); 
                     }
                 }
                 else {
-                    setError(Messages.getString("PluginManager.notaplugin"), fileName, className); //$NON-NLS-1$
+                    setError(Messages.getString("PluginManager.notaplugin"), fileName, className); 
                 }
             }
         }
         catch (ClassNotFoundException e) {
-            setError(Messages.getString("PluginManager.classnotfound"), fileName, className); //$NON-NLS-1$
+            setError(Messages.getString("PluginManager.classnotfound"), fileName, className); 
         }
         catch (IllegalAccessException e) {
-            setError(Messages.getString("PluginManager.illegalaccess"), fileName, className); //$NON-NLS-1$
+            setError(Messages.getString("PluginManager.illegalaccess"), fileName, className); 
         }
         catch (InstantiationException e) {
-            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           //$NON-NLS-1$
+            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           
         }
         catch (Exception e) {
-            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           //$NON-NLS-1$
+            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           
         }
     }
     
@@ -169,7 +169,7 @@ public class PluginManager {
     
     private final static FilenameFilter jarFilter = new FilenameFilter() {
         public boolean accept(File file, String name) {
-            return name.endsWith(".jar"); //$NON-NLS-1$
+            return name.endsWith(".jar"); 
         }
     };
     

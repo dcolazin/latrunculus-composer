@@ -73,7 +73,7 @@ public class SchemeRubette extends AbstractRubette {
     
 
     public String getName() {
-        return "Scheme"; //$NON-NLS-1$
+        return "Scheme"; 
     }
 
     
@@ -109,7 +109,7 @@ public class SchemeRubette extends AbstractRubette {
             schemeCodeArea.setText(schemeCode);            
             properties.add(new JScrollPane(schemeCodeArea), BorderLayout.CENTER);
 
-            infoLabel = new JLabel(" "); //$NON-NLS-1$
+            infoLabel = new JLabel(" "); 
             infoLabel.setForeground(Color.RED);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             properties.add(infoLabel, BorderLayout.SOUTH);
@@ -162,19 +162,19 @@ public class SchemeRubette extends AbstractRubette {
 
 
     public String getInTip(int i) {
-        return "Input denotator"; //$NON-NLS-1$
+        return "Input denotator"; 
     }
 
 
     public String getOutTip(int i) {
-        return "Output denotator #"+i; //$NON-NLS-1$
+        return "Output denotator #"+i; 
     }
 
     
-    private final static String INPUTS      = "Inputs"; //$NON-NLS-1$
-    private final static String OUTPUTS     = "Outputs"; //$NON-NLS-1$
-    private final static String CODE        = "Code"; //$NON-NLS-1$
-    private final static String NUMBER_ATTR = "number"; //$NON-NLS-1$
+    private final static String INPUTS      = "Inputs"; 
+    private final static String OUTPUTS     = "Outputs"; 
+    private final static String CODE        = "Code"; 
+    private final static String NUMBER_ATTR = "number"; 
     
     
     public void toXML(XMLWriter writer) {
@@ -316,6 +316,6 @@ public class SchemeRubette extends AbstractRubette {
     private static final Repository rep = Repository.systemRepository();
 
     static {
-        icon = Icons.loadIcon(SchemeRubette.class, "/images/rubettes/builtin/schemeicon.png"); //$NON-NLS-1$
+        icon = Icons.loadIcon(SchemeRubette.class, "/images/rubettes/builtin/schemeicon.png"); 
     }
 }

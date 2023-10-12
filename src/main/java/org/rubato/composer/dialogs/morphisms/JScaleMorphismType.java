@@ -39,7 +39,7 @@ class JScaleMorphismType extends JMorphismType implements ActionListener {
     public JScaleMorphismType(JMorphismContainer container) {
         this.container = container;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(JMorphismDialog.createTitle("f(x) = s * g(x)")); //$NON-NLS-1$
+        add(JMorphismDialog.createTitle("f(x) = s * g(x)")); 
         
         add(Box.createVerticalStrut(10));
         
@@ -56,7 +56,7 @@ class JScaleMorphismType extends JMorphismType implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         
-        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); //$NON-NLS-1$
+        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); 
         applyButton.addActionListener(this);
         
         buttonBox.add(applyButton);

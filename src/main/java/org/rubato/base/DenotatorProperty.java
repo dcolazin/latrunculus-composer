@@ -118,7 +118,7 @@ public class DenotatorProperty extends RubetteProperty implements ActionListener
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         DenotatorProperty property = clone();
-        Element child = XMLReader.getChild(element, "Denotator"); //$NON-NLS-1$
+        Element child = XMLReader.getChild(element, "Denotator"); 
         if (child == null) {
             property.setDenotator(null);
         }

@@ -56,13 +56,13 @@ public class ModuleListView
         c.weighty = 0.0;
         c.ipadx = 4;
         c.ipady = 4;
-        formLabel = new JLabel(" "); //$NON-NLS-1$
+        formLabel = new JLabel(" "); 
         formLabel.setHorizontalAlignment(SwingConstants.CENTER);
         formLabel.setBorder(BorderFactory.createEtchedBorder());
         gridbag.setConstraints(formLabel, c);
         add(formLabel);
 
-        typeLabel = new JLabel(" "); //$NON-NLS-1$
+        typeLabel = new JLabel(" "); 
         typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         typeLabel.setBorder(BorderFactory.createEtchedBorder());
         gridbag.setConstraints(typeLabel, c);
@@ -105,7 +105,7 @@ public class ModuleListView
 
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd.equals("edit")) { //$NON-NLS-1$
+		if (cmd.equals("edit")) { 
 			editValue(moduleElements[list.getSelectedIndex()]);
 		}
 	}
@@ -142,7 +142,7 @@ public class ModuleListView
 	private ModuleElement editValue(ModuleElement el) {
         ModuleElement resEl = null;
 		if (el instanceof RingElement) {
-			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), ((RingElement)el).stringRep()); //$NON-NLS-1$
+			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), ((RingElement)el).stringRep()); 
 			if (res != null) {
 				resEl = ((Ring)el.getModule()).parseString(res);				
 			}
@@ -153,9 +153,9 @@ public class ModuleListView
 	private void popupMenu(int x, int y, int index) {
 		JPopupMenu popup = new JPopupMenu();
 		JMenuItem menuItem;
-    	menuItem = new JMenuItem(Messages.getString("ModuleListView.edit")); //$NON-NLS-1$
+    	menuItem = new JMenuItem(Messages.getString("ModuleListView.edit")); 
 		menuItem.addActionListener(this);
-	    menuItem.setActionCommand("edit"); //$NON-NLS-1$
+	    menuItem.setActionCommand("edit"); 
 		popup.add(menuItem);		
 		popup.show(list, x, y);
 	}

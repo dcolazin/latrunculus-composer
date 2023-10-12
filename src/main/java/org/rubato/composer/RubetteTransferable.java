@@ -29,7 +29,7 @@ import org.rubato.base.Rubette;
 
 public class RubetteTransferable implements Transferable {
 
-    public static final String rubetteType = DataFlavor.javaJVMLocalObjectMimeType+";class=org.rubato.base.AbstractRubette"; //$NON-NLS-1$
+    public static final String rubetteType = DataFlavor.javaJVMLocalObjectMimeType+";class=org.rubato.base.AbstractRubette"; 
     public static final DataFlavor rubetteFlavor;
 
     
