@@ -238,11 +238,11 @@ public class RealArithRubette extends AbstractRubette {
     }
     
     
-    private final static String INPUTS      = "Inputs"; 
-    private final static String EXPRESSION  = "Expression"; 
-    private final static String NUMBER_ATTR = "number"; 
-    private final static String RES_ATTR    = "res"; 
-    private final static String EXPR_ATTR   = "expr"; 
+    private static final String INPUTS      = "Inputs"; 
+    private static final String EXPRESSION  = "Expression"; 
+    private static final String NUMBER_ATTR = "number"; 
+    private static final String RES_ATTR    = "res"; 
+    private static final String EXPR_ATTR   = "expr"; 
     
     
     public void toXML(XMLWriter writer) {

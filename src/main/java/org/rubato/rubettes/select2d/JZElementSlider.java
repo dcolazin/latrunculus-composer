@@ -82,5 +82,5 @@ public class JZElementSlider extends JElementSlider {
     private int max;
     private int last;
     
-    private final static int MAX =  256;
+    private static final int MAX =  256;
 }

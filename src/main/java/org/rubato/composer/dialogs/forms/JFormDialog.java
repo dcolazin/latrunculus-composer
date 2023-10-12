@@ -299,11 +299,11 @@ public class JFormDialog
     }
     
 
-    private final static Type simpleType  = new Type("Simple", Form.SIMPLE);
-    private final static Type limitType   = new Type("Limit", Form.LIMIT);
-    private final static Type colimitType = new Type("Colimit", Form.COLIMIT);
-    private final static Type listType    = new Type("List", Form.LIST);
-    private final static Type powerType   = new Type("Power", Form.POWER);
+    private static final Type simpleType  = new Type("Simple", Form.SIMPLE);
+    private static final Type limitType   = new Type("Limit", Form.LIMIT);
+    private static final Type colimitType = new Type("Colimit", Form.COLIMIT);
+    private static final Type listType    = new Type("List", Form.LIST);
+    private static final Type powerType   = new Type("Power", Form.POWER);
     
     private JTextField  nameField;
     private JStatusline statusline;
@@ -315,7 +315,7 @@ public class JFormDialog
     private FormEntry   formEntry = null;
     
     private Color nameFieldBg;
-    private final static Color ERROR_BG_COLOR = Utilities.ERROR_BG_COLOR;
+    private static final Color ERROR_BG_COLOR = Utilities.ERROR_BG_COLOR;
     
     private int type = Form.SIMPLE;
     
@@ -324,5 +324,5 @@ public class JFormDialog
     
     private boolean toplevel;
     private TempDictionary dict = null;
-    private final static Repository rep = Repository.systemRepository();
+    private static final Repository rep = Repository.systemRepository();
 }

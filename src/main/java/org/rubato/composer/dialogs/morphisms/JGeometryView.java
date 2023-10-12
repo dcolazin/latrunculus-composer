@@ -197,7 +197,7 @@ public class JGeometryView extends JPanel implements ComponentListener {
     private double[] qy = { 0.0, 0.0, 1.0, 1.0 };
     private double x_min, y_min, x_max, y_max;
     
-    private final static Color[] ovalColors  = new Color[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW };
-    private final static Color   rectColor   = new Color(0.0f, 1.0f, 0.0f, 0.5f);
-    private final static Color   mirrorColor = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+    private static final Color[] ovalColors  = new Color[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW };
+    private static final Color   rectColor   = new Color(0.0f, 1.0f, 0.0f, 0.5f);
+    private static final Color   mirrorColor = new Color(1.0f, 0.0f, 0.0f, 0.5f);
 }

@@ -512,9 +512,9 @@ public final class ScorePlayRubette extends AbstractRubette implements
     protected ArrayList<Note> notes        = null;
 
     private Timer timer = null;
-    private final static int   TIMER_PERIOD = 50; // ms
-    private final static float TEMPO_GAMMA  = 2.0f;
-    private final static int   MAX_FACTOR   = 100;
+    private static final int   TIMER_PERIOD = 50; // ms
+    private static final float TEMPO_GAMMA  = 2.0f;
+    private static final int   MAX_FACTOR   = 100;
     
     protected double duration = 0;
     private int[] voices = new int[1];

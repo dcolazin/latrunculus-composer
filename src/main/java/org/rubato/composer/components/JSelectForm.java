@@ -202,9 +202,9 @@ public class JSelectForm extends JPanel implements ActionListener {
     
     private RubatoDictionary dict = null;
     
-    private final static String FORM = Messages.getString("JSelectForm.form");
-    private final static String CREATE_BUTTON = Messages.getString("JSelectForm.create");
-    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip");
-    private final static String SELECT_BUTTON = Messages.getString("JSelectForm.select"); }
-    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip");
+    private static final String FORM = Messages.getString("JSelectForm.form");
+    private static final String CREATE_BUTTON = Messages.getString("JSelectForm.create");
+    private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip");
+    private static final String SELECT_BUTTON = Messages.getString("JSelectForm.select"); }
+    private static final String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip");
 }

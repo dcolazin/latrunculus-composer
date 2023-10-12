@@ -233,7 +233,7 @@ public class Select2DRubette extends AbstractRubette {
     }
     
     
-    private final static String SELECTION_PANEL = "SelectionPanel"; 
+    private static final String SELECTION_PANEL = "SelectionPanel"; 
     
     public void toXML(XMLWriter writer) {
         if (form != null) {
@@ -290,11 +290,11 @@ public class Select2DRubette extends AbstractRubette {
     private Select2DDialog           select2DDialog = null;
     private ArrayList<Denotator>     denotators = null;
     
-    private final static ImageIcon icon;
+    private static final ImageIcon icon;
 
-    private final static String INPUTNULL_ERROR  = Messages.getString("Select2DRubette.inputnullerror"); ;
-    private final static String FORMNOTSET_ERROR = Messages.getString("Select2DRubette.formnotseterror"); ;
-    private final static String FORMNOTSET_INFO  = Messages.getString("Select2DRubette.noformsetinfo"); ;
+    private static final String INPUTNULL_ERROR  = Messages.getString("Select2DRubette.inputnullerror"); ;
+    private static final String FORMNOTSET_ERROR = Messages.getString("Select2DRubette.formnotseterror"); ;
+    private static final String FORMNOTSET_INFO  = Messages.getString("Select2DRubette.noformsetinfo"); ;
     
     static {
         icon = Icons.loadIcon(Select2DRubette.class, "/images/rubettes/select2d/select2dicon.png"); 

@@ -188,7 +188,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     }
 
     
-    private final static String XML = "XML";
+    private static final String XML = "XML";
     
     public void toXML(XMLWriter writer) {
         writer.empty(XML, VALUE_ATTR, isXML?TRUE_VALUE:FALSE_VALUE);

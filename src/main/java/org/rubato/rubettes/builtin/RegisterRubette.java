@@ -161,7 +161,7 @@ public class RegisterRubette extends AbstractRubette {
     }
 
     
-    private final static String NAME = "Name";
+    private static final String NAME = "Name";
     
     
     public void toXML(XMLWriter writer) {

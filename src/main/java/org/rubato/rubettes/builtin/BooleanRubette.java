@@ -186,10 +186,10 @@ public final class BooleanRubette extends AbstractRubette {
     }
     
     
-    private final static String INPUTS      = "Inputs"; 
-    private final static String EXPRESSION  = "Expression"; 
-    private final static String NUMBER_ATTR = "number"; 
-    private final static String EXPR_ATTR   = "expr"; 
+    private static final String INPUTS      = "Inputs"; 
+    private static final String EXPRESSION  = "Expression"; 
+    private static final String NUMBER_ATTR = "number"; 
+    private static final String EXPR_ATTR   = "expr"; 
     
     
     public void toXML(XMLWriter writer) {
@@ -319,11 +319,11 @@ public final class BooleanRubette extends AbstractRubette {
         private ArrayList<Integer> newCode = null;
         private String    error = ""; 
 
-        private final static int C_OR = 50;
-        private final static int C_AND = 51;
-        private final static int C_NOT = 52;
-        private final static int C_TRUE = 53;
-        private final static int C_FALSE = 54;
+        private static final int C_OR = 50;
+        private static final int C_AND = 51;
+        private static final int C_NOT = 52;
+        private static final int C_TRUE = 53;
+        private static final int C_FALSE = 54;
         
         private char nextChar() {
             char c;

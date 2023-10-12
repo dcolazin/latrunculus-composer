@@ -399,6 +399,6 @@ public class SplitMorphism extends ModuleMorphism {
     private ModuleMorphism[] morphisms;
     
     
-    private final static int ALL_CONSTANT = 0;
-    private final static int ALL_IDENTITY = 1;
+    private static final int ALL_CONSTANT = 0;
+    private static final int ALL_IDENTITY = 1;
 }

@@ -300,7 +300,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
     
-    private final static int basicHash = "ModularPolynomialRing".hashCode();
+    private static final int basicHash = "ModularPolynomialRing".hashCode();
 
 
     private ModularPolynomialRing(PolynomialElement modulus) {

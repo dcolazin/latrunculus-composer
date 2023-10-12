@@ -155,7 +155,7 @@ class JCompositionMorphismType
     private JMorphismEntry[]   morphisms;
     
     // the minimum number of components
-    private final static int MIN_COMPONENTS = 2;
+    private static final int MIN_COMPONENTS = 2;
     // the maximum number of components
-    private final static int MAX_COMPONENTS = 20;
+    private static final int MAX_COMPONENTS = 20;
 }

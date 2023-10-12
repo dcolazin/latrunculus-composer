@@ -228,5 +228,5 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
     }
 
     
-    private final static int basicHash = "RStringFreeModule".hashCode();    
+    private static final int basicHash = "RStringFreeModule".hashCode();    
 }

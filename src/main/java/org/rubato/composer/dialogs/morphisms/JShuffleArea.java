@@ -271,9 +271,9 @@ class JShuffleArea extends JPanel implements MouseListener, MouseMotionListener 
     private int lastY;
     private int lastLeftBox = -1;
     
-    private final static int BOX_SIZE = 25;
-    private final static int BOX_GAP = 20;
-    private final static int GAP = 50;
-    private final static int BORDER = 30;
-    private final static int BORDER2 = BORDER/2;
+    private static final int BOX_SIZE = 25;
+    private static final int BOX_GAP = 20;
+    private static final int GAP = 50;
+    private static final int BORDER = 30;
+    private static final int BORDER2 = BORDER/2;
 }

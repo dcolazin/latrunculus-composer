@@ -167,7 +167,7 @@ public class PluginManager {
     private LinkedList<ModuleMorphismPlugin>  moduleMorphismPlugins = new LinkedList<ModuleMorphismPlugin>();
     private LinkedList<String>  errors = new LinkedList<String>();
     
-    private final static FilenameFilter jarFilter = new FilenameFilter() {
+    private static final FilenameFilter jarFilter = new FilenameFilter() {
         public boolean accept(File file, String name) {
             return name.endsWith(".jar"); 
         }

@@ -197,9 +197,9 @@ public class MacroOutputRubette
     }
     
     
-    private final static String LABELS     = "Labels";
-    private final static String LABEL      = "Label";
-    private final static String COUNT_ATTR = "count";
+    private static final String LABELS     = "Labels";
+    private static final String LABEL      = "Label";
+    private static final String COUNT_ATTR = "count";
 
     
     public void toXML(XMLWriter writer) {

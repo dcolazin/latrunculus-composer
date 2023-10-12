@@ -237,5 +237,5 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
     }
 
     
-    private final static int basicHash = "CFreeModule".hashCode();
+    private static final int basicHash = "CFreeModule".hashCode();
 }

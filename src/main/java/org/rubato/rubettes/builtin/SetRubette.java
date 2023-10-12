@@ -403,10 +403,10 @@ public class SetRubette extends AbstractRubette {
     }
 
     
-    private final static String INPUTS      = "Inputs"; 
-    private final static String NUMBER_ATTR = "number"; 
-    private final static String OPERATION   = "Operation"; 
-    private final static String OP_ATTR     = "op"; 
+    private static final String INPUTS      = "Inputs"; 
+    private static final String NUMBER_ATTR = "number"; 
+    private static final String OPERATION   = "Operation"; 
+    private static final String OP_ATTR     = "op"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(OPERATION, OP_ATTR, op);

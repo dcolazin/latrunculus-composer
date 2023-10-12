@@ -154,7 +154,7 @@ public class SourceRubette extends AbstractRubette {
     }
 
     
-    private final static String REFRESHABLE = "Refreshable";
+    private static final String REFRESHABLE = "Refreshable";
     
     
     public void toXML(XMLWriter writer) {

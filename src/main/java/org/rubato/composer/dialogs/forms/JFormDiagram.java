@@ -481,6 +481,6 @@ public class JFormDiagram
     
     protected boolean[][] morphMatrix = new boolean[0][0];
     
-    private final static int  DIAGRAM_WIDTH = 100;
+    private static final int  DIAGRAM_WIDTH = 100;
     protected final static Font PLAIN_FONT = Font.decode("Sans-PLAIN"); 
 }

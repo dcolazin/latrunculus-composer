@@ -363,8 +363,8 @@ public class StatRubette extends AbstractRubette {
     }
     
 
-    private final static String OPERATION   = "Operation";
-    private final static String OP_ATTR     = "op";
+    private static final String OPERATION   = "Operation";
+    private static final String OP_ATTR     = "op";
     
     public void toXML(XMLWriter writer) {
         writer.empty(OPERATION, OP_ATTR, op);

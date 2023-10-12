@@ -447,7 +447,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     
-    private final static int basicHash = "PolynomialRing".hashCode();
+    private static final int basicHash = "PolynomialRing".hashCode();
 
 
     private PolynomialRing(Ring coefficientRing, String indeterminate) {

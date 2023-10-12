@@ -368,7 +368,7 @@ public final class ProductRing extends Ring<ProductElement> implements ProductFr
     
     private Ring[] factors;
 
-    private final static int basicHash = "ProductRing".hashCode();
+    private static final int basicHash = "ProductRing".hashCode();
     private int hashcode = 0;
     private static HashMap<List<Ring>,ProductRing> cache = new HashMap<List<Ring>,ProductRing>();
 }

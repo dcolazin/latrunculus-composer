@@ -138,7 +138,7 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
     }
 
     
-    private final static int basicHash = "RStringRing".hashCode();
+    private static final int basicHash = "RStringRing".hashCode();
 
     private RStringRing() { /* not allowed */ }
 }

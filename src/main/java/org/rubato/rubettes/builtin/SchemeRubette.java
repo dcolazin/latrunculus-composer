@@ -171,10 +171,10 @@ public class SchemeRubette extends AbstractRubette {
     }
 
     
-    private final static String INPUTS      = "Inputs"; 
-    private final static String OUTPUTS     = "Outputs"; 
-    private final static String CODE        = "Code"; 
-    private final static String NUMBER_ATTR = "number"; 
+    private static final String INPUTS      = "Inputs"; 
+    private static final String OUTPUTS     = "Outputs"; 
+    private static final String CODE        = "Code"; 
+    private static final String NUMBER_ATTR = "number"; 
     
     
     public void toXML(XMLWriter writer) {

@@ -199,5 +199,5 @@ public class Connector {
     
     private ArrayList<JLink> links = new ArrayList<JLink>();
     
-    private final static Color stateColor[] = new Color[] { Color.BLUE, Color.RED };
+    private static final Color stateColor[] = new Color[] { Color.BLUE, Color.RED };
 }

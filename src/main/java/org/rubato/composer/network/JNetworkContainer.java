@@ -202,5 +202,5 @@ public class JNetworkContainer extends JPanel {
     private ArrayList<JNetwork> jnetworks;
     private int          networkCounter = 1;
     
-    private final static String NAMEUSED_ERROR = Messages.getString("JNetworkContainer.nameused"); 
+    private static final String NAMEUSED_ERROR = Messages.getString("JNetworkContainer.nameused"); 
 }

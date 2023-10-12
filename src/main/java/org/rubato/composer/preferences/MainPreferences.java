@@ -84,7 +84,7 @@ public class MainPreferences extends JPreferencesPanel {
     }
     
     
-    private final static String[] linkTypes = {
+    private static final String[] linkTypes = {
         Messages.getString("MainPreferences.line"), 
         Messages.getString("MainPreferences.zigzag"), 
         Messages.getString("MainPreferences.curve") 

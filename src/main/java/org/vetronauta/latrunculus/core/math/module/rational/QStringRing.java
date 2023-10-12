@@ -146,7 +146,7 @@ public final class QStringRing
     }
 
     
-    private final static int basicHash = "QStringRing".hashCode();
+    private static final int basicHash = "QStringRing".hashCode();
 
     private QStringRing() { /* not allowed */ }
 }

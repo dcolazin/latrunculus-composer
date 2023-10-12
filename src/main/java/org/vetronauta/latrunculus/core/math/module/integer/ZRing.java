@@ -174,6 +174,6 @@ public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing 
     }
 
     
-    private final static int basicHash = "ZRing".hashCode();
+    private static final int basicHash = "ZRing".hashCode();
 
 }

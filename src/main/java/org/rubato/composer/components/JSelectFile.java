@@ -145,7 +145,7 @@ public class JSelectFile extends JPanel implements ActionListener {
 
     private ActionEvent       actionEvent  = null;
     private EventListenerList listenerList = new EventListenerList();
-    private final static String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
 
     public void addActionListener(ActionListener l) {
         listenerList.add(ActionListener.class, l);

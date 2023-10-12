@@ -421,7 +421,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     private PolynomialElement     polynomial;
     private PolynomialElement     one;
 
-    private final static int basicHash = "ModularPolynomialElement".hashCode();
+    private static final int basicHash = "ModularPolynomialElement".hashCode();
 
     public static void main(String[] args) {
         PolynomialRing pr = PolynomialRing.make(QRing.ring, "X");

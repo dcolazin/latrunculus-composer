@@ -101,5 +101,5 @@ public class JBooleanLabelCheckbox extends JTextField {
     private EventListenerList listenerList = new EventListenerList();
     private int               width;
     
-    private final static int STANDARD_WIDTH = 170; 
+    private static final int STANDARD_WIDTH = 170; 
 }

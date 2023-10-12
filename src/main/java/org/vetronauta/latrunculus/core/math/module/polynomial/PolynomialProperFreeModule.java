@@ -283,5 +283,5 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
     
     private PolynomialRing ring;
     
-    private final static int basicHash = "PolynomialFreeModule".hashCode();    
+    private static final int basicHash = "PolynomialFreeModule".hashCode();    
 }

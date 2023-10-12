@@ -134,8 +134,8 @@ public class LatchRubette extends AbstractRubette {
     }
 
     
-    private final static String OUTPUTS     = "Outputs"; 
-    private final static String NUMBER_ATTR = "number"; 
+    private static final String OUTPUTS     = "Outputs"; 
+    private static final String NUMBER_ATTR = "number"; 
     
     
     public void toXML(XMLWriter writer) {

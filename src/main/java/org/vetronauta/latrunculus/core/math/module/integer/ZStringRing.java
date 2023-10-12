@@ -135,7 +135,7 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
     }
 
     
-    private final static int basicHash = "ZStringRing".hashCode();
+    private static final int basicHash = "ZStringRing".hashCode();
 
     private ZStringRing() { /* not allowed */ }
 }

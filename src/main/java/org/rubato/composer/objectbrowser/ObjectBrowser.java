@@ -369,16 +369,16 @@ public class ObjectBrowser
     private TitledBorder objectListBorder;
     private TitledBorder objectViewBorder;
 
-    private final static Repository rep = Repository.systemRepository();
+    private static final Repository rep = Repository.systemRepository();
     
-    private final static int MODULE          = 0;
-    private final static int MODULE_ELEMENT  = 1;
-    private final static int MODULE_MORPHISM = 2;
-    private final static int FORM            = 3;
-    private final static int DENOTATOR       = 4;
-    private final static int SCHEME          = 5;
+    private static final int MODULE          = 0;
+    private static final int MODULE_ELEMENT  = 1;
+    private static final int MODULE_MORPHISM = 2;
+    private static final int FORM            = 3;
+    private static final int DENOTATOR       = 4;
+    private static final int SCHEME          = 5;
     
-    private final static String[] typeStrings = {
+    private static final String[] typeStrings = {
         Messages.getString("ObjectBrowser.modules"),
         Messages.getString("ObjectBrowser.moduleelements"),
         Messages.getString("ObjectBrowser.modulemorphisms"),

@@ -602,7 +602,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain) {
+    private static final EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain) {
         if (domain instanceof ProductRing) {
             return makeProductRingEmbedding((ProductRing)domain, codomain);
         }
@@ -642,7 +642,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
+    private static final EmbeddingMorphism makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
         EmbeddingMorphism m = null;
         if (domain.getFactorCount() == codomain.getFactorCount()) {
             final ModuleMorphism[] ems = new ModuleMorphism[domain.getFactorCount()];
@@ -683,7 +683,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makePolynomialEmbedding(final Ring domain, final PolynomialRing codomain) {
+    private static final EmbeddingMorphism makePolynomialEmbedding(final Ring domain, final PolynomialRing codomain) {
         EmbeddingMorphism m = null;
         Ring coeffRing = codomain.getCoefficientRing();
         if (domain instanceof PolynomialRing) {
@@ -723,7 +723,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
+    private static final EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -736,7 +736,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static ModuleMorphism makeStringEmbedding(final Ring domain, final StringRing codomain) {
+    private static final ModuleMorphism makeStringEmbedding(final Ring domain, final StringRing codomain) {
         ModuleMorphism m = null;        
         if (domain instanceof StringRing) {
             m = makeStringEmbedding((StringRing)domain, codomain);
@@ -769,7 +769,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private final static EmbeddingMorphism makeStringEmbedding(final StringRing domain, final StringRing codomain) {
+    private static final EmbeddingMorphism makeStringEmbedding(final StringRing domain, final StringRing codomain) {
         if (make(domain.getFactorRing(), codomain.getFactorRing()) != null) {
             return new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {

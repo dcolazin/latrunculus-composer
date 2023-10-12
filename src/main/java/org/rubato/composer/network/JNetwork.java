@@ -938,10 +938,10 @@ public class JNetwork extends JLayeredPane
     private DropTarget dropTarget;
     private ChangeObservable changeObservable = new ChangeObservable();
 
-    private final static Color backgroundColor = Color.WHITE;
+    private static final Color backgroundColor = Color.WHITE;
 
-    private final static Dimension PREFERRED_SIZE = new Dimension(1500, 1500);
-    private final static Dimension MINIMUM_SIZE = new Dimension(200, 200);
+    private static final Dimension PREFERRED_SIZE = new Dimension(1500, 1500);
+    private static final Dimension MINIMUM_SIZE = new Dimension(200, 200);
 
     private Dimension currentSize = PREFERRED_SIZE;
     

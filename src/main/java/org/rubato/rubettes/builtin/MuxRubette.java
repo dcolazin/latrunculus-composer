@@ -153,8 +153,8 @@ public class MuxRubette extends AbstractRubette {
     }
 
     
-    private final static String INPUTS      = "Inputs"; 
-    private final static String NUMBER_ATTR = "number"; 
+    private static final String INPUTS      = "Inputs"; 
+    private static final String NUMBER_ATTR = "number"; 
     
     public void toXML(XMLWriter writer) {
         writer.empty(INPUTS, NUMBER_ATTR, getInCount());

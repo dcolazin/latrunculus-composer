@@ -54,5 +54,5 @@ public abstract class AbstractDenotatorEntry
     
     private ActionEvent       actionEvent  = null;
     private EventListenerList listenerList = new EventListenerList();
-    private final static String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
 }

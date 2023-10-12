@@ -563,17 +563,17 @@ class Select2DPanel
     }
     
     
-    private final static String EXTENT    = "Extent"; 
-    private final static String XMIN      = "xmin"; 
-    private final static String XMAX      = "xmax"; 
-    private final static String YMIN      = "ymin"; 
-    private final static String YMAX      = "ymax"; 
-    private final static String XPATH     = "XPath"; 
-    private final static String YPATH     = "YPath"; 
-    private final static String POINT     = "Point"; 
-    private final static String SELECTION = "Selection"; 
-    private final static String X_ATTR    = "X"; 
-    private final static String Y_ATTR    = "Y"; 
+    private static final String EXTENT    = "Extent"; 
+    private static final String XMIN      = "xmin"; 
+    private static final String XMAX      = "xmax"; 
+    private static final String YMIN      = "ymin"; 
+    private static final String YMAX      = "ymax"; 
+    private static final String XPATH     = "XPath"; 
+    private static final String YPATH     = "YPath"; 
+    private static final String POINT     = "Point"; 
+    private static final String SELECTION = "Selection"; 
+    private static final String X_ATTR    = "X"; 
+    private static final String Y_ATTR    = "Y"; 
     
     public void toXML(XMLWriter writer) {
         WindowConfig config = model.getWindowConfig();
@@ -700,24 +700,24 @@ class Select2DPanel
     // Strings (tooltips, titles...)
     //
     
-    private final static String NEWSEL_TIP      = Messages.getString("Select2DPanel.createnewselectiontip"); 
-    private final static String SELSEL_TIP      = Messages.getString("Select2DPanel.selectselectiontip"); 
-    private final static String ADD_TIP         = Messages.getString("Select2DPanel.addselpt"); 
-    private final static String REMOVE_TIP      = Messages.getString("Select2DPanel.remselpt"); 
-    private final static String MOVE_TIP        = Messages.getString("Select2DPanel.move"); 
-    private final static String IDENTIFY_TIP    = Messages.getString("Select2DPanel.identify"); 
-    private final static String ZOOM_TIP        = Messages.getString("Select2DPanel.windowzoomtip"); 
-    private final static String AUTO_ZOOM_TIP   = Messages.getString("Select2DPanel.zoom"); 
-    private final static String XAXISTREE_TITLE = Messages.getString("Select2DPanel.xaxis"); 
-    private final static String YAXISTREE_TITLE = Messages.getString("Select2DPanel.yaxis"); ;
-    private final static String EXTENT_TITLE    = Messages.getString("Select2DPanel.extent"); ;
-    private final static String POINTER_TITLE   = Messages.getString("Select2DPanel.pointer"); ;    
+    private static final String NEWSEL_TIP      = Messages.getString("Select2DPanel.createnewselectiontip"); 
+    private static final String SELSEL_TIP      = Messages.getString("Select2DPanel.selectselectiontip"); 
+    private static final String ADD_TIP         = Messages.getString("Select2DPanel.addselpt"); 
+    private static final String REMOVE_TIP      = Messages.getString("Select2DPanel.remselpt"); 
+    private static final String MOVE_TIP        = Messages.getString("Select2DPanel.move"); 
+    private static final String IDENTIFY_TIP    = Messages.getString("Select2DPanel.identify"); 
+    private static final String ZOOM_TIP        = Messages.getString("Select2DPanel.windowzoomtip"); 
+    private static final String AUTO_ZOOM_TIP   = Messages.getString("Select2DPanel.zoom"); 
+    private static final String XAXISTREE_TITLE = Messages.getString("Select2DPanel.xaxis"); 
+    private static final String YAXISTREE_TITLE = Messages.getString("Select2DPanel.yaxis"); ;
+    private static final String EXTENT_TITLE    = Messages.getString("Select2DPanel.extent"); ;
+    private static final String POINTER_TITLE   = Messages.getString("Select2DPanel.pointer"); ;    
     
     //
     // Icons
     //
     
-    private final static ImageIcon getIcon(String name) {
+    private static final ImageIcon getIcon(String name) {
         return Icons.loadIcon(Select2DPanel.class, name);        
     }
     

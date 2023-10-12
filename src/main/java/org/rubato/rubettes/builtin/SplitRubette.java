@@ -227,7 +227,7 @@ public class SplitRubette
     }
     
     
-    private final static String SELECTED = "Selected";
+    private static final String SELECTED = "Selected";
     
     public void toXML(XMLWriter writer) {
         if (form != null) {

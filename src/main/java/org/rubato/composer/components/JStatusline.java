@@ -88,11 +88,11 @@ public class JStatusline extends JTextField {
     }    
 
 
-    private final static Color ERROR_COLOR   = Color.RED;
-    private final static Color WARNING_COLOR = Color.ORANGE;
-    private final static Color INFO_COLOR    = Color.GREEN;
+    private static final Color ERROR_COLOR   = Color.RED;
+    private static final Color WARNING_COLOR = Color.ORANGE;
+    private static final Color INFO_COLOR    = Color.GREEN;
     
-    private final static int TIMEOUT = 5000;
+    private static final int TIMEOUT = 5000;
     
     private Timer timer;
 }

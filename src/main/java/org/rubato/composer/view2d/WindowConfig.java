@@ -114,5 +114,5 @@ public final class WindowConfig {
     }
     
     
-    private final static int MIN_TICK_SIZE = 30;
+    private static final int MIN_TICK_SIZE = 30;
 }

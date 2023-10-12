@@ -173,10 +173,10 @@ class JSplitArea extends JPanel implements MouseListener {
     private int[] splits;
     private int   boxWidth;
     
-    private final static int BOX_HEIGHT     = 25;
-    private final static int BOX_MIN_WIDTH  = 10;
-    private final static int BOX_MAX_WIDTH  = BOX_HEIGHT;
-    private final static int BORDER         = 15;
+    private static final int BOX_HEIGHT     = 25;
+    private static final int BOX_MIN_WIDTH  = 10;
+    private static final int BOX_MAX_WIDTH  = BOX_HEIGHT;
+    private static final int BORDER         = 15;
     
-    private final static Stroke stroke = new BasicStroke(2f);
+    private static final Stroke stroke = new BasicStroke(2f);
 }

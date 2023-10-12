@@ -301,6 +301,6 @@ public final class ProductProperFreeModule extends ProperFreeModule<ProductPrope
     
     private ProductRing ring;
     
-    private final static int basicHash = "ProductFreeModule".hashCode();
+    private static final int basicHash = "ProductFreeModule".hashCode();
     int hashcode = 0;
 }

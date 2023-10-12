@@ -875,5 +875,5 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     private PolynomialRing ring;
     private RingElement[]  coefficients;
     
-    private final static int basicHash = "PolynomialElement".hashCode();
+    private static final int basicHash = "PolynomialElement".hashCode();
 }

@@ -322,11 +322,11 @@ public class JNote
 
     private JColorChooser colorChooser = null;
 
-    private final static Color     DEFAULT_BACKGROUND = Color.YELLOW;
-    private final static Color     DEFAULT_FOREGROUND = Color.BLACK;
-    private final static Dimension DEFAULT_SIZE = new Dimension(180, 120);
-    private final static Border    emptyBorder = BorderFactory.createEmptyBorder();
-    private final static Border    marginBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-    private final static Border    lineBorder = BorderFactory.createLineBorder(Color.BLACK);
-    private final static Font      titleFont = new Font("sans", Font.BOLD, 16); 
+    private static final Color     DEFAULT_BACKGROUND = Color.YELLOW;
+    private static final Color     DEFAULT_FOREGROUND = Color.BLACK;
+    private static final Dimension DEFAULT_SIZE = new Dimension(180, 120);
+    private static final Border    emptyBorder = BorderFactory.createEmptyBorder();
+    private static final Border    marginBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    private static final Border    lineBorder = BorderFactory.createLineBorder(Color.BLACK);
+    private static final Font      titleFont = new Font("sans", Font.BOLD, 16); 
 }

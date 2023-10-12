@@ -158,7 +158,7 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
     }
 
     
-    private final static int basicHash = "ZStringRing".hashCode();
+    private static final int basicHash = "ZStringRing".hashCode();
 
     private int modulus;
 }

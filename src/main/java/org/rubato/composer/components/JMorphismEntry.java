@@ -223,5 +223,5 @@ public class JMorphismEntry extends JPanel implements ActionListener {
 
     private EventListenerList listenerList = new EventListenerList();
     
-    private final static String EMPTY_STRING = ""; 
+    private static final String EMPTY_STRING = ""; 
 }

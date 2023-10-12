@@ -157,5 +157,5 @@ public class RecentFiles implements ActionListener {
     protected Action action       = null;
     protected File   selectedFile = null;
     
-    private final static int MAX_FILES = 10;
+    private static final int MAX_FILES = 10;
 }

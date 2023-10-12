@@ -197,7 +197,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
 
     private ActionEvent       actionEvent  = null;
     private EventListenerList listenerList = new EventListenerList();
-    private final static String EMPTY_STRING = ""; 
+    private static final String EMPTY_STRING = ""; 
 
     public void addActionListener(ActionListener l) {
         listenerList.add(ActionListener.class, l);
@@ -233,10 +233,10 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     
     private RubatoDictionary dict = null;
     
-    private final static String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); 
-    private final static String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); 
-    private final static String SELECT_BUTTON = Messages.getString("JSelectDenotator.select"); 
-    private final static String SELECT_BUTTON_TIP = Messages.getString("JSelectDenotator.selecttip"); 
-    private final static String ANONYMOUS = Messages.getString("JSelectDenotator.anonymous"); 
-    private final static String SELECT_DENOTATOR = Messages.getString("JSelectDenotator.selectdenotator");  
+    private static final String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); 
+    private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); 
+    private static final String SELECT_BUTTON = Messages.getString("JSelectDenotator.select"); 
+    private static final String SELECT_BUTTON_TIP = Messages.getString("JSelectDenotator.selecttip"); 
+    private static final String ANONYMOUS = Messages.getString("JSelectDenotator.anonymous"); 
+    private static final String SELECT_DENOTATOR = Messages.getString("JSelectDenotator.selectdenotator");  
 }

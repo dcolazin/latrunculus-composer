@@ -106,12 +106,12 @@ public class NoteModel {
     }
     
     
-    private final static String FG_ATTR = "fg";
-    private final static String BG_ATTR = "bg";
-    private final static String W_ATTR  = "w";
-    private final static String H_ATTR  = "h";
-    private final static String TITLE   = "Title";
-    private final static String TEXT    = "Text";
+    private static final String FG_ATTR = "fg";
+    private static final String BG_ATTR = "bg";
+    private static final String W_ATTR  = "w";
+    private static final String H_ATTR  = "h";
+    private static final String TITLE   = "Title";
+    private static final String TEXT    = "Text";
 
     
     public void toXML(XMLWriter writer) {

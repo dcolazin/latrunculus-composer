@@ -209,14 +209,14 @@ public class JModuleElementList
 
     private Module          module;
 
-    private final static String ADD        = Messages.getString("JModuleElementList.add"); 
-    private final static String REMOVE     = Messages.getString("JModuleElementList.remove"); 
-    private final static String CLEAR      = Messages.getString("JModuleElementList.clear"); 
-    private final static String UP         = Messages.getString("JModuleElementList.up"); 
-    private final static String DOWN       = Messages.getString("JModuleElementList.down"); 
-    private final static String ADD_TIP    = Messages.getString("JModuleElementList.addtooltip"); 
-    private final static String REMOVE_TIP = Messages.getString("JModuleElementList.removetooltip"); 
-    private final static String CLEAR_TIP  = Messages.getString("JModuleElementList.cleartooltip"); 
-    private final static String UP_TIP     = Messages.getString("JModuleElementList.uptip"); 
-    private final static String DOWN_TIP   = Messages.getString("JModuleElementList.downtip"); 
+    private static final String ADD        = Messages.getString("JModuleElementList.add"); 
+    private static final String REMOVE     = Messages.getString("JModuleElementList.remove"); 
+    private static final String CLEAR      = Messages.getString("JModuleElementList.clear"); 
+    private static final String UP         = Messages.getString("JModuleElementList.up"); 
+    private static final String DOWN       = Messages.getString("JModuleElementList.down"); 
+    private static final String ADD_TIP    = Messages.getString("JModuleElementList.addtooltip"); 
+    private static final String REMOVE_TIP = Messages.getString("JModuleElementList.removetooltip"); 
+    private static final String CLEAR_TIP  = Messages.getString("JModuleElementList.cleartooltip"); 
+    private static final String UP_TIP     = Messages.getString("JModuleElementList.uptip"); 
+    private static final String DOWN_TIP   = Messages.getString("JModuleElementList.downtip"); 
 }

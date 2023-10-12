@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin.address;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoConstants;
@@ -275,7 +276,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 addError(INPUT2WRONGTYPE_ERROR);
             }
         }
-        else if (outputForm != null) {
+        else {
             // if an output form is configured
             // 2nd input denotator may be of type power or list
             // containing denotators of type simple
@@ -283,8 +284,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 input2 instanceof ListDenotator) {
                 List<Denotator> list = null;
                 list = ((FactorDenotator)input2).getFactors();
-                if (list.size() == 0) {
-                    res = DenoFactory.makeDenotator(outputForm, new Denotator[0]);
+                if (CollectionUtils.isEmpty(list)) {
+                    res = DenoFactory.makeDenotator(outputForm);
                 }
                 else {
                     if (list.get(0) instanceof SimpleDenotator) {
@@ -306,16 +307,13 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
             else if (input2 instanceof SimpleDenotator) {
                 res = input.changeAddress(((SimpleDenotator)input2).getModuleMorphism());
-                if (res == null) { 
+                if (res == null) {
                     addError(INPUT2WRONGTYPE_ERROR);
                 }
             }
             else {
                 addError(INPUT2WRONGTYPE_ERROR);
             }
-        }
-        else {
-            addError(INPUT2WRONGTYPE_ERROR);
         }
         return res;
     }
@@ -904,13 +902,13 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private List<ModuleElement> elements = null;
     private ModuleMorphism      morphism = null; 
     
-    private final static int EVAL_TYPE_NULL    = 0;
-    private final static int EVAL_TYPE_ELEMENT = 1;
-    private final static int EVAL_TYPE_LIST    = 2;
-    private final static int EVAL_TYPE_CHANGE  = 3;
-    private final static int EVAL_TYPE_INPUT   = 4;
+    private static final int EVAL_TYPE_NULL    = 0;
+    private static final int EVAL_TYPE_ELEMENT = 1;
+    private static final int EVAL_TYPE_LIST    = 2;
+    private static final int EVAL_TYPE_CHANGE  = 3;
+    private static final int EVAL_TYPE_INPUT   = 4;
     
-    private final static String[] evalTypes = {
+    private static final String[] evalTypes = {
         Messages.getString("AddressEvalRubette.evalnull"), 
         Messages.getString("AddressEvalRubette.evalelement"), 
         Messages.getString("AddressEvalRubette.evalllist"), 
@@ -919,26 +917,26 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     };
     
     // Message strings
-    private final static String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror");  
-    private final static String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");  
-    private final static String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); 
-    private final static String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); 
-    private final static String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror");     
-    private final static String LISTNOTSET_ERROR    = Messages.getString("AddressEvalRubette.listnotset"); 
-    private final static String OUTPUTFORMNOTSET_ERROR = Messages.getString("AddressEvalRubette.outputformnotset"); 
-    private final static String MORPHISMNOTSET_ERROR = Messages.getString("AddressEvalRubette.morphismnotset"); 
-    private final static String ADDRESSMORPHISM_ERROR = Messages.getString("AddressEvalRubette.addressmorphismerror"); 
-    private final static String NOMODULE_ERROR      = Messages.getString("AddressEvalRubette.modnotset"); 
-    private final static String NOELEMENT_ERROR     = Messages.getString("AddressEvalRubette.modelnotset"); 
-    private final static String NOOUTPUTFORM_ERROR  = Messages.getString("AddressEvalRubette.oformnotset"); 
-    private final static String NOELEMENTS_ERROR    = Messages.getString("AddressEvalRubette.noellist"); 
-    private final static String NOMORPHISM_ERROR    = Messages.getString("AddressEvalRubette.modmorphnotset"); 
-    private final static String INPUT2WRONGTYPE_ERROR = Messages.getString("AddressEvalRubette.secinputwrongtype"); 
-    private final static String INPUT2NOTSET_ERROR  = Messages.getString("AddressEvalRubette.secinputnull"); 
-    private final static String SIMPLE              = Messages.getString("AddressEvalRubette.simple"); 
-    private final static String LISTORPOWER         = Messages.getString("AddressEvalRubette.listorpower"); 
+    private static final String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror");
+    private static final String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");  
+    private static final String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); 
+    private static final String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); 
+    private static final String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror");     
+    private static final String LISTNOTSET_ERROR    = Messages.getString("AddressEvalRubette.listnotset"); 
+    private static final String OUTPUTFORMNOTSET_ERROR = Messages.getString("AddressEvalRubette.outputformnotset"); 
+    private static final String MORPHISMNOTSET_ERROR = Messages.getString("AddressEvalRubette.morphismnotset"); 
+    private static final String ADDRESSMORPHISM_ERROR = Messages.getString("AddressEvalRubette.addressmorphismerror"); 
+    private static final String NOMODULE_ERROR      = Messages.getString("AddressEvalRubette.modnotset"); 
+    private static final String NOELEMENT_ERROR     = Messages.getString("AddressEvalRubette.modelnotset"); 
+    private static final String NOOUTPUTFORM_ERROR  = Messages.getString("AddressEvalRubette.oformnotset"); 
+    private static final String NOELEMENTS_ERROR    = Messages.getString("AddressEvalRubette.noellist"); 
+    private static final String NOMORPHISM_ERROR    = Messages.getString("AddressEvalRubette.modmorphnotset"); 
+    private static final String INPUT2WRONGTYPE_ERROR = Messages.getString("AddressEvalRubette.secinputwrongtype"); 
+    private static final String INPUT2NOTSET_ERROR  = Messages.getString("AddressEvalRubette.secinputnull"); 
+    private static final String SIMPLE              = Messages.getString("AddressEvalRubette.simple"); 
+    private static final String LISTORPOWER         = Messages.getString("AddressEvalRubette.listorpower"); 
 
-    private final static ImageIcon icon;
+    private static final ImageIcon icon;
 
     static {
         icon = Icons.loadIcon(AddressEvalRubette.class, "/images/rubettes/builtin/address/addressicon.png"); 

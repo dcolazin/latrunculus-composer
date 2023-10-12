@@ -639,34 +639,34 @@ public class ArithCompiler {
                    " id="+id;
         }
         
-        private final static int LPAREN = 100;
-        private final static int RPAREN = 101;
-        private final static int EQUALS = 102;
-        private final static int LT     = 103;
-        private final static int LE     = 104;
-        private final static int GT     = 105;
-        private final static int GE     = 106;
-        private final static int PARAM  = 107;
-        private final static int IF     = 108;
-        private final static int THEN   = 109;
-        private final static int ELSE   = 110;
-        private final static int TIMES  = 111;
-        private final static int PLUS   = 112;
-        private final static int DIV    = 113;
-        private final static int MINUS  = 114;
-        private final static int NUMBER = 115;
-        private final static int TRUE   = 116;
-        private final static int FALSE  = 117;
-        private final static int EXP    = 121;
-        private final static int NOT    = 122;
-        private final static int AND    = 123;
-        private final static int OR     = 124;
-        private final static int NEQ    = 125;
-        private final static int ID     = 126;
-        private final static int COMMA  = 127;
-        private final static int EOS    = 999;
-        private final static int ERROR  = 998;
-        private final static int EMPTY  = 997;
+        private static final int LPAREN = 100;
+        private static final int RPAREN = 101;
+        private static final int EQUALS = 102;
+        private static final int LT     = 103;
+        private static final int LE     = 104;
+        private static final int GT     = 105;
+        private static final int GE     = 106;
+        private static final int PARAM  = 107;
+        private static final int IF     = 108;
+        private static final int THEN   = 109;
+        private static final int ELSE   = 110;
+        private static final int TIMES  = 111;
+        private static final int PLUS   = 112;
+        private static final int DIV    = 113;
+        private static final int MINUS  = 114;
+        private static final int NUMBER = 115;
+        private static final int TRUE   = 116;
+        private static final int FALSE  = 117;
+        private static final int EXP    = 121;
+        private static final int NOT    = 122;
+        private static final int AND    = 123;
+        private static final int OR     = 124;
+        private static final int NEQ    = 125;
+        private static final int ID     = 126;
+        private static final int COMMA  = 127;
+        private static final int EOS    = 999;
+        private static final int ERROR  = 998;
+        private static final int EMPTY  = 997;
     }
         
     

@@ -295,5 +295,5 @@ public class JPowerListDenotatorEntry
     
     private RubatoDictionary dict;
 
-    private final static Border emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
+    private static final Border emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 }

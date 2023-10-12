@@ -363,7 +363,7 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
 
     
-    private final static int basicHash = "DirectSumModule".hashCode();
+    private static final int basicHash = "DirectSumModule".hashCode();
 
     private Module[] components;
     private Ring	 ring;

@@ -208,9 +208,9 @@ public class MacroRubette extends AbstractRubette {
     }
     
     
-    private final static String INFO  = "Info";
-    private final static String SHORT = "ShortDescription";
-    private final static String LONG  = "LongDescription";
+    private static final String INFO  = "Info";
+    private static final String SHORT = "ShortDescription";
+    private static final String LONG  = "LongDescription";
 
     
     public void toXML(XMLWriter writer) {

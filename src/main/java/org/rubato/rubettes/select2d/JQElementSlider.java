@@ -83,5 +83,5 @@ public class JQElementSlider extends JElementSlider {
     private Rational max;
     private Rational last;
     
-    private final static Rational MAX =  new Rational(256);
+    private static final Rational MAX =  new Rational(256);
 }

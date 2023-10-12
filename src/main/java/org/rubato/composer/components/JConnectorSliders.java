@@ -132,5 +132,5 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
     private JSlider      outSlider = null;
     private TitledBorder outBorder;
     
-    private final static Border emptyBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+    private static final Border emptyBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 }

@@ -225,9 +225,9 @@ public class Selection {
     private boolean          selected = false;
     
     protected final static Color POINT_COLOR = Color.BLACK;
-    private final static Color BG_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.2f);
-    private final static Color FG_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.6f);
-    private final static Color SELECTED_BG_COLOR = new Color(0.5f, 0.0f, 0.0f, 0.2f);
-    private final static Color SELECTED_FG_COLOR = new Color(0.5f, 0.0f, 0.0f, 0.6f);
-    private final static int POINT_SIZE = 7;
+    private static final Color BG_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.2f);
+    private static final Color FG_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.6f);
+    private static final Color SELECTED_BG_COLOR = new Color(0.5f, 0.0f, 0.0f, 0.2f);
+    private static final Color SELECTED_FG_COLOR = new Color(0.5f, 0.0f, 0.0f, 0.6f);
+    private static final int POINT_SIZE = 7;
 }

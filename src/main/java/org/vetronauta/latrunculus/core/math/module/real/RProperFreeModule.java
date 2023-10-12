@@ -231,5 +231,5 @@ public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
     }
 
 
-    private final static int basicHash = "RFreeModule".hashCode();
+    private static final int basicHash = "RFreeModule".hashCode();
 }

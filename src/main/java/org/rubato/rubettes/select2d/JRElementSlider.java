@@ -82,5 +82,5 @@ public class JRElementSlider extends JElementSlider {
     private double max;
     private double last;
     
-    private final static double MAX =  256;
+    private static final double MAX =  256;
 }

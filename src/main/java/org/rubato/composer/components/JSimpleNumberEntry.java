@@ -162,5 +162,5 @@ public class JSimpleNumberEntry
     private JTextField[] inputFields;
     private Module       module = null;
     
-    private final static UserPreferences prefs = UserPreferences.getUserPreferences();
+    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

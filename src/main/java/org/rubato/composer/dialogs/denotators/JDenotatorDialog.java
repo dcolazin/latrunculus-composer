@@ -319,8 +319,8 @@ public final class JDenotatorDialog
 
     private DenotatorEntry denotatorEntry = null;
 
-    private final static Border formBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.form"));
-    private final static Border nameBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.name"));
+    private static final Border formBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.form"));
+    private static final Border nameBorder = makeTitledBorder(Messages.getString("JDenotatorDialog.name"));
 
-    private final static Repository rep = Repository.systemRepository();
+    private static final Repository rep = Repository.systemRepository();
 }

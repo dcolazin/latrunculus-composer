@@ -86,5 +86,5 @@ public class JZnElementSlider extends JElementSlider {
     private int last;
     private int modulus;
     
-    private final static int MAX =  256;
+    private static final int MAX =  256;
 }

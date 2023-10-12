@@ -507,5 +507,5 @@ public class ProductElement extends RingElement<ProductElement> implements Produ
     private RingElement<?>[] factors;
     private ProductRing   ring = null;
 
-    private final static int basicHash = "ProductElement".hashCode();
+    private static final int basicHash = "ProductElement".hashCode();
 }
