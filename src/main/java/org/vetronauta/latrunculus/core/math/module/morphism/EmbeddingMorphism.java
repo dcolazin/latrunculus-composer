@@ -469,10 +469,10 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
                         QProperFreeElement e = (QProperFreeElement)((QFreeElement)element).resize(codim);
-                        Rational[] v_from = e.getValue();
+                        QElement[] v_from = e.getValue();
                         double[] v_to = new double[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
-                            v_to[i] = v_from[i].doubleValue();
+                            v_to[i] = v_from[i].getValue().doubleValue();
                         }
                         return RProperFreeElement.make(v_to);
                     }
@@ -483,10 +483,10 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
                         QProperFreeElement e = (QProperFreeElement)((QFreeElement)element).resize(codim);
-                        Rational[] v_from = e.getValue();
+                        QElement[] v_from = e.getValue();
                         Complex[] v_to = new Complex[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
-                            v_to[i] = new Complex(v_from[i].doubleValue());
+                            v_to[i] = new Complex(v_from[i].getValue().doubleValue());
                         }
                         return CProperFreeElement.make(v_to);
                     }

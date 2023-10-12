@@ -37,6 +37,7 @@ import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
@@ -71,8 +72,8 @@ class JGraphSelect
             QConfiguration qconfig = new QConfiguration();
             config = qconfig;
             for (ModuleElement m : elements) {
-                Rational[] p = ((QProperFreeElement)m).getValue();
-                qconfig.addPoint(p[0], p[1]);
+                QElement[] p = ((QProperFreeElement)m).getValue();
+                qconfig.addPoint(p[0].getValue(), p[1].getValue());
             }
         }
         else if (ring instanceof RRing) {

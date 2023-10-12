@@ -35,10 +35,8 @@ public final class SumMorphism extends ModuleMorphism {
      *
      * @throws CompositionException if sum is not valid
      */
-    public static ModuleMorphism make(ModuleMorphism f, ModuleMorphism g)
-            throws CompositionException {
-        if (!f.getDomain().equals(g.getDomain()) ||
-            !f.getCodomain().equals(g.getCodomain())) {
+    public static ModuleMorphism make(ModuleMorphism f, ModuleMorphism g) throws CompositionException {
+        if (!f.getDomain().equals(g.getDomain()) || !f.getCodomain().equals(g.getCodomain())) {
             throw new CompositionException("SumMorphism.make: Cannot add "+g+" to "+f);
         }
         else if (f.isConstant() && g.isConstant()) {

@@ -41,21 +41,13 @@ public abstract class QFreeAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            Rational[] rv;
-            if (x instanceof QProperFreeElement) {
-                rv = ((QProperFreeElement) x).getValue();
-            }
-            else {
-                rv = new Rational[x.getLength()];
+            Rational[] rv = new Rational[x.getLength()];
                 for (int i = 0; i < x.getLength(); i++) {
                     rv[i] = ((QElement) x.getComponent(i)).getValue();
                 }
-            }
             return QProperFreeElement.make(mapValue(rv));
         }
-        else {
-            throw new MappingException("QFreeAbstractMorphism.map: ", x, this);
-        }
+        throw new MappingException("QFreeAbstractMorphism.map: ", x, this);
     }
 
     

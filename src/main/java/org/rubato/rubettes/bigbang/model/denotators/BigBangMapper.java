@@ -35,7 +35,7 @@ public class BigBangMapper extends BigBangManipulator {
 	public OperationPathResults mapCategorizedObjects(Set<DenotatorPath> objectPaths) {
 		//TODO REALLY CHECK WHAT HAPPENS WITHOUT CATEGORIZED OBJECTS
 		//for (int i = 0; i < objectPaths.size(); i++) {
-		this.mapObjects(new ArrayList<DenotatorPath>(objectPaths), this.transformationPaths.get(0));
+		this.mapObjects(new ArrayList<>(objectPaths), this.transformationPaths.get(0));
 		//}
 		//return this.denotatorManager.getCurrentNewPaths();
 		return this.denotatorManager.getPathResults();

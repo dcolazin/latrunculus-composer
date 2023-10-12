@@ -23,14 +23,13 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.List;
@@ -43,65 +42,26 @@ import java.util.List;
  */
 public final class QRing extends ArithmeticRing<QElement> implements NumberRing {
 
+    private QRing() {
+        super(new QElement(0), new QElement(1));
+    }
+
     /**
      * The unique instance of the ring of rationals.
      */
     public static final QRing ring = new QRing();
 
-    public QElement getZero() {
-        return new QElement(new Rational(0));
-    }
-    
-
-    public QElement getOne() {
-        return new QElement(new Rational(1));
-    }
-
-    
-    public QElement getUnitElement(int i) {
-        return getOne();
-    }
-    
-    
     public QProperFreeModule getNullModule() {
         return QProperFreeModule.nullModule;
     }
-    
-    
-    public QRing getComponentModule(int i) {
-        return this;
-    }
-    
-    
-    public QRing getRing() {
-        return this;
-    }
-    
-    
-    public boolean isField() {
-        return true;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return true;
-    }
-
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-    
 
     public boolean hasElement(ModuleElement element) {
         return element instanceof QElement;
     }
-    
 
-    public QFreeModule getFreeModule(int dimension) {
+    public FreeModule<?,QElement> getFreeModule(int dimension) {
         return QProperFreeModule.make(dimension);
     }
-
 
     public boolean equals(Object object) {
         return this == object;
@@ -126,7 +86,6 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
             return null;
         }
     }
-
 
     public QElement cast(ModuleElement element) {
         if (element instanceof ZElement) {
@@ -205,9 +164,8 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
     public int getNumberRingOrder() {
         return 200;
     }
-    
 
-    private final static int basicHash = "QRing".hashCode();
 
-    private QRing() { /* not allowed */ }
+    private static final int basicHash = "QRing".hashCode();
+
 }
