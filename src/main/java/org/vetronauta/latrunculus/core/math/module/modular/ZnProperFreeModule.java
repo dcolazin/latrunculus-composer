@@ -41,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZnElement>,ZnElement> {
+public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZnElement>,ZnElement> implements Modular {
 
     public static FreeModule<?, ZnElement> make(int dimension, int modulus) {
         dimension = Math.max(dimension, 0);

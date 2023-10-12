@@ -30,8 +30,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -528,7 +528,7 @@ public class JMorphismDialog
             }
             else if (selectedType.equals(MODULO_TYPE)) {
                 int dim = domain.getDimension();
-                int mod = ((ZnFreeModule)codomain).getModulus();
+                int mod = ((Modular)codomain).getModulus();
                 setMorphism(ModuloMorphism.make(dim, mod));
                 setResult(morphism.toString());
             }

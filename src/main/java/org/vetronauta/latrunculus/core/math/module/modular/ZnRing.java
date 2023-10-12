@@ -43,7 +43,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRing {
+public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRing, Modular {
 
     private ZnRing(int modulus) {
         super(new ZnElement(0, modulus), new ZnElement(1, modulus));
