@@ -33,7 +33,7 @@ import java.util.function.Function;
 /**
  * The ring of strings with integer factors mod <i>p</i>.
  */
-public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
+public final class ZnString extends RingString<ArithmeticModulus> {
 
     private final int modulus;
 
@@ -67,7 +67,7 @@ public final class ZnString extends RingString<ArithmeticModulus, ZnString> {
         this.modulus = modulus;
     }
 
-    public ZnString(RingString<?, ?> rs, int modulus) {
+    public ZnString(RingString<?> rs, int modulus) {
         super(rs); //TODO this will not work!!!
         this.modulus = modulus;
     }

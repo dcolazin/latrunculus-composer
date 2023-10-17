@@ -21,13 +21,11 @@ package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.string.QString;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
@@ -44,10 +42,12 @@ import java.util.Set;
  */
 public final class QStringElement extends StringElement<QStringElement> implements QStringFreeElement<QStringElement> {
 
+    private final RingString<Rational> value;
+
     /**
      * Constructs a QStringElement from a QString <code>value</code>.
      */
-    public QStringElement(QString value) {
+    public QStringElement(RingString<Rational> value) {
         this.value = value;
     }
 
@@ -57,7 +57,7 @@ public final class QStringElement extends StringElement<QStringElement> implemen
      * The result is a QStringElement of the form 1/1*value.
      */
     public QStringElement(String value) {
-        this.value = new QString(value);
+        this.value = new RingString<>(value);
     }
 
     
@@ -81,22 +81,22 @@ public final class QStringElement extends StringElement<QStringElement> implemen
                 factors[i/2] = Rational.getZero();
             }
         }
-        this.value = new QString(words, factors);
+        this.value = new RingString<>(words, factors);
     }
 
     
     public boolean isOne() {
-        return value.equals(QString.getOne());
+        return value.isOne();
     }
        
 
     public boolean isZero() {
-        return value.equals(QString.getZero());
+        return value.isZero();
     }
 
 
     public QStringElement sum(QStringElement element) {
-        return new QStringElement((QString)getValue().sum(element.getValue()));        
+        return new QStringElement(getValue().sum(element.getValue()));
     }
     
     public void add(QStringElement element) {
@@ -189,7 +189,7 @@ public final class QStringElement extends StringElement<QStringElement> implemen
     }
 
 
-    public QString getValue() {
+    public RingString<Rational> getValue() {
         return value;
     }
 
@@ -204,13 +204,13 @@ public final class QStringElement extends StringElement<QStringElement> implemen
             return this;
         }
         else if (n == 0) {
-            return QStringProperFreeElement.make(new QString[0]);
+            return QStringProperFreeElement.make(new RingString[0]);
         }
         else {
-            QString[] values = new QString[n];
-            values[0] = new QString(value);
+            RingString[] values = new RingString[n];
+            values[0] = new RingString(value);
             for (int i = 1; i < n; i++) {
-                values[i] = QString.getZero();
+                values[i] = new RingString();
             }
             return QStringProperFreeElement.make(values);
         }
@@ -241,7 +241,7 @@ public final class QStringElement extends StringElement<QStringElement> implemen
 
     @Override
     public QStringElement deepCopy() {
-        return new QStringElement((QString)getValue().deepCopy());
+        return new QStringElement(getValue().deepCopy());
     }
 
     public String toString() {
@@ -265,7 +265,7 @@ public final class QStringElement extends StringElement<QStringElement> implemen
 
     
     public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<String,RingElement>();
+        HashMap<String,RingElement> map = new HashMap<>();
         Set<String> strings = value.getStrings();
         for (String s : strings) {
             map.put(s, new QElement(((Rational)value.getFactorForString(s))));
@@ -281,7 +281,5 @@ public final class QStringElement extends StringElement<QStringElement> implemen
     public int hashCode() {
         return value.hashCode();
     }
-    
-    
-    private QString value = null;
+
 }

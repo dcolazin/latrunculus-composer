@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static java.lang.Math.PI;
@@ -43,18 +44,18 @@ import static java.lang.Math.min;
  * where the a_i are elements in a ring
  * and the s_i are character strings (<code>String</code>).
  */
-public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingString<T, R>>
-        implements DeepCopyable<R>, Comparable<R>, Serializable {
+public class RingString<T extends ArithmeticNumber<T>>
+        implements DeepCopyable<RingString<T>>, Comparable<RingString<T>>, Serializable {
 
     //TODO null checks everywhere
 
-    protected Map<String, T> dict; //TODO should be final?
+    private Map<String, T> dict; //TODO should be final?
 
     /**
      * Creates a new <code>RingString</code> instance.
      * This is the Zero RingString.
      */
-    protected RingString() {
+    public RingString() {
         this.dict = new HashMap<>();
     }
 
@@ -62,7 +63,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as 1*word.
      */
-    protected RingString(String word) {
+    public RingString(String word) {
         this();
         dict.put(word, getObjectOne());
     }
@@ -71,7 +72,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as factor*"" after the canonical transformation.
      */
-    protected RingString(ArithmeticNumber<?> factor) {
+    public RingString(ArithmeticNumber<?> factor) {
         this();
         dict.put(StringUtils.EMPTY, canonicalTransformation(factor));
     }
@@ -80,7 +81,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as factor*word.
      */
-    protected RingString(String word, T factor) {
+    public RingString(String word, T factor) {
         this();
         if (!factor.isZero()) {
             dict.put(word, factor);
@@ -91,7 +92,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as sum(factors[i]*words[i]).
      */
-    protected RingString(String[] words, T[] factors) {
+    public RingString(String[] words, T[] factors) {
         this();
         int len = Math.min(factors.length, words.length);
         for (int i = 0; i < len; i++) {
@@ -106,7 +107,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as sum(values[i]*keys[i]).
      */
-    protected RingString(EntryList<String, T> entryList) {
+    public RingString(EntryList<String, T> entryList) {
         this(entryList.getKeys(), entryList.getValues());
     }
 
@@ -114,7 +115,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Creates a new <code>RingString</code> instance.
      * The resulting string is represented as sum(factors[i]*words[i]).
      */
-    protected RingString(List<String> words, List<T> factors) {
+    public RingString(List<String> words, List<T> factors) {
         this();
         int len = min(factors.size(), words.size());
         for (int i = 0; i < len; i++) {
@@ -128,7 +129,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Creates a new <code>RingString</code> instance, in case converting the values with the canonical transformation
      */
-    protected RingString(RingString<?, ?> rs) {
+    public RingString(RingString<?> rs) {
         this();
         for (Map.Entry<String, ? extends ArithmeticNumber<?>> entry : rs.dict.entrySet()) {
             T factor = canonicalTransformation(entry.getValue());
@@ -138,7 +139,17 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
         }
     }
 
-    public abstract T canonicalTransformation(ArithmeticNumber<?> number);
+    public boolean isOne() {
+        return dict.size() == 1 && Optional.ofNullable(dict.get(StringUtils.EMPTY)).map(ArithmeticNumber::isOne).orElse(false);
+    }
+
+    public boolean isZero() {
+        return dict.size() == 0;
+    }
+
+    public T canonicalTransformation(ArithmeticNumber<?> number) {
+        return null; //TODO!!! from ring?
+    }
 
     /**
      * Returns one character string in the RingString.
@@ -176,8 +187,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Returns the sum of this and <code>x</code>.
      * @return a new RingString object
      */
-    public R sum(R x) {
-        R res = this.deepCopy();
+    public RingString<T> sum(RingString<T> x) {
+        RingString<T> res = this.deepCopy();
         res.add(x);
         return res;
     }
@@ -185,7 +196,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Add <code>x</code> to this.
      */
-    public void add(R x) {
+    public void add(RingString<T> x) {
         for (Map.Entry<String, T> entry : x.dict.entrySet()) {
             add(entry.getKey(), entry.getValue());
         }
@@ -195,8 +206,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Returns the difference of this and <code>x</code>.
      * @return a new RingString object.
      */
-    public R difference(R x) {
-        R res = this.deepCopy();
+    public RingString<T> difference(RingString<T> x) {
+        RingString<T> res = this.deepCopy();
         res.subtract(x);
         return res;
     }
@@ -204,7 +215,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Subtract <code>x</code> from this.
      */
-    public void subtract(R x) {
+    public void subtract(RingString<T> x) {
         for (Map.Entry<String, T> entry : x.dict.entrySet()) {
             subtract(entry.getKey(), entry.getValue());
         }
@@ -214,8 +225,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Returns the product of this and <code>x</code>
      * @return a new RingString object
      */
-    public R product(R x) {
-        R res = this.deepCopy();
+    public RingString<T> product(RingString<T> x) {
+        RingString<T> res = this.deepCopy();
         res.multiply(x);
         return res;
     }
@@ -223,7 +234,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Multiply this by <code>x</code>.
      */
-    public void multiply(R x) {
+    public void multiply(RingString<T> x) {
         Iterator<String> keys = x.dict.keySet().iterator();
         Map<String, T> myDict = dict;
         dict = new HashMap<>();
@@ -239,8 +250,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Returns this with all factors negated.
      */
-    public R negated() {
-        R res = this.deepCopy();
+    public RingString<T> negated() {
+        RingString<T> res = this.deepCopy();
         res.negate();
         return res;
     }
@@ -259,8 +270,8 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
      * Returns this scaled by <code>x</code>.
      * @return a new RingString object
      */
-    public R scaled(T x) {
-        R res = this.deepCopy();
+    public RingString<T> scaled(T x) {
+        RingString<T> res = this.deepCopy();
         res.scale(x);
         return res;
     }
@@ -305,7 +316,7 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      *
      */
-    public int compareTo(R rs) {
+    public int compareTo(RingString<T> rs) {
         Object[] otherKeyArray = rs.dict.keySet().toArray();
         Object[] thisKeyArray = dict.keySet().toArray();
         Arrays.sort(otherKeyArray);
@@ -354,12 +365,16 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
     /**
      * Returns the unit factor object.
      */
-    protected abstract T getObjectOne();
+    protected T getObjectOne() {
+        return null; //TODO!!! from ring?
+    }
 
     /**
      * Returns the zero factor object.
      */
-    protected abstract T getObjectZero();
+    protected T getObjectZero() {
+        return null; //TODO!!! from ring?
+    }
 
     /**
      * True, if <code>x</code> is the zero factor object.
@@ -473,6 +488,11 @@ public abstract class RingString<T extends ArithmeticNumber<T>, R extends RingSt
             factor *= oneByAscii;
         }
         return sum;
+    }
+
+    @Override
+    public RingString<T> deepCopy() {
+        return new RingString<>(this);
     }
 
     /*

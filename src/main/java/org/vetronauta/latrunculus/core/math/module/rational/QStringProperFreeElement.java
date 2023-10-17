@@ -20,7 +20,9 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.QString;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -32,6 +34,9 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Elements in the free module of QString.
  * @see QStringProperFreeModule
@@ -40,26 +45,27 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
  */
 public final class QStringProperFreeElement extends ProperFreeElement<QStringProperFreeElement,QStringElement> implements QStringFreeElement<QStringProperFreeElement> {
 
-    public static QStringFreeElement nullElement = new QStringProperFreeElement(new QString[0]);
+    public static QStringFreeElement nullElement = new QStringProperFreeElement(new ArrayList<>());
 
-    public static QStringFreeElement make(QString[] v) {
+    private final List<RingString<Rational>> value;
+    private FreeModule<?, ZElement> module = null; //TODO why not QElement?
+
+    public static QStringFreeElement make(List<RingString<Rational>> v) {
         assert(v != null);
-        if (v.length == 0) {
+        if (v.size() == 0) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return new QStringElement(v[0]);
+        else if (v.size() == 1) {
+            return new QStringElement(v.get(0));
         }
         else {
             return new QStringProperFreeElement(v);
         }
     }
-
     
     public boolean isZero() {
-        QString zero = QString.getZero();
         for (int i = 0; i < getLength(); i++) {
-            if (!value[i].equals(zero)) {
+            if (!value.get(i).isZero()) {
                 return false;
             }
         }
@@ -329,13 +335,9 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     }
     
 
-    private QStringProperFreeElement(QString[] value) {
+    private QStringProperFreeElement(List<RingString<Rational>> value) {
         this.value = value;
     }
-
-
-    private final QString[]   value;
-    private FreeModule<?, ZElement> module = null; //TODO why not QElement?
 
     @Override
     public ModuleElement deepCopy() {

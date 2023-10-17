@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * The ring of strings with rational factors.
  */
-public final class QString extends RingString<Rational, QString> {
+public final class QString extends RingString<Rational> {
 
     private QString() {
         super();
@@ -117,18 +117,4 @@ public final class QString extends RingString<Rational, QString> {
         return new QString(words, factors);
     }
 
-    @Override
-    protected Rational getObjectOne() {
-        return new Rational(1);
-    }
-
-    @Override
-    protected Rational getObjectZero() {
-        return new Rational(0);
-    }
-
-    @Override
-    public QString deepCopy() {
-        return new QString(this);
-    }
 }
