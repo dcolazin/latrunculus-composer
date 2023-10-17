@@ -34,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -99,7 +99,7 @@ public class SplitMorphism extends ModuleMorphism {
                 }
                 return makeZnFreeMorphism(module.getDimension(), ((Modular)module).getModulus(), morphisms);
             }
-            else if (module instanceof QFreeModule) {
+            else if (module.checkRingElement(QElement.class)) {
                 for (ModuleMorphism m : morphisms) {
                     if (!(m instanceof QFreeAffineMorphism) &&
                         !(m instanceof QAffineMorphism)) {
@@ -108,7 +108,7 @@ public class SplitMorphism extends ModuleMorphism {
                 }
                 return makeQFreeMorphism(module.getDimension(), morphisms);
             }
-            else if (module instanceof RFreeModule) {
+            else if (module.checkRingElement(RElement.class)) {
                 for (ModuleMorphism m : morphisms) {
                     if (!(m instanceof RFreeAffineMorphism) &&
                         !(m instanceof RAffineMorphism)) {

@@ -14,7 +14,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;

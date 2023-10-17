@@ -44,8 +44,6 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
@@ -450,13 +448,13 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 };
             }
         }
-        else if (domain instanceof QFreeModule) {
+        else if (domain.checkRingElement(QElement.class)) {
             // Q^n -> ?
             if (codomain instanceof QProperFreeModule) {
                 // Q^n -> Q^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return ((QFreeElement)element).resize(codim);
+                        return ((FreeElement)element).resize(codim);
                     }
                 };
             }
@@ -464,7 +462,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Q^n -> R^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        QProperFreeElement e = (QProperFreeElement)((QFreeElement)element).resize(codim);
+                        QProperFreeElement e = (QProperFreeElement)((FreeElement)element).resize(codim);
                         QElement[] v_from = e.getValue();
                         double[] v_to = new double[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
@@ -478,7 +476,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Q^n -> C^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        QProperFreeElement e = (QProperFreeElement)((QFreeElement)element).resize(codim);
+                        QProperFreeElement e = (QProperFreeElement)((FreeElement)element).resize(codim);
                         QElement[] v_from = e.getValue();
                         Complex[] v_to = new Complex[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {
