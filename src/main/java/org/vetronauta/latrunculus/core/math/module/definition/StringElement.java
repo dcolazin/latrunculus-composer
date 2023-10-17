@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
@@ -44,7 +44,7 @@ public abstract class StringElement<R extends RingElement<R>> extends RingElemen
     /**
      * Returns the underlying <code>RingString</code>.
      */
-    abstract public RingString getRingString();
+    public abstract RingString getRingString();
 
     
     public boolean isInvertible() {
@@ -55,7 +55,7 @@ public abstract class StringElement<R extends RingElement<R>> extends RingElemen
     /**
      * Returns the terms of the string as a map from strings to factors.
      */
-    public abstract HashMap<String,RingElement> getTerms();
+    public abstract Map<String,RingElement> getTerms();
 
     
     /**
