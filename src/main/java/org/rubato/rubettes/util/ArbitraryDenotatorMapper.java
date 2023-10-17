@@ -16,7 +16,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
@@ -316,7 +316,7 @@ public class ArbitraryDenotatorMapper {
 		ModuleMorphism projection;
 		if (morphism.getCodomain() instanceof ProductRing) {
 			projection = ProjectionMorphism.make((ProductRing)morphism.getCodomain(), index);
-		} else if (morphism.getCodomain() instanceof RFreeModule) {
+		} else if (morphism.getCodomain().checkRingElement(RElement.class)) {
 			double[][] projectionMatrix = new double[1][codomainDim];
 			projectionMatrix[0][index] = 1;
 			projection = RFreeAffineMorphism.make(new RMatrix(projectionMatrix), new double[]{0});

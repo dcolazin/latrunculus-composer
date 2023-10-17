@@ -48,8 +48,6 @@ import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -487,13 +485,13 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 };
             }
         }
-        else if (domain instanceof RFreeModule) {
+        else if (domain.checkRingElement(RElement.class)) {
             // R^n -> ?
             if (codomain instanceof RProperFreeModule) {
                 // R^n to R^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return ((RFreeElement)element).resize(codim);
+                        return ((FreeElement)element).resize(codim);
                     }
                 };
             }
@@ -501,7 +499,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // R^n to C^m
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        RProperFreeElement e = (RProperFreeElement)((RFreeElement)element).resize(codim);
+                        RProperFreeElement e = (RProperFreeElement)((FreeElement)element).resize(codim);
                         RElement[] v_from = e.getValue();
                         Complex[] v_to = new Complex[v_from.length];
                         for (int i = 0; i < v_from.length; i++) {

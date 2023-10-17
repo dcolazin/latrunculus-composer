@@ -62,7 +62,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RFreeModule;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -459,7 +458,7 @@ public class JMorphismDialog
                 if (domain.checkRingElement(CElement.class) && domain.equals(codomain)) {
                     items.add(CONJUGATION_TYPE);
                 }
-                if (domain.checkRingElement(RElement.class) && codomain instanceof RFreeModule &&
+                if (domain.checkRingElement(RElement.class) && codomain.checkRingElement(RElement.class) &&
                         domain.getDimension() == 2 && codomain.getDimension() == 2) {
                     items.add(GEOMETRY_TYPE);
                 }
