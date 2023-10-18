@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.QString;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -29,6 +29,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+
+import java.util.LinkedList;
 
 /**
  * The ring of QString.
@@ -43,12 +45,12 @@ public final class QStringRing
     public static final QStringRing ring = new QStringRing();
 
     public QStringElement getZero() {
-        return new QStringElement(QString.getZero());
+        return new QStringElement(RingString.getZero());
     }
 
     
     public QStringElement getOne() {
-        return new QStringElement(QString.getOne());
+        return new QStringElement(RingString.getOne());
     }
 
     
@@ -103,7 +105,7 @@ public final class QStringRing
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new QStringElement(new QString(rs));
+            return new QStringElement(new RingString<>(rs));
         }
         else {
             QElement e = QRing.ring.cast(element);
@@ -111,7 +113,7 @@ public final class QStringRing
                 return null;
             }
             else {
-                return new QStringElement(new QString(e.getValue()));
+                return new QStringElement(new RingString<>(e.getValue()));
             }
         }       
     }
@@ -129,11 +131,33 @@ public final class QStringRing
     
     public RingElement parseString(String string) {
         try {
-            return new QStringElement(QString.parseQString(TextUtils.unparenthesize(string)));
+            return new QStringElement(parse(TextUtils.unparenthesize(string)));
         }
         catch (Exception e) {
             return null;
         }
+    }
+
+    public static RingString<Rational> parse(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Rational> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            Rational f = Rational.parseRational(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(f);
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
     }
 
     public String getElementTypeName() {

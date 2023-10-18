@@ -22,8 +22,8 @@ package org.vetronauta.latrunculus.server.xml.reader;
 import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.string.QString;
 import org.vetronauta.latrunculus.core.math.arith.string.RString;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -66,8 +66,10 @@ import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.BASE64;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
@@ -552,7 +554,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 wordArray[i] = witer.next();
                 i++;
             }
-            QString qstring = new QString(wordArray, factorArray);
+            RingString<Rational> qstring = new RingString<>(wordArray, factorArray);
             return new QStringElement(qstring);
         }
         else {
@@ -737,11 +739,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(ringElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            QString[] coefficients = new QString[elements.size()];
+            List<RingString<Rational>> coefficients = new ArrayList<>(elements.size());
             Iterator<QStringElement> iter = elements.iterator();
             int i = 0;
             while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
+                coefficients.set(i++, iter.next().getValue());
             }
             return QStringProperFreeElement.make(coefficients);
         }

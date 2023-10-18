@@ -20,7 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.QString;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,22 +59,19 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
     
     
     public QStringProperFreeElement getZero() {
-        QString[] res = new QString[getDimension()];
+        List<RingString<Rational>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res[i] = QString.getZero();
+            res.set(i, RingString.getZero());
         }
         return (QStringProperFreeElement) QStringProperFreeElement.make(res); //TODO do not cast
     }
     
     
     public QStringProperFreeElement getUnitElement(int i) {
-        QString[] v = new QString[getDimension()];
         assert(i >= 0 && i < getDimension());
-        for (int j = 0; j < getDimension(); j++) {
-            v[j] = QString.getZero();
-        }
-        v[i] = QString.getOne();
-        return (QStringProperFreeElement) QStringProperFreeElement.make(v);
+        QStringProperFreeElement unit = getZero();
+        unit.setValue(i, RingString.getOne());
+        return unit;
     }
     
 
@@ -122,20 +121,17 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
         if (elements.size() < getDimension()) {
             return null;
         }
-
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        QString[] values = new QString[getDimension()];        
+        List<RingString<Rational>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
             if (object instanceof QStringElement) {
-                values[i] = ((QStringElement)object).getValue();
+                values.set(i, ((QStringElement) object).getValue());
             }
             else {
                 return null;
             }
-            i++;
         }
-
         return (QStringProperFreeElement) QStringProperFreeElement.make(values);
     }
     
@@ -168,7 +164,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
     public QStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (QStringProperFreeElement) QStringProperFreeElement.make(new QString[0]);
+            return (QStringProperFreeElement) QStringProperFreeElement.make(new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -177,12 +173,9 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
                 return null;
             }
             else {
-                QString[] qstrings = new QString[getDimension()];
+                List<RingString<Rational>> qstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    qstrings[i] = QString.parseQString(strings[i]);
-                    if (qstrings[i] == null) {
-                        return null;
-                    }
+                    qstrings.set(i, QStringRing.parse(strings[i]));
                 }
                 return (QStringProperFreeElement) QStringProperFreeElement.make(qstrings);
             }            

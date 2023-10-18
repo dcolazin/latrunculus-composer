@@ -139,6 +139,14 @@ public class RingString<T extends ArithmeticNumber<T>>
         }
     }
 
+    public static <I extends ArithmeticNumber<I>> RingString<I> getZero() {
+        return new RingString<>();
+    }
+
+    public static <I extends ArithmeticNumber<I>> RingString<I> getOne() {
+        return new RingString<>(StringUtils.EMPTY);
+    }
+
     public boolean isOne() {
         return dict.size() == 1 && Optional.ofNullable(dict.get(StringUtils.EMPTY)).map(ArithmeticNumber::isOne).orElse(false);
     }

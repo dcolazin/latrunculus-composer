@@ -31,7 +31,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -204,13 +206,13 @@ public final class QStringElement extends StringElement<QStringElement> implemen
             return this;
         }
         else if (n == 0) {
-            return QStringProperFreeElement.make(new RingString[0]);
+            return QStringProperFreeElement.make(new ArrayList<>());
         }
         else {
-            RingString[] values = new RingString[n];
-            values[0] = new RingString(value);
+            List<RingString<Rational>> values = new ArrayList<>(n);
+            values.set(0, new RingString<>(value));
             for (int i = 1; i < n; i++) {
-                values[i] = new RingString();
+                values.set(i, new RingString<>());
             }
             return QStringProperFreeElement.make(values);
         }
