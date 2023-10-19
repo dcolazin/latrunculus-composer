@@ -19,15 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
+import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,15 +37,13 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringElement extends StringElement<RStringElement> implements FreeElement<RStringElement,RStringElement> {
-
-    private final RingString<ArithmeticDouble> value;
+public final class RStringElement extends ArithmeticStringElement<RStringElement,ArithmeticDouble> {
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
      */
     public RStringElement(RingString<ArithmeticDouble> value) {
-        this.value = value;
+        super(value);
     }
 
     
@@ -57,10 +52,15 @@ public final class RStringElement extends StringElement<RStringElement> implemen
      * The result is an RStringElement of the form 1.0*value.
      */
     public RStringElement(String value) {
-        this.value = new RingString<>(value);
+        super(value);
     }
 
-    
+    @Override
+    protected RStringElement valueOf(@NonNull RingString<ArithmeticDouble> value) {
+        return new RStringElement(value);
+    }
+
+
     /**
      * Constructs an RStringElement from the array of objects <code>objs</code>.
      * @param objs an array of objects where strings alternate with
@@ -68,6 +68,10 @@ public final class RStringElement extends StringElement<RStringElement> implemen
      *             length
      */
     public RStringElement(Object... objs) {
+        super(build(objs));
+    }
+
+    private static RingString<ArithmeticDouble> build(Object[] objs) {
         int len = objs.length/2;
         String[] words = new String[len];
         ArithmeticDouble[] factors = new ArithmeticDouble[len];
@@ -81,123 +85,11 @@ public final class RStringElement extends StringElement<RStringElement> implemen
                 factors[i/2] = new ArithmeticDouble(0);
             }
         }
-        this.value = new RingString<>(words, factors);
+        return new RingString<>(words, factors);
     }
-
-    
-    public boolean isOne() {
-        return value.equals(RingString.getOne());
-    }
-       
-
-    public boolean isZero() {
-        return value.equals(RingString.getZero());
-    }
-
-    public RStringElement sum(RStringElement element) {
-        return new RStringElement(getValue().sum(element.getValue()));
-    }
-
-    
-    public void add(RStringElement element) {
-        value.add(element.getValue());        
-    }
-
-
-
-    public RStringElement difference(RStringElement element) {
-        return new RStringElement(getValue().difference(element.getValue()));
-    }
-
-
-    public void subtract(RStringElement element) {
-        value.subtract(element.getValue());
-    }
-
-
-    public RStringElement negated() {
-        return new RStringElement(getValue().negated());
-    }
-
-    
-    public void negate() {
-        value.negate();
-    }
-
-
-    public RStringElement scaled(RStringElement element)
-            throws DomainException {
-        return product(element);
-    }
-    
-
-    public void scale(RStringElement element)
-            throws DomainException {
-        multiply(element);
-    }
-
-    
-    public RStringElement product(RStringElement element) {
-        return new RStringElement(getValue().product(element.getValue()));
-    }
-
-    public void multiply(RStringElement element) {
-        value.multiply(element.getValue());
-    }
-
-    
-    public RStringElement inverse() {
-        throw new InverseException("Inverse of "+this+" does not exist.");
-    }
-
-    
-    public void invert() {
-        throw new InverseException("Inverse of "+this+" does not exist.");
-    }
-
-    
-    public RStringElement quotient(RStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof RStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public void divide(RStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof RStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public boolean divides(RingElement element) {
-        // TODO: implement division where possible
-        return false;
-    }
-
 
     public RStringRing getRing() {
         return RStringRing.ring;
-    }
-
-
-    public RingString<ArithmeticDouble> getValue() {
-        return value;
-    }
-
-
-    public RingString getRingString() {
-        return getValue();
     }
 
 
@@ -210,62 +102,23 @@ public final class RStringElement extends StringElement<RStringElement> implemen
         }
         else {
             List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
-            values.set(0, new RingString<>(value));
+            values.set(0, new RingString<>(getValue()));
             for (int i = 1; i < n; i++) {
                 values.set(i, RingString.getZero());
             }
             return RStringProperFreeElement.make(values);
         }
     }
-    
-
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        else if (object instanceof RStringElement) {
-            return getValue().equals(((RStringElement)object).getValue());
-        }
-        else {
-            return false;
-        }
-    }
-
-
-    public int compareTo(ModuleElement object) {
-        if (object instanceof RStringElement) {
-            return getValue().compareTo(((RStringElement)object).getValue());
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    @Override
-    public RStringElement deepCopy() {
-        return new RStringElement(getValue().deepCopy());
-    }
 
     public String toString() {
-        return "RStringElement["+value+"]";
+        return "RStringElement["+getValue()+"]";
     }
-
-    
-    public String stringRep(boolean ... parens) {
- 		return getValue().stringRep();
-    }
-
-    
-    public String getString() {
-        return getValue().getString();
-    }
-
     
     public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<String,RingElement>();
-        Set<String> strings = value.getStrings();
+        HashMap<String,RingElement> map = new HashMap<>();
+        Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new RElement(((Double)value.getFactorForString(s))));
+            map.put(s, new RElement(((Double)getValue().getFactorForString(s))));
         }
         return map;
     }
@@ -273,10 +126,5 @@ public final class RStringElement extends StringElement<RStringElement> implemen
     public String getElementTypeName() {
         return "RStringElement";
     }
-    
-    
-    public int hashCode() {
-        return value.hashCode();
-    }
-    
+
 }

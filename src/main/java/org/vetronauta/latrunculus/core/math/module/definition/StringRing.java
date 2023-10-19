@@ -39,15 +39,14 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
  */
 public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
 
-    public abstract R getZero();
-    
     public abstract R getOne();
     
     public ModuleMorphism getIdentityMorphism() {
         return ModuleMorphism.getIdentityMorphism(this);
     }
-    
-    public StringRing getComponentModule(int i) {
+
+    @Override
+    public StringRing<R> getComponentModule(int i) {
         return this;
     }
     
