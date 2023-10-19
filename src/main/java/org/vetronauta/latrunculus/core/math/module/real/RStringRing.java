@@ -20,15 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.RString;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+
+import java.util.LinkedList;
 
 /**
  * The ring of RString.
@@ -41,12 +42,12 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
     public static final RStringRing ring = new RStringRing();
 
     public RStringElement getZero() {
-        return new RStringElement(RString.getZero());
+        return new RStringElement(RingString.getZero());
     }
 
     
     public RStringElement getOne() {
-        return new RStringElement(RString.getOne());
+        return new RStringElement(RingString.getOne());
     }
 
     
@@ -96,15 +97,15 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new RStringElement(new RString(rs));
+            return new RStringElement(new RingString<>(rs));
         }
         else {
-            RElement e = (RElement)RRing.ring.cast(element);
+            RElement e = RRing.ring.cast(element);
             if (e == null) {
                 return null;
             }
             else {
-                return new RStringElement(new RString(e.getValue()));
+                return new RStringElement(new RingString<>(e.getValue()));
             }
         }       
     }
@@ -119,10 +120,31 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
         return "R-String";
     }
 
+    public static RingString<ArithmeticDouble> parse(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<ArithmeticDouble> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            double f = Double.parseDouble(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new ArithmeticDouble(f));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
     
-    public RingElement parseString(String string) {
+    public RStringElement parseString(String string) {
         try {
-            return new RStringElement(RString.parseRString(TextUtils.unparenthesize(string)));
+            return new RStringElement(parse(TextUtils.unparenthesize(string)));
         }
         catch (Exception e) {
             return null;

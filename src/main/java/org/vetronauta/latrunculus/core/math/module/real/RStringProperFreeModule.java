@@ -20,7 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.RString;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,20 +59,20 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
     
     
     public RStringProperFreeElement getZero() {
-        RString[] res = new RString[getDimension()];
+        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res[i] = RString.getZero();
+            res.set(i, RingString.getZero());
         }
         return (RStringProperFreeElement) RStringProperFreeElement.make(res); //TODO not cast
     }
     
     
     public RStringProperFreeElement getUnitElement(int i) {
-        RString[] v = new RString[getDimension()];
+        List<RingString<ArithmeticDouble>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            v[j] = RString.getZero();
+            v.set(j, RingString.getZero());
         }
-        v[i] = RString.getOne();
+        v.set(i, RingString.getOne());
         return (RStringProperFreeElement) RStringProperFreeElement.make(v);
     }
     
@@ -123,11 +125,11 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        RString[] values = new RString[getDimension()];
+        List<RingString<ArithmeticDouble>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof RStringElement) {
-                values[i] = ((RStringElement)object).getValue();
+                values.set(i, ((RStringElement)object).getValue());
             }
             else {
                 return null;
@@ -166,7 +168,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
     public RStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (RStringProperFreeElement) RStringProperFreeElement.make(new RString[0]);
+            return (RStringProperFreeElement) RStringProperFreeElement.make(new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -175,12 +177,9 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
                 return null;
             }
             else {
-                RString[] rstrings = new RString[getDimension()];
+                List<RingString<ArithmeticDouble>> rstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    rstrings[i] = RString.parseRString(strings[i]);
-                    if (rstrings[i] == null) {
-                        return null;
-                    }
+                    rstrings.set(i, RStringRing.parse(strings[i]));
                 }
                 return (RStringProperFreeElement) RStringProperFreeElement.make(rstrings);
             }            

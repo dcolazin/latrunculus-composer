@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.rubato.util.Base64;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.string.RString;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
@@ -604,17 +604,17 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 words.add(next.getTextContent());
                 next = XMLReader.getNextSibling(next, WORD);
             }
-            double[] factorArray = new double[factors.size()];
+            ArithmeticDouble[] factorArray = new ArithmeticDouble[factors.size()];
             String[] wordArray = new String[factors.size()];
             int i = 0;
             Iterator<Double> fiter = factors.iterator();
             Iterator<String> witer = words.iterator();
             while (fiter.hasNext()) {
-                factorArray[i] = fiter.next().doubleValue();
+                factorArray[i] = new ArithmeticDouble(fiter.next());
                 wordArray[i] = witer.next();
                 i++;
             }
-            RString rstring = new RString(wordArray, factorArray);
+            RingString<ArithmeticDouble> rstring = new RingString<>(wordArray, factorArray);
             return new RStringElement(rstring);
         }
         else {
@@ -782,11 +782,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(ringElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            RString[] coefficients = new RString[elements.size()];
+            List<RingString<ArithmeticDouble>> coefficients = new ArrayList<>(elements.size());
             Iterator<RStringElement> iter = elements.iterator();
             int i = 0;
             while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
+                coefficients.set(i++, iter.next().getValue());
             }
             return RStringProperFreeElement.make(coefficients);
         }

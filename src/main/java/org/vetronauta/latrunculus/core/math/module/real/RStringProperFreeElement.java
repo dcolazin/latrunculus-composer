@@ -20,7 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.RString;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -28,6 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Elements in a free module over RString.
@@ -37,15 +41,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  */
 public final class RStringProperFreeElement extends ProperFreeElement<RStringProperFreeElement,RStringElement> implements RStringFreeElement<RStringProperFreeElement> {
 
-    public static RStringFreeElement nullElement = new RStringProperFreeElement(new RString[0]);
+    public static final RStringProperFreeElement nullElement = new RStringProperFreeElement(new ArrayList<>());
 
-    public static RStringFreeElement make(RString[] v) {
+    public static RStringFreeElement make(List<RingString<ArithmeticDouble>> v) {
         assert(v != null);
-        if (v.length == 0) {
+        if (v.isEmpty()) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return new RStringElement(v[0]);
+        else if (v.size() == 1) {
+            return new RStringElement(v.get(0));
         }
         else {
             return new RStringProperFreeElement(v);
@@ -54,9 +58,9 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
     
     public boolean isZero() {
-        RString zero = RString.getZero();
+        RingString<ArithmeticDouble> zero = RingString.getZero();
         for (int i = 0; i < getLength(); i++) {
-            if (!value[i].equals(zero)) {
+            if (!value.get(i).equals(zero)) {
                 return false;
             }
         }
@@ -66,9 +70,9 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public RStringProperFreeElement sum(RStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            RString res[] = new RString[getLength()];
+            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (RString)value[i].sum(element.value[i]);
+                res.set(i, value.get(i).sum(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);
         }
@@ -81,7 +85,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].add(element.value[i]);
+                value.get(i).add(element.value.get(i));
             }        
         }
         else {
@@ -92,9 +96,9 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public RStringProperFreeElement difference(RStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            RString res[] = new RString[getLength()];
+            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (RString)value[i].difference(element.value[i]);
+                res.set(i, value.get(i).difference(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);        
         }
@@ -107,7 +111,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].subtract(element.value[i]);
+                value.get(i).subtract(element.value.get(i));
             }        
         }
         else {
@@ -118,9 +122,9 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public RStringProperFreeElement productCW(RStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            RString res[] = new RString[getLength()];
+            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = (RString)value[i].product(element.value[i]);
+                res.set(i, value.get(i).product(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);
         }
@@ -133,7 +137,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].multiply(element.value[i]);
+                value.get(i).multiply(element.value.get(i));
             }        
         }
         else {
@@ -143,9 +147,9 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
 
     public RStringProperFreeElement negated() {
-        RString[] res = new RString[getLength()];
+        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res[i] = (RString)value[i].negated();
+            res.set(i, value.get(i).negated());
         }
         return new RStringProperFreeElement(res);
     }
@@ -153,41 +157,41 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
-            value[i].negate();
+            value.get(i).negate();
         }
     }
 
     public RStringProperFreeElement scaled(RStringElement element) {
-        RString val = element.getValue();
-        RString res[] = new RString[getLength()];
+        RingString<ArithmeticDouble> val = element.getValue();
+        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res[i] = (RString)value[i].product(val);
+            res.set(i, value.get(i).product(val));
         }
         return new RStringProperFreeElement(res);        
     }
     
     public void scale(RStringElement element) {
-        RString val = element.getValue();
+        RingString<ArithmeticDouble> val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
-            value[i].multiply(val);
+            value.get(i).multiply(val);
         }
     }
 
     
     public ModuleElement getComponent(int i) {
         assert(i < getLength());
-        return new RStringElement(value[i]);
+        return new RStringElement(value.get(i));
     }
     
 
     public RingElement getRingElement(int i) {
         assert(i < getLength());
-        return new RStringElement(value[i]);
+        return new RStringElement(value.get(i));
     }
     
 
     public int getLength() {
-        return value.length;
+        return value.size();
     }
     
 
@@ -199,13 +203,13 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     }
     
 
-    public RString[] getValue() {
+    public List<RingString<ArithmeticDouble>> getValue() {
         return value;
     }
     
 
-    public RString getValue(int i) {
-        return value[i];
+    public RingString<ArithmeticDouble> getValue(int i) {
+        return value.get(i);
     }
     
 
@@ -215,12 +219,12 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         }
         else {
             int minlen = Math.min(n, getLength());
-            RString[] values = new RString[n];
+            List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
             for (int i = 0; i < minlen; i++) {
-                values[i] = getValue(i);
+                values.set(i, getValue(i));
             }
             for (int i = minlen; i < n; i++) {
-                values[i] = RString.getZero();
+                values.set(i, RingString.getZero());
             }
             return RStringProperFreeElement.make(values);
         }
@@ -232,7 +236,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             RStringProperFreeElement e = (RStringProperFreeElement) object;
             if (getLength() == e.getLength()) {
                 for (int i = 0; i < getLength(); i++) {
-                    if (!value[i].equals(e.value[i])) {
+                    if (!value.get(i).equals(e.value.get(i))) {
                         return false;
                     }
                 }
@@ -257,7 +261,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int d = value[i].compareTo(element.value[i]);
+                    int d = value.get(i).compareTo(element.value.get(i));
                     if (d != 0) {
                         return d;
                     }
@@ -276,10 +280,10 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(value[0].stringRep());
+            res.append(value.get(0).stringRep());
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i].stringRep());
+                res.append(value.get(i).stringRep());
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -297,10 +301,10 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(value.get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(value.get(i));
             }
         }
         buf.append("]");
@@ -320,26 +324,26 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public int hashCode() {
         int val = 0;
         for (int i = 0; i < getLength(); i++) {
-            val ^= value[i].hashCode();
+            val ^= value.get(i).hashCode();
         }
         return val;
     }
     
 
-    private RStringProperFreeElement(RString[] value) {
+    private RStringProperFreeElement(List<RingString<ArithmeticDouble>> value) {
         this.value = value;
     }
 
 
-    private RString[]   value;
+    private final List<RingString<ArithmeticDouble>> value;
     private FreeModule<?,RElement> module = null;
 
     @Override
-    public ModuleElement deepCopy() {
-        RString[] v = new RString[getLength()];
+    public RStringProperFreeElement deepCopy() {
+        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            v[i] = value[i].deepCopy();
+            res.set(i, value.get(i).deepCopy());
         }
-        return new RStringProperFreeElement(v);
+        return new RStringProperFreeElement(res);
     }
 }
