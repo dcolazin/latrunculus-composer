@@ -296,8 +296,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(ZStringProperFreeElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().length; i++) {
-            write(new ZStringElement(element.getValue()[i]), writer);
+        for (int i = 0; i < element.getValue().size(); i++) {
+            write(new ZStringElement(element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }
@@ -305,24 +305,24 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     private void write(ZnStringProperFreeElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(),
                 MODULUS_ATTR, element.getModulus());
-        for (int i = 0; i < element.getValue().length; i++) {
-            write(new ZnStringElement(element.getValue()[i]), writer);
+        for (int i = 0; i < element.getValue().size(); i++) {
+            write(new ZnStringElement(element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }
 
     private void write(QStringProperFreeElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().length; i++) {
-            write(new QStringElement(element.getValue()[i]), writer);
+        for (int i = 0; i < element.getValue().size(); i++) {
+            write(new QStringElement(element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }
 
     private void write(RStringProperFreeElement element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().length; i++) {
-            write(new RStringElement(element.getValue()[i]), writer);
+        for (int i = 0; i < element.getValue().size(); i++) {
+            write(new RStringElement(element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }

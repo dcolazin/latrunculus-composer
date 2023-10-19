@@ -39,6 +39,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Morphism that casts elements from a ring to another ring.
@@ -211,9 +212,9 @@ public abstract class CastMorphism extends ModuleMorphism {
             if (m != null) {
                 return new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        StringElement e = (StringElement)element;
+                        StringElement<?> e = (StringElement<?>)element;
                         ModuleElement s = domain.getFactorRing().getZero();
-                        HashMap<String, RingElement> terms = e.getTerms();
+                        Map<String, RingElement> terms = e.getTerms();
                         try {
                             for (RingElement x : terms.values()) {
                                 s.add(x);
