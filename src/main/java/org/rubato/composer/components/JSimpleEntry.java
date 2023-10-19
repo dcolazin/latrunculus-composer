@@ -23,12 +23,8 @@ import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RStringFreeModule;
 
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
@@ -38,11 +34,7 @@ import java.awt.event.ActionListener;
 public abstract class JSimpleEntry extends JPanel {
 
     public static JSimpleEntry make(Module<?,?> module) {
-        if ( FreeUtils.isUsualFree(module) ||
-            module instanceof ZStringFreeModule ||
-            module instanceof RStringFreeModule ||
-            module instanceof QStringFreeModule ||
-            module instanceof ZnStringFreeModule ||
+        if ( FreeUtils.isUsualFree(module) || FreeUtils.isUsualStringFree(module) ||
             module instanceof PolynomialRing ||
             module instanceof ModularPolynomialRing) {
             return new JSimpleNumberEntry(module);

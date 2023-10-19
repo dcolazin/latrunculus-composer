@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.rational;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -40,12 +41,12 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringProperFreeModule extends ProperFreeModule<QStringProperFreeElement,QStringElement> implements QStringFreeModule<QStringProperFreeElement> {
+public final class QStringProperFreeModule extends ProperFreeModule<QStringProperFreeElement,QStringElement> {
 
     public static final QStringProperFreeModule nullModule = new QStringProperFreeModule(0);
 
-    public static QStringFreeModule make(int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static FreeModule<?,QStringElement> make(int dimension) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
         }

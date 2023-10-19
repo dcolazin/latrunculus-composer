@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.real;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -40,11 +41,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeModule extends ProperFreeModule<RStringProperFreeElement,RStringElement> implements RStringFreeModule<RStringProperFreeElement> {
+public final class RStringProperFreeModule extends ProperFreeModule<RStringProperFreeElement,RStringElement> {
 
     public static final RStringProperFreeModule nullModule = new RStringProperFreeModule(0);
 
-    public static RStringFreeModule make(int dimension) {
+    public static FreeModule<?, RStringElement> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;

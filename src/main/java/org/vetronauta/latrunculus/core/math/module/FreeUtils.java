@@ -25,9 +25,14 @@ import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 
 /**
  * @author vetronauta
@@ -43,5 +48,14 @@ public class FreeUtils {
                 module.checkRingElement(QElement.class) ||
                 module.checkRingElement(RElement.class) ||
                 module.checkRingElement(CElement.class));
+    }
+
+    //TODO temp method...
+    public static boolean isUsualStringFree(Module<?,?> module) {
+        return module instanceof FreeModule && (
+                module.checkRingElement(ZStringElement.class) ||
+                        module.checkRingElement(ZnStringElement.class) ||
+                        module.checkRingElement(QStringElement.class) ||
+                        module.checkRingElement(RStringElement.class));
     }
 }

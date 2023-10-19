@@ -38,7 +38,7 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringRing extends StringRing implements ZnStringFreeModule {
+public final class ZnStringRing extends StringRing<ZnStringElement> {
     
     public static ZnStringRing make(int modulus) {
         assert(modulus > 1);
@@ -105,7 +105,7 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public ZnStringElement cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
             return new ZnStringElement(new RingString<>(rs), modulus);

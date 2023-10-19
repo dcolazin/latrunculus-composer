@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
@@ -35,7 +36,7 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringRing extends StringRing implements ZStringFreeModule {
+public final class ZStringRing extends StringRing<ZStringElement> {
 
     public static final ZStringRing ring = new ZStringRing();
 
@@ -74,7 +75,7 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
     }
 
     
-    public ZStringFreeModule getFreeModule(int dimension) {
+    public FreeModule<?,ZStringElement> getFreeModule(int dimension) {
         return ZStringProperFreeModule.make(dimension);
     }
 
@@ -89,9 +90,9 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public ZStringElement cast(ModuleElement element) {
         if (element instanceof ZStringElement) {
-            return element;
+            return (ZStringElement) element;
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();

@@ -37,7 +37,7 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringRing extends StringRing implements RStringFreeModule {
+public final class RStringRing extends StringRing<RStringElement> {
 
     public static final RStringRing ring = new RStringRing();
 
@@ -91,9 +91,9 @@ public final class RStringRing extends StringRing implements RStringFreeModule {
     }
 
     
-    public ModuleElement cast(ModuleElement element) {
+    public RStringElement cast(ModuleElement element) {
         if (element instanceof RStringElement) {
-            return element;
+            return (RStringElement) element;
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();

@@ -89,8 +89,8 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         return new RingString<>(words, factors);
     }
 
-    public RStringRing getRing() {
-        return RStringRing.ring;
+    public QStringRing getRing() {
+        return QStringRing.ring;
     }
 
     public FreeElement resize(int n) {

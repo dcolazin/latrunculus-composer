@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 
@@ -38,9 +37,7 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringRing
-        extends StringRing
-        implements QStringFreeModule {
+public final class QStringRing extends StringRing<QStringElement> {
 
     public static final QStringRing ring = new QStringRing();
 
@@ -99,9 +96,9 @@ public final class QStringRing
     }
 
 
-    public ModuleElement cast(ModuleElement element) {
+    public QStringElement cast(ModuleElement element) {
         if (element instanceof QStringElement) {
-            return element;
+            return (QStringElement) element;
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
@@ -129,7 +126,7 @@ public final class QStringRing
     }
 
     
-    public RingElement parseString(String string) {
+    public QStringElement parseString(String string) {
         try {
             return new QStringElement(parse(TextUtils.unparenthesize(string)));
         }
