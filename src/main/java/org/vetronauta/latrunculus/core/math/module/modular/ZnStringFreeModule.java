@@ -24,8 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over ZnString.
- * @see ZnStringFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public interface ZnStringFreeModule<E extends ModuleElement<E,ZnStringElement>> extends FreeModule<E,ZnStringElement> {

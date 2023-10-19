@@ -42,16 +42,16 @@ import java.util.stream.Collectors;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringProperFreeElement extends ProperFreeElement<QStringProperFreeElement,QStringElement> implements QStringFreeElement<QStringProperFreeElement> {
+public final class QStringProperFreeElement extends ProperFreeElement<QStringProperFreeElement,QStringElement> implements FreeElement<QStringProperFreeElement,QStringElement> {
 
     public static final QStringProperFreeElement nullElement = new QStringProperFreeElement(new ArrayList<>());
 
     private final List<RingString<Rational>> value;
     private FreeModule<?, QElement> module = null;
 
-    public static QStringFreeElement make(List<RingString<Rational>> v) {
+    public static FreeElement<?, QStringElement> make(List<RingString<Rational>> v) {
         assert(v != null);
-        if (v.size() == 0) {
+        if (v.isEmpty()) {
             return nullElement;
         }
         else if (v.size() == 1) {

@@ -40,7 +40,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringElement extends StringElement<ZStringElement> implements ZStringFreeElement<ZStringElement> {
+public final class ZStringElement extends StringElement<ZStringElement> implements FreeElement<ZStringElement,ZStringElement> {
 
     private RingString<ArithmeticInteger> value = null;
     private String simpleString = null;

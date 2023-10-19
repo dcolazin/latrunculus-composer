@@ -24,8 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over RString.
- * @see RStringFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public interface RStringFreeModule<E extends ModuleElement<E,RStringElement>> extends FreeModule<E,RStringElement> {

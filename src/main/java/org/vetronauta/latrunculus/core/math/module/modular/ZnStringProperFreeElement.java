@@ -39,7 +39,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringProperFreeElement,ZnStringElement> implements ZnStringFreeElement<ZnStringProperFreeElement> {
+public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringProperFreeElement,ZnStringElement> implements FreeElement<ZnStringProperFreeElement,ZnStringElement> {
 
     //TODO various consistency checks for modulus
 
@@ -47,7 +47,7 @@ public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringP
     private final int modulus;
     private ZnProperFreeModule module;
 
-    public static ZnStringFreeElement make(List<RingString<ArithmeticModulus>> v, int modulus) {
+    public static FreeElement<?, ZnStringElement> make(List<RingString<ArithmeticModulus>> v, int modulus) {
         if (v == null || v.isEmpty()) {
             return new ZnStringProperFreeElement(new ArrayList<>(0), modulus);
         }

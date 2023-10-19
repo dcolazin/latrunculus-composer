@@ -40,7 +40,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringElement extends StringElement<RStringElement> implements RStringFreeElement<RStringElement> {
+public final class RStringElement extends StringElement<RStringElement> implements FreeElement<RStringElement,RStringElement> {
 
     private final RingString<ArithmeticDouble> value;
 

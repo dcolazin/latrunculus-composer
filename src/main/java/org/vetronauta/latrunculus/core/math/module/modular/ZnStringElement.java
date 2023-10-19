@@ -42,7 +42,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringElement extends StringElement<ZnStringElement> implements ZnStringFreeElement<ZnStringElement> {
+public final class ZnStringElement extends StringElement<ZnStringElement> implements FreeElement<ZnStringElement,ZnStringElement> {
 
     //TODO various consistency checks for modulus
 

@@ -39,11 +39,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeElement extends ProperFreeElement<RStringProperFreeElement,RStringElement> implements RStringFreeElement<RStringProperFreeElement> {
+public final class RStringProperFreeElement extends ProperFreeElement<RStringProperFreeElement,RStringElement> implements FreeElement<RStringProperFreeElement,RStringElement> {
 
     public static final RStringProperFreeElement nullElement = new RStringProperFreeElement(new ArrayList<>());
 
-    public static RStringFreeElement make(List<RingString<ArithmeticDouble>> v) {
+    public static FreeElement<?, RStringElement> make(List<RingString<ArithmeticDouble>> v) {
         assert(v != null);
         if (v.isEmpty()) {
             return nullElement;

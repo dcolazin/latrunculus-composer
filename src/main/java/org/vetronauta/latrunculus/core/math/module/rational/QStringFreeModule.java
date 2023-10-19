@@ -24,8 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 
 /**
  * The interface for free modules over QString.
- * @see QStringFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public interface QStringFreeModule<E extends ModuleElement<E,QStringElement>> extends FreeModule<E,QStringElement> {

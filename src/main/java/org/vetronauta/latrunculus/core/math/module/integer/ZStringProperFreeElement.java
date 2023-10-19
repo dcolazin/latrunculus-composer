@@ -40,14 +40,14 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringProperFreeElement extends ProperFreeElement<ZStringProperFreeElement,ZStringElement> implements ZStringFreeElement<ZStringProperFreeElement> {
+public final class ZStringProperFreeElement extends ProperFreeElement<ZStringProperFreeElement,ZStringElement> implements FreeElement<ZStringProperFreeElement,ZStringElement> {
 
-    public static ZStringFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
+    public static ZStringProperFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
 
     private final List<RingString<ArithmeticInteger>> value;
     private FreeModule<?,ZElement> module;
 
-    public static ZStringFreeElement make(List<RingString<ArithmeticInteger>> v) {
+    public static FreeElement<?,ZStringElement> make(List<RingString<ArithmeticInteger>> v) {
         assert(v != null);
         if (v.isEmpty()) {
             return nullElement;

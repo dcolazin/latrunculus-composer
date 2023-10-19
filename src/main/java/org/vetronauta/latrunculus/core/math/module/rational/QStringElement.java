@@ -42,7 +42,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringElement extends StringElement<QStringElement> implements QStringFreeElement<QStringElement> {
+public final class QStringElement extends StringElement<QStringElement> implements FreeElement<QStringElement,QStringElement> {
 
     private final RingString<Rational> value;
 
