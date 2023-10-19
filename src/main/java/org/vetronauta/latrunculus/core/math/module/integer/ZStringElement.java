@@ -19,18 +19,19 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,6 +41,9 @@ import java.util.Set;
  * @author Gérard Milmeister
  */
 public final class ZStringElement extends StringElement<ZStringElement> implements ZStringFreeElement<ZStringElement> {
+
+    private RingString<ArithmeticInteger> value = null;
+    private String simpleString = null;
 
     /**
      * Constructs a ZStringElement from an ordinary String <code>string</code>.
@@ -53,7 +57,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     /**
      * Constructs a ZStringElement from a ZString <code>value</code>.
      */
-    public ZStringElement(ZString value) {
+    public ZStringElement(RingString<ArithmeticInteger> value) {
         this.value = value;
     }
 
@@ -67,24 +71,24 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     public ZStringElement(Object ... objs) {
         int len = objs.length/2;
         String[] words = new String[len];
-        int[] factors = new int[len];
+        ArithmeticInteger[] factors = new ArithmeticInteger[len];
         for (int i = 0; i < len*2; i += 2) {
             if (objs[i] instanceof String && objs[i+1] instanceof Integer) {
                 words[i/2] = (String)objs[i];
-                factors[i/2] = (Integer)objs[i+1];
+                factors[i/2] = new ArithmeticInteger((Integer)objs[i+1]);
             }
             else {
                 words[i/2] = "";
-                factors[i/2] = 0;
+                factors[i/2] = new ArithmeticInteger(0);
             }
         }
-        this.value = new ZString(words, factors);
+        this.value = new RingString<>(words, factors);
     }
     
 
     public boolean isOne() {
         if (value != null) {
-            return value.equals(ZString.getOne());
+            return value.equals(RingString.getOne());
         }
         else {
             return false;
@@ -94,7 +98,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
 
     public boolean isZero() {
         if (value != null) {
-            return value.equals(ZString.getZero());
+            return value.equals(RingString.getZero());
         }
         else {
             return false;
@@ -111,7 +115,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     }
 
     public ZStringElement difference(ZStringElement element) {
-        return new ZStringElement((ZString)getValue().difference(element.getValue()));
+        return new ZStringElement(getValue().difference(element.getValue()));
     }
 
     public void subtract(ZStringElement element) {
@@ -144,7 +148,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
 
     
     public ZStringElement product(ZStringElement element) {
-        return new ZStringElement((ZString)getValue().product(element.getValue()));
+        return new ZStringElement(getValue().product(element.getValue()));
     }
 
     
@@ -198,13 +202,11 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     }
 
 
-    public ZString getValue() {
+    public RingString<ArithmeticInteger> getValue() {
         if (simpleString != null) {
-            return new ZString(simpleString);
+            return new RingString<>(simpleString);
         }
-        else {
-            return value;
-        }
+        return value;
     }
 
 
@@ -218,13 +220,13 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
             return this;
         }
         else if (n == 0) {
-            return ZStringProperFreeElement.make(new ZString[0]);
+            return ZStringProperFreeElement.make(new ArrayList<>(0));
         }
         else {
-            ZString[] values = new ZString[n];
-            values[0] = new ZString(value);
+            List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
+            values.set(0, new RingString<>(value));
             for (int i = 1; i < n; i++) {
-                values[i] = ZString.getZero();
+                values.set(i, RingString.getZero());
             }
             return ZStringProperFreeElement.make(values);
         }
@@ -310,7 +312,7 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
 
     
     public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<String,RingElement>();
+        HashMap<String,RingElement> map = new HashMap<>();
         if (value != null) {
             Set<String> strings = value.getStrings();
             for (String s : strings) {
@@ -340,12 +342,9 @@ public final class ZStringElement extends StringElement<ZStringElement> implemen
     
     private void zstringify() {
         if (simpleString != null) {
-            value = new ZString(simpleString);
+            value = new RingString<>(simpleString);
         }
         simpleString = null;
     }
 
-
-    private ZString value = null;
-    private String  simpleString = null;
 }

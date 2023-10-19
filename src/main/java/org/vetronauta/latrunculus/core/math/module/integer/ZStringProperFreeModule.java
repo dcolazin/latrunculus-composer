@@ -20,7 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,21 +59,21 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
     
     
     public ZStringProperFreeElement getZero() {
-        ZString[] res = new ZString[getDimension()];
+        List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res[i] = ZString.getZero();
+            res.set(i, RingString.getZero());
         }
         return (ZStringProperFreeElement) ZStringProperFreeElement.make(res); //TODO do not cast
     }
     
     
     public ZStringProperFreeElement getUnitElement(int i) {
-        ZString[] v = new ZString[getDimension()];
+        List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            v[j] = ZString.getZero();
+            res.set(j, RingString.getZero());
         }
-        v[i] = ZString.getOne();
-        return (ZStringProperFreeElement) ZStringProperFreeElement.make(v);
+        res.set(i, RingString.getOne());
+        return (ZStringProperFreeElement) ZStringProperFreeElement.make(res);
     }
     
 
@@ -123,17 +125,15 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        ZString[] values = new ZString[getDimension()];        
+        List<RingString<ArithmeticInteger>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
             if (object instanceof ZStringElement) {
-                values[i] = ((ZStringElement)object).getValue();
-            }
-            else {
+                values.set(i, ((ZStringElement)object).getValue());
+            } else {
                 return null;
             }
         }
-
         return (ZStringProperFreeElement) ZStringProperFreeElement.make(values);
     }
     
@@ -166,7 +166,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
     public ZStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (ZStringProperFreeElement) ZStringProperFreeElement.make(new ZString[0]);
+            return (ZStringProperFreeElement) ZStringProperFreeElement.make(new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -175,19 +175,14 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
                 return null;
             }
             else {
-                ZString[] zstrings = new ZString[getDimension()];
+                List<RingString<ArithmeticInteger>> zstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    zstrings[i] = ZString.parseZString(strings[i]);
-                    if (zstrings[i] == null) {
-                        return null;
-                    }
+                    zstrings.set(i, ZStringRing.parse(strings[i]));
                 }
                 return (ZStringProperFreeElement) ZStringProperFreeElement.make(zstrings);
             }            
         }
-        else {
-            return null;
-        }
+        return null;
     }
     
     

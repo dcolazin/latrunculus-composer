@@ -20,12 +20,14 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+
+import java.util.LinkedList;
 
 /**
  * The ring of ZString.
@@ -38,12 +40,12 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
     public static final ZStringRing ring = new ZStringRing();
 
     public ZStringElement getZero() {
-        return new ZStringElement(ZString.getZero());
+        return new ZStringElement(RingString.getZero());
     }
 
     
     public ZStringElement getOne() {
-        return new ZStringElement(ZString.getOne());
+        return new ZStringElement(RingString.getOne());
     }
 
     
@@ -93,7 +95,7 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
         }
         else if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ZStringElement(new ZString(rs));
+            return new ZStringElement(new RingString<>(rs));
         }
         else {
             ZElement e = ZRing.ring.cast(element);
@@ -101,7 +103,7 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
                 return null;
             }
             else {
-                return new ZStringElement(new ZString(e.getValue()));
+                return new ZStringElement(new RingString<>(e.getValue()));
             }
         }       
     }
@@ -116,10 +118,31 @@ public final class ZStringRing extends StringRing implements ZStringFreeModule {
         return "Z-String";
     }
 
-    
+    public static RingString<ArithmeticInteger> parse(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<ArithmeticInteger> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            int f = Integer.parseInt(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new ArithmeticInteger(f));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
+
     public ZStringElement parseString(String string) {
         try {
-            return new ZStringElement(ZString.parseZString(TextUtils.unparenthesize(string)));
+            return new ZStringElement(parse(TextUtils.unparenthesize(string)));
         }
         catch (Exception e) {
             return new ZStringElement(string);

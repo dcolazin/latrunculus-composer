@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -29,7 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -40,15 +42,18 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  */
 public final class ZStringProperFreeElement extends ProperFreeElement<ZStringProperFreeElement,ZStringElement> implements ZStringFreeElement<ZStringProperFreeElement> {
 
-    public static ZStringFreeElement nullElement = new ZStringProperFreeElement(new ZString[0]);
+    public static ZStringFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
 
-    public static ZStringFreeElement make(ZString[] v) {
+    private final List<RingString<ArithmeticInteger>> value;
+    private FreeModule<?,ZElement> module;
+
+    public static ZStringFreeElement make(List<RingString<ArithmeticInteger>> v) {
         assert(v != null);
-        if (v.length == 0) {
+        if (v.isEmpty()) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return new ZStringElement(v[0]);
+        else if (v.size() == 1) {
+            return new ZStringElement(v.get(0));
         }
         else {
             return new ZStringProperFreeElement(v);
@@ -57,9 +62,9 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
 
     
     public boolean isZero() {
-        ZString zero = ZString.getZero();
+        RingString<ArithmeticInteger> zero = RingString.getZero();
         for (int i = 0; i < getLength(); i++) {
-            if (!value[i].equals(zero)) {
+            if (!value.get(i).equals(zero)) {
                 return false;
             }
         }
@@ -69,9 +74,9 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public ZStringProperFreeElement sum(ZStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            ZString res[] = new ZString[getLength()];
+            List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].sum(element.value[i]);
+                res.set(i, value.get(i).sum(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);
         }
@@ -84,7 +89,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].add(element.value[i]);
+                value.get(i).add(element.value.get(i));
             }        
         }
         else {
@@ -95,9 +100,9 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public ZStringProperFreeElement difference(ZStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            ZString res[] = new ZString[getLength()];
+            List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].difference(element.value[i]);
+                res.set(i, value.get(i).difference(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);        
         }
@@ -110,7 +115,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].subtract(element.value[i]);
+                value.get(i).subtract(element.value.get(i));
             }        
         }
         else {
@@ -121,9 +126,9 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public ZStringProperFreeElement productCW(ZStringProperFreeElement element)
             throws DomainException {
         if (getLength() == element.getLength()) {
-            ZString res[] = new ZString[getLength()];
+            List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = value[i].product(element.value[i]);
+                res.set(i, value.get(i).product(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);
         }
@@ -136,7 +141,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                value[i].add(element.value[i]);
+                value.get(i).add(element.value.get(i));
             }        
         }
         else {
@@ -146,9 +151,9 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     
     
     public ZStringProperFreeElement negated() {
-        ZString[] res = new ZString[getLength()];
+        List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].negated();
+            res.set(i, value.get(i).negated());
         }
         return new ZStringProperFreeElement(res);
     }
@@ -156,41 +161,41 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
-            value[i].negate();
+            value.get(i).negate();
         }
     }
 
     public ZStringProperFreeElement scaled(ZStringElement element) {
-        ZString val = element.getValue();
-        ZString res[] = new ZString[getLength()];
+        RingString<ArithmeticInteger> val = element.getValue();
+        List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res[i] = value[i].product(val);
+            res.set(i, value.get(i).product(val));
         }
         return new ZStringProperFreeElement(res);        
     }
 
     public void scale(ZStringElement element) {
-        ZString val = element.getValue();
+        RingString<ArithmeticInteger> val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
-            value[i].multiply(val);
+            value.get(i).multiply(val);
         }
     }
 
     
     public ModuleElement getComponent(int i) {
         assert(i < getLength());
-        return new ZStringElement(value[i]);
+        return new ZStringElement(value.get(i));
     }
     
 
     public RingElement getRingElement(int i) {
         assert(i < getLength());
-        return new ZStringElement(value[i]);
+        return new ZStringElement(value.get(i));
     }
     
 
     public int getLength() {
-        return value.length;
+        return value.size();
     }
     
 
@@ -202,13 +207,13 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     }
     
 
-    public ZString[] getValue() {
+    public List<RingString<ArithmeticInteger>> getValue() {
         return value;
     }
     
 
-    public ZString getValue(int i) {
-        return value[i];
+    public RingString<ArithmeticInteger> getValue(int i) {
+        return value.get(i);
     }
     
 
@@ -218,12 +223,12 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         }
         else {
             int minlen = Math.min(n, getLength());
-            ZString[] values = new ZString[n];
+            List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
             for (int i = 0; i < minlen; i++) {
-                values[i] = getValue(i);
+                values.set(i, getValue(i));
             }
             for (int i = minlen; i < n; i++) {
-                values[i] = ZString.getZero();
+                values.set(i, RingString.getZero());
             }
             return ZStringProperFreeElement.make(values);
         }
@@ -235,7 +240,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             ZStringProperFreeElement e = (ZStringProperFreeElement) object;
             if (getLength() == e.getLength()) {
                 for (int i = 0; i < getLength(); i++) {
-                    if (!value[i].equals(e.value[i])) {
+                    if (!value.get(i).equals(e.value.get(i))) {
                         return false;
                     }
                 }
@@ -260,7 +265,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int d = value[i].compareTo(element.value[i]);
+                    int d = value.get(i).compareTo(element.value.get(i));
                     if (d != 0) {
                         return d;
                     }
@@ -279,10 +284,10 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(value[0].stringRep());
+            res.append(value.get(0).stringRep());
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(value[i].stringRep());
+                res.append(value.get(i).stringRep());
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -300,10 +305,10 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(value[0]);
+            buf.append(value.get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(value[i]);
+                buf.append(value.get(i));
             }
         }
         buf.append("]");
@@ -323,25 +328,21 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public int hashCode() {
         int val = 0;
         for (int i = 0; i < getLength(); i++) {
-            val ^= value[i].hashCode();
+            val ^= value.get(i).hashCode();
         }
         return val;
     }
     
 
-    private ZStringProperFreeElement(ZString[] value) {
+    private ZStringProperFreeElement(List<RingString<ArithmeticInteger>> value) {
         this.value = value;
     }
 
-
-    private ZString[]   value;
-    private FreeModule<?,ZElement> module = null;
-
     @Override
-    public ModuleElement deepCopy() {
-        ZString[] v = new ZString[getLength()];
+    public ZStringProperFreeElement deepCopy() {
+        List<RingString<ArithmeticInteger>> v = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            v[i] = value[i].deepCopy();
+            v.set(i, value.get(i).deepCopy());
         }
         return new ZStringProperFreeElement(v);
     }

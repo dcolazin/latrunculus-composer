@@ -24,9 +24,10 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -501,7 +502,7 @@ public final class SimpleDenotator extends Denotator {
     /**
      * Returns the ZString contained in a ZStringElement denotator.
      */
-    public ZString getZString() {
+    public RingString<ArithmeticInteger> getZString() {
         return ((ZStringElement)getElement()).getValue();
     }
 

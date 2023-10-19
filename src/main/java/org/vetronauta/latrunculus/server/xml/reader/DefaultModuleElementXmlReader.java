@@ -21,11 +21,11 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
@@ -407,17 +407,17 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 words.add(next.getTextContent());
                 next = XMLReader.getNextSibling(next, WORD);
             }
-            int[] factorArray = new int[factors.size()];
+            ArithmeticInteger[] factorArray = new ArithmeticInteger[factors.size()];
             String[] wordArray = new String[factors.size()];
             int j = 0;
             Iterator<Integer> fiter = factors.iterator();
             Iterator<String> witer = words.iterator();
             while (fiter.hasNext()) {
-                factorArray[j] = fiter.next();
+                factorArray[j] = new ArithmeticInteger(fiter.next());
                 wordArray[j] = witer.next();
                 j++;
             }
-            ZString zstring = new ZString(wordArray, factorArray);
+            RingString<ArithmeticInteger> zstring = new RingString<>(wordArray, factorArray);
             return new ZStringElement(zstring);
         }
         else {
@@ -652,11 +652,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(ringElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            ZString[] coefficients = new ZString[elements.size()];
+            List<RingString<ArithmeticInteger>> coefficients = new ArrayList<>(elements.size());
             Iterator<ZStringElement> iter = elements.iterator();
             int i = 0;
             while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
+                coefficients.set(i++, iter.next().getValue());
             }
             return ZStringProperFreeElement.make(coefficients);
         }
