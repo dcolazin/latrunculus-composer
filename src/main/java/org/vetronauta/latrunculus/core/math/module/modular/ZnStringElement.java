@@ -19,16 +19,13 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
+import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringElement extends StringElement<ZnStringElement> implements FreeElement<ZnStringElement,ZnStringElement> {
+public final class ZnStringElement extends ArithmeticStringElement<ZnStringElement,ArithmeticModulus> {
 
     //TODO various consistency checks for modulus
 
@@ -51,12 +48,12 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
      * The result is a ZnStringElement of the form 1*value.
      */
     public ZnStringElement(String string, int modulus) {
-        this.value = new RingString<>(string);
+        super(new RingString<>(string));
         this.modulus = modulus;
     }
 
     public ZnStringElement(RingString<ArithmeticModulus> value) {
-        this.value = value;
+        super(value);
         this.modulus = extractModulus();
     }
 
@@ -64,7 +61,7 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
      * Constructs a ZnStringElement from a ZnString <code>value</code>.
      */
     public ZnStringElement(RingString<ArithmeticModulus> value, int modulus) {
-        this.value = value;
+        super(value);
         this.modulus = modulus;
     }
 
@@ -76,6 +73,11 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
      *             length
      */
     public ZnStringElement(int modulus, Object ... objs) {
+        super(build(modulus, objs));
+        this.modulus = modulus;
+    }
+
+    private static RingString<ArithmeticModulus> build(int modulus, Object ... objs) {
         int len = objs.length/2;
         String[] words = new String[len];
         ArithmeticModulus[] factors = new ArithmeticModulus[len];
@@ -89,105 +91,13 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
                 factors[i/2] = new ArithmeticModulus(0, modulus);
             }
         }
-        this.value = new RingString<>(words, factors);
-    }
-    
-
-    public boolean isOne() {
-        return value.equals(RingString.getOne());
-    }
-       
-
-    public boolean isZero() {
-        return value.equals(RingString.getZero());
+        return new RingString<>(words, factors);
     }
 
-    public ZnStringElement sum(ZnStringElement element) {
-        return new ZnStringElement(value.sum(element.getValue()));
+    @Override
+    protected ZnStringElement valueOf(@NonNull RingString<ArithmeticModulus> value) {
+        return new ZnStringElement(value);
     }
-
-    public void add(ZnStringElement element) {
-        value.add(element.getValue());
-    }
-
-    public ZnStringElement difference(ZnStringElement element) {
-        return new ZnStringElement(value.difference(element.getValue()));
-    }
-
-    public void subtract(ZnStringElement element) {
-        value.subtract(element.getValue());
-    }
-
-
-    public ZnStringElement negated() {
-        return new ZnStringElement(value.negated());
-    }
-
-    
-    public void negate() {
-        value.negate();
-    }
-
-    
-    public ZnStringElement scaled(ZnStringElement element)
-            throws DomainException {
-        return product(element);
-    }
-    
-
-    public void scale(ZnStringElement element)
-            throws DomainException {
-        multiply(element);
-    }
-    
-    public ZnStringElement product(ZnStringElement element) {
-        return new ZnStringElement(getValue().product(element.getValue()));
-    }
-    
-    public void multiply(ZnStringElement element) {
-        value.multiply(element.getValue());
-    }
-
-    
-    public ZnStringElement inverse() {
-        throw new InverseException("Inverse of "+this+" does not exist");
-    }
-
-    
-    public void invert() {
-        throw new InverseException("Inverse of "+this+" does not exist");
-    }
-    
-
-    public ZnStringElement quotient(ZnStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZnStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public void divide(ZnStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof ZnStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public boolean divides(RingElement element) {
-        // TODO: implement division where possible
-        return false;
-    }
-
 
     public ZnStringRing getRing() {
         if (module == null) {
@@ -195,17 +105,6 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
         }
         return module;
     }
-
-    
-    public RingString<ArithmeticModulus> getValue() {
-        return value;
-    }
-    
-
-    public RingString getRingString() {
-        return value;
-    }
-
     
     public FreeElement resize(int n) {
         if (n == 1) {
@@ -216,45 +115,16 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
         }
         else {
             List<RingString<ArithmeticModulus>> values = new ArrayList<>(n);
-            values.set(0, value);
+            values.set(0, getValue());
             for (int i = 1; i < n; i++) {
                 values.set(i, RingString.getZero());
             }
             return ZnStringProperFreeElement.make(values, modulus);
         }
     }
-    
-
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        else if (object instanceof ZnStringElement) {
-            return (value.equals(((ZnStringElement)object).getValue()) &&
-                    	extractModulus() == ((ZnStringElement)object).getModulus());
-        }
-        else {
-            return false;
-        }
-    }
 
     private int extractModulus() {
-        return value.getFactors().stream().findFirst().map(ArithmeticModulus::getModulus).orElseThrow(ZeroDivisorException::new);
-    }
-
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ZnStringElement) {
-            ZnStringElement element = (ZnStringElement)object;
-            return value.compareTo(element.getValue());
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    @Override
-    public ZnStringElement deepCopy() {
-        return new ZnStringElement(value.deepCopy());
+        return getValue().getFactors().stream().findFirst().map(ArithmeticModulus::getModulus).orElseThrow(ZeroDivisorException::new);
     }
     
     public int getModulus() {
@@ -265,18 +135,12 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     public String toString() {
         return "ZnStringElement("+getModulus()+")["+getValue()+"]";
     }
-
-    
-    public String stringRep(boolean ... parens) {
-    	return value.stringRep();
-    }
-    
     
     public HashMap<String,RingElement> getTerms() {
         HashMap<String,RingElement> map = new HashMap<String,RingElement>();
-        Set<String> strings = value.getStrings();
+        Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new ZElement(((Integer)value.getFactorForString(s))));
+            map.put(s, new ZElement(((Integer)getValue().getFactorForString(s))));
         }
         return map;
     }
@@ -284,14 +148,8 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     public String getElementTypeName() {
         return "ZnStringElement";
     }
-    
-    
-    public int hashCode() {
-        return value.hashCode();
-    }
-     
-   
-    private RingString<ArithmeticModulus> value;
+
     private int      modulus;
     private ZnStringRing   module = null;
+
 }

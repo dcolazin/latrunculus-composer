@@ -241,23 +241,14 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ZStringElement element, XMLWriter writer) {
-        if (element.getSimpleString() == null) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-            for (String word : element.getValue().getStrings()) {
-                int factor = (Integer) element.getValue().getFactorForString(word);
-                writer.openInline(WORD, FACTOR_ATTR, factor);
-                writer.text(word);
-                writer.closeInline();
-            }
-            writer.closeBlock();
-        }
-        else {
-            writer.openInline(MODULE_ELEMENT,
-                    TYPE_ATTR, element.getElementTypeName(),
-                    KIND_ATTR, "simple");
-            writer.text(element.getSimpleString());
+        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
+        for (String word : element.getValue().getStrings()) {
+            int factor = (Integer) element.getValue().getFactorForString(word);
+            writer.openInline(WORD, FACTOR_ATTR, factor);
+            writer.text(word);
             writer.closeInline();
         }
+        writer.closeBlock();
     }
 
     private void write(QStringElement element, XMLWriter writer) {

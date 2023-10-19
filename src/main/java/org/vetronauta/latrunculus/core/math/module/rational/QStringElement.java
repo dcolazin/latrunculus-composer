@@ -19,16 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import org.rubato.util.TextUtils;
+import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import java.util.ArrayList;
@@ -42,15 +38,13 @@ import java.util.Set;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringElement extends StringElement<QStringElement> implements FreeElement<QStringElement,QStringElement> {
-
-    private final RingString<Rational> value;
+public final class QStringElement extends ArithmeticStringElement<QStringElement,Rational> {
 
     /**
      * Constructs a QStringElement from a QString <code>value</code>.
      */
     public QStringElement(RingString<Rational> value) {
-        this.value = value;
+        super(value);
     }
 
 
@@ -59,17 +53,26 @@ public final class QStringElement extends StringElement<QStringElement> implemen
      * The result is a QStringElement of the form 1/1*value.
      */
     public QStringElement(String value) {
-        this.value = new RingString<>(value);
+        super(value);
     }
 
-    
+    @Override
+    protected QStringElement valueOf(@NonNull RingString<Rational> value) {
+        return new QStringElement(value);
+    }
+
+
     /**
      * Constructs a QStringElement from the array of objects <code>objs</code>.
      * @param objs an array of objects where strings alternate with
      *             rationals, the array should therefore be of even
      *             length
      */
-    public QStringElement(Object ... objs) {
+    public QStringElement(Object... objs) {
+        super(build(objs));
+    }
+
+    private static RingString<Rational> build(Object[] objs) {
         int len = objs.length/2;
         String[] words = new String[len];
         Rational[] factors = new Rational[len];
@@ -83,123 +86,12 @@ public final class QStringElement extends StringElement<QStringElement> implemen
                 factors[i/2] = Rational.getZero();
             }
         }
-        this.value = new RingString<>(words, factors);
+        return new RingString<>(words, factors);
     }
-
-    
-    public boolean isOne() {
-        return value.isOne();
-    }
-       
-
-    public boolean isZero() {
-        return value.isZero();
-    }
-
-
-    public QStringElement sum(QStringElement element) {
-        return new QStringElement(getValue().sum(element.getValue()));
-    }
-    
-    public void add(QStringElement element) {
-        value.add(element.getValue());        
-    }
-
-    public QStringElement difference(QStringElement element) {
-        return new QStringElement(getValue().difference(element.getValue()));
-    }
-
-    public void subtract(QStringElement element) {
-        value.subtract(element.getValue());
-    }
-
-
-    public QStringElement negated() {
-        return new QStringElement(getValue().negated());
-    }
-
-    
-    public void negate() {
-        value.negate();
-    }
-
-
-    public QStringElement scaled(QStringElement element)
-            throws DomainException {
-        return product(element);
-    }
-    
-
-    public void scale(QStringElement element)
-            throws DomainException {
-        multiply(element);
-    }
-
-    
-    public QStringElement product(QStringElement element) {
-        return new QStringElement(getValue().product(element.getValue()));
-    }
-
-    
-    public final void multiply(QStringElement element) {
-        value.multiply(element.getValue());
-    }
-
-    
-    public QStringElement inverse() {
-        throw new InverseException("Inverse of "+this+" does not exist");
-    }
-
-    
-    public void invert() {
-        throw new InverseException("Inverse of "+this+" does not exist");
-    }
-
-    
-    public QStringElement quotient(QStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof QStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public void divide(QStringElement element)
-            throws DomainException, DivisionException {
-        if (element instanceof QStringElement) {
-            // TODO: implement division where possible
-            throw new DivisionException(this, element);
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-
-
-    public boolean divides(RingElement element) {
-        // TODO: implement division where possible
-        return false;
-    }
-
 
     public RStringRing getRing() {
         return RStringRing.ring;
     }
-
-
-    public RingString<Rational> getValue() {
-        return value;
-    }
-
-
-    public RingString getRingString() {
-        return getValue();
-    }
-
 
     public FreeElement resize(int n) {
         if (n == 1) {
@@ -210,78 +102,29 @@ public final class QStringElement extends StringElement<QStringElement> implemen
         }
         else {
             List<RingString<Rational>> values = new ArrayList<>(n);
-            values.set(0, new RingString<>(value));
+            values.set(0, new RingString<>(getValue()));
             for (int i = 1; i < n; i++) {
                 values.set(i, new RingString<>());
             }
             return QStringProperFreeElement.make(values);
         }
     }
-    
-
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        else if (object instanceof QStringElement) {
-            return getValue().equals(((QStringElement)object).getValue());
-        }
-        else {
-            return false;
-        }
-    }
-
-
-    public int compareTo(ModuleElement object) {
-        if (object instanceof QStringElement) {
-            return getValue().compareTo(((QStringElement)object).getValue());
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    @Override
-    public QStringElement deepCopy() {
-        return new QStringElement(getValue().deepCopy());
-    }
 
     public String toString() {
-        return "QStringElement["+value+"]";
+        return "QStringElement["+getValue()+"]";
     }
-
-    
-    public String stringRep(boolean ... parens) {
-        if (parens.length > 0) {
-            return TextUtils.parenthesize(getValue().stringRep());
-        }
-        else {
-            return getValue().stringRep();
-        }
-    }
-
-    
-    public String getString() {
-        return getValue().getString();
-    }
-
     
     public HashMap<String,RingElement> getTerms() {
         HashMap<String,RingElement> map = new HashMap<>();
-        Set<String> strings = value.getStrings();
+        Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new QElement(((Rational)value.getFactorForString(s))));
+            map.put(s, new QElement(((Rational)getValue().getFactorForString(s))));
         }
         return map;
     }
 
     public String getElementTypeName() {
         return "QStringElement";
-    }
-    
-    
-    public int hashCode() {
-        return value.hashCode();
     }
 
 }
