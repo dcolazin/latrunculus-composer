@@ -19,20 +19,21 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -43,22 +44,28 @@ import java.util.Set;
  */
 public final class ZnStringElement extends StringElement<ZnStringElement> implements ZnStringFreeElement<ZnStringElement> {
 
+    //TODO various consistency checks for modulus
+
     /**
      * Constructs a ZnStringElement from a <code>string</code> mod <code>modulus</code>.
      * The result is a ZnStringElement of the form 1*value.
      */
     public ZnStringElement(String string, int modulus) {
-        this.value = new ZnString(string, modulus);
+        this.value = new RingString<>(string);
         this.modulus = modulus;
     }
 
-    
+    public ZnStringElement(RingString<ArithmeticModulus> value) {
+        this.value = value;
+        this.modulus = extractModulus();
+    }
+
     /**
      * Constructs a ZnStringElement from a ZnString <code>value</code>.
      */
-    public ZnStringElement(ZnString value) {
+    public ZnStringElement(RingString<ArithmeticModulus> value, int modulus) {
         this.value = value;
-        this.modulus = value.getModulus();
+        this.modulus = modulus;
     }
 
 
@@ -71,28 +78,28 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     public ZnStringElement(int modulus, Object ... objs) {
         int len = objs.length/2;
         String[] words = new String[len];
-        int[] factors = new int[len];
+        ArithmeticModulus[] factors = new ArithmeticModulus[len];
         for (int i = 0; i < len*2; i += 2) {
             if (objs[i] instanceof String && objs[i+1] instanceof Integer) {
                 words[i/2] = (String)objs[i];
-                factors[i/2] = (Integer)objs[i+1];
+                factors[i/2] = new ArithmeticModulus((Integer)objs[i+1], modulus);
             }
             else {
                 words[i/2] = "";
-                factors[i/2] = 0;
+                factors[i/2] = new ArithmeticModulus(0, modulus);
             }
         }
-        this.value = new ZnString(words, factors, modulus);
+        this.value = new RingString<>(words, factors);
     }
     
 
     public boolean isOne() {
-        return value.equals(ZnString.getOne(getModulus()));
+        return value.equals(RingString.getOne());
     }
        
 
     public boolean isZero() {
-        return value.equals(ZnString.getZero(getModulus()));
+        return value.equals(RingString.getZero());
     }
 
     public ZnStringElement sum(ZnStringElement element) {
@@ -190,7 +197,7 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     }
 
     
-    public ZnString getValue() {
+    public RingString<ArithmeticModulus> getValue() {
         return value;
     }
     
@@ -205,13 +212,13 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
             return this;
         }
         else if (n == 0) {
-            return ZnStringProperFreeElement.make(new ZnString[0], modulus);
+            return ZnStringProperFreeElement.make(new ArrayList<>(), modulus);
         }
         else {
-            ZnString[] values = new ZnString[n];
-            values[0] = value;
+            List<RingString<ArithmeticModulus>> values = new ArrayList<>(n);
+            values.set(0, value);
             for (int i = 1; i < n; i++) {
-                values[i] = ZnString.getZero(modulus);
+                values.set(i, RingString.getZero());
             }
             return ZnStringProperFreeElement.make(values, modulus);
         }
@@ -224,13 +231,16 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
         }
         else if (object instanceof ZnStringElement) {
             return (value.equals(((ZnStringElement)object).getValue()) &&
-                    	value.getModulus() == ((ZnStringElement)object).getModulus());
+                    	extractModulus() == ((ZnStringElement)object).getModulus());
         }
         else {
             return false;
         }
     }
 
+    private int extractModulus() {
+        return value.getFactors().stream().findFirst().map(ArithmeticModulus::getModulus).orElseThrow(ZeroDivisorException::new);
+    }
 
     public int compareTo(ModuleElement object) {
         if (object instanceof ZnStringElement) {
@@ -244,7 +254,7 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
 
     @Override
     public ZnStringElement deepCopy() {
-        return new ZnStringElement((ZnString)value.deepCopy());
+        return new ZnStringElement(value.deepCopy());
     }
     
     public int getModulus() {
@@ -281,7 +291,7 @@ public final class ZnStringElement extends StringElement<ZnStringElement> implem
     }
      
    
-    private ZnString value;
+    private RingString<ArithmeticModulus> value;
     private int      modulus;
     private ZnStringRing   module = null;
 }

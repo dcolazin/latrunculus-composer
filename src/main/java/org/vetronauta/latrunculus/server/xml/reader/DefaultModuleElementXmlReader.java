@@ -21,11 +21,11 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.arith.string.ZString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
@@ -447,8 +447,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
 
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {
-            LinkedList<Integer> factors = new LinkedList<Integer>();
-            LinkedList<String> words = new LinkedList<String>();
+            LinkedList<Integer> factors = new LinkedList<>();
+            LinkedList<String> words = new LinkedList<>();
             String factor;
             Integer integer;
 
@@ -484,17 +484,17 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 words.add(next.getTextContent());
                 next = XMLReader.getNextSibling(next, WORD);
             }
-            int[] factorArray = new int[factors.size()];
+            ArithmeticModulus[] factorArray = new ArithmeticModulus[factors.size()];
             String[] wordArray = new String[factors.size()];
             int i = 0;
             Iterator<Integer> fiter = factors.iterator();
             Iterator<String> witer = words.iterator();
             while (fiter.hasNext()) {
-                factorArray[i] = fiter.next().intValue();
+                factorArray[i] = new ArithmeticModulus(fiter.next(), mod);
                 wordArray[i] = witer.next();
                 i++;
             }
-            ZnString znstring = new ZnString(wordArray, factorArray, mod);
+            RingString<ArithmeticModulus> znstring = new RingString<>(wordArray, factorArray);
             return new ZnStringElement(znstring);
         }
         else {
@@ -696,11 +696,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(ringElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            ZnString[] coefficients = new ZnString[elements.size()];
+            List<RingString<ArithmeticModulus>> coefficients = new ArrayList<>(elements.size());
             Iterator<ZnStringElement> iter = elements.iterator();
             int i = 0;
             while (iter.hasNext()) {
-                coefficients[i++] = iter.next().getValue();
+                coefficients.set(i++, iter.next().getValue());
             }
             return ZnStringProperFreeElement.make(coefficients, modulus0);
         }

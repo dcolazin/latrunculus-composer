@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -179,6 +180,14 @@ public class RingString<T extends ArithmeticNumber<T>>
      */
     public Set<String> getStrings() {
         return dict.keySet();
+    }
+
+    /**
+     * Returns a Set of all the strings in the
+     * terms of the RingString.
+     */
+    public Collection<T> getFactors() {
+        return dict.values();
     }
 
     /**

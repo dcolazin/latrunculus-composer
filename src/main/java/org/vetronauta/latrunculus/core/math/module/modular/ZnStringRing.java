@@ -20,8 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
@@ -29,6 +29,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+
+import java.util.LinkedList;
 
 /**
  * The ring of ZnString.
@@ -45,12 +47,12 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
     
 
     public ZnStringElement getZero() {
-        return new ZnStringElement(ZnString.getZero(modulus));
+        return new ZnStringElement(RingString.getZero(), modulus);
     }
 
     
     public ZnStringElement getOne() {
-        return new ZnStringElement(ZnString.getOne(modulus));
+        return new ZnStringElement(RingString.getOne(), modulus);
     }
 
     
@@ -106,7 +108,7 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
     public ModuleElement cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ZnStringElement(new ZnString(rs, modulus));
+            return new ZnStringElement(new RingString<>(rs), modulus);
         }
         else {
             ZElement e = ZRing.ring.cast(element);
@@ -114,7 +116,7 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
                 return null;
             }
             else {
-                return new ZnStringElement(new ZnString(e.getValue(), getModulus()));
+                return new ZnStringElement(new RingString<>(e.getValue()), modulus);
             }
         }       
     }
@@ -134,10 +136,31 @@ public final class ZnStringRing extends StringRing implements ZnStringFreeModule
         return "Z_"+getModulus()+"-String";
     }
 
-    
+    public static RingString<ArithmeticModulus> parse(String string, int modulus) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<ArithmeticModulus> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            int f = Integer.parseInt(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new ArithmeticModulus(f, modulus));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
+
     public ZnStringElement parseString(String string) {
         try {
-            return new ZnStringElement(ZnString.parseZnString(TextUtils.unparenthesize(string), getModulus()));
+            return new ZnStringElement(parse(TextUtils.unparenthesize(string), getModulus()));
         }
         catch (Exception e) {
             return null;

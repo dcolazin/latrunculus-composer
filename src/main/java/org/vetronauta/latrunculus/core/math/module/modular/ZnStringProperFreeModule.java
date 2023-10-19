@@ -20,7 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.ZnString;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +43,7 @@ import java.util.List;
 public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringProperFreeElement,ZnStringElement> implements ZnStringFreeModule<ZnStringProperFreeElement> {
 
     public static ZnStringFreeModule make(int dimension, int modulus) {
-        dimension = (dimension < 0)?0:dimension;
+        dimension = Math.max(dimension, 0);
         if (dimension == 1) {
             return ZnStringRing.make(modulus);
         }
@@ -52,20 +54,20 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
     
     
     public ZnStringProperFreeElement getZero() {
-        ZnString[] res = new ZnString[getDimension()];
+        List<RingString<ArithmeticModulus>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res[i] = ZnString.getZero(modulus);
+            res.set(i, RingString.getZero());
         }
         return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(res, modulus); //TODO do not cast
     }
     
     
     public ZnStringProperFreeElement getUnitElement(int i) {
-        ZnString[] v = new ZnString[getDimension()];
+        List<RingString<ArithmeticModulus>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            v[j] = ZnString.getZero(modulus);
+            v.set(j, RingString.getZero());
         }
-        v[i] = ZnString.getOne(modulus);
+        v.set(i, RingString.getOne());
         return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(v, modulus);
     }
     
@@ -125,11 +127,11 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        ZnString[] values = new ZnString[getDimension()];        
+        List<RingString<ArithmeticModulus>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof ZnStringElement) {
-                values[i] = ((ZnStringElement)object).getValue();
+                values.set(i, ((ZnStringElement)object).getValue());
             }
             else {
                 return null;
@@ -174,7 +176,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
     public ZnStringProperFreeElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(new ZnString[0], getModulus());
+            return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(new ArrayList<>(), getModulus());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -183,12 +185,9 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
                 return null;
             }
             else {
-                ZnString[] zstrings = new ZnString[getDimension()];
+                List<RingString<ArithmeticModulus>> zstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    zstrings[i] = ZnString.parseZnString(strings[i], getModulus());
-                    if (zstrings[i] == null) {
-                        return null;
-                    }
+                    zstrings.set(i, ZnStringRing.parse(strings[i], getModulus()));
                 }
                 return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(zstrings, getModulus());
             }            
