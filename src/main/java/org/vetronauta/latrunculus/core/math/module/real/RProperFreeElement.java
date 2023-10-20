@@ -21,10 +21,16 @@ package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over reals.
@@ -32,30 +38,30 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
+public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticDouble> {
 
     public static RProperFreeElement nullElement = new RProperFreeElement(new double[0]);
     
-    public static FreeElement<?, RElement> make(double[] v) {
+    public static FreeElement<?, ArithmeticElement<ArithmeticDouble>> make(double[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
         }
         else if (v.length == 1) {
-            return new RElement(v[0]);
+            return new ArithmeticElement<>(new ArithmeticDouble(v[0]));
         }
         else {
             return new RProperFreeElement(v);
         }
     }
 
-    public static FreeElement<?, RElement> make(RElement[] v) {
+    public static FreeElement<?, ArithmeticElement<ArithmeticDouble>> make(List<ArithmeticElement<ArithmeticDouble>> v) {
         assert(v != null);
-        if (v.length == 0) {
+        if (v.size() == 0) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return v[0];
+        else if (v.size() == 1) {
+            return v.get(0);
         }
         else {
             return new RProperFreeElement(v);
@@ -81,7 +87,7 @@ public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    double d = getValue()[i].difference(element.getValue()[i]).getValue().doubleValue();
+                    double d = getValue().get(i).difference(element.getValue().get(i)).getValue().doubleValue();
                     if (d < 0) {
                         return -1;
                     }
@@ -103,10 +109,10 @@ public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(getValue()[0]);
+            res.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(getValue()[i]);
+                res.append(getValue().get(i));
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -124,10 +130,10 @@ public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(getValue()[0]);
+            buf.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(getValue()[i]);
+                buf.append(getValue().get(i));
             }
         }
         buf.append("]");
@@ -141,9 +147,9 @@ public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[elements.length];
-            RElement[] r = ((RProperFreeElement)elements[i]).getValue();
+            List<ArithmeticElement<ArithmeticDouble>> r = ((RProperFreeElement)elements[i]).getValue();
             for (int j = 0; i < elements.length; j++) {
-                res[i][j] = r[j].getValue().doubleValue();
+                res[i][j] = r.get(j).getValue().doubleValue();
             }
         }
         return Folding.fold(res);
@@ -154,10 +160,10 @@ public final class RProperFreeElement extends ArithmeticMultiElement<RElement> {
     }
     
     private RProperFreeElement(double[] value) {
-        super(toElementArray(value));
+        super(Arrays.stream(value).mapToObj(ArithmeticDouble::new).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
-    private RProperFreeElement(RElement[] value) {
+    private RProperFreeElement(List<ArithmeticElement<ArithmeticDouble>> value) {
         super(value);
     }
 

@@ -19,21 +19,19 @@
 
 package org.rubato.logeo;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -49,6 +47,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -128,7 +129,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, int i) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ZElement(i));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         }
         catch (ClassCastException e) {
             return null;
@@ -148,7 +149,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, int i) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ZElement(i));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         } 
         catch (ClassCastException e) {
             return null;
@@ -167,7 +168,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, int i) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ZElement(i));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         }
         catch (ClassCastException e) {
             return null;

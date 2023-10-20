@@ -30,10 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.List;
 
@@ -61,7 +57,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
     
     @Override
-    public FreeModule<?, CElement> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
         return CProperFreeModule.make(dimension);
     }
 
@@ -71,7 +67,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
 
     @Override
-    public CElement createElement(List<ModuleElement<?,?>> elements) {
+    public ArithmeticElement<Complex> createElement(List<ModuleElement<?,?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -79,9 +75,9 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
     
     @Override
-    public CElement cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<Complex> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
-            return cast(((ArithmeticElement<?, ?>) element).getValue());
+            return cast(((ArithmeticElement<?>) element).getValue());
         }
         if (element instanceof DirectSumElement) {
             return element.cast(this);
@@ -89,9 +85,8 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
         return null;
     }
 
-    
-    public CElement cast(ArithmeticNumber<?> element) {
-        return new CElement(element.doubleValue());
+    public ArithmeticElement<Complex> cast(ArithmeticNumber<?> element) {
+        return new ArithmeticElement<>(new Complex(element.doubleValue()));
     }
 
     
@@ -105,10 +100,10 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
     
     
-    public CElement parseString(String string) {
+    public ArithmeticElement<Complex> parseString(String string) {
     	try {
     		Complex value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
-        	return new CElement(value);
+        	return new ArithmeticElement<>(value);
     	}
     	catch (NumberFormatException e) {
     		return null;

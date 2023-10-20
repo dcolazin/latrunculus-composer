@@ -19,21 +19,18 @@
 
 package org.rubato.rubettes.wallpaper;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
 import org.rubato.composer.dialogs.morphisms.JGeometryView;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This view is similar to JGeometryView, except for that it does not just show the colored square
@@ -163,8 +160,8 @@ public class JWallpaperView extends JGeometryView {
 								//four new corners for each x/y combination
 								for (int k = 0; k < originalElements.size(); k++) {
 									ModuleElement currentElement = originalElements.get(k);
-									double x = ((RElement)RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
-									double y = ((RElement)RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
+									double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
+									double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
 									this.addPoint(x, y);
 								}
 							}
@@ -174,7 +171,7 @@ public class JWallpaperView extends JGeometryView {
 							int xIndex = xIndices.get(i);
 							for (int k = 0; k < originalElements.size(); k++) {
 								ModuleElement currentElement = originalElements.get(k);
-								double x = ((RElement)RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
+								double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
 								double y = originalYs.get(k).doubleValue();
 								this.addPoint(x, y);
 							}
@@ -185,7 +182,7 @@ public class JWallpaperView extends JGeometryView {
 							for (int k = 0; k < originalElements.size(); k++) {
 								ModuleElement currentElement = originalElements.get(k);
 								double x = originalXs.get(k).doubleValue();
-								double y = ((RElement)RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
+								double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
 								this.addPoint(x, y);
 							}
 						}
@@ -266,9 +263,9 @@ public class JWallpaperView extends JGeometryView {
 		for (int i = 0; i < domain.getDimension(); i++) {
 			ModuleElement currentComponent = zero.getComponent(i);
 			if (xIndices.contains(new Integer(i))) {
-				elements.add(currentComponent.getModule().cast(new ZElement(x)));
+				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new ArithmeticInteger(x))));
 			} else if (yIndices.contains(new Integer(i))) {
-				elements.add(currentComponent.getModule().cast(new ZElement(y)));
+				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new ArithmeticInteger(y))));
 			} else {
 				elements.add(currentComponent);
 			}

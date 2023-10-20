@@ -8,9 +8,11 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
@@ -138,7 +140,7 @@ public class ObjectGenerator {
 			} else if (valuePath.getEndForm().getType() == Form.SIMPLE) {
 				SimpleDenotator simple = (SimpleDenotator)denotator.get(valuePath.toIntArray());
 				if (simple != null) {
-					return ((RElement)simple.getElement().cast(RRing.ring)).getValue().doubleValue();
+					return ((ArithmeticElement<ArithmeticDouble>)simple.getElement().cast(RRing.ring)).getValue().doubleValue();
 				}
 				return null;
 			}
@@ -156,7 +158,7 @@ public class ObjectGenerator {
 				element = element.getComponent(i);
 			}
 		}
-		return ((RElement)element.cast(RRing.ring)).getValue().doubleValue();
+		return ((ArithmeticElement<ArithmeticDouble>)element.cast(RRing.ring)).getValue().doubleValue();
 	}
 	
 	/**
@@ -397,8 +399,8 @@ public class ObjectGenerator {
 			}
 			return ProductElement.make(factors).cast(productElement.getModule());
 		} else if (currentDimension > 1) {
-			RElement[] values = ((RProperFreeElement)currentElement.cast(RProperFreeModule.make(currentDimension))).getValue();
-			values[elementPath[elementPath.length-1]] = new RElement(value);
+			List<ArithmeticElement<ArithmeticDouble>> values = ((RProperFreeElement)currentElement.cast(RProperFreeModule.make(currentDimension))).getValue();
+			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new ArithmeticDouble(value)));
 			return RProperFreeElement.make(values).cast(currentElement.getModule());
 		} else {
 			return new RElement(value).cast(currentElement.getModule());

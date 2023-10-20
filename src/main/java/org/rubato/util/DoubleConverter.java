@@ -19,17 +19,17 @@
 
 package org.rubato.util;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 
 /**
@@ -38,18 +38,18 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
  * 
  * @author Gérard Milmeister
  */
-public abstract class DoubleConverter {
+public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
 
     /**
      * Converts the module element <code>x</code> to double.
      */
-    public abstract double toDouble(ModuleElement x);
+    public abstract double toDouble(T x);
 
     
     /**
      * Converts the double <code>x</code> to a module element.
      */
-    public abstract ModuleElement fromDouble(double x);
+    public abstract T fromDouble(double x);
     
     
     /**
@@ -76,43 +76,43 @@ public abstract class DoubleConverter {
         }
     }
 
-    private static class ZnConverter extends DoubleConverter {
+    private static class ZnConverter extends DoubleConverter<ArithmeticElement<ArithmeticModulus>> {
         public ZnConverter(int modulus) {
             this.modulus = modulus;
         }
-        public double toDouble(ModuleElement x) {
-            return ((ZnElement)x).getValue().doubleValue();
+        public double toDouble(ArithmeticElement<ArithmeticModulus> x) {
+            return x.getValue().doubleValue();
         }
-        public ModuleElement fromDouble(double x) {
-            return new ZnElement((int)Math.round(x), modulus);
+        public ArithmeticElement<ArithmeticModulus> fromDouble(double x) {
+            return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(x), modulus));
         }
         private int modulus;
     }
     
-    private static DoubleConverter rconverter = new DoubleConverter() {
-        public double toDouble(ModuleElement x) {
-            return ((RElement)x).getValue().doubleValue();
+    private static final DoubleConverter<ArithmeticElement<ArithmeticDouble>> rconverter = new DoubleConverter<ArithmeticElement<ArithmeticDouble>>() {
+        public double toDouble(ArithmeticElement<ArithmeticDouble> x) {
+            return x.getValue().doubleValue();
         }
-        public ModuleElement fromDouble(double x) {
-            return new RElement(x);
-        }
-    };
-
-    private static DoubleConverter zconverter = new DoubleConverter() {
-        public double toDouble(ModuleElement x) {
-            return ((ZElement)x).getValue().doubleValue();
-        }
-        public ModuleElement fromDouble(double x) {
-            return new ZElement((int)Math.round(x));
+        public ArithmeticElement<ArithmeticDouble> fromDouble(double x) {
+            return new ArithmeticElement<>(new ArithmeticDouble(x));
         }
     };
 
-    private static DoubleConverter qconverter = new DoubleConverter() {
-        public double toDouble(ModuleElement x) {
-            return ((QElement)x).getValue().doubleValue();
+    private static final DoubleConverter<ArithmeticElement<ArithmeticInteger>> zconverter = new DoubleConverter<ArithmeticElement<ArithmeticInteger>>() {
+        public double toDouble(ArithmeticElement<ArithmeticInteger> x) {
+            return x.getValue().doubleValue();
         }
-        public ModuleElement fromDouble(double x) {
-            return new QElement(new Rational(x));
+        public ArithmeticElement<ArithmeticInteger> fromDouble(double x) {
+            return new ArithmeticElement<>(new ArithmeticInteger((int) Math.round(x)));
+        }
+    };
+
+    private static final DoubleConverter<ArithmeticElement<Rational>> qconverter = new DoubleConverter<ArithmeticElement<Rational>>() {
+        public double toDouble(ArithmeticElement<Rational> x) {
+            return x.getValue().doubleValue();
+        }
+        public ArithmeticElement<Rational> fromDouble(double x) {
+            return new ArithmeticElement<>(new Rational(x));
         }
     };
 }

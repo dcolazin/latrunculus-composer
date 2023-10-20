@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
@@ -42,7 +43,7 @@ public abstract class ZFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             int[] v = new int[x.getLength()];
             for (int i = 0; i < x.getLength(); i++) {
-                v[i] = ((ZElement) x.getComponent(i)).getValue().intValue();
+                v[i] = ((ArithmeticElement<ArithmeticInteger>) x.getComponent(i)).getValue().intValue();
             }
             return ZProperFreeElement.make(mapValue(v));
         }

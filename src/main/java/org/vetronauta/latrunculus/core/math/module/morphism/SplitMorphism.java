@@ -19,6 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
@@ -26,16 +30,12 @@ import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,12 +60,10 @@ public class SplitMorphism extends ModuleMorphism {
             if (morphisms.size() == 1) {
                 // there is only one morphism, no need for split
                 return morphisms.get(0);
-            }
-            else if (info[ALL_IDENTITY]) {
+            } else if (info[ALL_IDENTITY]) {
                 return getIdentityMorphism(module);
-            }
-            else if (info[ALL_CONSTANT]) {
-                LinkedList<ModuleElement<?,?>> resList = new LinkedList<>();
+            } else if (info[ALL_CONSTANT]) {
+                LinkedList<ModuleElement<?, ?>> resList = new LinkedList<>();
                 for (ModuleMorphism m : morphisms) {
                     Module domain = m.getDomain();
                     int dim = domain.getDimension();
@@ -74,61 +72,56 @@ public class SplitMorphism extends ModuleMorphism {
                         for (int k = 0; k < dim; k++) {
                             resList.add(res.getComponent(k));
                         }
-                    }
-                    catch (MappingException e) {
+                    } catch (MappingException e) {
                         return null;
                     }
                 }
                 return getConstantMorphism(module, module.createElement(resList));
-            }
-            else if (module.checkRingElement(ZElement.class)) {
-                for (ModuleMorphism m : morphisms) {
-                    if (!(m instanceof ZFreeAffineMorphism) &&
-                        !(m instanceof ZAffineMorphism)) {
-                        return new SplitMorphism(module, morphisms);
+            } else if (module.checkRingElement(ArithmeticElement.class)) {
+                ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
+                if (number instanceof ArithmeticInteger) {
+                    for (ModuleMorphism m : morphisms) {
+                        if (!(m instanceof ZFreeAffineMorphism) &&
+                                !(m instanceof ZAffineMorphism)) {
+                            return new SplitMorphism(module, morphisms);
+                        }
                     }
-                }
-                return makeZFreeMorphism(module.getDimension(), morphisms);
-            }
-            else if (module.checkRingElement(ZnElement.class)) {
-                for (ModuleMorphism m : morphisms) {
-                    if (!(m instanceof ZnFreeAffineMorphism) &&
-                        !(m instanceof ZnAffineMorphism)) {
-                        return new SplitMorphism(module, morphisms);
+                    return makeZFreeMorphism(module.getDimension(), morphisms);
+                } else if (number instanceof ArithmeticModulus) {
+                    for (ModuleMorphism m : morphisms) {
+                        if (!(m instanceof ZnFreeAffineMorphism) &&
+                                !(m instanceof ZnAffineMorphism)) {
+                            return new SplitMorphism(module, morphisms);
+                        }
                     }
-                }
-                return makeZnFreeMorphism(module.getDimension(), ((Modular)module).getModulus(), morphisms);
-            }
-            else if (module.checkRingElement(QElement.class)) {
-                for (ModuleMorphism m : morphisms) {
-                    if (!(m instanceof QFreeAffineMorphism) &&
-                        !(m instanceof QAffineMorphism)) {
-                        return new SplitMorphism(module, morphisms);
+                    return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms);
+                } else if (number instanceof Rational) {
+                    for (ModuleMorphism m : morphisms) {
+                        if (!(m instanceof QFreeAffineMorphism) &&
+                                !(m instanceof QAffineMorphism)) {
+                            return new SplitMorphism(module, morphisms);
+                        }
                     }
-                }
-                return makeQFreeMorphism(module.getDimension(), morphisms);
-            }
-            else if (module.checkRingElement(RElement.class)) {
-                for (ModuleMorphism m : morphisms) {
-                    if (!(m instanceof RFreeAffineMorphism) &&
-                        !(m instanceof RAffineMorphism)) {
-                        return new SplitMorphism(module, morphisms);
+                    return makeQFreeMorphism(module.getDimension(), morphisms);
+                } else if (number instanceof ArithmeticDouble) {
+                    for (ModuleMorphism m : morphisms) {
+                        if (!(m instanceof RFreeAffineMorphism) &&
+                                !(m instanceof RAffineMorphism)) {
+                            return new SplitMorphism(module, morphisms);
+                        }
                     }
-                }
-                return makeRFreeMorphism(module.getDimension(), morphisms);
-            }
-            else if (module.checkRingElement(CElement.class)) {
-                for (ModuleMorphism m : morphisms) {
-                    if (!(m instanceof CFreeAffineMorphism) &&
-                        !(m instanceof CAffineMorphism)) {
-                        return new SplitMorphism(module, morphisms);
+                    return makeRFreeMorphism(module.getDimension(), morphisms);
+                } else if (number instanceof Complex) {
+                    for (ModuleMorphism m : morphisms) {
+                        if (!(m instanceof CFreeAffineMorphism) &&
+                                !(m instanceof CAffineMorphism)) {
+                            return new SplitMorphism(module, morphisms);
+                        }
                     }
+                    return makeCFreeMorphism((module).getDimension(), morphisms);
                 }
-                return makeCFreeMorphism((module).getDimension(), morphisms);
             }
-            else {
-                return new SplitMorphism(module, morphisms);
-            }
+            return new SplitMorphism(module, morphisms);
         }
         else {
             return null;

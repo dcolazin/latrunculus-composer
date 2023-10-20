@@ -33,8 +33,7 @@ import java.util.List;
 
 /**
  * The ring of integers.
- * @see ZElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {

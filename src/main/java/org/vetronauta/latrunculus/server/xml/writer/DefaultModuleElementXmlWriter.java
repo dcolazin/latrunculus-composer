@@ -24,7 +24,6 @@ import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -32,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
@@ -44,23 +43,21 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialE
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
+import java.util.List;
+
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.BASE64;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.KIND_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.WORD;
@@ -81,24 +78,12 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     @Override
     public void toXML(ModuleElement object, XMLWriter writer) {
-        if (object instanceof CElement) {
-            write((CElement) object, writer);
-            return;
-        }
-        if (object instanceof ZElement) {
-            write((ZElement) object, writer);
-            return;
-        }
         if (object instanceof ZnElement) {
             write((ZnElement) object, writer);
             return;
         }
-        if (object instanceof QElement) {
-            write((QElement) object, writer);
-            return;
-        }
-        if (object instanceof RElement) {
-            write((RElement) object, writer);
+        if (object instanceof ArithmeticElement) {
+            write((ArithmeticElement<?>) object, writer);
             return;
         }
         if (object instanceof CProperFreeElement) {
@@ -186,45 +171,32 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
     }
 
-    private void write(CElement element, XMLWriter writer) {
+    private void write(ArithmeticElement<?> element, XMLWriter writer) {
         writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue().toString());
     }
-
-    private void write(ZElement element, XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue());
-    }
-
     private void write(ZnElement element, XMLWriter writer) {
         writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue(), MODULUS_ATTR, element.getModulus());
     }
 
-    private void write(QElement element, XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue());
-    }
-
-    private void write(RElement element, XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue());
-    }
-
     private void write(CProperFreeElement element, XMLWriter writer) {
         String s = "";
-        CElement[] value = element.getValue();
-        if (value.length > 0) {
-            s += value[0];
-            for (int i = 1; i < value.length; i++) {
-                s += ","+value[i];
+        List<ArithmeticElement<Complex>> value = element.getValue();
+        if (value.size() > 0) {
+            s += value.get(0);
+            for (int i = 1; i < value.size(); i++) {
+                s += ","+value.get(i);
             }
         }
         writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUES_ATTR, s);
     }
 
     private void write(ZProperFreeElement element, XMLWriter writer) {
-        if (element.getValue().length <= 16) {
+        if (element.getValue().size() <= 16) {
             String s = "";
-            if (element.getValue().length > 0) {
-                s += element.getValue()[0];
-                for (int i = 1; i < element.getValue().length; i++) {
-                    s += ","+element.getValue()[i];
+            if (element.getValue().size() > 0) {
+                s += element.getValue().get(0);
+                for (int i = 1; i < element.getValue().size(); i++) {
+                    s += ","+element.getValue().get(i);
                 }
             }
             writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUES_ATTR, s);
@@ -320,10 +292,10 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(QProperFreeElement element, XMLWriter writer) {
         String s = "";
-        if (element.getValue().length > 0) {
-            s += element.getValue()[0];
-            for (int i = 1; i < element.getValue().length; i++) {
-                s += ","+element.getValue()[i];
+        if (element.getValue().size() > 0) {
+            s += element.getValue().get(0);
+            for (int i = 1; i < element.getValue().size(); i++) {
+                s += ","+element.getValue().get(i);
             }
         }
         writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUES_ATTR, s);
@@ -331,10 +303,10 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(RProperFreeElement element, XMLWriter writer) {
         String s = "";
-        if (element.getValue().length > 0) {
-            s += element.getValue()[0];
-            for (int i = 1; i < element.getValue().length; i++) {
-                s += ","+element.getValue()[i];
+        if (element.getValue().size() > 0) {
+            s += element.getValue().get(0);
+            for (int i = 1; i < element.getValue().size(); i++) {
+                s += ","+element.getValue().get(i);
             }
         }
         writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUES_ATTR, s);
@@ -342,10 +314,10 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(ZnProperFreeElement element, XMLWriter writer) {
         String s = "";
-        if (element.getValue().length > 0) {
-            s += element.getValue()[0];
-            for (int i = 1; i < element.getValue().length; i++) {
-                s += ","+element.getValue()[i];
+        if (element.getValue().size() > 0) {
+            s += element.getValue().get(0);
+            for (int i = 1; i < element.getValue().size(); i++) {
+                s += ","+element.getValue().get(i);
             }
         }
         s += "\"";

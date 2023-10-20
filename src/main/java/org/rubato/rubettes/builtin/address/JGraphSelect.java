@@ -19,34 +19,36 @@
 
 package org.rubato.rubettes.builtin.address;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-import javax.swing.event.EventListenerList;
-
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import javax.swing.*;
+import javax.swing.event.EventListenerList;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -62,40 +64,33 @@ class JGraphSelect
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
-        if (ring instanceof ZRing) {
+        if (ring instanceof ZRing || ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                ZElement[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0].getValue().intValue(), p[1].getValue().intValue());
+                List<ArithmeticElement<ArithmeticInteger>> p = ((ZProperFreeElement)m).getValue();
+                config.addPoint(p.get(0).getValue().intValue(), p.get(1).getValue().intValue());
             }
         }
         else if (ring instanceof QRing) {
             QConfiguration qconfig = new QConfiguration();
             config = qconfig;
             for (ModuleElement m : elements) {
-                QElement[] p = ((QProperFreeElement)m).getValue();
-                qconfig.addPoint(p[0].getValue(), p[1].getValue());
+                List<ArithmeticElement<Rational>> p = ((QProperFreeElement)m).getValue();
+                qconfig.addPoint(p.get(0).getValue(), p.get(1).getValue());
             }
         }
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                RElement[] p = ((RProperFreeElement)m).getValue();
-                config.addPoint(p[0].getValue().doubleValue(), p[1].getValue().doubleValue());
+                List<ArithmeticElement<ArithmeticDouble>> p = ((RProperFreeElement)m).getValue();
+                config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
             }
         }
         else if (ring instanceof CRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                CElement[] p = ((CProperFreeElement)m).getValue();
-                config.addPoint(p[0].getValue().abs(), p[1].getValue().abs());
-            }
-        }
-        else if (ring instanceof ZnRing) {
-            config = new ZConfiguration();
-            for (ModuleElement m : elements) {
-                ZElement[] p = ((ZProperFreeElement)m).getValue();
-                config.addPoint(p[0].getValue().intValue(), p[1].getValue().intValue());
+                List<ArithmeticElement<Complex>> p = ((CProperFreeElement)m).getValue();
+                config.addPoint(p.get(0).getValue().abs(), p.get(1).getValue().abs());
             }
         }
         else {

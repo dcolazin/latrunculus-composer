@@ -21,17 +21,18 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 
 /**
@@ -42,12 +43,15 @@ public class FreeUtils {
 
     //TODO temp method...
     public static boolean isUsualFree(Module<?,?> module) {
-        return module instanceof FreeModule && (
-                module.checkRingElement(ZElement.class) ||
-                module.checkRingElement(ZnElement.class) ||
-                module.checkRingElement(QElement.class) ||
-                module.checkRingElement(RElement.class) ||
-                module.checkRingElement(CElement.class));
+        if (!(module instanceof FreeModule && module.checkRingElement(ArithmeticElement.class))) {
+            return false;
+        }
+        ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
+        return number instanceof ArithmeticInteger ||
+                number instanceof ArithmeticModulus ||
+                number instanceof Rational ||
+                number instanceof ArithmeticDouble ||
+                number instanceof Complex;
     }
 
     //TODO temp method...

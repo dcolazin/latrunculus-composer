@@ -23,13 +23,15 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Elements in a free module of rationals.
@@ -37,49 +39,42 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
+public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
 
-    public static final QProperFreeElement nullElement = new QProperFreeElement(new QElement[0]);
+    public static final QProperFreeElement nullElement = new QProperFreeElement(new ArrayList<>());
 
-    private QProperFreeElement(QElement[] array) {
+    private QProperFreeElement(List<ArithmeticElement<Rational>> array) {
         super(array);
     }
 
-    public static FreeElement<?, QElement> make(Rational[] v) {
+    public static FreeElement<?, ArithmeticElement<Rational>> make(Rational[] v) {
         assert(v != null);
         if (v.length == 0) {
             return nullElement;
         }
         else if (v.length == 1) {
-            return new QElement(v[0]);
+            return new ArithmeticElement<>(v[0]);
         }
         else {
-            return new QProperFreeElement(toElementArray(v));
+            return new QProperFreeElement(Arrays.stream(v).map(ArithmeticElement::new).collect(Collectors.toList()));
         }
     }
 
-    private static QElement[] toElementArray(Rational[] v) {
-        QElement[] elements = new QElement[v.length];
-        for (int i = 0; i < v.length; i++) {
-            elements[i] = new QElement(v[i]);
-        }
-        return elements;
-    }
-
-    public static FreeElement<?, QElement> make(ZElement[] v) {
+    public static FreeElement<?, ArithmeticElement<Rational>> make(List<ArithmeticElement<ArithmeticInteger>> v) {
         assert(v != null);
-        if (v.length == 0) {
+        if (v.size() == 0) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return new QElement(v[0].getValue().intValue());
+        else if (v.size() == 1) {
+            return new ArithmeticElement<>(new Rational(v.get(0).getValue().intValue()));
         }
         else {
-            Rational[] values = new Rational[v.length];
-            for (int i = 0; i < v.length; i++) {
-                values[i] = new Rational(v[i].getValue().intValue());
-            }
-            return new QProperFreeElement(toElementArray(values));
+            return new QProperFreeElement(v.stream()
+                    .map(ArithmeticElement::getValue)
+                    .map(ArithmeticInteger::intValue)
+                    .map(Rational::new)
+                    .map(ArithmeticElement::new)
+                    .collect(Collectors.toList()));
         }
     }
     
@@ -99,7 +94,7 @@ public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int c = getValue()[i].compareTo(element.getValue()[i]);
+                    int c = getValue().get(i).compareTo(element.getValue().get(i));
                     if (c != 0) {
                         return c;
                     }
@@ -117,10 +112,10 @@ public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
             return "Null";
         }
         else {
-            StringBuilder res = new StringBuilder(getValue()[0].toString());
+            StringBuilder res = new StringBuilder(getValue().get(0).toString());
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(getValue()[i]);
+                res.append(getValue().get(i));
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -137,10 +132,10 @@ public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(getValue()[0]);
+            buf.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(getValue()[i]);
+                buf.append(getValue().get(i));
             }
         }
         buf.append("]");
@@ -152,10 +147,10 @@ public final class QProperFreeElement extends ArithmeticMultiElement<QElement> {
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            QElement[] r = ((QProperFreeElement)elements[i]).getValue();
+            List<ArithmeticElement<Rational>> r = ((QProperFreeElement)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; i < elements.length; j++) {
-                res[i][j] = r[j].getValue().doubleValue();
+                res[i][j] = r.get(j).getValue().doubleValue();
             }
         }
         return Folding.fold(res);

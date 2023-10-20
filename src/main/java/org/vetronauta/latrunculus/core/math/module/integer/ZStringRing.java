@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -99,7 +100,7 @@ public final class ZStringRing extends StringRing<ZStringElement> {
             return new ZStringElement(new RingString<>(rs));
         }
         else {
-            ZElement e = ZRing.ring.cast(element);
+            ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
             if (e == null) {
                 return null;
             }

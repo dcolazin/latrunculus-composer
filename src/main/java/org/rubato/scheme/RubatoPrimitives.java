@@ -19,23 +19,21 @@
 
 package org.rubato.scheme;
 
-import static org.rubato.scheme.SExpr.*;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -48,6 +46,14 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.rubato.scheme.SExpr.NULL;
+import static org.rubato.scheme.SExpr.car;
+import static org.rubato.scheme.SExpr.cdr;
+import static org.rubato.scheme.SExpr.cons;
 
 
 /**
@@ -749,22 +755,21 @@ abstract class RubatoPrimitives {
     }
     
     protected static SExpr moduleElementToSExpr(ModuleElement element) {
-        if (element instanceof ZElement) {
-            return new SInteger(((ZElement)element).getValue().intValue());
-        }
-        else if (element instanceof ZnElement) {
-            return new SInteger(((ZnElement)element).getValue().getValue());
-        }
-        else if (element instanceof QElement) {
-            return SRational.make(((QElement)element).getValue());
-        }
-        else if (element instanceof RElement) {
-            return SReal.make(((RElement)element).getValue().doubleValue());
-        }
-        else if (element instanceof CElement) {
-            return new SComplex(((CElement)element).getValue());
-        }
-        else if (element instanceof FreeElement) {
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof ArithmeticInteger || number instanceof ArithmeticModulus) {
+                return new SInteger(number.intValue());
+            }
+            if (number instanceof Rational) {
+                return SRational.make((Rational) number);
+            }
+            if (number instanceof ArithmeticDouble) {
+                return SReal.make(number.doubleValue());
+            }
+            if (number instanceof Complex) {
+                return new SComplex((Complex) number);
+            }
+        } else if (element instanceof FreeElement) {
             FreeElement freeElement = (FreeElement)element;
             int len = freeElement.getLength();
             if (len > 1) {
@@ -782,26 +787,24 @@ abstract class RubatoPrimitives {
                 return null;
             }
         }
-        else {
-            return null;
-        }
+        return null;
     }
     
     private static ModuleElement sexprToModuleElement(SExpr sexpr) {
         if (sexpr.isInteger()) {
-            return new ZElement(((SInteger)sexpr).getInt());
+            return new ArithmeticElement<>(new ArithmeticInteger(((SInteger)sexpr).getInt()));
         }
         else if (sexpr.isRational()) {
-            return new QElement(((SRational)sexpr).getRational());
+            return new ArithmeticElement<>(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
             return new RElement(((SReal)sexpr).getDouble());
         }
         else if (sexpr.isComplex()) {
-            return new CElement(((SComplex)sexpr).getComplex());
+            return new ArithmeticElement<>(((SComplex)sexpr).getComplex());
         }
         else if (sexpr.isBoolean()) {
-            return new ZElement(sexpr == SBoolean.TRUE?1:0);
+            return new ArithmeticElement<>(new ArithmeticInteger(sexpr == SBoolean.TRUE ? 1 : 0));
         }
         else if (sexpr.isChar()) {
             return new ZStringElement(Character.toString(((SChar)sexpr).getChar()));
@@ -810,7 +813,7 @@ abstract class RubatoPrimitives {
             return new ZStringElement(((SString)sexpr).getString());            
         }
         else if (sexpr.isSymbol()) {
-            return new ZStringElement(((Symbol)sexpr).toString());            
+            return new ZStringElement((sexpr).toString());
         }
         else if (sexpr.isVector()) {
             SExpr[] v = ((SVector)sexpr).getArray();

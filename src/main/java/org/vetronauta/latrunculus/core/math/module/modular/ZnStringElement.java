@@ -20,13 +20,14 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import lombok.NonNull;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,10 +138,10 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
     }
     
     public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<String,RingElement>();
+        HashMap<String,RingElement> map = new HashMap<>();
         Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new ZElement(((Integer)getValue().getFactorForString(s))));
+            map.put(s, new ArithmeticElement<>(new ArithmeticInteger((Integer)getValue().getFactorForString(s))));
         }
         return map;
     }

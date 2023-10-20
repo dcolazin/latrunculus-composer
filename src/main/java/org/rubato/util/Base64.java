@@ -19,9 +19,10 @@
 
 package org.rubato.util;
 
-
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+
+import java.util.List;
 
 /**
  * The class converts an array of integers to base-64 string
@@ -32,18 +33,20 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
  */
 public final class Base64 {
 
+    //TODO or extend the method to all numbers or understand if we really need this
+
     /**
      * Encodes the integer array <code>a</code> as a base-64
      * string.
      */
-    public static String encodeIntArray(ZElement[] a) {
-        int len = a.length*4;
+    public static String encodeIntArray(List<ArithmeticElement<ArithmeticInteger>> a) {
+        int len = a.size()*4;
         StringBuilder buf = new StringBuilder((len*8)/6);
         char b[] = new char[len];
         int i = 0;
         int j = 0;
-        while (i < a.length) {
-            int n = a[i].getValue().intValue();
+        while (i < a.size()) {
+            int n = a.get(i).getValue().intValue();
             for (int k = 0; k < 4; k++) {
                 b[j++] = (char)(n & 255);
                 n = n >> 8;

@@ -19,9 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * Affine morphism in the <i>Z</i>.
@@ -104,23 +105,23 @@ public final class ZAffineMorphism extends ZAbstractMorphism {
 
     public ModuleMorphism scaled(RingElement element)
             throws CompositionException {
-        if (element instanceof ZElement) {
-            int s = ((ZElement)element).getValue().intValue();
-            if (s == 0) {
-                return getConstantMorphism(element);
-            }
-            else {
-                return new ZAffineMorphism(getA()*s, getB()*s);
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof ArithmeticInteger) {
+                int s = number.intValue();
+                if (s == 0) {
+                    return getConstantMorphism(element);
+                } else {
+                    return new ZAffineMorphism(getA() * s, getB() * s);
+                }
             }
         }
-        else {
-            throw new CompositionException("ZAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("ZAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
     
     
-    public ModuleElement atZero() {
-        return new ZElement(getB());
+    public ArithmeticElement<ArithmeticInteger> atZero() {
+        return new ArithmeticElement<>(new ArithmeticInteger(getB()));
     }
     
     

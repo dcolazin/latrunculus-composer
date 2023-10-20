@@ -24,21 +24,19 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
@@ -463,7 +461,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the integer contained in a ZElement denotator.
      */
     public int getInteger() {
-        return ((ZElement)getElement()).getValue().intValue();
+        return ((ArithmeticElement<ArithmeticInteger>)getElement()).getValue().intValue();
     }
 
 
@@ -471,7 +469,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the modular integer contained in a ZnElement denotator.
      */
     public int getModInteger() {
-        return ((ZnElement)getElement()).getValue().intValue();
+        return ((ArithmeticElement<ArithmeticModulus>)getElement()).getValue().intValue();
     }    
     
     
@@ -479,7 +477,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the double contained in an RElement denotator.
      */
     public double getReal() {
-        return ((RElement)getElement()).getValue().doubleValue();
+        return ((ArithmeticElement<ArithmeticDouble>)getElement()).getValue().doubleValue();
     }
     
     
@@ -487,7 +485,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the rational contained in a QElement denotator.
      */
     public Rational getRational() {
-        return ((QElement)getElement()).getValue();
+        return ((ArithmeticElement<Rational>)getElement()).getValue();
     }
     
     
@@ -495,7 +493,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the complex number contained in a CElement denotator.
      */
     public Complex getComplex() {
-        return ((CElement)getElement()).getValue();
+        return ((ArithmeticElement<Complex>)getElement()).getValue();
     }
 
     

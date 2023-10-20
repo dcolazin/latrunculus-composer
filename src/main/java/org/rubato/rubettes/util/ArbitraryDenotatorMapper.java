@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -14,12 +15,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
@@ -303,7 +304,7 @@ public class ArbitraryDenotatorMapper {
 			return EmbeddingMorphism.makeProductRingEmbedding(product.getFactor(index), product, index);
 		}
 		GenericAffineMorphism injection = new GenericAffineMorphism(ring, 1, codomainDim);
-		RingElement one = (RingElement)new ZElement(1).cast(ring);
+		RingElement one = (RingElement)new ArithmeticElement<>(new ArithmeticInteger(1)).cast(ring);
 		injection.setMatrix(index, 0, one);
 		return injection;
 	}

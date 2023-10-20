@@ -21,59 +21,62 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over integers mod <i>n</i>.
  *
  * @author Gérard Milmeister
  */
-public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
+public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulus> {
 
-    public static FreeElement<?, ZnElement> make(int[] v, int modulus) {
+    public static FreeElement<?, ArithmeticElement<ArithmeticModulus>> make(int[] v, int modulus) {
         assert(v != null);
         assert(modulus > 1);
         if (v.length == 0) {
-            return new ZnProperFreeElement(toElementArray(v, modulus), modulus);
+            return new ZnProperFreeElement(toElementList(v, modulus), modulus);
         }
         else if (v.length == 1) {
-            return new ZnElement(v[0], modulus);
+            return new ArithmeticElement<>(new ArithmeticModulus(v[0], modulus));
         }
         else {
-            return new ZnProperFreeElement(toElementArray(v, modulus), modulus);
+            return new ZnProperFreeElement(toElementList(v, modulus), modulus);
         }
     }
 
-    public static FreeElement<?, ZnElement> make(ZElement[] v, int modulus) {
+    public static FreeElement<?, ArithmeticElement<ArithmeticModulus>> make(List<ArithmeticElement<ArithmeticInteger>> v, int modulus) {
         assert(v != null);
         assert(modulus > 1);
-        if (v.length == 0) {
-            return new ZnProperFreeElement(new ZnElement[0], modulus);
+        if (v.size() == 0) {
+            return new ZnProperFreeElement(new ArrayList<>(), modulus);
         }
-        else if (v.length == 1) {
-            return new ZnElement(v[0].getValue().intValue(), modulus);
+        else if (v.size() == 1) {
+            return new ArithmeticElement<>(new ArithmeticModulus(v.get(0).getValue().intValue(), modulus));
         }
         else {
-            return new ZnProperFreeElement(toElementArray(v, modulus), modulus);
+            return new ZnProperFreeElement(v.stream()
+                    .map(ArithmeticElement::getValue)
+                    .map(ArithmeticInteger::intValue)
+                    .map(i -> new ArithmeticModulus(i, modulus))
+                    .map(ArithmeticElement::new)
+                    .collect(Collectors.toList()),
+                    modulus);
         }
     }
-
-    private static ZnElement[] toElementArray(ZElement[] array, int modulus) {
-        ZnElement[] elements = new ZnElement[array.length];
+    private static List<ArithmeticElement<ArithmeticModulus>> toElementList(int[] array, int modulus) {
+        List<ArithmeticElement<ArithmeticModulus>> elements = new ArrayList<>(array.length);
         for (int i = 0; i < array.length; i++) {
-            elements[i] = new ZnElement(array[i].getValue().intValue(), modulus);
-        }
-        return elements;
-    }
-
-    private static ZnElement[] toElementArray(int[] array, int modulus) {
-        ZnElement[] elements = new ZnElement[array.length];
-        for (int i = 0; i < array.length; i++) {
-            elements[i] = new ZnElement(array[i], modulus);
+            elements.add(new ArithmeticElement<>(new ArithmeticModulus(array[i], modulus)));
         }
         return elements;
     }
@@ -106,7 +109,7 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
                 }
 	            else {
 	                for (int i = 0; i < getLength(); i++) {
-	                    int d = getValue()[i].getValue().intValue()-element.getValue()[i].getValue().intValue();
+	                    int d = getValue().get(i).getValue().intValue()-element.getValue().get(i).getValue().intValue();
                         if (d != 0) {
                             return d;
                         }
@@ -126,10 +129,10 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(getValue()[0]);
+            res.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(getValue()[i]);
+                res.append(getValue().get(i));
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -148,10 +151,10 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(getValue()[0]);
+            buf.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(getValue()[i]);
+                buf.append(getValue().get(i));
             }
         }
         buf.append("]");
@@ -167,7 +170,7 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZnProperFreeElement)elements[i]).getValue()[j].getValue().intValue();
+                res[i][j] = ((ZnProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);
@@ -177,7 +180,7 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ZnElement> {
         return "ZnFreeElement";
     }
 
-    private ZnProperFreeElement(ZnElement[] value, int modulus) {
+    private ZnProperFreeElement(List<ArithmeticElement<ArithmeticModulus>> value, int modulus) {
         super(value);
         this.modulus = modulus;
     }

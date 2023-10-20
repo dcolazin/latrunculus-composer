@@ -42,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<CElement>, CElement> {
+public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);
        
@@ -52,7 +52,7 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
      * @param dimension the dimension of the free module over C,
      *                  if < 0, assumed to be 0
      */
-    public static FreeModule<?,CElement> make(int dimension) {
+    public static FreeModule<?,ArithmeticElement<Complex>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -139,14 +139,14 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((CElement)castElement).getValue();
+            values[i] = ((ArithmeticElement<Complex>)castElement).getValue();
         }
 
         return (CProperFreeElement) CProperFreeElement.make(values); //TODO do not cast
     }
 
     
-    public ArithmeticMultiElement<CElement> cast(ModuleElement<?,?> element) {
+    public ArithmeticMultiElement<Complex> cast(ModuleElement<?,?> element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
                 return element.cast(this);
@@ -161,7 +161,7 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((CElement)castElement).getValue();
+                    elements[i] = ((ArithmeticElement<Complex>)castElement).getValue();
                 }
                 return (CProperFreeElement) CProperFreeElement.make(elements); //TODO do not cast
             }

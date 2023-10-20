@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 
 /**
@@ -30,15 +31,15 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
  */
 public abstract class ZAbstractMorphism extends ModuleMorphism {
 
-    public ZAbstractMorphism() {
+    protected ZAbstractMorphism() {
         super(ZRing.ring, ZRing.ring);
     }
 
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            int v = ((ZElement) x.getComponent(0)).getValue().intValue();
-            return new ZElement(mapValue(v));
+            int v = ((ArithmeticElement<ArithmeticInteger>) x.getComponent(0)).getValue().intValue();
+            return new ArithmeticElement<>(new ArithmeticInteger(mapValue(v)));
         }
         else {
             throw new MappingException("ZAbstractMorphism.map: ", x, this);

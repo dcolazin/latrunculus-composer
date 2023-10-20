@@ -1,15 +1,12 @@
 package org.rubato.rubettes.util;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
@@ -17,6 +14,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SoundNoteGenerator extends NoteGenerator {
 	
@@ -95,7 +95,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 	private LimitDenotator convertToSoundNote(LimitDenotator note, boolean withModulators) {
 		List<Denotator> coordinates = note.getFactors();
 		try {
-			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ZElement(0)));
+			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ArithmeticElement(new ArithmeticInteger(0))));
 		} catch (DomainException e) { e.printStackTrace(); }
 		return this.createSpecificNoteDenotator(coordinates, withModulators);
 	}
@@ -164,22 +164,22 @@ public class SoundNoteGenerator extends NoteGenerator {
 	}
 	
 	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws RubatoException {
-		ModuleElement modulatorPitch = new QElement(relativeFrequency);
-		ModuleElement modulatorLoudness = new ZElement(relativeAmplitude);
-		List<Denotator> coordinates = new ArrayList<Denotator>();
-		coordinates.add(this.createSimpleDenotator(this.onsetForm, new RElement(0)));
+		ArithmeticElement<Rational> modulatorPitch = new ArithmeticElement<>(new Rational(relativeFrequency));
+		ArithmeticElement<ArithmeticInteger> modulatorLoudness = new ArithmeticElement<>(new ArithmeticInteger(relativeAmplitude));
+		List<Denotator> coordinates = new ArrayList<>();
+		coordinates.add(this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new ArithmeticDouble(0))));
 		coordinates.add(this.createSimpleDenotator(this.pitchForm, modulatorPitch));
 		coordinates.add(this.createSimpleDenotator(this.loudnessForm, modulatorLoudness));
-		coordinates.add(this.createSimpleDenotator(this.durationForm, new RElement(0)));
-		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ZElement(0)));
-		coordinates.add(this.createSimpleDenotator(this.layerForm, new ZElement(0)));
+		coordinates.add(this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new ArithmeticDouble(0))));
+		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
+		coordinates.add(this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
 		coordinates.add(this.createEmptyModulators());
 		//this takes a lot of time compared to the other operations
 		return new LimitDenotator(this.emptyName, this.soundNoteForm, coordinates);
 	}
 	
 	private PowerDenotator createEmptyModulators() throws RubatoException {
-		List<Denotator> modulators = new ArrayList<Denotator>();
+		List<Denotator> modulators = new ArrayList<>();
 		return new PowerDenotator(this.emptyName, this.modulatorsForm, modulators);
 	}
 	

@@ -1,19 +1,20 @@
 package org.rubato.rubettes.texture;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.rubato.base.DoubleProperty;
 import org.rubato.base.RubatoException;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.composer.RunInfo;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.util.ObjectGenerator;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Creates a Texture based on the rate of occurrence of each pitch in a given Score
@@ -39,10 +40,10 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 		
 		try {
 			for (Denotator currentNote : score.getFactors()) {
-				double currentOnset = ((RElement)currentNote.getElement(new int[]{0,0})).getValue().doubleValue();
-				double currentPitch = ((QElement)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
-				double currentLoudness = ((ZElement)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
-				double currentDuration = ((RElement)currentNote.getElement(new int[]{3,0})).getValue().doubleValue();
+				double currentOnset = ((ArithmeticElement<ArithmeticDouble>)currentNote.getElement(new int[]{0,0})).getValue().doubleValue();
+				double currentPitch = ((ArithmeticElement<Rational>)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
+				double currentLoudness = ((ArithmeticElement<ArithmeticInteger>)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
+				double currentDuration = ((ArithmeticElement<ArithmeticDouble>)currentNote.getElement(new int[]{3,0})).getValue().doubleValue();
 				
 				maxOnset = Math.max(maxOnset, currentOnset);
 				maxDuration = Math.max(maxDuration, currentDuration);

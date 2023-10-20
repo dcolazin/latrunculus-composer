@@ -35,10 +35,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -116,14 +117,14 @@ class WallpaperRubetteTest {
 	@Test
 	void testMapDenotatorInteger() throws RubatoException {
 		this.morphisms.add(new ZAffineMorphism(2, 1));
-		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ZElement(3));
+		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ArithmeticElement<>(new ArithmeticInteger(3)));
 		((LimitDenotator)this.denotator.getFactor(0)).setFactor(2, newLoudness);
 
-		assertEquals(3, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(3, ((ArithmeticElement<ArithmeticInteger>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(2), 0, 1, this.createSimplePaths(2, 2));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(2));
-		assertEquals(7, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(7, ((ArithmeticElement<ArithmeticInteger>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 	}
 
 	@Test
@@ -244,7 +245,7 @@ class WallpaperRubetteTest {
 	private void assertThisDenotatorAsDefault() throws RubatoException {
 		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
-		assertEquals(0, ((ZElement) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(0, ((ArithmeticElement<ArithmeticInteger>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
 	}
 

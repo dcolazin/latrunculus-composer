@@ -19,14 +19,11 @@
 
 package org.rubato.composer.dialogs.morphisms;
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-
 import org.rubato.composer.Utilities;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
@@ -34,17 +31,11 @@ import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
@@ -58,6 +49,17 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 class JAffineMorphismType
         extends JMorphismType
@@ -257,16 +259,16 @@ class JAffineMorphismType
     
     
     private ModuleMorphism createMorphism() {
-        ModuleMorphism morphism = null;
+        ModuleMorphism morphism;
         if (ring instanceof ZRing) {
             int[][] vA = new int[rows][cols];
             int[] b = new int[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    ZElement v = (ZElement)getValue(i, j);
+                    ArithmeticElement<ArithmeticInteger> v = (ArithmeticElement<ArithmeticInteger>)getValue(i, j);
                     vA[i][j] = v.getValue().intValue();
                 }
-                ZElement v = (ZElement)getValue(i);
+                ArithmeticElement<ArithmeticInteger> v = (ArithmeticElement<ArithmeticInteger>)getValue(i);
                 b[i] = v.getValue().intValue();
             }
             ZMatrix A = new ZMatrix(vA);
@@ -277,10 +279,10 @@ class JAffineMorphismType
             Rational[] b = new Rational[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    QElement v = (QElement)getValue(i, j);
+                    ArithmeticElement<Rational> v = (ArithmeticElement<Rational>)getValue(i, j);
                     vA[i][j] = v.getValue();
                 }
-                QElement v = (QElement)getValue(i);
+                ArithmeticElement<Rational> v = (ArithmeticElement<Rational>)getValue(i);
                 b[i] = v.getValue();
             }
             QMatrix A = new QMatrix(vA);
@@ -291,10 +293,10 @@ class JAffineMorphismType
             double[] b = new double[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    RElement v = (RElement)getValue(i, j);
+                    ArithmeticElement<ArithmeticDouble> v = (ArithmeticElement<ArithmeticDouble>)getValue(i, j);
                     vA[i][j] = v.getValue().doubleValue();
                 }
-                RElement v = (RElement)getValue(i);
+                ArithmeticElement<ArithmeticDouble> v = (ArithmeticElement<ArithmeticDouble>)getValue(i);
                 b[i] = v.getValue().doubleValue();
             }
             RMatrix A = new RMatrix(vA);
@@ -305,10 +307,10 @@ class JAffineMorphismType
             Complex[] b = new Complex[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    CElement v = (CElement)getValue(i, j);
+                    ArithmeticElement<Complex> v = (ArithmeticElement<Complex>)getValue(i, j);
                     vA[i][j] = v.getValue();
                 }
-                CElement v = (CElement)getValue(i);
+                ArithmeticElement<Complex> v = (ArithmeticElement<Complex>)getValue(i);
                 b[i] = v.getValue();
             }
             CMatrix A = new CMatrix(vA);
@@ -319,10 +321,10 @@ class JAffineMorphismType
             int[] b = new int[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    ZnElement v = (ZnElement)getValue(i, j);
+                    ArithmeticElement<ArithmeticModulus> v = (ArithmeticElement<ArithmeticModulus>)getValue(i, j);
                     vA[i][j] = v.getValue().getValue();
                 }
-                ZnElement v = (ZnElement)getValue(i);
+                ArithmeticElement<ArithmeticModulus> v = (ArithmeticElement<ArithmeticModulus>)getValue(i);
                 b[i] = v.getValue().getValue();
             }
             ZnMatrix A = new ZnMatrix(vA, ((ZnRing)ring).getModulus());

@@ -19,18 +19,16 @@
 
 package org.rubato.rubettes.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
@@ -38,6 +36,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A utility class for generating Note and Score denotators with ease. The following possibilities
@@ -195,12 +196,12 @@ public abstract class NoteGenerator {
 	 * @param duration
 	 */
 	public LimitDenotator createNoteDenotator(double onset, double pitch, int loudness, double duration, int voice) {
-		List<ModuleElement> elements = new ArrayList<ModuleElement>();
-		elements.add(new RElement(onset));
-		elements.add(new QElement(new Rational(pitch)));
-		elements.add(new ZElement(loudness));
-		elements.add(new RElement(duration));
-		elements.add(new ZElement(voice));
+		List<ModuleElement> elements = new ArrayList<>();
+		elements.add(new ArithmeticElement<>(new ArithmeticDouble(onset)));
+		elements.add(new ArithmeticElement<>(new Rational(pitch)));
+		elements.add(new ArithmeticElement<>(new ArithmeticInteger(loudness)));
+		elements.add(new ArithmeticElement<>(new ArithmeticDouble(duration)));
+		elements.add(new ArithmeticElement<>(new ArithmeticInteger(voice)));
 		return this.createNoteDenotator(elements);
 	}
 	
@@ -357,7 +358,7 @@ public abstract class NoteGenerator {
 	
 	private LimitDenotator copyNoteAndSetLayer(LimitDenotator note, int layerIndex) {
 		note = note.copy();
-		Denotator layer = this.createSimpleDenotator(this.layerForm, new ZElement(layerIndex));
+		Denotator layer = this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new ArithmeticInteger(layerIndex)));
 		try { note.setFactor(2, layer); } catch (RubatoException e) { }
 		return note;
 	}
@@ -365,7 +366,7 @@ public abstract class NoteGenerator {
 	public int getLayer(LimitDenotator node) {
 		//TODO:NEW: LAYER IN NOTE!!!!!!!
 		try {
-			return ((ZElement)node.getElement(new int[]{2,0})).getValue().intValue();
+			return ((ArithmeticElement<ArithmeticInteger>)node.getElement(new int[]{2,0})).getValue().intValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return -1;
@@ -383,7 +384,7 @@ public abstract class NoteGenerator {
 	 */
 	public void modifyNoteDenotator(LimitDenotator note, double onset, int loudness, double duration) throws RubatoException {
 		this.modifyNoteDenotator(note, onset, duration);
-		Denotator loudnessDenotator = this.createSimpleDenotator(this.loudnessForm, new ZElement(loudness));
+		Denotator loudnessDenotator = this.createSimpleDenotator(this.loudnessForm, new ArithmeticElement<>(new ArithmeticInteger(loudness)));
 		note.setFactor(2, loudnessDenotator);
 	}
 	
@@ -416,7 +417,7 @@ public abstract class NoteGenerator {
 	
 	public Double getDoubleValue(Denotator note, int[] elementPath) {
 		try {
-			return ((RElement)note.getElement(elementPath).cast(RRing.ring)).getValue().doubleValue();
+			return ((ArithmeticElement<ArithmeticDouble>)note.getElement(elementPath).cast(RRing.ring)).getValue().doubleValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return null;
@@ -425,7 +426,7 @@ public abstract class NoteGenerator {
 	
 	protected void setLayerToVoice(LimitDenotator note) throws RubatoException {
 		int[] voicePath = new int[]{4,0};
-		ZElement voiceElement = (ZElement)note.getElement(voicePath).deepCopy();
+		ArithmeticElement<ArithmeticInteger> voiceElement = (ArithmeticElement<ArithmeticInteger>)note.getElement(voicePath).deepCopy();
 		Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);
 		note.setFactor(5, currentLayer);
 	}

@@ -23,15 +23,18 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -61,27 +64,12 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Frame;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -455,18 +443,26 @@ public class JMorphismDialog
                 }
             }
             if (domain instanceof FreeModule) {
-                if (domain.checkRingElement(CElement.class) && domain.equals(codomain)) {
-                    items.add(CONJUGATION_TYPE);
-                }
-                if (domain.checkRingElement(RElement.class) && codomain.checkRingElement(RElement.class) &&
-                        domain.getDimension() == 2 && codomain.getDimension() == 2) {
-                    items.add(GEOMETRY_TYPE);
-                }
                 if (domain.equals(codomain)) {
                     items.add(SPLIT_TYPE);
                 }
-                if (domain.checkRingElement(ZElement.class) && codomain instanceof FreeModule && codomain.checkRingElement(ZnElement.class) && (domain.getDimension() == codomain.getDimension())) {
-                    items.add(MODULO_TYPE);
+                if (domain.checkRingElement(ArithmeticElement.class)) {
+                    ArithmeticNumber<?> domainNumber = ((ArithmeticElement<?>) domain.getZero()).getValue();
+                    if (domainNumber instanceof Complex && domain.equals(codomain)) {
+                        items.add(CONJUGATION_TYPE);
+                    }
+                    if (codomain.checkRingElement(ArithmeticElement.class)) {
+                        ArithmeticNumber<?> codomainNumber = ((ArithmeticElement<?>) codomain.getZero()).getValue();
+                        if (domainNumber instanceof ArithmeticDouble && codomainNumber instanceof ArithmeticDouble &&
+                                domain.getDimension() == 2 && codomain.getDimension() == 2) {
+                            items.add(GEOMETRY_TYPE);
+                        }
+                        if (domainNumber instanceof ArithmeticInteger &&
+                                codomain instanceof FreeModule &&
+                                codomainNumber instanceof ArithmeticModulus && (domain.getDimension() == codomain.getDimension())) {
+                            items.add(MODULO_TYPE);
+                        }
+                    }
                 }
             }
             if (codomain.isRing()) {
