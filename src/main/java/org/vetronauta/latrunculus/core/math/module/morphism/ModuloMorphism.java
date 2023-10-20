@@ -27,9 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 
 import java.util.stream.Collectors;
 
@@ -74,8 +72,7 @@ public class ModuloMorphism extends ModuleMorphism {
     }
     
     
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
+    public ModuleElement map(ModuleElement x) throws MappingException {
         if (dimension == 1) {
             if (x instanceof ArithmeticElement) {
                 ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
@@ -84,8 +81,8 @@ public class ModuloMorphism extends ModuleMorphism {
                 }
             }
         }
-        else if (x instanceof ZProperFreeElement) {
-            ZProperFreeElement e = (ZProperFreeElement)x;
+        else if (x instanceof ArithmeticMultiElement && ((ArithmeticMultiElement<?>) x).getRing() instanceof ZRing) {
+            ArithmeticMultiElement<?> e = (ArithmeticMultiElement<?>) x;
             if (e.getLength() == dimension) {
                 return ArithmeticMultiElement.make(
                         ArithmeticRingRepository.getModulusRing(modulus),

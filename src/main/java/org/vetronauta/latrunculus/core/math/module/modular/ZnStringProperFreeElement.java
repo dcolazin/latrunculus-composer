@@ -30,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -270,7 +269,7 @@ public final class ZnStringProperFreeElement extends ProperFreeElement<ZnStringP
 
     
     public int compareTo(ModuleElement object) {
-        if (object instanceof ZProperFreeElement) {
+        if (object instanceof ZnStringProperFreeElement) {
             ZnStringProperFreeElement element = (ZnStringProperFreeElement)object;
             int l = getLength()-element.getLength();
             if (l != 0) {

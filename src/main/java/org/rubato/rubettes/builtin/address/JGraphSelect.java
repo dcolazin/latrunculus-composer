@@ -29,7 +29,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
@@ -67,7 +66,7 @@ class JGraphSelect
         if (ring instanceof ZRing || ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<ArithmeticInteger>> p = ((ZProperFreeElement)m).getValue();
+                List<ArithmeticElement<ArithmeticInteger>> p = ((ArithmeticMultiElement<ArithmeticInteger>)m).getValue();
                 config.addPoint(p.get(0).getValue().intValue(), p.get(1).getValue().intValue());
             }
         }

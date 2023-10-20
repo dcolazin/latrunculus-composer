@@ -260,7 +260,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
 
     
     public int compareTo(ModuleElement object) {
-        if (object instanceof ZProperFreeElement) {
+        if (object instanceof ZStringProperFreeElement) {
             ZStringProperFreeElement element = (ZStringProperFreeElement)object;
             int l = getLength()-element.getLength();
             if (l != 0) {

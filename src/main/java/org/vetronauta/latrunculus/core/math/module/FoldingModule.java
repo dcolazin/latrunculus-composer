@@ -32,7 +32,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
@@ -143,7 +142,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((ArithmeticMultiElement<ArithmeticInteger>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);

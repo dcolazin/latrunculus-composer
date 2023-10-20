@@ -31,7 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -263,7 +262,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
 
     
     public int compareTo(ModuleElement object) {
-        if (object instanceof ZProperFreeElement) {
+        if (object instanceof QStringProperFreeElement) {
             QStringProperFreeElement element = (QStringProperFreeElement)object;
             int l = getLength()-element.getLength();
             if (l != 0) {
