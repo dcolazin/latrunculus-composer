@@ -31,8 +31,7 @@ import java.io.Serializable;
  * The abstract base class for morphisms in modules.
  * @author Gérard Milmeister
  */
-public abstract class ModuleMorphism<
-        A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
     implements Comparable<ModuleMorphism<?,?,?,?>>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism<A,B,?,?>> {
 
     private final Module<A,RA> domain;

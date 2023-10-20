@@ -21,13 +21,18 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * Morphism that represents the sum of two arbitrary morphisms.
  * 
  * @author Gérard Milmeister
  */
-public final class SumMorphism extends ModuleMorphism {
+public final class SumMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+    private final ModuleMorphism<A,B,RA,RB> f;
+    private final ModuleMorphism<A,B,RA,RB> g;
 
     /**
      * Creates a morphism from <code>f</code> and <code>g</code>.
@@ -35,45 +40,36 @@ public final class SumMorphism extends ModuleMorphism {
      *
      * @throws CompositionException if sum is not valid
      */
-    public static ModuleMorphism make(ModuleMorphism f, ModuleMorphism g) throws CompositionException {
+    public static <X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,Y,RX,RY> make(ModuleMorphism<X,Y,RX,RY> f, ModuleMorphism<X,Y,RX,RY> g) throws CompositionException {
         if (!f.getDomain().equals(g.getDomain()) || !f.getCodomain().equals(g.getCodomain())) {
             throw new CompositionException("SumMorphism.make: Cannot add "+g+" to "+f);
         }
         else if (f.isConstant() && g.isConstant()) {
             try {
-                ModuleElement zero = f.getDomain().getZero();
-                ModuleElement fe = f.map(zero);
-                ModuleElement ge = g.map(zero);
+                X zero = f.getDomain().getZero();
+                Y fe = f.map(zero);
+                Y ge = g.map(zero);
                 return new ConstantMorphism(f.getDomain(), fe.sum(ge));
             }
-            catch (DomainException e) {
+            catch (DomainException | MappingException e) {
                 throw new AssertionError("This should never happen!");
             }
-            catch (MappingException e) {
-                throw new AssertionError("This should never happen!");
-            }
-        }
-        else {
-            return new SumMorphism(f, g);
+        } else {
+            return new SumMorphism<>(f, g);
         }
     }
     
     
-    private SumMorphism(ModuleMorphism f, ModuleMorphism g) {
+    private SumMorphism(ModuleMorphism<A,B,RA,RB> f, ModuleMorphism<A,B,RA,RB> g) {
         super(f.getDomain(), f.getCodomain());
         this.f = f;
         this.g = g;
     }
 
     
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        try {
-            return f.map(x).sum(g.map(x));
-        }
-        catch (DomainException e) {
-            throw new MappingException("SumMorphism.map: ", x, this);
-        }
+    public B map(A x) throws MappingException {
+        return f.map(x).sum(g.map(x));
     }
     
     
@@ -100,7 +96,7 @@ public final class SumMorphism extends ModuleMorphism {
     /**
      * Returns the first morphism <i>f</i> of the sum <i>f+g</i>.
      */
-    public ModuleMorphism getFirstMorphism() {
+    public ModuleMorphism<A,B,RA,RB> getFirstMorphism() {
         return f;
     }
     
@@ -108,19 +104,19 @@ public final class SumMorphism extends ModuleMorphism {
     /**
      * Returns the second morphism <i>g</i> of the sum <i>f+g</i>.
      */
-    public ModuleMorphism getSecondMorphism() {
+    public ModuleMorphism<A,B,RA,RB> getSecondMorphism() {
         return g;
     }
     
     
-    public ModuleMorphism getRingMorphism() {
+    public ModuleMorphism<RA,RB,RA,RB> getRingMorphism() {
         return f.getRingMorphism();
     }
 
     
     public int compareTo(ModuleMorphism object) {
         if (object instanceof SumMorphism) {
-            SumMorphism morphism = (SumMorphism)object;
+            SumMorphism<?,?,?,?> morphism = (SumMorphism<?,?,?,?>)object;
             int comp = f.compareTo(morphism.f);
             if (comp == 0) {
                 return g.compareTo(morphism.g);
@@ -137,7 +133,7 @@ public final class SumMorphism extends ModuleMorphism {
     
     public boolean equals(Object object) {
         if (object instanceof SumMorphism) {
-            SumMorphism m = (SumMorphism)object;
+            SumMorphism<?,?,?,?> m = (SumMorphism<?,?,?,?>)object;
             return f.equals(m.f) && g.equals(m.g);
         }
         else {
@@ -153,8 +149,5 @@ public final class SumMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "SumMorphism";
     }
-    
-    
-    private ModuleMorphism f;
-    private ModuleMorphism g;
+
 }
