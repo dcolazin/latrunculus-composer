@@ -57,7 +57,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
     public ZnStringProperFreeElement getZero() {
         List<RingString<ArithmeticModulus>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res.set(i, RingString.getZero());
+            res.add(RingString.getZero());
         }
         return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(res, modulus); //TODO do not cast
     }
@@ -66,7 +66,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
     public ZnStringProperFreeElement getUnitElement(int i) {
         List<RingString<ArithmeticModulus>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            v.set(j, RingString.getZero());
+            v.add(RingString.getZero());
         }
         v.set(i, RingString.getOne());
         return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(v, modulus);
@@ -132,7 +132,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof ZnStringElement) {
-                values.set(i, ((ZnStringElement)object).getValue());
+                values.add(((ZnStringElement)object).getValue());
             }
             else {
                 return null;
@@ -188,7 +188,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ZnStringPro
             else {
                 List<RingString<ArithmeticModulus>> zstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    zstrings.set(i, ZnStringRing.parse(strings[i], getModulus()));
+                    zstrings.add(ZnStringRing.parse(strings[i], getModulus()));
                 }
                 return (ZnStringProperFreeElement) ZnStringProperFreeElement.make(zstrings, getModulus());
             }            

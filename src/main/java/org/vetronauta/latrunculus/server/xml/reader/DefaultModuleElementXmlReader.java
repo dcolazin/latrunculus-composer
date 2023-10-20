@@ -653,10 +653,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
             List<RingString<ArithmeticInteger>> coefficients = new ArrayList<>(elements.size());
-            Iterator<ZStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients.set(i++, iter.next().getValue());
+            for (ZStringElement ringElements : elements) {
+                coefficients.add(ringElements.getValue());
             }
             return ZStringProperFreeElement.make(coefficients);
         }
@@ -697,10 +695,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
             List<RingString<ArithmeticModulus>> coefficients = new ArrayList<>(elements.size());
-            Iterator<ZnStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients.set(i++, iter.next().getValue());
+            for (ZnStringElement ringElements : elements) {
+                coefficients.add(ringElements.getValue());
             }
             return ZnStringProperFreeElement.make(coefficients, modulus0);
         }
@@ -714,7 +710,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
-            LinkedList<QStringElement> elements = new LinkedList<QStringElement>();
+            LinkedList<QStringElement> elements = new LinkedList<>();
             ModuleElement moduleElement = reader.parseModuleElement(childElement);
             if (moduleElement == null) {
                 return null;
@@ -740,10 +736,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
             List<RingString<Rational>> coefficients = new ArrayList<>(elements.size());
-            Iterator<QStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients.set(i++, iter.next().getValue());
+            for (QStringElement ringElements : elements) {
+                coefficients.add(ringElements.getValue());
             }
             return QStringProperFreeElement.make(coefficients);
         }
@@ -783,10 +777,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
             List<RingString<ArithmeticDouble>> coefficients = new ArrayList<>(elements.size());
-            Iterator<RStringElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                coefficients.set(i++, iter.next().getValue());
+            for (RStringElement ringElements : elements) {
+                coefficients.add(ringElements.getValue());
             }
             return RStringProperFreeElement.make(coefficients);
         }

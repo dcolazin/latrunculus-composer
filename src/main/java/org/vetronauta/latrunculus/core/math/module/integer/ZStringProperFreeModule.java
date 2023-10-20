@@ -63,7 +63,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
     public ZStringProperFreeElement getZero() {
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res.set(i, RingString.getZero());
+            res.add(RingString.getZero());
         }
         return (ZStringProperFreeElement) ZStringProperFreeElement.make(res); //TODO do not cast
     }
@@ -72,7 +72,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
     public ZStringProperFreeElement getUnitElement(int i) {
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            res.set(j, RingString.getZero());
+            res.add(RingString.getZero());
         }
         res.set(i, RingString.getOne());
         return (ZStringProperFreeElement) ZStringProperFreeElement.make(res);
@@ -131,7 +131,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
             if (object instanceof ZStringElement) {
-                values.set(i, ((ZStringElement)object).getValue());
+                values.add(((ZStringElement)object).getValue());
             } else {
                 return null;
             }
@@ -179,7 +179,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ZStringPrope
             else {
                 List<RingString<ArithmeticInteger>> zstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    zstrings.set(i, ZStringRing.parse(strings[i]));
+                    zstrings.add(ZStringRing.parse(strings[i]));
                 }
                 return (ZStringProperFreeElement) ZStringProperFreeElement.make(zstrings);
             }            

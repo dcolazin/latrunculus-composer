@@ -9,4 +9,6 @@ public interface DeepCopyable<T> {
 
     T deepCopy();
 
+    //TODO utils to copy lists
+
 }

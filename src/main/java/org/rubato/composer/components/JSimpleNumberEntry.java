@@ -20,11 +20,18 @@
 package org.rubato.composer.components;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
@@ -100,7 +107,7 @@ public class JSimpleNumberEntry
     
     public ModuleElement getValue() {
         boolean error = false;
-        LinkedList<ModuleElement> list = new LinkedList<ModuleElement>();
+        LinkedList<ModuleElement> list = new LinkedList<>();
         Ring ring = module.getRing();
         for (int i = 0; i < inputFields.length; i++) {
             String s = inputFields[i].getText();
@@ -129,16 +136,19 @@ public class JSimpleNumberEntry
     public static String getSymbol(Module<?,?> module) {
         String s = "";  
         if (module instanceof FreeModule) {
-            if (module.checkRingElement(ZElement.class)) {
-                s = "Z"; 
-            } else if (module.checkRingElement(ZnElement.class)) {
-                s = "Z" + ((ZnRing) module.getRing()).getModulus(); 
-            } else if (module.checkRingElement(RElement.class)) {
-                s = "R"; 
-            } else if (module.checkRingElement(CElement.class)) {
-                s = "C"; 
-            } else if (module.checkRingElement(QElement.class)) {
-                s = "Q"; 
+            if (module.checkRingElement(ArithmeticElement.class)) {
+                ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
+                if (number instanceof ArithmeticInteger) {
+                    s = "Z";
+                } else if (number instanceof ArithmeticModulus) {
+                    s = "Z" + ((ZnRing) module.getRing()).getModulus();
+                } else if (number instanceof ArithmeticDouble) {
+                    s = "R";
+                } else if (number instanceof Complex) {
+                    s = "C";
+                } else if (number instanceof Rational) {
+                    s = "Q";
+                }
             } else if (module instanceof ZStringRing) {
                 s = "Z-String"; 
             } else if (module instanceof ZnStringRing) {
@@ -160,7 +170,7 @@ public class JSimpleNumberEntry
     
     
     private JTextField[] inputFields;
-    private Module       module = null;
+    private Module       module;
     
     private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

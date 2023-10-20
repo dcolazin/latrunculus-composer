@@ -102,9 +102,9 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         }
         else {
             List<RingString<Rational>> values = new ArrayList<>(n);
-            values.set(0, new RingString<>(getValue()));
+            values.add(new RingString<>(getValue()));
             for (int i = 1; i < n; i++) {
-                values.set(i, new RingString<>());
+                values.add(new RingString<>());
             }
             return QStringProperFreeElement.make(values);
         }

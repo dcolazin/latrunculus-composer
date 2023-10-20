@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,11 +42,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZElement>, ZElement> {
+public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ArithmeticInteger>, ArithmeticElement<ArithmeticInteger>> {
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
 
-    public static FreeModule<?,ZElement> make(int dimension) {
+    public static FreeModule<?,ArithmeticElement<ArithmeticInteger>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -122,13 +123,13 @@ public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        ArithmeticInteger[] values = new ArithmeticInteger[getDimension()];
+        List<ArithmeticInteger> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement castElement = iter.next().cast(ZRing.ring);
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((ZElement)castElement).getValue();
+            values.add(((ArithmeticElement<ArithmeticInteger>)castElement).getValue());
         }
 
         return (ZProperFreeElement) ZProperFreeElement.make(values); //TODO do not cast
@@ -144,15 +145,15 @@ public final class ZProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
                 return (ZProperFreeElement)element;
             }
             else {
-                ArithmeticInteger[] elements = new ArithmeticInteger[getDimension()];
+                List<ArithmeticInteger> values = new ArrayList<>(getDimension());
                 for (int i = 0; i < getDimension(); i++) {
                     ModuleElement castElement = element.getComponent(i).cast(ZRing.ring);
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((ZElement)castElement).getValue();
+                    values.add(((ArithmeticElement<ArithmeticInteger>)castElement).getValue());
                 }
-                return (ZProperFreeElement) ZProperFreeElement.make(elements);
+                return (ZProperFreeElement) ZProperFreeElement.make(values);
             }
         }
         else {

@@ -62,7 +62,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
     public QStringProperFreeElement getZero() {
         List<RingString<Rational>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res.set(i, RingString.getZero());
+            res.add(RingString.getZero());
         }
         return (QStringProperFreeElement) QStringProperFreeElement.make(res); //TODO do not cast
     }
@@ -127,7 +127,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
             if (object instanceof QStringElement) {
-                values.set(i, ((QStringElement) object).getValue());
+                values.add(((QStringElement) object).getValue());
             }
             else {
                 return null;
@@ -176,7 +176,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<QStringPrope
             else {
                 List<RingString<Rational>> qstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    qstrings.set(i, QStringRing.parse(strings[i]));
+                    qstrings.add(QStringRing.parse(strings[i]));
                 }
                 return (QStringProperFreeElement) QStringProperFreeElement.make(qstrings);
             }            

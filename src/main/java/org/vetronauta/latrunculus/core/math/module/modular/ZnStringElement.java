@@ -115,9 +115,9 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         }
         else {
             List<RingString<ArithmeticModulus>> values = new ArrayList<>(n);
-            values.set(0, getValue());
+            values.add(getValue());
             for (int i = 1; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return ZnStringProperFreeElement.make(values, modulus);
         }

@@ -62,7 +62,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
     public RStringProperFreeElement getZero() {
         List<RingString<ArithmeticDouble>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            res.set(i, RingString.getZero());
+            res.add(RingString.getZero());
         }
         return (RStringProperFreeElement) RStringProperFreeElement.make(res); //TODO not cast
     }
@@ -71,7 +71,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
     public RStringProperFreeElement getUnitElement(int i) {
         List<RingString<ArithmeticDouble>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
-            v.set(j, RingString.getZero());
+            v.add(RingString.getZero());
         }
         v.set(i, RingString.getOne());
         return (RStringProperFreeElement) RStringProperFreeElement.make(v);
@@ -130,7 +130,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof RStringElement) {
-                values.set(i, ((RStringElement)object).getValue());
+                values.add(((RStringElement)object).getValue());
             }
             else {
                 return null;
@@ -180,7 +180,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<RStringPrope
             else {
                 List<RingString<ArithmeticDouble>> rstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
-                    rstrings.set(i, RStringRing.parse(strings[i]));
+                    rstrings.add(RStringRing.parse(strings[i]));
                 }
                 return (RStringProperFreeElement) RStringProperFreeElement.make(rstrings);
             }            

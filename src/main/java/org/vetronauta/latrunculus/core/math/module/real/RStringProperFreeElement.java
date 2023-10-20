@@ -72,7 +72,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).sum(element.value.get(i)));
+                res.add(value.get(i).sum(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);
         }
@@ -98,7 +98,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).difference(element.value.get(i)));
+                res.add(value.get(i).difference(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);        
         }
@@ -124,7 +124,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).product(element.value.get(i)));
+                res.add(value.get(i).product(element.value.get(i)));
             }
             return new RStringProperFreeElement(res);
         }
@@ -149,7 +149,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public RStringProperFreeElement negated() {
         List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).negated());
+            res.add(value.get(i).negated());
         }
         return new RStringProperFreeElement(res);
     }
@@ -165,7 +165,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         RingString<ArithmeticDouble> val = element.getValue();
         List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).product(val));
+            res.add(value.get(i).product(val));
         }
         return new RStringProperFreeElement(res);        
     }
@@ -221,10 +221,10 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             int minlen = Math.min(n, getLength());
             List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
             for (int i = 0; i < minlen; i++) {
-                values.set(i, getValue(i));
+                values.add(getValue(i));
             }
             for (int i = minlen; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return RStringProperFreeElement.make(values);
         }
@@ -342,7 +342,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     public RStringProperFreeElement deepCopy() {
         List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).deepCopy());
+            res.add(value.get(i).deepCopy());
         }
         return new RStringProperFreeElement(res);
     }

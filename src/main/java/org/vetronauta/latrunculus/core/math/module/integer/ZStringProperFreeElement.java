@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public static ZStringProperFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
 
     private final List<RingString<ArithmeticInteger>> value;
-    private FreeModule<?,ZElement> module;
+    private FreeModule<?, ArithmeticElement<ArithmeticInteger>> module;
 
     public static FreeElement<?,ZStringElement> make(List<RingString<ArithmeticInteger>> v) {
         assert(v != null);
@@ -76,7 +77,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).sum(element.value.get(i)));
+                res.add(value.get(i).sum(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);
         }
@@ -102,7 +103,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).difference(element.value.get(i)));
+                res.add(value.get(i).difference(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);        
         }
@@ -128,7 +129,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         if (getLength() == element.getLength()) {
             List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).product(element.value.get(i)));
+                res.add(value.get(i).product(element.value.get(i)));
             }
             return new ZStringProperFreeElement(res);
         }
@@ -153,7 +154,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public ZStringProperFreeElement negated() {
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).negated());
+            res.add(value.get(i).negated());
         }
         return new ZStringProperFreeElement(res);
     }
@@ -169,7 +170,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
         RingString<ArithmeticInteger> val = element.getValue();
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).product(val));
+            res.add(value.get(i).product(val));
         }
         return new ZStringProperFreeElement(res);        
     }
@@ -225,10 +226,10 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
             int minlen = Math.min(n, getLength());
             List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
             for (int i = 0; i < minlen; i++) {
-                values.set(i, getValue(i));
+                values.add(getValue(i));
             }
             for (int i = minlen; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return ZStringProperFreeElement.make(values);
         }
@@ -342,7 +343,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
     public ZStringProperFreeElement deepCopy() {
         List<RingString<ArithmeticInteger>> v = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            v.set(i, value.get(i).deepCopy());
+            v.add(value.get(i).deepCopy());
         }
         return new ZStringProperFreeElement(v);
     }

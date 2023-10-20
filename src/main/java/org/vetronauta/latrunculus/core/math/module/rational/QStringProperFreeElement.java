@@ -76,7 +76,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
         if (getLength() == element.getLength()) {
             List<RingString<Rational>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).sum(element.value.get(i)));
+                res.add(value.get(i).sum(element.value.get(i)));
             }
             return new QStringProperFreeElement(res);
         }
@@ -102,7 +102,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
         if (getLength() == element.getLength()) {
             List<RingString<Rational>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).difference(element.value.get(i)));
+                res.add(value.get(i).difference(element.value.get(i)));
             }
             return new QStringProperFreeElement(res);        
         }
@@ -128,7 +128,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
         if (getLength() == element.getLength()) {
             List<RingString<Rational>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res.set(i, value.get(i).product(element.value.get(i)));
+                res.add(value.get(i).product(element.value.get(i)));
             }
             return new QStringProperFreeElement(res);
         }
@@ -153,7 +153,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     public QStringProperFreeElement negated() {
         List<RingString<Rational>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).negated());
+            res.add(value.get(i).negated());
         }
         return new QStringProperFreeElement(res);
     }
@@ -169,7 +169,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
         RingString<Rational> val = element.getValue();
         List<RingString<Rational>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res.set(i, value.get(i).product(val));
+            res.add(value.get(i).product(val));
         }
         return new QStringProperFreeElement(res);        
     }
@@ -217,7 +217,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     }
 
     public void setValue(int i, RingString<Rational> string) {
-        value.set(i, string);
+        value.add(string);
     }
     
 
@@ -229,10 +229,10 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
             int minlen = Math.min(n, getLength());
             List<RingString<Rational>> values = new ArrayList<>(n);
             for (int i = 0; i < minlen; i++) {
-                values.set(i,  getValue(i));
+                values.add( getValue(i));
             }
             for (int i = minlen; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return QStringProperFreeElement.make(values);
         }
@@ -350,7 +350,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     public ModuleElement deepCopy() {
         List<RingString<Rational>> v = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            v.set(i, value.get(i).deepCopy());
+            v.add(value.get(i).deepCopy());
         }
         return new QStringProperFreeElement(v);
     }

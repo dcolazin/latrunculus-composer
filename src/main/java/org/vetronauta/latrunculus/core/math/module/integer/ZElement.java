@@ -20,8 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import lombok.NonNull;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
@@ -30,40 +29,9 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZElement extends ArithmeticElement<ZElement, ArithmeticInteger> {
+public final class ZElement extends ArithmeticElement {
 
-    /**
-     * Constructs a ZElement with integer <code>value</code>.
-     */
-    public ZElement(int value) {
-        super(new ArithmeticInteger(value));
-    }
-
-    /**
-     * Constructs a ZElement with integer <code>value</code>.
-     */
-    public ZElement(ArithmeticInteger value) {
+    public ZElement(@NonNull ArithmeticNumber value) {
         super(value);
     }
-
-    @Override
-    protected ZElement valueOf(@NonNull ArithmeticInteger value) {
-        return new ZElement(value);
-    }
-
-    @Override
-    public ZRing getRing() {
-        return ZRing.ring;
-    }
-
-    @Override
-    public double[] fold(ModuleElement[] elements) {
-        double[] res = new double[elements.length];
-        for (int i = 0; i < elements.length; i++) {
-            ZElement e = (ZElement)elements[i];
-            res[i] = e.getValue().intValue();
-        }
-        return res;
-    }
-
 }

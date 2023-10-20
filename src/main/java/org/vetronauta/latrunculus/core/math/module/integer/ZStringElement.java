@@ -99,9 +99,9 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
         }
         else {
             List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
-            values.set(0, new RingString<>(getValue()));
+            values.add(new RingString<>(getValue()));
             for (int i = 1; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return ZStringProperFreeElement.make(values);
         }

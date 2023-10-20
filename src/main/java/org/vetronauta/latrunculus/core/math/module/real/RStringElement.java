@@ -102,9 +102,9 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         }
         else {
             List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
-            values.set(0, new RingString<>(getValue()));
+            values.add(new RingString<>(getValue()));
             for (int i = 1; i < n; i++) {
-                values.set(i, RingString.getZero());
+                values.add(RingString.getZero());
             }
             return RStringProperFreeElement.make(values);
         }

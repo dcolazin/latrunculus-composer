@@ -33,10 +33,10 @@ import java.util.List;
  * @author vetronauta
  */
 @RequiredArgsConstructor
-public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
+public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<ArithmeticElement<N>> {
 
-    private final ArithmeticElement<T,?> zero;
-    private final ArithmeticElement<T,?> one;
+    private final ArithmeticElement<N> zero;
+    private final ArithmeticElement<N> one;
 
     //TODO proper consturctor or make abstract?
 
@@ -46,7 +46,7 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     }
 
     @Override
-    public T getZero() {
+    public ArithmeticElement<N> getZero() {
         return zero.deepCopy();
     }
 
@@ -56,7 +56,7 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     }
 
     @Override
-    public Module<?, T> getNullModule() {
+    public Module<?, ArithmeticElement<N>> getNullModule() {
         return null; //TODO
     }
 
@@ -66,12 +66,12 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     }
 
     @Override
-    public T cast(ModuleElement<?, ?> element) {
+    public ArithmeticElement<N> cast(ModuleElement<?, ?> element) {
         return null; //TODO
     }
 
     @Override
-    public T createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<N> createElement(List<ModuleElement<?, ?>> elements) {
         return null; //TODO
     }
 
@@ -81,7 +81,7 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     }
 
     @Override
-    public T getOne() {
+    public ArithmeticElement<N> getOne() {
         return one.deepCopy();
     }
 
@@ -91,12 +91,12 @@ public class ArithmeticRing<T extends ArithmeticElement<T,?>> extends Ring<T> {
     }
 
     @Override
-    public FreeModule<?, T> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<N>> getFreeModule(int dimension) {
         return null; //TODO
     }
 
     @Override
-    public T parseString(String s) {
+    public ArithmeticElement<N> parseString(String s) {
         return null; //TODO
     }
 }

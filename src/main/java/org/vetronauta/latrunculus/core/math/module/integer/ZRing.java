@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -29,9 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.List;
 
@@ -41,12 +37,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing {
+public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {
 
     private ZRing() {
-        super(new ZElement(0), new ZElement(1));
+        super(new ArithmeticElement<>(new ArithmeticInteger(0)), new ArithmeticElement<>(new ArithmeticInteger(1)));
     }
-
 
     /**
      * The unique instance of the ring of integers.
@@ -60,11 +55,11 @@ public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing 
     
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        return (element instanceof ZElement);
+        return (element instanceof ArithmeticElement) && (((ArithmeticElement<?>)element).getValue() instanceof ArithmeticInteger);
     }
 
     
-    public FreeModule<?, ZElement> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<ArithmeticInteger>> getFreeModule(int dimension) {
         return ZProperFreeModule.make(dimension);
     }
 
@@ -86,58 +81,28 @@ public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing 
     }
 
 
-    public ZElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<ArithmeticInteger> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return (ZElement) elements.get(0).cast(this);
+            return elements.get(0).cast(this);
         }
         return null;
     }
 
     
-    public ZElement cast(ModuleElement element) {
-        if (element instanceof ZElement) {
-            return (ZElement)element;
+    public ArithmeticElement<ArithmeticInteger> cast(ModuleElement<?,?> element) {
+        if (element instanceof ArithmeticElement) {
+            return cast((ArithmeticElement<?>) element);
         }
-        else if (element instanceof ZnElement) {
-            return cast((ZnElement)element);
+        if (element instanceof DirectSumElement) {
+            return element.cast(this);
         }
-        else if (element instanceof QElement) {
-            return cast((QElement)element);
-        }
-        else if (element instanceof RElement) {
-            return cast((RElement)element);
-        }
-        else if (element instanceof CElement) {
-            return cast((CElement)element);
-        }
-        else if (element instanceof DirectSumElement) {
-            return (ZElement)element.cast(this);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
     
-    public ZElement cast(ZnElement element) {
-        return new ZElement(element.getValue().getValue());
+    public ArithmeticElement<ArithmeticInteger> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new ArithmeticInteger(element.getValue().intValue()));
     }
-    
-    
-    public ZElement cast(QElement element) {
-        return new ZElement((int)Math.round(element.getValue().doubleValue()));
-    }
-
-    
-    public ZElement cast(RElement element) {
-        return new ZElement((int)Math.round(element.getValue().doubleValue()));
-    }
-
-    
-    public ZElement cast(CElement element) {
-        return new ZElement((int)Math.round(element.getValue().getReal()));
-    }
-
     
     public String toString() {
         return "ZRing";
@@ -149,10 +114,10 @@ public final class ZRing extends ArithmeticRing<ZElement> implements NumberRing 
     }
     
     
-    public ZElement parseString(String s) {
+    public ArithmeticElement<ArithmeticInteger> parseString(String s) {
     	try {
     		int value = Integer.parseInt(TextUtils.unparenthesize(s));
-        	return new ZElement(value);
+        	return new ArithmeticElement<>(new ArithmeticInteger(value));
     	}
     	catch (NumberFormatException e) {
     		return null;

@@ -25,7 +25,12 @@ import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over integers.
@@ -33,48 +38,44 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
  * 
  * @author Gérard Milmeister
  */
-public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
+public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticInteger> {
 
-    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ZElement[0]);
+    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ArrayList<>());
 
     private ZProperFreeModule module;
 
-    public static FreeElement<?, ZElement> make(@NonNull int[] v) {
+    private ZProperFreeElement(List<ArithmeticElement<ArithmeticInteger>> value) {
+        super(value);
+    }
+
+    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull int[] v) {
         if (v.length == 0) {
             return nullElement;
         }
         else if (v.length == 1) {
-            return new ZElement(v[0]);
+            return new ArithmeticElement<>(new ArithmeticInteger(v[0]));
         }
         else {
-            return new ZProperFreeElement(toElementArray(v));
+            return new ZProperFreeElement(toElementList(v));
         }
     }
 
-    public static FreeElement<?, ZElement> make(@NonNull ArithmeticInteger[] v) {
-        if (v.length == 0) {
+    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull List<ArithmeticInteger> v) {
+        if (v.isEmpty()) {
             return nullElement;
         }
-        else if (v.length == 1) {
-            return new ZElement(v[0]);
+        else if (v.size() == 1) {
+            return new ArithmeticElement<>(v.get(0));
         }
         else {
-            return new ZProperFreeElement(toElementArray(v));
+            return new ZProperFreeElement(v.stream().map(ArithmeticElement::new).collect(Collectors.toList()));
         }
     }
 
-    private static ZElement[] toElementArray(int[] v) {
-        ZElement[] elements = new ZElement[v.length];
-        for (int i = 0; i < v.length; i++) {
-            elements[i] = new ZElement(v[i]);
-        }
-        return elements;
-    }
-
-    private static ZElement[] toElementArray(ArithmeticInteger[] v) {
-        ZElement[] elements = new ZElement[v.length];
-        for (int i = 0; i < v.length; i++) {
-            elements[i] = new ZElement(v[i]);
+    private static List<ArithmeticElement<ArithmeticInteger>> toElementList(int[] v) {
+        List<ArithmeticElement<ArithmeticInteger>> elements = new ArrayList<>(v.length);
+        for (int j : v) {
+            elements.add(new ArithmeticElement<>(new ArithmeticInteger(j)));
         }
         return elements;
     }
@@ -96,7 +97,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
             }
             else {
                 for (int i = 0; i < getLength(); i++) {
-                    int d = getValue()[i].getValue().intValue()-element.getValue()[i].getValue().intValue();
+                    int d = getValue().get(i).getValue().intValue()-element.getValue().get(i).getValue().intValue();
                     if (d != 0) {
                         return d;
                     }
@@ -115,10 +116,10 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
         }
         else {
             StringBuilder res = new StringBuilder(30);
-            res.append(getValue()[0]);
+            res.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 res.append(',');
-                res.append(getValue()[i]);
+                res.append(getValue().get(i));
             }
             if (parens.length > 0) {
                 return TextUtils.parenthesize(res.toString());
@@ -136,10 +137,10 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
         buf.append(getLength());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(getValue()[0]);
+            buf.append(getValue().get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(getValue()[i]);
+                buf.append(getValue().get(i));
             }
         }
         buf.append("]");
@@ -156,7 +157,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZProperFreeElement)elements[i]).getValue()[j].getValue().intValue();
+                res[i][j] = ((ZProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);
@@ -170,14 +171,9 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ZElement> {
     public int hashCode() {
         int val = 0;
         for (int i = 0; i < getLength(); i++) {
-            val ^= getValue()[i].getValue().intValue();
+            val ^= getValue().get(i).getValue().intValue();
         }
         return val;
-    }
-    
-
-    private ZProperFreeElement(ZElement[] value) {
-        super(value);
     }
 
 }
