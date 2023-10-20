@@ -249,7 +249,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return QProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(QRing.ring, dimension);
     }
 
     private Module readRProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {

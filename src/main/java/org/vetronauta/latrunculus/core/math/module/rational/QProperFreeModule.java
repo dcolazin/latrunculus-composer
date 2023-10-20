@@ -19,22 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Free modules over rationals.
@@ -42,73 +32,9 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Rational>, ArithmeticElement<Rational>> {
+public final class QProperFreeModule extends ArithmeticMultiModule<Rational> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
-
-    public static FreeModule<?, ArithmeticElement<Rational>> make(int dimension) {
-        dimension = Math.max(dimension, 0);
-        if (dimension == 0) {
-            return nullModule;
-        }
-        else if (dimension == 1) {
-            return QRing.ring;
-        }
-        else {
-            return new QProperFreeModule(dimension);
-        }
-    }
-
-    
-    public QProperFreeElement getZero() {
-        Rational[] res = new Rational[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            res[i] = new Rational(0);
-        }
-        return (QProperFreeElement)QProperFreeElement.make(res);
-    }
-
-    
-    public QProperFreeElement getUnitElement(int i) {
-        Rational[] v = new Rational[getDimension()];
-        for (int j = 0; j < getDimension(); j++) {
-            v[j] = Rational.getZero();
-        }
-        v[i] = Rational.getOne();
-        return (QProperFreeElement)QProperFreeElement.make(v);
-    }
-    
-
-    public QProperFreeModule getNullModule() {
-        return nullModule;
-    }
-    
-    
-    public boolean isNullModule() {
-        return this == nullModule;
-    }
-
-    
-    public QRing getComponentModule(int i) {
-        return QRing.ring;
-    }
-    
-
-    public QRing getRing() {
-        return QRing.ring;
-    }
-
-
-    public boolean isVectorSpace() {
-        return true;
-    }
-   
-
-    public boolean hasElement(ModuleElement element) {
-        return (element instanceof QProperFreeElement &&
-                element.getLength() == getDimension());
-    }
-
     
     public int compareTo(Module object) {
         if (object instanceof QProperFreeModule) {
@@ -120,86 +46,13 @@ public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
         }
     }
 
-    
-    public QProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
-        if (elements.size() < getDimension()) {
-            return null;
-        }
-
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        Rational[] values = new Rational[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            ModuleElement castElement = iter.next().cast(QRing.ring);
-            if (castElement == null) {
-                return null;
-            }
-            values[i] = ((ArithmeticElement<Rational>)castElement).getValue();
-        }
-
-        return (QProperFreeElement)QProperFreeElement.make(values);
-    }
-
-
-    public QProperFreeElement cast(ModuleElement element) {
-        if (element.getLength() == getDimension()) {
-            if (element instanceof DirectSumElement) {
-                return (QProperFreeElement) element.cast(this);
-            }
-            else if (element instanceof QProperFreeElement) {
-                return (QProperFreeElement) element;
-            }
-            else {   
-                Rational[] elements = new Rational[getDimension()];
-                for (int i = 0; i < getDimension(); i++) {
-                    ModuleElement castElement = QRing.ring.cast(element.getComponent(i));
-                    if (castElement == null) {
-                        return null;
-                    }
-                    elements[i] = ((ArithmeticElement<Rational>)castElement).getValue();
-                }
-                return (QProperFreeElement) QProperFreeElement.make(elements);
-            }
-        }
-        else {
-            return null;
-        }
-    }
-
-
     public boolean equals(Object object) {
         return (object instanceof QProperFreeModule &&
                 	getDimension() == ((QProperFreeModule)object).getDimension());
     }
 
-    
-    public QProperFreeElement parseString(String string) {
-        string = TextUtils.unparenthesize(string);
-        String[] components = string.split(",");
-        if (components.length != getDimension()) {
-            return null;
-        }
-        else {
-            Rational[] values = new Rational[components.length];
-            for (int i = 0; i < values.length; i++) {
-                try {
-                    values[i] = ArithmeticParsingUtils.parseRational(components[i]);
-                }
-                catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-            return (QProperFreeElement) QProperFreeElement.make(values);
-        }
-    }
-    
-    
     public String toString() {
         return "QFreeModule["+getDimension()+"]";
-    }
-
-    
-    public String toVisualString() {
-        return "Q^"+getDimension();
     }
     
     public String getElementTypeName() {
@@ -230,7 +83,7 @@ public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
     
     
     private QProperFreeModule(int dimension) {
-        super(dimension);
+        super(QRing.ring, dimension);
     }
 
 

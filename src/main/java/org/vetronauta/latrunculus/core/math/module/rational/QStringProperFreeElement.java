@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 
 import java.util.ArrayList;
@@ -202,7 +203,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
 
     public Module getModule() { //TODO the return values of this method for the string are different than usual
         if (module == null) {
-            module = QProperFreeModule.make(getLength());
+            module = ArithmeticMultiModule.make(QRing.ring, getLength());
         }
         return module;
     }

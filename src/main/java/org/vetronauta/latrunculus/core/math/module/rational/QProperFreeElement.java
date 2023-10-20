@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,9 +79,9 @@ public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
         }
     }
     
-    public QProperFreeModule getModule() {
+    public ArithmeticMultiModule<Rational> getModule() {
         if (module == null) {
-            module = (QProperFreeModule)QProperFreeModule.make(getLength());
+            module = new ArithmeticMultiModule<>(QRing.ring, getLength());
         }
         return module;
     }
@@ -160,6 +161,6 @@ public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
         return "QFreeElement";
     }
 
-    private QProperFreeModule module = null;
+    private ArithmeticMultiModule<Rational> module = null;
 
 }

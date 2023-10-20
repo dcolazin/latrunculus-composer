@@ -329,7 +329,7 @@ public final class DenotexParser implements DenotexParserConstants {
         else if (s.equals("Q")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return QRing.ring;
-            else                return QProperFreeModule.make(sup);
+            else                return ArithmeticMultiModule.make(QRing.ring, sup);
         }
         else if (s.equals("R")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");

@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
@@ -33,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.rational.QRing;
  */
 public abstract class QFreeAbstractMorphism extends ModuleMorphism {
 
-    public QFreeAbstractMorphism(int domDim, int codomDim) {
-        super(QProperFreeModule.make(domDim), QProperFreeModule.make(codomDim));
+    protected QFreeAbstractMorphism(int domDim, int codomDim) {
+        super(ArithmeticMultiModule.make(QRing.ring, domDim), ArithmeticMultiModule.make(QRing.ring, codomDim));
     }
 
     
