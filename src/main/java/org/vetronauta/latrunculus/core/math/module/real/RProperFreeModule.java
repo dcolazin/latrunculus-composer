@@ -20,13 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 
 /**
  * Free modules over real numbers.
@@ -37,22 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 public final class RProperFreeModule extends ArithmeticMultiModule<ArithmeticDouble> {
 
     public static final RProperFreeModule nullModule = new RProperFreeModule(0);
-
-    protected ModuleMorphism _getProjection(int index) {
-        RMatrix A = new RMatrix(1, getDimension());
-        A.set(0, index, 1);
-        return RFreeAffineMorphism.make(A, new double[] { 0.0 });
-    }
-    
-    protected ModuleMorphism _getInjection(int index) {
-        RMatrix A = new RMatrix(getDimension(), 1);
-        A.set(index, 0, 1.0);
-        double[] b = new double[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            b[i] = 0.0;
-        }
-        return RFreeAffineMorphism.make(A, b);
-    }
 
     private RProperFreeModule(int dimension) {
         super(RRing.ring, dimension);

@@ -20,10 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 
 /**
  * Free modules over integers.
@@ -34,22 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 public final class ZProperFreeModule extends ArithmeticMultiModule<ArithmeticInteger> {
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
-
-    protected ModuleMorphism _getProjection(int index) {
-        ZMatrix A = new ZMatrix(1, getDimension());
-        A.set(0, index, 1);
-        return ZFreeAffineMorphism.make(A, new int[] { 0 });
-    }
-
-    protected ModuleMorphism _getInjection(int index) {
-        ZMatrix A = new ZMatrix(getDimension(), 1);
-        A.set(index, 0, 1);
-        int[] b = new int[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            b[i] = 0;
-        }
-        return ZFreeAffineMorphism.make(A, b);
-    }
     
     private ZProperFreeModule(int dimension) {
         super(ZRing.ring, dimension);

@@ -20,14 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
 
 /**
  * Free modules over integers mod <i>n</i>.
@@ -40,23 +34,6 @@ public final class ZnProperFreeModule extends ArithmeticMultiModule<ArithmeticMo
     public int getModulus() {
         return modulus;
     }
-
-    protected ModuleMorphism _getProjection(int index) {
-        ZnMatrix A = new ZnMatrix(1, getDimension(), getModulus());
-        A.set(0, index, 1);
-        return ZnFreeAffineMorphism.make(A, new int[] { 0 });
-    }
-    
-    protected ModuleMorphism _getInjection(int index) {
-        ZnMatrix A = new ZnMatrix(getDimension(), 1, getModulus());
-        A.set(index, 0, 1);
-        int[] b = new int[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            b[i] = 0;
-        }
-        return ZnFreeAffineMorphism.make(A, b);
-    }
-    
     
     private ZnProperFreeModule(int dimension, int modulus) {
         super(ArithmeticRingRepository.getModulusRing(modulus), dimension);

@@ -3,6 +3,7 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.module.InjectionProjectionUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -157,12 +158,12 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
 
     @Override
     protected ModuleMorphism _getProjection(int index) {
-        return null; //TODO
+        return InjectionProjectionUtils.getProjection(ring, index, getDimension());
     }
 
     @Override
     protected ModuleMorphism _getInjection(int index) {
-        return null; //TODO
+        return InjectionProjectionUtils.getInjection(ring, index, getDimension());
     }
 
     @Override
@@ -198,5 +199,5 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     public String getElementTypeName() {
         return String.format("ArithmeticMultiModule<%s>", ring.toVisualString());
     }
-    
+
 }

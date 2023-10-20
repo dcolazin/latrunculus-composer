@@ -20,11 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * The free modules over complex numbers.
@@ -35,22 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 public final class CProperFreeModule extends ArithmeticMultiModule<Complex> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);
-
-    protected ModuleMorphism _getProjection(int index) {
-        CMatrix A = new CMatrix(1, getDimension());
-        A.set(0, index, Complex.getOne());
-        return CFreeAffineMorphism.make(A, new Complex[] { Complex.getZero() });
-    }
-
-    protected ModuleMorphism _getInjection(int index) {
-        CMatrix A = new CMatrix(getDimension(), 1);
-        A.set(index, 0, Complex.getOne());
-        Complex[] b = new Complex[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            b[i] = Complex.getZero();
-        }
-        return CFreeAffineMorphism.make(A, b);
-    }
 
     private CProperFreeModule(int dimension) {
         super(CRing.ring, dimension);

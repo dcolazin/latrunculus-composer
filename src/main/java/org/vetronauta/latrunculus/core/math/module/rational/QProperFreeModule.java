@@ -20,11 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 
 /**
  * Free modules over rationals.
@@ -35,22 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 public final class QProperFreeModule extends ArithmeticMultiModule<Rational> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
-
-    protected ModuleMorphism _getProjection(int index) {
-        QMatrix A = new QMatrix(1, getDimension());
-        A.set(0, index, Rational.getOne());
-        return QFreeAffineMorphism.make(A, new Rational[] { Rational.getZero() });
-    }
-
-    protected ModuleMorphism _getInjection(int index) {
-        QMatrix A = new QMatrix(getDimension(), 1);
-        A.set(index, 0, Rational.getOne());
-        Rational[] b = new Rational[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            b[i] = Rational.getZero();
-        }
-        return QFreeAffineMorphism.make(A, b);
-    }
 
     private QProperFreeModule(int dimension) {
         super(QRing.ring, dimension);
