@@ -23,8 +23,10 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.
@@ -34,7 +36,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 public final class ConjugationMorphism extends ModuleMorphism {
 
     public ConjugationMorphism(int dimension) {
-        super(CProperFreeModule.make(dimension), CProperFreeModule.make(dimension));
+        super(ArithmeticMultiModule.make(CRing.ring, dimension), ArithmeticMultiModule.make(CRing.ring, dimension));
         this.dimension = dimension;
     }
 

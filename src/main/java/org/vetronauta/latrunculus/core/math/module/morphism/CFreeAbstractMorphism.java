@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 /**
  * The abstract base class for morphisms in a free <i>C</i>-module.
@@ -34,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 public abstract class CFreeAbstractMorphism extends ModuleMorphism {
 
     protected CFreeAbstractMorphism(int domDim, int codomDim) {
-        super(CProperFreeModule.make(domDim), CProperFreeModule.make(codomDim));
+        super(ArithmeticMultiModule.make(CRing.ring, domDim), ArithmeticMultiModule.make(CRing.ring, codomDim));
     }
 
     

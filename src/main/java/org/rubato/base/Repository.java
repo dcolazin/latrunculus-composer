@@ -19,32 +19,27 @@
 
 package org.rubato.base;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
-
-import java.io.*;
-import java.util.*;
-import java.util.Map.Entry;
-
 import org.rubato.logeo.FormFactory;
+import org.rubato.rubettes.denotex.DenotexReader;
+import org.rubato.scheme.Env;
+import org.rubato.scheme.Evaluator;
+import org.rubato.scheme.Parser;
+import org.rubato.scheme.SExpr;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.rubato.rubettes.denotex.DenotexReader;
-import org.rubato.scheme.*;
+import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
@@ -59,7 +54,27 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Observable;
+import java.util.TreeSet;
+
+import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
 
 /**
  * A repository of forms and denotators, retrievable by their names.
@@ -1095,15 +1110,15 @@ public class Repository
         registerBuiltinModule("Integers modulo 2", ZnRing.make(2));
         registerBuiltinModule("Integers modulo 12", ZnRing.make(12));
         
-        registerBuiltinModule("Pairs of integers", ZProperFreeModule.make(2));
-        registerBuiltinModule("Pairs of rationals", QProperFreeModule.make(2));
-        registerBuiltinModule("Pairs of reals", RProperFreeModule.make(2));
-        registerBuiltinModule("Pairs of complexes", CProperFreeModule.make(2));
+        registerBuiltinModule("Pairs of integers", ArithmeticMultiModule.make(ZRing.ring, 2));
+        registerBuiltinModule("Pairs of rationals", ArithmeticMultiModule.make(QRing.ring, 2));
+        registerBuiltinModule("Pairs of reals", ArithmeticMultiModule.make(RRing.ring, 2));
+        registerBuiltinModule("Pairs of complexes", ArithmeticMultiModule.make(CRing.ring, 2));
 
-        registerBuiltinModule("Triples of integers", ZProperFreeModule.make(3));
-        registerBuiltinModule("Triples of rationals", QProperFreeModule.make(3));
-        registerBuiltinModule("Triples of reals", RProperFreeModule.make(3));
-        registerBuiltinModule("Triples of complexes", CProperFreeModule.make(3));
+        registerBuiltinModule("Triples of integers", ArithmeticMultiModule.make(ZRing.ring, 3));
+        registerBuiltinModule("Triples of rationals", ArithmeticMultiModule.make(QRing.ring, 3));
+        registerBuiltinModule("Triples of reals", ArithmeticMultiModule.make(RRing.ring, 3));
+        registerBuiltinModule("Triples of complexes", ArithmeticMultiModule.make(CRing.ring, 3));
         
         // Scheme environment and code
         env = Env.makeGlobalEnvironment();

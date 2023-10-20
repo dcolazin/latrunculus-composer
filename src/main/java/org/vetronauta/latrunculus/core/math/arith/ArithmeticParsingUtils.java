@@ -5,17 +5,31 @@ import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArithmeticParsingUtils {
 
     //TODO this stuff should go in the server package, not in the math one
 
+    public static <N extends ArithmeticNumber<N>> N parse(ArithmeticRing<N> ring, String s) {
+        return (N) parse(detectParsingClass(ring), s);
+    }
+
     public static ArithmeticNumber<?> parse(String s) {
-        Class<?> parsingClass = detectParsingClass(s);
+        return parse(detectParsingClass(s), s);
+    }
+
+    private static ArithmeticNumber<?> parse(Class<?> parsingClass, String s) {
         if (parsingClass == null) {
             throw new NumberFormatException(String.format("cannot detect parsing class for %s", s));
         }
@@ -36,6 +50,25 @@ public class ArithmeticParsingUtils {
 
     private static Class<?> detectParsingClass(String s) {
         return null; //TODO
+    }
+
+    private static Class<?> detectParsingClass(ArithmeticRing<?> ring) {
+        if (ring instanceof ZRing) {
+            return ArithmeticInteger.class;
+        }
+        if (ring instanceof ZnRing) {
+            return ArithmeticModulus.class;
+        }
+        if (ring instanceof QRing) {
+            return Rational.class;
+        }
+        if (ring instanceof RRing) {
+            return ArithmeticDouble.class;
+        }
+        if (ring instanceof CRing) {
+            return Complex.class;
+        }
+        return null;
     }
 
     /**

@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +58,7 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
     @Override
     public CProperFreeModule getModule() {
         if (module == null) {
-            module = (CProperFreeModule)CProperFreeModule.make(getLength());
+            module = (CProperFreeModule) ArithmeticMultiModule.make(CRing.ring, getLength());
         }
         return module;
     }

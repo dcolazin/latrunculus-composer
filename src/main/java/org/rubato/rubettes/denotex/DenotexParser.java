@@ -12,6 +12,7 @@ import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
@@ -337,7 +338,7 @@ public final class DenotexParser implements DenotexParserConstants {
         else if (s.equals("C")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return CRing.ring;
-            else                return CProperFreeModule.make(sup);
+            else                return ArithmeticMultiModule.make(CRing.ring, sup);
         }
         else if (s.equals("Null")) {
             return ZProperFreeModule.nullModule;

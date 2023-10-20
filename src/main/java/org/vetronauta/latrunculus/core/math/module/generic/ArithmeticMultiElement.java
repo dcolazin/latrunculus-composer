@@ -205,7 +205,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
     }
 
     @Override
-    public Module<ArithmeticMultiElement<N>, ArithmeticElement<N>> getModule() {
+    public ArithmeticMultiModule<N> getModule() {
         return null; //TODO
     }
 

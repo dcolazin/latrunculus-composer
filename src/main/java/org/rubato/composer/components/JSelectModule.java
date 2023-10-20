@@ -30,6 +30,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.rubato.util.TextUtils;
@@ -38,8 +41,10 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -225,7 +230,7 @@ public class JSelectModule
         int dim = polSwitch.isSelected()?1:getDimension();
         switch (ringSelect.getSelectedIndex()) {
         case ZRING: {
-            module = ZProperFreeModule.make(dim);
+            module = ArithmeticMultiModule.make(ZRing.ring, dim);
             break;
         }
         case ZNRING: {
@@ -233,15 +238,15 @@ public class JSelectModule
             break;
         }
         case QRING: {
-            module = QProperFreeModule.make(dim);
+            module = ArithmeticMultiModule.make(QRing.ring, dim);
             break;
         }
         case RRING: {
-            module = RProperFreeModule.make(dim);
+            module = ArithmeticMultiModule.make(RRing.ring, dim);
             break;
         }
         case CRING: {
-            module = CProperFreeModule.make(dim);
+            module = ArithmeticMultiModule.make(CRing.ring, dim);
             break;
         }
         case ZSTRING: {
@@ -445,7 +450,8 @@ public class JSelectModule
     private JPanel          factorView;
     
     private JSelectModule[] factorModules;
-    
+
+    //TODO enum
     private static final int ZRING    = 0;
     private static final int ZNRING   = 1;
     private static final int QRING    = 2;

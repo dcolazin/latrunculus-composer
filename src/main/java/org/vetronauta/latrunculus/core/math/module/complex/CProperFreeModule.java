@@ -19,22 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.complex;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * The free modules over complex numbers.
@@ -42,79 +32,9 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
+public final class CProperFreeModule extends ArithmeticMultiModule<Complex> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);
-       
-    /**
-     * Constructs a free module over complex numbers with given <code>dimension</code>.
-     * 
-     * @param dimension the dimension of the free module over C,
-     *                  if < 0, assumed to be 0
-     */
-    public static FreeModule<?,ArithmeticElement<Complex>> make(int dimension) {
-        dimension = Math.max(dimension, 0);
-        if (dimension == 0) {
-            return nullModule;
-        }
-        else if (dimension == 1) {
-            return CRing.ring;
-        }
-        else {
-            return new CProperFreeModule(dimension);
-        }
-    }
-
-    public CProperFreeElement getZero() {
-        Complex[] res = new Complex[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            res[i] = Complex.getZero();
-        }
-        return (CProperFreeElement) CProperFreeElement.make(res); //TODO do not cast
-    }
-
-    
-    public CProperFreeElement getUnitElement(int i) {
-        Complex[] v = new Complex[getDimension()];
-        assert(i >= 0 && i < getDimension());
-        for (int j = 0; j < getDimension(); j++) {
-            v[j] = Complex.getZero();
-        }
-        v[i] = Complex.getOne();
-        return (CProperFreeElement) CProperFreeElement.make(v); //TODO do not cast
-    }
-    
-
-    public CProperFreeModule getNullModule() {
-        return nullModule;
-    }
-    
-    
-    public boolean isNullModule() {
-        return this == nullModule;
-    }
-
-    
-    public CRing getComponentModule(int i) {
-        return CRing.ring;
-    }
-
-    
-    public CRing getRing() {
-        return CRing.ring;
-    }
-
-
-    public boolean isVectorSpace() {
-        return true;
-    }
-    
-
-    public boolean hasElement(ModuleElement element) {
-        return (element instanceof CProperFreeElement &&
-                element.getLength() == getDimension());
-    }
-    
 
     public int compareTo(Module object) {
         if (object instanceof CProperFreeModule) {
@@ -126,84 +46,13 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
         }
     }
 
-    
-    public CProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
-        if (elements.size() < getDimension()) {
-            return null;
-        }
-
-        Complex[] values = new Complex[getDimension()];        
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        for (int i = 0; i < getDimension(); i++) {
-            ModuleElement castElement = iter.next().cast(CRing.ring);
-            if (castElement == null) {
-                return null;
-            }
-            values[i] = ((ArithmeticElement<Complex>)castElement).getValue();
-        }
-
-        return (CProperFreeElement) CProperFreeElement.make(values); //TODO do not cast
-    }
-
-    
-    public ArithmeticMultiElement<Complex> cast(ModuleElement<?,?> element) {
-        if (element.getLength() == getDimension()) {
-            if (element instanceof DirectSumElement) {
-                return element.cast(this);
-            }
-            else if (element instanceof CProperFreeElement) {
-                return (CProperFreeElement) element;
-            }
-            else {   
-                Complex[] elements = new Complex[getDimension()];
-                for (int i = 0; i < getDimension(); i++) {
-                    ModuleElement castElement = CRing.ring.cast(element.getComponent(i));
-                    if (castElement == null) {
-                        return null;
-                    }
-                    elements[i] = ((ArithmeticElement<Complex>)castElement).getValue();
-                }
-                return (CProperFreeElement) CProperFreeElement.make(elements); //TODO do not cast
-            }
-        }
-        else {
-            return null;
-        }
-    }
-
-    
     public boolean equals(Object object) {
         return (object instanceof CProperFreeModule &&
                 getDimension() == ((CProperFreeModule)object).getDimension());
     }
 
-    
-    public CProperFreeElement parseString(String string) {
-        string = TextUtils.unparenthesize(string);
-        String[] components = string.split(",");
-        if (components.length != getDimension()) {
-            return null;
-        }
-        else {
-            Complex[] values = new Complex[components.length];
-            for (int i = 0; i < values.length; i++) {
-                try {
-                    values[i] = ArithmeticParsingUtils.parseComplex(components[i]);
-                }
-                catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-            return (CProperFreeElement) CProperFreeElement.make(values); //TODO do not cast
-        }
-    }
-
     public String toString() {
         return "CFreeModule["+getDimension()+"]";
-    }
-    
-    public String toVisualString() {
-        return "C^"+getDimension();
     }
     
     public String getElementTypeName() {
@@ -213,15 +62,13 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
     public int hashCode() {
         return 37*basicHash + getDimension();
     }
-    
 
     protected ModuleMorphism _getProjection(int index) {
         CMatrix A = new CMatrix(1, getDimension());
         A.set(0, index, Complex.getOne());
         return CFreeAffineMorphism.make(A, new Complex[] { Complex.getZero() });
     }
-    
-    
+
     protected ModuleMorphism _getInjection(int index) {
         CMatrix A = new CMatrix(getDimension(), 1);
         A.set(index, 0, Complex.getOne());
@@ -231,12 +78,10 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
         }
         return CFreeAffineMorphism.make(A, b);
     }
-    
-    
-    private CProperFreeModule(int dimension) {
-        super(dimension);
-    }
 
+    private CProperFreeModule(int dimension) {
+        super(CRing.ring, dimension);
+    }
     
     private static final int basicHash = "CFreeModule".hashCode();
 }

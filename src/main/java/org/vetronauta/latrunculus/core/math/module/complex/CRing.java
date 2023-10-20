@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     
     @Override
     public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
-        return CProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(CRing.ring, dimension);
     }
 
     @Override

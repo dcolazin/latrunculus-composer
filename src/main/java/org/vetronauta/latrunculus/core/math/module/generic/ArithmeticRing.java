@@ -61,7 +61,7 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
     }
 
     @Override
-    public Module<?, ArithmeticElement<N>> getNullModule() {
+    public FreeModule<?, ArithmeticElement<N>> getNullModule() {
         return null; //TODO
     }
 
@@ -102,6 +102,10 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
 
     @Override
     public ArithmeticElement<N> parseString(String s) {
+        return null; //TODO
+    }
+
+    public ArithmeticMultiModule<N> nullModule() {
         return null; //TODO
     }
 }
