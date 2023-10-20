@@ -27,7 +27,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -40,17 +39,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
@@ -404,110 +401,119 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) domain.getZero()).getValue();
             if (number instanceof ArithmeticInteger) {
                 // Z^n -> ?
-                if (codomain instanceof ZProperFreeModule) {
-                    // Z^n -> Z^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            return ((ArithmeticMultiElement) element).resize(codim);
-                        }
-                    };
-                } else if (codomain instanceof QProperFreeModule) {
-                    // Z^n to Q^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
-                            return QProperFreeElement.make(e.getValue());
-                        }
-                    };
-                } else if (codomain instanceof RProperFreeModule) {
-                    // Z^n to R^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
-                            List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
-                            double[] v_to = new double[v_from.size()];
-                            for (int i = 0; i < v_from.size(); i++) {
-                                v_to[i] = v_from.get(i).getValue().intValue();
+                if (codomain instanceof ArithmeticMultiModule) {
+                    Ring<?> codomainRing = codomain.getRing();
+                    if (codomainRing instanceof ZRing) {
+                        // Z^n -> Z^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                return ((ArithmeticMultiElement) element).resize(codim);
                             }
-                            return RProperFreeElement.make(v_to);
-                        }
-                    };
-                } else if (codomain instanceof CProperFreeModule) {
-                    // Z^n to C^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
-                            List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
-                            Complex[] v_to = new Complex[v_from.size()];
-                            for (int i = 0; i < v_from.size(); i++) {
-                                v_to[i] = new Complex(v_from.get(i).getValue().intValue());
+                        };
+                    } else if (codomainRing instanceof QRing) {
+                        // Z^n to Q^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
+                                return QProperFreeElement.make(e.getValue());
                             }
-                            return CProperFreeElement.make(v_to);
-                        }
-                    };
+                        };
+                    } else if (codomainRing instanceof RRing) {
+                        // Z^n to R^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
+                                List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
+                                double[] v_to = new double[v_from.size()];
+                                for (int i = 0; i < v_from.size(); i++) {
+                                    v_to[i] = v_from.get(i).getValue().intValue();
+                                }
+                                return RProperFreeElement.make(v_to);
+                            }
+                        };
+                    } else if (codomainRing instanceof CRing) {
+                        // Z^n to C^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
+                                List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
+                                Complex[] v_to = new Complex[v_from.size()];
+                                for (int i = 0; i < v_from.size(); i++) {
+                                    v_to[i] = new Complex(v_from.get(i).getValue().intValue());
+                                }
+                                return CProperFreeElement.make(v_to);
+                            }
+                        };
+                    }
                 }
             } else if (number instanceof Rational) {
                 // Q^n -> ?
-                if (codomain instanceof QProperFreeModule) {
-                    // Q^n -> Q^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            return ((FreeElement) element).resize(codim);
-                        }
-                    };
-                } else if (codomain instanceof RProperFreeModule) {
-                    // Q^n -> R^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
-                            List<ArithmeticElement<Rational>> v_from = e.getValue();
-                            double[] v_to = new double[v_from.size()];
-                            for (int i = 0; i < v_from.size(); i++) {
-                                v_to[i] = v_from.get(i).getValue().doubleValue();
+                if (codomain instanceof ArithmeticMultiModule) {
+                    Ring<?> codomainRing = codomain.getRing();
+                    if (codomainRing instanceof QRing) {
+                        // Q^n -> Q^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                return ((FreeElement) element).resize(codim);
                             }
-                            return RProperFreeElement.make(v_to);
-                        }
-                    };
-                } else if (codomain instanceof CProperFreeModule) {
-                    // Q^n -> C^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
-                            List<ArithmeticElement<Rational>> v_from = e.getValue();
-                            Complex[] v_to = new Complex[v_from.size()];
-                            for (int i = 0; i < v_from.size(); i++) {
-                                v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
+                        };
+                    } else if (codomainRing instanceof RRing) {
+                        // Q^n -> R^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
+                                List<ArithmeticElement<Rational>> v_from = e.getValue();
+                                double[] v_to = new double[v_from.size()];
+                                for (int i = 0; i < v_from.size(); i++) {
+                                    v_to[i] = v_from.get(i).getValue().doubleValue();
+                                }
+                                return RProperFreeElement.make(v_to);
                             }
-                            return CProperFreeElement.make(v_to);
-                        }
-                    };
+                        };
+                    } else if (codomainRing instanceof CRing) {
+                        // Q^n -> C^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
+                                List<ArithmeticElement<Rational>> v_from = e.getValue();
+                                Complex[] v_to = new Complex[v_from.size()];
+                                for (int i = 0; i < v_from.size(); i++) {
+                                    v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
+                                }
+                                return CProperFreeElement.make(v_to);
+                            }
+                        };
+                    }
                 }
             } else if (number instanceof ArithmeticDouble) {
                 // R^n -> ?
-                if (codomain instanceof RProperFreeModule) {
-                    // R^n to R^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            return ((FreeElement) element).resize(codim);
-                        }
-                    };
-                } else if (codomain instanceof CProperFreeModule) {
-                    // R^n to C^m
-                    m = new EmbeddingMorphism(domain, codomain) {
-                        public ModuleElement mapValue(ModuleElement element) {
-                            RProperFreeElement e = (RProperFreeElement) ((FreeElement) element).resize(codim);
-                            List<ArithmeticElement<ArithmeticDouble>> v_from = e.getValue();
-                            Complex[] v_to = new Complex[v_from.size()];
-                            for (int i = 0; i < v_from.size(); i++) {
-                                v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
+                if (codomain instanceof ArithmeticMultiModule) {
+                    Ring<?> codomainRing = codomain.getRing();
+                    if (codomainRing instanceof RRing) {
+                        // R^n to R^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                return ((FreeElement) element).resize(codim);
                             }
-                            return CProperFreeElement.make(v_to);
-                        }
-                    };
+                        };
+                    } else if (codomainRing instanceof CRing) {
+                        // R^n to C^m
+                        m = new EmbeddingMorphism(domain, codomain) {
+                            public ModuleElement mapValue(ModuleElement element) {
+                                RProperFreeElement e = (RProperFreeElement) ((FreeElement) element).resize(codim);
+                                List<ArithmeticElement<ArithmeticDouble>> v_from = e.getValue();
+                                Complex[] v_to = new Complex[v_from.size()];
+                                for (int i = 0; i < v_from.size(); i++) {
+                                    v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
+                                }
+                                return CProperFreeElement.make(v_to);
+                            }
+                        };
+                    }
                 }
             } else if (number instanceof Complex) {
                 // C^n -> ?
-                if (codomain instanceof CProperFreeModule) {
+                if (codomain instanceof ArithmeticMultiModule && codomain.getRing() instanceof CRing) {
                     // C^n to C^m
                     m = new EmbeddingMorphism(domain, codomain) {
                         public ModuleElement mapValue(ModuleElement element) {
@@ -555,7 +561,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param index the index of the codomain factor where the ring should be embedded
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    public static final EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain, final int index) {
+    public static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain, final int index) {
         if (domain instanceof ProductRing) {
             return makeProductRingEmbedding((ProductRing)domain, codomain);
         }
@@ -589,7 +595,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain) {
+    private static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain) {
         if (domain instanceof ProductRing) {
             return makeProductRingEmbedding((ProductRing)domain, codomain);
         }
@@ -629,7 +635,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final EmbeddingMorphism makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
+    private static EmbeddingMorphism makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
         EmbeddingMorphism m = null;
         if (domain.getFactorCount() == codomain.getFactorCount()) {
             final ModuleMorphism[] ems = new ModuleMorphism[domain.getFactorCount()];
@@ -670,7 +676,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final EmbeddingMorphism makePolynomialEmbedding(final Ring domain, final PolynomialRing codomain) {
+    private static EmbeddingMorphism makePolynomialEmbedding(final Ring domain, final PolynomialRing codomain) {
         EmbeddingMorphism m = null;
         Ring coeffRing = codomain.getCoefficientRing();
         if (domain instanceof PolynomialRing) {
@@ -710,7 +716,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
+    private static EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -723,7 +729,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final ModuleMorphism makeStringEmbedding(final Ring domain, final StringRing codomain) {
+    private static ModuleMorphism makeStringEmbedding(final Ring domain, final StringRing codomain) {
         ModuleMorphism m = null;        
         if (domain instanceof StringRing) {
             m = makeStringEmbedding((StringRing)domain, codomain);
@@ -756,7 +762,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static final EmbeddingMorphism makeStringEmbedding(final StringRing domain, final StringRing codomain) {
+    private static EmbeddingMorphism makeStringEmbedding(final StringRing domain, final StringRing codomain) {
         if (make(domain.getFactorRing(), codomain.getFactorRing()) != null) {
             return new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {

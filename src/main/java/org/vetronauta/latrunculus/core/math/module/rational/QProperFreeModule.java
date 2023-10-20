@@ -29,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
  * @author Gérard Milmeister
  */
 public final class QProperFreeModule extends ArithmeticMultiModule<Rational> {
-    
+
     private QProperFreeModule(int dimension) {
         super(QRing.ring, dimension);
     }

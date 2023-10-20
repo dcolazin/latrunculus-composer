@@ -19,39 +19,47 @@
 
 package org.rubato.composer.components;
 
-import static org.rubato.composer.Utilities.makeTitledBorder;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
+
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.Scrollable;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static org.rubato.composer.Utilities.makeTitledBorder;
 
 /**
  * A component for creating modules.
