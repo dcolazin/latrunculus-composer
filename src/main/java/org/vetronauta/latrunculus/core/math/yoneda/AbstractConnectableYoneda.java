@@ -37,8 +37,6 @@ public abstract class AbstractConnectableYoneda implements Connectable, Yoneda {
     public final void setConnector(Object c) {
         connector = c;
     }
-    
-    public abstract Object clone();
-    
+
     private transient Object connector;
 }

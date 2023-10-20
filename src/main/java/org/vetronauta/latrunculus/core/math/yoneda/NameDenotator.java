@@ -313,7 +313,7 @@ public final class NameDenotator extends ListDenotator {
 
 
     @Override
-    public NameDenotator copy() {
+    public NameDenotator deepCopy() {
         return this;
     }
 

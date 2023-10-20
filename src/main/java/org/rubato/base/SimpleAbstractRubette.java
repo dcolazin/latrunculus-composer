@@ -85,7 +85,7 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     
     public Rubette duplicate() {
         SimpleAbstractRubette rubette = (SimpleAbstractRubette)newInstance();
-        rubette.properties = properties.clone();
+        rubette.properties = properties.deepCopy();
         return rubette;
     }
     

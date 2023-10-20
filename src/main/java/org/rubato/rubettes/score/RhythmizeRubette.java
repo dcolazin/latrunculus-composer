@@ -74,7 +74,7 @@ public class RhythmizeRubette extends SimpleAbstractRubette {
     }
 
     public void run(RunInfo runInfo) {
-		PowerDenotator score = (PowerDenotator) this.getInput(0).copy();
+		PowerDenotator score = (PowerDenotator) this.getInput(0).deepCopy();
 		this.readProperties();
 		
 		try {

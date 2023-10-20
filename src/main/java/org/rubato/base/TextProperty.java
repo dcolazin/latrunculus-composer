@@ -126,8 +126,8 @@ public class TextProperty
         textArea.setText(value);
     }
     
-    
-    public TextProperty clone() {
+    @Override
+    public TextProperty deepCopy() {
         return new TextProperty(this);
     }
     
@@ -140,7 +140,7 @@ public class TextProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        TextProperty property = clone();
+        TextProperty property = deepCopy();
         property.setValue(XMLReader.getText(element).trim());
         return property;
     }

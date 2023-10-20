@@ -53,7 +53,7 @@ public class QuantizeRubette extends SimpleAbstractRubette {
     }
 
     public void run(RunInfo runInfo) {
-    	Denotator input = this.getInput(0).copy();
+    	Denotator input = this.getInput(0).deepCopy();
     	if (input == null) {
             this.addError("Input denotator is null.");
     	} else if (input.hasForm(new SoundNoteGenerator().getScoreForm())) {

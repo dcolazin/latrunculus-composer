@@ -69,7 +69,7 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
     	if (input == null) {
             this.addError("Input denotator is null.");
     	} else if (input.hasForm(this.noteGenerator.getScoreForm())) {
-    		this.writeToLilyPondFile(this.getLilyPondString((PowerDenotator)input.copy(), runInfo));
+    		this.writeToLilyPondFile(this.getLilyPondString((PowerDenotator)input.deepCopy(), runInfo));
     	} else {
     		this.addError("Input denotator is not of form \"Score\".");
     	}

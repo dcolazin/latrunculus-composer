@@ -143,8 +143,8 @@ public final class CompoundMorphism extends YonedaMorphism {
         }
     }
 
-    
-    public CompoundMorphism copy() {
+    @Override
+    public CompoundMorphism deepCopy() {
         return new CompoundMorphism(domain, codomain, map.deepCopy());
     }
 

@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -31,7 +32,7 @@ import java.io.Serializable;
  * @author Gérard Milmeister
  */
 public abstract class ModuleMorphism
-    implements Comparable<ModuleMorphism>, Cloneable, Serializable, MathDefinition {
+    implements Comparable<ModuleMorphism>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism> {
 
     /**
      * Creates a new morphism with <code>domain</code>
@@ -263,16 +264,11 @@ public abstract class ModuleMorphism
      */
     public abstract boolean equals(Object object);
     
-    
-    /**
-     * ModuleMorphism objects cannot be changed, so clone
-     * returns the object itself.
-     */
-    public Object clone() {
+
+    public ModuleMorphism deepCopy() {
         return this;
     }
 
-    
     /**
      * Returns a string representation of this morphism.
      * This string is used for generic comparison.

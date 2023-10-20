@@ -98,8 +98,8 @@ public class FormProperty
         selectForm.setForm(tmpValue);
     }
     
-    
-    public FormProperty clone() {
+    @Override
+    public FormProperty deepCopy() {
         return new FormProperty(this);
     }
     
@@ -114,7 +114,7 @@ public class FormProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        FormProperty property = clone();
+        FormProperty property = deepCopy();
         Element child = XMLReader.getChild(element, "Form"); 
         if (child == null) {
             property.setForm(null);

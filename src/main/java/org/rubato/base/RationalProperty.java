@@ -141,8 +141,8 @@ public class RationalProperty
         textField.setText(value.toString());
     }
     
-    
-    public RationalProperty clone() {
+    @Override
+    public RationalProperty deepCopy() {
         return new RationalProperty(this);
     }
     
@@ -153,7 +153,7 @@ public class RationalProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        RationalProperty property = clone();
+        RationalProperty property = deepCopy();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         try {
             property.setValue(ArithmeticParsingUtils.parseRational(s));

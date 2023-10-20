@@ -258,7 +258,7 @@ public final class AutoListMorphismMap implements MorphismMap {
     public AutoListMorphismMap deepCopy() {
     	ArrayList<Denotator> copiedFactors = new ArrayList<>();
         for (Denotator d : this.getFactors()) {
-        	copiedFactors.add(d.copy());
+        	copiedFactors.add(d.deepCopy());
         }
         return new AutoListMorphismMap(copiedFactors);
     }

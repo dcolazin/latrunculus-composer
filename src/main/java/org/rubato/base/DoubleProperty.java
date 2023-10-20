@@ -139,8 +139,8 @@ public class DoubleProperty
         textField.setText(Double.toString(value));
     }
     
-    
-    public DoubleProperty clone() {
+    @Override
+    public DoubleProperty deepCopy() {
         return new DoubleProperty(this);
     }
     
@@ -151,7 +151,7 @@ public class DoubleProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        DoubleProperty property = clone();
+        DoubleProperty property = deepCopy();
         property.setValue(XMLReader.getRealAttribute(element, VALUE_ATTR, value));
         return property;
     }

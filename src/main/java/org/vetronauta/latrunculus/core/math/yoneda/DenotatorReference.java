@@ -59,7 +59,7 @@ public final class DenotatorReference extends Denotator {
 
     
     @Override
-    public DenotatorReference copy() {
+    public DenotatorReference deepCopy() {
         throw new Error("Fatal error: DenotatorReference.clone should never be called.");
     }
 

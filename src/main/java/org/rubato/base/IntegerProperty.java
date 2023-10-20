@@ -139,8 +139,8 @@ public class IntegerProperty
         textField.setText(Integer.toString(value));
     }
     
-    
-    public IntegerProperty clone() {
+    @Override
+    public IntegerProperty deepCopy() {
         return new IntegerProperty(this);
     }
     
@@ -151,7 +151,7 @@ public class IntegerProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        IntegerProperty property = clone();
+        IntegerProperty property = deepCopy();
         property.setValue(XMLReader.getIntAttribute(element, VALUE_ATTR, min, max, value));
         return property;
     }

@@ -191,7 +191,7 @@ public final class IndexMorphismMap implements MorphismMap {
 
     @Override
     public IndexMorphismMap deepCopy() {
-        return new IndexMorphismMap(index, factor.copy()); 
+        return new IndexMorphismMap(index, factor.deepCopy());
     }
 
     public boolean equals(Object object) {

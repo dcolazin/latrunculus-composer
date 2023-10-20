@@ -109,11 +109,6 @@ public abstract class Diagram implements Yoneda, MathDefinition {
     abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);    
     
     public abstract int compareTo(Yoneda object);
-
-    /**
-     * Returns a copy of this diagram.
-     */
-    public abstract Object clone();
     
     /**
      * Returns a hash code for this diagram.

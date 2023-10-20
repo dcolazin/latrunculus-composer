@@ -101,8 +101,8 @@ public class DenotatorProperty extends RubetteProperty implements ActionListener
         selectDenotator.setDenotator(tmpValue);
     }
     
-    
-    public DenotatorProperty clone() {
+    @Override
+    public DenotatorProperty deepCopy() {
         return new DenotatorProperty(this);
     }
     
@@ -117,7 +117,7 @@ public class DenotatorProperty extends RubetteProperty implements ActionListener
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        DenotatorProperty property = clone();
+        DenotatorProperty property = deepCopy();
         Element child = XMLReader.getChild(element, "Denotator"); 
         if (child == null) {
             property.setDenotator(null);

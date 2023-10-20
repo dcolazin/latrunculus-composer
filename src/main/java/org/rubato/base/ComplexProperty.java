@@ -35,9 +35,7 @@ import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public class ComplexProperty
-        extends RubetteProperty
-        implements ActionListener, CaretListener {
+public class ComplexProperty extends RubetteProperty implements ActionListener, CaretListener {
 
     public ComplexProperty(String key, String name, Complex value) {
         super(key, name);
@@ -45,14 +43,12 @@ public class ComplexProperty
         this.tmpValue = value;
     }
     
-    
     public ComplexProperty(ComplexProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
     }
-    
-    
+
     public Object getValue() {
         return value;
     }
@@ -117,8 +113,8 @@ public class ComplexProperty
         textField.setText(value.toString());
     }
     
-    
-    public ComplexProperty clone() {
+    @Override
+    public ComplexProperty deepCopy() {
         return new ComplexProperty(this);
     }
     
@@ -129,7 +125,7 @@ public class ComplexProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        ComplexProperty property = clone();
+        ComplexProperty property = deepCopy();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         try {
             property.setValue(ArithmeticParsingUtils.parseComplex(s));

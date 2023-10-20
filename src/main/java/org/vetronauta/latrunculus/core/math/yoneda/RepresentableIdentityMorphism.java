@@ -110,8 +110,8 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
         return this;
     }
 
-    
-    public RepresentableIdentityMorphism copy() {
+    @Override
+    public RepresentableIdentityMorphism deepCopy() {
         return new RepresentableIdentityMorphism(module, lowValue, highValue); 
     }
 

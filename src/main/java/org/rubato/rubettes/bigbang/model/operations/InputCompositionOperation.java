@@ -56,14 +56,14 @@ public class InputCompositionOperation extends AbstractOperation {
 	@Override
 	protected void updateOperation() {
 		if (this.composition instanceof PowerDenotator) {
-			PowerDenotator clone = ((PowerDenotator)this.composition).copy();
+			PowerDenotator clone = ((PowerDenotator)this.composition).deepCopy();
 			int modifiedNumberOfElements = (int)Math.round(clone.getFactorCount()*this.modificationRatio);
 			try {
 				clone.replaceFactors(clone.getFactors().subList(0, modifiedNumberOfElements));
 			} catch (RubatoException e) { }
 			this.modifiedComposition = clone;
 		} else if (this.composition instanceof ListDenotator) {
-			ListDenotator clone = ((ListDenotator)this.composition).copy();
+			ListDenotator clone = ((ListDenotator)this.composition).deepCopy();
 			int modifiedNumberOfElements = (int)Math.round(clone.getFactorCount()*this.modificationRatio);
 			try {
 				clone.replaceFactors(clone.getFactors().subList(0, modifiedNumberOfElements));

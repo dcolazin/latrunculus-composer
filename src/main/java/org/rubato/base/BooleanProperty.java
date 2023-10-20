@@ -112,8 +112,8 @@ public class BooleanProperty extends RubetteProperty implements ActionListener {
         this.booleanCheckbox.setSelected(this.tmpValue);
     }
     
-    
-    public BooleanProperty clone() {
+    @Override
+    public BooleanProperty deepCopy() {
         return new BooleanProperty(this);
     }
     
@@ -124,7 +124,7 @@ public class BooleanProperty extends RubetteProperty implements ActionListener {
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        BooleanProperty property = this.clone();
+        BooleanProperty property = this.deepCopy();
         property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE));
         return property;
     }

@@ -21,6 +21,8 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import org.vetronauta.latrunculus.core.DeepCopyable;
+
 import java.io.Serializable;
 
 /**
@@ -30,7 +32,7 @@ import java.io.Serializable;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public interface Yoneda extends Cloneable, Serializable {
+public interface Yoneda extends DeepCopyable<Yoneda>, Serializable {
 
     //TODO enum
     int SIMPLE  = 0;
@@ -38,12 +40,5 @@ public interface Yoneda extends Cloneable, Serializable {
     int COLIMIT = 2;
     int POWER   = 3;
     int LIST    = 4;
-                                           
-    /**
-     * Clone object. All yoneda classes must support cloning, thus clone() is
-     * overridden at this point without the "CloneNotSupported" exception.
-     * The clone operation has different semantics for different yoneda 
-     * subclasses.
-     */
-    Object clone();
+
 }

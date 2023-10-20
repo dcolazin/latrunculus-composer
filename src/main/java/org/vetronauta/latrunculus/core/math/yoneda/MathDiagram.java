@@ -177,12 +177,8 @@ public class MathDiagram extends Diagram {
     public final void deleteArrows(int i, int j) {
         arrows.add(vertexes.size() * i + j, new ArrayList<YonedaMorphism>());
     }
-    
 
-    /**
-     * Clone object. Operation just performs a shallow copy!
-     */
-    public Object clone() {
+    public MathDiagram deepCopy() {
         MathDiagram d = new MathDiagram(vertexes, arrows);
         
         //$$$RA how deep should we copy here?
@@ -197,8 +193,8 @@ public class MathDiagram extends Diagram {
     
 
     protected MathDiagram() {
-        vertexes = new ArrayList<YonedaMorphism>();
-        arrows = new ArrayList<ArrayList<YonedaMorphism>>();
+        vertexes = new ArrayList<>();
+        arrows = new ArrayList<>();
     }
         
 

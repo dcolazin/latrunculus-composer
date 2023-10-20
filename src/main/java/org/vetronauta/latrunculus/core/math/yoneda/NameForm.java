@@ -107,7 +107,7 @@ public final class NameForm extends ListForm {
     }
 
 
-    public Object clone() {
+    public NameForm deepCopy() {
         return this;
     }
 

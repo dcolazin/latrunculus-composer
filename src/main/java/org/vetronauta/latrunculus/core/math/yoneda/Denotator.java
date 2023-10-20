@@ -420,21 +420,12 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
     public final boolean hasForm(Form f) {
         return getForm().equals(f);
     }
-
-
-    /**
-     * The cloning of a denotator is the same as copying it.
-     */
-    public final Object clone() {
-        return copy();
-    }
-    
     
     /**
      * Returns a deep copy of this denotator.
      * The copy is given the same name as the original.
      */
-    public abstract Denotator copy();
+    public abstract Denotator deepCopy();
 
     
     /**

@@ -151,7 +151,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     /**
      * Form object cannot be cloned.
      */
-    public Object clone() {
+    public Form deepCopy() {
         throw new UnsupportedOperationException("Form objects cannot be cloned");
     }
 

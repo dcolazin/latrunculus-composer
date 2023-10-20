@@ -101,8 +101,8 @@ public class FileProperty extends RubetteProperty implements ActionListener {
         this.fileSelector.setFile(this.value);
     }
     
-    
-    public FileProperty clone() {
+    @Override
+    public FileProperty deepCopy() {
         return new FileProperty(this);
     }
     
@@ -121,7 +121,7 @@ public class FileProperty extends RubetteProperty implements ActionListener {
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        FileProperty property = this.clone();
+        FileProperty property = this.deepCopy();
         property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
         return property;
     }

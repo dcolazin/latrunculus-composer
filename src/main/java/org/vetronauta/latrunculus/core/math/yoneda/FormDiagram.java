@@ -248,12 +248,8 @@ public final class FormDiagram extends Diagram {
         }
     }
 
-    
-    /**
-     * Returns a shallow copy of this diagram.
-     * Forms and morphisms themselves are not cloned.
-     */
-    public Object clone() {
+    @Override
+    public FormDiagram deepCopy() {
         FormDiagram diagram = new FormDiagram();
         diagram.allocate(forms.length);
         for (int i = 0; i < forms.length; i++) {
@@ -261,7 +257,7 @@ public final class FormDiagram extends Diagram {
         }
         for (int i = 0; i < forms.length; i++) {
             for (int j = 0; j < forms.length; j++) {
-                diagram.morphisms[i][j] = new ArrayList<YonedaMorphism>(morphisms[i][j]);
+                diagram.morphisms[i][j] = new ArrayList<>(morphisms[i][j]);
             }
         }
         return diagram;

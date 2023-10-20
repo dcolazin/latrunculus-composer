@@ -100,7 +100,7 @@ public class Alterator {
 				Denotator nearestNeighbour = this.neighborFinder.findNearestNeighbor(currentDenotator);
 				Denotator morphedDenotator;
 				//need to copy both denotators, since copy makes an address change so sum fails
-				morphedDenotator = this.morphSoundDenotator(currentDenotator.copy(), nearestNeighbour.copy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees, onlyModulators);
+				morphedDenotator = this.morphSoundDenotator(currentDenotator.deepCopy(), nearestNeighbour.deepCopy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees, onlyModulators);
 				alteredDenotators.add(morphedDenotator);
 			}
 		} catch (RubatoException e) { e.printStackTrace(); }
@@ -138,7 +138,7 @@ public class Alterator {
 					Denotator nearestNeighbour = this.neighborFinder.findNearestNeighbor(currentDenotator);
 					Denotator morphedDenotator;
 					//need to copy both denotators, since copy makes an address change so sum fails
-					morphedDenotator = this.morphDenotator(currentDenotator.copy(), nearestNeighbour.copy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees);
+					morphedDenotator = this.morphDenotator(currentDenotator.deepCopy(), nearestNeighbour.deepCopy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees);
 					alteredDenotators.add(morphedDenotator);
 				}
 			}
@@ -162,7 +162,7 @@ public class Alterator {
 			Denotator nearestNeighbour = this.neighborFinder.findNearestNeighbor(currentDenotator);
 			Denotator morphedDenotator;
 			//need to copy both denotators, since copy makes an address change so sum fails
-			morphedDenotator = this.morphDenotator(currentDenotator.copy(), nearestNeighbour.copy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees);
+			morphedDenotator = this.morphDenotator(currentDenotator.deepCopy(), nearestNeighbour.deepCopy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees);
 			morphedFactors.add(morphedDenotator);
 		}
 		return new PowerDenotator(this.emptyName, input0.getPowerForm(), morphedFactors);
@@ -220,7 +220,7 @@ public class Alterator {
 		
 		Denotator morphedDenotator;
 		if (onlyModulators) {
-			morphedDenotator = morphed.copy();
+			morphedDenotator = morphed.deepCopy();
 		} else {
 			morphedDenotator = this.alterDenotator(morphed, pole, allPaths, degrees);
 		}

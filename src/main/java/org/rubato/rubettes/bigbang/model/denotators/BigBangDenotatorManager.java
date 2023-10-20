@@ -156,7 +156,7 @@ public class BigBangDenotatorManager {
 			//add transformation
 			this.currentWallpaper.addTransformationToLastDimension(transformation);
 			//reset composition
-			this.composition = this.currentWallpaper.getCompositionBeforeWallpaper().copy();
+			this.composition = this.currentWallpaper.getCompositionBeforeWallpaper().deepCopy();
 			//returns pathresults of last transformation of wallpaper
 			PerformanceCheck.startTask("update wallpaper");
 			return this.currentWallpaper.update();

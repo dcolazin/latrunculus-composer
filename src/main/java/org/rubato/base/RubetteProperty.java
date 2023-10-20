@@ -21,21 +21,21 @@ package org.rubato.base;
 
 import javax.swing.JComponent;
 
+import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public abstract class RubetteProperty
-        implements Cloneable, Comparable<RubetteProperty> {
+public abstract class RubetteProperty implements Comparable<RubetteProperty>, DeepCopyable<RubetteProperty> {
 
-    public RubetteProperty(String key, String name) {
+    protected RubetteProperty(String key, String name) {
         this.key = key;
         this.name = name;
         this.order = sequence++;
     }
     
     
-    public RubetteProperty(RubetteProperty prop) {
+    protected RubetteProperty(RubetteProperty prop) {
         key = prop.key;
         name = prop.name;
         order = prop.order;
@@ -85,9 +85,7 @@ public abstract class RubetteProperty
     public abstract void toXML(XMLWriter writer);
     
     public abstract RubetteProperty fromXML(XMLReader reader, Element element);
-    
-    public abstract RubetteProperty clone();
- 
+
     protected static String VALUE_ATTR = "value";  
     
     private String key;

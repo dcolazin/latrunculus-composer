@@ -23,15 +23,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class RubetteProperties implements Cloneable {
+public class RubetteProperties implements DeepCopyable<RubetteProperties> {
 
     public RubetteProperties() {
-        properties = new HashMap<String,RubetteProperty>();
+        properties = new HashMap<>();
     }
     
     
@@ -72,7 +73,7 @@ public class RubetteProperties implements Cloneable {
     
     
     public RubetteProperties fromXML(XMLReader reader, Element element) {        
-        RubetteProperties newProp = clone();
+        RubetteProperties newProp = deepCopy();
         Node node = element.getFirstChild();
         while (node != null) {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -90,10 +91,10 @@ public class RubetteProperties implements Cloneable {
     }
     
     
-    public RubetteProperties clone() {
+    public RubetteProperties deepCopy() {
         RubetteProperties newProp = new RubetteProperties();
         for (Entry<String,RubetteProperty> entry : properties.entrySet()) {
-            newProp.properties.put(entry.getKey(), entry.getValue().clone());
+            newProp.properties.put(entry.getKey(), entry.getValue().deepCopy());
         }
         return newProp;
     }

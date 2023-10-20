@@ -281,7 +281,7 @@ public class ModuleMorphismMap implements MorphismMap {
 
     @Override
     public ModuleMorphismMap deepCopy() {
-        return new ModuleMorphismMap((ModuleMorphism) moduleMorphism.clone());
+        return new ModuleMorphismMap(moduleMorphism.deepCopy());
     }
 
     

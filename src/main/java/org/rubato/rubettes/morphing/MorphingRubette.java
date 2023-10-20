@@ -101,8 +101,8 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		Denotator id1 = this.getInput(0);
 		Denotator id2 = this.getInput(1);
 		if (id1 instanceof PowerDenotator && id2 instanceof PowerDenotator) {
-            this.d1 = (PowerDenotator) id1.copy();
-            this.d2 = (PowerDenotator) id2.copy();
+            this.d1 = (PowerDenotator) id1.deepCopy();
+            this.d2 = (PowerDenotator) id2.deepCopy();
 			if (this.d1.getForm().equals(this.d1.getForm())) {
 				this.updatePaths();
 				return true;

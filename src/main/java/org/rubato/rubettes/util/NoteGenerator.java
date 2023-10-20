@@ -350,13 +350,13 @@ public abstract class NoteGenerator {
 	}
 		
 	private LimitDenotator copyNodeAndSetLayer(LimitDenotator node, int layerIndex) {
-		Denotator note = this.copyNoteAndSetLayer((LimitDenotator)node.getFactor(0).copy(), layerIndex);
-		Denotator satellites = node.getFactor(1).copy();
+		Denotator note = this.copyNoteAndSetLayer((LimitDenotator)node.getFactor(0).deepCopy(), layerIndex);
+		Denotator satellites = node.getFactor(1).deepCopy();
 		return this.createNodeDenotator(note, satellites);
 	}
 	
 	private LimitDenotator copyNoteAndSetLayer(LimitDenotator note, int layerIndex) {
-		note = note.copy();
+		note = note.deepCopy();
 		Denotator layer = this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new ArithmeticInteger(layerIndex)));
 		try { note.setFactor(2, layer); } catch (RubatoException e) { }
 		return note;

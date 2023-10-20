@@ -108,8 +108,8 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
         return this;
     }
 
-    
-    public ProperIdentityMorphism copy() {
+    @Override
+    public ProperIdentityMorphism deepCopy() {
         return new ProperIdentityMorphism(diagram, type); 
     }
     

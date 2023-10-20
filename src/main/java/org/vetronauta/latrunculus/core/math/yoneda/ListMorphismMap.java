@@ -302,7 +302,7 @@ public final class ListMorphismMap implements MorphismMap {
     public ListMorphismMap deepCopy() {
         ArrayList<Denotator> newList = new ArrayList<>(list.size());
         for (Denotator d : list) {
-            newList.add(d.copy());
+            newList.add(d.deepCopy());
         }
         return new ListMorphismMap(newList);
     }

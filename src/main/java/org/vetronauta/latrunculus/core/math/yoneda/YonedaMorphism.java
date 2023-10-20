@@ -111,14 +111,7 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
     /**
      * Returns a deep copy of this morphism.
      */
-    public final Object clone() {
-        return copy();
-    }
-    
-    /**
-     * Returns a deep copy of this morphism.
-     */
-    public abstract YonedaMorphism copy();
+    public abstract YonedaMorphism deepCopy();
 
     /**
      * Evaluates this morphism at address <code>element</code>.

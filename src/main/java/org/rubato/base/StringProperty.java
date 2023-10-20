@@ -149,8 +149,8 @@ public class StringProperty
         textField.setText(value);
     }
     
-    
-    public StringProperty clone() {
+    @Override
+    public StringProperty deepCopy() {
         return new StringProperty(this);
     }
     
@@ -161,7 +161,7 @@ public class StringProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        StringProperty property = clone();
+        StringProperty property = deepCopy();
         property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR));
         return property;
     }

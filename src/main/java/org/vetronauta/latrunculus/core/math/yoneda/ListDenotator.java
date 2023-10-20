@@ -122,11 +122,11 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = (YonedaMorphism)getCoordinate().clone();
+            coord = frameCoord = getCoordinate().deepCopy();
         }
         else {
-            coord = (YonedaMorphism)getCoordinate().clone();
-            frameCoord = (YonedaMorphism)getCoordinate().clone();
+            coord = getCoordinate().deepCopy();
+            frameCoord = getCoordinate().deepCopy();
         }
         return new ListDenotator(name, getListForm(), coord, frameCoord);
     }
@@ -606,15 +606,15 @@ public class ListDenotator extends Denotator implements FactorDenotator {
 
 
     @Override
-    public ListDenotator copy() {
+    public ListDenotator deepCopy() {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = getCoordinate().copy();
+            coord = frameCoord = getCoordinate().deepCopy();
         }
         else {
-            coord = getCoordinate().copy();
-            frameCoord = getCoordinate().copy();
+            coord = getCoordinate().deepCopy();
+            frameCoord = getCoordinate().deepCopy();
         }
         return new ListDenotator(getName(), getListForm(), coord, frameCoord);
     }

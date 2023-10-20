@@ -26,7 +26,7 @@ class PowerDenotatorTest {
 
 	@Test
 	void testCopy() throws RubatoException {
-		PowerDenotator copy = this.macroScore.copy();
+		PowerDenotator copy = this.macroScore.deepCopy();
 		assertEquals(copy, this.macroScore);
 		assertTrue(copy != this.macroScore);
 		this.checkIfDeepCopied(copy, this.macroScore, new int[]{0,1,0});

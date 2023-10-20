@@ -119,11 +119,11 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = (YonedaMorphism)getCoordinate().clone();
+            coord = frameCoord = getCoordinate().deepCopy();
         }
         else {
-            coord = (YonedaMorphism)getCoordinate().clone();
-            frameCoord = (YonedaMorphism)getCoordinate().clone();
+            coord = getCoordinate().deepCopy();
+            frameCoord = getCoordinate().deepCopy();
         }
         return new PowerDenotator(name, getPowerForm(), coord, frameCoord); 
     }
@@ -615,15 +615,15 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
 
 
     @Override
-    public PowerDenotator copy() {        
+    public PowerDenotator deepCopy() {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
-            coord = frameCoord = getCoordinate().copy();
+            coord = frameCoord = getCoordinate().deepCopy();
         }
         else {
-            coord = getCoordinate().copy();
-            frameCoord = getCoordinate().copy();
+            coord = getCoordinate().deepCopy();
+            frameCoord = getCoordinate().deepCopy();
         }
         return new PowerDenotator(getName(), getPowerForm(), coord, frameCoord);
     }
