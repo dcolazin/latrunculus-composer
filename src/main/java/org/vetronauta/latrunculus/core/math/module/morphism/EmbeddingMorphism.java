@@ -43,9 +43,7 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
@@ -460,7 +458,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         // Q^n -> R^m
                         m = new EmbeddingMorphism(domain, codomain) {
                             public ModuleElement mapValue(ModuleElement element) {
-                                QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
+                                ArithmeticMultiElement<Rational> e = (ArithmeticMultiElement<Rational>) ((FreeElement) element).resize(codim);
                                 List<ArithmeticElement<Rational>> v_from = e.getValue();
                                 ArithmeticDouble[] v_to = new ArithmeticDouble[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
@@ -473,7 +471,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         // Q^n -> C^m
                         m = new EmbeddingMorphism(domain, codomain) {
                             public ModuleElement mapValue(ModuleElement element) {
-                                QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
+                                ArithmeticMultiElement<Rational> e = (ArithmeticMultiElement<Rational>) ((FreeElement) element).resize(codim);
                                 List<ArithmeticElement<Rational>> v_from = e.getValue();
                                 Complex[] v_to = new Complex[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
@@ -499,7 +497,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         // R^n to C^m
                         m = new EmbeddingMorphism(domain, codomain) {
                             public ModuleElement mapValue(ModuleElement element) {
-                                RProperFreeElement e = (RProperFreeElement) ((FreeElement) element).resize(codim);
+                                ArithmeticMultiElement<ArithmeticDouble> e = (ArithmeticMultiElement<ArithmeticDouble>) ((FreeElement) element).resize(codim);
                                 List<ArithmeticElement<ArithmeticDouble>> v_from = e.getValue();
                                 Complex[] v_to = new Complex[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {

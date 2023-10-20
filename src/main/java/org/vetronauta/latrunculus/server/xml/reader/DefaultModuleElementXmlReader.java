@@ -55,23 +55,17 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
@@ -125,12 +119,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
         if (RStringProperFreeElement.class.isAssignableFrom(clazz)) {
             return readRStringProperFreeElement(element, clazz, reader);
-        }
-        if (QProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readQProperFreeElement(element, clazz, reader);
-        }
-        if (RProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readRProperFreeElement(element, clazz, reader);
         }
         if (DirectSumElement.class.isAssignableFrom(clazz)) {
             return readDirectSumElement(element, clazz, reader);
@@ -703,50 +691,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
             return null;
         }
-    }
-
-    private ModuleElement readQProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(VALUES_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
-            return null;
-        }
-
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        Rational[] rationalValues = new Rational[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                rationalValues[i] = ArithmeticParsingUtils.parseRational(values[i]);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Values in type %%1 must be a comma-separated list of rationals.", getElementTypeName(clazz));
-                return null;
-            }
-        }
-
-        return QProperFreeElement.make(QRing.ring, Arrays.stream(rationalValues).collect(Collectors.toList()));
-    }
-
-    private ModuleElement readRProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(VALUES_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
-            return null;
-        }
-
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        ArithmeticDouble[] doubleValues = new ArithmeticDouble[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                doubleValues[i] = new ArithmeticDouble(Double.parseDouble(values[i]));
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Values in type %%1 must be a comma-separated list of reals.", getElementTypeName(clazz));
-                return null;
-            }
-        }
-
-        return ArithmeticMultiElement.make(RRing.ring, doubleValues);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

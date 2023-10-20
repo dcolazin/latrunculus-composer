@@ -31,9 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import javax.swing.*;
@@ -74,14 +72,14 @@ class JGraphSelect
             QConfiguration qconfig = new QConfiguration();
             config = qconfig;
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Rational>> p = ((QProperFreeElement)m).getValue();
+                List<ArithmeticElement<Rational>> p = ((ArithmeticMultiElement<Rational>)m).getValue();
                 qconfig.addPoint(p.get(0).getValue(), p.get(1).getValue());
             }
         }
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<ArithmeticDouble>> p = ((RProperFreeElement)m).getValue();
+                List<ArithmeticElement<ArithmeticDouble>> p = ((ArithmeticMultiElement<ArithmeticDouble>)m).getValue();
                 config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
             }
         }

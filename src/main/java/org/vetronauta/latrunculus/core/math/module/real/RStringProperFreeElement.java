@@ -255,7 +255,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
     
     public int compareTo(ModuleElement object) {
-        if (object instanceof RProperFreeElement) {
+        if (object instanceof RStringProperFreeElement) {
             RStringProperFreeElement element = (RStringProperFreeElement)object;
             int l = getLength()-element.getLength();
             if (l != 0) {

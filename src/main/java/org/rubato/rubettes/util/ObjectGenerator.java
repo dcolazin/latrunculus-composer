@@ -15,7 +15,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
@@ -399,7 +398,7 @@ public class ObjectGenerator {
 			}
 			return ProductElement.make(factors).cast(productElement.getModule());
 		} else if (currentDimension > 1) {
-			List<ArithmeticElement<ArithmeticDouble>> values = ((RProperFreeElement)currentElement.cast(ArithmeticMultiModule.make(RRing.ring, currentDimension))).getValue();
+			List<ArithmeticElement<ArithmeticDouble>> values = ((ArithmeticMultiElement<ArithmeticDouble>)currentElement.cast(ArithmeticMultiModule.make(RRing.ring, currentDimension))).getValue();
 			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new ArithmeticDouble(value)));
 			return new ArithmeticMultiElement(RRing.ring, values).cast(currentElement.getModule());
 		} else {

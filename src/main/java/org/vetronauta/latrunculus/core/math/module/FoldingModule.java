@@ -33,11 +33,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.List;
@@ -153,7 +150,7 @@ public class FoldingModule {
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Rational>> r = ((QProperFreeElement)elements[i]).getValue();
+            List<ArithmeticElement<Rational>> r = ((ArithmeticMultiElement<Rational>)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
@@ -168,7 +165,7 @@ public class FoldingModule {
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[elements.length];
-            List<ArithmeticElement<ArithmeticDouble>> r = ((RProperFreeElement)elements[i]).getValue();
+            List<ArithmeticElement<ArithmeticDouble>> r = ((ArithmeticMultiElement<ArithmeticDouble>)elements[i]).getValue();
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
             }
@@ -196,7 +193,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZnProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((ArithmeticMultiElement<ArithmeticModulus>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);
