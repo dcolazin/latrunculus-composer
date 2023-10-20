@@ -22,6 +22,8 @@ package org.vetronauta.latrunculus.server.xml.writer;
 import lombok.RequiredArgsConstructor;
 import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
@@ -35,7 +37,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
@@ -78,10 +79,6 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     @Override
     public void toXML(ModuleElement object, XMLWriter writer) {
-        if (object instanceof ZnElement) {
-            write((ZnElement) object, writer);
-            return;
-        }
         if (object instanceof ArithmeticElement) {
             write((ArithmeticElement<?>) object, writer);
             return;
@@ -172,10 +169,12 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticElement<?> element, XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue().toString());
-    }
-    private void write(ZnElement element, XMLWriter writer) {
-        writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, element.getValue(), MODULUS_ATTR, element.getModulus());
+        ArithmeticNumber<?> number = element.getValue();
+        if (number instanceof ArithmeticModulus) {
+            writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number, MODULUS_ATTR, ((ArithmeticModulus) number).getModulus());
+        } else {
+            writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number);
+        }
     }
 
     private void write(CProperFreeElement element, XMLWriter writer) {

@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
@@ -33,7 +34,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -125,7 +125,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 final int modulus = ((ZnRing)codomain).getModulus();
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ZnElement(((ArithmeticElement<Rational>)element).getValue().intValue(), modulus);
+                        return new ArithmeticElement<>(new ArithmeticModulus(((ArithmeticElement<Rational>)element).getValue().intValue(), modulus));
                     }
                 };
             }
@@ -153,7 +153,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 final int modulus = ((ZnRing)codomain).getModulus();
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ZnElement((int)Math.round(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()), modulus);
+                        return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()), modulus));
                     }
                 };
             }
@@ -189,7 +189,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 final int modulus = ((ZnRing)codomain).getModulus();
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ZnElement((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs()), modulus);
+                        return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs()), modulus));
                     }
                 };
             }

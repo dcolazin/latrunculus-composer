@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -32,8 +33,7 @@ import java.util.List;
 
 /**
  * The ring of integers mod <i>n</i>.
- * @see ZnElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements NumberRing, Modular {
@@ -58,8 +58,11 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
 
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        return (element instanceof ZnElement) &&
-        	    (((ZnElement)element).getModulus() == modulus);
+        if (!(element instanceof ArithmeticElement)) {
+            return false;
+        }
+        ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+        return number instanceof ArithmeticModulus && (((ArithmeticModulus) number).getModulus() == modulus);
     }
 
     

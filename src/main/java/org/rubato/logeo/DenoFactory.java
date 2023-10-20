@@ -22,13 +22,13 @@ package org.rubato.logeo;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
@@ -164,7 +164,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, int i, int p) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ZnElement(i, p));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -181,7 +181,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, int i, int p) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ZnElement(i, p));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -197,7 +197,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, int i, int p) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ZnElement(i, p));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;

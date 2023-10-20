@@ -1,7 +1,7 @@
 package org.rubato.rubettes.select2d;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 public class JZnElementSlider extends JElementSlider {
 
@@ -28,8 +28,8 @@ public class JZnElementSlider extends JElementSlider {
     }
     
     
-    protected ModuleElement getElement() {
-        return new ZnElement(getInteger(), modulus);
+    protected ArithmeticElement<ArithmeticModulus> getElement() {
+        return new ArithmeticElement<>(new ArithmeticModulus(getInteger(), modulus));
     }
 
 

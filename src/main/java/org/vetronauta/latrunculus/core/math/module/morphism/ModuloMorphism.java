@@ -20,12 +20,12 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 
@@ -76,7 +76,7 @@ public class ModuloMorphism extends ModuleMorphism {
             if (x instanceof ArithmeticElement) {
                 ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
                 if (number instanceof ArithmeticInteger) {
-                    return new ZnElement(number.intValue(), modulus);
+                    return new ArithmeticElement<>(new ArithmeticModulus(number.intValue(), modulus));
                 }
             }
         }

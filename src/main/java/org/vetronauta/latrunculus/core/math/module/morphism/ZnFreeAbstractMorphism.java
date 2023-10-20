@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 
@@ -31,7 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
  */
 public abstract class ZnFreeAbstractMorphism extends ModuleMorphism {
 
-    public ZnFreeAbstractMorphism(int domDim, int codomDim, int m) {
+    protected ZnFreeAbstractMorphism(int domDim, int codomDim, int m) {
         super(ZnProperFreeModule.make(domDim, m), ZnProperFreeModule.make(codomDim, m));
         modulus = m;
     }
@@ -42,7 +43,7 @@ public abstract class ZnFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             int[] v = new int[x.getLength()];
             for (int i = 0; i < x.getLength(); i++) {
-                v[i] = ((ZnElement)x).getComponent(i).getValue().getValue();
+                v[i] = ((ArithmeticElement<ArithmeticModulus>)x).getComponent(i).getValue().getValue();
             }
             return ZnProperFreeElement.make(mapValue(v), modulus);
         }

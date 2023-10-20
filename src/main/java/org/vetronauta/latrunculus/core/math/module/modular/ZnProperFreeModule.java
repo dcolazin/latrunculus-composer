@@ -139,7 +139,7 @@ public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiEl
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((ZnElement)castElement).getValue().getValue();
+            values[i] = ((ArithmeticElement<ArithmeticModulus>)castElement).getValue().getValue();
         }
 
         return (ZnProperFreeElement) ZnProperFreeElement.make(values, getModulus()); //TODO do not cast
@@ -162,7 +162,7 @@ public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiEl
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((ZnElement)castElement).getValue().getValue();
+                    elements[i] = ((ArithmeticElement<ArithmeticModulus>)castElement).getValue().getValue();
                 }
                 return (ZnProperFreeElement) ZnProperFreeElement.make(elements, modulus);
             }

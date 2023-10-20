@@ -20,9 +20,10 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * Affine morphism in <i>Zn</i>.
@@ -108,23 +109,23 @@ public final class ZnAffineMorphism extends ZnAbstractMorphism {
     
     public ModuleMorphism scaled(RingElement element)
             throws CompositionException {
-        if (element instanceof ZnElement && ((ZnElement)element).getModulus() == getModulus()) {
-            int s = ((ZnElement)element).getValue().getValue();
-            if (s == 0) {
-                return getConstantMorphism(element);
-            }
-            else {
-                return new ZnAffineMorphism(getA()*s, getB()*s, getModulus());
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof ArithmeticModulus && ((ArithmeticModulus) number).getModulus() == getModulus()) {
+                int s = ((ArithmeticModulus) number).getValue();
+                if (s == 0) {
+                    return getConstantMorphism(element);
+                } else {
+                    return new ZnAffineMorphism(getA() * s, getB() * s, getModulus());
+                }
             }
         }
-        else {
-            throw new CompositionException("ZnAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("ZnAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
     
     
-    public ModuleElement atZero() {
-        return new ZnElement(getB(), getModulus());
+    public ArithmeticElement<ArithmeticModulus> atZero() {
+        return new ArithmeticElement<>(new ArithmeticModulus(getB(), getModulus()));
     }
     
     

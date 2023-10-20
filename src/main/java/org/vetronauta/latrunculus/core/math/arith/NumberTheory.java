@@ -181,6 +181,7 @@ public final class NumberTheory {
      * @exception ZeroDivisorException if n < 0 and gcd(x,p) != 1
      */
     public static int powerMod(int x, int n, int p) throws ZeroDivisorException {
+        //TODO check if it is possible to bring this optimization to the generic RingElement
         int res, bpos;
 
         if (n < 0) {

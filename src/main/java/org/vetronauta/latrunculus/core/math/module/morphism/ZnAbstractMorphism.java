@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 
 /**
@@ -30,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
  */
 public abstract class ZnAbstractMorphism extends ModuleMorphism {
 
-    public ZnAbstractMorphism(int modulus) {
+    protected ZnAbstractMorphism(int modulus) {
         super(ZnRing.make(modulus), ZnRing.make(modulus));
         this.modulus = modulus;
     }
@@ -39,8 +40,8 @@ public abstract class ZnAbstractMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            int v = ((ZnElement) x.getComponent(0)).getValue().getValue();
-            return new ZnElement(mapValue(v), modulus);
+            int v = ((ArithmeticElement<ArithmeticModulus>) x.getComponent(0)).getValue().getValue();
+            return new ArithmeticElement(new ArithmeticModulus(mapValue(v), modulus));
         }
         else {
             throw new MappingException("ZnAbstractMorphism.map: ", x, this);

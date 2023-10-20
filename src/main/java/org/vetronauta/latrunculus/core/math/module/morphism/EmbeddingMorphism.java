@@ -43,7 +43,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
@@ -337,7 +336,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Zm
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ZnElement(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue(), ((ZnRing)codomain).getModulus());
+                    return new ArithmeticElement<>(new ArithmeticModulus(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue(), ((ZnRing)codomain).getModulus()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
