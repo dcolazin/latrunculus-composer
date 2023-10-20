@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * Constant mappings between modules.
@@ -31,76 +32,75 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
  * 
  * @author Gérard Milmeister
  */
-public final class ConstantMorphism extends ModuleMorphism {
+public final class ConstantMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+    private final B value;
 
     /**
      * Creates a constant morphism with value <code>v</code>
      * and domain <code>m</code>.
      */
-    public ConstantMorphism(Module m, ModuleElement value) {
+    public ConstantMorphism(Module<A,RA> m, B value) {
         super(m, value.getModule());
         this.value = value;
     }
-
 
     /**
      * Creates a constant morphism with value <code>v</code>.
      * The domain is the same as the codomain.
      */
-    public ConstantMorphism(ModuleElement value) {
-        super(value.getModule(), value.getModule());
-        this.value = value;
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ConstantMorphism<X,X,RX,RX> make(X value) {
+        return new ConstantMorphism<>(value.getModule(), value);
     }
 
-
-    public ModuleElement map(ModuleElement x) {
+    public B map(A x) {
         return value;
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
-    
-    
+
+    @Override
     public boolean isRingHomomorphism() {
         return value.isZero();
     }
-    
-    
+
+    @Override
     public boolean isLinear() {
         return value.isZero();
     }
     
-    
+    @Override
     public boolean isConstant() {
         return true;
     }
 
     
-    public ModuleMorphism getRingMorphism() {
-        Ring domainRing = getDomain().getRing();
-        Ring codomainRing = getCodomain().getRing();
+    public ModuleMorphism<RA,RB,RA,RB> getRingMorphism() {
+        Ring<RA> domainRing = getDomain().getRing();
+        Ring<RB> codomainRing = getCodomain().getRing();
         return CanonicalMorphism.make(domainRing, codomainRing);
     }
-    
-    
-    public ModuleElement atZero() {
+
+    @Override
+    public B atZero() {
         return getValue();
     }
 
-    
     /**
      * Returns the constant value.
      */
-    public ModuleElement getValue() {
+    public B getValue() {
         return value;
     }
-    
-    
+
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof ConstantMorphism) {
-            ConstantMorphism cm = (ConstantMorphism)object;
+            ConstantMorphism<?,?,?,?> cm = (ConstantMorphism<?,?,?,?>)object;
             int comp = getDomain().compareTo(cm.getDomain());
             if (comp == 0) {
                 return value.compareTo(cm.getValue());
@@ -117,7 +117,7 @@ public final class ConstantMorphism extends ModuleMorphism {
 
     public boolean equals(Object object) {
         if (object instanceof ConstantMorphism) {
-            ConstantMorphism cm = (ConstantMorphism)object;
+            ConstantMorphism<?,?,?,?> cm = (ConstantMorphism<?,?,?,?>)object;
             return getDomain().equals(cm.getDomain())
                    && value.equals(cm.getValue());
         }
@@ -135,6 +135,4 @@ public final class ConstantMorphism extends ModuleMorphism {
         return "ConstantMorphism";
     }
     
-    
-    private ModuleElement value;
 }

@@ -50,7 +50,7 @@ public final class SumMorphism<A extends ModuleElement<A, RA>, B extends ModuleE
                 X zero = f.getDomain().getZero();
                 Y fe = f.map(zero);
                 Y ge = g.map(zero);
-                return new ConstantMorphism(f.getDomain(), fe.sum(ge));
+                return new ConstantMorphism<>(f.getDomain(), fe.sum(ge));
             }
             catch (DomainException | MappingException e) {
                 throw new AssertionError("This should never happen!");
@@ -59,35 +59,33 @@ public final class SumMorphism<A extends ModuleElement<A, RA>, B extends ModuleE
             return new SumMorphism<>(f, g);
         }
     }
-    
-    
+
     private SumMorphism(ModuleMorphism<A,B,RA,RB> f, ModuleMorphism<A,B,RA,RB> g) {
         super(f.getDomain(), f.getCodomain());
         this.f = f;
         this.g = g;
     }
-
     
     public B map(A x) throws MappingException {
         return f.map(x).sum(g.map(x));
     }
-    
-    
+
+    @Override
     public boolean isModuleHomomorphism() {
         return f.isModuleHomomorphism() && g.isModuleHomomorphism();
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return f.isRingHomomorphism() && g.isRingHomomorphism();
     }
-    
-    
+
+    @Override
     public boolean isLinear() {
         return f.isLinear() && g.isLinear();
     }
-    
-    
+
+    @Override
     public boolean isConstant() {
         return f.isConstant() && g.isConstant();
     }
@@ -99,21 +97,19 @@ public final class SumMorphism<A extends ModuleElement<A, RA>, B extends ModuleE
     public ModuleMorphism<A,B,RA,RB> getFirstMorphism() {
         return f;
     }
-    
-    
+
     /**
      * Returns the second morphism <i>g</i> of the sum <i>f+g</i>.
      */
     public ModuleMorphism<A,B,RA,RB> getSecondMorphism() {
         return g;
     }
-    
-    
+
     public ModuleMorphism<RA,RB,RA,RB> getRingMorphism() {
         return f.getRingMorphism();
     }
 
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof SumMorphism) {
             SumMorphism<?,?,?,?> morphism = (SumMorphism<?,?,?,?>)object;
