@@ -19,10 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
@@ -38,55 +35,6 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulu
 
     public int getModulus() {
         return modulus;
-    }
-    
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ZnProperFreeElement) {
-            ZnProperFreeElement element = (ZnProperFreeElement)object;
-            int m = getModulus()-element.getModulus();
-            if (m < 0) {
-                return -1;
-            }
-            else if (m > 0) {
-                return 1;
-            }
-            else {
-	            int l = getLength()-element.getLength();
-                if (l != 0) {
-                    return l;
-                }
-	            else {
-	                for (int i = 0; i < getLength(); i++) {
-	                    int d = getValue().get(i).getValue().intValue()-element.getValue().get(i).getValue().intValue();
-                        if (d != 0) {
-                            return d;
-                        }
-	                }
-	                return 0;
-	            }
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public String toString() {
-        StringBuilder buf = new StringBuilder(30);        
-        buf.append("ZnFreeElement(");
-        buf.append(getModulus());
-        buf.append(")[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(getValue().get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(getValue().get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
     }
 
     public String getElementTypeName() {

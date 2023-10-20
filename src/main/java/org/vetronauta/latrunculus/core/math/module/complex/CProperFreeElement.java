@@ -19,9 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.complex;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
@@ -36,46 +34,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
 
     private CProperFreeElement(List<ArithmeticElement<Complex>> value) {
         super(CRing.ring, value);
-    }
-
-    @Override
-    public int compareTo(ModuleElement object) {
-        if (object instanceof CProperFreeElement) {
-            CProperFreeElement element = (CProperFreeElement)object;
-            int l = getLength()-element.getLength();
-            if (l != 0) {
-                return l;
-            }
-            else {
-                for (int i = 0; i < getLength(); i++) {
-                    int c = getValue().get(i).compareTo(element.getValue().get(i));
-                    if (c != 0) {
-                        return c;
-                    }
-                }
-                return 0;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder buf = new StringBuilder(30);
-        buf.append("CFreeElement[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(getValue().get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(getValue().get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
     }
 
     public String getElementTypeName() {

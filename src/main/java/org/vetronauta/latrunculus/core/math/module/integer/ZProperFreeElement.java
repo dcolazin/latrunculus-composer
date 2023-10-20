@@ -19,10 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
@@ -39,55 +36,8 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
         super(ZRing.ring, value);
     }
 
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ZProperFreeElement) {
-            ZProperFreeElement element = (ZProperFreeElement)object;
-            int l = getLength()-element.getLength();
-            if (l != 0) {
-                return l;
-            }
-            else {
-                for (int i = 0; i < getLength(); i++) {
-                    int d = getValue().get(i).getValue().intValue()-element.getValue().get(i).getValue().intValue();
-                    if (d != 0) {
-                        return d;
-                    }
-                }
-                return 0;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    public String toString() {
-        StringBuilder buf = new StringBuilder(30);
-        buf.append("ZFreeElement[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(getValue().get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(getValue().get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
-    }
-
     public String getElementTypeName() {
         return "ZFreeElement";
-    }
-    
-    
-    public int hashCode() {
-        int val = 0;
-        for (int i = 0; i < getLength(); i++) {
-            val ^= getValue().get(i).getValue().intValue();
-        }
-        return val;
     }
 
 }

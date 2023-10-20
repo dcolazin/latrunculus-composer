@@ -19,9 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
@@ -37,50 +35,6 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
 
     public RProperFreeElement(ArithmeticRing<ArithmeticDouble> ring, List<ArithmeticElement<ArithmeticDouble>> value) {
         super(ring, value);
-    }
-
-    public int compareTo(ModuleElement object) {
-        if (object instanceof RProperFreeElement) {
-            RProperFreeElement element = (RProperFreeElement)object;
-            int l = getLength()-element.getLength();
-            if (l < 0) {
-                return -1;
-            }
-            else if (l > 0) {
-                return 1;
-            }
-            else {
-                for (int i = 0; i < getLength(); i++) {
-                    double d = getValue().get(i).difference(element.getValue().get(i)).getValue().doubleValue();
-                    if (d < 0) {
-                        return -1;
-                    }
-                    else if (d > 0) {
-                        return 1;
-                    }
-                }
-                return 0;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    public String toString() {
-        StringBuilder buf = new StringBuilder(30);
-        buf.append("RFreeElement[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(getValue().get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(getValue().get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
     }
 
     public String getElementTypeName() {

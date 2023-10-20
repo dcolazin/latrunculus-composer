@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         extends ProperFreeElement<ArithmeticMultiElement<N>, ArithmeticElement<N>> {
 
-    //TODO make it abstract and have a N list instead of a ArithmeticElement one
+    //TODO have a N list instead of a ArithmeticElement<N> one
 
     private final List<ArithmeticElement<N>> value;
     private final ArithmeticRing<N> ring;
@@ -245,6 +245,50 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
             res.append(getValue().get(i));
         }
         return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder(30);
+        buf.append("ArithmeticMultiElement<");
+        buf.append(ring.toVisualString());
+        buf.append(">[");
+        buf.append(getLength());
+        buf.append("][");
+        if (getLength() > 0) {
+            buf.append(getValue().get(0));
+            for (int i = 1; i < getLength(); i++) {
+                buf.append(",");
+                buf.append(getValue().get(i));
+            }
+        }
+        buf.append("]");
+        return buf.toString();
+    }
+
+    public String getElementTypeName() {
+        return String.format("ArithmeticMultiElement<%s>", ring.toVisualString());
+    }
+
+    @Override
+    public int compareTo(ModuleElement object) {
+        if (object instanceof ArithmeticMultiElement) {
+            ArithmeticMultiElement<?> element = (ArithmeticMultiElement<?>) object;
+            if (ring.equals(element.ring)) {
+                int l = getLength() - element.getLength();
+                if (l != 0) {
+                    return l;
+                }
+                for (int i = 0; i < getLength(); i++) {
+                    int c = getValue().get(i).compareTo(element.getValue().get(i));
+                    if (c != 0) {
+                        return c;
+                    }
+                }
+                return 0;
+            }
+        }
+        return super.compareTo(object);
     }
 
     @Override
