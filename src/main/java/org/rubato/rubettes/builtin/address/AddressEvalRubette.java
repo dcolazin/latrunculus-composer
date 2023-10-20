@@ -39,6 +39,7 @@ import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
@@ -46,12 +47,14 @@ import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
@@ -796,7 +799,28 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     }
     
     private void showGraphDialog() {
-        if (module instanceof RProperFreeModule) {
+        if (module instanceof CRing) {
+            LinkedList<ModuleElement> elements0 = new LinkedList<>();
+            for (ModuleElement m : elementList.getElements()) {
+                Complex c = ((ArithmeticElement<Complex>)m).getValue();
+                elements0.add(RProperFreeElement.make(new double[] { c.getReal(), c.getImag() }));
+            }
+            JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
+            if (select != null) {
+                elementList.clear();
+                RConfiguration config = (RConfiguration)select.getConfiguration();
+                for (int i = 0; i < config.getSize(); i++) {
+                    double[] p = new double[] { config.px.get(i), config.py.get(i) };
+                    elementList.addElement(new ArithmeticElement<>(new Complex(p[0], p[1])));
+                }
+            }
+            return;
+        }
+        if (!(module instanceof ArithmeticMultiModule)) {
+            return;
+        }
+        Ring<?> moduleRing = module.getRing();
+        if (moduleRing instanceof RRing) {
             RProperFreeModule m = (RProperFreeModule)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elementList.getElements());
@@ -810,7 +834,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 }
             }
         }
-        else if (module instanceof QProperFreeModule) {
+        else if (moduleRing instanceof QRing) {
             QProperFreeModule m = (QProperFreeModule)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, QRing.ring, elementList.getElements());
@@ -824,8 +848,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 }
             }
         }
-        else if (module instanceof ZProperFreeModule) {
-            ZProperFreeModule m = (ZProperFreeModule)module;
+        else if (moduleRing instanceof ZRing) {
+            ArithmeticMultiModule<ArithmeticInteger> m = (ArithmeticMultiModule<ArithmeticInteger>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, ZRing.ring, elementList.getElements());
                 if (select != null) {
@@ -838,7 +862,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 }
             }
         }
-        else if (module instanceof ZnProperFreeModule) {
+        else if (moduleRing instanceof ZnRing) {
             ZnProperFreeModule m = (ZnProperFreeModule)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, m.getRing(), elementList.getElements());
@@ -849,22 +873,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) }; 
                         elementList.addElement(ZnProperFreeElement.make(p, m.getRing().getOne().getValue().getModulus())); //TODO ugly way to get the modulus
                     }
-                }
-            }
-        }
-        else if (module instanceof CRing) {
-            LinkedList<ModuleElement> elements0 = new LinkedList<>();
-            for (ModuleElement m : elementList.getElements()) {
-                Complex c = ((ArithmeticElement<Complex>)m).getValue();
-                elements0.add(RProperFreeElement.make(new double[] { c.getReal(), c.getImag() }));
-            }
-            JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
-            if (select != null) {
-                elementList.clear();
-                RConfiguration config = (RConfiguration)select.getConfiguration();
-                for (int i = 0; i < config.getSize(); i++) {
-                    double[] p = new double[] { config.px.get(i), config.py.get(i) }; 
-                    elementList.addElement(new ArithmeticElement<>(new Complex(p[0], p[1])));
                 }
             }
         }

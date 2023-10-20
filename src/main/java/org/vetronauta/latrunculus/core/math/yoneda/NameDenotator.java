@@ -19,14 +19,13 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 
 import java.util.HashMap;
 import java.util.List;
 
-import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import static org.rubato.logeo.DenoFactory.makeDenotator;
 
 
 /**

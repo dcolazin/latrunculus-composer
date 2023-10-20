@@ -35,8 +35,7 @@ import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over integers.
- * @see ZProperFreeModule
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticInteger> {
