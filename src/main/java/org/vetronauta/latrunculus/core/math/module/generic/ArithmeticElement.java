@@ -113,7 +113,7 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
 
     @Override
     public double[] fold(ModuleElement<?, ?>[] elements) {
-        return FoldingModule.fold(this, elements);
+        return FoldingModule.fold(this.getRing(), elements);
     }
 
     @Override
@@ -171,8 +171,8 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
     }
 
     @Override
-    public Ring<ArithmeticElement<N>> getRing() {
-        return (Ring<ArithmeticElement<N>>) ArithmeticRingRepository.getRing(this);
+    public ArithmeticRing<N> getRing() {
+        return ArithmeticRingRepository.getRing(this);
     }
 
     public boolean isFieldElement() {

@@ -25,11 +25,16 @@ import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 /**
  * @author vetronauta
@@ -39,24 +44,23 @@ public class FoldingModule {
 
     //TODO make this a proper object to inject when needed
 
-    public static double[] fold(ArithmeticElement<?> base, ModuleElement<?, ?>[] elements) {
-        ArithmeticNumber<?> number = base.getValue();
-        if (number instanceof ArithmeticInteger) {
+    public static double[] fold(ArithmeticRing<?> ring, ModuleElement<?, ?>[] elements) {
+        if (ring instanceof ZRing) {
             return foldInteger(elements);
         }
-        if (number instanceof Rational) {
+        if (ring instanceof QRing) {
             return foldRational(elements);
         }
-        if (number instanceof ArithmeticDouble) {
+        if (ring instanceof RRing) {
             return foldReal(elements);
         }
-        if (number instanceof Complex) {
+        if (ring instanceof CRing) {
             return foldComplex(elements);
         }
-        if (number instanceof ArithmeticModulus) {
+        if (ring instanceof ZnRing) {
             return foldModulus(elements);
         }
-        throw new UnsupportedOperationException(String.format("cannot fold %s", number.getClass()));
+        throw new UnsupportedOperationException(String.format("cannot fold %s", ring));
     }
 
     public static double[] foldInteger(ModuleElement[] elements) {

@@ -47,22 +47,22 @@ public class ArithmeticRingRepository {
 
     private static final Map<Integer, ArithmeticRing<ArithmeticModulus>> modRingMap = new HashMap<>();
 
-    public static Ring<? extends ArithmeticElement<?>> getRing(ArithmeticElement<?> element) {
-        ArithmeticNumber<?> number = element.getValue();
+    public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getRing(ArithmeticElement<N> element) {
+        ArithmeticNumber<N> number = element.getValue();
         if (number instanceof ArithmeticInteger) {
-            return ZRing.ring;
+            return (ArithmeticRing<N>) ZRing.ring;
         }
         if (number instanceof Rational) {
-            return QRing.ring;
+            return (ArithmeticRing<N>) QRing.ring;
         }
         if (number instanceof ArithmeticDouble) {
-            return RRing.ring;
+            return (ArithmeticRing<N>) RRing.ring;
         }
         if (number instanceof Complex) {
-            return CRing.ring;
+            return (ArithmeticRing<N>) CRing.ring;
         }
         if (number instanceof ArithmeticModulus) {
-            return modRingMap.computeIfAbsent(((ArithmeticModulus) number).getModulus(), ZnRing::make);
+            return (ArithmeticRing<N>) modRingMap.computeIfAbsent(((ArithmeticModulus) number).getModulus(), ZnRing::make);
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }
