@@ -38,41 +38,11 @@ public final class RProperFreeModule extends ArithmeticMultiModule<ArithmeticDou
 
     public static final RProperFreeModule nullModule = new RProperFreeModule(0);
 
-    public int compareTo(Module object) {
-        if (object instanceof RProperFreeModule) {
-            RProperFreeModule module = (RProperFreeModule)object;
-            return getDimension()-module.getDimension();
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public boolean equals(Object object) {
-        return (object instanceof RProperFreeModule &&
-                	getDimension() == ((RProperFreeModule)object).getDimension());
-    }
-
-    public String toString() {
-        return "RFreeModule["+getDimension()+"]";
-    }
-
-    public String getElementTypeName() {
-        return "RFreeModule";
-    }
-    
-    
-    public int hashCode() {
-        return 37*basicHash + getDimension();
-    }
-    
-    
     protected ModuleMorphism _getProjection(int index) {
         RMatrix A = new RMatrix(1, getDimension());
         A.set(0, index, 1);
         return RFreeAffineMorphism.make(A, new double[] { 0.0 });
     }
-    
     
     protected ModuleMorphism _getInjection(int index) {
         RMatrix A = new RMatrix(getDimension(), 1);
@@ -83,12 +53,9 @@ public final class RProperFreeModule extends ArithmeticMultiModule<ArithmeticDou
         }
         return RFreeAffineMorphism.make(A, b);
     }
-    
-    
+
     private RProperFreeModule(int dimension) {
         super(RRing.ring, dimension);
     }
 
-
-    private static final int basicHash = "RFreeModule".hashCode();
 }

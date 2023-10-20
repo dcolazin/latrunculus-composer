@@ -35,42 +35,13 @@ import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 public final class QProperFreeModule extends ArithmeticMultiModule<Rational> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
-    
-    public int compareTo(Module object) {
-        if (object instanceof QProperFreeModule) {
-            QProperFreeModule module = (QProperFreeModule)object;
-            return getDimension()-module.getDimension();
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public boolean equals(Object object) {
-        return (object instanceof QProperFreeModule &&
-                	getDimension() == ((QProperFreeModule)object).getDimension());
-    }
-
-    public String toString() {
-        return "QFreeModule["+getDimension()+"]";
-    }
-    
-    public String getElementTypeName() {
-        return "QFreeModule";
-    }
-
-    public int hashCode() {
-        return 37*basicHash + getDimension();
-    }
-    
 
     protected ModuleMorphism _getProjection(int index) {
         QMatrix A = new QMatrix(1, getDimension());
         A.set(0, index, Rational.getOne());
         return QFreeAffineMorphism.make(A, new Rational[] { Rational.getZero() });
     }
-    
-    
+
     protected ModuleMorphism _getInjection(int index) {
         QMatrix A = new QMatrix(getDimension(), 1);
         A.set(index, 0, Rational.getOne());
@@ -80,12 +51,9 @@ public final class QProperFreeModule extends ArithmeticMultiModule<Rational> {
         }
         return QFreeAffineMorphism.make(A, b);
     }
-    
-    
+
     private QProperFreeModule(int dimension) {
         super(QRing.ring, dimension);
     }
 
-
-    private static final int basicHash = "QFreeModule".hashCode();
 }

@@ -36,33 +36,6 @@ public final class CProperFreeModule extends ArithmeticMultiModule<Complex> {
 
     public static final CProperFreeModule nullModule = new CProperFreeModule(0);
 
-    public int compareTo(Module object) {
-        if (object instanceof CProperFreeModule) {
-            CProperFreeModule module = (CProperFreeModule)object;
-            return getDimension()-module.getDimension();
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public boolean equals(Object object) {
-        return (object instanceof CProperFreeModule &&
-                getDimension() == ((CProperFreeModule)object).getDimension());
-    }
-
-    public String toString() {
-        return "CFreeModule["+getDimension()+"]";
-    }
-    
-    public String getElementTypeName() {
-        return "CFreeModule";
-    }
-
-    public int hashCode() {
-        return 37*basicHash + getDimension();
-    }
-
     protected ModuleMorphism _getProjection(int index) {
         CMatrix A = new CMatrix(1, getDimension());
         A.set(0, index, Complex.getOne());
@@ -82,6 +55,4 @@ public final class CProperFreeModule extends ArithmeticMultiModule<Complex> {
     private CProperFreeModule(int dimension) {
         super(CRing.ring, dimension);
     }
-    
-    private static final int basicHash = "CFreeModule".hashCode();
 }

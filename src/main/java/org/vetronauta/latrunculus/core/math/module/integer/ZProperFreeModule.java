@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
@@ -36,41 +35,12 @@ public final class ZProperFreeModule extends ArithmeticMultiModule<ArithmeticInt
 
     public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
 
-    public int compareTo(Module object) {
-        if (object instanceof ZProperFreeModule) {
-            ZProperFreeModule module = (ZProperFreeModule)object;
-            return getDimension()-module.getDimension();
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    public boolean equals(Object object) {
-        return (object instanceof ZProperFreeModule &&
-                getDimension() == ((ZProperFreeModule)object).getDimension());
-    }
-
-    public String toString() {
-        return "ZFreeModule["+getDimension()+"]";
-    }
-
-    public String getElementTypeName() {
-        return "ZFreeModule";
-    }
-    
-    public int hashCode() {
-        return 37*basicHash + getDimension();
-    }
-    
-    
     protected ModuleMorphism _getProjection(int index) {
         ZMatrix A = new ZMatrix(1, getDimension());
         A.set(0, index, 1);
         return ZFreeAffineMorphism.make(A, new int[] { 0 });
     }
-    
-    
+
     protected ModuleMorphism _getInjection(int index) {
         ZMatrix A = new ZMatrix(getDimension(), 1);
         A.set(index, 0, 1);
@@ -81,11 +51,8 @@ public final class ZProperFreeModule extends ArithmeticMultiModule<ArithmeticInt
         return ZFreeAffineMorphism.make(A, b);
     }
     
-    
     private ZProperFreeModule(int dimension) {
         super(ZRing.ring, dimension);
     }
 
-
-    private static final int basicHash = "ZFreeModule".hashCode();
 }

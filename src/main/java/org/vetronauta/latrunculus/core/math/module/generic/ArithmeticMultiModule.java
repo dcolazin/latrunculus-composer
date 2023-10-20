@@ -164,4 +164,39 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     protected ModuleMorphism _getInjection(int index) {
         return null; //TODO
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof ArithmeticMultiModule)) {
+            return false;
+        }
+        return getDimension() == ((ArithmeticMultiModule<?>) object).getDimension()
+            && ring.equals(((ArithmeticMultiModule<?>) object).getRing());
+    }
+
+    @Override
+    public int hashCode() {
+        return ring.hashCode() + getDimension();
+    }
+
+    @Override
+    public int compareTo(Module object) {
+        if (object instanceof ArithmeticMultiModule) {
+            ArithmeticMultiModule<?> module = (ArithmeticMultiModule<?>) object;
+            if (ring.equals(module.getRing())) {
+                return getDimension() - module.getDimension();
+            }
+        }
+        return super.compareTo(object);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ArithmeticMultiModule<%s>[%s]", ring.toVisualString(), getDimension());
+    }
+
+    public String getElementTypeName() {
+        return String.format("ArithmeticMultiModule<%s>", ring.toVisualString());
+    }
+    
 }

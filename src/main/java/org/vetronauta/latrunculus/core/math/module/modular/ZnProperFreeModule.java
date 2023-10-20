@@ -37,52 +37,15 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism
  */
 public final class ZnProperFreeModule extends ArithmeticMultiModule<ArithmeticModulus> implements Modular {
 
-   public int compareTo(Module object) {
-        if (object instanceof ZnProperFreeModule) {
-            ZnProperFreeModule module = (ZnProperFreeModule)object;
-            int m = getModulus()-module.getModulus();
-            if (m != 0) {
-                return m;
-            }
-            else {
-	            return getDimension()-module.getDimension();
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public boolean equals(Object object) {
-        return (object instanceof ZnProperFreeModule &&
-                getDimension() == ((ZnProperFreeModule)object).getDimension() &&
-                modulus == ((ZnProperFreeModule)object).getModulus());
-    }
-    
-    public String toString() {
-        return "ZnFreeModule("+getModulus()+")["+getDimension()+"]";
-    }
-
     public int getModulus() {
         return modulus;
     }
-    
-    
-    public String getElementTypeName() {
-        return "ZnFreeElement";
-    }
 
-    public int hashCode() {
-        return 37*37*basicHash+37*modulus+getDimension();
-    }
-    
-    
     protected ModuleMorphism _getProjection(int index) {
         ZnMatrix A = new ZnMatrix(1, getDimension(), getModulus());
         A.set(0, index, 1);
         return ZnFreeAffineMorphism.make(A, new int[] { 0 });
     }
-    
     
     protected ModuleMorphism _getInjection(int index) {
         ZnMatrix A = new ZnMatrix(getDimension(), 1, getModulus());
@@ -99,9 +62,6 @@ public final class ZnProperFreeModule extends ArithmeticMultiModule<ArithmeticMo
         super(ArithmeticRingRepository.getModulusRing(modulus), dimension);
         this.modulus = modulus;
     }
-
-
-    private static final int basicHash = "ZnFreeModule".hashCode();
 
     private final int    modulus;
 
