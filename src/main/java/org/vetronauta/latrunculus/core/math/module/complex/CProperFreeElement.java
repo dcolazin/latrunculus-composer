@@ -62,26 +62,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
     }
 
     @Override
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder res = new StringBuilder(getValue().get(0).toString());
-            for (int i = 1; i < getLength(); i++) {
-                res.append(',');
-                res.append(getValue().get(i));
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();
-            }
-        }
-    }
-
-    @Override
     public String toString() {
         StringBuilder buf = new StringBuilder(30);
         buf.append("CFreeElement[");
