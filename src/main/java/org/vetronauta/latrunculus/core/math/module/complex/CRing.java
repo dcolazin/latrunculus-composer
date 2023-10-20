@@ -44,10 +44,11 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
      * The unique instance of the ring of complex numbers.
      */
     public static final CRing ring = new CRing();
+    public static final ArithmeticMultiModule<Complex> nullModule = new ArithmeticMultiModule<>(ring, 0);
 
     @Override
-    public CProperFreeModule getNullModule() {
-        return CProperFreeModule.nullModule;
+    public ArithmeticMultiModule<Complex> getNullModule() {
+        return nullModule;
     }
 
     @Override

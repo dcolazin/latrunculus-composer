@@ -43,9 +43,10 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
      * The unique instance of the ring of reals.
      */
     public static final RRing ring = new RRing();
+    public static final ArithmeticMultiModule<ArithmeticDouble> nullModule = new ArithmeticMultiModule<>(ring, 0);
     
     public ArithmeticMultiModule<ArithmeticDouble> getNullModule() {
-        return RProperFreeModule.nullModule;
+        return nullModule;
     }
     
     public boolean hasElement(ModuleElement element) {

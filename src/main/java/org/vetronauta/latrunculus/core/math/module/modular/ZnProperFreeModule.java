@@ -29,17 +29,10 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingReposit
  * 
  * @author Gérard Milmeister
  */
-public final class ZnProperFreeModule extends ArithmeticMultiModule<ArithmeticModulus> implements Modular {
+public final class ZnProperFreeModule extends ArithmeticMultiModule<ArithmeticModulus> {
 
-    public int getModulus() {
-        return modulus;
-    }
-    
     private ZnProperFreeModule(int dimension, int modulus) {
         super(ArithmeticRingRepository.getModulusRing(modulus), dimension);
-        this.modulus = modulus;
     }
-
-    private final int    modulus;
 
 }

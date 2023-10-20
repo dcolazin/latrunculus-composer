@@ -39,18 +39,19 @@ import java.util.List;
  */
 public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {
 
-    private ZRing() {
-        super(new ArithmeticInteger(0), new ArithmeticInteger(1));
-    }
-
     /**
      * The unique instance of the ring of integers.
      */
     public static final ZRing ring = new ZRing();
+    public static final ArithmeticMultiModule<ArithmeticInteger> nullModule = new ArithmeticMultiModule<>(ring, 0);
+
+    private ZRing() {
+        super(new ArithmeticInteger(0), new ArithmeticInteger(1));
+    }
 
     @Override
-    public ZProperFreeModule getNullModule() {
-        return ZProperFreeModule.nullModule;
+    public ArithmeticMultiModule<ArithmeticInteger> getNullModule() {
+        return nullModule;
     }
     
     @Override

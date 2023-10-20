@@ -48,9 +48,10 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
      * The unique instance of the ring of rationals.
      */
     public static final QRing ring = new QRing();
+    public static final ArithmeticMultiModule<Rational> nullModule = new ArithmeticMultiModule<>(ring, 0);
 
-    public QProperFreeModule getNullModule() {
-        return QProperFreeModule.nullModule;
+    public ArithmeticMultiModule<Rational> getNullModule() {
+        return nullModule;
     }
 
     public boolean hasElement(ModuleElement element) {

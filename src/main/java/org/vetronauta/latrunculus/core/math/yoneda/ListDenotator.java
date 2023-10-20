@@ -29,6 +29,7 @@ import org.rubato.logeo.Lists;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -95,7 +96,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
 	        }
         }
         else {
-            address = ZProperFreeModule.nullModule;
+            address = ZRing.nullModule;
         }
         setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIST), map));
     }

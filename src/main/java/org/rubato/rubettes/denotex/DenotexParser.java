@@ -342,7 +342,7 @@ public final class DenotexParser implements DenotexParserConstants {
             else                return ArithmeticMultiModule.make(CRing.ring, sup);
         }
         else if (s.equals("Null")) {
-            return ZProperFreeModule.nullModule;
+            return ZRing.nullModule;
         }
         throw parseError("Illegal module '" + s + "'");
     }
@@ -844,7 +844,7 @@ final public List simpleCrs(int type) throws ParseException {
       
     }
         if (a == null)
-            a = ZProperFreeModule.nullModule;
+            a = ZRing.nullModule;
         {if (true) return a;}
     throw new Error("Missing return statement in function");
   }

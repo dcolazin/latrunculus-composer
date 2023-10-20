@@ -30,8 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
  */
 public final class RProperFreeModule extends ArithmeticMultiModule<ArithmeticDouble> {
 
-    public static final RProperFreeModule nullModule = new RProperFreeModule(0);
-
     private RProperFreeModule(int dimension) {
         super(RRing.ring, dimension);
     }

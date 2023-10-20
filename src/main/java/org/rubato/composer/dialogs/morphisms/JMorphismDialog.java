@@ -523,7 +523,7 @@ public class JMorphismDialog
             }
             else if (selectedType.equals(MODULO_TYPE)) {
                 int dim = domain.getDimension();
-                int mod = ((Modular)codomain).getModulus();
+                int mod = ((Modular)codomain).getModulus(); //TODO this might not work after the ArithmeticMultiModule refactoring
                 setMorphism(ModuloMorphism.make(dim, mod));
                 setResult(morphism.toString());
             }

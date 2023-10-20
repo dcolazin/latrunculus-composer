@@ -29,6 +29,7 @@ import org.rubato.logeo.Sets;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -104,7 +105,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
             }
         }
         else {
-            address = ZProperFreeModule.nullModule;
+            address = ZRing.nullModule;
         }
         setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, POWER), map));
         _normalize();

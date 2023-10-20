@@ -78,7 +78,7 @@ public final class Address {
      */
     public static Module getCommonDenotatorModule(List<Denotator> denotators) {
         if (denotators.size() == 0) {
-            return ZProperFreeModule.nullModule;
+            return ZRing.nullModule;
         }
         LinkedList<Ring> rings = new LinkedList<Ring>();
         int dim = 0;

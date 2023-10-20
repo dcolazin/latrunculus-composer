@@ -847,7 +847,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) }; 
-                        elementList.addElement(ZnProperFreeElement.make(p, m.getModulus()));
+                        elementList.addElement(ZnProperFreeElement.make(p, m.getRing().getOne().getValue().getModulus())); //TODO ugly way to get the modulus
                     }
                 }
             }

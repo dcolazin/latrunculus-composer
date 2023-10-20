@@ -30,8 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
  */
 public final class ZProperFreeModule extends ArithmeticMultiModule<ArithmeticInteger> {
 
-    public static final ZProperFreeModule nullModule = new ZProperFreeModule(0);
-    
     private ZProperFreeModule(int dimension) {
         super(ZRing.ring, dimension);
     }

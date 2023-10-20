@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 
 
 /**
@@ -344,7 +345,7 @@ public final class NameDenotator extends ListDenotator {
             Denotator deno = makeDenotator(stringForm, nameEntry.getString(i)); 
             map.appendFactor(deno);
         }
-        return new CompoundMorphism(ZProperFreeModule.nullModule, new ProperIdentityMorphism(diagram, LIST), map);
+        return new CompoundMorphism(ZRing.nullModule, new ProperIdentityMorphism(diagram, LIST), map);
     }
     
     private        NameEntry   nameEntry  = null;

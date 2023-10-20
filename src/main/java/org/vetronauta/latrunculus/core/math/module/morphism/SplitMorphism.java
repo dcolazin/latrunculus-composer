@@ -94,7 +94,7 @@ public class SplitMorphism extends ModuleMorphism {
                             return new SplitMorphism(module, morphisms);
                         }
                     }
-                    return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms);
+                    return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms); //TODO this might not work after the ArithmeticMultiModule refactoring
                 } else if (number instanceof Rational) {
                     for (ModuleMorphism m : morphisms) {
                         if (!(m instanceof QFreeAffineMorphism) &&

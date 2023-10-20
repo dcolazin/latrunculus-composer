@@ -30,9 +30,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
  */
 public final class CProperFreeModule extends ArithmeticMultiModule<Complex> {
 
-    public static final CProperFreeModule nullModule = new CProperFreeModule(0);
-
     private CProperFreeModule(int dimension) {
         super(CRing.ring, dimension);
     }
+
 }

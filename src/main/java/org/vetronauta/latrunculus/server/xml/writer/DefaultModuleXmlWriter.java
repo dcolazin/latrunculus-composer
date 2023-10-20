@@ -180,7 +180,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
     }
 
     private void write(ZnProperFreeModule module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, module.getModulus());
+        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, module.getRing().getOne().getValue().getModulus()); //TODO ugly way to get the modulus
     }
 
     private void write(QProperFreeModule module, XMLWriter writer) {
