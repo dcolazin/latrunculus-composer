@@ -22,9 +22,14 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The abstract base class for morphisms in a free <i>Zn</i>-module.
@@ -47,13 +52,16 @@ public abstract class ZnFreeAbstractMorphism extends ModuleMorphism {
             for (int i = 0; i < x.getLength(); i++) {
                 v[i] = ((ArithmeticElement<ArithmeticModulus>)x).getComponent(i).getValue().getValue();
             }
-            return ZnProperFreeElement.make(mapValue(v), modulus);
+            return ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus), mapToList(v, modulus));
         }
         else {
             throw new MappingException("ZnFreeAbstractMorphism.map: ", x, this);
         }
     }
 
+    private List<ArithmeticModulus> mapToList(int[] x, int modulus) {
+        return Arrays.stream(mapValue(x)).mapToObj(element -> new ArithmeticModulus(element, modulus)).collect(Collectors.toList());
+    }
     
     /**
      * The low-level map method.

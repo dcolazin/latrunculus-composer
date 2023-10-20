@@ -39,8 +39,6 @@ import java.util.stream.Collectors;
  */
 public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
 
-    private ArithmeticMultiModule<Complex> module = null;
-
     private CProperFreeElement(List<ArithmeticElement<Complex>> value) {
         super(CRing.ring, value);
     }
@@ -53,13 +51,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
             return new ArithmeticElement<>(v[0]);
         }
         return new CProperFreeElement(Arrays.stream(v).map(ArithmeticElement::new).collect(Collectors.toList()));
-    }
-    @Override
-    public ArithmeticMultiModule<Complex> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule(CRing.ring, getLength());
-        }
-        return module;
     }
 
     @Override

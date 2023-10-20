@@ -41,48 +41,8 @@ import java.util.stream.Collectors;
  */
 public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
 
-    public static final QProperFreeElement nullElement = new QProperFreeElement(new ArrayList<>());
-
     private QProperFreeElement(List<ArithmeticElement<Rational>> array) {
         super(QRing.ring, array);
-    }
-
-    public static FreeElement<?, ArithmeticElement<Rational>> make(Rational[] v) {
-        assert(v != null);
-        if (v.length == 0) {
-            return nullElement;
-        }
-        else if (v.length == 1) {
-            return new ArithmeticElement<>(v[0]);
-        }
-        else {
-            return new QProperFreeElement(Arrays.stream(v).map(ArithmeticElement::new).collect(Collectors.toList()));
-        }
-    }
-
-    public static FreeElement<?, ArithmeticElement<Rational>> make(List<ArithmeticElement<ArithmeticInteger>> v) {
-        assert(v != null);
-        if (v.size() == 0) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return new ArithmeticElement<>(new Rational(v.get(0).getValue().intValue()));
-        }
-        else {
-            return new QProperFreeElement(v.stream()
-                    .map(ArithmeticElement::getValue)
-                    .map(ArithmeticInteger::intValue)
-                    .map(Rational::new)
-                    .map(ArithmeticElement::new)
-                    .collect(Collectors.toList()));
-        }
-    }
-    
-    public ArithmeticMultiModule<Rational> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule<>(QRing.ring, getLength());
-        }
-        return module;
     }
 
     public int compareTo(ModuleElement object) {
@@ -159,7 +119,5 @@ public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
     public String getElementTypeName() {
         return "QFreeElement";
     }
-
-    private ArithmeticMultiModule<Rational> module = null;
 
 }

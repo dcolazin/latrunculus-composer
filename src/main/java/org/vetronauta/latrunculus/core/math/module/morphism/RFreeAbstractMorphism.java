@@ -22,9 +22,14 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The abstract base class for morphisms in a free <i>R</i>-module.
@@ -45,11 +50,15 @@ public abstract class RFreeAbstractMorphism extends ModuleMorphism {
                 for (int i = 0; i < x.getLength(); i++) {
                     v[i] = ((ArithmeticElement<ArithmeticDouble>) x.getComponent(i)).getValue().doubleValue();
                 }
-            return RProperFreeElement.make(mapValue(v));
+            return ArithmeticMultiElement.make(RRing.ring, mapToList(v));
         }
         else {
             throw new MappingException("RFreeAbstractMorphism.map: ", x, this);
         }
+    }
+
+    private List<ArithmeticDouble> mapToList(double[] x) {
+        return Arrays.stream(mapValue(x)).mapToObj(ArithmeticDouble::new).collect(Collectors.toList());
     }
 
     

@@ -24,11 +24,14 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
+
+import java.util.stream.Collectors;
 
 /**
  * The function that takes an element <i>i</i> in <i>Z^d</i> 
@@ -84,7 +87,9 @@ public class ModuloMorphism extends ModuleMorphism {
         else if (x instanceof ZProperFreeElement) {
             ZProperFreeElement e = (ZProperFreeElement)x;
             if (e.getLength() == dimension) {
-                return ZnProperFreeElement.make(e.getValue(), modulus);
+                return ArithmeticMultiElement.make(
+                        ArithmeticRingRepository.getModulusRing(modulus),
+                        e.getValue().stream().map(i -> new ArithmeticModulus(i.getValue().intValue(), modulus)).collect(Collectors.toList()));
             }
         }
         throw new MappingException("ModuloMorphism.map: ", x, this);

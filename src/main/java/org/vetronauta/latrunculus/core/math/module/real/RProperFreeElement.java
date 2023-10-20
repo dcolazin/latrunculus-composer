@@ -22,16 +22,12 @@ package org.vetronauta.latrunculus.core.math.module.real;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over reals.
@@ -40,40 +36,8 @@ import java.util.stream.Collectors;
  */
 public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticDouble> {
 
-    public static RProperFreeElement nullElement = new RProperFreeElement(new ArrayList<>());
-    
-    public static FreeElement<?, ArithmeticElement<ArithmeticDouble>> make(double[] v) {
-        assert(v != null);
-        if (v.length == 0) {
-            return nullElement;
-        }
-        else if (v.length == 1) {
-            return new ArithmeticElement<>(new ArithmeticDouble(v[0]));
-        }
-        else {
-            return new RProperFreeElement(v);
-        }
-    }
-
-    public static FreeElement<?, ArithmeticElement<ArithmeticDouble>> make(List<ArithmeticElement<ArithmeticDouble>> v) {
-        assert(v != null);
-        if (v.size() == 0) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return v.get(0);
-        }
-        else {
-            return new RProperFreeElement(v);
-        }
-    }
-
-    @Override
-    public ArithmeticMultiModule<ArithmeticDouble> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule<>(RRing.ring, getLength());
-        }
-        return module;
+    public RProperFreeElement(ArithmeticRing<ArithmeticDouble> ring, List<ArithmeticElement<ArithmeticDouble>> value) {
+        super(ring, value);
     }
 
     public int compareTo(ModuleElement object) {
@@ -159,15 +123,5 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
     public String getElementTypeName() {
         return "RFreeElement";
     }
-    
-    private RProperFreeElement(double[] value) {
-        super(RRing.ring, Arrays.stream(value).mapToObj(ArithmeticDouble::new).map(ArithmeticElement::new).collect(Collectors.toList()));
-    }
-
-    private RProperFreeElement(List<ArithmeticElement<ArithmeticDouble>> value) {
-        super(RRing.ring, value);
-    }
-    
-    private ArithmeticMultiModule<ArithmeticDouble> module = null;
 
 }

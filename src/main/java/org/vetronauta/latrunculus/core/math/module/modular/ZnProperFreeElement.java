@@ -21,19 +21,13 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over integers mod <i>n</i>.
@@ -41,55 +35,6 @@ import java.util.stream.Collectors;
  * @author Gérard Milmeister
  */
 public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulus> {
-
-    public static FreeElement<?, ArithmeticElement<ArithmeticModulus>> make(int[] v, int modulus) {
-        assert(v != null);
-        assert(modulus > 1);
-        if (v.length == 0) {
-            return new ZnProperFreeElement(toElementList(v, modulus), modulus);
-        }
-        else if (v.length == 1) {
-            return new ArithmeticElement<>(new ArithmeticModulus(v[0], modulus));
-        }
-        else {
-            return new ZnProperFreeElement(toElementList(v, modulus), modulus);
-        }
-    }
-
-    public static FreeElement<?, ArithmeticElement<ArithmeticModulus>> make(List<ArithmeticElement<ArithmeticInteger>> v, int modulus) {
-        assert(v != null);
-        assert(modulus > 1);
-        if (v.size() == 0) {
-            return new ZnProperFreeElement(new ArrayList<>(), modulus);
-        }
-        else if (v.size() == 1) {
-            return new ArithmeticElement<>(new ArithmeticModulus(v.get(0).getValue().intValue(), modulus));
-        }
-        else {
-            return new ZnProperFreeElement(v.stream()
-                    .map(ArithmeticElement::getValue)
-                    .map(ArithmeticInteger::intValue)
-                    .map(i -> new ArithmeticModulus(i, modulus))
-                    .map(ArithmeticElement::new)
-                    .collect(Collectors.toList()),
-                    modulus);
-        }
-    }
-    private static List<ArithmeticElement<ArithmeticModulus>> toElementList(int[] array, int modulus) {
-        List<ArithmeticElement<ArithmeticModulus>> elements = new ArrayList<>(array.length);
-        for (int i = 0; i < array.length; i++) {
-            elements.add(new ArithmeticElement<>(new ArithmeticModulus(array[i], modulus)));
-        }
-        return elements;
-    }
-
-    @Override
-    public ArithmeticMultiModule<ArithmeticModulus> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule<>(ArithmeticRingRepository.getModulusRing(modulus), getLength());
-        }
-        return module;
-    }
 
     public int getModulus() {
         return modulus;
@@ -189,6 +134,5 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulu
     }
     
     private int          modulus;
-    private ArithmeticMultiModule<ArithmeticModulus> module = null;
 
 }

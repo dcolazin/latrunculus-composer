@@ -10,12 +10,15 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
 import java.util.ArrayList;
@@ -67,9 +70,12 @@ class AlteratorTest {
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{1, 0, 0})), new ArithmeticElement<>(new ArithmeticDouble(2)));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 1, 0})), new ArithmeticElement<>(new ArithmeticDouble(3.5)));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 0, 1})), new ArithmeticElement<>(new ArithmeticDouble(5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(1), new ArithmeticDouble(0), new ArithmeticDouble(0)})),
+				new ArithmeticElement<>(new ArithmeticDouble(2)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(0), new ArithmeticDouble(1), new ArithmeticDouble(0)})),
+				new ArithmeticElement<>(new ArithmeticDouble(3.5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(0), new ArithmeticDouble(0), new ArithmeticDouble(1)})),
+				new ArithmeticElement<>(new ArithmeticDouble(5)));
 		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);
@@ -81,9 +87,9 @@ class AlteratorTest {
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
 		Rational zero = new Rational(0);
 		Rational one = new Rational(1);
-		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{one, zero, zero})), new ArithmeticElement<>(new Rational(2)));
-		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{zero, one, zero})), new ArithmeticElement<>(new Rational(3.5)));
-		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{zero, zero, one})), new ArithmeticElement<>(new Rational(5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{one, zero, zero})), new ArithmeticElement<>(new Rational(2)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{zero, one, zero})), new ArithmeticElement<>(new Rational(3.5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{zero, zero, one})), new ArithmeticElement<>(new Rational(5)));
 		assertEquals(m100, m1);
 	}
 	

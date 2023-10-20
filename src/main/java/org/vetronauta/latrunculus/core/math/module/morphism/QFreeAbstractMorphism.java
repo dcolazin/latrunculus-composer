@@ -22,9 +22,13 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * The abstract base class for morphisms in a free <i>Q</i>-module.
@@ -45,7 +49,7 @@ public abstract class QFreeAbstractMorphism extends ModuleMorphism {
                 for (int i = 0; i < x.getLength(); i++) {
                     rv[i] = ((ArithmeticElement<Rational>) x.getComponent(i)).getValue();
                 }
-            return QProperFreeElement.make(mapValue(rv));
+            return ArithmeticMultiElement.make(QRing.ring, Arrays.stream(mapValue(rv)).collect(Collectors.toList()));
         }
         throw new MappingException("QFreeAbstractMorphism.map: ", x, this);
     }

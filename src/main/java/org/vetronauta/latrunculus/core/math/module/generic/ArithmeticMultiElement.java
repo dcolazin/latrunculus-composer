@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
+import org.apache.commons.collections4.CollectionUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -28,8 +30,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author vetronauta
@@ -42,6 +46,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     private final List<ArithmeticElement<N>> value;
     private final ArithmeticRing<N> ring;
+    private ArithmeticMultiModule<N> module;
 
     public ArithmeticMultiElement(ArithmeticRing<N> ring, List<ArithmeticElement<N>> value) {
         if (value == null || value.size() == 1) {
@@ -49,6 +54,20 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         }
         this.value = value;
         this.ring = ring;
+    }
+
+    public static <N extends ArithmeticNumber<N>> FreeElement<?, ArithmeticElement<N>> make(ArithmeticRing<N> ring, N[] elements) {
+        return make(ring, Arrays.stream(elements).collect(Collectors.toList()));
+    }
+
+    public static <N extends ArithmeticNumber<N>> FreeElement<?, ArithmeticElement<N>> make(ArithmeticRing<N> ring, List<N> elements) {
+        if (CollectionUtils.isEmpty(elements)) {
+            return new ArithmeticMultiElement<>(ring, new ArrayList<>());
+        }
+        if (elements.size() == 1) {
+            return new ArithmeticElement<>(elements.get(0));
+        }
+        return new ArithmeticMultiElement<>(ring, elements.stream().map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -208,7 +227,10 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     @Override
     public ArithmeticMultiModule<N> getModule() {
-        return new ArithmeticMultiModule<>(ring, getLength());
+        if (module == null) {
+            module = new ArithmeticMultiModule<>(ring, getLength());
+        }
+        return module;
     }
 
     @Override

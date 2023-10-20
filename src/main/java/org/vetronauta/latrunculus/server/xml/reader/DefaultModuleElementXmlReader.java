@@ -41,7 +41,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
@@ -57,18 +60,22 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElem
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.BASE64;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
@@ -254,15 +261,15 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
 
             String s = XMLReader.getText(child);
-            int[] intValues = Base64.decodeIntArray(s);
-            return ZProperFreeElement.make(intValues);
+            List<ArithmeticInteger> intValues = Arrays.stream(Base64.decodeIntArray(s)).mapToObj(ArithmeticInteger::new).collect(Collectors.toList());
+            return ArithmeticMultiElement.make(ZRing.ring, intValues);
         }
 
         String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        int[] intValues = new int[values.length];
+        List<ArithmeticInteger> intValues = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
             try {
-                intValues[i] = Integer.parseInt(values[i]);
+                intValues.add(new ArithmeticInteger(Integer.parseInt(values[i])));
             }
             catch (NumberFormatException e) {
                 reader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName(clazz));
@@ -270,7 +277,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
         }
 
-        return ZProperFreeElement.make(intValues);
+        return ArithmeticMultiElement.make(ZRing.ring, intValues);
     }
 
     private ModuleElement readZnProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
@@ -297,18 +304,17 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
 
         String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        int[] intValues = new int[values.length];
+        List<ArithmeticModulus> intValues = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
             try {
-                intValues[i] = Integer.parseInt(values[i]);
-            }
-            catch (NumberFormatException e) {
+                intValues.add(new ArithmeticModulus(Integer.parseInt(values[i]), mod));
+            } catch (NumberFormatException e) {
                 reader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName(clazz));
                 return null;
             }
         }
 
-        return ZnProperFreeElement.make(intValues, mod);
+        return ZnProperFreeElement.make(ArithmeticRingRepository.getModulusRing(mod), intValues);
     }
 
     private ModuleElement readZStringElement(Element element, Class<?> clazz, XMLReader reader) {
@@ -752,7 +758,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
         }
 
-        return QProperFreeElement.make(rationalValues);
+        return QProperFreeElement.make(QRing.ring, Arrays.stream(rationalValues).collect(Collectors.toList()));
     }
 
     private ModuleElement readRProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
@@ -763,10 +769,10 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
 
         String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        double[] doubleValues = new double[values.length];
+        ArithmeticDouble[] doubleValues = new ArithmeticDouble[values.length];
         for (int i = 0; i < values.length; i++) {
             try {
-                doubleValues[i] = Double.parseDouble(values[i]);
+                doubleValues[i] = new ArithmeticDouble(Double.parseDouble(values[i]));
             }
             catch (NumberFormatException e) {
                 reader.setError("Values in type %%1 must be a comma-separated list of reals.", getElementTypeName(clazz));
@@ -774,7 +780,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
         }
 
-        return RProperFreeElement.make(doubleValues);
+        return ArithmeticMultiElement.make(RRing.ring, doubleValues);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

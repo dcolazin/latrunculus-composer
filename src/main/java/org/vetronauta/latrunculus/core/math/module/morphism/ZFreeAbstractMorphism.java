@@ -22,9 +22,14 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The abstract base class for morphisms in a free <i>Z</i>-module.
@@ -45,11 +50,15 @@ public abstract class ZFreeAbstractMorphism extends ModuleMorphism {
             for (int i = 0; i < x.getLength(); i++) {
                 v[i] = ((ArithmeticElement<ArithmeticInteger>) x.getComponent(i)).getValue().intValue();
             }
-            return ZProperFreeElement.make(mapValue(v));
+            return ArithmeticMultiElement.make(ZRing.ring, mapToList(v));
         }
         else {
             throw new MappingException("ZFreeAbstractMorphism.map: ", x, this);
         }
+    }
+
+    private List<ArithmeticInteger> mapToList(int[] x) {
+        return Arrays.stream(mapValue(x)).mapToObj(ArithmeticInteger::new).collect(Collectors.toList());
     }
 
     

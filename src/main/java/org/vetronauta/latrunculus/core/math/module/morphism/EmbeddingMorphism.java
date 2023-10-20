@@ -53,6 +53,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Morphism that embeds one module into another.
@@ -415,7 +416,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         m = new EmbeddingMorphism(domain, codomain) {
                             public ModuleElement mapValue(ModuleElement element) {
                                 ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
-                                return QProperFreeElement.make(e.getValue());
+                                return ArithmeticMultiElement.make(QRing.ring, e.getValue().stream().map(i -> new Rational(i.getValue().intValue())).collect(Collectors.toList()));
                             }
                         };
                     } else if (codomainRing instanceof RRing) {
@@ -424,11 +425,11 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                             public ModuleElement mapValue(ModuleElement element) {
                                 ZProperFreeElement e = (ZProperFreeElement) ((ArithmeticMultiElement) element).resize(codim);
                                 List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
-                                double[] v_to = new double[v_from.size()];
+                                ArithmeticDouble[] v_to = new ArithmeticDouble[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
-                                    v_to[i] = v_from.get(i).getValue().intValue();
+                                    v_to[i] = new ArithmeticDouble(v_from.get(i).getValue().intValue());
                                 }
-                                return RProperFreeElement.make(v_to);
+                                return ArithmeticMultiElement.make(RRing.ring, v_to);
                             }
                         };
                     } else if (codomainRing instanceof CRing) {
@@ -463,11 +464,11 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                             public ModuleElement mapValue(ModuleElement element) {
                                 QProperFreeElement e = (QProperFreeElement) ((FreeElement) element).resize(codim);
                                 List<ArithmeticElement<Rational>> v_from = e.getValue();
-                                double[] v_to = new double[v_from.size()];
+                                ArithmeticDouble[] v_to = new ArithmeticDouble[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
-                                    v_to[i] = v_from.get(i).getValue().doubleValue();
+                                    v_to[i] = new ArithmeticDouble(v_from.get(i).getValue().doubleValue());
                                 }
-                                return RProperFreeElement.make(v_to);
+                                return ArithmeticMultiElement.make(RRing.ring, v_to);
                             }
                         };
                     } else if (codomainRing instanceof CRing) {

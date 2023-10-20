@@ -19,19 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
-import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over integers.
@@ -40,52 +35,8 @@ import java.util.stream.Collectors;
  */
 public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticInteger> {
 
-    public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ArrayList<>());
-
-    private ArithmeticMultiModule<ArithmeticInteger> module;
-
     private ZProperFreeElement(List<ArithmeticElement<ArithmeticInteger>> value) {
         super(ZRing.ring, value);
-    }
-
-    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull int[] v) {
-        if (v.length == 0) {
-            return nullElement;
-        }
-        else if (v.length == 1) {
-            return new ArithmeticElement<>(new ArithmeticInteger(v[0]));
-        }
-        else {
-            return new ZProperFreeElement(toElementList(v));
-        }
-    }
-
-    public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull List<ArithmeticInteger> v) {
-        if (v.isEmpty()) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return new ArithmeticElement<>(v.get(0));
-        }
-        else {
-            return new ZProperFreeElement(v.stream().map(ArithmeticElement::new).collect(Collectors.toList()));
-        }
-    }
-
-    private static List<ArithmeticElement<ArithmeticInteger>> toElementList(int[] v) {
-        List<ArithmeticElement<ArithmeticInteger>> elements = new ArrayList<>(v.length);
-        for (int j : v) {
-            elements.add(new ArithmeticElement<>(new ArithmeticInteger(j)));
-        }
-        return elements;
-    }
-
-    @Override
-    public ArithmeticMultiModule<ArithmeticInteger> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule<>(ZRing.ring, getLength());
-        }
-        return module;
     }
 
     public int compareTo(ModuleElement object) {

@@ -51,7 +51,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
@@ -89,8 +91,11 @@ import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.rubato.composer.Utilities.getJDialog;
 import static org.rubato.composer.Utilities.makeTitledBorder;
@@ -802,7 +807,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
                 Complex c = ((ArithmeticElement<Complex>)m).getValue();
-                elements0.add(RProperFreeElement.make(new double[] { c.getReal(), c.getImag() }));
+                elements0.add(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[] { new ArithmeticDouble(c.getReal()), new ArithmeticDouble(c.getImag()) }));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
             if (select != null) {
@@ -827,8 +832,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     RConfiguration config = (RConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        double[] p = new double[] { config.px.get(i), config.py.get(i) };
-                        elementList.addElement(RProperFreeElement.make(p));
+                        ArithmeticDouble[] p = new ArithmeticDouble[] { new ArithmeticDouble(config.px.get(i)), new ArithmeticDouble(config.py.get(i)) };
+                        elementList.addElement(ArithmeticMultiElement.make(RRing.ring, p));
                     }
                 }
             }
@@ -841,8 +846,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     QConfiguration config = (QConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        Rational[] p = new Rational[] { config.qpx.get(i), config.qpy.get(i) }; 
-                        elementList.addElement(QProperFreeElement.make(p));
+                        Rational[] p = new Rational[] { config.qpx.get(i), config.qpy.get(i) };
+                        elementList.addElement(ArithmeticMultiElement.make(QRing.ring, Arrays.stream(p).collect(Collectors.toList())));
                     }
                 }
             }
@@ -855,8 +860,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) }; 
-                        elementList.addElement(ZProperFreeElement.make(p));
+                        List<ArithmeticInteger> pList = new ArrayList<>();
+                        pList.add(new ArithmeticInteger(config.ipx.get(i)));
+                        pList.add(new ArithmeticInteger(config.ipy.get(i)));
+                        elementList.addElement(ArithmeticMultiElement.make(ZRing.ring, pList));
                     }
                 }
             }
@@ -869,8 +876,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 if (select != null) {
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) }; 
-                        elementList.addElement(ZnProperFreeElement.make(p, m.getRing().getOne().getValue().getModulus())); //TODO ugly way to get the modulus
+                        int modulus = m.getRing().getOne().getValue().getModulus(); //TODO ugly way to get the modulus
+                        int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) };
+                        List<ArithmeticModulus> pList = Arrays.stream(p).mapToObj(elementP -> new ArithmeticModulus(elementP, modulus)).collect(Collectors.toList());
+                        elementList.addElement(ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus), pList));
                     }
                 }
             }
