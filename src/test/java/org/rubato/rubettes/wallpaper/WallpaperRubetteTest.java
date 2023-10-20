@@ -26,26 +26,20 @@ package org.rubato.rubettes.wallpaper;
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-import java.io.*;
-
-import java.util.List;
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
@@ -54,13 +48,19 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -106,12 +106,12 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(0));
-		assertEquals(1, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(1, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
-		assertEquals(2, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
-		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(3));
+		assertEquals(2, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(((ArithmeticElement<Rational>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(3));
 	}
 
 	@Test
@@ -238,15 +238,15 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertEquals(((RElement) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
-		assertEquals(((QElement) factor.getElement(new int[]{1, 0})).getValue(), new Rational(pitchValue));
+		assertEquals(((ArithmeticElement<ArithmeticDouble>) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
+		assertEquals(((ArithmeticElement<Rational>) factor.getElement(new int[]{1, 0})).getValue(), new Rational(pitchValue));
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
-		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
-		assertEquals(((QElement) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
+		assertEquals(0, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(((ArithmeticElement<Rational>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
 		assertEquals(0, ((ArithmeticElement<ArithmeticInteger>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
-		assertEquals(0, ((RElement) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
+		assertEquals(0, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
 	}
 
 	@Test
@@ -256,7 +256,7 @@ class WallpaperRubetteTest {
 		assertEquals(0, selectElements.getNumberOfFormBoxes());
 		//test automatic elements
 		selectElements.setMorphism(this.morphisms.get(1));
-		List<List<Integer>> coordinatePaths = new ArrayList<List<Integer>>();
+		List<List<Integer>> coordinatePaths = new ArrayList<>();
 		coordinatePaths.add(this.createPath(0));
 		coordinatePaths.add(this.createPath(1));
 		coordinatePaths.add(this.createPath(0));

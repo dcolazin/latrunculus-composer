@@ -30,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
@@ -48,6 +47,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -72,15 +72,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, new RElement(d));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a simple denotator consisting of an RElement.
      * @param name the name of the new denotator
@@ -92,14 +88,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new RElement(d));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds an anonymous simple denotator consisting of an RElement.
@@ -111,14 +103,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, new RElement(d));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a ZElement.
@@ -131,14 +119,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a ZElement.
@@ -151,14 +135,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         } 
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds an anonymous simple denotator consisting of a ZElement.
@@ -170,14 +150,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticInteger(i)));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a ZnElement.
@@ -191,15 +167,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, new ZnElement(i, p));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Build a simple denotator consisting of a ZnElement.
      * @param name the name of the new denotator
@@ -212,14 +184,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ZnElement(i, p));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds an anonymous simple denotator consisting of a ZnElement.
@@ -232,14 +200,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, new ZnElement(i, p));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a QElement.
@@ -250,16 +214,12 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, Rational r) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new QElement(r));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(r));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a QElement.
@@ -270,16 +230,12 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, Rational r) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new QElement(r));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(r));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds an anonymous simple denotator consisting of a QElement.
@@ -288,16 +244,12 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, Rational r) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new QElement(r));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(r));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of an CElement.
@@ -310,14 +262,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new CElement(c));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator consisting of a ZStringElement.
@@ -330,14 +278,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, new ZStringElement(s));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-    
 
     /**
      * Builds a simple denotator consisting of a ZStringElement.
@@ -350,14 +294,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ZStringElement(s));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds an anonymous simple denotator consisting of a ZStringElement.
@@ -368,15 +308,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, new ZStringElement(s));
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a simple denotator containing the given module element.
      * @param name the name of the new denotator
@@ -387,15 +323,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, element);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a simple denotator containing the given module element.
      * @param name the name of the new denotator
@@ -406,14 +338,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, element);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator containing the given module element.
@@ -424,15 +352,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, element);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a simple denotator containing the given module morphism.
      * @param name the name of the new denotator
@@ -443,15 +367,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(name, (SimpleForm)form, morphism);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a simple denotator containing the given module morphism.
      * @param name the name of the new denotator
@@ -462,14 +382,10 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, morphism);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
-
 
     /**
      * Builds a simple denotator containing the given module morphism.
@@ -480,15 +396,11 @@ public final class DenoFactory {
         try {
             return new SimpleDenotator(null, (SimpleForm)form, morphism);
         }
-        catch (ClassCastException e) {
-            return null;
-        }
-        catch (DomainException e) {
+        catch (ClassCastException | DomainException e) {
             return null;
         }
     }
 
-    
     /**
      * Builds a general denotator.
      * @param name the name of the new denotator
@@ -526,11 +438,8 @@ public final class DenoFactory {
      * @param denotators the coordinate list of the new denotator
      * @return null if unsuccessful
      */
-    public static Denotator makeDenotator(NameDenotator name, Form form, Denotator ... denotators) {        
-        LinkedList<Denotator> denoList = new LinkedList<Denotator>();
-        for (Denotator d : denotators) {
-            denoList.add(d);
-        }
+    public static Denotator makeDenotator(NameDenotator name, Form form, Denotator ... denotators) {
+        LinkedList<Denotator> denoList = new LinkedList<>(Arrays.asList(denotators));
         return makeDenotator(name, form, denoList);
     }
     
@@ -555,10 +464,7 @@ public final class DenoFactory {
      * @return null if unsuccessful
      */
     public static Denotator makeDenotator(String name, Form form, Denotator ... denotators) {
-        LinkedList<Denotator> denoList = new LinkedList<Denotator>();
-        for (Denotator d : denotators) {
-            denoList.add(d);
-        }
+        LinkedList<Denotator> denoList = new LinkedList<>(Arrays.asList(denotators));
         return makeDenotator(name, form, denoList);
     }
     

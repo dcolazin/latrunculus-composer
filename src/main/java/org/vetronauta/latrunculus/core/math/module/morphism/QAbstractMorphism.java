@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 
 /**
@@ -39,8 +39,8 @@ public abstract class QAbstractMorphism extends ModuleMorphism {
     public final ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            Rational value = ((QElement)x).getValue();
-            return new QElement(mapValue(value));
+            Rational value = ((ArithmeticElement<Rational>)x).getValue();
+            return new ArithmeticElement<>(mapValue(value));
         }
         else {
             throw new MappingException("QAbstractMorphism.map: ", x, this);

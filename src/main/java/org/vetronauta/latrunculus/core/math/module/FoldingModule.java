@@ -23,6 +23,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
@@ -39,6 +40,9 @@ public class FoldingModule {
         if (number instanceof ArithmeticInteger) {
             return foldInteger(elements);
         }
+        if (number instanceof Rational) {
+            return foldRational(elements);
+        }
         return null; //TODO
     }
 
@@ -47,6 +51,15 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             ArithmeticElement<ArithmeticInteger> e = (ArithmeticElement<ArithmeticInteger>) elements[i];
             res[i] = e.getValue().intValue();
+        }
+        return res;
+    }
+
+    public static double[] foldRational(ModuleElement[] elements) {
+        double[] res = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            ArithmeticElement<Rational> r = (ArithmeticElement<Rational>)elements[i];
+            res[i] = r.getValue().doubleValue();
         }
         return res;
     }

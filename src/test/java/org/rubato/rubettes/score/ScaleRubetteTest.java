@@ -31,7 +31,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.util.ScaleMap;
@@ -40,6 +41,7 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -71,13 +73,13 @@ class ScaleRubetteTest {
 		double[] ionian = this.rubette.getScaleMap().get("ionian");
 		Iterator<Denotator> steps = scale.getFactors().iterator();
 		int[] path = new int[]{1,0};
-		double previousPitch = ((QElement)steps.next().getElement(path)).getValue().doubleValue();
+		double previousPitch = ((ArithmeticElement<Rational>)steps.next().getElement(path)).getValue().doubleValue();
 		double currentPitch;
 		//starts at 1, due to root note 59...
 		int currentStep = 1;
 		while (steps.hasNext()) {
-			currentPitch = ((QElement)steps.next().getElement(path)).getValue().doubleValue();
-			assertTrue(currentPitch-previousPitch == ionian[currentStep%7]);
+			currentPitch = ((ArithmeticElement<Rational>)steps.next().getElement(path)).getValue().doubleValue();
+			assertEquals(currentPitch - previousPitch, ionian[currentStep % 7]);
 			previousPitch = currentPitch;
 			currentStep++;
 		}

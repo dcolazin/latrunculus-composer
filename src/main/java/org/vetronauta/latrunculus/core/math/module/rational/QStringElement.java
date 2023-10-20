@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
@@ -118,7 +119,7 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         HashMap<String,RingElement> map = new HashMap<>();
         Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new QElement(((Rational)getValue().getFactorForString(s))));
+            map.put(s, new ArithmeticElement<>(((Rational)getValue().getFactorForString(s))));
         }
         return map;
     }

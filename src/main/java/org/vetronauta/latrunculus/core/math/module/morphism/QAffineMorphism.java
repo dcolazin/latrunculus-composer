@@ -19,10 +19,11 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * Affine morphism in <i>Q</i>.
@@ -107,23 +108,22 @@ public class QAffineMorphism extends QAbstractMorphism {
 
     public ModuleMorphism scaled(RingElement element)
             throws CompositionException {
-        if (element instanceof QElement) {
-            Rational s = ((QElement)element).getValue();
-            if (s.isZero()) {
-                return getConstantMorphism(element);
-            }
-            else {
-                return new QAffineMorphism(getA().product(s), getB().product(s));
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof Rational) {
+                if (number.isZero()) {
+                    return getConstantMorphism(element);
+                } else {
+                    return new QAffineMorphism(getA().product((Rational) number), getB().product((Rational) number));
+                }
             }
         }
-        else {
-            throw new CompositionException("QAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("QAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
     
     
     public ModuleElement atZero() {
-        return new QElement(getB());
+        return new ArithmeticElement<>(getB());
     }
     
     

@@ -48,7 +48,6 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
@@ -272,7 +271,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> Q
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new QElement(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue());
+                        return new ArithmeticElement<>(new Rational(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue()));
                     }
                 };
             }
@@ -360,7 +359,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Q
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new QElement(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue());
+                    return new ArithmeticElement<>(new Rational(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }

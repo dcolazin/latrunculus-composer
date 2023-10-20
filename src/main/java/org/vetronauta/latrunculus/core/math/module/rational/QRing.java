@@ -34,8 +34,7 @@ import java.util.List;
 
 /**
  * The field of rationals.
- * @see QElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class QRing extends ArithmeticRing<Rational> implements NumberRing {
@@ -54,7 +53,7 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
     }
 
     public boolean hasElement(ModuleElement element) {
-        return element instanceof QElement;
+        return element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Rational;
     }
 
     public FreeModule<?,ArithmeticElement<Rational>> getFreeModule(int dimension) {

@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public final class QStringProperFreeElement extends ProperFreeElement<QStringPro
     public static final QStringProperFreeElement nullElement = new QStringProperFreeElement(new ArrayList<>());
 
     private final List<RingString<Rational>> value;
-    private FreeModule<?, QElement> module = null;
+    private FreeModule<?, ArithmeticElement<Rational>> module = null;
 
     public static FreeElement<?, QStringElement> make(List<RingString<Rational>> v) {
         assert(v != null);

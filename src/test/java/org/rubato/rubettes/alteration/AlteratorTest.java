@@ -1,27 +1,27 @@
 package org.rubato.rubettes.alteration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
+import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.rubato.rubettes.util.SimpleFormFinder;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Defines tests for the AlterationRubette class.
@@ -54,8 +54,8 @@ class AlteratorTest {
 		Denotator note3 = this.noteGenerator.createNoteDenotator(1, 52.5, 121, 1, 0);
 		int[][] paths = new SimpleFormFinder(this.noteGenerator.getScoreForm()).getSimpleFormArrayPaths();
 		Denotator altered = this.alterator.alter(note1, note2, 0.5, paths);
-		
-		assertTrue(altered.equals(note3));
+
+		assertEquals(altered, note3);
 	}
 
 	@Test
@@ -65,26 +65,26 @@ class AlteratorTest {
 		ModuleMorphism m000 = this.alterator.makeAlteredMorphism(m0, m1, 0);
 		ModuleMorphism m050 = this.alterator.makeAlteredMorphism(m0, m1, 0.5);
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
-		assertTrue(m000.equals(m0));
+		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		assertTrue(m050.map(RProperFreeElement.make(new double[]{1,0,0})).equals(new RElement(2)));
-		assertTrue(m050.map(RProperFreeElement.make(new double[]{0,1,0})).equals(new RElement(3.5)));
-		assertTrue(m050.map(RProperFreeElement.make(new double[]{0,0,1})).equals(new RElement(5)));
-		assertTrue(m100.equals(m1));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{1, 0, 0})), new RElement(2));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 1, 0})), new RElement(3.5));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 0, 1})), new RElement(5));
+		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);
 		m1 = this.morphisms.get(3);
 		m000 = this.alterator.makeAlteredMorphism(m0, m1, 0);
 		m050 = this.alterator.makeAlteredMorphism(m0, m1, 0.5);
 		m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
-		assertTrue(m000.equals(m0));
+		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
 		Rational zero = new Rational(0);
 		Rational one = new Rational(1);
-		assertTrue(m050.map(QProperFreeElement.make(new Rational[]{one,zero,zero})).equals(new QElement(new Rational(2))));
-		assertTrue(m050.map(QProperFreeElement.make(new Rational[]{zero,one,zero})).equals(new QElement(new Rational(3.5))));
-		assertTrue(m050.map(QProperFreeElement.make(new Rational[]{zero,zero,one})).equals(new QElement(new Rational(5))));
-		assertTrue(m100.equals(m1));
+		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{one, zero, zero})), new ArithmeticElement<>(new Rational(2)));
+		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{zero, one, zero})), new ArithmeticElement<>(new Rational(3.5)));
+		assertEquals(m050.map(QProperFreeElement.make(new Rational[]{zero, zero, one})), new ArithmeticElement<>(new Rational(5)));
+		assertEquals(m100, m1);
 	}
 	
 }

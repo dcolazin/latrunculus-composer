@@ -35,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -138,7 +137,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // R -> Q
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new QElement(new Rational(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()));
+                        return new ArithmeticElement<>(new Rational(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -174,7 +173,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // C -> Q
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new QElement(new Rational(((ArithmeticElement<Complex>)element).getValue().abs()));
+                        return new ArithmeticElement<>(new Rational(((ArithmeticElement<Complex>)element).getValue().abs()));
                     }
                 };
             }
@@ -182,7 +181,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // C -> Z
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement(new ArithmeticInteger((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs())));
+                        return new ArithmeticElement<>(new ArithmeticInteger((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs())));
                     }
                 };
             }

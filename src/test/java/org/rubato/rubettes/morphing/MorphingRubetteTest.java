@@ -19,18 +19,19 @@
 
 package org.rubato.rubettes.morphing;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.rubato.rubettes.util.MacroNoteGenerator;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -122,11 +123,11 @@ class MorphingRubetteTest {
 	}
 	
 	private double getPitch(Denotator denotator) throws RubatoException {
-		return ((QElement)denotator.getElement(new int[]{1,0})).getValue().doubleValue();
+		return ((ArithmeticElement<Rational>)denotator.getElement(new int[]{1,0})).getValue().doubleValue();
 	}
 	
 	private double getDuration(Denotator denotator) throws RubatoException {
-		return ((RElement)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
+		return ((ArithmeticElement<ArithmeticDouble>)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
 	}
 
 }

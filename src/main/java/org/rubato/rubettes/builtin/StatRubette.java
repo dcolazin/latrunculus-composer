@@ -19,20 +19,29 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.makeTitledBorder;
-
-import java.awt.BorderLayout;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.*;
-
-import org.rubato.base.*;
+import org.rubato.base.AbstractRubette;
+import org.rubato.base.Repository;
+import org.rubato.base.RubatoConstants;
+import org.rubato.base.RubatoException;
+import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
@@ -40,19 +49,14 @@ import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.w3c.dom.Element;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.rubato.composer.Utilities.makeTitledBorder;
 
 public class StatRubette extends AbstractRubette {
 
@@ -255,13 +259,13 @@ public class StatRubette extends AbstractRubette {
             throws RubatoException {
         Ring r = e.getModule().getRing();
         if (r.equals(RRing.ring)) {
-            e.scale(new RElement(1/(double)s));
+            e.scale(new ArithmeticElement<>(new ArithmeticDouble(1/(double)s)));
         }
         else if (r.equals(QRing.ring)) {
-            e.scale(new QElement(1, s));
+            e.scale(new ArithmeticElement<>(new Rational(1, s)));
         }
         else if (r.equals(CRing.ring)) {
-            e.scale(new CElement(1/(double)s));
+            e.scale(new ArithmeticElement<>(new Complex(1/(double)s)));
         }
         else {
             throw new RubatoException("Cannot take averages over ring "+r);

@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -132,7 +133,7 @@ public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((QElement)castElement).getValue();
+            values[i] = ((ArithmeticElement<Rational>)castElement).getValue();
         }
 
         return (QProperFreeElement)QProperFreeElement.make(values);
@@ -154,7 +155,7 @@ public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((QElement)castElement).getValue();
+                    elements[i] = ((ArithmeticElement<Rational>)castElement).getValue();
                 }
                 return (QProperFreeElement) QProperFreeElement.make(elements);
             }

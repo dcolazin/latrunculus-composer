@@ -23,8 +23,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 
 /**
  * @author vetronauta
@@ -38,6 +40,9 @@ public class ArithmeticRingRepository {
         ArithmeticNumber<?> number = element.getValue();
         if (number instanceof ArithmeticInteger) {
             return ZRing.ring;
+        }
+        if (number instanceof Rational) {
+            return QRing.ring;
         }
         return null; //TODO
     }

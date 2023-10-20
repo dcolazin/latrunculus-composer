@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.LinkedList;
 
@@ -105,7 +107,7 @@ public final class QStringRing extends StringRing<QStringElement> {
             return new QStringElement(new RingString<>(rs));
         }
         else {
-            QElement e = QRing.ring.cast(element);
+            ArithmeticElement<Rational> e = QRing.ring.cast(element);
             if (e == null) {
                 return null;
             }
