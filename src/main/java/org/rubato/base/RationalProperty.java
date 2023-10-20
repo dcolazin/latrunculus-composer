@@ -119,7 +119,7 @@ public class RationalProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            Rational d = Rational.parseRational(s);
+            Rational d = ArithmeticParsingUtils.parseRational(s);
             if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
                 tmpValue = d;
                 return;
@@ -155,7 +155,7 @@ public class RationalProperty
         RationalProperty property = clone();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         try {
-            property.setValue(Rational.parseRational(s));
+            property.setValue(ArithmeticParsingUtils.parseRational(s));
         }
         catch (NumberFormatException e) {
             property.setValue(value);

@@ -29,6 +29,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
@@ -99,7 +100,7 @@ public class ComplexProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            tmpValue = Complex.parseComplex(s);
+            tmpValue = ArithmeticParsingUtils.parseComplex(s);
         }
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
@@ -131,7 +132,7 @@ public class ComplexProperty
         ComplexProperty property = clone();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         try {
-            property.setValue(Complex.parseComplex(s));
+            property.setValue(ArithmeticParsingUtils.parseComplex(s));
         }
         catch (NumberFormatException e) {
             property.setValue(value);

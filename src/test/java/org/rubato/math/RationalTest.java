@@ -168,11 +168,11 @@ class RationalTest {
 
     @Test
     void testRationalParseRational() {
-        r = Rational.parseRational("60/154");
+        r = ArithmeticParsingUtils.parseRational("60/154");
         assertEquals(new Rational(30, 77), r);
-        r = Rational.parseRational("-60/154");
+        r = ArithmeticParsingUtils.parseRational("-60/154");
         assertEquals(new Rational(-30, 77), r);
-        r = Rational.parseRational("60/-154");
+        r = ArithmeticParsingUtils.parseRational("60/-154");
         assertEquals(new Rational(-30, 77), r);
     }
 
@@ -191,7 +191,7 @@ class RationalTest {
 
     @Test
     void testRationalToString() {
-        String s = Rational.parseRational("60/-154").toString();
+        String s = ArithmeticParsingUtils.parseRational("60/-154").toString();
         assertEquals("-30/77", s);
     }
 

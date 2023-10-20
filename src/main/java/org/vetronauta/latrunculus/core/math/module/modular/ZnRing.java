@@ -20,20 +20,13 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.List;
 
@@ -43,10 +36,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRing, Modular {
+public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements NumberRing, Modular {
 
     private ZnRing(int modulus) {
-        super(new ZnElement(0, modulus), new ZnElement(1, modulus));
+        super(new ArithmeticModulus(0, modulus), new ArithmeticModulus(1, modulus));
         this.modulus = modulus;
     }
 
@@ -98,7 +91,7 @@ public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRin
     }
 
     
-    public ZnElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<ArithmeticModulus> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -107,62 +100,20 @@ public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRin
         }
     }
 
-    
-    public ZnElement cast(ModuleElement element) {
-        if (element instanceof ZElement) {
-            return cast((ZElement)element);
+    public ArithmeticElement<ArithmeticModulus> cast(ModuleElement<?,?> element) {
+        if (element instanceof ArithmeticElement) {
+            return cast((ArithmeticElement<?>) element);
         }
-        else if (element instanceof ZnElement) {
-            return cast((ZnElement)element);
+        if (element instanceof DirectSumElement) {
+            return element.cast(this);
         }
-        else if (element instanceof QElement) {
-            return cast((QElement)element);
-        }
-        else if (element instanceof RElement) {
-            return cast((RElement)element);
-        }
-        else if (element instanceof CElement) {
-            return cast((CElement)element);
-        }
-        else if (element instanceof DirectSumElement) {
-            return (ZnElement) element.cast(this);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
-    
-    public ZnElement cast(ZElement element) {
-        return new ZnElement(element.getValue().intValue(), modulus);
+    public ArithmeticElement<ArithmeticModulus> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new ArithmeticModulus(element.getValue().intValue(), modulus));
     }
 
-    
-    public ZnElement cast(ZnElement element) {
-        if (element.getModulus() == getModulus()) {
-            return element;
-        }
-        else {
-            return new ZnElement(element.getValue().getValue(), modulus);
-        }
-    }
-    
-    
-    public ZnElement cast(QElement element) {
-        return new ZnElement((int)Math.round(element.getValue().doubleValue()), modulus);
-    }
-
-    
-    public ZnElement cast(RElement element) {
-        return new ZnElement((int)Math.round(element.getValue().doubleValue()), modulus);
-    }
-
-    
-    public ZnElement cast(CElement element) {
-        return new ZnElement((int)Math.round(element.getValue().getReal()), modulus);
-    }
-
-    
     public int getModulus() {
         return modulus;
     }
@@ -178,10 +129,10 @@ public final class ZnRing extends ArithmeticRing<ZnElement> implements NumberRin
     }
 
     
-    public ZnElement parseString(String s) {
+    public ArithmeticElement<ArithmeticModulus> parseString(String s) {
     	try {
     		int value = Integer.parseInt(TextUtils.unparenthesize(s));
-        	return new ZnElement(value, modulus);
+        	return new ArithmeticElement<>(new ArithmeticModulus(value, modulus));
     	}
     	catch (NumberFormatException e) {
     		return null;

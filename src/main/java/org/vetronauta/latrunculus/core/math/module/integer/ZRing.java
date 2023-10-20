@@ -40,7 +40,7 @@ import java.util.List;
 public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements NumberRing {
 
     private ZRing() {
-        super(new ArithmeticElement<>(new ArithmeticInteger(0)), new ArithmeticElement<>(new ArithmeticInteger(1)));
+        super(new ArithmeticInteger(0), new ArithmeticInteger(1));
     }
 
     /**

@@ -40,6 +40,11 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
 
     //TODO proper consturctor or make abstract?
 
+    protected ArithmeticRing(N zero, N one) {
+        this.zero = new ArithmeticElement<>(zero);
+        this.one = new ArithmeticElement<>(one);
+    }
+
     @Override
     public boolean isVectorSpace() {
         return one.isFieldElement();

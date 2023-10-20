@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -187,7 +188,7 @@ public final class CProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
             Complex[] values = new Complex[components.length];
             for (int i = 0; i < values.length; i++) {
                 try {
-                    values[i] = Complex.parseComplex(components[i]);
+                    values[i] = ArithmeticParsingUtils.parseComplex(components[i]);
                 }
                 catch (NumberFormatException e) {
                     return null;

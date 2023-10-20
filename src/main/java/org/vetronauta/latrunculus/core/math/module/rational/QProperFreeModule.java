@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
@@ -40,11 +41,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<QElement>,QElement> {
+public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<Rational>, ArithmeticElement<Rational>> {
 
     public static final QProperFreeModule nullModule = new QProperFreeModule(0);
 
-    public static FreeModule<?, QElement> make(int dimension) {
+    public static FreeModule<?, ArithmeticElement<Rational>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -180,7 +181,7 @@ public final class QProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
             Rational[] values = new Rational[components.length];
             for (int i = 0; i < values.length; i++) {
                 try {
-                    values[i] = Rational.parseRational(components[i]);
+                    values[i] = ArithmeticParsingUtils.parseRational(components[i]);
                 }
                 catch (NumberFormatException e) {
                     return null;

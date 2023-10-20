@@ -148,7 +148,7 @@ public final class QStringRing extends StringRing<QStringElement> {
             if (term.length < 2) {
                 throw new NumberFormatException();
             }
-            Rational f = Rational.parseRational(term[0]);
+            Rational f = ArithmeticParsingUtils.parseRational(term[0]);
             String w = TextUtils.unquote(term[1]);
             factors.add(f);
             words.add(w);

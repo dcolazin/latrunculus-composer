@@ -36,7 +36,7 @@ public class JQElementSlider extends JElementSlider {
     protected void maxFieldUpdate() {
         Rational cur = getRational();
         try {
-            max = Rational.parseRational(getMaxField());
+            max = ArithmeticParsingUtils.parseRational(getMaxField());
         }
         catch (NumberFormatException e) {}
         if (max.compareTo(min) <= 0) { max = min.sum(1); }
@@ -54,7 +54,7 @@ public class JQElementSlider extends JElementSlider {
     protected void minFieldUpdate() {
         Rational cur = getRational();
         try {
-            min = Rational.parseRational(getMinField());
+            min = ArithmeticParsingUtils.parseRational(getMinField());
         }
         catch (NumberFormatException e) {}
         if (max.compareTo(min) <= 0) { min = max.difference(1); }

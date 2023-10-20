@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -27,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -41,9 +43,9 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ZnElement>,ZnElement> implements Modular {
+public final class ZnProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ArithmeticModulus>, ArithmeticElement<ArithmeticModulus>> implements Modular {
 
-    public static FreeModule<?, ZnElement> make(int dimension, int modulus) {
+    public static FreeModule<?, ArithmeticElement<ArithmeticModulus>> make(int dimension, int modulus) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return new ZnProperFreeModule(0, modulus);

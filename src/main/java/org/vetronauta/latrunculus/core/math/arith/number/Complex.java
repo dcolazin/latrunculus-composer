@@ -471,19 +471,6 @@ public final class Complex implements ArithmeticNumber<Complex> {
         // TODO: not yet implemented
         return null;
     }
-    
-    /**
-     * Returns the complex number with the string representation <code>s</code>
-     */
-    public static Complex parseComplex(String s) {
-        if (s.length() == 0) {
-            throw new NumberFormatException("Empty string makes no complex");
-        }
-        else if (s.charAt(0) == '(' && s.charAt(s.length()-1) == ')') {
-            s = s.substring(1, s.length()-1);
-        }
-        return new Complex(s);
-    }
 
     @Override
     public boolean equals(Object other) {

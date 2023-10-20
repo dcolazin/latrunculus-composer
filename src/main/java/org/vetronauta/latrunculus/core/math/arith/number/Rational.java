@@ -337,34 +337,6 @@ public final class Rational implements ArithmeticNumber<Rational> {
     public int intValue() {
         return (int)Math.round(doubleValue());
     }
-
-    
-    /**
-     * Returns the rational correspoding to its string representation <code>s</code>.
-     */
-    public static Rational parseRational(String s) {
-        String unparenthesized = TextUtils.unparenthesize(s);
-        int divpos = unparenthesized.indexOf("/");
-        if (divpos > -1) {
-            try {
-                int n = Integer.parseInt(unparenthesized.substring(0, divpos));
-                int d = Integer.parseInt(unparenthesized.substring(divpos + 1));
-                return new Rational(n,d);
-            }
-            catch (Exception e) {
-                throw new NumberFormatException();
-            }
-        }
-        else {
-            try {
-                return new Rational(Integer.parseInt(s));
-            }
-            catch (Exception e) {
-                throw new NumberFormatException();
-            }
-        }
-    }
-
     
     public boolean isIntegral() {
         return denom == 1;
@@ -381,7 +353,6 @@ public final class Rational implements ArithmeticNumber<Rational> {
             return num+"/"+denom;
         }
     }
-
 
     public Rational deepCopy() {
         return this;

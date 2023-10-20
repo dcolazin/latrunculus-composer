@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -42,7 +43,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class CRing extends ArithmeticRing<CElement> implements NumberRing {
+public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     /**
      * The unique instance of the ring of complex numbers.
@@ -106,7 +107,7 @@ public final class CRing extends ArithmeticRing<CElement> implements NumberRing 
     
     public CElement parseString(String string) {
     	try {
-    		Complex value = Complex.parseComplex(TextUtils.unparenthesize(string));
+    		Complex value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
         	return new CElement(value);
     	}
     	catch (NumberFormatException e) {
@@ -141,6 +142,6 @@ public final class CRing extends ArithmeticRing<CElement> implements NumberRing 
     private static final int basicHash = "CRing".hashCode();
 
     private CRing() {
-        super(new CElement(0), new CElement(1));
+        super(new Complex(0), new Complex(1));
     }
 }

@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -208,14 +209,14 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         Complex a0;
         Complex b0;
         try {
-            a0 = Complex.parseComplex(element.getAttribute(A_ATTR));
+            a0 = ArithmeticParsingUtils.parseComplex(element.getAttribute(A_ATTR));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a complex number.", A_ATTR, getElementTypeName(clazz));
             return null;
         }
         try {
-            b0 = Complex.parseComplex(element.getAttribute(B_ATTR));
+            b0 = ArithmeticParsingUtils.parseComplex(element.getAttribute(B_ATTR));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a complex number.", B_ATTR, getElementTypeName(clazz));
@@ -239,14 +240,14 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         Rational aValue;
         Rational bValue;
         try {
-            aValue = Rational.parseRational(element.getAttribute(A_ATTR));
+            aValue = ArithmeticParsingUtils.parseRational(element.getAttribute(A_ATTR));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a rational number.", A_ATTR, getElementTypeName(clazz));
             return null;
         }
         try {
-            bValue = Rational.parseRational(element.getAttribute(B_ATTR));
+            bValue = ArithmeticParsingUtils.parseRational(element.getAttribute(B_ATTR));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a rational number.", B_ATTR, getElementTypeName(clazz));
@@ -413,7 +414,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             int n = 0;
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    A0.set(i, j, Complex.parseComplex(numbers[n]));
+                    A0.set(i, j, ArithmeticParsingUtils.parseComplex(numbers[n]));
                     n++;
                 }
             }
@@ -437,7 +438,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         Complex b0[]= new Complex[rows];
         try {
             for (int i = 1; i <= rows; i++) {
-                b0[i] = Complex.parseComplex(numbers[i]);
+                b0[i] = ArithmeticParsingUtils.parseComplex(numbers[i]);
             }
         }
         catch (NumberFormatException e) {
@@ -494,7 +495,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             int n = 0;
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    A0.set(i, j, Rational.parseRational(numbers[n]));
+                    A0.set(i, j, ArithmeticParsingUtils.parseRational(numbers[n]));
                     n++;
                 }
             }
@@ -518,7 +519,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         Rational b0[]= new Rational[rows];
         try {
             for (int i = 0; i < rows; i++) {
-                b0[i] = Rational.parseRational(numbers[i]);
+                b0[i] = ArithmeticParsingUtils.parseRational(numbers[i]);
             }
         }
         catch (NumberFormatException e) {

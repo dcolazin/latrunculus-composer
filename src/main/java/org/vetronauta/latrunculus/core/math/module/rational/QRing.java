@@ -20,17 +20,15 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 
 import java.util.List;
 
@@ -40,10 +38,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QRing extends ArithmeticRing<QElement> implements NumberRing {
+public final class QRing extends ArithmeticRing<Rational> implements NumberRing {
 
     private QRing() {
-        super(new QElement(0), new QElement(1));
+        super(new Rational(0), new Rational(1));
     }
 
     /**
@@ -59,7 +57,7 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
         return element instanceof QElement;
     }
 
-    public FreeModule<?,QElement> getFreeModule(int dimension) {
+    public FreeModule<?,ArithmeticElement<Rational>> getFreeModule(int dimension) {
         return QProperFreeModule.make(dimension);
     }
 
@@ -78,7 +76,7 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
         return super.compareTo(object);
     }
     
-    public QElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<Rational> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -87,50 +85,19 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
         }
     }
 
-    public QElement cast(ModuleElement element) {
-        if (element instanceof ZElement) {
-            return cast((ZElement)element);
+    public ArithmeticElement<Rational> cast(ModuleElement<?,?> element) {
+        if (element instanceof ArithmeticElement) {
+            return cast((ArithmeticElement<?>) element);
         }
-        else if (element instanceof ZnElement) {
-            return cast((ZnElement)element);
+        if (element instanceof DirectSumElement) {
+            return element.cast(this);
         }
-        else if (element instanceof QElement) {
-            return (QElement)element;
-        }
-        else if (element instanceof RElement) {
-            return cast((RElement)element);
-        }
-        else if (element instanceof CElement) {
-            return cast((CElement)element);
-        }
-        else if (element instanceof DirectSumElement) {
-            return (QElement)element.cast(this);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
-    
-    public QElement cast(ZElement element) {
-        return new QElement(element.getValue().intValue(), 1);
+    public ArithmeticElement<Rational> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new Rational(element.getValue().doubleValue()));
     }
-
-    
-    public QElement cast(ZnElement element) {
-        return new QElement(element.getValue().getValue(), 1);
-    }
-    
-    
-    public QElement cast(RElement element) {
-        return new QElement(new Rational(element.getValue().doubleValue()));
-    }
-
-    
-    public QElement cast(CElement element) {
-        return new QElement(new Rational(element.getValue().getReal()));
-    }
-
     
     public String toString() {
         return "QRing";
@@ -142,10 +109,10 @@ public final class QRing extends ArithmeticRing<QElement> implements NumberRing 
     }
 
     
-    public QElement parseString(String string) {
+    public ArithmeticElement<Rational> parseString(String string) {
     	try {
-    		Rational value = Rational.parseRational(TextUtils.unparenthesize(string));
-        	return new QElement(value);
+    		Rational value = ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
+        	return new ArithmeticElement<>(value);
     	}
     	catch (NumberFormatException e) {
     		return null;

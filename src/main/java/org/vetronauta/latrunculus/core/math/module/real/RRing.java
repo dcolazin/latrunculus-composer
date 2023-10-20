@@ -20,18 +20,14 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QElement;
 
 import java.util.List;
 
@@ -41,7 +37,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RRing extends ArithmeticRing<RElement> implements NumberRing {
+public final class RRing extends ArithmeticRing<ArithmeticDouble> implements NumberRing {
 
     /**
      * The unique instance of the ring of reals.
@@ -77,7 +73,7 @@ public final class RRing extends ArithmeticRing<RElement> implements NumberRing 
     }
 
 
-    public RElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<ArithmeticDouble> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -86,52 +82,20 @@ public final class RRing extends ArithmeticRing<RElement> implements NumberRing 
         }
     }
 
-    
-    public RElement cast(ModuleElement element) {
-        if (element instanceof ZElement) {
-            return cast((ZElement)element);
+
+    public ArithmeticElement<ArithmeticDouble> cast(ModuleElement<?,?> element) {
+        if (element instanceof ArithmeticElement) {
+            return cast((ArithmeticElement<?>) element);
         }
-        else if (element instanceof ZnElement) {
-            return cast((ZnElement)element);
+        if (element instanceof DirectSumElement) {
+            return element.cast(this);
         }
-        else if (element instanceof QElement) {
-            return cast((QElement)element);
-        }
-        else if (element instanceof RElement) {
-            return (RElement) element;
-        }
-        else if (element instanceof CElement) {
-            return cast((CElement)element);
-        }
-        else if (element instanceof DirectSumElement) {
-            return (RElement) element.cast(this);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
-    
-    public RElement cast(ZElement element) {
-        return new RElement(element.getValue().intValue());
+    public ArithmeticElement<ArithmeticDouble> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new ArithmeticDouble(element.getValue().doubleValue()));
     }
-
-    
-    public RElement cast(ZnElement element) {
-        return new RElement(element.getValue().getValue());
-    }
-    
-    
-    public RElement cast(QElement element) {
-        return new RElement(element.getValue().doubleValue());
-    }
-
-    
-    public RElement cast(CElement element) {
-        return new RElement(element.getValue().getReal());
-    }
-
-    
     public String toString() {
         return "RRing";
     }
@@ -142,10 +106,10 @@ public final class RRing extends ArithmeticRing<RElement> implements NumberRing 
     }
     
     
-    public RElement parseString(String string) {
+    public ArithmeticElement<ArithmeticDouble> parseString(String string) {
     	try {
     		double value = Double.parseDouble(TextUtils.unparenthesize(string));
-        	return new RElement(value);
+        	return new ArithmeticElement<>(new ArithmeticDouble(value));
     	}
     	catch (NumberFormatException e) {
     		return null;
@@ -169,6 +133,6 @@ public final class RRing extends ArithmeticRing<RElement> implements NumberRing 
     private static final int basicHash = "RRing".hashCode();
 
     private RRing() {
-        super(new RElement(0), new RElement(1));
+        super(new ArithmeticDouble(0), new ArithmeticDouble(1));
     }
 }

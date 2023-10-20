@@ -387,7 +387,7 @@ class JAffineMorphismType
                 for (int j = 0; j < 2; j++) {
                     try {
                         if (qring) {
-                            A[i][j] = Rational.parseRational(getStringValue(i, j)).doubleValue();
+                            A[i][j] = ArithmeticParsingUtils.parseRational(getStringValue(i, j)).doubleValue();
                         }
                         else {
                             A[i][j] = Double.parseDouble(getStringValue(i, j));
@@ -399,7 +399,7 @@ class JAffineMorphismType
                 }
                 try {
                     if (qring) {
-                        b[i] = Rational.parseRational(getStringValue(i)).doubleValue();
+                        b[i] = ArithmeticParsingUtils.parseRational(getStringValue(i)).doubleValue();
                     }
                     else {
                         b[i] = Double.parseDouble(getStringValue(i));
