@@ -30,6 +30,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,7 +204,7 @@ public final class ZStringProperFreeElement extends ProperFreeElement<ZStringPro
 
     public Module getModule() { //TODO this is wrong, the meaning of getModule is different from usual getModules types
         if (module == null) {
-            module = ZProperFreeModule.make(getLength());
+            module = ArithmeticMultiModule.make(ZRing.ring, getLength());
         }
         return module;
     }

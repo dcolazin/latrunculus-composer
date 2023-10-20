@@ -19,8 +19,11 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
 
     private final ArithmeticRing<N> ring;
 
-    protected ArithmeticMultiModule(ArithmeticRing<N> ring, int dimension) {
+    public ArithmeticMultiModule(ArithmeticRing<N> ring, int dimension) {
         super(dimension);
+        if (dimension <= 1) {
+            throw new IllegalArgumentException("ArithmeticMultiModule must have dimension >= 2");
+        }
         this.ring = ring;
     }
 

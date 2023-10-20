@@ -321,7 +321,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 else            return ZnRing.make(sub);
             }
             else {
-                if (sub == -1)   return ZProperFreeModule.make(sup);
+                if (sub == -1)   return ArithmeticMultiModule.make(ZRing.ring, sup);
                 else            return ZnProperFreeModule.make(sup, sub);
             }
         }

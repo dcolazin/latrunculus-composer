@@ -24,8 +24,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeModule;
 
@@ -173,7 +176,7 @@ public class ModuloMorphism extends ModuleMorphism {
     
     
     private ModuloMorphism(int dim, int modulus) {
-        super(ZProperFreeModule.make(dim), ZnProperFreeModule.make(dim, modulus));
+        super(ArithmeticMultiModule.make(ZRing.ring, dim), ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(modulus), dim));
         this.modulus = modulus;
         this.dimension = dim;
     }

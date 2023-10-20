@@ -10,6 +10,8 @@ import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -175,7 +177,7 @@ class DenotatorPathTest {
 	@Test
 	void testOtherStuffForThesisTest() throws RubatoException {
 		SimpleForm onset = FormFactory.makeQModuleForm("Onset");
-		Module eulerPitchSpace = ZProperFreeModule.make(3);
+		Module eulerPitchSpace = ArithmeticMultiModule.make(ZRing.ring, 3);
 		SimpleForm eulerPitch = FormFactory.makeModuleForm("EulerPitch", eulerPitchSpace);
 		Module loudnessSpace = ZStringProperFreeModule.make(1);
 		SimpleForm loudness = FormFactory.makeModuleForm("Loudness", loudnessSpace);

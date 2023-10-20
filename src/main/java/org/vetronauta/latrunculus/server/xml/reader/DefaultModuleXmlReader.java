@@ -184,7 +184,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return ZProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(ZRing.ring, dimension);
     }
 
     private Module readZnProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {

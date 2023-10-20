@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
 
     
     public FreeModule<?, ArithmeticElement<ArithmeticInteger>> getFreeModule(int dimension) {
-        return ZProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(ring, dimension);
     }
 
     @Override

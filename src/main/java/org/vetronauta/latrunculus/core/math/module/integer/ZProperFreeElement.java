@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
 
     public static final ZProperFreeElement nullElement = new ZProperFreeElement(new ArrayList<>());
 
-    private ZProperFreeModule module;
+    private ArithmeticMultiModule<ArithmeticInteger> module;
 
     private ZProperFreeElement(List<ArithmeticElement<ArithmeticInteger>> value) {
         super(value);
@@ -81,9 +82,9 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
     }
 
     @Override
-    public ZProperFreeModule getModule() {
+    public ArithmeticMultiModule<ArithmeticInteger> getModule() {
         if (module == null) {
-            module = (ZProperFreeModule)ZProperFreeModule.make(getLength());
+            module = new ArithmeticMultiModule<>(ZRing.ring, getLength());
         }
         return module;
     }
