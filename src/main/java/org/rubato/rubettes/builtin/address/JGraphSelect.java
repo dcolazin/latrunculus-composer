@@ -24,11 +24,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
@@ -89,7 +89,7 @@ class JGraphSelect
         else if (ring instanceof CRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Complex>> p = ((CProperFreeElement)m).getValue();
+                List<ArithmeticElement<Complex>> p = ((ArithmeticMultiElement<Complex>)m).getValue();
                 config.addPoint(p.get(0).getValue().abs(), p.get(1).getValue().abs());
             }
         }

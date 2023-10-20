@@ -118,4 +118,8 @@ public class ArithmeticParsingUtils {
         return new ArithmeticDouble(Double.parseDouble(s));
     }
 
+    public static ArithmeticRing<?> parseRing(String s) {
+        return null; //TODO
+    }
+
 }

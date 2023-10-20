@@ -27,10 +27,10 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
@@ -180,7 +180,7 @@ public class FoldingModule {
     public static double[] multiFoldComplex(ModuleElement<?,?>[] elements, int length) {
         double[][] res = new double[elements.length][length*2];
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Complex>> c = ((CProperFreeElement)elements[i]).getValue();
+            List<ArithmeticElement<Complex>> c = ((ArithmeticMultiElement<Complex>)elements[i]).getValue();
             for (int j = 0; j < length; j++) {
                 res[i][2*j] = c.get(j).getValue().getReal();
                 res[i][2*j+1] = c.get(j).getValue().getImag();

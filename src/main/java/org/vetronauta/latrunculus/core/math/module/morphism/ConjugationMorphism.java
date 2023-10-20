@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -48,13 +47,14 @@ public final class ConjugationMorphism extends ModuleMorphism {
             if (number instanceof Complex) {
                 return new ArithmeticElement<>(((Complex) number).conjugated());
             }
-        } else if (x instanceof CProperFreeElement) {
-            CProperFreeElement element = (CProperFreeElement) x;
-            Complex[] res = new Complex[element.getValue().size()];
-            for (int i = 0; i < element.getValue().size(); i++) {
-                res[i] = element.getValue().get(i).getValue().conjugated();
-            }
-            return ArithmeticMultiElement.make(CRing.ring, res);
+        } else if (x instanceof ArithmeticMultiElement && (((ArithmeticMultiElement<?>) x).getRing() instanceof CRing)) {
+                ArithmeticMultiElement<Complex> element = (ArithmeticMultiElement<Complex>) x;
+                Complex[] res = new Complex[element.getValue().size()];
+                for (int i = 0; i < element.getValue().size(); i++) {
+                    res[i] = element.getValue().get(i).getValue().conjugated();
+                }
+                return ArithmeticMultiElement.make(CRing.ring, res);
+
         }
         throw new MappingException("ConjugationMorphism.map: ", x, this);
     }

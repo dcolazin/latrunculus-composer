@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -507,7 +506,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                                 for (int i = 0; i < v_from.size(); i++) {
                                     v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
                                 }
-                                return CProperFreeElement.make(CRing.ring, v_to);
+                                return ArithmeticMultiElement.make(CRing.ring, v_to);
                             }
                         };
                     }

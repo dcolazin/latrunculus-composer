@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
-import org.rubato.util.Base64;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
@@ -29,8 +28,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -43,13 +40,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
@@ -78,7 +73,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.BASE64;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
@@ -97,19 +91,16 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
     @Override
     public ModuleElement fromXML(Element element, Class<? extends ModuleElement> clazz, XMLReader reader) {
         if (ArithmeticElement.class.isAssignableFrom(clazz)) {
-            if (Modular.class.isAssignableFrom(clazz)) {
+            if (Modular.class.isAssignableFrom(clazz)) { //TODO this check does not works
                 return readModularArithmeticElement(element, clazz, reader);
             }
             return readArithmeticElement(element, clazz, reader);
         }
-        if (CProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readCProperFreeElement(element, clazz, reader);
-        }
-        if (ZProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readZProperFreeElement(element, clazz, reader);
-        }
-        if (ZnProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readZnProperFreeElement(element, clazz, reader);
+        if (ArithmeticMultiElement.class.isAssignableFrom(clazz)) {
+            if (Modular.class.isAssignableFrom(clazz)) { //TODO this check does not works
+                return readZnProperFreeElement(element, clazz, reader);
+            }
+            return readArithmeticMultiElement(element, clazz, reader);
         }
         if (ZStringElement.class.isAssignableFrom(clazz)) {
             return readZStringElement(element, clazz, reader);
@@ -230,55 +221,29 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             return null;
         }
     }
-    private ModuleElement readCProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+
+    private ArithmeticMultiElement<?> readArithmeticMultiElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUES_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUES_ATTR);
             return null;
         }
 
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        Complex[] complexValues = new Complex[values.length];
-        for (int i = 0; i < values.length; i++) {
-            try {
-                complexValues[i] = ArithmeticParsingUtils.parseComplex(values[i]);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Values in type %%1 must be a comma-separated list of rationals.", getElementTypeName(clazz));
-                return null;
-            }
+        ArithmeticRing<?> ring = ArithmeticParsingUtils.parseRing(element.getAttribute(VALUE_ATTR));
+        try {
+            return parseWithRing(ring, element.getAttribute(VALUES_ATTR).split(","));
+        } catch (NumberFormatException e) {
+            reader.setError("Values in type %%1 must be a comma-separated list of rationals.", getElementTypeName(clazz));
+            return null;
         }
-
-        return ArithmeticMultiElement.make(CRing.ring, complexValues);
     }
 
-    private ModuleElement readZProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(VALUES_ATTR)) {
-            Element child = XMLReader.getChild(element, BASE64);
-            if (child == null) {
-                reader.setError("Type %%1 is missing attribute %%2 or child element <%3>.", getElementTypeName(clazz), VALUES_ATTR, BASE64);
-                return null;
-            }
-
-            String s = XMLReader.getText(child);
-            List<ArithmeticInteger> intValues = Arrays.stream(Base64.decodeIntArray(s)).mapToObj(ArithmeticInteger::new).collect(Collectors.toList());
-            return ArithmeticMultiElement.make(ZRing.ring, intValues);
-        }
-
-        String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        List<ArithmeticInteger> intValues = new ArrayList<>(values.length);
+    private static <N extends ArithmeticNumber<N>> ArithmeticMultiElement<N> parseWithRing(ArithmeticRing<N> ring, String[] values) {
+        List<N> elements = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
-            try {
-                intValues.add(new ArithmeticInteger(Integer.parseInt(values[i])));
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName(clazz));
-                return null;
-            }
+            elements.add(ArithmeticParsingUtils.parse(ring, values[i]));
         }
-
-        return ArithmeticMultiElement.make(ZRing.ring, intValues);
+        return new ArithmeticMultiElement(ring, elements);
     }
 
     private ModuleElement readZnProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
@@ -315,7 +280,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
         }
 
-        return ZnProperFreeElement.make(ArithmeticRingRepository.getModulusRing(mod), intValues);
+        return ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(mod), intValues);
     }
 
     private ModuleElement readZStringElement(Element element, Class<?> clazz, XMLReader reader) {

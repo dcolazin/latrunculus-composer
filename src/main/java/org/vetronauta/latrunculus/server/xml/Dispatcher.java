@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -28,14 +27,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
@@ -81,13 +79,11 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
@@ -204,11 +200,7 @@ public class Dispatcher {
         addModuleElement(RStringElement.class);
         addModuleElement(QStringElement.class);
 
-        addModuleElement(ZProperFreeElement.class);
-        addModuleElement(ZnProperFreeElement.class);
-        addModuleElement(RProperFreeElement.class);
-        addModuleElement(QProperFreeElement.class);
-        addModuleElement(CProperFreeElement.class);
+        addModuleElement(ArithmeticMultiElement.class);
         
         addModuleElement(ZStringProperFreeElement.class);
         addModuleElement(ZnStringProperFreeElement.class);
