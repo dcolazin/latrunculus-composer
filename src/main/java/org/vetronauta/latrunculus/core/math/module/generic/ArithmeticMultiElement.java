@@ -21,11 +21,10 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 
@@ -222,7 +221,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     @Override
     public double[] fold(ModuleElement<?, ?>[] elements) {
-        return new double[0]; //TODO
+        return FoldingModule.multiFold(ring, elements, getLength());
     }
 
     @Override

@@ -442,7 +442,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                                 for (int i = 0; i < v_from.size(); i++) {
                                     v_to[i] = new Complex(v_from.get(i).getValue().intValue());
                                 }
-                                return CProperFreeElement.make(v_to);
+                                return ArithmeticMultiElement.make(CRing.ring, v_to);
                             }
                         };
                     }
@@ -481,7 +481,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                                 for (int i = 0; i < v_from.size(); i++) {
                                     v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
                                 }
-                                return CProperFreeElement.make(v_to);
+                                return ArithmeticMultiElement.make(CRing.ring, v_to);
                             }
                         };
                     }
@@ -507,7 +507,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                                 for (int i = 0; i < v_from.size(); i++) {
                                     v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());
                                 }
-                                return CProperFreeElement.make(v_to);
+                                return CProperFreeElement.make(CRing.ring, v_to);
                             }
                         };
                     }

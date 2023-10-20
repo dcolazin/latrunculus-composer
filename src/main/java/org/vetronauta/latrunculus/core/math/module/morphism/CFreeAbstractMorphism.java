@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 /**
@@ -45,7 +46,7 @@ public abstract class CFreeAbstractMorphism extends ModuleMorphism {
             for (int i = 0; i < x.getLength(); i++) {
                 rv[i] = ((ArithmeticElement<Complex>) x.getComponent(i)).getValue();
             }
-            return CProperFreeElement.make(mapValue(rv));
+            return ArithmeticMultiElement.make(CRing.ring, mapValue(rv));
         }
         else {
             throw new MappingException("CFreeAbstractMorphism.map: ", x, this);

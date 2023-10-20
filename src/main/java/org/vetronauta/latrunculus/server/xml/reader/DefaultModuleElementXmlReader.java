@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -248,7 +249,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
         }
 
-        return CProperFreeElement.make(complexValues);
+        return ArithmeticMultiElement.make(CRing.ring, complexValues);
     }
 
     private ModuleElement readZProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {

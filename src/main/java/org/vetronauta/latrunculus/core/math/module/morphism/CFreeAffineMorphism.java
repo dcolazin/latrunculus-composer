@@ -23,9 +23,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 import java.util.Arrays;
 
@@ -167,7 +169,7 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
 
 
     public ModuleElement atZero() {
-        return CProperFreeElement.make(getVector());
+        return ArithmeticMultiElement.make(CRing.ring, getVector());
     }
 
 

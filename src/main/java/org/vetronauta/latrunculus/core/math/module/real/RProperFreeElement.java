@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -103,21 +102,6 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
         }
         buf.append("]");
         return buf.toString();
-    }
-
-    
-    public double[] fold(ModuleElement[] elements) {
-        double[][] res = new double[elements.length][];
-        // Create an array of double arrays corresponding
-        // to the array of RFreeElements
-        for (int i = 0; i < elements.length; i++) {
-            res[i] = new double[elements.length];
-            List<ArithmeticElement<ArithmeticDouble>> r = ((RProperFreeElement)elements[i]).getValue();
-            for (int j = 0; i < elements.length; j++) {
-                res[i][j] = r.get(j).getValue().doubleValue();
-            }
-        }
-        return Folding.fold(res);
     }
 
     public String getElementTypeName() {

@@ -102,20 +102,6 @@ public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
         return buf.toString();
     }
 
-    public double[] fold(ModuleElement[] elements) {
-        double[][] res = new double[elements.length][];
-        // Create an array of double arrays corresponding
-        // to the array of RFreeElements
-        for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Rational>> r = ((QProperFreeElement)elements[i]).getValue();
-            res[i] = new double[elements.length];
-            for (int j = 0; i < elements.length; j++) {
-                res[i][j] = r.get(j).getValue().doubleValue();
-            }
-        }
-        return Folding.fold(res);
-    }
-
     public String getElementTypeName() {
         return "QFreeElement";
     }

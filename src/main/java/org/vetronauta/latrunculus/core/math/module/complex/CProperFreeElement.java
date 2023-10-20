@@ -20,17 +20,12 @@
 package org.vetronauta.latrunculus.core.math.module.complex;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Elements in the free modules of complex numbers.
@@ -41,16 +36,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
 
     private CProperFreeElement(List<ArithmeticElement<Complex>> value) {
         super(CRing.ring, value);
-    }
-
-    /**
-     * Creates a CFreeElement from an array of Complex.
-     */
-    public static FreeElement<?, ArithmeticElement<Complex>> make(Complex[] v) { //TODO generalize as possible
-        if (v.length == 1) {
-            return new ArithmeticElement<>(v[0]);
-        }
-        return new CProperFreeElement(Arrays.stream(v).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -111,19 +96,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
         }
         buf.append("]");
         return buf.toString();
-    }
-    
-    @Override
-    public double[] fold(ModuleElement<?,?>[] elements) {
-        double[][] res = new double[elements.length][getLength()*2];
-        for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Complex>> c = ((CProperFreeElement)elements[i]).getValue();
-            for (int j = 0; j < getLength(); j++) {
-                res[i][2*j] = c.get(j).getValue().getReal();
-                res[i][2*j+1] = c.get(j).getValue().getImag();
-            }
-        }
-        return Folding.fold(res);
     }
 
     public String getElementTypeName() {

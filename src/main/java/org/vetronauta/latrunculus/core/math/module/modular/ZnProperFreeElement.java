@@ -109,21 +109,6 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulu
         return buf.toString();
     }
 
-    public double[] fold(ModuleElement[] elements) {
-        assert(elements.length > 0);
-        double[][] res = new double[elements.length][];
-        int len = (elements[0]).getLength();
-        // Create an array of double arrays corresponding
-        // to the array of RFreeElements
-        for (int i = 0; i < elements.length; i++) {
-            res[i] = new double[len];
-            for (int j = 0; j < len; j++) {
-                res[i][j] = ((ZnProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
-            }
-        }
-        return Folding.fold(res);
-    }
-
     public String getElementTypeName() {
         return "ZnFreeElement";
     }

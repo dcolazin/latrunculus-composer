@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 /**
@@ -53,7 +54,7 @@ public final class ConjugationMorphism extends ModuleMorphism {
             for (int i = 0; i < element.getValue().size(); i++) {
                 res[i] = element.getValue().get(i).getValue().conjugated();
             }
-            return CProperFreeElement.make(res);
+            return ArithmeticMultiElement.make(CRing.ring, res);
         }
         throw new MappingException("ConjugationMorphism.map: ", x, this);
     }

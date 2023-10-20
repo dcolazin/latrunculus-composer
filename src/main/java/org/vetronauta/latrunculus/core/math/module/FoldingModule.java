@@ -27,14 +27,21 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import java.util.List;
 
 /**
  * @author vetronauta
@@ -107,6 +114,93 @@ public class FoldingModule {
             res[i] = e.getValue().intValue();
         }
         return res;
+    }
+
+    public static double[] multiFold(ArithmeticRing<?> ring, ModuleElement<?, ?>[] elements, int length) {
+        if (ring instanceof ZRing) {
+            return multiFoldInteger(elements);
+        }
+        if (ring instanceof QRing) {
+            return multiFoldRational(elements);
+        }
+        if (ring instanceof RRing) {
+            return multiFoldReal(elements);
+        }
+        if (ring instanceof CRing) {
+            return multiFoldComplex(elements, length);
+        }
+        if (ring instanceof ZnRing) {
+            return multiFoldModulus(elements);
+        }
+        throw new UnsupportedOperationException(String.format("cannot fold %s", ring));
+    }
+
+    public static double[] multiFoldInteger(ModuleElement<?,?>[] elements) {
+        double[][] res = new double[elements.length][];
+        int len = elements[0].getLength();
+        // Create an array of double arrays corresponding
+        // to the array of RFreeElements
+        for (int i = 0; i < elements.length; i++) {
+            res[i] = new double[len];
+            for (int j = 0; j < len; j++) {
+                res[i][j] = ((ZProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
+            }
+        }
+        return Folding.fold(res);
+    }
+
+    public static double[] multiFoldRational(ModuleElement<?,?>[] elements) {
+        double[][] res = new double[elements.length][];
+        // Create an array of double arrays corresponding
+        // to the array of RFreeElements
+        for (int i = 0; i < elements.length; i++) {
+            List<ArithmeticElement<Rational>> r = ((QProperFreeElement)elements[i]).getValue();
+            res[i] = new double[elements.length];
+            for (int j = 0; j < elements.length; j++) {
+                res[i][j] = r.get(j).getValue().doubleValue();
+            }
+        }
+        return Folding.fold(res);
+    }
+
+    public static double[] multiFoldReal(ModuleElement<?,?>[] elements) {
+        double[][] res = new double[elements.length][];
+        // Create an array of double arrays corresponding
+        // to the array of RFreeElements
+        for (int i = 0; i < elements.length; i++) {
+            res[i] = new double[elements.length];
+            List<ArithmeticElement<ArithmeticDouble>> r = ((RProperFreeElement)elements[i]).getValue();
+            for (int j = 0; j < elements.length; j++) {
+                res[i][j] = r.get(j).getValue().doubleValue();
+            }
+        }
+        return Folding.fold(res);
+    }
+
+    public static double[] multiFoldComplex(ModuleElement<?,?>[] elements, int length) {
+        double[][] res = new double[elements.length][length*2];
+        for (int i = 0; i < elements.length; i++) {
+            List<ArithmeticElement<Complex>> c = ((CProperFreeElement)elements[i]).getValue();
+            for (int j = 0; j < length; j++) {
+                res[i][2*j] = c.get(j).getValue().getReal();
+                res[i][2*j+1] = c.get(j).getValue().getImag();
+            }
+        }
+        return Folding.fold(res);
+    }
+
+    public static double[] multiFoldModulus(ModuleElement<?,?>[] elements) {
+        double[][] res = new double[elements.length][];
+        int len = (elements[0]).getLength();
+        // Create an array of double arrays corresponding
+        // to the array of RFreeElements
+        for (int i = 0; i < elements.length; i++) {
+            res[i] = new double[len];
+            for (int j = 0; j < len; j++) {
+                res[i][j] = ((ZnProperFreeElement)elements[i]).getValue().get(j).getValue().intValue();
+            }
+        }
+        return Folding.fold(res);
     }
 
 }
