@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -14,7 +15,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 
@@ -67,9 +67,9 @@ class AlteratorTest {
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{1, 0, 0})), new RElement(2));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 1, 0})), new RElement(3.5));
-		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 0, 1})), new RElement(5));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{1, 0, 0})), new ArithmeticElement<>(new ArithmeticDouble(2)));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 1, 0})), new ArithmeticElement<>(new ArithmeticDouble(3.5)));
+		assertEquals(m050.map(RProperFreeElement.make(new double[]{0, 0, 1})), new ArithmeticElement<>(new ArithmeticDouble(5)));
 		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);

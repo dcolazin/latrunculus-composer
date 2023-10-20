@@ -21,12 +21,14 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 /**
  * @author vetronauta
@@ -43,6 +45,9 @@ public class ArithmeticRingRepository {
         }
         if (number instanceof Rational) {
             return QRing.ring;
+        }
+        if (number instanceof ArithmeticDouble) {
+            return RRing.ring;
         }
         return null; //TODO
     }

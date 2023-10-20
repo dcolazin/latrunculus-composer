@@ -166,15 +166,6 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
     private RProperFreeElement(List<ArithmeticElement<ArithmeticDouble>> value) {
         super(value);
     }
-
-    private static RElement[] toElementArray(double[] v) {
-        RElement[] elements = new RElement[v.length];
-        for (int i = 0; i < v.length; i++) {
-            elements[i] = new RElement(v[i]);
-        }
-        return elements;
-    }
-
     
     private RProperFreeModule module = null;
 

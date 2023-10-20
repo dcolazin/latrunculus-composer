@@ -24,7 +24,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
@@ -86,7 +87,7 @@ public class NearestNeighborFinder {
 			//getElementPath verschnellern!!
 			int[] currentPath = this.elementPaths[i];
 			try {
-				key[i] = ((RElement) denotator.getElement(currentPath).cast(RRing.ring)).getValue().doubleValue();
+				key[i] = ((ArithmeticElement<ArithmeticDouble>) denotator.getElement(currentPath).cast(RRing.ring)).getValue().doubleValue();
 			} catch (RubatoException e) { e.printStackTrace(); }
 		}
 		return key;

@@ -1,7 +1,7 @@
 package org.rubato.rubettes.select2d;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 public class JRElementSlider extends JElementSlider {
 
@@ -27,8 +27,8 @@ public class JRElementSlider extends JElementSlider {
     }
     
     
-    protected ModuleElement getElement() {
-        return new RElement(getDouble());
+    protected ArithmeticElement<ArithmeticDouble> getElement() {
+        return new ArithmeticElement<>(new ArithmeticDouble(getDouble()));
     }
 
 

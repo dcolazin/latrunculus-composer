@@ -33,7 +33,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -798,7 +797,7 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
-            return new RElement(((SReal)sexpr).getDouble());
+            return new ArithmeticElement<>(new ArithmeticDouble(((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
             return new ArithmeticElement<>(((SComplex)sexpr).getComplex());

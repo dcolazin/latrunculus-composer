@@ -51,7 +51,6 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -279,7 +278,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> R
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new RElement(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue());
+                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue()));
                     }
                 };                
             }
@@ -299,7 +298,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Q -> R
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new RElement(((ArithmeticElement<Rational>)element).getValue().doubleValue());
+                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<Rational>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -369,7 +368,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> R
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new RElement(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue());
+                    return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }

@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public final class FoldingMorphism extends ModuleMorphism {
         double[] f = elements[0].fold(elements);
         values = new HashMap<>();
         for (int i = 0; i < f.length; i++) {
-            values.put(elements[i], new RElement(f[i]));
+            values.put(elements[i], new ArithmeticElement<>(new ArithmeticDouble(f[i])));
         }
     }
 
@@ -50,13 +51,13 @@ public final class FoldingMorphism extends ModuleMorphism {
     }
 
     
-    public ModuleElement map(ModuleElement element) {
+    public ArithmeticElement<ArithmeticDouble> map(ModuleElement element) {
         return values.get(element);
     }
     
 
     public double mapValue(ModuleElement element) {
-        RElement res = (RElement)map(element);
+        ArithmeticElement<ArithmeticDouble> res = map(element);
         if (res != null) {
             return res.getValue().doubleValue();
         }
@@ -114,6 +115,6 @@ public final class FoldingMorphism extends ModuleMorphism {
     }
     
     
-    private HashMap<ModuleElement,RElement> values;
-    private ModuleElement[] elements;
+    private final HashMap<ModuleElement,ArithmeticElement<ArithmeticDouble>> values;
+    private final ModuleElement[] elements;
 }

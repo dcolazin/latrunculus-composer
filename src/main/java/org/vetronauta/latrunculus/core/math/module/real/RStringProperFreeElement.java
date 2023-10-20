@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -336,7 +337,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
 
     private final List<RingString<ArithmeticDouble>> value;
-    private FreeModule<?,RElement> module = null;
+    private FreeModule<?, ArithmeticElement<ArithmeticDouble>> module = null;
 
     @Override
     public RStringProperFreeElement deepCopy() {

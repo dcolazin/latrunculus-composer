@@ -36,7 +36,6 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
@@ -165,7 +164,7 @@ public abstract class CastMorphism extends ModuleMorphism {
                 // C -> R
                 m = new CastMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new RElement(((ArithmeticElement<Complex>)element).getValue().abs());
+                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<Complex>)element).getValue().abs()));
                     }
                 };
             }

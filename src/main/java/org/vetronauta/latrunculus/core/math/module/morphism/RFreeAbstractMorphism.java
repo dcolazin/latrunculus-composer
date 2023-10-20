@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -42,7 +43,7 @@ public abstract class RFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             double[] v = new double[x.getLength()];
                 for (int i = 0; i < x.getLength(); i++) {
-                    v[i] = ((RElement) x.getComponent(i)).getValue().doubleValue();
+                    v[i] = ((ArithmeticElement<ArithmeticDouble>) x.getComponent(i)).getValue().doubleValue();
                 }
             return RProperFreeElement.make(mapValue(v));
         }

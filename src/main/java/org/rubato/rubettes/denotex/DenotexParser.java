@@ -2,6 +2,7 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
@@ -24,7 +25,6 @@ import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
@@ -1332,7 +1332,7 @@ final public List simpleCrs(int type) throws ParseException {
             else if (m instanceof QRing)
                 elements.add(new ArithmeticElement<>(new Rational(q)));
             else if (m instanceof RRing)
-                elements.add(new RElement((double)n / (double)d));
+                elements.add(new ArithmeticElement<>(new ArithmeticDouble((double)n / (double)d)));
 
             // we also allow to convert numbers into strings without quotes
             else if (m instanceof ZStringRing)
@@ -1357,7 +1357,7 @@ final public List simpleCrs(int type) throws ParseException {
       r = rLiteral();
         try {
             if (m instanceof RRing)
-                elements.add(new RElement(r));
+                elements.add(new ArithmeticElement<>(new ArithmeticDouble(r)));
 
             // we also allow to convert numbers into strings without quotes
             else if (m instanceof ZStringRing)

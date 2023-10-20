@@ -27,7 +27,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
@@ -397,8 +396,8 @@ public abstract class NoteGenerator {
 	 * @throws RubatoException
 	 */
 	public void modifyNoteDenotator(LimitDenotator note, double onset, double duration) throws RubatoException {
-		Denotator onsetDenotator = this.createSimpleDenotator(this.onsetForm, new RElement(onset));
-		Denotator durationDenotator = this.createSimpleDenotator(this.durationForm, new RElement(duration));
+		Denotator onsetDenotator = this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new ArithmeticDouble(onset)));
+		Denotator durationDenotator = this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new ArithmeticDouble(duration)));
 		
 		note.setFactor(0, onsetDenotator);
 		note.setFactor(3, durationDenotator);
@@ -406,7 +405,7 @@ public abstract class NoteGenerator {
 	
 	public void modifyNoteDenotator(LimitDenotator note, int[] elementPath, double value) {
 		try {
-			ModuleElement newElement = new RElement(value).cast(note.getElement(elementPath).getModule());
+			ModuleElement newElement = new ArithmeticElement<>(new ArithmeticDouble(value)).cast(note.getElement(elementPath).getModule());
 			SimpleForm form = (SimpleForm)note.getFactor(elementPath[0]).getForm();
 			Denotator newCoordinate = this.createSimpleDenotator(form, newElement);
 			note.setFactor(elementPath[0], newCoordinate);

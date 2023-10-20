@@ -27,15 +27,16 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.rubato.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
@@ -984,27 +985,27 @@ public class Repository
         registerNameForm(NameForm.getNameForm());
         
         // 2D and 3D vectors
-        FreeModule<?, RElement> m2d = RProperFreeModule.make(2);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m2d = RProperFreeModule.make(2);
         registerBuiltin(FormFactory.makeModuleForm("Vector2D", m2d));
-        FreeModule<?, RElement> m3d = RProperFreeModule.make(3);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m3d = RProperFreeModule.make(3);
         registerBuiltin(FormFactory.makeModuleForm("Vector3D", m3d));
-        FreeModule<?, RElement> m4d = RProperFreeModule.make(4);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m4d = RProperFreeModule.make(4);
         registerBuiltin(FormFactory.makeModuleForm("Vector4D", m4d));
-        FreeModule<?, RElement> m5d = RProperFreeModule.make(5);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m5d = RProperFreeModule.make(5);
         registerBuiltin(FormFactory.makeModuleForm("Vector5D", m5d));
-        FreeModule<?, RElement> m6d = RProperFreeModule.make(6);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m6d = RProperFreeModule.make(6);
         registerBuiltin(FormFactory.makeModuleForm("Vector6D", m6d));
-        FreeModule<?, RElement> m7d = RProperFreeModule.make(7);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m7d = RProperFreeModule.make(7);
         registerBuiltin(FormFactory.makeModuleForm("Vector7D", m7d));
-        FreeModule<?, RElement> m8d = RProperFreeModule.make(8);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m8d = RProperFreeModule.make(8);
         registerBuiltin(FormFactory.makeModuleForm("Vector8D", m8d));
-        FreeModule<?, RElement> m9d = RProperFreeModule.make(9);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m9d = RProperFreeModule.make(9);
         registerBuiltin(FormFactory.makeModuleForm("Vector9D", m9d));
-        FreeModule<?, RElement> m10d = RProperFreeModule.make(10);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m10d = RProperFreeModule.make(10);
         registerBuiltin(FormFactory.makeModuleForm("Vector10D", m10d));
-        FreeModule<?, RElement> m11d = RProperFreeModule.make(11);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m11d = RProperFreeModule.make(11);
         registerBuiltin(FormFactory.makeModuleForm("Vector11D", m11d));
-        FreeModule<?, RElement> m12d = RProperFreeModule.make(12);
+        FreeModule<?, ArithmeticElement<ArithmeticDouble>> m12d = RProperFreeModule.make(12);
         registerBuiltin(FormFactory.makeModuleForm("Vector12D", m12d));
         
         // Polynomials

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
@@ -18,7 +19,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -317,7 +317,8 @@ public class ArbitraryDenotatorMapper {
 		ModuleMorphism projection;
 		if (morphism.getCodomain() instanceof ProductRing) {
 			projection = ProjectionMorphism.make((ProductRing)morphism.getCodomain(), index);
-		} else if (morphism.getCodomain().checkRingElement(RElement.class)) {
+		} else if (morphism.getCodomain().checkRingElement(ArithmeticElement.class) &&
+				((ArithmeticElement<?>)morphism.getCodomain().getRing().getZero()).getValue() instanceof ArithmeticDouble) {
 			double[][] projectionMatrix = new double[1][codomainDim];
 			projectionMatrix[0][index] = 1;
 			projection = RFreeAffineMorphism.make(new RMatrix(projectionMatrix), new double[]{0});

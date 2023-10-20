@@ -19,9 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * Affine morphism in <i>R</i>.
@@ -107,23 +108,22 @@ public final class RAffineMorphism extends RAbstractMorphism {
     
     public ModuleMorphism scaled(RingElement element)
         throws CompositionException {
-        if (element instanceof RElement) {
-            double s = ((RElement)element).getValue().doubleValue();
-            if (s == 0.0) {
-                return getConstantMorphism(element);
-            }
-            else {
-                return new RAffineMorphism(getA()*s, getB()*s);
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof ArithmeticDouble) {
+                if (number.doubleValue() == 0.0) {
+                    return getConstantMorphism(element);
+                } else {
+                    return new RAffineMorphism(getA() * number.doubleValue(), getB() * number.doubleValue());
+                }
             }
         }
-        else {
-            throw new CompositionException("RAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("RAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
 
 
-    public ModuleElement atZero() {
-        return new RElement(getB());
+    public ArithmeticElement<ArithmeticDouble> atZero() {
+        return new ArithmeticElement<>(new ArithmeticDouble(getB()));
     }
 
 

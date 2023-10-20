@@ -8,11 +8,12 @@ import java.util.TreeSet;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
@@ -133,9 +134,9 @@ public class TestObjects {
 	}
 	
 	private void createProductRingRealTriples() throws DomainException, RubatoException {
-		ProductElement element1 = ProductElement.make(new RElement(1), new RElement(2), new RElement(3));
-		ProductElement element2 = ProductElement.make(new RElement(4), new RElement(3), new RElement(1));
-		ProductElement element3 = ProductElement.make(new RElement(2), new RElement(1), new RElement(5));
+		ProductElement element1 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(1)), new ArithmeticElement<>(new ArithmeticDouble(2)), new ArithmeticElement<>(new ArithmeticDouble(3)));
+		ProductElement element2 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(4)), new ArithmeticElement<>(new ArithmeticDouble(3)), new ArithmeticElement<>(new ArithmeticDouble(1)));
+		ProductElement element3 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(2)), new ArithmeticElement<>(new ArithmeticDouble(1)), new ArithmeticElement<>(new ArithmeticDouble(5)));
 		List<Denotator> triples = new ArrayList<Denotator>();
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element1));
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element2));

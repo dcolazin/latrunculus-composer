@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -100,7 +101,7 @@ public final class RStringRing extends StringRing<RStringElement> {
             return new RStringElement(new RingString<>(rs));
         }
         else {
-            RElement e = RRing.ring.cast(element);
+            ArithmeticElement<ArithmeticDouble> e = RRing.ring.cast(element);
             if (e == null) {
                 return null;
             }

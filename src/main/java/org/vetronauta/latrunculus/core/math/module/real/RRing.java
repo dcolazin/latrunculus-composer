@@ -33,8 +33,7 @@ import java.util.List;
 
 /**
  * The field of real numbers.
- * @see RElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class RRing extends ArithmeticRing<ArithmeticDouble> implements NumberRing {
@@ -49,7 +48,7 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     }
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof RElement);
+        return (element instanceof ArithmeticElement) && ((ArithmeticElement<?>) element).getValue() instanceof ArithmeticDouble;
     }
 
     public FreeModule getFreeModule(int dimension) {

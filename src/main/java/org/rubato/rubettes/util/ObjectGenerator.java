@@ -13,7 +13,6 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -363,7 +362,7 @@ public class ObjectGenerator {
 		try {
 			SimpleDenotator oldSimple = (SimpleDenotator)object.get(simplePath);
 			if (oldSimple != null) {
-				ModuleElement newElement = new RElement(value).cast(oldSimple.getElement().getModule());
+				ModuleElement newElement = new ArithmeticElement<>(new ArithmeticDouble(value)).cast(oldSimple.getElement().getModule());
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
@@ -389,7 +388,7 @@ public class ObjectGenerator {
 		int currentDimension = currentElement.getModule().getDimension();
 		if (currentElement instanceof ProductElement) {
 			ProductElement productElement = (ProductElement)currentElement;
-			List<RingElement> factors = new ArrayList<RingElement>();
+			List<RingElement> factors = new ArrayList<>();
 			for (int i = 0; i < productElement.getFactorCount(); i++) {
 				if (i == currentIndex) {
 					factors.add((RingElement)this.createModuleElement(productElement.getFactor(i), elementPath, currentPosition, value));
@@ -403,7 +402,7 @@ public class ObjectGenerator {
 			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new ArithmeticDouble(value)));
 			return RProperFreeElement.make(values).cast(currentElement.getModule());
 		} else {
-			return new RElement(value).cast(currentElement.getModule());
+			return new ArithmeticElement<>(new ArithmeticDouble(value)).cast(currentElement.getModule());
 		}
 	}
 

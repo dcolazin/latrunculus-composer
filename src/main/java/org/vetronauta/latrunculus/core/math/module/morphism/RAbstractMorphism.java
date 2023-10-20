@@ -19,8 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.real.RElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 /**
@@ -30,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
  */
 public abstract class RAbstractMorphism extends ModuleMorphism {
 
-    public RAbstractMorphism() {
+    protected RAbstractMorphism() {
         super(RRing.ring, RRing.ring);
     }
 
@@ -38,8 +39,8 @@ public abstract class RAbstractMorphism extends ModuleMorphism {
     public final ModuleElement map(ModuleElement x)
             throws MappingException {
         if (getDomain().hasElement(x)) {
-            double v = ((RElement) x.getComponent(0)).getValue().doubleValue();
-            return new RElement(mapValue(v));
+            double v = ((ArithmeticElement<ArithmeticDouble>) x.getComponent(0)).getValue().doubleValue();
+            return new ArithmeticElement<>(new ArithmeticDouble(mapValue(v)));
         }
         else {
             throw new MappingException("RAbstractMorphism.map: ", x, this);

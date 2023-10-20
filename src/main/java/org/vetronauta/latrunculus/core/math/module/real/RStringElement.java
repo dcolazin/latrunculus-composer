@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         HashMap<String,RingElement> map = new HashMap<>();
         Set<String> strings = getValue().getStrings();
         for (String s : strings) {
-            map.put(s, new RElement(((Double)getValue().getFactorForString(s))));
+            map.put(s, new ArithmeticElement<>(new ArithmeticDouble((Double)getValue().getFactorForString(s))));
         }
         return map;
     }

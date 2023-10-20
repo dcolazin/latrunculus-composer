@@ -20,14 +20,15 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
@@ -41,11 +42,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<RElement>,RElement> {
+public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiElement<ArithmeticDouble>, ArithmeticElement<ArithmeticDouble>> {
 
     public static final RProperFreeModule nullModule = new RProperFreeModule(0);
     
-    public static FreeModule<?, RElement> make(int dimension) {
+    public static FreeModule<?, ArithmeticElement<ArithmeticDouble>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -129,7 +130,7 @@ public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
             if (castElement == null) {
                 return null;
             }
-            values[i] = ((RElement)castElement).getValue().doubleValue();
+            values[i] = ((ArithmeticElement<ArithmeticDouble>)castElement).getValue().doubleValue();
         }
 
         return (RProperFreeElement) RProperFreeElement.make(values);
@@ -151,7 +152,7 @@ public final class RProperFreeModule extends ProperFreeModule<ArithmeticMultiEle
                     if (castElement == null) {
                         return null;
                     }
-                    elements[i] = ((RElement)castElement).getValue().doubleValue();
+                    elements[i] = ((ArithmeticElement<ArithmeticDouble>)castElement).getValue().doubleValue();
                 }
                 return (RProperFreeElement) RProperFreeElement.make(elements);
             }
