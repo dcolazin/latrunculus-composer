@@ -36,8 +36,7 @@ import java.util.stream.Collectors;
 
 /**
  * Elements in a free module of rationals.
- * @see QProperFreeModule
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {

@@ -1,26 +1,22 @@
 package org.rubato.rubettes.util;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.rubato.base.RubatoException;
+import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
@@ -32,12 +28,16 @@ import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
-import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 
@@ -322,7 +322,7 @@ public class ArbitraryDenotatorMapper {
 			double[][] projectionMatrix = new double[1][codomainDim];
 			projectionMatrix[0][index] = 1;
 			projection = RFreeAffineMorphism.make(new RMatrix(projectionMatrix), new double[]{0});
-		} else if (morphism.getCodomain() instanceof QRing || morphism.getCodomain() instanceof QProperFreeModule) {
+		} else if (morphism.getCodomain() instanceof FreeModule && morphism.getCodomain().getRing() instanceof QRing) {
 			Rational[][] projectionMatrix = new Rational[1][codomainDim];
 			for (int i = 0; i < codomainDim; i++) {
 				if (i == index) {

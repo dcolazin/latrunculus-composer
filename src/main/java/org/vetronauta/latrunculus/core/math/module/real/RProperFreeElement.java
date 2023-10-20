@@ -35,8 +35,7 @@ import java.util.stream.Collectors;
 
 /**
  * Elements in a free module over reals.
- * @see RProperFreeModule
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticDouble> {
