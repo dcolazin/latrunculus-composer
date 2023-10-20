@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
@@ -224,7 +225,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return ZnProperFreeModule.make(dimension, mod);
+        return ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(mod), dimension);
     }
 
     private Module readQProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {

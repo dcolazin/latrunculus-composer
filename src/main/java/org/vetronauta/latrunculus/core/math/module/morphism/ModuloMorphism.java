@@ -140,7 +140,7 @@ public class ModuloMorphism extends ModuleMorphism {
 
     
     public ModuleElement atZero() {
-        return ZnProperFreeModule.make(getDimension(), getModulus()).getZero();
+        return ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(getModulus()), getDimension()).getZero();
     }
 
     

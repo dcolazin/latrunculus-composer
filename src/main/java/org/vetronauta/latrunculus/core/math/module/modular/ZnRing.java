@@ -23,11 +23,15 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 
 import java.util.List;
 
@@ -52,8 +56,8 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
     }
 
     @Override
-    public ZnProperFreeModule getNullModule() {
-        return (ZnProperFreeModule) ZnProperFreeModule.make(0, modulus);
+    public ArithmeticMultiModule<ArithmeticModulus> getNullModule() {
+        return new ArithmeticMultiModule<>(this, 0);
     }
 
     @Override
@@ -65,9 +69,9 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
         return number instanceof ArithmeticModulus && (((ArithmeticModulus) number).getModulus() == modulus);
     }
 
-    
-    public ZnProperFreeModule getFreeModule(int dimension) {
-        return (ZnProperFreeModule) ZnProperFreeModule.make(dimension, modulus);
+    @Override
+    public FreeModule<?, ArithmeticElement<ArithmeticModulus>> getFreeModule(int dimension) {
+        return ArithmeticMultiModule.make(this, dimension);
     }
 
     public boolean equals(Object object) {

@@ -21,8 +21,8 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
 
     public ArithmeticMultiModule(ArithmeticRing<N> ring, int dimension) {
         super(dimension);
-        if (dimension <= 1) {
-            throw new IllegalArgumentException("ArithmeticMultiModule must have dimension >= 2");
+        if (dimension != 0 && dimension < 1) {
+            throw new IllegalArgumentException("ArithmeticMultiModule must have dimension >= 2 or 0");
         }
         this.ring = ring;
     }
@@ -74,7 +74,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
 
     @Override
     public boolean isNullModule() {
-        return this.equals(ring.getNullModule());
+        return getDimension() == 0;
     }
 
     @Override

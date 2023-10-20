@@ -32,6 +32,7 @@ import javax.swing.event.ChangeListener;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -234,7 +235,7 @@ public class JSelectModule
             break;
         }
         case ZNRING: {
-            module = ZnProperFreeModule.make(dim, getModulus());
+            module = ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(getModulus()), dim);
             break;
         }
         case QRING: {
