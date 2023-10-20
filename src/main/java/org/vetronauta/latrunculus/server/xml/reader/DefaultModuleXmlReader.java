@@ -273,7 +273,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return RProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(RRing.ring, dimension);
     }
 
     private Module readCRing(Element element, Class<?> clazz, XMLReader reader) {

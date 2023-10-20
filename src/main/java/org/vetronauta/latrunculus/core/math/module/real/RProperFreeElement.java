@@ -23,10 +23,10 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,9 +68,10 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
         }
     }
 
-    public Module getModule() {
+    @Override
+    public ArithmeticMultiModule<ArithmeticDouble> getModule() {
         if (module == null) {
-            module = (RProperFreeModule) RProperFreeModule.make(getLength());
+            module = new ArithmeticMultiModule<>(RRing.ring, getLength());
         }
         return module;
     }
@@ -167,6 +168,6 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
         super(value);
     }
     
-    private RProperFreeModule module = null;
+    private ArithmeticMultiModule<ArithmeticDouble> module = null;
 
 }

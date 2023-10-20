@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
@@ -34,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 public abstract class RFreeAbstractMorphism extends ModuleMorphism {
 
     public RFreeAbstractMorphism(int domDim, int codomDim) {
-        super(RProperFreeModule.make(domDim), RProperFreeModule.make(codomDim));
+        super(ArithmeticMultiModule.make(RRing.ring, domDim), ArithmeticMultiModule.make(RRing.ring, codomDim));
     }
 
     

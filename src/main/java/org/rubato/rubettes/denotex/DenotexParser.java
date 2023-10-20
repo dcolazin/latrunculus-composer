@@ -334,7 +334,7 @@ public final class DenotexParser implements DenotexParserConstants {
         else if (s.equals("R")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return RRing.ring;
-            else                return RProperFreeModule.make(sup);
+            else                return ArithmeticMultiModule.make(RRing.ring, sup);
         }
         else if (s.equals("C")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");

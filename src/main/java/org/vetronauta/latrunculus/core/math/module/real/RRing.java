@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
      */
     public static final RRing ring = new RRing();
     
-    public Module getNullModule() {
+    public ArithmeticMultiModule<ArithmeticDouble> getNullModule() {
         return RProperFreeModule.nullModule;
     }
     
@@ -52,7 +53,7 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     }
 
     public FreeModule getFreeModule(int dimension) {
-        return RProperFreeModule.make(dimension);
+        return ArithmeticMultiModule.make(this, dimension);
     }
 
     public boolean equals(Object object) {

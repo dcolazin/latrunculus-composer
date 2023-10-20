@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.real.RProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
@@ -222,7 +224,7 @@ public class CoolFormRegistrant {
 	}
 	
 	private List<String> generateLabels(Form... coordinateForms) {
-		List<String> labels = new ArrayList<String>();
+		List<String> labels = new ArrayList<>();
 		for (Form currentCoordinate : coordinateForms) {
 			labels.add(currentCoordinate.getNameString().toLowerCase());
 		}
@@ -234,7 +236,7 @@ public class CoolFormRegistrant {
 	}
 	
 	private SimpleForm registerRModuleForm(String name, int dimension) {
-		return (SimpleForm)this.register(FormFactory.makeModuleForm(name, RProperFreeModule.make(dimension)));
+		return (SimpleForm)this.register(FormFactory.makeModuleForm(name, ArithmeticMultiModule.make(RRing.ring, dimension)));
 	}
 	
 	private SimpleForm registerZModuleForm(String name) {

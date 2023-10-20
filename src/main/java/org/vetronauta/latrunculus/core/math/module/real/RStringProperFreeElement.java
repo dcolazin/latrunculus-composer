@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +199,7 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
 
     public Module getModule() {
         if (module == null) {
-            module = RProperFreeModule.make(getLength());
+            module = ArithmeticMultiModule.make(RRing.ring, getLength());
         }
         return module;
     }
