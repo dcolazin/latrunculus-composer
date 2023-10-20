@@ -55,7 +55,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
             list.add(ring.getZero());
         }
         list.set(i, ring.getOne());
-        return new ArithmeticMultiElement<>(list);
+        return new ArithmeticMultiElement<>(ring, list);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
         for (int j = 0; j < getDimension(); j++) {
             list.add(ring.getZero());
         }
-        return new ArithmeticMultiElement<>(list);
+        return new ArithmeticMultiElement<>(ring, list);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
                 }
                 elements.add(castElement);
             }
-            return new ArithmeticMultiElement<>(elements);
+            return new ArithmeticMultiElement<>(ring, elements);
         }
         return null;
     }
@@ -129,7 +129,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
             values.add(castElement);
         }
 
-        return new ArithmeticMultiElement<>(values);
+        return new ArithmeticMultiElement<>(ring, values);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
                 return null;
             }
         }
-        return new ArithmeticMultiElement<>(values);
+        return new ArithmeticMultiElement<>(ring, values);
     }
 
     @Override

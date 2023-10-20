@@ -43,7 +43,7 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
     private CProperFreeModule module = null;
 
     private CProperFreeElement(List<ArithmeticElement<Complex>> value) {
-        super(value);
+        super(CRing.ring, value);
     }
 
     /**

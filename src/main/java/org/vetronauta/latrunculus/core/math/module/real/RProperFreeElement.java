@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ import java.util.stream.Collectors;
  */
 public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticDouble> {
 
-    public static RProperFreeElement nullElement = new RProperFreeElement(new double[0]);
+    public static RProperFreeElement nullElement = new RProperFreeElement(new ArrayList<>());
     
     public static FreeElement<?, ArithmeticElement<ArithmeticDouble>> make(double[] v) {
         assert(v != null);
@@ -161,11 +162,11 @@ public final class RProperFreeElement extends ArithmeticMultiElement<ArithmeticD
     }
     
     private RProperFreeElement(double[] value) {
-        super(Arrays.stream(value).mapToObj(ArithmeticDouble::new).map(ArithmeticElement::new).collect(Collectors.toList()));
+        super(RRing.ring, Arrays.stream(value).mapToObj(ArithmeticDouble::new).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
     private RProperFreeElement(List<ArithmeticElement<ArithmeticDouble>> value) {
-        super(value);
+        super(RRing.ring, value);
     }
     
     private ArithmeticMultiModule<ArithmeticDouble> module = null;

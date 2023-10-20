@@ -46,7 +46,7 @@ public final class ZProperFreeElement extends ArithmeticMultiElement<ArithmeticI
     private ArithmeticMultiModule<ArithmeticInteger> module;
 
     private ZProperFreeElement(List<ArithmeticElement<ArithmeticInteger>> value) {
-        super(value);
+        super(ZRing.ring, value);
     }
 
     public static FreeElement<?, ArithmeticElement<ArithmeticInteger>> make(@NonNull int[] v) {

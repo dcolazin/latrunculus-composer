@@ -45,7 +45,7 @@ public final class QProperFreeElement extends ArithmeticMultiElement<Rational> {
     public static final QProperFreeElement nullElement = new QProperFreeElement(new ArrayList<>());
 
     private QProperFreeElement(List<ArithmeticElement<Rational>> array) {
-        super(array);
+        super(QRing.ring, array);
     }
 
     public static FreeElement<?, ArithmeticElement<Rational>> make(Rational[] v) {

@@ -184,7 +184,7 @@ public class ZnProperFreeElement extends ArithmeticMultiElement<ArithmeticModulu
     }
 
     private ZnProperFreeElement(List<ArithmeticElement<ArithmeticModulus>> value, int modulus) {
-        super(value);
+        super(ArithmeticRingRepository.getModulusRing(modulus), value);
         this.modulus = modulus;
     }
     

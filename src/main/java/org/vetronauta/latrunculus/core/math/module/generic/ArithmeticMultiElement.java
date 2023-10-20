@@ -41,12 +41,14 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
     //TODO make it abstract and have a N list instead of a ArithmeticElement one
 
     private final List<ArithmeticElement<N>> value;
+    private final ArithmeticRing<N> ring;
 
-    public ArithmeticMultiElement(List<ArithmeticElement<N>> value) {
+    public ArithmeticMultiElement(ArithmeticRing<N> ring, List<ArithmeticElement<N>> value) {
         if (value == null || value.size() == 1) {
             throw new IllegalArgumentException("MultiElement must have length > 1");
         }
         this.value = value;
+        this.ring = ring;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             v.add(value.get(i).deepCopy());
         }
-        return new ArithmeticMultiElement<>(v);
+        return new ArithmeticMultiElement<>(ring, v);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).product(element.value.get(i)));
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -101,11 +103,11 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < minLength; i++) {
             res.add(value.get(i));
         }
-        ArithmeticElement<N> zero = res.get(0).difference(res.get(0)); //TODO getRing might be useful for this...
+        ArithmeticElement<N> zero = ring.getZero();
         for (int i = value.size(); i < n; i++) {
             res.add(zero);
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).product(element));
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -148,7 +150,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).sum(element.value.get(i)));
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -170,7 +172,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).difference(element.value.get(i)));
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -189,7 +191,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).negated());
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(ring, res);
     }
 
     @Override
@@ -206,7 +208,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     @Override
     public ArithmeticMultiModule<N> getModule() {
-        return null; //TODO
+        return new ArithmeticMultiModule<>(ring, getLength());
     }
 
     @Override

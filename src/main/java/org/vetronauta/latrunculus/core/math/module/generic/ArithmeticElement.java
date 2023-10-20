@@ -63,7 +63,7 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
         for (int i = 1; i < n; i++) {
             res.add(zero);
         }
-        return new ArithmeticMultiElement<>(res);
+        return new ArithmeticMultiElement<>(getRing(), res);
     }
 
     @Override
