@@ -21,9 +21,12 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -47,7 +50,13 @@ public class FoldingModule {
         if (number instanceof ArithmeticDouble) {
             return foldReal(elements);
         }
-        return null; //TODO
+        if (number instanceof Complex) {
+            return foldComplex(elements);
+        }
+        if (number instanceof ArithmeticModulus) {
+            return foldModulus(elements);
+        }
+        throw new UnsupportedOperationException(String.format("cannot fold %s", number.getClass()));
     }
 
     public static double[] foldInteger(ModuleElement[] elements) {
@@ -73,6 +82,25 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             ArithmeticElement<ArithmeticDouble> e = (ArithmeticElement<ArithmeticDouble>)elements[i];
             res[i] = e.getValue().doubleValue();
+        }
+        return res;
+    }
+
+    public static double[] foldComplex(ModuleElement[] elements) {
+        double[][] res = new double[elements.length][2];
+        for (int i = 0; i < elements.length; i++) {
+            ArithmeticElement<Complex> c = (ArithmeticElement<Complex>)elements[i];
+            res[i][0] = c.getValue().getReal();
+            res[i][1] = c.getValue().getImag();
+        }
+        return Folding.fold(res);
+    }
+
+    public static double[] foldModulus(ModuleElement[] elements) {
+        double[] res = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            ArithmeticElement<ArithmeticModulus> e = (ArithmeticElement<ArithmeticModulus>)elements[i];
+            res[i] = e.getValue().intValue();
         }
         return res;
     }

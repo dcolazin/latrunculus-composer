@@ -23,12 +23,19 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author vetronauta
@@ -37,6 +44,8 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 public class ArithmeticRingRepository {
 
     //TODO make this a proper object to inject when needed
+
+    private static final Map<Integer, ArithmeticRing<ArithmeticModulus>> modRingMap = new HashMap<>();
 
     public static Ring<? extends ArithmeticElement<?>> getRing(ArithmeticElement<?> element) {
         ArithmeticNumber<?> number = element.getValue();
@@ -49,7 +58,13 @@ public class ArithmeticRingRepository {
         if (number instanceof ArithmeticDouble) {
             return RRing.ring;
         }
-        return null; //TODO
+        if (number instanceof Complex) {
+            return CRing.ring;
+        }
+        if (number instanceof ArithmeticModulus) {
+            return modRingMap.computeIfAbsent(((ArithmeticModulus) number).getModulus(), ZnRing::make);
+        }
+        throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }
 
 }

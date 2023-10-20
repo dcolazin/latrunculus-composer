@@ -22,9 +22,9 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * The abstract base class for morphisms in a free <i>C</i>-module.
@@ -43,7 +43,7 @@ public abstract class CFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             Complex[] rv = new Complex[x.getLength()];
             for (int i = 0; i < x.getLength(); i++) {
-                rv[i] = ((CElement) x.getComponent(i)).getValue();
+                rv[i] = ((ArithmeticElement<Complex>) x.getComponent(i)).getValue();
             }
             return CProperFreeElement.make(mapValue(rv));
         }

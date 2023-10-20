@@ -7,7 +7,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -1381,7 +1380,7 @@ final public List simpleCrs(int type) throws ParseException {
       c = cLiteral();
         try {
                 if (m instanceof CRing)
-                        elements.add(new CElement(c));
+                        elements.add(new ArithmeticElement<>(c));
                 else
                         {if (true) throw parseError("");}
         }

@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.complex;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -38,16 +37,12 @@ import java.util.stream.Collectors;
  * 
  * @author Gérard Milmeister
  */
-public final class CProperFreeElement extends ArithmeticMultiElement<Complex> implements ConjugableElement<ArithmeticMultiElement<Complex>, ArithmeticElement<Complex>> {
+public final class CProperFreeElement extends ArithmeticMultiElement<Complex> {
 
     private CProperFreeModule module = null;
 
     private CProperFreeElement(List<ArithmeticElement<Complex>> value) {
         super(value);
-    }
-
-    private CProperFreeElement(Complex[] value) {
-        super(Arrays.stream(value).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
     /**
@@ -59,21 +54,6 @@ public final class CProperFreeElement extends ArithmeticMultiElement<Complex> im
         }
         return new CProperFreeElement(Arrays.stream(v).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
-
-    public CProperFreeElement conjugated() {
-        Complex[] res = new Complex[getValue().size()];
-        for (int i = 0; i < getValue().size(); i++) {
-            res[i] = getValue().get(i).getValue().conjugated();
-        }
-        return new CProperFreeElement(res);
-    }
-
-    public void conjugate() { //TODO hack
-        CProperFreeElement conj = this.conjugated();
-        subtract(this);
-        add(conj);
-    }
-
     @Override
     public CProperFreeModule getModule() {
         if (module == null) {

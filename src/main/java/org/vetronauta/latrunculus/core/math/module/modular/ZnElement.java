@@ -50,36 +50,12 @@ public final class ZnElement extends ArithmeticElement<ZnElement, ArithmeticModu
     public ZnElement power(int n) {
         return new ZnElement(NumberTheory.powerMod(getValue().intValue(), getModulus(), n), getModulus());
     }
-
-    @Override
-    public Ring<ZnElement> getRing() {
-        if (module == null) {
-            module = ZnRing.make(getModulus());
-        }
-        return module;
-    }
-
     public int getModulus() {
         return getValue().getModulus();
-    }
-    
-    public double[] fold(ModuleElement[] elements) {
-        double[] res = new double[elements.length];
-        for (int i = 0; i < elements.length; i++) {
-            ZnElement e = (ZnElement)elements[i];
-            res[i] = e.getValue().intValue();
-        }
-        return res;
-    }
-
-    @Override
-    protected ZnElement valueOf(@NonNull ArithmeticModulus value) {
-        return new ZnElement(value.intValue(), value.getModulus());
     }
 
     public String getElementTypeName() {
         return "ZnElement";
     }
 
-    private ZnRing module = null;
 }

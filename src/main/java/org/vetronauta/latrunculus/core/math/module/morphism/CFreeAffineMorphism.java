@@ -19,12 +19,13 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.Arrays;
 
@@ -145,25 +146,23 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
     }
 
 
-    public ModuleMorphism scaled(RingElement element)
-            throws CompositionException {
-        if (element instanceof CElement) {
-            Complex s = ((CElement)element).getValue();
-            if (s.isZero()) {
-                return getConstantMorphism(getCodomain().getZero());
-            }
-            else {
-                Complex[] oldv = getVector();
-                Complex[] newv = new Complex[oldv.length];
-                for (int i = 0; i < oldv.length; i++) {
-                    newv[i] = oldv[i].product(s);
+    public ModuleMorphism scaled(RingElement element) throws CompositionException {
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof Complex) {
+                if (number.isZero()) {
+                    return getConstantMorphism(getCodomain().getZero());
+                } else {
+                    Complex[] oldv = getVector();
+                    Complex[] newv = new Complex[oldv.length];
+                    for (int i = 0; i < oldv.length; i++) {
+                        newv[i] = oldv[i].product((Complex) number);
+                    }
+                    return new CFreeAffineMorphism(getMatrix().scaled((Complex) number), newv);
                 }
-                return new CFreeAffineMorphism(getMatrix().scaled(s), newv);
             }
         }
-        else {
-            throw new CompositionException("CAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("CAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
 
 

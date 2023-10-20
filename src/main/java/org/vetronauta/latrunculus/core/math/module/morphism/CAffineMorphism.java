@@ -19,10 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * Affine morphism in <i>C</i>.
@@ -109,25 +109,23 @@ public final class CAffineMorphism extends CAbstractMorphism {
     }
 
     
-    public ModuleMorphism scaled(RingElement element)
-            throws CompositionException {
-        if (element instanceof CElement) {
-            Complex s = ((CElement)element).getValue();
-            if (s.isZero()) {
-                return getConstantMorphism(element);
-            }
-            else {
-                return new CAffineMorphism(getA().product(s), getB().product(s));
+    public ModuleMorphism scaled(RingElement element) throws CompositionException {
+        if (element instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
+            if (number instanceof Complex) {
+                if (number.isZero()) {
+                    return getConstantMorphism(element);
+                } else {
+                    return new CAffineMorphism(getA().product((Complex) number), getB().product((Complex) number));
+                }
             }
         }
-        else {
-            throw new CompositionException("CAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-        }
+        throw new CompositionException("CAffineMorphism.scaled: Cannot scale "+this+" by "+element);
     }
 
     
-    public ModuleElement atZero() {
-        return new CElement(getB());
+    public ArithmeticElement<Complex> atZero() {
+        return new ArithmeticElement<>(getB());
     }
     
     

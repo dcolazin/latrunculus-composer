@@ -19,9 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ConjugableElement;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.
@@ -38,15 +41,21 @@ public final class ConjugationMorphism extends ModuleMorphism {
     
     public ModuleElement map(ModuleElement x)
             throws MappingException {
-        if (x instanceof ConjugableElement) {
-            ConjugableElement c = (ConjugableElement)x;
-            if (c.getLength() == dimension) {
-                return c.conjugated();
+        if (x instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
+            if (number instanceof Complex) {
+                return new ArithmeticElement<>(((Complex) number).conjugated());
             }
+        } else if (x instanceof CProperFreeElement) {
+            CProperFreeElement element = (CProperFreeElement) x;
+            Complex[] res = new Complex[element.getValue().size()];
+            for (int i = 0; i < element.getValue().size(); i++) {
+                res[i] = element.getValue().get(i).getValue().conjugated();
+            }
+            return CProperFreeElement.make(res);
         }
         throw new MappingException("ConjugationMorphism.map: ", x, this);
     }
-
     
     public boolean isRingHomomorphism() {
         return getDomain().isRing();

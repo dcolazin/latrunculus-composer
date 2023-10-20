@@ -42,11 +42,11 @@ import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
@@ -853,9 +853,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (module instanceof CRing) {
-            LinkedList<ModuleElement> elements0 = new LinkedList<ModuleElement>();
+            LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
-                Complex c = ((CElement)m).getValue();
+                Complex c = ((ArithmeticElement<Complex>)m).getValue();
                 elements0.add(RProperFreeElement.make(new double[] { c.getReal(), c.getImag() }));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
@@ -864,7 +864,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 RConfiguration config = (RConfiguration)select.getConfiguration();
                 for (int i = 0; i < config.getSize(); i++) {
                     double[] p = new double[] { config.px.get(i), config.py.get(i) }; 
-                    elementList.addElement(new CElement(p[0], p[1]));
+                    elementList.addElement(new ArithmeticElement<>(new Complex(p[0], p[1])));
                 }
             }
         }

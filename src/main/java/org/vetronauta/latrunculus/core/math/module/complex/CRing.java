@@ -35,8 +35,6 @@ import java.util.List;
 
 /**
  * The field of complex numbers.
- * @see CElement
- * 
  * @author Gérard Milmeister
  */
 public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
@@ -53,7 +51,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        return (element instanceof CElement);
+        return (element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Complex);
     }
     
     @Override

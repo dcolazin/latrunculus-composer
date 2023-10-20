@@ -19,10 +19,11 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 /**
  * The abstract base class for morphisms in <i>C</i>.
@@ -35,20 +36,19 @@ public abstract class CAbstractMorphism extends ModuleMorphism {
     /**
      * Creates a new morphism from complex numbers to complex numbers.
      */
-    public CAbstractMorphism() {
+    protected CAbstractMorphism() {
         super(CRing.ring, CRing.ring);
     }
 
 
-    public final ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (x instanceof CElement) {
-            Complex value = ((CElement)x.getComponent(0)).getValue();
-            return new CElement(mapValue(value));
+    public final ModuleElement map(ModuleElement x) throws MappingException {
+        if (x instanceof ArithmeticElement) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
+            if (number instanceof Complex) {
+                return new ArithmeticElement<>(mapValue((Complex) number));
+            }
         }
-        else {
-            throw new MappingException("CAbstractMorphism.map: ", x, this);
-        }
+        throw new MappingException("CAbstractMorphism.map: ", x, this);
     }
 
     

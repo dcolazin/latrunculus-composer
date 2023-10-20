@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.complex.CProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
@@ -286,7 +285,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new CElement(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue());
+                        return new ArithmeticElement<>(new Complex(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue()));
                     }
                 };
             }
@@ -306,7 +305,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Q -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new CElement(((ArithmeticElement<Rational>)element).getValue().doubleValue());
+                        return new ArithmeticElement<>(new Complex(((ArithmeticElement<Rational>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -318,7 +317,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // R -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new CElement(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue());
+                        return new ArithmeticElement<>(new Complex(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -378,7 +377,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> C
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new CElement(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue());
+                    return new ArithmeticElement<>(new Complex(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
