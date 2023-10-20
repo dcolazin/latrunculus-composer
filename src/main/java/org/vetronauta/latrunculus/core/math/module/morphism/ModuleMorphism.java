@@ -31,19 +31,18 @@ import java.io.Serializable;
  * The abstract base class for morphisms in modules.
  * @author Gérard Milmeister
  */
-public abstract class ModuleMorphism
-    implements Comparable<ModuleMorphism>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism> {
+public abstract class ModuleMorphism<A extends ModuleElement<A, ?>, B extends ModuleElement<B, ?>>
+    implements Comparable<ModuleMorphism<?,?>>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism<A,B>> {
 
     /**
      * Creates a new morphism with <code>domain</code>
      * and <code>codomain<code> as indicated.
      */
-    protected ModuleMorphism(Module domain, Module codomain) {
+    protected ModuleMorphism(Module<A,?> domain, Module<B,?> codomain) {
         this.domain = domain;
         this.codomain = codomain;
     }
 
-    
     /**
      * Maps the element <code>x</code>.
      * This must be implemented for each specific morphism type.
@@ -51,7 +50,7 @@ public abstract class ModuleMorphism
      * @return the result of mapping element <code>x</code>
      * @throws MappingException if mapping of <code>element<code> fails
      */
-    public abstract ModuleElement map(ModuleElement x)
+    public abstract B map(A x)
         throws MappingException;
 
     
@@ -60,8 +59,7 @@ public abstract class ModuleMorphism
      * 
      * @throws CompositionException if composition could not be performed
      */
-    public ModuleMorphism compose(ModuleMorphism morphism)
-        	throws CompositionException {
+    public <C extends ModuleElement<C,?>> ModuleMorphism<C,B> compose(ModuleMorphism<C,A> morphism) throws CompositionException {
         return CompositionMorphism.make(this, morphism);
     }
 
@@ -71,7 +69,7 @@ public abstract class ModuleMorphism
      * 
      * @throws CompositionException if sum could not be performed
      */
-    public ModuleMorphism sum(ModuleMorphism morphism) 
+    public ModuleMorphism<A,B> sum(ModuleMorphism<A,B> morphism)
     		throws CompositionException {
         return SumMorphism.make(this, morphism);
     }
@@ -82,7 +80,7 @@ public abstract class ModuleMorphism
      * 
      * @throws CompositionException if difference could not be performed
      */
-    public ModuleMorphism difference(ModuleMorphism morphism)
+    public ModuleMorphism<A,B> difference(ModuleMorphism<A,B> morphism)
         	throws CompositionException {
         return DifferenceMorphism.make(this, morphism);
     }
@@ -91,9 +89,8 @@ public abstract class ModuleMorphism
     /**
      * Returns this module morphism scaled by <code>element</code>.
      */
-    public ModuleMorphism scaled(RingElement element)
-            throws CompositionException {
-        ModuleMorphism m = ScaledMorphism.make(this, element);
+    public ModuleMorphism<A,B> scaled(RingElement element) throws CompositionException {
+        ModuleMorphism<A,B> m = ScaledMorphism.make(this, element);
         if (m == null) {
             throw new CompositionException("ModuleMorphism.scaled: "+this+" cannot be scaled by "+element);
         }
@@ -104,11 +101,10 @@ public abstract class ModuleMorphism
     /**
      * Returns the value of the morphism evaluated at the zero of the domain.
      */
-    public ModuleElement atZero() {
+    public B atZero() {
         try {
-            return map(getDomain().getZero());
-        }
-        catch (MappingException e) {
+            return map((getDomain().getZero()));
+        } catch (MappingException e) {
             throw new AssertionError("This should never happen!");
         }
     }
@@ -121,8 +117,7 @@ public abstract class ModuleMorphism
      * 
      * @throws CompositionException if power could not be performed
      */
-    public ModuleMorphism power(int n)
-    		throws CompositionException {
+    public ModuleMorphism<A,A> power(int n) throws CompositionException {
         return PowerMorphism.make(this, n);
     }
 
@@ -130,7 +125,7 @@ public abstract class ModuleMorphism
     /**
      * Returns the identity morphism in <code>module</code>.
      */
-    public static ModuleMorphism getIdentityMorphism(Module module) {
+    public static <X extends ModuleElement<X,?>> ModuleMorphism<X,X> getIdentityMorphism(Module<X,?> module) {
         return new IdentityMorphism(module);
     }
 
@@ -138,7 +133,7 @@ public abstract class ModuleMorphism
     /**
      * Returns the constant <code>value</code> morphism in <code>module</code>.
      */
-    public static ModuleMorphism getConstantMorphism(Module module, ModuleElement value) {
+    public static <X extends ModuleElement<X,?>, Y extends ModuleElement<Y,?>> ModuleMorphism<X,Y> getConstantMorphism(Module<X,?> module, Y value) {
         return new ConstantMorphism(module, value);
     }
 
@@ -147,7 +142,7 @@ public abstract class ModuleMorphism
      * Returns a constant morphism with the domain of this
      * morphism that returns the specified constant <code>value</code>.
      */
-    public ModuleMorphism getConstantMorphism(ModuleElement value) {
+    public ModuleMorphism<A,A> getConstantMorphism(A value) {
         return new ConstantMorphism(getDomain(), value);
     }
 
@@ -171,7 +166,7 @@ public abstract class ModuleMorphism
     /**
      * Returns the domain of this morphism.
      */
-    public final Module getDomain() {
+    public final Module<A,?> getDomain() {
         return domain;
     }
 
@@ -179,7 +174,7 @@ public abstract class ModuleMorphism
     /**
      * Returns the codomain of this morphism.
      */
-    public final Module getCodomain() {
+    public final Module<B,?> getCodomain() {
         return codomain;
     }
 
@@ -212,7 +207,7 @@ public abstract class ModuleMorphism
      * Returns the the ring morphism that transforms between
      * the rings of the domain and codomain modules. 
      */
-    public abstract ModuleMorphism getRingMorphism();
+    public abstract ModuleMorphism<? extends RingElement<?>, ? extends RingElement<?>> getRingMorphism();
     
     
     /**
@@ -227,7 +222,8 @@ public abstract class ModuleMorphism
      * Returns true iff the composition <code>f</code>*<code>g</code>
      * is possible.
      */
-    public static boolean composable(ModuleMorphism f, ModuleMorphism g) {
+    public static <X extends ModuleElement<X,?>, Y extends ModuleElement<Y,?>, Z extends ModuleElement<Z,?>>
+    boolean composable(ModuleMorphism<X,Y> f, ModuleMorphism<Y,Z> g) {
         return f.getDomain().equals(g.getCodomain());
     }
     
@@ -235,7 +231,7 @@ public abstract class ModuleMorphism
     /**
      * Returns true iff element <code>x</code> is in the domain of the morphism.
      */
-    public boolean inDomain(ModuleElement x) {
+    public boolean inDomain(A x) {
         return domain.hasElement(x);
     }
 
@@ -265,7 +261,7 @@ public abstract class ModuleMorphism
     public abstract boolean equals(Object object);
     
 
-    public ModuleMorphism deepCopy() {
+    public ModuleMorphism<A,B> deepCopy() {
         return this;
     }
 
@@ -276,6 +272,6 @@ public abstract class ModuleMorphism
     public abstract String toString();
     
     
-    private final Module domain;
-    private final Module codomain;
+    private final Module<A,?> domain;
+    private final Module<B,?> codomain;
 }
