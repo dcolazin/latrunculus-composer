@@ -20,13 +20,13 @@
 package org.vetronauta.latrunculus.core.math.module.rational;
 
 import lombok.NonNull;
+import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,32 +62,8 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         return new QStringElement(value);
     }
 
-
-    /**
-     * Constructs a QStringElement from the array of objects <code>objs</code>.
-     * @param objs an array of objects where strings alternate with
-     *             rationals, the array should therefore be of even
-     *             length
-     */
-    public QStringElement(Object... objs) {
-        super(build(objs));
-    }
-
-    private static RingString<Rational> build(Object[] objs) {
-        int len = objs.length/2;
-        String[] words = new String[len];
-        Rational[] factors = new Rational[len];
-        for (int i = 0; i < len*2; i += 2) {
-            if (objs[i] instanceof String && objs[i+1] instanceof Rational) {
-                words[i/2] = (String)objs[i];
-                factors[i/2] = (Rational)objs[i+1];
-            }
-            else {
-                words[i/2] = "";
-                factors[i/2] = Rational.getZero();
-            }
-        }
-        return new RingString<>(words, factors);
+    public QStringElement(EntryList<String,Rational> entryList) {
+        super(entryList);
     }
 
     public QStringRing getRing() {

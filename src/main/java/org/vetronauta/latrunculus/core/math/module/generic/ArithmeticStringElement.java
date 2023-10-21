@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
 import lombok.NonNull;
+import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
@@ -47,6 +48,9 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
         this.value = value;
     }
 
+    protected ArithmeticStringElement(EntryList<String,N> entryList) {
+        this(new RingString<>(entryList.getKeys(), entryList.getValues()));
+    }
 
     /**
      * Constructs an RStringElement from a simple string <code>value</code>.

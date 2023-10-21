@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import lombok.NonNull;
+import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -61,32 +62,8 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         return new RStringElement(value);
     }
 
-
-    /**
-     * Constructs an RStringElement from the array of objects <code>objs</code>.
-     * @param objs an array of objects where strings alternate with
-     *             doubles, the array should therefore be of even
-     *             length
-     */
-    public RStringElement(Object... objs) {
-        super(build(objs));
-    }
-
-    private static RingString<ArithmeticDouble> build(Object[] objs) {
-        int len = objs.length/2;
-        String[] words = new String[len];
-        ArithmeticDouble[] factors = new ArithmeticDouble[len];
-        for (int i = 0; i < len*2; i += 2) {
-            if (objs[i] instanceof String && objs[i+1] instanceof Double) {
-                words[i/2] = (String)objs[i];
-                factors[i/2] = new ArithmeticDouble((Double)objs[i+1]);
-            }
-            else {
-                words[i/2] = "";
-                factors[i/2] = new ArithmeticDouble(0);
-            }
-        }
-        return new RingString<>(words, factors);
+    public RStringElement(EntryList<String,ArithmeticDouble> entryList) {
+        super(entryList);
     }
 
     public RStringRing getRing() {

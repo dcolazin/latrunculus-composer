@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
+import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -54,32 +55,8 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
         super(value);
     }
 
-
-    /**
-     * Constructs a ZStringElement from the array of objects <code>objs</code>.
-     * @param objs an array of objects where strings alternate with
-     *             integers, the array should therefore be of even
-     *             length
-     */
-    public ZStringElement(Object ... objs) {
-        super(build(objs));
-    }
-
-    private static RingString<ArithmeticInteger> build(Object[] objs) {
-        int len = objs.length/2;
-        String[] words = new String[len];
-        ArithmeticInteger[] factors = new ArithmeticInteger[len];
-        for (int i = 0; i < len*2; i += 2) {
-            if (objs[i] instanceof String && objs[i+1] instanceof Integer) {
-                words[i/2] = (String)objs[i];
-                factors[i/2] = new ArithmeticInteger((Integer)objs[i+1]);
-            }
-            else {
-                words[i/2] = "";
-                factors[i/2] = new ArithmeticInteger(0);
-            }
-        }
-        return new RingString<>(words, factors);
+    public ZStringElement(EntryList<String,ArithmeticInteger> entryList) {
+        super(entryList);
     }
 
     @Override

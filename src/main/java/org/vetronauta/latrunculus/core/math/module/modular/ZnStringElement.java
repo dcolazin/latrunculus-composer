@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import lombok.NonNull;
+import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -66,33 +67,9 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         this.modulus = modulus;
     }
 
-
-    /**
-     * Constructs a ZnStringElement from the array of objects <code>objs</code>.
-     * @param objs an array of objects where strings alternate with
-     *             integers, the array should therefore be of even
-     *             length
-     */
-    public ZnStringElement(int modulus, Object ... objs) {
-        super(build(modulus, objs));
+    public ZnStringElement(EntryList<String, ArithmeticModulus> entryList, int modulus) {
+        super(entryList);
         this.modulus = modulus;
-    }
-
-    private static RingString<ArithmeticModulus> build(int modulus, Object ... objs) {
-        int len = objs.length/2;
-        String[] words = new String[len];
-        ArithmeticModulus[] factors = new ArithmeticModulus[len];
-        for (int i = 0; i < len*2; i += 2) {
-            if (objs[i] instanceof String && objs[i+1] instanceof Integer) {
-                words[i/2] = (String)objs[i];
-                factors[i/2] = new ArithmeticModulus((Integer)objs[i+1], modulus);
-            }
-            else {
-                words[i/2] = "";
-                factors[i/2] = new ArithmeticModulus(0, modulus);
-            }
-        }
-        return new RingString<>(words, factors);
     }
 
     @Override
