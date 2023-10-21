@@ -53,8 +53,11 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
      * @return the result of mapping element <code>x</code>
      * @throws MappingException if mapping of <code>element<code> fails
      */
-    public abstract B map(A x)
-        throws MappingException;
+    public abstract B map(A x) throws MappingException;
+
+    protected B unsafeMap(ModuleElement<?,?> x) throws MappingException {
+        return map((A) x);
+    }
 
     
     /**
@@ -126,7 +129,7 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
     /**
      * Returns the identity morphism in <code>module</code>.
      */
-    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX> getIdentityMorphism(Module<X,?> module) {
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX> getIdentityMorphism(Module<X,RX> module) {
         return new IdentityMorphism(module);
     }
 

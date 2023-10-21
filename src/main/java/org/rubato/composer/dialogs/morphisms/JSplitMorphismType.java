@@ -84,7 +84,7 @@ public class JSplitMorphismType
      
      
      private void createMorphism() {
-         List<ModuleMorphism> morphisms = new LinkedList<ModuleMorphism>();
+         List<ModuleMorphism> morphisms = new LinkedList<>();
          for (JMorphismEntry entry : morphismEntries) {
              ModuleMorphism m = entry.getMorphism();
              if (m == null) {
@@ -100,14 +100,14 @@ public class JSplitMorphismType
      
      public void editMorphism(ModuleMorphism morphism) {
          SplitMorphism m = (SplitMorphism)morphism;
-         ModuleMorphism[] ms = m.getMorphisms();
-         int[] sl = new int[ms.length];
-         for (int i = 0; i < ms.length; i++) {
-             sl[i] = ms[i].getDomain().getDimension();
+         List<? extends ModuleMorphism<?,?,?,?>> ms = m.getMorphisms();
+         int[] sl = new int[ms.size()];
+         for (int i = 0; i < ms.size(); i++) {
+             sl[i] = ms.get(i).getDomain().getDimension();
          }
          jsplit.setSplitLengths(sl);
          for (int i = 0; i < morphismEntries.length; i++) {
-             morphismEntries[i].setMorphism(ms[i]);
+             morphismEntries[i].setMorphism(ms.get(i));
          }
      }
 

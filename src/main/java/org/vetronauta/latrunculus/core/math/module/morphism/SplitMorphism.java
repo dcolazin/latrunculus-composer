@@ -34,6 +34,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 
@@ -48,121 +49,92 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class SplitMorphism extends ModuleMorphism {
+public class SplitMorphism <A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends ModuleMorphism<A,A,RA,RA> {
+
+    private final List<ModuleMorphism> morphisms;
 
     /**
      * Creates a split morphism over <code>module</code> with
      * the given list of morphisms.
      */
-    public static ModuleMorphism make(FreeModule<?,?> module, List<ModuleMorphism> morphisms) {
-        boolean info[] = new boolean[3];
-        if (checkMorphisms(module, morphisms, info)) {
-            if (morphisms.size() == 1) {
-                // there is only one morphism, no need for split
-                return morphisms.get(0);
-            } else if (info[ALL_IDENTITY]) {
-                return getIdentityMorphism(module);
-            } else if (info[ALL_CONSTANT]) {
-                LinkedList<ModuleElement<?, ?>> resList = new LinkedList<>();
-                for (ModuleMorphism m : morphisms) {
-                    Module domain = m.getDomain();
-                    int dim = domain.getDimension();
-                    try {
-                        ModuleElement res = m.map(domain.getZero());
-                        for (int k = 0; k < dim; k++) {
-                            resList.add(res.getComponent(k));
-                        }
-                    } catch (MappingException e) {
-                        return null;
-                    }
-                }
-                return getConstantMorphism(module, module.createElement(resList));
-            } else if (module.checkRingElement(ArithmeticElement.class)) {
-                ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
-                if (number instanceof ArithmeticInteger) {
-                    for (ModuleMorphism m : morphisms) {
-                        if (!(m instanceof ZFreeAffineMorphism) &&
-                                !(m instanceof ZAffineMorphism)) {
-                            return new SplitMorphism(module, morphisms);
-                        }
-                    }
-                    return makeZFreeMorphism(module.getDimension(), morphisms);
-                } else if (number instanceof ArithmeticModulus) {
-                    for (ModuleMorphism m : morphisms) {
-                        if (!(m instanceof ZnFreeAffineMorphism) &&
-                                !(m instanceof ZnAffineMorphism)) {
-                            return new SplitMorphism(module, morphisms);
-                        }
-                    }
-                    return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms); //TODO this might not work after the ArithmeticMultiModule refactoring
-                } else if (number instanceof Rational) {
-                    for (ModuleMorphism m : morphisms) {
-                        if (!(m instanceof QFreeAffineMorphism) &&
-                                !(m instanceof QAffineMorphism)) {
-                            return new SplitMorphism(module, morphisms);
-                        }
-                    }
-                    return makeQFreeMorphism(module.getDimension(), morphisms);
-                } else if (number instanceof ArithmeticDouble) {
-                    for (ModuleMorphism m : morphisms) {
-                        if (!(m instanceof RFreeAffineMorphism) &&
-                                !(m instanceof RAffineMorphism)) {
-                            return new SplitMorphism(module, morphisms);
-                        }
-                    }
-                    return makeRFreeMorphism(module.getDimension(), morphisms);
-                } else if (number instanceof Complex) {
-                    for (ModuleMorphism m : morphisms) {
-                        if (!(m instanceof CFreeAffineMorphism) &&
-                                !(m instanceof CAffineMorphism)) {
-                            return new SplitMorphism(module, morphisms);
-                        }
-                    }
-                    return makeCFreeMorphism((module).getDimension(), morphisms);
-                }
-            }
-            return new SplitMorphism(module, morphisms);
-        }
-        else {
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    make(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
+        if (!checkMorphisms(module, morphisms)) {
             return null;
         }
+        if (morphisms.size() == 1) {
+                // there is only one morphism, no need for split
+            return (ModuleMorphism<X,X,RX,RX>) morphisms.get(0);
+        }
+        if (areAllIdentity(morphisms)) {
+            return getIdentityMorphism(module);
+        }
+        if (areAllConstants(morphisms)) {
+            return buildSplitConstants(module, morphisms);
+        }
+        if (module.checkRingElement(ArithmeticElement.class)) {
+            ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
+            if (number instanceof ArithmeticInteger && areAllZAffine(morphisms)) {
+                return makeZFreeMorphism(module.getDimension(), morphisms);
+            } else if (number instanceof ArithmeticModulus && areAllZnAffine(morphisms)) {
+                return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms); //TODO this might not work after the ArithmeticMultiModule refactoring
+            } else if (number instanceof Rational && areAllQAffine(morphisms)) {
+                return makeQFreeMorphism(module.getDimension(), morphisms);
+            } else if (number instanceof ArithmeticDouble && areAllRAffine(morphisms)) {
+                return makeRFreeMorphism(module.getDimension(), morphisms);
+            } else if (number instanceof Complex && areAllCAffine(morphisms)) {
+                return makeCFreeMorphism((module).getDimension(), morphisms);
+            }
+        }
+        return new SplitMorphism<>(module, morphisms);
     }
-    
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (getDomain().hasElement(x)) {
-            LinkedList<ModuleElement> resList = new LinkedList<ModuleElement>();
-            int j = 0;
-            for (int i = 0; i < morphisms.length; i++) {
-                ModuleMorphism m = morphisms[i];
-                Module domain = m.getDomain();
-                int dim = domain.getDimension();
-                LinkedList<ModuleElement> list = new LinkedList<ModuleElement>();
-                for (int k = 0; k < dim; k++) {
-                    list.add(x.getComponent(j));
-                    j++;
-                }
-                ModuleElement res = m.map(domain.createElement(list));
+
+    private static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    buildSplitConstants(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
+        List<ModuleElement<?, ?>> resList = new LinkedList<>();
+        for (ModuleMorphism<?,?,?,?> m : morphisms) {
+            Module<?,?> domain = m.getDomain();
+            int dim = domain.getDimension();
+            try {
+                ModuleElement<?,?> res = m.unsafeMap(domain.getZero());
                 for (int k = 0; k < dim; k++) {
                     resList.add(res.getComponent(k));
                 }
+            } catch (MappingException e) {
+                return null;
             }
-            return getDomain().createElement(resList);
         }
-        else {
+        return getConstantMorphism(module, module.createElement(resList));
+    }
+    
+    
+    public A map(A x) throws MappingException {
+        if (!getDomain().hasElement(x)) {
             throw new MappingException("SplitMorphism.map: ", x, this);
         }
+        LinkedList<ModuleElement<?,?>> resList = new LinkedList<>();
+        for (ModuleMorphism<?, ?, RA, RA> m : morphisms) {
+            Module<?, RA> domain = m.getDomain();
+            int dim = domain.getDimension();
+            List<ModuleElement<?, ?>> list = new LinkedList<>();
+            for (int j = 0; j < dim; j++) {
+                list.add(x.getComponent(j));
+            }
+            ModuleElement<?, RA> res = m.unsafeMap(domain.createElement(list));
+            for (int k = 0; k < dim; k++) {
+                resList.add(res.getComponent(k));
+            }
+        }
+        return getDomain().createElement(resList);
     }
 
-    
-    public ModuleMorphism getRingMorphism() {
+    public ModuleMorphism<RA,RA,RA,RA> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
-        for (ModuleMorphism m : morphisms) {
+        for (ModuleMorphism<?,?,?,?> m : morphisms) {
             if (!m.isModuleHomomorphism()) {
                 return false;
             }
@@ -170,51 +142,42 @@ public class SplitMorphism extends ModuleMorphism {
         return true;        
     }
 
-    
     /**
      * Returns the morphisms that make up this split morphism
      * in the correct order.
      */
-    public ModuleMorphism[] getMorphisms() {
+    public List<ModuleMorphism> getMorphisms() {
         return morphisms;
     }
-    
     
     public boolean equals(Object object) {
         if (this == object) {
             return true;
-
         }    
-        else if (object instanceof SplitMorphism) {
-            SplitMorphism m = (SplitMorphism)object;
-            if (getDomain().equals(m.getDomain()) &&
-                morphisms.length == m.morphisms.length) {
-                for (int i = 0; i < morphisms.length; i++) {
-                    if (!morphisms[i].equals(m.morphisms[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
+        if (!(object instanceof SplitMorphism)) {
+            return false;
+        }
+        SplitMorphism<?,?> m = (SplitMorphism<?,?>)object;
+        if (!getDomain().equals(m.getDomain()) || morphisms.size() != m.morphisms.size()) {
+            return false;
+        }
+        for (int i = 0; i < morphisms.size(); i++) {
+            if (!morphisms.get(i).equals(m.morphisms.get(i))) {
                 return false;
             }
         }
-        else {
-            return false;
-        }
+        return true;
     }
-
 
     public String toString() {
         StringBuilder buf = new StringBuilder(50);
         buf.append("SplitMorphism[");
         buf.append(getDomain());
         buf.append(",");
-        buf.append(morphisms[0]);
-        for (int i = 1; i < morphisms.length; i++) {
+        buf.append(morphisms.get(0));
+        for (int i = 1; i < morphisms.size(); i++) {
             buf.append(",");
-            buf.append(morphisms[i]);
+            buf.append(morphisms.get(i));
         }
         buf.append("]");
         return buf.toString();
@@ -223,32 +186,51 @@ public class SplitMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "SplitMorphism";
     }
-    
-    
-    private static boolean checkMorphisms(FreeModule module, List<ModuleMorphism> morphisms, boolean[] info) {
-        info[ALL_CONSTANT] = true;
-        info[ALL_IDENTITY] = true;
-        Ring ring = module.getRing();
+
+    private static boolean checkMorphisms(FreeModule<?,?> module, List<ModuleMorphism> morphisms) {
+        Ring<?> ring = module.getRing();
         int dim = 0;
-        for (ModuleMorphism m : morphisms) {
-            Module domain = m.getDomain();
+        for (ModuleMorphism<?,?,?,?> m : morphisms) {
+            Module<?,?> domain = m.getDomain();
             if (!domain.equals(m.getCodomain())) {
                 return false;
             }
             if (!domain.getRing().equals(ring)) {
                 return false;
             }
-            if (!m.isConstant()) { info[ALL_CONSTANT] = false; }
-            if (!m.isIdentity()) { info[ALL_IDENTITY] = false; }
             dim += domain.getDimension();
         }
-        if (dim != module.getDimension()){
-            return false;
-        }
-        return true;
+        return dim == module.getDimension();
     }
-    
-    
+
+    private static boolean areAllConstants(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(ModuleMorphism::isConstant);
+    }
+
+    private static boolean areAllIdentity(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(ModuleMorphism::isIdentity);
+    }
+
+    private static boolean areAllZAffine(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(m -> m instanceof ZFreeAffineMorphism || m instanceof ZAffineMorphism);
+    }
+
+    private static boolean areAllZnAffine(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(m -> m instanceof ZnFreeAffineMorphism || m instanceof ZnAffineMorphism);
+    }
+
+    private static boolean areAllQAffine(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(m -> m instanceof QFreeAffineMorphism || m instanceof QAffineMorphism);
+    }
+
+    private static boolean areAllRAffine(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(m -> m instanceof RFreeAffineMorphism || m instanceof RAffineMorphism);
+    }
+
+    private static boolean areAllCAffine(List<ModuleMorphism> morphisms) {
+        return morphisms.stream().allMatch(m -> m instanceof CFreeAffineMorphism || m instanceof CAffineMorphism);
+    }
+
     private static ModuleMorphism makeZFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         ZMatrix A = new ZMatrix(dim, dim);
         int[] b = new int[dim];
@@ -378,20 +360,9 @@ public class SplitMorphism extends ModuleMorphism {
         return CFreeAffineMorphism.make(A, b);
     }
     
-    
-    private SplitMorphism(FreeModule module, List<ModuleMorphism> morphisms) {
+    private SplitMorphism(FreeModule<A,RA> module, List<ModuleMorphism> morphisms) {
         super(module, module);
-        this.morphisms = new ModuleMorphism[morphisms.size()];
-        int i = 0;
-        for (ModuleMorphism m : morphisms) {
-            this.morphisms[i++] = m;
-        }
+        this.morphisms = morphisms;
     }
-    
 
-    private ModuleMorphism[] morphisms;
-    
-    
-    private static final int ALL_CONSTANT = 0;
-    private static final int ALL_IDENTITY = 1;
 }

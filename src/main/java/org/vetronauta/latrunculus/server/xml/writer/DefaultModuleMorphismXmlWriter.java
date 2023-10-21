@@ -484,7 +484,7 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.closeBlock();
     }
 
-    private void write(SplitMorphism morphism, XMLWriter writer) {
+    private void write(SplitMorphism<?,?> morphism, XMLWriter writer) {
         writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName());
         definitionWriter.toXML(morphism.getDomain(), writer);
         for (ModuleMorphism m : morphism.getMorphisms()) {

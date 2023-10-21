@@ -916,7 +916,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
                 return null;
             }
             if (domain == null) {
-                return new ConstantMorphism(moduleElement);
+                return ConstantMorphism.make(moduleElement);
             }
             else {
                 return new ConstantMorphism(domain, moduleElement);
