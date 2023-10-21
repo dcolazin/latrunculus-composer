@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @author Gérard Milmeister
  */
 public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
-    implements Comparable<ModuleMorphism<?,?,?,?>>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism<A,B,?,?>> {
+    implements Comparable<ModuleMorphism<?,?,?,?>>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism<A,B,RA,RB>> {
 
     private final Module<A,RA> domain;
     private final Module<B,RB> codomain;

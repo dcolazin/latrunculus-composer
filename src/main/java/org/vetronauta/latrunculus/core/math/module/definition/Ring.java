@@ -35,7 +35,7 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
      * Returns the unit element of this ring.
      */
     public abstract R getOne();
-        
+
     /**
      * Returns the unit vector with 1 at position <code>i</code>.
      * In the case of rings, this is simple the unit.

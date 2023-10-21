@@ -64,7 +64,7 @@ public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
     /**
      * Returns the ring of the factors.
      */
-    public abstract Ring getFactorRing();
+    public abstract Ring<?> getFactorRing();
     
     public int compareTo(Module object) {
         if (object instanceof StringRing) {

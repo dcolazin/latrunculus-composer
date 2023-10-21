@@ -20,23 +20,13 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +42,15 @@ import java.util.Map;
  * 
  * @author Gérard Milmeister
  */
-public abstract class CastMorphism extends ModuleMorphism {
+public abstract class CastMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+
+    private static final Map<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> castingMorphisms = new HashMap<>();
+
+    protected CastMorphism(Module<A,RA> domain, Module<B,RB> codomain) {
+        super(domain, codomain);
+    }
 
     /**
      * Creates a casting morphism from <code>domain</code>
@@ -60,7 +58,7 @@ public abstract class CastMorphism extends ModuleMorphism {
      * 
      * @return null iff no such morphism could be created
      */
-    public static ModuleMorphism make(Ring domain, Ring codomain) {
+    public static <RX extends RingElement<RX>, RY extends RingElement<RY>> ModuleMorphism<RX,RY,RX,RY> make(Ring<RX> domain, Ring<RY> codomain) {
         // check if the required morphism is in the cache
         Pair<Module<?,?>,Module<?,?>> pair = Pair.makePair(domain, codomain);
         ModuleMorphism morphism = castingMorphisms.get(pair);
@@ -74,29 +72,19 @@ public abstract class CastMorphism extends ModuleMorphism {
         }
         return morphism;
     }
-    
-    
-    public final ModuleElement map(ModuleElement x)
-            throws MappingException {
-        ModuleElement res = null;
-        
-        if (getDomain().hasElement(x)) {
-            res = mapValue(x);
-        }
-        
-        if (res == null) {
+
+    public final RB map(RA x) throws MappingException {
+        if (!getDomain().hasElement(x)) {
             throw new MappingException("CastMorphism.map: ", x, this);
         }
-        else {
-            return res;
-        }
+        return mapValue(x);
     }
 
     /**
      * The low-level map method.
      * This must be implemented by subclasses.
      */
-    public abstract ModuleElement mapValue(ModuleElement element);    
+    public abstract RB mapValue(RA element);
 
     
     /**
@@ -105,132 +93,34 @@ public abstract class CastMorphism extends ModuleMorphism {
      * 
      * @return null iff noch such morphism could be created
      */
-    private static ModuleMorphism makeCastingMorphism(final Ring domain, final Ring codomain) {
-        ModuleMorphism m = null;
+    private static <RX extends RingElement<RX>, RY extends RingElement<RY>> ModuleMorphism<RX,RY,RX,RY>
+    makeCastingMorphism(final Ring<RX> domain, final Ring<RY> codomain) {
         if (domain instanceof StringRing) {
-            m = makeStringRingMorphism((StringRing)domain, codomain);
+            return (ModuleMorphism<RX, RY, RX, RY>) makeStringRingMorphism((StringRing<?>)domain, codomain);
         }
-        else if (domain == QRing.ring) {
-            // Q -> ?
-            if (codomain == ZRing.ring) {
-                // Q -> Z
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticInteger(((ArithmeticElement<Rational>)element).getValue().intValue()));
-                    }
-                };
-            }
-            else if (codomain instanceof ZnRing) {
-                // Q -> Zn
-                final int modulus = ((ZnRing)codomain).getModulus();
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticModulus(((ArithmeticElement<Rational>)element).getValue().intValue(), modulus));
-                    }
-                };
-            }
+        if (areArithmeticCompatible(domain, codomain)) {
+            return new RingCastMorphism<>(domain, codomain);
         }
-        else if (domain == RRing.ring) {
-            // R -> ?
-            if (codomain == QRing.ring) {
-                // R -> Q
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new Rational(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()));
-                    }
-                };
-            }
-            else if (codomain == ZRing.ring) {
-                // R -> Z
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticInteger((int)Math.round(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue())));
-                    }
-                };
-            }
-            else if (codomain instanceof ZnRing) {
-                // R -> Zn
-                final int modulus = ((ZnRing)codomain).getModulus();
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()), modulus));
-                    }
-                };
-            }
-        }
-        else if (domain == CRing.ring) {
-            // C -> ?
-            if (codomain == RRing.ring) {
-                // C -> R
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<Complex>)element).getValue().abs()));
-                    }
-                };
-            }
-            else if (codomain == QRing.ring) {
-                // C -> Q
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new Rational(((ArithmeticElement<Complex>)element).getValue().abs()));
-                    }
-                };
-            }
-            else if (codomain == ZRing.ring) {
-                // C -> Z
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticInteger((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs())));
-                    }
-                };
-            }
-            else if (codomain instanceof ZnRing) {
-                // C -> Zn
-                final int modulus = ((ZnRing)codomain).getModulus();
-                m = new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(((ArithmeticElement<Complex>)element).getValue().abs()), modulus));
-                    }
-                };
-            }
-        }
-        
-        return m;
+        return null;
     }
 
-    
-    private static ModuleMorphism makeStringRingMorphism(final StringRing domain, final Ring codomain) {
+    private static boolean areArithmeticCompatible(Ring<?> domain, Ring<?> codomain) {
+        if (domain instanceof ArithmeticRing && codomain instanceof ArithmeticRing) {
+            return domain.compareTo(codomain) > 0;
+        }
+        return false;
+    }
+
+    private static <RX extends StringElement<RX>, RY extends RingElement<RY>> ModuleMorphism<RX,RY,RX,RY>
+    makeStringRingMorphism(final StringRing<RX> domain, final Ring<RY> codomain) {
         if (codomain instanceof StringRing) {
-            return new CastMorphism(domain, codomain) {
-                public ModuleElement mapValue(ModuleElement element) {
-                    return codomain.cast(element);
-                }
-            };
+            return new RingCastMorphism<>(domain, codomain);
         }
-        else {
-            final ModuleMorphism m = CanonicalMorphism.make(domain.getFactorRing(), codomain);
-            if (m != null) {
-                return new CastMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        StringElement<?> e = (StringElement<?>)element;
-                        ModuleElement s = domain.getFactorRing().getZero();
-                        Map<String, RingElement> terms = e.getTerms();
-                        try {
-                            for (RingElement x : terms.values()) {
-                                s.add(x);
-                            }
-                            return m.map(s);
-                        }
-                        catch (Exception ex) {                            
-                            throw new RuntimeException("This should never happen!");
-                        }
-                    }
-                };
-            }
-            else {
-                return null;
-            }
+        final ModuleMorphism m = CanonicalMorphism.make(domain.getFactorRing(), codomain);
+        if (m == null) {
+            return null;
         }
+        return new StringCastMorphism<>(m, domain, codomain);
     }
 
 
@@ -266,19 +156,52 @@ public abstract class CastMorphism extends ModuleMorphism {
         }
     }
 
-    
     public String toString() {
         return "CastMorphism["+getDomain()+","+getCodomain()+"]";
     }
-    
-    private static HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> castingMorphisms = new HashMap<>();
 
     public String getElementTypeName() {
         return "CastMorphism";
     }
 
-    
-    protected CastMorphism(Module domain, Module codomain) {
-        super(domain, codomain);
+    private static class RingCastMorphism<RX extends RingElement<RX>, RY extends RingElement<RY>> extends CastMorphism<RX,RY,RX,RY> {
+
+        protected RingCastMorphism(Ring<RX> domain, Ring<RY> codomain) {
+            super(domain, codomain);
+        }
+
+        @Override
+        public RY mapValue(RX element) {
+            return getCodomain().getRing().cast(element);
+        }
+
     }
+
+    private static class StringCastMorphism<RX extends StringElement<RX>, RY extends RingElement<RY>, T extends RingElement<T>> extends CastMorphism<RX,RY,RX,RY> {
+
+        private final ModuleMorphism<T,RY,T,RY> internalMorphism;
+
+        protected StringCastMorphism(ModuleMorphism internalMorphism, StringRing<RX> domain, Ring<RY> codomain) {
+            super(domain, codomain);
+            this.internalMorphism = internalMorphism;
+        }
+
+        public StringRing<RX> getDomain() {
+            return (StringRing<RX>) super.getDomain();
+        }
+
+        public RY mapValue(RX element) {
+            T s = (T) getDomain().getFactorRing().getZero();
+            Map<String, RingElement> terms = element.getTerms();
+            try {
+                for (RingElement x : terms.values()) {
+                    s.add((T) x);
+                }
+                return internalMorphism.map(s);
+            } catch (Exception ex) {
+                throw new RuntimeException("This should never happen!");
+            }
+        }
+    }
+
 }

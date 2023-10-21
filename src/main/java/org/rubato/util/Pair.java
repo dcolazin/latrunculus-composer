@@ -79,7 +79,7 @@ public class Pair<A extends Comparable<A>,B extends Comparable<B>>
     
     
     public Pair<A,B> copy() {
-        return new Pair<A,B>(first, second);
+        return new Pair<>(first, second);
     }
     
     
@@ -95,6 +95,6 @@ public class Pair<A extends Comparable<A>,B extends Comparable<B>>
     
     public static <A extends Comparable<A>,B extends Comparable<B>>
     Pair<A,B> makePair(A a, B b) {
-        return new Pair<A,B>(a, b);
+        return new Pair<>(a, b);
     }
 }
