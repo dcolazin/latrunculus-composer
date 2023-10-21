@@ -66,10 +66,6 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         super(entryList);
     }
 
-    public QStringRing getRing() {
-        return QStringRing.ring;
-    }
-
     public FreeElement resize(int n) {
         if (n == 1) {
             return this;

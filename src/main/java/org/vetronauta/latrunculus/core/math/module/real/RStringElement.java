@@ -66,11 +66,6 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         super(entryList);
     }
 
-    public RStringRing getRing() {
-        return RStringRing.ring;
-    }
-
-
     public FreeElement resize(int n) {
         if (n == 1) {
             return this;

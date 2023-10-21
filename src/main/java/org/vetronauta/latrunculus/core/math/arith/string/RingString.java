@@ -382,14 +382,14 @@ public class RingString<T extends ArithmeticNumber<T>>
     /**
      * Returns the unit factor object.
      */
-    protected T getObjectOne() {
+    public T getObjectOne() {
         return null; //TODO!!! from ring?
     }
 
     /**
      * Returns the zero factor object.
      */
-    protected T getObjectZero() {
+    public T getObjectZero() {
         return null; //TODO!!! from ring?
     }
 

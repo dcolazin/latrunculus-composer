@@ -63,10 +63,6 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
     protected ZStringElement valueOf(RingString<ArithmeticInteger> value) {
         return new ZStringElement(value);
     }
-    
-    public ZStringRing getRing() {
-        return ZStringRing.ring;
-    }
 
     public FreeElement resize(int n) {
         if (n == 1) {

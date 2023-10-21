@@ -31,6 +31,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
 /**
  * @author vetronauta
@@ -144,6 +146,10 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
     public boolean divides(RingElement element) {
         // TODO: implement division where possible
         return false;
+    }
+
+    public StringRing<T> getRing() {
+        return StringRingRepository.getRing(this);
     }
 
     public RingString<N> getRingString() {

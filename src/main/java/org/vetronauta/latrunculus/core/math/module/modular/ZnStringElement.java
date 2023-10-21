@@ -77,13 +77,6 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         return new ZnStringElement(value);
     }
 
-    public ZnStringRing getRing() {
-        if (module == null) {
-            module = ZnStringRing.make(modulus);
-        }
-        return module;
-    }
-    
     public FreeElement resize(int n) {
         if (n == 1) {
             return this;
