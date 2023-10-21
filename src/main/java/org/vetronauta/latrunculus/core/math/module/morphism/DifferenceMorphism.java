@@ -21,13 +21,18 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * Morphism that represents the difference of two arbitrary morphisms.
  *
  * @author Gérard Milmeister
  */
-public final class DifferenceMorphism extends ModuleMorphism {
+public final class DifferenceMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+    private final ModuleMorphism<A,B,RA,RB> f;
+    private final ModuleMorphism<A,B,RA,RB> g;
     
     /**
      * Creates a morphism from <code>f</code> and <code>g</code>.
@@ -35,40 +40,35 @@ public final class DifferenceMorphism extends ModuleMorphism {
      * 
      * @throws CompositionException if difference is not valid
      */
-    public static ModuleMorphism make(ModuleMorphism f, ModuleMorphism g)
-            throws CompositionException {
-        if (!f.getDomain().equals(g.getDomain()) ||
-            !f.getCodomain().equals(g.getCodomain())) {
+    public static <X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,Y,RX,RY> make(ModuleMorphism<X,Y,RX,RY> f, ModuleMorphism<X,Y,RX,RY> g) throws CompositionException {
+        if (!f.getDomain().equals(g.getDomain()) || !f.getCodomain().equals(g.getCodomain())) {
             throw new CompositionException("DifferenceMorphism.make: Cannot subtract "+g+" from "+f);
         }
-        else if (f.isConstant() && g.isConstant()) {
+        if (f.isConstant() && g.isConstant()) {
             try {
-                ModuleElement zero = f.getDomain().getZero();
-                ModuleElement fe = f.map(zero);
-                ModuleElement ge = g.map(zero);
-                return new ConstantMorphism(fe.difference(ge));
-            }
-            catch (DomainException e) {
-                throw new AssertionError("This should never happen!");
-            }
-            catch (MappingException e) {
+                X zero = f.getDomain().getZero();
+                Y fe = f.map(zero);
+                Y ge = g.map(zero);
+                return new ConstantMorphism<>(f.getDomain(), fe.difference(ge));
+            } catch (DomainException | MappingException e) {
                 throw new AssertionError("This should never happen!");
             }
         }
         else {
-            return new DifferenceMorphism(f, g);
+            return new DifferenceMorphism<>(f, g);
         }
     }
     
     
-    private DifferenceMorphism(ModuleMorphism f, ModuleMorphism g) {
+    private DifferenceMorphism(ModuleMorphism<A,B,RA,RB> f, ModuleMorphism<A,B,RA,RB> g) {
         super(f.getDomain(), f.getCodomain());
         this.f = f;
         this.g = g;
     }
 
     
-    public ModuleElement map(ModuleElement x)
+    public B map(A x)
             throws MappingException {
         try {
             return f.map(x).difference(g.map(x));
@@ -78,17 +78,20 @@ public final class DifferenceMorphism extends ModuleMorphism {
         }
     }
 
-    
+
+    @Override
     public boolean isModuleHomomorphism() {
         return f.isModuleHomomorphism() && g.isModuleHomomorphism();
     }
-    
 
+
+    @Override
     public boolean isRingHomomorphism() {
         return f.isRingHomomorphism() && g.isRingHomomorphism();
     }
-    
-    
+
+
+    @Override
     public boolean isLinear() {
         return f.isLinear() && g.isLinear();
     }
@@ -97,7 +100,7 @@ public final class DifferenceMorphism extends ModuleMorphism {
     /**
      * Returns the morphism <i>f</i> of the difference <i>f-g</i>.
      */
-    public ModuleMorphism getFirstMorphism() {
+    public ModuleMorphism<A,B,RA,RB> getFirstMorphism() {
         return f;
     }
     
@@ -105,19 +108,19 @@ public final class DifferenceMorphism extends ModuleMorphism {
     /**
      * Returns the morphism <i>g</i> of the difference <i>f-g</i>.
      */
-    public ModuleMorphism getSecondMorphism() {
+    public ModuleMorphism<A,B,RA,RB> getSecondMorphism() {
         return g;
     }
     
     
-    public ModuleMorphism getRingMorphism() {
+    public ModuleMorphism<RA,RB,RA,RB> getRingMorphism() {
         return f.getRingMorphism();
     }
 
     
     public int compareTo(ModuleMorphism object) {
         if (object instanceof DifferenceMorphism) {
-            DifferenceMorphism morphism = (DifferenceMorphism)object;
+            DifferenceMorphism<?,?,?,?> morphism = (DifferenceMorphism<?,?,?,?>)object;
             int comp = f.compareTo(morphism.f);
             if (comp == 0) {
                 return g.compareTo(morphism.g);
@@ -150,8 +153,5 @@ public final class DifferenceMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "DifferenceMorphism";
     }
-    
-    
-    private ModuleMorphism f;
-    private ModuleMorphism g;
+
 }
