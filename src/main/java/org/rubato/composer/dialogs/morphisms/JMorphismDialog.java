@@ -528,7 +528,7 @@ public class JMorphismDialog
                 setResult(morphism.toString());
             }
             else if (selectedType.equals(CONJUGATION_TYPE)) {
-                setMorphism(new ConjugationMorphism(domain.getDimension()));
+                setMorphism(ConjugationMorphism.make(domain.getDimension()));
                 setResult(morphism.toString());
             }
             else if (selectedType.equals(SUM_TYPE)) {

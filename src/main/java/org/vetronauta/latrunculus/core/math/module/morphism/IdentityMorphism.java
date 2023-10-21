@@ -21,104 +21,89 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 /**
  * Identity mappings on a module.
  * 
  * @author Gérard Milmeister
  */
-public final class IdentityMorphism extends ModuleMorphism {
+public final class IdentityMorphism<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
 
     /**
      * Creates an identity morphism on the module <code>m</code>.
      */
-    public IdentityMorphism(Module m) {
-        super(m, m);
+    public IdentityMorphism(Module<A,RA> m) {
+        super(m);
+    }
+
+    public A map(A x) {
+        return x;
     }
     
-
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (getDomain().hasElement(x)) {
-            return x;
-        }
-        else {
-            throw new MappingException("IdentityMorphism.map: ", x, this);
-        }
-    }
-    
-
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return true;
     }
     
-    
+    @Override
     public boolean isLinear() {
         return true;
     }
     
-    
+    @Override
     public boolean isIdentity() {
         return true;
     }
     
-    
+    @Override
     public boolean isConstant() {
         return false;
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public IdentityMorphism<RA, RA> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
     
-
-    public ModuleMorphism compose(ModuleMorphism morphism)
-            throws CompositionException {
+    @Override
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,A,RC,RA> compose(ModuleMorphism<C,A,RC,RA> morphism) throws CompositionException {
         if (composable(this, morphism)) {
             return morphism;
         }
-        else {
-            return super.compose(morphism);
-        }
+        return super.compose(morphism);
     }
     
-    
-    public ModuleMorphism power(int n) {
+    @Override
+    public IdentityMorphism<A, RA> power(int n) {
         return this;
     }
     
-    
-    public ModuleElement atZero() {
+    @Override
+    public A atZero() {
         return getCodomain().getZero();
     }
-    
 
     public int compareTo(ModuleMorphism object) {
         if (object instanceof IdentityMorphism) {
             return object.getDomain().compareTo(getDomain());
         }
-        else {
-            return super.compareTo(object);
-        }
+        return super.compareTo(object);
     }
-    
-    
+
     public boolean equals(Object object) {
         if (object instanceof IdentityMorphism) {
             return getDomain().equals(((IdentityMorphism)object).getDomain());
         }
-        else {
-            return false;
-        }
+        return false;
     }
-    
-    
+
     public String toString() {
         return "IdentityMorphism["+getDomain()+"]";
     }

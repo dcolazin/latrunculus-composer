@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -49,7 +50,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class SplitMorphism <A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends ModuleMorphism<A,A,RA,RA> {
+public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement<RA>> extends ModuleMorphism<A,A,RA,RA> {
 
     private final List<ModuleMorphism> morphisms;
 
@@ -57,7 +58,7 @@ public class SplitMorphism <A extends ModuleElement<A, RA>, RA extends RingEleme
      * Creates a split morphism over <code>module</code> with
      * the given list of morphisms.
      */
-    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    public static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
     make(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
         if (!checkMorphisms(module, morphisms)) {
             return null;
@@ -89,7 +90,7 @@ public class SplitMorphism <A extends ModuleElement<A, RA>, RA extends RingEleme
         return new SplitMorphism<>(module, morphisms);
     }
 
-    private static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    private static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
     buildSplitConstants(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
         List<ModuleElement<?, ?>> resList = new LinkedList<>();
         for (ModuleMorphism<?,?,?,?> m : morphisms) {

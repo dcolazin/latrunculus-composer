@@ -20,13 +20,24 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 /**
  * Morphism that represents an iterated arbitrary morphism.
  * 
  * @author Gérard Milmeister
  */
-public final class PowerMorphism extends ModuleMorphism {
+public final class PowerMorphism<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
+
+    private final Endomorphism<A,RA> f;
+    private final int exponent;
+
+    private PowerMorphism(Endomorphism<A,RA> f, int exp) {
+        super(f.getDomain());
+        this.f = f;
+        this.exponent = exp;
+    }
 
     /**
      * Creates a morphism from <code>f</code> raised to <code>power</code>.
@@ -34,76 +45,62 @@ public final class PowerMorphism extends ModuleMorphism {
      * where there are <code>exp</code> repetitions of <code>f</code>.
      * This is a virtual constructor, so that simplifications can be made.
      */
-    public static ModuleMorphism make(ModuleMorphism f, int exp)
-        	throws CompositionException {
-        if (!f.getDomain().equals(f.getCodomain())) {
-            throw new CompositionException("PowerMorphism.make: Cannot raise "+f+" to power "+exp);
-        }
-        else if (exp < 0) {
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> Endomorphism<X,RX> make(Endomorphism<X,RX> f, int exp) throws CompositionException {
+        if (exp < 0) {
             throw new CompositionException("PowerMorphism.make: Cannot raise "+f+" to a negative power "+exp);
         }
-        else if (exp == 0) {
+        if (exp == 0) {
             return getIdentityMorphism(f.getDomain());
         }
-        else if (exp == 1) {
+        if (exp == 1 || f.isIdentity() || f.isConstant()) {
             return f;
         }
-        else if (f.isIdentity()) {
-            return f;
-        }
-        else if (f.isConstant()) {
-            return f;
-        }
-        else {
-            return new PowerMorphism(f, exp);
-        }
+        return new PowerMorphism<>(f, exp);
     }
 
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        ModuleElement res = x;
+    @Override
+    public A map(A x) throws MappingException {
+        A res = x;
         for (int i = 1; i < exponent; i++) {
             res = f.map(res);
         }
         return res;
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return f.isModuleHomomorphism();
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return f.isRingHomomorphism();        
     }
     
-    
+    @Override
     public boolean isLinear() {
         return f.isLinear();
     }
     
-    
+    @Override
     public boolean isIdentity() {
         return exponent == 0 || f.isIdentity();
     }
     
-    
+    @Override
     public boolean isConstant() {
         return f.isConstant();
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public IdentityMorphism<RA, RA> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
-    
     /**
      * Returns the base morphism <i>f</i> of the power <i>f^n</i>.
      */
-    public ModuleMorphism getBaseMorphism() {
+    public Endomorphism<A, RA> getBaseMorphism() {
         return f;
     }
     
@@ -113,14 +110,14 @@ public final class PowerMorphism extends ModuleMorphism {
     public int getExponent() {
         return exponent;
     }
-    
-    
-    public ModuleMorphism power(int n)
-            throws CompositionException {
-        return make(f, exponent+n);
+
+
+    @Override
+    public Endomorphism<A, RA> power(int n) throws CompositionException {
+        return make(f, exponent * n);
     }
-    
-    
+
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof PowerMorphism) {
             PowerMorphism morphism = (PowerMorphism)object;
@@ -137,7 +134,7 @@ public final class PowerMorphism extends ModuleMorphism {
         }
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (object instanceof PowerMorphism) {
             PowerMorphism morphism = (PowerMorphism)object;
@@ -156,14 +153,5 @@ public final class PowerMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "PowerMorphism";
     }
-    
-    
-    private PowerMorphism(ModuleMorphism f, int exp) {
-        super(f.getDomain(), f.getCodomain());
-        this.f = f;
-        this.exponent = exp;
-    }
-    
-    private ModuleMorphism f;
-    private int            exponent;
+
 }

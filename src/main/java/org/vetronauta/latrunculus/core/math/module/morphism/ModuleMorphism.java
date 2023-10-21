@@ -113,24 +113,11 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
         }
     }
     
-    
-    /**
-     * Returns this module morphism raise to the power <code>n</code>.
-     * The power must be non-negative and the domain must be equal
-     * to the codomain. 
-     * 
-     * @throws CompositionException if power could not be performed
-     */
-    public ModuleMorphism<A,A,RA,RA> power(int n) throws CompositionException {
-        return PowerMorphism.make(this, n);
-    }
-
-    
     /**
      * Returns the identity morphism in <code>module</code>.
      */
-    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX> getIdentityMorphism(Module<X,RX> module) {
-        return new IdentityMorphism(module);
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> IdentityMorphism<X,RX> getIdentityMorphism(Module<X,RX> module) {
+        return new IdentityMorphism<>(module);
     }
 
 

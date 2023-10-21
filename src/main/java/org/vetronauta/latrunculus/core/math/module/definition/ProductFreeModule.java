@@ -25,7 +25,7 @@ package org.vetronauta.latrunculus.core.math.module.definition;
  * 
  * @author Gérard Milmeister
  */
-public interface ProductFreeModule<E extends ModuleElement<E,R>, R extends RingElement<R>> extends FreeModule<E,R> {
+public interface ProductFreeModule<E extends FreeElement<E,R>, R extends RingElement<R>> extends FreeModule<E,R> {
 
     int getFactorCount();
     

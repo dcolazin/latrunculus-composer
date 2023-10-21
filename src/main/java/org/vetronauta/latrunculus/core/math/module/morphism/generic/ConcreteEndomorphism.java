@@ -22,25 +22,39 @@ package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
 
 /**
  * @author vetronauta
  */
-public abstract class Endomorphism<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends ModuleMorphism<A,A,RA,RA> {
+public class ConcreteEndomorphism<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
 
-    protected Endomorphism(Module<A, RA> domain) {
-        super(domain, domain);
+    private ModuleMorphism<A,A,RA,RA> internalMorphism;
+
+    protected ConcreteEndomorphism(ModuleMorphism<A,A,RA,RA> morphism) {
+        super(morphism.getDomain());
+        this.internalMorphism = morphism;
     }
 
-    /**
-     * Returns this module morphism raise to the power <code>n</code>.
-     * @throws CompositionException if power could not be performed
-     */
-    public Endomorphism<A,RA> power(int n) throws CompositionException {
-        return PowerMorphism.make(this, n);
+    @Override
+    public A map(A x) throws MappingException {
+        return internalMorphism.map(x);
+    }
+
+    @Override
+    public ModuleMorphism<RA, RA, RA, RA> getRingMorphism() {
+        return internalMorphism.getRingMorphism();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return internalMorphism.equals(object);
+    }
+
+    @Override
+    public String toString() {
+        return "Endomorphism:" + internalMorphism.toString();
     }
 
 }

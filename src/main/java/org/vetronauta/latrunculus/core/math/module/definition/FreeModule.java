@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
  * 
  * @author Gérard Milmeister
  */
-public interface FreeModule<E extends ModuleElement<E,R>, R extends RingElement<R>> extends Module<E,R> {
+public interface FreeModule<E extends FreeElement<E,R>, R extends RingElement<R>> extends Module<E,R> {
 
     /**
      * Returns true if this free module is a vector space.

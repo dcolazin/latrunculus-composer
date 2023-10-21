@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -30,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public interface PolynomialFreeModule<E extends ModuleElement<E,PolynomialElement<B>>, B extends RingElement<B>> extends FreeModule<E,PolynomialElement<B>> {
+public interface PolynomialFreeModule<E extends FreeElement<E,PolynomialElement<B>>, B extends RingElement<B>> extends FreeModule<E,PolynomialElement<B>> {
     
     /**
      * Returns the ring of the coefficients of the polynomials.

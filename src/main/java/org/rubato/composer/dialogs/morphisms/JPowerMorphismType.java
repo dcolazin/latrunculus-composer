@@ -32,6 +32,7 @@ import org.rubato.composer.components.JMorphismEntry;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 class JPowerMorphismType
         extends JMorphismType 
@@ -75,11 +76,10 @@ class JPowerMorphismType
     private void createMorphism() {
         ModuleMorphism m = morphismEntry.getMorphism();
         int power = (Integer)spinner.getValue();
-        if (m != null) {
+        if (m instanceof Endomorphism) {
             try {
-                container.setMorphism(m.power(power));
-            }
-            catch (CompositionException ex) {
+                container.setMorphism(((Endomorphism<?,?>)m).power(power));
+            } catch (CompositionException ex) {
                 container.setMorphism(null);
             }
         }

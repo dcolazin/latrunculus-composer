@@ -19,88 +19,81 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.
  * 
  * @author Gérard Milmeister
  */
-public final class ConjugationMorphism extends ModuleMorphism {
+public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement<Complex>>> extends Endomorphism<A,ArithmeticElement<Complex>> {
 
-    public ConjugationMorphism(int dimension) {
-        super(ArithmeticMultiModule.make(CRing.ring, dimension), ArithmeticMultiModule.make(CRing.ring, dimension));
-        this.dimension = dimension;
+    public static ConjugationMorphism<?> make(int dimension) {
+        FreeModule<?,ArithmeticElement<Complex>> domain = ArithmeticMultiModule.make(CRing.ring, dimension);
+        return new ConjugationMorphism<>(domain);
     }
 
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
+    private ConjugationMorphism(FreeModule<A,ArithmeticElement<Complex>> domain) {
+        super(domain);
+    }
+
+    //TODO make in abstract and map the two cases separately
+    public A map(A x) throws MappingException {
         if (x instanceof ArithmeticElement) {
-            ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
-            if (number instanceof Complex) {
-                return new ArithmeticElement<>(((Complex) number).conjugated());
-            }
-        } else if (x instanceof ArithmeticMultiElement && (((ArithmeticMultiElement<?>) x).getRing() instanceof CRing)) {
+            Complex number = ((ArithmeticElement<Complex>) x).getValue();
+            return (A) new ArithmeticElement<>(number.conjugated());
+        } else if (x instanceof ArithmeticMultiElement) {
                 ArithmeticMultiElement<Complex> element = (ArithmeticMultiElement<Complex>) x;
                 Complex[] res = new Complex[element.getValue().size()];
                 for (int i = 0; i < element.getValue().size(); i++) {
                     res[i] = element.getValue().get(i).getValue().conjugated();
                 }
-                return ArithmeticMultiElement.make(CRing.ring, res);
+                return (A) ArithmeticMultiElement.make(CRing.ring, res);
 
         }
         throw new MappingException("ConjugationMorphism.map: ", x, this);
     }
-    
+
+    @Override
     public boolean isRingHomomorphism() {
         return getDomain().isRing();
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public IdentityMorphism<ArithmeticElement<Complex>, ArithmeticElement<Complex>> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
-    
-    public ModuleMorphism compose(ModuleMorphism morphism)
-            throws CompositionException {
+    @Override
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,A,RC,ArithmeticElement<Complex>>
+    compose(ModuleMorphism<C,A,RC,ArithmeticElement<Complex>> morphism) throws CompositionException {
         if (morphism instanceof ConjugationMorphism) {
-            ConjugationMorphism m = (ConjugationMorphism)morphism;
-            if (m.dimension == dimension) {
-                return getIdentityMorphism(getDomain());
+            if (morphism.getDomain().getDimension() == getDomain().getDimension()) {
+                return (ModuleMorphism) getIdentityMorphism(getDomain());
             }
-            else {
-                throw new CompositionException("ConjugationMorphism.compose: ", this, morphism);
-            }
+            throw new CompositionException("ConjugationMorphism.compose: ", this, morphism);
         }
-        else {
-            return super.compose(morphism);
-        }
+        return super.compose(morphism);
     }
     
-    
-    public ModuleElement atZero() {
+    @Override
+    public A atZero() {
         return getCodomain().getZero();
     }
     
-    
-    public ModuleMorphism power(int n)
-            throws CompositionException {
-        if (n % 2 == 0) {
-            return getIdentityMorphism(getDomain());
-        }
-        else {
-            return this;
-        }
+    @Override
+    public Endomorphism<A,ArithmeticElement<Complex>> power(int n) throws CompositionException {
+        return n % 2 == 0 ? getIdentityMorphism(getDomain()) : this;
     }
-    
     
     public boolean equals(Object object) {
         if (object instanceof ConjugationMorphism) {
@@ -111,10 +104,10 @@ public final class ConjugationMorphism extends ModuleMorphism {
         }
     }
     
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof ConjugationMorphism) {
-            return getDomain().getDimension()-((ConjugationMorphism)object).getDomain().getDimension();
+            return getDomain().getDimension()-object.getDomain().getDimension();
         }
         else {
             return super.compareTo(object);
@@ -130,6 +123,4 @@ public final class ConjugationMorphism extends ModuleMorphism {
         return "ConjugationMorphism";
     }
     
-    
-    private int dimension;
 }

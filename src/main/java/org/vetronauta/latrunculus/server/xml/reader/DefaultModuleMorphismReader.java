@@ -67,6 +67,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
@@ -892,7 +893,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
         int dim = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0);
-        return new ConjugationMorphism(dim);
+        return ConjugationMorphism.make(dim);
     }
 
     private ModuleMorphism readConstantMorphism(Element element, Class<?> clazz, XMLReader reader) {
@@ -1209,7 +1210,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         }
         Element childElement = XMLReader.getChild(element, MODULE_MORPHISM);
         if (childElement != null) {
-            ModuleMorphism f0 = reader.parseModuleMorphism(childElement);
+            Endomorphism<?,?> f0 = (Endomorphism<?, ?>) reader.parseModuleMorphism(childElement);
             if (f0 == null) {
                 return null;
             }
