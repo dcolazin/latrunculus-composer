@@ -32,21 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 public final class DomainException extends LatrunculusRuntimeException {
 
     //TODO temporary hack, this should not be an unchecked exception!
-    
-    /**
-     * Creates a DomainException.
-     * 
-     * @param message  indicates the reason for the exception
-     * @param expected the module (or element of that module) that was required
-     * @param received the actual module (or element of that module)
-     */
-    public DomainException(String message, Module expected, Module received) {
-        super(message);
-        this.expected = expected;
-        this.received = received;
-    }
-    
-    
+
     /**
      * Creates a DomainException.
      * A message is generated from <code>expected</code> and <code>received</code>.
@@ -54,27 +40,8 @@ public final class DomainException extends LatrunculusRuntimeException {
      * @param expected the module (or element of that module) that was required
      * @param received the actual module (or element of that module)
      */
-    public DomainException(Module expected, Module received) {
-        this("Expected domain "+expected+", got "+received+".", expected, received);
+    public DomainException(Module<?,?> expected, Module<?,?> received) {
+        super(String.format("Expected domain %s, got %s.", expected, received));
     }
 
-
-    /**
-     * Returns the module that was required.
-     */
-    public Module getExpectedDomain() {
-        return expected;
-    }
-    
-    
-    /**
-     * Returns the actual module.
-     */
-    public Module getReceivedDomain() {
-        return received;
-    }
-    
-    
-    private Module expected;
-    private Module received;
 }

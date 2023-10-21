@@ -30,7 +30,7 @@ import org.rubato.base.RubatoException;
 public final class CompositionException extends RubatoException {
 
     /**
-     * Creates a CompositionExecption with the specified message.
+     * Creates a CompositionException with the specified message.
      */
     public CompositionException(String msg) {
         super(msg);
@@ -55,4 +55,5 @@ public final class CompositionException extends RubatoException {
     public CompositionException(ModuleMorphism f, ModuleMorphism g) {
         this("", f, g);
     }
+
 }

@@ -38,6 +38,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.EndomorphismWrapper;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +52,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement<RA>> extends ModuleMorphism<A,A,RA,RA> {
+public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
 
     private final List<ModuleMorphism> morphisms;
 
@@ -58,14 +60,14 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
      * Creates a split morphism over <code>module</code> with
      * the given list of morphisms.
      */
-    public static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    public static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> Endomorphism<X,RX>
     make(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
         if (!checkMorphisms(module, morphisms)) {
             return null;
         }
         if (morphisms.size() == 1) {
                 // there is only one morphism, no need for split
-            return (ModuleMorphism<X,X,RX,RX>) morphisms.get(0);
+            return (Endomorphism<X, RX>) morphisms.get(0);
         }
         if (areAllIdentity(morphisms)) {
             return getIdentityMorphism(module);
@@ -90,7 +92,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
         return new SplitMorphism<>(module, morphisms);
     }
 
-    private static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> ModuleMorphism<X,X,RX,RX>
+    private static <X extends FreeElement<X,RX>, RX extends RingElement<RX>> Endomorphism<X,RX>
     buildSplitConstants(FreeModule<X,RX> module, List<ModuleMorphism> morphisms) {
         List<ModuleElement<?, ?>> resList = new LinkedList<>();
         for (ModuleMorphism<?,?,?,?> m : morphisms) {
@@ -105,7 +107,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 return null;
             }
         }
-        return getConstantMorphism(module, module.createElement(resList));
+        return getConstantMorphism(module.createElement(resList));
     }
     
     
@@ -232,7 +234,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
         return morphisms.stream().allMatch(m -> m instanceof CFreeAffineMorphism || m instanceof CAffineMorphism);
     }
 
-    private static ModuleMorphism makeZFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
+    private static Endomorphism makeZFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         ZMatrix A = new ZMatrix(dim, dim);
         int[] b = new int[dim];
         int i = 0;
@@ -254,11 +256,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b[i] = ((ZAffineMorphism)m).getB();
             }
         }
-        return ZFreeAffineMorphism.make(A, b);
+        return new EndomorphismWrapper(ZFreeAffineMorphism.make(A, b));
     }
     
     
-    private static ModuleMorphism makeZnFreeMorphism(int dim, int modulus, List<ModuleMorphism> morphisms) {
+    private static Endomorphism makeZnFreeMorphism(int dim, int modulus, List<ModuleMorphism> morphisms) {
         ZnMatrix A = new ZnMatrix(dim, dim, modulus);
         int[] b = new int[dim];
         int i = 0;
@@ -280,11 +282,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b[i] = ((ZnAffineMorphism)m).getB();
             }
         }
-        return ZnFreeAffineMorphism.make(A, b);
+        return new EndomorphismWrapper(ZnFreeAffineMorphism.make(A, b));
     }
     
     
-    private static ModuleMorphism makeQFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
+    private static Endomorphism makeQFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         QMatrix A = new QMatrix(dim, dim);
         Rational[] b = new Rational[dim];
         int i = 0;
@@ -306,11 +308,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b[i] = ((QAffineMorphism)m).getB();
             }
         }
-        return QFreeAffineMorphism.make(A, b);
+        return new EndomorphismWrapper(QFreeAffineMorphism.make(A, b));
     }
     
     
-    private static ModuleMorphism makeRFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
+    private static Endomorphism makeRFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         RMatrix A = new RMatrix(dim, dim);
         double[] b = new double[dim];
         int i = 0;
@@ -332,11 +334,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b[i] = ((RAffineMorphism)m).getB();
             }
         }
-        return RFreeAffineMorphism.make(A, b);
+        return new EndomorphismWrapper(RFreeAffineMorphism.make(A, b));
     }
     
     
-    private static ModuleMorphism makeCFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
+    private static Endomorphism makeCFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         CMatrix A = new CMatrix(dim, dim);
         Complex[] b = new Complex[dim];
         int i = 0;
@@ -358,11 +360,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b[i] = ((CAffineMorphism)m).getB();
             }
         }
-        return CFreeAffineMorphism.make(A, b);
+        return new EndomorphismWrapper(CFreeAffineMorphism.make(A, b));
     }
     
     private SplitMorphism(FreeModule<A,RA> module, List<ModuleMorphism> morphisms) {
-        super(module, module);
+        super(module);
         this.morphisms = morphisms;
     }
 

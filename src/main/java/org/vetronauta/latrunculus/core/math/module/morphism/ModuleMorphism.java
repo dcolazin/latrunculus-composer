@@ -24,6 +24,8 @@ import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.EndomorphismWrapper;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 import java.io.Serializable;
 
@@ -125,8 +127,8 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
      * Returns the constant <code>value</code> morphism in <code>module</code>.
      */
     public static <X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
-    ModuleMorphism<X,Y,RX,RY> getConstantMorphism(Module<X,?> module, Y value) {
-        return new ConstantMorphism(module, value);
+    ModuleMorphism<X,Y,RX,RY> getConstantMorphism(Module<X,RX> module, Y value) {
+        return new ConstantMorphism<>(module, value);
     }
 
 
@@ -134,8 +136,8 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
      * Returns a constant morphism with the domain of this
      * morphism that returns the specified constant <code>value</code>.
      */
-    public ModuleMorphism<A,A,RA,RA> getConstantMorphism(A value) {
-        return new ConstantMorphism(getDomain(), value);
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>> Endomorphism<X,RX> getConstantMorphism(X value) {
+        return new EndomorphismWrapper<>(ConstantMorphism.make(value));
     }
 
     

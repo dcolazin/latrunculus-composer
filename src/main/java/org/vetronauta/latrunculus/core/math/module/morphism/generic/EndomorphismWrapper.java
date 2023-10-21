@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.exception.EndomorphismCreationException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
@@ -28,12 +28,15 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 /**
  * @author vetronauta
  */
-public class ConcreteEndomorphism<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
+public class EndomorphismWrapper<A extends ModuleElement<A, RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
 
-    private ModuleMorphism<A,A,RA,RA> internalMorphism;
+    private final ModuleMorphism<A,A,RA,RA> internalMorphism;
 
-    protected ConcreteEndomorphism(ModuleMorphism<A,A,RA,RA> morphism) {
+    public EndomorphismWrapper(ModuleMorphism<A,A,RA,RA> morphism) {
         super(morphism.getDomain());
+        if (!morphism.getDomain().equals(morphism.getCodomain())) {
+            throw new EndomorphismCreationException(morphism.getDomain(), morphism.getCodomain());
+        }
         this.internalMorphism = morphism;
     }
 
