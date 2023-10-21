@@ -19,11 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 
 /**
  * Affine morphism in <i>Zn</i>.
@@ -32,155 +30,14 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnAffineMorphism extends ZnAbstractMorphism {
+public final class ZnAffineMorphism extends ArithmeticAffineMorphism<ArithmeticModulus> {
 
     public ZnAffineMorphism(int a, int b, int modulus) {
-        super(modulus);
-        this.a = NumberTheory.mod(a, modulus);
-        this.b = NumberTheory.mod(b, modulus);
+        super(ArithmeticRingRepository.getModulusRing(modulus), new ArithmeticModulus(a, modulus), new ArithmeticModulus(b, modulus));
     }
 
-    
-    public int mapValue(int x) {
-        return NumberTheory.mod(a*x+b, modulus);
+    public int getModulus() {
+        return getDomain().getOne().getValue().getModulus();
     }
 
-    
-    public boolean isModuleHomomorphism() {
-        return true;
-    }
-    
-    
-    public boolean isRingHomomorphism() {
-        return (a == 1 && b == 0) || (a == 0 && b == 0);
-    }
-
-    
-    public boolean isLinear() {
-        return b == 0;
-    }
-    
-    
-    public boolean isIdentity() {
-        return (a == 1 && b == 0);
-    }
-    
-    
-    public boolean isConstant() {
-        return a == 0;
-    }
-    
-    
-    public ModuleMorphism compose(ModuleMorphism morphism)
-        	throws CompositionException {
-        if (morphism instanceof ZnAffineMorphism) {
-            ZnAffineMorphism znmorphism = (ZnAffineMorphism) morphism;
-            if (modulus == znmorphism.modulus) {
-                return new ZnAffineMorphism(a * znmorphism.a, a * znmorphism.b + b, modulus);
-            }
-        }
-        return super.compose(morphism);
-    }
-    
-
-    public ModuleMorphism sum(ModuleMorphism morphism)
-    		throws CompositionException {
-        if (morphism instanceof ZnAffineMorphism) {
-            ZnAffineMorphism znmorphism = (ZnAffineMorphism)morphism;
-            if (modulus == znmorphism.modulus) {
-                return new ZnAffineMorphism(a + znmorphism.a, b + znmorphism.b, modulus);
-            }
-        }
-        return super.sum(morphism);
-    }
-
-    
-    public ModuleMorphism difference(ModuleMorphism morphism)
-        	throws CompositionException {
-        if (morphism instanceof ZnAffineMorphism) {
-            ZnAffineMorphism znmorphism = (ZnAffineMorphism) morphism;
-            if (modulus == znmorphism.modulus) {
-                return new ZnAffineMorphism(a - znmorphism.a, b - znmorphism.b, modulus);
-            }
-        }
-        return super.difference(morphism);
-    }
-
-    
-    public ModuleMorphism scaled(RingElement element)
-            throws CompositionException {
-        if (element instanceof ArithmeticElement) {
-            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-            if (number instanceof ArithmeticModulus && ((ArithmeticModulus) number).getModulus() == getModulus()) {
-                int s = ((ArithmeticModulus) number).getValue();
-                if (s == 0) {
-                    return getConstantMorphism(element);
-                } else {
-                    return new ZnAffineMorphism(getA() * s, getB() * s, getModulus());
-                }
-            }
-        }
-        throw new CompositionException("ZnAffineMorphism.scaled: Cannot scale "+this+" by "+element);
-    }
-    
-    
-    public ArithmeticElement<ArithmeticModulus> atZero() {
-        return new ArithmeticElement<>(new ArithmeticModulus(getB(), getModulus()));
-    }
-    
-    
-    public int compareTo(ModuleMorphism object) {
-        if (object instanceof ZnAffineMorphism) {
-            ZnAffineMorphism morphism = (ZnAffineMorphism)object;
-            if (a == morphism.a) {
-                return b-morphism.b;
-            }
-            else {
-                return a-morphism.a;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    
-    public boolean equals(Object object) {
-        if (object instanceof ZnAffineMorphism) {
-            ZnAffineMorphism morphism = (ZnAffineMorphism)object;
-            return (a == morphism.a && b == morphism.b);
-        }
-        else {
-            return false;
-        }
-    }
-    
-    
-    public String toString() {
-        return "ZnAffineMorphism("+getModulus()+")["+a+","+b+"]";
-    }
-
-    public String getElementTypeName() {
-        return "ZnAffineMorphism";
-    }
-    
-    
-    /**
-     * Returns the linear part.
-     */
-    public int getA() {
-        return a;
-    }
-    
-
-    /**
-     * Returns the translation part.
-     */
-    public int getB() {
-        return b;
-    }
-    
-    
-    private final int a;
-    private final int b;
 }

@@ -252,8 +252,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof ZAffineMorphism) {
-                A.set(i, i, ((ZAffineMorphism)m).getA());
-                b[i] = ((ZAffineMorphism)m).getB();
+                A.set(i, i, ((ZAffineMorphism)m).getA().intValue());
+                b[i] = ((ZAffineMorphism)m).getB().intValue();
             }
         }
         return new EndomorphismWrapper(ZFreeAffineMorphism.make(A, b));
@@ -278,8 +278,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof ZnAffineMorphism) {
-                A.set(i, i, ((ZnAffineMorphism)m).getA());
-                b[i] = ((ZnAffineMorphism)m).getB();
+                A.set(i, i, ((ZnAffineMorphism)m).getA().intValue());
+                b[i] = ((ZnAffineMorphism)m).getB().intValue();
             }
         }
         return new EndomorphismWrapper(ZnFreeAffineMorphism.make(A, b));
@@ -330,8 +330,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof RAffineMorphism) {
-                A.set(i, i, ((RAffineMorphism)m).getA());
-                b[i] = ((RAffineMorphism)m).getB();
+                A.set(i, i, ((RAffineMorphism)m).getA().doubleValue());
+                b[i] = ((RAffineMorphism)m).getB().doubleValue();
             }
         }
         return new EndomorphismWrapper(RFreeAffineMorphism.make(A, b));

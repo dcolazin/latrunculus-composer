@@ -422,8 +422,8 @@ class JAffineMorphismType
     public void editMorphism(ModuleMorphism morphism) {
         if (morphism instanceof ZnAffineMorphism) {
             ZnAffineMorphism m = (ZnAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Integer.toString(m.getA()));
-            vectorEntries[0].setText(Integer.toString(m.getB()));
+            matrixEntries[0][0].setText(Integer.toString(m.getA().intValue()));
+            vectorEntries[0].setText(Integer.toString(m.getB().intValue()));
         }
         else if (morphism instanceof ZnFreeAffineMorphism) {
             ZnFreeAffineMorphism m = (ZnFreeAffineMorphism)morphism;
@@ -438,8 +438,8 @@ class JAffineMorphismType
         }
         else if (morphism instanceof ZAffineMorphism) {
             ZAffineMorphism m = (ZAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Integer.toString(m.getA()));
-            vectorEntries[0].setText(Integer.toString(m.getB()));
+            matrixEntries[0][0].setText(Integer.toString(m.getA().intValue()));
+            vectorEntries[0].setText(Integer.toString(m.getB().intValue()));
         }
         else if (morphism instanceof ZFreeAffineMorphism) {
             ZFreeAffineMorphism m = (ZFreeAffineMorphism)morphism;
@@ -470,8 +470,8 @@ class JAffineMorphismType
         }
         else if (morphism instanceof RAffineMorphism) {
             RAffineMorphism m = (RAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Double.toString(m.getA()));
-            vectorEntries[0].setText(Double.toString(m.getB()));
+            matrixEntries[0][0].setText(Double.toString(m.getA().doubleValue()));
+            vectorEntries[0].setText(Double.toString(m.getB().doubleValue()));
         }
         else if (morphism instanceof RFreeAffineMorphism) {
             RFreeAffineMorphism m = (RFreeAffineMorphism)morphism;
