@@ -53,7 +53,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;

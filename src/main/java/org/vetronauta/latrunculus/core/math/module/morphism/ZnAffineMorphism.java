@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 
 /**

@@ -24,7 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 
 import java.util.Arrays;
 import java.util.List;

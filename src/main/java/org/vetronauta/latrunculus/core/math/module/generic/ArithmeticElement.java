@@ -22,16 +22,14 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 import lombok.Getter;
 import lombok.NonNull;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.module.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

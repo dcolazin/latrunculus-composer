@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.math.module.generic;
+package org.vetronauta.latrunculus.core.math.module.repository;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -29,6 +29,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;

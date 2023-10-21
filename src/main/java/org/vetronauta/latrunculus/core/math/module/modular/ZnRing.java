@@ -28,10 +28,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
 
 import java.util.List;
 

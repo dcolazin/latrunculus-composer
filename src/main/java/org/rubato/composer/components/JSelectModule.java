@@ -25,7 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
