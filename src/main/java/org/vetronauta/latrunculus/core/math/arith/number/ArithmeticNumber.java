@@ -19,28 +19,28 @@ public interface ArithmeticNumber<T extends ArithmeticNumber<T>> extends Compara
 
     boolean isFieldElement();
 
-    boolean divides(ArithmeticNumber<?> y);
+    boolean divides(ArithmeticNumber<?> other);
 
     /**
      * pure sum between this number and the parameter
      */
-    T sum(T y);
+    T sum(T other);
 
     /**
      * pure difference between this number and the parameter
      */
-    T difference(T y);
+    T difference(T other);
 
     /**
      * pure product between this number and the parameter
      */
-    T product(T y);
+    T product(T other);
 
     /**
      * pure quotient between this number and the parameter
      */
-    default T quotient(T y) throws DivisionException {
-        return this.product(y.inverse());
+    default T quotient(T other) throws DivisionException {
+        return this.product(other.inverse());
     }
 
     /**

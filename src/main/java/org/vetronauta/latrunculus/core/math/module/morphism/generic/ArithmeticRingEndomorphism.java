@@ -47,4 +47,5 @@ public abstract class ArithmeticRingEndomorphism<N extends ArithmeticNumber<N>> 
     public ModuleMorphism getRingMorphism() {
         return getIdentityMorphism(getDomain());
     }
+
 }

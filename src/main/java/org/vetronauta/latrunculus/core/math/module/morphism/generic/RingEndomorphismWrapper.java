@@ -19,33 +19,39 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * @author vetronauta
  */
-public abstract class RingEndomorphism<RA extends RingElement<RA>> extends Endomorphism<RA,RA> {
+public class RingEndomorphismWrapper<RA extends RingElement<RA>> extends RingEndomorphism<RA> {
 
-    protected RingEndomorphism(Ring<RA> domain) {
-        super(domain);
+    private final ModuleMorphism<RA,RA,RA,RA> internalMorphism;
+
+    public RingEndomorphismWrapper(ModuleMorphism<RA,RA,RA,RA> morphism) {
+        super(morphism.getDomain().getRing());
+        this.internalMorphism = morphism;
     }
 
     @Override
-    public Ring<RA> getDomain() {
-        return super.getDomain().getRing();
+    public RA map(RA x) throws MappingException {
+        return internalMorphism.map(x);
     }
 
     @Override
-    public RingEndomorphism<RA> sum(ModuleMorphism<RA,RA,RA,RA> other) throws CompositionException {
-        return new RingEndomorphismWrapper<>(super.sum(other));
+    public ModuleMorphism<RA, RA, RA, RA> getRingMorphism() {
+        return this;
     }
 
     @Override
-    public RingEndomorphism<RA> difference(ModuleMorphism<RA,RA,RA,RA> other) throws CompositionException {
-        return new RingEndomorphismWrapper<>(super.difference(other));
+    public boolean equals(Object object) {
+        return internalMorphism.equals(object);
     }
 
+    @Override
+    public String toString() {
+        return String.format("RingEndomorphism:%s", internalMorphism);
+    }
 }

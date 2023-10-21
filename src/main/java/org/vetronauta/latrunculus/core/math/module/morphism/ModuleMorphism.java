@@ -160,7 +160,7 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
     /**
      * Returns the domain of this morphism.
      */
-    public final Module<A,RA> getDomain() {
+    public Module<A,RA> getDomain() {
         return domain;
     }
 
@@ -168,7 +168,7 @@ public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends M
     /**
      * Returns the codomain of this morphism.
      */
-    public final Module<B,RB> getCodomain() {
+    public Module<B,RB> getCodomain() {
         return codomain;
     }
 
