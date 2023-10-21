@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -41,7 +42,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringProperFreeModule extends ProperFreeModule<QStringProperFreeElement,QStringElement> {
+public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<QStringElement,Rational>,QStringElement> {
 
     public static final QStringProperFreeModule nullModule = new QStringProperFreeModule(0);
 

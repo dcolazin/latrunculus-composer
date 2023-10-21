@@ -19,18 +19,18 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
+import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeElement extends ProperFreeElement<RStringProperFreeElement,RStringElement> implements FreeElement<RStringProperFreeElement,RStringElement> {
+public final class RStringProperFreeElement extends ArithmeticStringMultiElement<RStringElement,ArithmeticDouble> {
 
     public static final RStringProperFreeElement nullElement = new RStringProperFreeElement(new ArrayList<>());
 
@@ -57,128 +57,6 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
             return new RStringProperFreeElement(v);
         }
     }
-
-    
-    public boolean isZero() {
-        RingString<ArithmeticDouble> zero = RingString.getZero();
-        for (int i = 0; i < getLength(); i++) {
-            if (!value.get(i).equals(zero)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public RStringProperFreeElement sum(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-            for (int i = 0; i < getLength(); i++) {
-                res.add(value.get(i).sum(element.value.get(i)));
-            }
-            return new RStringProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void add(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value.get(i).add(element.value.get(i));
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public RStringProperFreeElement difference(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-            for (int i = 0; i < getLength(); i++) {
-                res.add(value.get(i).difference(element.value.get(i)));
-            }
-            return new RStringProperFreeElement(res);        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-    public void subtract(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value.get(i).subtract(element.value.get(i));
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public RStringProperFreeElement productCW(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-            for (int i = 0; i < getLength(); i++) {
-                res.add(value.get(i).product(element.value.get(i)));
-            }
-            return new RStringProperFreeElement(res);
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void multiplyCW(RStringProperFreeElement element)
-            throws DomainException {
-        if (getLength() == element.getLength()) {
-            for (int i = 0; i < getLength(); i++) {
-                value.get(i).multiply(element.value.get(i));
-            }        
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-
-
-    public RStringProperFreeElement negated() {
-        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-        for (int i = 0; i < getLength(); i++) {
-            res.add(value.get(i).negated());
-        }
-        return new RStringProperFreeElement(res);
-    }
-
-    
-    public void negate() {
-        for (int i = 0; i < getLength(); i++) {
-            value.get(i).negate();
-        }
-    }
-
-    public RStringProperFreeElement scaled(RStringElement element) {
-        RingString<ArithmeticDouble> val = element.getValue();
-        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-        for (int i = 0; i < getLength(); i++) {
-            res.add(value.get(i).product(val));
-        }
-        return new RStringProperFreeElement(res);        
-    }
-    
-    public void scale(RStringElement element) {
-        RingString<ArithmeticDouble> val = element.getValue();
-        for (int i = 0; i < getLength(); i++) {
-            value.get(i).multiply(val);
-        }
-    }
-
     
     public ModuleElement getComponent(int i) {
         assert(i < getLength());
@@ -190,12 +68,6 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         assert(i < getLength());
         return new RStringElement(value.get(i));
     }
-    
-
-    public int getLength() {
-        return value.size();
-    }
-    
 
     public Module getModule() {
         if (module == null) {
@@ -203,17 +75,6 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
         }
         return module;
     }
-    
-
-    public List<RingString<ArithmeticDouble>> getValue() {
-        return value;
-    }
-    
-
-    public RingString<ArithmeticDouble> getValue(int i) {
-        return value.get(i);
-    }
-    
 
     public FreeElement resize(int n) {
         if (n == getLength()) {
@@ -333,19 +194,17 @@ public final class RStringProperFreeElement extends ProperFreeElement<RStringPro
     
 
     private RStringProperFreeElement(List<RingString<ArithmeticDouble>> value) {
+        super(value);
         this.value = value;
+    }
+
+    @Override
+    protected ArithmeticStringMultiElement<RStringElement, ArithmeticDouble> valueOf(@NonNull List<RingString<ArithmeticDouble>> value) {
+        return new RStringProperFreeElement(value);
     }
 
 
     private final List<RingString<ArithmeticDouble>> value;
     private FreeModule<?, ArithmeticElement<ArithmeticDouble>> module = null;
 
-    @Override
-    public RStringProperFreeElement deepCopy() {
-        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getLength());
-        for (int i = 0; i < getLength(); i++) {
-            res.add(value.get(i).deepCopy());
-        }
-        return new RStringProperFreeElement(res);
-    }
 }
