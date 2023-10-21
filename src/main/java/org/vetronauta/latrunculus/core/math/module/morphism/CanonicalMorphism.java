@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-
+import java.util.List;
 
 /**
  * Canonical morphisms are the "simplest" morphisms that map
@@ -41,7 +41,14 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public abstract class CanonicalMorphism extends ModuleMorphism {
+public abstract class CanonicalMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+    private static final HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> canonicalMorphisms = new HashMap<>();
+
+    protected CanonicalMorphism(Module<A,RA> domain, Module<B,RB> codomain) {
+        super(domain, codomain);
+    }
 
     /**
      * Creates a canonical morphism from <code>domain</code>
@@ -49,10 +56,11 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
      * 
      * @return null iff no such morphism could be created
      */
-    public static ModuleMorphism make(Module domain, Module codomain) {
+    public static <X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,Y,RX,RY> make(Module<X,RX> domain, Module<Y,RY> codomain) {
         // check if the required morphism is in the cache
         Pair<Module<?,?>,Module<?,?>> pair = Pair.makePair(domain, codomain);
-        ModuleMorphism morphism = canonicalMorphisms.get(pair);
+        ModuleMorphism<X,Y,RX,RY> morphism = canonicalMorphisms.get(pair);
         if (morphism == null) {
             // if not, try to create it
             morphism = makeCanonicalMorphism(domain, codomain);
@@ -71,45 +79,19 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
      * 
      * @return null iff noch such morphism could be created
      */
-    private static ModuleMorphism makeCanonicalMorphism(final Module domain, final Module codomain) {
-        ModuleMorphism morphism = null;
+    private static <X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,Y,RX,RY> makeCanonicalMorphism(final Module<X,RX> domain, final Module<Y,RY> codomain) {
+        ModuleMorphism<X,Y,RX,RY> morphism;
         if (domain.isNullModule()) {
-            // if the domain is a null module, a canonical morphism maps
-            // the unique null element to the zero in the codomain
-            morphism = new CanonicalMorphism(domain, codomain) {
-                public ModuleElement map(ModuleElement x) throws MappingException {
-                    if (!domain.hasElement(x)) {
-                        throw new MappingException("CanonicalMorphism.map: ", x, this);
-                    }
-                    return zero;
-                }
-                public ModuleMorphism getRingMorphism() {
-                    return makeRingMorphism(domain.getRing(), codomain.getRing());
-                }
-                private final ModuleElement zero = codomain.getZero();
-            };
+            morphism = new NullDomainMorphism<>(domain, codomain);
         }
         else if (codomain.isNullModule()) {
-            // if the codomain is a null module, a canonical morphism maps
-            // every element from the domain to the unique null element
-            // in the codomain
-            morphism = new CanonicalMorphism(domain, codomain) {
-                public ModuleElement map(ModuleElement x) throws MappingException {
-                    if (!domain.hasElement(x)) {
-                        throw new MappingException("CanonicalMorphism.map: ", x, this);
-                    }
-                    return zero;
-                }
-                public ModuleMorphism getRingMorphism() {
-                    return makeRingMorphism(domain.getRing(), codomain.getRing());
-                }
-                private final ModuleElement zero = codomain.getZero();
-            };
+            morphism = new NullCodomainMorphism<>(domain, codomain);
         }
         else if (domain instanceof Ring && codomain instanceof Ring) {
             // handle canonical mappings from rings to rings separately
             // including embeddings
-            morphism = makeRingMorphism((Ring)domain, (Ring)codomain);
+            morphism = (ModuleMorphism<X,Y,RX,RY>) makeRingMorphism((Ring<RX>)domain, (Ring<RY>)codomain);
         }
         else {
             // try to create a non-ring, e.g., free module, embedding
@@ -121,13 +103,12 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
             // now try to create a canonical morphism on
             // the underlying rings of the domain and codomain modules
             // provided that the domain and codomain are free modules
-            Ring domainRing = domain.getRing();
-            Ring codomainRing = codomain.getRing();
-            ModuleMorphism ringMorphism = makeRingMorphism(domainRing, codomainRing);
+            Ring<RX> domainRing = domain.getRing();
+            Ring<RY> codomainRing = codomain.getRing();
+            ModuleMorphism<RX,RY,RX,RY> ringMorphism = makeRingMorphism(domainRing, codomainRing);
             if (ringMorphism != null) {
                 // now extend this mapping to the free modules
-                morphism = makeFreeModuleMorphism(domainRing, codomainRing, ringMorphism,
-                                                  domain.getDimension(), codomain.getDimension());
+                morphism = (ModuleMorphism<X,Y,RX,RY>) makeFreeModuleMorphism(ringMorphism, domain.getDimension(), codomain.getDimension());
             }
         }
 
@@ -144,8 +125,9 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
      * 
      * @return null iff no such morphism could be created
      */
-    protected static ModuleMorphism makeRingMorphism(Ring domainRing, Ring codomainRing) {
-        ModuleMorphism morphism = null;
+    protected static <RX extends RingElement<RX>, RY extends RingElement<RY>> ModuleMorphism<RX,RY,RX,RY>
+    makeRingMorphism(Ring<RX> domainRing, Ring<RY> codomainRing) {
+        ModuleMorphism<RX,RY,RX,RY> morphism;
         
         if (domainRing instanceof ZRing && codomainRing instanceof ZnRing) {
             // the special case of the mapping of integers to modular integers
@@ -175,37 +157,20 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
      * If the domain dimension is greater then the codomain dimension, the
      * excess components are omitted.  
      */
-    private static ModuleMorphism makeFreeModuleMorphism(final Ring domainRing,
-                                                         final Ring codomainRing,
-                                                         final ModuleMorphism ringMorphism,
-                                                         final int dim,
-                                                         final int codim) {
-        final FreeModule domain = domainRing.getFreeModule(dim);
-        final FreeModule codomain = codomainRing.getFreeModule(codim);
-        return new CanonicalMorphism(domain, codomain) {
-            public ModuleElement map(ModuleElement x) throws MappingException {
-                if (!domain.hasElement(x)) {
-                    throw new MappingException("CanonicalMorphism.map: ", x, this);
-                }
-                FreeElement<?,?> e = ((FreeElement)x).resize(codim);
-                LinkedList<ModuleElement> elements = new LinkedList<ModuleElement>();
-                for (RingElement element : e) {
-                    elements.add(ringMorphism.map(element));
-                }
-                return codomain.createElement(elements);
-            }
-            public ModuleMorphism getRingMorphism() {
-                return ringMorphism;
-            }
-        };
+    private static <RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<? extends FreeElement<?,RX>, ? extends FreeElement<?,RY>, RX,RY> makeFreeModuleMorphism(
+            final ModuleMorphism<RX,RY,RX,RY> ringMorphism, final int dim, final int codim) {
+        final FreeModule<?, RX> domain = ringMorphism.getDomain().getRing().getFreeModule(dim);
+        final FreeModule<?, RY> codomain = ringMorphism.getCodomain().getRing().getFreeModule(codim);
+        return new FreeEmbedding(domain, codomain, ringMorphism); //TODO FIX
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
-    
-    
+
+    @Override
     public boolean isRingHomomorphism() {
         return isRingMorphism();
     }
@@ -213,7 +178,7 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
     
     public boolean equals(Object object) {
         if (object instanceof CanonicalMorphism) {
-            CanonicalMorphism morphism = (CanonicalMorphism)object;
+            CanonicalMorphism<?,?,?,?> morphism = (CanonicalMorphism<?,?,?,?>)object;
             return getDomain().equals(morphism.getDomain()) &&
                    getCodomain().equals(morphism.getCodomain());
         }
@@ -231,11 +196,72 @@ public abstract class CanonicalMorphism extends ModuleMorphism {
         return "CanonicalMorphism";
     }
 
-    
-    protected CanonicalMorphism(Module domain, Module codomain) {
-        super(domain, codomain);
-    }
-    
+    private static class NullDomainMorphism<X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+            extends CanonicalMorphism<X,Y,RX,RY> {
 
-    private static HashMap<Pair<Module<?,?>,Module<?,?>>,ModuleMorphism> canonicalMorphisms = new HashMap<>();
+        protected NullDomainMorphism(Module<X,RX> domain, Module<Y,RY> codomain) {
+            super(domain, codomain);
+        }
+
+        public Y map(X x) throws MappingException {
+            if (!getDomain().hasElement(x)) {
+                throw new MappingException("CanonicalMorphism.map: ", x, this);
+            }
+            return zero;
+        }
+
+        public ModuleMorphism<RX,RY,RX,RY> getRingMorphism() {
+            return makeRingMorphism(getDomain().getRing(), getCodomain().getRing());
+        }
+
+        private final Y zero = getCodomain().getZero();
+    }
+
+    private static class NullCodomainMorphism<X extends ModuleElement<X,RX>, Y extends ModuleElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+            extends CanonicalMorphism<X,Y,RX,RY> {
+
+        protected NullCodomainMorphism(Module<X,RX> domain, Module<Y,RY> codomain) {
+            super(domain, codomain);
+        }
+
+        public Y map(X x) throws MappingException {
+            if (!getDomain().hasElement(x)) {
+                throw new MappingException("CanonicalMorphism.map: ", x, this);
+            }
+            return zero;
+        }
+        public ModuleMorphism<RX,RY,RX,RY> getRingMorphism() {
+            return makeRingMorphism(getDomain().getRing(), getCodomain().getRing());
+        }
+        private final Y zero = getCodomain().getZero();
+    }
+
+    private static class FreeEmbedding<X extends FreeElement<X,RX>, Y extends FreeElement<Y,RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+            extends CanonicalMorphism<X,Y,RX,RY> {
+
+        private final ModuleMorphism<RX,RY,RX,RY> ringMorphism;
+
+        protected FreeEmbedding(Module<X,RX> domain, Module<Y,RY> codomain, ModuleMorphism<RX,RY,RX,RY> ringMorphism) {
+            super(domain, codomain);
+            this.ringMorphism = ringMorphism;
+        }
+
+        public Y map(X x) throws MappingException {
+            if (!getDomain().hasElement(x)) {
+                throw new MappingException("CanonicalMorphism.map: ", x, this);
+            }
+            FreeElement<?,RX> e = x.resize(getCodomain().getDimension());
+            List<ModuleElement<?,?>> elements = new LinkedList<>();
+            for (RingElement<RX> element : e) {
+                elements.add(ringMorphism.map((RX) element)); //TODO FIX
+            }
+            return getCodomain().createElement(elements);
+        }
+
+        public ModuleMorphism<RX,RY,RX,RY> getRingMorphism() {
+            return ringMorphism;
+        }
+
+    }
+
 }
