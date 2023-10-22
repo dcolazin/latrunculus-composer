@@ -70,10 +70,12 @@ public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     
     
     public QStringProperFreeElement getUnitElement(int i) {
-        assert(i >= 0 && i < getDimension());
-        QStringProperFreeElement unit = getZero();
-        unit.setValue(i, RingString.getOne());
-        return unit;
+        List<RingString<Rational>> res = new ArrayList<>(getDimension());
+        for (int j = 0; j < getDimension(); j++) {
+            res.add(RingString.getZero());
+        }
+        res.set(i, RingString.getOne());
+        return (QStringProperFreeElement) QStringProperFreeElement.make(res); //TODO do not cast
     }
     
 

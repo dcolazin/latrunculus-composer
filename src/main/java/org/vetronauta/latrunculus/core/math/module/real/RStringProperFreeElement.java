@@ -23,10 +23,6 @@ import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
@@ -73,16 +69,11 @@ public final class RStringProperFreeElement extends ArithmeticStringMultiElement
 
     private RStringProperFreeElement(List<RingString<ArithmeticDouble>> value) {
         super(RRing.ring, value);
-        this.value = value;
     }
 
     @Override
     protected ArithmeticStringMultiElement<RStringElement, ArithmeticDouble> valueOf(@NonNull List<RingString<ArithmeticDouble>> value) {
         return new RStringProperFreeElement(value);
     }
-
-
-    private final List<RingString<ArithmeticDouble>> value;
-    private FreeModule<?, ArithmeticElement<ArithmeticDouble>> module = null;
 
 }

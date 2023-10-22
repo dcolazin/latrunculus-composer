@@ -41,8 +41,6 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
 
     public static ZStringProperFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
 
-    private final List<RingString<ArithmeticInteger>> value;
-
     public static FreeElement<?,ZStringElement> make(List<RingString<ArithmeticInteger>> v) {
         assert(v != null);
         if (v.isEmpty()) {
@@ -75,7 +73,6 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
 
     private ZStringProperFreeElement(List<RingString<ArithmeticInteger>> value) {
         super(ZRing.ring, value);
-        this.value = value;
     }
 
     @Override

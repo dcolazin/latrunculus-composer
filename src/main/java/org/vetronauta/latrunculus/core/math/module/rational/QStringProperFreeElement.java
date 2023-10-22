@@ -23,8 +23,6 @@ import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
@@ -40,8 +38,6 @@ public final class QStringProperFreeElement extends ArithmeticStringMultiElement
 
     public static final QStringProperFreeElement nullElement = new QStringProperFreeElement(new ArrayList<>());
 
-    private final List<RingString<Rational>> value;
-
     public static FreeElement<?, QStringElement> make(List<RingString<Rational>> v) {
         assert(v != null);
         if (v.isEmpty()) {
@@ -54,11 +50,6 @@ public final class QStringProperFreeElement extends ArithmeticStringMultiElement
             return new QStringProperFreeElement(v);
         }
     }
-
-    public void setValue(int i, RingString<Rational> string) {
-        value.add(string);
-    }
-    
 
     public FreeElement resize(int n) {
         if (n == getLength()) {
@@ -79,7 +70,6 @@ public final class QStringProperFreeElement extends ArithmeticStringMultiElement
 
     private QStringProperFreeElement(List<RingString<Rational>> value) {
         super(QRing.ring, value);
-        this.value = value;
     }
 
     @Override

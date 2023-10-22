@@ -20,16 +20,10 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import lombok.NonNull;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +38,6 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
 
     //TODO various consistency checks for modulus
 
-    private final List<RingString<ArithmeticModulus>> value;
     private final int modulus;
 
     public static FreeElement<?, ZnStringElement> make(List<RingString<ArithmeticModulus>> v, int modulus) {
@@ -86,7 +79,6 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
 
     private ZnStringProperFreeElement(List<RingString<ArithmeticModulus>> value, int modulus) {
         super(ZnRing.make(modulus), value);
-        this.value = value;
         this.modulus = modulus;
     }
 

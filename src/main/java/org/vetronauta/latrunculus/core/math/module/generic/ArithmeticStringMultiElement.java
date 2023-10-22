@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,20 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     protected ArithmeticStringMultiElement(ArithmeticRing<N> ring, List<RingString<N>> value) {
         this.ring = ring;
         this.value = value;
+    }
+
+    public static <Y extends ArithmeticStringElement<Y,X>, X extends ArithmeticNumber<X>> FreeElement<?, Y> make(List<RingString<X>> v) {
+        assert(v != null);
+        return null; //TODO!!!
+        /*
+        if (v.isEmpty()) {
+            return new ArithmeticStringMultiElement<>(new ArrayList<>());
+        }
+        else if (v.size() == 1) {
+            return new ArithmeticStringElement<>(v.get(0));
+        }
+        return new ArithmeticStringMultiElement<>(StringRingRepository.getRing(v.get(0)), v);
+         */
     }
 
     //TODO is just a temp method
