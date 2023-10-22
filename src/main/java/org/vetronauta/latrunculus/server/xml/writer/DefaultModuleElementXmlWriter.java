@@ -32,19 +32,17 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeE
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import java.util.List;
@@ -81,36 +79,12 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             write((ArithmeticMultiElement<?>) object, writer);
             return;
         }
-        if (object instanceof ZStringElement) {
-            write((ZStringElement) object, writer);
+        if (object instanceof ArithmeticStringMultiElement) {
+            write((ArithmeticStringMultiElement<?,?>) object, writer);
             return;
         }
-        if (object instanceof ZnStringElement) {
-            write((ZnStringElement) object, writer);
-            return;
-        }
-        if (object instanceof QStringElement) {
-            write((QStringElement) object, writer);
-            return;
-        }
-        if (object instanceof RStringElement) {
-            write((RStringElement) object, writer);
-            return;
-        }
-        if (object instanceof ZStringProperFreeElement) {
-            write((ZStringProperFreeElement) object, writer);
-            return;
-        }
-        if (object instanceof ZnStringProperFreeElement) {
-            write((ZnStringProperFreeElement) object, writer);
-            return;
-        }
-        if (object instanceof QStringProperFreeElement) {
-            write((QStringProperFreeElement) object, writer);
-            return;
-        }
-        if (object instanceof RStringProperFreeElement) {
-            write((RStringProperFreeElement) object, writer);
+        if (object instanceof ArithmeticStringElement) {
+            write((ArithmeticStringElement<?,?>) object, writer);
             return;
         }
         if (object instanceof DirectSumElement) {
@@ -172,80 +146,28 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
     }
 
-    private void write(ZStringElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
+    private void write(ArithmeticStringElement<?,?> element, XMLWriter writer) {
+        if (element.getValue().getObjectOne() instanceof ArithmeticModulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().getObjectOne()).getModulus());
+        } else {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
+        }
         for (String word : element.getValue().getStrings()) {
-            int factor = (Integer) element.getValue().getFactorForString(word);
-            writer.openInline(WORD, FACTOR_ATTR, factor);
+            writer.openInline(WORD, FACTOR_ATTR, element.getValue().getFactorForString(word));
             writer.text(word);
             writer.closeInline();
         }
         writer.closeBlock();
     }
 
-    private void write(QStringElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (String word : element.getValue().getStrings()) {
-            Rational factor = ((Rational)element.getValue().getFactorForString(word));
-            writer.openInline(WORD, FACTOR_ATTR, factor);
-            writer.text(word);
-            writer.closeInline();
+    private void write(ArithmeticStringMultiElement<?,?> element, XMLWriter writer) {
+        if (element.getValue().get(0).getObjectOne() instanceof ArithmeticModulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().get(0).getObjectOne()).getModulus());
+        } else {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }
-        writer.closeBlock();
-    }
-
-    private void write(ZnStringElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(),
-                MODULUS_ATTR, element.getModulus());
-        for (String word : element.getValue().getStrings()) {
-            int factor = (Integer) element.getValue().getFactorForString(word);
-            writer.openInline(WORD, FACTOR_ATTR, factor);
-            writer.text(word);
-            writer.closeInline();
-        }
-        writer.closeBlock();
-    }
-
-    private void write(RStringElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (String word : element.getValue().getStrings()) {
-            double factor = (Double) element.getValue().getFactorForString(word);
-            writer.openInline(WORD, FACTOR_ATTR, factor);
-            writer.text(word);
-            writer.closeInline();
-        }
-        writer.closeBlock();
-    }
-
-    private void write(ZStringProperFreeElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         for (int i = 0; i < element.getValue().size(); i++) {
-            write(new ZStringElement(element.getValue().get(i)), writer);
-        }
-        writer.closeBlock();
-    }
-
-    private void write(ZnStringProperFreeElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(),
-                MODULUS_ATTR, element.getModulus());
-        for (int i = 0; i < element.getValue().size(); i++) {
-            write(new ZnStringElement(element.getValue().get(i)), writer);
-        }
-        writer.closeBlock();
-    }
-
-    private void write(QStringProperFreeElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().size(); i++) {
-            write(new QStringElement(element.getValue().get(i)), writer);
-        }
-        writer.closeBlock();
-    }
-
-    private void write(RStringProperFreeElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().size(); i++) {
-            write(new RStringElement(element.getValue().get(i)), writer);
+            write(new ArithmeticStringElement<>(element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }

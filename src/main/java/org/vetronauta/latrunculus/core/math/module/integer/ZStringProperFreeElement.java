@@ -20,16 +20,11 @@
 package org.vetronauta.latrunculus.core.math.module.integer;
 
 import lombok.NonNull;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
@@ -47,7 +42,6 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
     public static ZStringProperFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
 
     private final List<RingString<ArithmeticInteger>> value;
-    private FreeModule<?, ArithmeticElement<ArithmeticInteger>> module;
 
     public static FreeElement<?,ZStringElement> make(List<RingString<ArithmeticInteger>> v) {
         assert(v != null);
@@ -60,24 +54,6 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
         else {
             return new ZStringProperFreeElement(v);
         }
-    }
-
-    public ModuleElement getComponent(int i) {
-        assert(i < getLength());
-        return new ZStringElement(value.get(i));
-    }
-
-
-    public RingElement getRingElement(int i) {
-        assert(i < getLength());
-        return new ZStringElement(value.get(i));
-    }
-
-    public Module getModule() { //TODO this is wrong, the meaning of getModule is different from usual getModules types
-        if (module == null) {
-            module = ArithmeticMultiModule.make(ZRing.ring, getLength());
-        }
-        return module;
     }
 
     public FreeElement resize(int n) {
@@ -96,109 +72,9 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
             return ZStringProperFreeElement.make(values);
         }
     }
-    
-
-    public boolean equals(Object object) {
-        if (object instanceof ZStringProperFreeElement) {
-            ZStringProperFreeElement e = (ZStringProperFreeElement) object;
-            if (getLength() == e.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (!value.get(i).equals(e.value.get(i))) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
-    
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ZStringProperFreeElement) {
-            ZStringProperFreeElement element = (ZStringProperFreeElement)object;
-            int l = getLength()-element.getLength();
-            if (l != 0) {
-                return l;
-            }
-            else {
-                for (int i = 0; i < getLength(); i++) {
-                    int d = value.get(i).compareTo(element.value.get(i));
-                    if (d != 0) {
-                        return d;
-                    }
-                }
-                return 0;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder res = new StringBuilder(30);
-            res.append(value.get(0).stringRep());
-            for (int i = 1; i < getLength(); i++) {
-                res.append(',');
-                res.append(value.get(i).stringRep());
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();
-            }
-        }
-    }
-
-    
-    public String toString() {
-        StringBuilder buf = new StringBuilder(50);
-        buf.append("ZStringFreeElement[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(value.get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(value.get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
-    }
-    
-
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public String getElementTypeName() {
-        return "ZStringFreeElement";
-    }
-    
-    
-    public int hashCode() {
-        int val = 0;
-        for (int i = 0; i < getLength(); i++) {
-            val ^= value.get(i).hashCode();
-        }
-        return val;
-    }
-    
 
     private ZStringProperFreeElement(List<RingString<ArithmeticInteger>> value) {
-        super(value);
+        super(ZRing.ring, value);
         this.value = value;
     }
 

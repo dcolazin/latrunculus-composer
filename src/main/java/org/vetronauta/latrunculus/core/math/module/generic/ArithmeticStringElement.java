@@ -34,11 +34,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
+import java.util.Map;
+
 /**
  * @author vetronauta
  */
 @Getter
-public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>> extends StringElement<T>
+public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>> extends StringElement<T>
         implements FreeElement<T,T> {
 
     private final RingString<N> value;
@@ -46,7 +48,7 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
      */
-    protected ArithmeticStringElement(RingString<N> value) {
+    public ArithmeticStringElement(RingString<N> value) {
         this.value = value;
     }
 
@@ -62,7 +64,10 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
         this.value = new RingString<>(value);
     }
 
-    protected abstract T valueOf(@NonNull RingString<N> value);
+    //TODO temp method to be removed when fully refactored
+    protected T valueOf(@NonNull RingString<N> value) {
+        return null;
+    }
 
     public boolean isOne() {
         return value.equals(RingString.getOne());
@@ -156,6 +161,11 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
         return getValue();
     }
 
+    @Override
+    public Map<String, RingElement> getTerms() {
+        return null; //TODO!!!
+    }
+
     public String stringRep(boolean... parens) {
         return getValue().stringRep();
     }
@@ -192,6 +202,15 @@ public abstract class ArithmeticStringElement<T extends ArithmeticStringElement<
     @Override
     public T deepCopy() {
         return valueOf(getValue().deepCopy());
+    }
+
+    @Override
+    public FreeElement<?, T> resize(int n) {
+        return null; //TODO!!!
+    }
+
+    public String getElementTypeName() {
+        return String.format("ArithmeticStringElement<%s>", getRing().toVisualString());
     }
 
 }

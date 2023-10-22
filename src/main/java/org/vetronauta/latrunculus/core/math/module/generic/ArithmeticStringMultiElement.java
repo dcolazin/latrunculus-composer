@@ -20,9 +20,13 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.NonNull;
+import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 
 import java.util.ArrayList;
@@ -31,16 +35,22 @@ import java.util.List;
 /**
  * @author vetronauta
  */
-public abstract class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>>
+public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>>
         extends ProperFreeElement<ArithmeticStringMultiElement<T,N>,T> {
 
     private final List<RingString<N>> value;
+    private final ArithmeticRing<N> ring;
+    private Module module;
 
-    protected ArithmeticStringMultiElement(List<RingString<N>> value) {
+    protected ArithmeticStringMultiElement(ArithmeticRing<N> ring, List<RingString<N>> value) {
+        this.ring = ring;
         this.value = value;
     }
 
-    protected abstract ArithmeticStringMultiElement<T,N> valueOf(@NonNull List<RingString<N>> value);
+    //TODO is just a temp method
+    protected ArithmeticStringMultiElement<T,N> valueOf(@NonNull List<RingString<N>> value) {
+        return null;
+    }
 
     @Override
     public boolean isZero() {
@@ -120,6 +130,11 @@ public abstract class ArithmeticStringMultiElement<T extends ArithmeticStringEle
     }
 
     @Override
+    public FreeElement<?, T> resize(int n) {
+        return null; //TODO!!!
+    }
+
+    @Override
     public ArithmeticStringMultiElement<T,N> negated() {
         List<RingString<N>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
@@ -133,6 +148,28 @@ public abstract class ArithmeticStringMultiElement<T extends ArithmeticStringEle
         for (int i = 0; i < getLength(); i++) {
             value.get(i).negate();
         }
+    }
+
+    @Override
+    public Module getModule() { //TODO this is wrong, the meaning of getModule is different from usual getModules types
+        if (module == null) {
+            module = ArithmeticMultiModule.make(ring, getLength());
+        }
+        return module;
+    }
+
+    @Override
+    public String stringRep(boolean... parens) {
+        if (getLength() == 0) {
+            return "Null";
+        }
+        StringBuilder res = new StringBuilder(30);
+        res.append(value.get(0).stringRep());
+        for (int i = 1; i < getLength(); i++) {
+            res.append(',');
+            res.append(value.get(i).stringRep());
+        }
+        return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
     }
 
     @Override
@@ -158,6 +195,19 @@ public abstract class ArithmeticStringMultiElement<T extends ArithmeticStringEle
         return value.size();
     }
 
+    @Override
+    public ArithmeticStringElement<T,N> getComponent(int i) {
+        assert(i < getLength());
+        return new ArithmeticStringElement<>(value.get(i));
+    }
+
+
+    @Override
+    public ArithmeticStringElement<T,N> getRingElement(int i) {
+        assert(i < getLength());
+        return new ArithmeticStringElement<>(value.get(i));
+    }
+
     public List<RingString<N>> getValue() {
         return value;
     }
@@ -174,6 +224,78 @@ public abstract class ArithmeticStringMultiElement<T extends ArithmeticStringEle
             v.add(value.get(i).deepCopy());
         }
         return valueOf(v);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof ArithmeticStringMultiElement)) {
+            return false;
+        }
+        ArithmeticStringMultiElement<?,?> e = (ArithmeticStringMultiElement<?,?>) object;
+        if (getLength() != e.getLength()) {
+            return false;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            if (!value.get(i).equals(e.value.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int val = 0;
+        for (int i = 0; i < getLength(); i++) {
+            val ^= value.get(i).hashCode();
+        }
+        return val;
+    }
+
+    public String getElementTypeName() {
+        return String.format("ArithmeticStringMultiElement<%s>", getModule().getRing().toVisualString());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder(50);
+        buf.append("ArithmeticStringMultiElement<");
+        buf.append(getModule().getRing().toVisualString());
+        buf.append(">[");
+        buf.append(getLength());
+        buf.append("][");
+        if (getLength() > 0) {
+            buf.append(value.get(0));
+            for (int i = 1; i < getLength(); i++) {
+                buf.append(",");
+                buf.append(value.get(i));
+            }
+        }
+        buf.append("]");
+        return buf.toString();
+    }
+
+    public double[] fold(ModuleElement[] elements) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public int compareTo(ModuleElement object) {
+        if (!(object instanceof ArithmeticStringMultiElement) || ! getModule().equals(object.getModule())) {
+            return super.compareTo(object);
+        }
+        ArithmeticStringMultiElement<?,N> element = (ArithmeticStringMultiElement<?,N>)object;
+        int l = getLength()-element.getLength();
+        if (l != 0) {
+            return l;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            int d = value.get(i).compareTo(element.value.get(i));
+            if (d != 0) {
+                return d;
+            }
+        }
+        return 0;
     }
 
 }

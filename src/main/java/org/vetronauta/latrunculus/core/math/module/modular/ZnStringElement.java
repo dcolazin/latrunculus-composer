@@ -116,11 +116,6 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         return map;
     }
 
-    public String getElementTypeName() {
-        return "ZnStringElement";
-    }
-
     private int      modulus;
-    private ZnStringRing   module = null;
 
 }

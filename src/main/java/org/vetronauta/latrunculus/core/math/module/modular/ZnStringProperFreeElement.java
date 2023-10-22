@@ -46,7 +46,6 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
 
     private final List<RingString<ArithmeticModulus>> value;
     private final int modulus;
-    private ArithmeticMultiModule<ArithmeticModulus> module;
 
     public static FreeElement<?, ZnStringElement> make(List<RingString<ArithmeticModulus>> v, int modulus) {
         if (v == null || v.isEmpty()) {
@@ -61,24 +60,6 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
     @Override
     protected ArithmeticStringMultiElement<ZnStringElement, ArithmeticModulus> valueOf(@NonNull List<RingString<ArithmeticModulus>> value) {
         return new ZnStringProperFreeElement(value, value.get(0).getObjectOne().getModulus());
-    }
-    
-    public ModuleElement getComponent(int i) {
-        assert(i < getLength());
-        return new ZnStringElement(value.get(i));
-    }
-    
-
-    public RingElement getRingElement(int i) {
-        assert(i < getLength());
-        return new ZnStringElement(value.get(i));
-    }
-
-    public Module getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule(ArithmeticRingRepository.getModulusRing(modulus), getLength());
-        }
-        return module;
     }
 
     public int getModulus() {
@@ -102,111 +83,9 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
             return ZnStringProperFreeElement.make(values, modulus);
         }
     }
-    
-
-    public boolean equals(Object object) {
-        if (object instanceof ZnStringProperFreeElement) {
-            ZnStringProperFreeElement e = (ZnStringProperFreeElement) object;
-            if (getLength() == e.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (!value.get(i).equals(e.value.get(i))) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
-    
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ZnStringProperFreeElement) {
-            ZnStringProperFreeElement element = (ZnStringProperFreeElement)object;
-            int l = getLength()-element.getLength();
-            if (l != 0) {
-                return l;
-            }
-            else {
-                for (int i = 0; i < getLength(); i++) {
-                    int d = value.get(i).compareTo(element.value.get(i));
-                    if (d != 0) {
-                        return d;
-                    }
-                }
-                return 0;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder res = new StringBuilder(30);
-            res.append("(");
-            res.append(value.get(0).stringRep());
-            for (int i = 1; i < getLength(); i++) {
-                res.append(',');
-                res.append(value.get(i).stringRep());
-            }
-            res.append(")");
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();
-            }
-        }
-    }
-
-    
-    public String toString() {
-        StringBuilder buf = new StringBuilder(50);
-        buf.append("ZnStringFreeElement[");
-        buf.append(getLength());
-        buf.append("][");
-        if (getLength() > 0) {
-            buf.append(value.get(0));
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(value.get(i));
-            }
-        }
-        buf.append("]");
-        return buf.toString();
-    }
-    
-
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public String getElementTypeName() {
-        return "ZnStringFreeElement";
-    }
-    
-    
-    public int hashCode() {
-        int val = 0;
-        for (int i = 0; i < getLength(); i++) {
-            val ^= value.get(i).hashCode();
-        }
-        return val;
-    }
-    
 
     private ZnStringProperFreeElement(List<RingString<ArithmeticModulus>> value, int modulus) {
-        super(value);
+        super(ZnRing.make(modulus), value);
         this.value = value;
         this.modulus = modulus;
     }

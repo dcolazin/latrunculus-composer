@@ -95,8 +95,4 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
         return map;
     }
 
-    public String getElementTypeName() {
-        return "ZStringElement";
-    }
-
 }

@@ -96,8 +96,4 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         return map;
     }
 
-    public String getElementTypeName() {
-        return "RStringElement";
-    }
-
 }

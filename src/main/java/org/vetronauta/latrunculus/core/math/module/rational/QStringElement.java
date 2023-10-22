@@ -96,8 +96,4 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
         return map;
     }
 
-    public String getElementTypeName() {
-        return "QStringElement";
-    }
-
 }
