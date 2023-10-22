@@ -80,8 +80,8 @@ public class MidiChange implements Comparable<MidiChange> {
 
         newChange.onset = (int)Math.round(o*resolution);
         newChange.duration = (int)Math.round(d*resolution);
-        newChange.track = ((Integer)v.getFactorForString("Track")).intValue()-1;
-        newChange.channel = ((Integer)v.getFactorForString("Channel")).intValue()-1;
+        newChange.track = v.getFactorForString("Track").intValue()-1;
+        newChange.channel = v.getFactorForString("Channel").intValue()-1;
         newChange.loudness = 127; 
         newChange.pitch = 0x40;
         newChange.type = CONTROL_CHANGE;         

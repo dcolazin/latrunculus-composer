@@ -193,7 +193,7 @@ public class RingString<T extends ArithmeticNumber<T>>
     /**
      * Returns the factor for the character string.
      */
-    public Object getFactorForString(String word) {
+    public T getFactorForString(String word) {
         if (dict.containsKey(word)) {
             return dict.get(word);
         }

@@ -23,16 +23,7 @@ import lombok.NonNull;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Elements in the ring of strings with real factors.
@@ -65,19 +56,6 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
 
     public RStringElement(EntryList<String,ArithmeticDouble> entryList) {
         super(entryList);
-    }
-
-    public String toString() {
-        return "RStringElement["+getValue()+"]";
-    }
-    
-    public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<>();
-        Set<String> strings = getValue().getStrings();
-        for (String s : strings) {
-            map.put(s, new ArithmeticElement<>(new ArithmeticDouble((Double)getValue().getFactorForString(s))));
-        }
-        return map;
     }
 
 }

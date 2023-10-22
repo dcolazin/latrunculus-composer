@@ -35,8 +35,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author vetronauta
@@ -165,7 +167,12 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
 
     @Override
     public Map<String, RingElement> getTerms() {
-        return null; //TODO!!!
+        HashMap<String,RingElement> map = new HashMap<>();
+        Set<String> strings = getValue().getStrings();
+        for (String s : strings) {
+            map.put(s, new ArithmeticElement<>(getValue().getFactorForString(s)));
+        }
+        return map;
     }
 
     public String stringRep(boolean... parens) {
@@ -227,5 +234,11 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
     public String getElementTypeName() {
         return String.format("ArithmeticStringElement<%s>", getRing().toVisualString());
     }
+
+    @Override
+    public String toString() {
+        return String.format("ArithmeticStringElement<%s>[%s]", getRing().toVisualString(), getValue());
+    }
+
 
 }

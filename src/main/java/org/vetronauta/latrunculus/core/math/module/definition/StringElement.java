@@ -55,7 +55,7 @@ public abstract class StringElement<R extends RingElement<R>> extends RingElemen
     /**
      * Returns the terms of the string as a map from strings to factors.
      */
-    public abstract Map<String,RingElement> getTerms();
+    public abstract Map<String,RingElement> getTerms(); //TODO proper signature
 
     
     /**
@@ -69,7 +69,7 @@ public abstract class StringElement<R extends RingElement<R>> extends RingElemen
         return RingString.fold(relements);
     }
     
-
+    @Override
     public int hashCode() {
         return getRingString().hashCode();
     }

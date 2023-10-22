@@ -21,21 +21,10 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import lombok.NonNull;
 import org.vetronauta.latrunculus.core.EntryList;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Elements of the ring of strings with integer mod <i>n</i> factors.
@@ -86,20 +75,6 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
     
     public int getModulus() {
         return modulus;
-    }
-
-    
-    public String toString() {
-        return "ZnStringElement("+getModulus()+")["+getValue()+"]";
-    }
-    
-    public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<>();
-        Set<String> strings = getValue().getStrings();
-        for (String s : strings) {
-            map.put(s, new ArithmeticElement<>(new ArithmeticInteger((Integer)getValue().getFactorForString(s))));
-        }
-        return map;
     }
 
     private int      modulus;

@@ -23,16 +23,7 @@ import lombok.NonNull;
 import org.vetronauta.latrunculus.core.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Elements in the ring of strings with rational factors.
@@ -65,19 +56,6 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
 
     public QStringElement(EntryList<String,Rational> entryList) {
         super(entryList);
-    }
-    
-    public String toString() {
-        return "QStringElement["+getValue()+"]";
-    }
-    
-    public HashMap<String,RingElement> getTerms() {
-        HashMap<String,RingElement> map = new HashMap<>();
-        Set<String> strings = getValue().getStrings();
-        for (String s : strings) {
-            map.put(s, new ArithmeticElement<>(((Rational)getValue().getFactorForString(s))));
-        }
-        return map;
     }
 
 }
