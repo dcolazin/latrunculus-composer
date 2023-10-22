@@ -30,10 +30,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 /**
  * @author vetronauta
@@ -56,10 +53,13 @@ public class FreeUtils {
 
     //TODO temp method...
     public static boolean isUsualStringFree(Module<?,?> module) {
-        return module instanceof FreeModule && (
-                module.checkRingElement(ZStringElement.class) ||
-                        module.checkRingElement(ZnStringElement.class) ||
-                        module.checkRingElement(QStringElement.class) ||
-                        module.checkRingElement(RStringElement.class));
+        if (!(module instanceof FreeModule && (module.checkRingElement(ArithmeticStringElement.class)))) {
+            return false;
+        }
+        ArithmeticNumber<?> number = ((ArithmeticStringElement<?>) module.getZero()).getValue().getObjectOne();
+        return number instanceof ArithmeticInteger ||
+                number instanceof ArithmeticModulus ||
+                number instanceof Rational ||
+                number instanceof ArithmeticDouble;
     }
 }

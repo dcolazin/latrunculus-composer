@@ -22,12 +22,13 @@ package org.rubato.audio.midi;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 public class MidiChange implements Comparable<MidiChange> {
-    
+
+    //TODO enum
     static final int NOTE_ON        = 0;
     static final int NOTE_OFF       = 1;
     static final int PROGRAM_CHANGE = 2;
@@ -74,7 +75,7 @@ public class MidiChange implements Comparable<MidiChange> {
 
         public static MidiChange getPedalOn(FactorDenotator pedal, int resolution) {
         MidiChange newChange = new MidiChange();
-        RingString<ArithmeticInteger> v = ((ZStringElement)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
+        RingString<ArithmeticInteger> v = ((ArithmeticStringElement<ArithmeticInteger>)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
         double  o = ((SimpleDenotator)pedal.getFactor(1)).getReal();
         double  d = ((SimpleDenotator)pedal.getFactor(2)).getReal();
 

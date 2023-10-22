@@ -34,7 +34,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -501,7 +501,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the ZString contained in a ZStringElement denotator.
      */
     public RingString<ArithmeticInteger> getZString() {
-        return ((ZStringElement)getElement()).getValue();
+        return ((ArithmeticStringElement<ArithmeticInteger>)getElement()).getValue();
     }
 
 

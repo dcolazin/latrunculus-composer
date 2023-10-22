@@ -32,7 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -806,13 +806,13 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(new ArithmeticInteger(sexpr == SBoolean.TRUE ? 1 : 0));
         }
         else if (sexpr.isChar()) {
-            return new ZStringElement(Character.toString(((SChar)sexpr).getChar()));
+            return new ArithmeticStringElement<ArithmeticInteger>(Character.toString(((SChar)sexpr).getChar()));
         }
         else if (sexpr.isString()) {
-            return new ZStringElement(((SString)sexpr).getString());            
+            return new ArithmeticStringElement<ArithmeticInteger>(((SString)sexpr).getString());
         }
         else if (sexpr.isSymbol()) {
-            return new ZStringElement((sexpr).toString());
+            return new ArithmeticStringElement<ArithmeticInteger>((sexpr).toString());
         }
         else if (sexpr.isVector()) {
             SExpr[] v = ((SVector)sexpr).getArray();

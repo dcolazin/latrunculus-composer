@@ -131,7 +131,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         List<RingString<ArithmeticDouble>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
-            if (object instanceof RStringElement) {
+            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof ArithmeticDouble) {
                 values.add(((ArithmeticStringElement<ArithmeticDouble>)object).getValue());
             }
             else {

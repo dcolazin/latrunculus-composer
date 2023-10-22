@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -43,9 +42,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
@@ -54,8 +51,6 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
@@ -94,17 +89,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
             return readArithmeticMultiElement(element, clazz, reader);
         }
-        if (ZStringElement.class.isAssignableFrom(clazz)) {
-            return readZStringElement(element, clazz, reader);
-        }
-        if (ZnStringElement.class.isAssignableFrom(clazz)) {
-            return readZnStringElement(element, clazz, reader);
-        }
-        if (QStringElement.class.isAssignableFrom(clazz)) {
-            return readQStringElement(element, clazz, reader);
-        }
-        if (RStringElement.class.isAssignableFrom(clazz)) {
-            return readRStringElement(element, clazz, reader);
+        if (ArithmeticStringElement.class.isAssignableFrom(clazz)) {
+            return readArithmeticStringElement(element, clazz, reader);
         }
         if (ArithmeticStringMultiElement.class.isAssignableFrom(clazz)) {
             return readArithmeticStringMultiElement(element, clazz, reader);
@@ -260,7 +246,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(mod), intValues);
     }
 
-    private ModuleElement readZStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readArithmeticStringElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {
@@ -301,6 +287,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 words.add(next.getTextContent());
                 next = XMLReader.getNextSibling(next, WORD);
             }
+            //TODO actually read proper ArithmeticNumber
             ArithmeticInteger[] factorArray = new ArithmeticInteger[factors.size()];
             String[] wordArray = new String[factors.size()];
             int j = 0;
@@ -311,205 +298,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 wordArray[j] = witer.next();
                 j++;
             }
-            RingString<ArithmeticInteger> zstring = new RingString<>(wordArray, factorArray);
-            return new ZStringElement(zstring);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
-            return null;
-        }
-    }
-
-    private ModuleElement readZnStringElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), MODULUS_ATTR);
-            return null;
-        }
-
-        int mod;
-        try {
-            mod = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (mod < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        Element childElement = XMLReader.getChild(element, WORD);
-        if (childElement != null) {
-            LinkedList<Integer> factors = new LinkedList<>();
-            LinkedList<String> words = new LinkedList<>();
-            String factor;
-            Integer integer;
-
-            if (!childElement.hasAttribute(FACTOR_ATTR)) {
-                reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                return null;
-            }
-            factor = childElement.getAttribute(FACTOR_ATTR);
-            try {
-                integer = Integer.valueOf(Integer.parseInt(factor));
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%1 must be an integer.", FACTOR_ATTR);
-                return null;
-            }
-            factors.add(integer);
-            words.add(childElement.getTextContent());
-            Element next = XMLReader.getNextSibling(childElement, WORD);
-            while (next != null) {
-                if (!next.hasAttribute(FACTOR_ATTR)) {
-                    reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                    return null;
-                }
-                factor = childElement.getAttribute(FACTOR_ATTR);
-                try {
-                    integer = Integer.valueOf(Integer.parseInt(factor));
-                }
-                catch (NumberFormatException e) {
-                    reader.setError("Attribute %%1 must be a real number.", FACTOR_ATTR);
-                    return null;
-                }
-                factors.add(integer);
-                words.add(next.getTextContent());
-                next = XMLReader.getNextSibling(next, WORD);
-            }
-            ArithmeticModulus[] factorArray = new ArithmeticModulus[factors.size()];
-            String[] wordArray = new String[factors.size()];
-            int i = 0;
-            Iterator<Integer> fiter = factors.iterator();
-            Iterator<String> witer = words.iterator();
-            while (fiter.hasNext()) {
-                factorArray[i] = new ArithmeticModulus(fiter.next(), mod);
-                wordArray[i] = witer.next();
-                i++;
-            }
-            RingString<ArithmeticModulus> znstring = new RingString<>(wordArray, factorArray);
-            return new ZnStringElement(znstring);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
-            return null;
-        }
-    }
-
-    private ModuleElement readQStringElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, WORD);
-        if (childElement != null) {
-            LinkedList<Rational> factors = new LinkedList<Rational>();
-            LinkedList<String> words = new LinkedList<String>();
-            String factor;
-            Rational r;
-
-            if (!childElement.hasAttribute(FACTOR_ATTR)) {
-                reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                return null;
-            }
-            factor = childElement.getAttribute(FACTOR_ATTR);
-            try {
-                r = ArithmeticParsingUtils.parseRational(factor);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%1 must be a rational number.", FACTOR_ATTR);
-                return null;
-            }
-            factors.add(r);
-            words.add(childElement.getTextContent());
-            Element next = XMLReader.getNextSibling(childElement, WORD);
-            while (next != null) {
-                if (!next.hasAttribute(FACTOR_ATTR)) {
-                    reader.setError("Element <$1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                    return null;
-                }
-                factor = childElement.getAttribute(FACTOR_ATTR);
-                try {
-                    r = ArithmeticParsingUtils.parseRational(factor);
-                }
-                catch (NumberFormatException e) {
-                    reader.setError("Attribute %%1 must be a rational number.", FACTOR_ATTR);
-                    return null;
-                }
-                factors.add(r);
-                words.add(next.getTextContent());
-                next = XMLReader.getNextSibling(next, WORD);
-            }
-            Rational[] factorArray = new Rational[factors.size()];
-            String[] wordArray = new String[factors.size()];
-            int i = 0;
-            Iterator<Rational> fiter = factors.iterator();
-            Iterator<String> witer = words.iterator();
-            while (fiter.hasNext()) {
-                factorArray[i] = fiter.next();
-                wordArray[i] = witer.next();
-                i++;
-            }
-            RingString<Rational> qstring = new RingString<>(wordArray, factorArray);
-            return new QStringElement(qstring);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
-            return null;
-        }
-    }
-
-    private ModuleElement readRStringElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, WORD);
-        if (childElement != null) {
-            LinkedList<Double> factors = new LinkedList<Double>();
-            LinkedList<String> words = new LinkedList<String>();
-            String factor;
-            double d;
-
-            if (!childElement.hasAttribute(FACTOR_ATTR)) {
-                reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                return null;
-            }
-            factor = childElement.getAttribute(FACTOR_ATTR);
-            try {
-                d = Double.parseDouble(factor);
-            }
-            catch (NumberFormatException e) {
-                reader.setError("Attribute %%1 must be a real number.", FACTOR_ATTR);
-                return null;
-            }
-            factors.add(d);
-            words.add(childElement.getTextContent());
-            Element next = XMLReader.getNextSibling(childElement, WORD);
-            while (next != null) {
-                if (!next.hasAttribute(FACTOR_ATTR)) {
-                    reader.setError("Element <%1> is missing attribute %%2.", WORD, FACTOR_ATTR);
-                    return null;
-                }
-                factor = childElement.getAttribute(FACTOR_ATTR);
-                try {
-                    d = Double.valueOf(Double.parseDouble(factor));
-                }
-                catch (NumberFormatException e) {
-                    reader.setError("Attribute %%1 must be a real number.", FACTOR_ATTR);
-                    return null;
-                }
-                factors.add(d);
-                words.add(next.getTextContent());
-                next = XMLReader.getNextSibling(next, WORD);
-            }
-            ArithmeticDouble[] factorArray = new ArithmeticDouble[factors.size()];
-            String[] wordArray = new String[factors.size()];
-            int i = 0;
-            Iterator<Double> fiter = factors.iterator();
-            Iterator<String> witer = words.iterator();
-            while (fiter.hasNext()) {
-                factorArray[i] = new ArithmeticDouble(fiter.next());
-                wordArray[i] = witer.next();
-                i++;
-            }
-            RingString<ArithmeticDouble> rstring = new RingString<>(wordArray, factorArray);
-            return new RStringElement(rstring);
+            RingString<?> zstring = new RingString<>(wordArray, factorArray);
+            return new ArithmeticStringElement(zstring);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);

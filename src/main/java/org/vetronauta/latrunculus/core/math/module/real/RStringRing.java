@@ -36,8 +36,7 @@ import java.util.LinkedList;
 
 /**
  * The ring of RString.
- * @see RStringElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class RStringRing extends StringRing<ArithmeticStringElement<ArithmeticDouble>> {
@@ -75,7 +74,7 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof RStringElement);
+        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof ArithmeticDouble);
     }
 
     
@@ -94,23 +93,13 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
     }
 
     
-    public RStringElement cast(ModuleElement element) {
-        if (element instanceof RStringElement) {
-            return (RStringElement) element;
-        }
-        else if (element instanceof StringElement) {
+    public ArithmeticStringElement<ArithmeticDouble> cast(ModuleElement element) {
+        if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new RStringElement(new RingString<>(rs));
+            return new ArithmeticStringElement<ArithmeticDouble>(new RingString<>(rs));
         }
-        else {
-            ArithmeticElement<ArithmeticDouble> e = RRing.ring.cast(element);
-            if (e == null) {
-                return null;
-            }
-            else {
-                return new RStringElement(new RingString<>(e.getValue()));
-            }
-        }       
+        ArithmeticElement<ArithmeticDouble> e = RRing.ring.cast(element);
+        return e != null ? new ArithmeticStringElement<ArithmeticDouble>(new RingString<>(e.getValue())) : null;
     }
 
     

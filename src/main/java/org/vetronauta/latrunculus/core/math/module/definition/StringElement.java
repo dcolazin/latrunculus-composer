@@ -21,8 +21,9 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 
 import java.util.Map;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 /**
  * Elements in a string ring.
@@ -64,7 +65,7 @@ public abstract class StringElement<R extends RingElement<R>> extends RingElemen
     public double[] fold(ModuleElement[] elements) {
         RingString[] relements = new RingString[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            relements[i] = ((ZStringElement)elements[i]).getRingString();
+            relements[i] = ((ArithmeticStringElement<ArithmeticInteger>)elements[i]).getRingString();
         }
         return RingString.fold(relements);
     }

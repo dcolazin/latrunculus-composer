@@ -12,19 +12,16 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
@@ -1331,18 +1328,22 @@ final public List simpleCrs(int type) throws ParseException {
                 elements.add(new ArithmeticElement<>(new ArithmeticDouble((double)n / (double)d)));
 
             // we also allow to convert numbers into strings without quotes
-            else if (m instanceof ZStringRing)
-                elements.add(new ZStringElement("" + (double)n / (double)d));
-            else if (m instanceof ZnStringRing)
-                elements.add(new ZnStringElement("" + (double)n / (double)d,
-                                            ((ZnStringRing)m).getModulus()));
-            else if (m instanceof QStringRing)
-                elements.add(new QStringElement("" + (double)n / (double)d));
-            else if (m instanceof RStringRing)
-                elements.add(new RStringElement("" + (double)n / (double)d));
+            else {
+                String s = String.valueOf((double) n / (double) d);
+                if (m instanceof ZStringRing)
+                    elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
+                else if (m instanceof ZnStringRing)
+                    elements.add(new ArithmeticStringElement<ArithmeticModulus>(s));
+                else if (m instanceof QStringRing)
+                    elements.add(new ArithmeticStringElement<Rational>(s));
+                else if (m instanceof RStringRing)
+                    elements.add(new ArithmeticStringElement<ArithmeticDouble>(s));
 
-            // error
-            else {if (true) throw parseError("");}
+                    // error
+                else {
+                    if (true) throw parseError("");
+                }
+            }
         }
         catch(Exception e) {
             {if (true) throw parseError("Expected element from " + m.toString());}
@@ -1357,13 +1358,13 @@ final public List simpleCrs(int type) throws ParseException {
 
             // we also allow to convert numbers into strings without quotes
             else if (m instanceof ZStringRing)
-                elements.add(new ZStringElement("" + r));
+                elements.add(new ArithmeticStringElement<ArithmeticInteger>(String.valueOf(r)));
             else if (m instanceof ZnStringRing)
-                elements.add(new ZnStringElement("" + r, ((ZnStringRing)m).getModulus()));
+                elements.add(new ArithmeticStringElement<ArithmeticModulus>(String.valueOf(r)));
             else if (m instanceof QStringRing)
-                elements.add(new QStringElement("" + r));
+                elements.add(new ArithmeticStringElement<Rational>(String.valueOf(r)));
             else if (m instanceof RStringRing)
-                elements.add(new RStringElement("" + r));
+                elements.add(new ArithmeticStringElement<ArithmeticDouble>(String.valueOf(r)));
 
             // error
             else {if (true) throw parseError("");}
@@ -1392,13 +1393,13 @@ final public List simpleCrs(int type) throws ParseException {
         s = sLiteral();
         try {
             if (m instanceof ZStringRing)
-                elements.add(new ZStringElement(s));
+                elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
             else if (m instanceof ZnStringRing)
-                elements.add(new ZnStringElement(s, ((ZnStringRing)m).getModulus()));
+                elements.add(new ArithmeticStringElement<ArithmeticModulus>(s));
             else if (m instanceof QStringRing)
-                elements.add(new QStringElement(s));
+                elements.add(new ArithmeticStringElement<Rational>(s));
             else if (m instanceof RStringRing)
-                elements.add(new RStringElement(s));
+                elements.add(new ArithmeticStringElement<ArithmeticDouble>(s));
 
             // error
             else {if (true) throw parseError("Expected StringElement, got " + s);}

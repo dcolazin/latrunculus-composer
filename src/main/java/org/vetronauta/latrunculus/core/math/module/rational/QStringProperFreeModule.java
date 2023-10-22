@@ -131,7 +131,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         List<RingString<Rational>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
-            if (object instanceof QStringElement) {
+            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof Rational) {
                 values.add(((ArithmeticStringElement<Rational>) object).getValue());
             }
             else {

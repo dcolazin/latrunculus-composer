@@ -23,6 +23,7 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -37,8 +38,7 @@ import java.util.LinkedList;
 
 /**
  * The ring of ZnString.
- * @see ZnStringElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZnStringRing extends StringRing<ArithmeticStringElement<ArithmeticModulus>> {
@@ -80,8 +80,11 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof ZnStringElement &&
-                ((ZnStringElement)element).getModulus() == modulus);
+        if (!(element instanceof ArithmeticStringElement)) {
+            return false;
+        }
+        ArithmeticNumber<?> number = ((ArithmeticStringElement<?>)element).getValue().getObjectOne();
+        return (number instanceof ArithmeticModulus && ((ArithmeticModulus) number).getModulus() == modulus);
     }
 
     
@@ -108,10 +111,10 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
     }
 
     
-    public ZnStringElement cast(ModuleElement element) {
+    public ArithmeticStringElement<ArithmeticModulus> cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ZnStringElement(new RingString<>(rs), modulus);
+            return new ArithmeticStringElement<ArithmeticModulus>(new RingString<>(rs));
         }
         else {
             ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
@@ -119,7 +122,7 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
                 return null;
             }
             else {
-                return new ZnStringElement(new RingString<>(e.getValue()), modulus);
+                return new ArithmeticStringElement<ArithmeticModulus>(new RingString<>(e.getValue()));
             }
         }       
     }

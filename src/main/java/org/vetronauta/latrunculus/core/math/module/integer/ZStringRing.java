@@ -34,8 +34,7 @@ import java.util.LinkedList;
 
 /**
  * The ring of ZString.
- * @see ZStringElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZStringRing extends StringRing<ArithmeticStringElement<ArithmeticInteger>> {
@@ -75,7 +74,7 @@ public final class ZStringRing extends StringRing<ArithmeticStringElement<Arithm
 
     
     public boolean hasElement(ModuleElement element) {
-        return element instanceof ZStringElement;
+        return element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof ArithmeticInteger;
     }
 
     
@@ -94,23 +93,13 @@ public final class ZStringRing extends StringRing<ArithmeticStringElement<Arithm
     }
 
     
-    public ZStringElement cast(ModuleElement element) {
-        if (element instanceof ZStringElement) {
-            return (ZStringElement) element;
-        }
-        else if (element instanceof StringElement) {
+    public ArithmeticStringElement<ArithmeticInteger> cast(ModuleElement element) {
+        if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ZStringElement(new RingString<>(rs));
+            return new ArithmeticStringElement<ArithmeticInteger>(new RingString<>(rs));
         }
-        else {
-            ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
-            if (e == null) {
-                return null;
-            }
-            else {
-                return new ZStringElement(new RingString<>(e.getValue()));
-            }
-        }       
+        ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
+        return e != null ? new ArithmeticStringElement<ArithmeticInteger>(new RingString<>(e.getValue())) : null;
     }
 
     

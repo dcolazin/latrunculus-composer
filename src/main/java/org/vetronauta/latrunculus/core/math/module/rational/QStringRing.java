@@ -37,8 +37,7 @@ import java.util.LinkedList;
 
 /**
  * The ring of QString.
- * @see QStringElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class QStringRing extends StringRing<ArithmeticStringElement<Rational>> {
@@ -71,7 +70,7 @@ public final class QStringRing extends StringRing<ArithmeticStringElement<Ration
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof QStringElement);
+        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof Rational);
     }
 
     
@@ -100,23 +99,13 @@ public final class QStringRing extends StringRing<ArithmeticStringElement<Ration
     }
 
 
-    public QStringElement cast(ModuleElement element) {
-        if (element instanceof QStringElement) {
-            return (QStringElement) element;
+    public ArithmeticStringElement<Rational> cast(ModuleElement element) {
+        if (element instanceof StringElement) {
+            RingString<?> rs = ((StringElement)element).getRingString();
+            return new ArithmeticStringElement<Rational>(new RingString<>(rs));
         }
-        else if (element instanceof StringElement) {
-            RingString rs = ((StringElement)element).getRingString();
-            return new QStringElement(new RingString<>(rs));
-        }
-        else {
-            ArithmeticElement<Rational> e = QRing.ring.cast(element);
-            if (e == null) {
-                return null;
-            }
-            else {
-                return new QStringElement(new RingString<>(e.getValue()));
-            }
-        }       
+        ArithmeticElement<Rational> e = QRing.ring.cast(element);
+        return e != null ? new ArithmeticStringElement<Rational>(new RingString<>(e.getValue())) : null;
     }
 
     

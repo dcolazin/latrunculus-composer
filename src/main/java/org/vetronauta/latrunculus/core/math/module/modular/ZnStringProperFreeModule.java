@@ -133,7 +133,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
         List<RingString<ArithmeticModulus>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
-            if (object instanceof ZnStringElement) {
+            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof ArithmeticModulus) {
                 values.add(((ArithmeticStringElement<ArithmeticModulus>)object).getValue());
             }
             else {

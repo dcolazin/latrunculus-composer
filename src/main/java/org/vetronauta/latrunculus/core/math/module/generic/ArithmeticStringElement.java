@@ -63,7 +63,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
      * Constructs an RStringElement from a simple string <code>value</code>.
      * The result is an RStringElement of the form 1.0*value.
      */
-    protected ArithmeticStringElement(String value) {
+    public ArithmeticStringElement(String value) {
         this.value = new RingString<>(value);
     }
 
