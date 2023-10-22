@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
@@ -30,10 +30,10 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
  * 
  * @author Gérard Milmeister
  */
-public final class RAffineMorphism extends ArithmeticAffineMorphism<ArithmeticDouble> {
+public final class RAffineMorphism extends ArithmeticAffineMorphism<Real> {
 
     public RAffineMorphism(double a, double b) {
-        super(RRing.ring, new ArithmeticDouble(a), new ArithmeticDouble(b));
+        super(RRing.ring, new Real(a), new Real(b));
     }
 
 }

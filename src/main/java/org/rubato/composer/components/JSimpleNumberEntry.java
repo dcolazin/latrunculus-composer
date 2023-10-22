@@ -20,9 +20,9 @@
 package org.rubato.composer.components;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -132,9 +132,9 @@ public class JSimpleNumberEntry
                 ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
                 if (number instanceof ArithmeticInteger) {
                     s = "Z";
-                } else if (number instanceof ArithmeticModulus) {
+                } else if (number instanceof Modulus) {
                     s = "Z" + ((ZnRing) module.getRing()).getModulus();
-                } else if (number instanceof ArithmeticDouble) {
+                } else if (number instanceof Real) {
                     s = "R";
                 } else if (number instanceof Complex) {
                     s = "C";

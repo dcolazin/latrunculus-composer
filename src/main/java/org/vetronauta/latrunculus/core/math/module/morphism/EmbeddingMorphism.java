@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -270,7 +270,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Z -> R
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue()));
+                        return new ArithmeticElement<>(new Real(((ArithmeticElement<ArithmeticInteger>)element).getValue().intValue()));
                     }
                 };                
             }
@@ -290,7 +290,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // Q -> R
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<Rational>)element).getValue().doubleValue()));
+                        return new ArithmeticElement<>(new Real(((ArithmeticElement<Rational>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -310,7 +310,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                 // R -> C
                 m = new EmbeddingMorphism(domain, codomain) {
                     public ModuleElement mapValue(ModuleElement element) {
-                        return new ArithmeticElement<>(new Complex(((ArithmeticElement<ArithmeticDouble>)element).getValue().doubleValue()));
+                        return new ArithmeticElement<>(new Complex(((ArithmeticElement<Real>)element).getValue().doubleValue()));
                     }
                 };
             }
@@ -330,7 +330,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Zm
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ArithmeticElement<>(new ArithmeticModulus(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue(), ((ZnRing)codomain).getModulus()));
+                    return new ArithmeticElement<>(new Modulus(((ArithmeticElement<Modulus>)element).getValue().getValue(), ((ZnRing)codomain).getModulus()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -340,7 +340,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Z
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ArithmeticElement<>(new ArithmeticInteger(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
+                    return new ArithmeticElement<>(new ArithmeticInteger(((ArithmeticElement<Modulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -350,7 +350,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> Q
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ArithmeticElement<>(new Rational(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
+                    return new ArithmeticElement<>(new Rational(((ArithmeticElement<Modulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -360,7 +360,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> R
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ArithmeticElement<>(new ArithmeticDouble(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
+                    return new ArithmeticElement<>(new Real(((ArithmeticElement<Modulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -370,7 +370,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
             // Zn -> C
             m = new EmbeddingMorphism(domain, codomain) {
                 public ModuleElement mapValue(ModuleElement element) {
-                    return new ArithmeticElement<>(new Complex(((ArithmeticElement<ArithmeticModulus>)element).getValue().getValue()));
+                    return new ArithmeticElement<>(new Complex(((ArithmeticElement<Modulus>)element).getValue().getValue()));
                 }
                 public boolean isRingHomomorphism() { return false; }
                 public boolean isModuleHomomorphism() { return false; }
@@ -421,9 +421,9 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                             public ModuleElement mapValue(ModuleElement element) {
                                 ArithmeticMultiElement<ArithmeticInteger> e = (ArithmeticMultiElement<ArithmeticInteger>) ((ArithmeticMultiElement<ArithmeticInteger>) element).resize(codim);
                                 List<ArithmeticElement<ArithmeticInteger>> v_from = e.getValue();
-                                ArithmeticDouble[] v_to = new ArithmeticDouble[v_from.size()];
+                                Real[] v_to = new Real[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
-                                    v_to[i] = new ArithmeticDouble(v_from.get(i).getValue().intValue());
+                                    v_to[i] = new Real(v_from.get(i).getValue().intValue());
                                 }
                                 return ArithmeticMultiElement.make(RRing.ring, v_to);
                             }
@@ -460,9 +460,9 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                             public ModuleElement mapValue(ModuleElement element) {
                                 ArithmeticMultiElement<Rational> e = (ArithmeticMultiElement<Rational>) ((FreeElement) element).resize(codim);
                                 List<ArithmeticElement<Rational>> v_from = e.getValue();
-                                ArithmeticDouble[] v_to = new ArithmeticDouble[v_from.size()];
+                                Real[] v_to = new Real[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
-                                    v_to[i] = new ArithmeticDouble(v_from.get(i).getValue().doubleValue());
+                                    v_to[i] = new Real(v_from.get(i).getValue().doubleValue());
                                 }
                                 return ArithmeticMultiElement.make(RRing.ring, v_to);
                             }
@@ -482,7 +482,7 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         };
                     }
                 }
-            } else if (number instanceof ArithmeticDouble) {
+            } else if (number instanceof Real) {
                 // R^n -> ?
                 if (codomain instanceof ArithmeticMultiModule) {
                     Ring<?> codomainRing = codomain.getRing();
@@ -497,8 +497,8 @@ public abstract class EmbeddingMorphism extends ModuleMorphism {
                         // R^n to C^m
                         m = new EmbeddingMorphism(domain, codomain) {
                             public ModuleElement mapValue(ModuleElement element) {
-                                ArithmeticMultiElement<ArithmeticDouble> e = (ArithmeticMultiElement<ArithmeticDouble>) ((FreeElement) element).resize(codim);
-                                List<ArithmeticElement<ArithmeticDouble>> v_from = e.getValue();
+                                ArithmeticMultiElement<Real> e = (ArithmeticMultiElement<Real>) ((FreeElement) element).resize(codim);
+                                List<ArithmeticElement<Real>> v_from = e.getValue();
                                 Complex[] v_to = new Complex[v_from.size()];
                                 for (int i = 0; i < v_from.size(); i++) {
                                     v_to[i] = new Complex(v_from.get(i).getValue().doubleValue());

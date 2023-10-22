@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin.address;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
@@ -79,7 +79,7 @@ class JGraphSelect
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<ArithmeticDouble>> p = ((ArithmeticMultiElement<ArithmeticDouble>)m).getValue();
+                List<ArithmeticElement<Real>> p = ((ArithmeticMultiElement<Real>)m).getValue();
                 config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
             }
         }
@@ -376,11 +376,11 @@ class JGraphSelect
     }
 
     public class RConfiguration extends Configuration {
-        public ArithmeticDouble getX(int i) {
-            return new ArithmeticDouble(px.get(i));
+        public Real getX(int i) {
+            return new Real(px.get(i));
         }
-        public ArithmeticDouble getY(int i) {
-            return new ArithmeticDouble(py.get(i));
+        public Real getY(int i) {
+            return new Real(py.get(i));
         }
     }
     

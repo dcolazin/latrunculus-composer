@@ -2,9 +2,9 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
@@ -1320,12 +1320,12 @@ final public List simpleCrs(int type) throws ParseException {
             }
             else if (m instanceof ZnRing) {
                 if (d != 1) {if (true) throw parseError("");}
-                elements.add(new ArithmeticElement<>(new ArithmeticModulus(n, ((ZnRing)m).getModulus())));
+                elements.add(new ArithmeticElement<>(new Modulus(n, ((ZnRing)m).getModulus())));
             }
             else if (m instanceof QRing)
                 elements.add(new ArithmeticElement<>(new Rational(q)));
             else if (m instanceof RRing)
-                elements.add(new ArithmeticElement<>(new ArithmeticDouble((double)n / (double)d)));
+                elements.add(new ArithmeticElement<>(new Real((double)n / (double)d)));
 
             // we also allow to convert numbers into strings without quotes
             else {
@@ -1333,11 +1333,11 @@ final public List simpleCrs(int type) throws ParseException {
                 if (m instanceof ZStringRing)
                     elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
                 else if (m instanceof ZnStringRing)
-                    elements.add(new ArithmeticStringElement<ArithmeticModulus>(s));
+                    elements.add(new ArithmeticStringElement<Modulus>(s));
                 else if (m instanceof QStringRing)
                     elements.add(new ArithmeticStringElement<Rational>(s));
                 else if (m instanceof RStringRing)
-                    elements.add(new ArithmeticStringElement<ArithmeticDouble>(s));
+                    elements.add(new ArithmeticStringElement<Real>(s));
 
                     // error
                 else {
@@ -1354,17 +1354,17 @@ final public List simpleCrs(int type) throws ParseException {
       r = rLiteral();
         try {
             if (m instanceof RRing)
-                elements.add(new ArithmeticElement<>(new ArithmeticDouble(r)));
+                elements.add(new ArithmeticElement<>(new Real(r)));
 
             // we also allow to convert numbers into strings without quotes
             else if (m instanceof ZStringRing)
                 elements.add(new ArithmeticStringElement<ArithmeticInteger>(String.valueOf(r)));
             else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticModulus>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<Modulus>(String.valueOf(r)));
             else if (m instanceof QStringRing)
                 elements.add(new ArithmeticStringElement<Rational>(String.valueOf(r)));
             else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticDouble>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<Real>(String.valueOf(r)));
 
             // error
             else {if (true) throw parseError("");}
@@ -1395,11 +1395,11 @@ final public List simpleCrs(int type) throws ParseException {
             if (m instanceof ZStringRing)
                 elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
             else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticModulus>(s));
+                elements.add(new ArithmeticStringElement<Modulus>(s));
             else if (m instanceof QStringRing)
                 elements.add(new ArithmeticStringElement<Rational>(s));
             else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticDouble>(s));
+                elements.add(new ArithmeticStringElement<Real>(s));
 
             // error
             else {if (true) throw parseError("Expected StringElement, got " + s);}

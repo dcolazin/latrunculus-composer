@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.exception.ModulusException;
 import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
@@ -35,18 +34,18 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @Getter
-public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModulus> {
+public final class Modulus implements ArithmeticNumber<Modulus> {
 
     private final int value;
     private final int modulus;
 
-    public ArithmeticModulus(int value, int modulus) {
+    public Modulus(int value, int modulus) {
         this.value = NumberTheory.mod(value, modulus);
         this.modulus = modulus;
     }
 
     @Override
-    public int compareTo(ArithmeticModulus arithmeticModulus) {
+    public int compareTo(Modulus arithmeticModulus) {
         return this.intValue() - arithmeticModulus.intValue();
     }
 
@@ -71,7 +70,7 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
     }
 
     @Override
-    public ArithmeticModulus deepCopy() {
+    public Modulus deepCopy() {
         return this;
     }
 
@@ -102,36 +101,36 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
 
     @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof ArithmeticModulus) && NumberTheory.gcd(value, modulus) == 1;
+        return (y instanceof Modulus) && NumberTheory.gcd(value, modulus) == 1;
     }
 
     @Override
-    public ArithmeticModulus sum(ArithmeticModulus other) {
+    public Modulus sum(Modulus other) {
         assertModulusIsSame(other);
-        return new ArithmeticModulus(value + other.value, modulus);
+        return new Modulus(value + other.value, modulus);
     }
 
     @Override
-    public ArithmeticModulus difference(ArithmeticModulus other) {
+    public Modulus difference(Modulus other) {
         assertModulusIsSame(other);
-        return new ArithmeticModulus(value - other.value, modulus);
+        return new Modulus(value - other.value, modulus);
     }
 
     @Override
-    public ArithmeticModulus product(ArithmeticModulus other) {
+    public Modulus product(Modulus other) {
         assertModulusIsSame(other);
-        return new ArithmeticModulus(value * other.value, modulus);
+        return new Modulus(value * other.value, modulus);
     }
 
     @Override
-    public ArithmeticModulus neg() {
-        return new ArithmeticModulus(-value, modulus);
+    public Modulus neg() {
+        return new Modulus(-value, modulus);
     }
 
     @Override
-    public ArithmeticModulus inverse() {
+    public Modulus inverse() {
         try {
-            return new ArithmeticModulus(NumberTheory.inverseMod(value, modulus), modulus);
+            return new Modulus(NumberTheory.inverseMod(value, modulus), modulus);
         } catch (ZeroDivisorException e) {
             throw new InverseException(this, e);
         }
@@ -144,10 +143,10 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof ArithmeticModulus)) {
+        if (!(other instanceof Modulus)) {
             return false;
         }
-        ArithmeticModulus otherModulus = (ArithmeticModulus) other;
+        Modulus otherModulus = (Modulus) other;
         return otherModulus.value == value && otherModulus.modulus == modulus;
     }
 
@@ -156,17 +155,17 @@ public final class ArithmeticModulus implements ArithmeticNumber<ArithmeticModul
         return value;
     }
 
-    public static ArithmeticModulus[] toArray(int[] array, int m) {
+    public static Modulus[] toArray(int[] array, int m) {
         return Arrays.stream(array)
-                .mapToObj(i -> new ArithmeticModulus(i, m))
-                .toArray(ArithmeticModulus[]::new);
+                .mapToObj(i -> new Modulus(i, m))
+                .toArray(Modulus[]::new);
     }
 
-    public static List<ArithmeticModulus> toList(List<Integer> list, int m) {
-        return list.stream().map(i -> new ArithmeticModulus(i, m)).collect(Collectors.toList());
+    public static List<Modulus> toList(List<Integer> list, int m) {
+        return list.stream().map(i -> new Modulus(i, m)).collect(Collectors.toList());
     }
 
-    private void assertModulusIsSame(ArithmeticModulus other) {
+    private void assertModulusIsSame(Modulus other) {
         if (modulus != other.getModulus()) {
             throw new ModulusException(this, other);
         }

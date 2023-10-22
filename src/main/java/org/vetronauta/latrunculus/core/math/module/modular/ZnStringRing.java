@@ -20,9 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -41,7 +40,7 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class ZnStringRing extends StringRing<ArithmeticStringElement<ArithmeticModulus>> {
+public final class ZnStringRing extends StringRing<ArithmeticStringElement<Modulus>> {
     
     public static ZnStringRing make(int modulus) {
         assert(modulus > 1);
@@ -49,13 +48,13 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
     }
     
 
-    public ArithmeticStringElement<ArithmeticModulus> getZero() {
-        return new ArithmeticStringElement<ArithmeticModulus>(RingString.getZero());
+    public ArithmeticStringElement<Modulus> getZero() {
+        return new ArithmeticStringElement<Modulus>(RingString.getZero());
     }
 
     
-    public ArithmeticStringElement<ArithmeticModulus> getOne() {
-        return new ArithmeticStringElement<ArithmeticModulus>(RingString.getOne());
+    public ArithmeticStringElement<Modulus> getOne() {
+        return new ArithmeticStringElement<Modulus>(RingString.getOne());
     }
 
     
@@ -84,7 +83,7 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
             return false;
         }
         ArithmeticNumber<?> number = ((ArithmeticStringElement<?>)element).getValue().getObjectOne();
-        return (number instanceof ArithmeticModulus && ((ArithmeticModulus) number).getModulus() == modulus);
+        return (number instanceof Modulus && ((Modulus) number).getModulus() == modulus);
     }
 
     
@@ -111,10 +110,10 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
     }
 
     
-    public ArithmeticStringElement<ArithmeticModulus> cast(ModuleElement element) {
+    public ArithmeticStringElement<Modulus> cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<ArithmeticModulus>(new RingString<>(rs));
+            return new ArithmeticStringElement<Modulus>(new RingString<>(rs));
         }
         else {
             ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
@@ -122,7 +121,7 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
                 return null;
             }
             else {
-                return new ArithmeticStringElement<ArithmeticModulus>(new RingString<>(e.getValue()));
+                return new ArithmeticStringElement<Modulus>(new RingString<>(e.getValue()));
             }
         }       
     }
@@ -142,14 +141,14 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
         return "Z_"+getModulus()+"-String";
     }
 
-    public static RingString<ArithmeticModulus> parse(String string, int modulus) {
+    public static RingString<Modulus> parse(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<ArithmeticModulus> factors = new LinkedList<>();
+        LinkedList<Modulus> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -157,14 +156,14 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Arith
             }
             int f = Integer.parseInt(term[0]);
             String w = TextUtils.unquote(term[1]);
-            factors.add(new ArithmeticModulus(f, modulus));
+            factors.add(new Modulus(f, modulus));
             words.add(w);
         }
 
         return new RingString<>(words, factors);
     }
 
-    public ArithmeticStringElement<ArithmeticModulus> parseString(String string) {
+    public ArithmeticStringElement<Modulus> parseString(String string) {
         try {
             return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string), getModulus()));
         } catch (Exception e) {

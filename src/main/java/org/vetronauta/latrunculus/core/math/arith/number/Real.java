@@ -31,12 +31,12 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble> {
+public final class Real implements ArithmeticNumber<Real> {
 
     private final double value;
 
     @Override
-    public int compareTo(ArithmeticDouble arithmeticDouble) {
+    public int compareTo(Real arithmeticDouble) {
         return Double.compare(value, arithmeticDouble.doubleValue());
     }
 
@@ -61,7 +61,7 @@ public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble
     }
 
     @Override
-    public ArithmeticDouble deepCopy() {
+    public Real deepCopy() {
         return this;
     }
 
@@ -87,35 +87,35 @@ public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble
 
     @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof ArithmeticDouble) && !this.isZero();
+        return (y instanceof Real) && !this.isZero();
     }
 
     @Override
-    public ArithmeticDouble sum(ArithmeticDouble other) {
-        return new ArithmeticDouble(value + other.value);
+    public Real sum(Real other) {
+        return new Real(value + other.value);
     }
 
     @Override
-    public ArithmeticDouble difference(ArithmeticDouble other) {
-        return new ArithmeticDouble(value - other.value);
+    public Real difference(Real other) {
+        return new Real(value - other.value);
     }
 
     @Override
-    public ArithmeticDouble product(ArithmeticDouble other) {
-        return new ArithmeticDouble(value * other.value);
+    public Real product(Real other) {
+        return new Real(value * other.value);
     }
 
     @Override
-    public ArithmeticDouble neg() {
-        return new ArithmeticDouble(-value);
+    public Real neg() {
+        return new Real(-value);
     }
 
     @Override
-    public ArithmeticDouble inverse() {
+    public Real inverse() {
         if (value == 0) {
             throw  new InverseException(this);
         }
-        return new ArithmeticDouble(1/value);
+        return new Real(1/value);
     }
 
     @Override
@@ -125,10 +125,10 @@ public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof ArithmeticDouble)) {
+        if (!(other instanceof Real)) {
             return false;
         }
-        return ((ArithmeticDouble) other).value == value;
+        return ((Real) other).value == value;
     }
 
     @Override
@@ -136,14 +136,14 @@ public final class ArithmeticDouble implements ArithmeticNumber<ArithmeticDouble
         return (int) value;
     }
 
-    public static ArithmeticDouble[] toArray(double[] array) {
+    public static Real[] toArray(double[] array) {
         return Arrays.stream(array)
-            .mapToObj(ArithmeticDouble::new)
-            .toArray(ArithmeticDouble[]::new);
+            .mapToObj(Real::new)
+            .toArray(Real[]::new);
     }
 
-    public static List<ArithmeticDouble> toList(List<Double> list) {
-        return list.stream().map(ArithmeticDouble::new).collect(Collectors.toList());
+    public static List<Real> toList(List<Double> list) {
+        return list.stream().map(Real::new).collect(Collectors.toList());
     }
 
 }

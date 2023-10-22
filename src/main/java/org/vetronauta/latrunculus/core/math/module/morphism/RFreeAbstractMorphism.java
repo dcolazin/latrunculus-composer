@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -47,7 +47,7 @@ public abstract class RFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             double[] v = new double[x.getLength()];
                 for (int i = 0; i < x.getLength(); i++) {
-                    v[i] = ((ArithmeticElement<ArithmeticDouble>) x.getComponent(i)).getValue().doubleValue();
+                    v[i] = ((ArithmeticElement<Real>) x.getComponent(i)).getValue().doubleValue();
                 }
             return ArithmeticMultiElement.make(RRing.ring, mapToList(v));
         }
@@ -56,8 +56,8 @@ public abstract class RFreeAbstractMorphism extends ModuleMorphism {
         }
     }
 
-    private List<ArithmeticDouble> mapToList(double[] x) {
-        return Arrays.stream(mapValue(x)).mapToObj(ArithmeticDouble::new).collect(Collectors.toList());
+    private List<Real> mapToList(double[] x) {
+        return Arrays.stream(mapValue(x)).mapToObj(Real::new).collect(Collectors.toList());
     }
 
     

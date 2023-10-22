@@ -21,9 +21,9 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
@@ -293,10 +293,10 @@ class JAffineMorphismType
             double[] b = new double[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<ArithmeticDouble> v = (ArithmeticElement<ArithmeticDouble>)getValue(i, j);
+                    ArithmeticElement<Real> v = (ArithmeticElement<Real>)getValue(i, j);
                     vA[i][j] = v.getValue().doubleValue();
                 }
-                ArithmeticElement<ArithmeticDouble> v = (ArithmeticElement<ArithmeticDouble>)getValue(i);
+                ArithmeticElement<Real> v = (ArithmeticElement<Real>)getValue(i);
                 b[i] = v.getValue().doubleValue();
             }
             RMatrix A = new RMatrix(vA);
@@ -321,10 +321,10 @@ class JAffineMorphismType
             int[] b = new int[rows];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<ArithmeticModulus> v = (ArithmeticElement<ArithmeticModulus>)getValue(i, j);
+                    ArithmeticElement<Modulus> v = (ArithmeticElement<Modulus>)getValue(i, j);
                     vA[i][j] = v.getValue().getValue();
                 }
-                ArithmeticElement<ArithmeticModulus> v = (ArithmeticElement<ArithmeticModulus>)getValue(i);
+                ArithmeticElement<Modulus> v = (ArithmeticElement<Modulus>)getValue(i);
                 b[i] = v.getValue().getValue();
             }
             ZnMatrix A = new ZnMatrix(vA, ((ZnRing)ring).getModulus());

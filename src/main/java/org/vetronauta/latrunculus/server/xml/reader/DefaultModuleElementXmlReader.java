@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -150,7 +150,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
     
-    private ArithmeticElement<ArithmeticModulus> readModularArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ArithmeticElement<Modulus> readModularArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUE_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUE_ATTR);
@@ -177,7 +177,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
 
         try {
             int val = Integer.parseInt(element.getAttribute(VALUE_ATTR));
-            return new ArithmeticElement<>(new ArithmeticModulus(val, mod));
+            return new ArithmeticElement<>(new Modulus(val, mod));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be an integer.", VALUE_ATTR, getElementTypeName(clazz));
@@ -233,10 +233,10 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
 
         String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        List<ArithmeticModulus> intValues = new ArrayList<>(values.length);
+        List<Modulus> intValues = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
             try {
-                intValues.add(new ArithmeticModulus(Integer.parseInt(values[i]), mod));
+                intValues.add(new Modulus(Integer.parseInt(values[i]), mod));
             } catch (NumberFormatException e) {
                 reader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName(clazz));
                 return null;

@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -37,20 +37,20 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class RRing extends ArithmeticRing<ArithmeticDouble> implements NumberRing {
+public final class RRing extends ArithmeticRing<Real> implements NumberRing {
 
     /**
      * The unique instance of the ring of reals.
      */
     public static final RRing ring = new RRing();
-    public static final ArithmeticMultiModule<ArithmeticDouble> nullModule = new ArithmeticMultiModule<>(ring, 0);
+    public static final ArithmeticMultiModule<Real> nullModule = new ArithmeticMultiModule<>(ring, 0);
     
-    public ArithmeticMultiModule<ArithmeticDouble> getNullModule() {
+    public ArithmeticMultiModule<Real> getNullModule() {
         return nullModule;
     }
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticElement) && ((ArithmeticElement<?>) element).getValue() instanceof ArithmeticDouble;
+        return (element instanceof ArithmeticElement) && ((ArithmeticElement<?>) element).getValue() instanceof Real;
     }
 
     public FreeModule getFreeModule(int dimension) {
@@ -74,7 +74,7 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     }
 
 
-    public ArithmeticElement<ArithmeticDouble> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<Real> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -84,7 +84,7 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     }
 
 
-    public ArithmeticElement<ArithmeticDouble> cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<Real> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
@@ -94,8 +94,8 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
         return null;
     }
 
-    public ArithmeticElement<ArithmeticDouble> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new ArithmeticDouble(element.getValue().doubleValue()));
+    public ArithmeticElement<Real> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new Real(element.getValue().doubleValue()));
     }
     public String toString() {
         return "RRing";
@@ -107,10 +107,10 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     }
     
     
-    public ArithmeticElement<ArithmeticDouble> parseString(String string) {
+    public ArithmeticElement<Real> parseString(String string) {
     	try {
     		double value = Double.parseDouble(TextUtils.unparenthesize(string));
-        	return new ArithmeticElement<>(new ArithmeticDouble(value));
+        	return new ArithmeticElement<>(new Real(value));
     	}
     	catch (NumberFormatException e) {
     		return null;
@@ -134,6 +134,6 @@ public final class RRing extends ArithmeticRing<ArithmeticDouble> implements Num
     private static final int basicHash = "RRing".hashCode();
 
     private RRing() {
-        super(new ArithmeticDouble(0), new ArithmeticDouble(1));
+        super(new Real(0), new Real(1));
     }
 }

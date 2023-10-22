@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -117,8 +117,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(ArithmeticElement<?> element, XMLWriter writer) {
         ArithmeticNumber<?> number = element.getValue();
-        if (number instanceof ArithmeticModulus) {
-            writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number, MODULUS_ATTR, ((ArithmeticModulus) number).getModulus());
+        if (number instanceof Modulus) {
+            writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number, MODULUS_ATTR, ((Modulus) number).getModulus());
         } else {
             writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number);
         }
@@ -142,8 +142,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticStringElement<?> element, XMLWriter writer) {
-        if (element.getValue().getObjectOne() instanceof ArithmeticModulus) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().getObjectOne()).getModulus());
+        if (element.getValue().getObjectOne() instanceof Modulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getValue().getObjectOne()).getModulus());
         } else {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }
@@ -156,8 +156,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticStringMultiElement<?> element, XMLWriter writer) {
-        if (element.getValue().get(0).getObjectOne() instanceof ArithmeticModulus) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().get(0).getObjectOne()).getModulus());
+        if (element.getValue().get(0).getObjectOne() instanceof Modulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getValue().get(0).getObjectOne()).getModulus());
         } else {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }

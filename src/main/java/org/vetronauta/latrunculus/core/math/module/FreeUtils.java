@@ -21,9 +21,9 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -45,9 +45,9 @@ public class FreeUtils {
         }
         ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
         return number instanceof ArithmeticInteger ||
-                number instanceof ArithmeticModulus ||
+                number instanceof Modulus ||
                 number instanceof Rational ||
-                number instanceof ArithmeticDouble ||
+                number instanceof Real ||
                 number instanceof Complex;
     }
 
@@ -58,8 +58,8 @@ public class FreeUtils {
         }
         ArithmeticNumber<?> number = ((ArithmeticStringElement<?>) module.getZero()).getValue().getObjectOne();
         return number instanceof ArithmeticInteger ||
-                number instanceof ArithmeticModulus ||
+                number instanceof Modulus ||
                 number instanceof Rational ||
-                number instanceof ArithmeticDouble;
+                number instanceof Real;
     }
 }

@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -153,7 +153,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
 
     private void write(ArithmeticMultiModule<?> module, XMLWriter writer) {
         if (module.getRing().getClass().isAssignableFrom(ZnRing.class)) {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ArithmeticModulus)module.getRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((Modulus)module.getRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
         } else {
             writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
         }

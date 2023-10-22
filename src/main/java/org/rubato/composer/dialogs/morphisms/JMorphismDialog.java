@@ -23,9 +23,9 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -453,13 +453,13 @@ public class JMorphismDialog
                     }
                     if (codomain.checkRingElement(ArithmeticElement.class)) {
                         ArithmeticNumber<?> codomainNumber = ((ArithmeticElement<?>) codomain.getZero()).getValue();
-                        if (domainNumber instanceof ArithmeticDouble && codomainNumber instanceof ArithmeticDouble &&
+                        if (domainNumber instanceof Real && codomainNumber instanceof Real &&
                                 domain.getDimension() == 2 && codomain.getDimension() == 2) {
                             items.add(GEOMETRY_TYPE);
                         }
                         if (domainNumber instanceof ArithmeticInteger &&
                                 codomain instanceof FreeModule &&
-                                codomainNumber instanceof ArithmeticModulus && (domain.getDimension() == codomain.getDimension())) {
+                                codomainNumber instanceof Modulus && (domain.getDimension() == codomain.getDimension())) {
                             items.add(MODULO_TYPE);
                         }
                     }

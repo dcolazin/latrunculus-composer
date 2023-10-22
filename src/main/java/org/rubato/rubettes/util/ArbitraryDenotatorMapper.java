@@ -2,7 +2,7 @@ package org.rubato.rubettes.util;
 
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -318,7 +318,7 @@ public class ArbitraryDenotatorMapper {
 		if (morphism.getCodomain() instanceof ProductRing) {
 			projection = ProjectionMorphism.make((ProductRing)morphism.getCodomain(), index);
 		} else if (morphism.getCodomain().checkRingElement(ArithmeticElement.class) &&
-				((ArithmeticElement<?>)morphism.getCodomain().getRing().getZero()).getValue() instanceof ArithmeticDouble) {
+				((ArithmeticElement<?>)morphism.getCodomain().getRing().getZero()).getValue() instanceof Real) {
 			double[][] projectionMatrix = new double[1][codomainDim];
 			projectionMatrix[0][index] = 1;
 			projection = RFreeAffineMorphism.make(new RMatrix(projectionMatrix), new double[]{0});

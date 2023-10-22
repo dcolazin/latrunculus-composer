@@ -20,8 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -39,17 +38,17 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class RStringRing extends StringRing<ArithmeticStringElement<ArithmeticDouble>> {
+public final class RStringRing extends StringRing<ArithmeticStringElement<Real>> {
 
     public static final RStringRing ring = new RStringRing();
 
-    public ArithmeticStringElement<ArithmeticDouble> getZero() {
-        return new ArithmeticStringElement<ArithmeticDouble>(RingString.getZero());
+    public ArithmeticStringElement<Real> getZero() {
+        return new ArithmeticStringElement<Real>(RingString.getZero());
     }
 
     
-    public ArithmeticStringElement<ArithmeticDouble> getOne() {
-        return new ArithmeticStringElement<ArithmeticDouble>(RingString.getOne());
+    public ArithmeticStringElement<Real> getOne() {
+        return new ArithmeticStringElement<Real>(RingString.getOne());
     }
 
     
@@ -74,7 +73,7 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof ArithmeticDouble);
+        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof Real);
     }
 
     
@@ -93,13 +92,13 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
     }
 
     
-    public ArithmeticStringElement<ArithmeticDouble> cast(ModuleElement element) {
+    public ArithmeticStringElement<Real> cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<ArithmeticDouble>(new RingString<>(rs));
+            return new ArithmeticStringElement<Real>(new RingString<>(rs));
         }
-        ArithmeticElement<ArithmeticDouble> e = RRing.ring.cast(element);
-        return e != null ? new ArithmeticStringElement<ArithmeticDouble>(new RingString<>(e.getValue())) : null;
+        ArithmeticElement<Real> e = RRing.ring.cast(element);
+        return e != null ? new ArithmeticStringElement<Real>(new RingString<>(e.getValue())) : null;
     }
 
     
@@ -112,14 +111,14 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
         return "R-String";
     }
 
-    public static RingString<ArithmeticDouble> parse(String string) {
+    public static RingString<Real> parse(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<ArithmeticDouble> factors = new LinkedList<>();
+        LinkedList<Real> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -127,14 +126,14 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Arithm
             }
             double f = Double.parseDouble(term[0]);
             String w = TextUtils.unquote(term[1]);
-            factors.add(new ArithmeticDouble(f));
+            factors.add(new Real(f));
             words.add(w);
         }
 
         return new RingString<>(words, factors);
     }
     
-    public ArithmeticStringElement<ArithmeticDouble> parseString(String string) {
+    public ArithmeticStringElement<Real> parseString(String string) {
         try {
             return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
         } catch (Exception e) {

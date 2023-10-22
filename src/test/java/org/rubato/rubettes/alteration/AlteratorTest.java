@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -68,12 +68,12 @@ class AlteratorTest {
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(1), new ArithmeticDouble(0), new ArithmeticDouble(0)})),
-				new ArithmeticElement<>(new ArithmeticDouble(2)));
-		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(0), new ArithmeticDouble(1), new ArithmeticDouble(0)})),
-				new ArithmeticElement<>(new ArithmeticDouble(3.5)));
-		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[]{new ArithmeticDouble(0), new ArithmeticDouble(0), new ArithmeticDouble(1)})),
-				new ArithmeticElement<>(new ArithmeticDouble(5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new Real[]{new Real(1), new Real(0), new Real(0)})),
+				new ArithmeticElement<>(new Real(2)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new Real[]{new Real(0), new Real(1), new Real(0)})),
+				new ArithmeticElement<>(new Real(3.5)));
+		assertEquals(m050.map(ArithmeticMultiElement.make(RRing.ring, new Real[]{new Real(0), new Real(0), new Real(1)})),
+				new ArithmeticElement<>(new Real(5)));
 		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);

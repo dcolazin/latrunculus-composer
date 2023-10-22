@@ -30,7 +30,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -106,11 +106,11 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(0));
-		assertEquals(1, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(1, ((ArithmeticElement<Real>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
-		assertEquals(2, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(2, ((ArithmeticElement<Real>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		assertEquals(((ArithmeticElement<Rational>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(3));
 	}
 
@@ -238,15 +238,15 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertEquals(((ArithmeticElement<ArithmeticDouble>) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
+		assertEquals(((ArithmeticElement<Real>) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
 		assertEquals(((ArithmeticElement<Rational>) factor.getElement(new int[]{1, 0})).getValue(), new Rational(pitchValue));
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
-		assertEquals(0, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(0, ((ArithmeticElement<Real>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
 		assertEquals(((ArithmeticElement<Rational>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new Rational(0));
 		assertEquals(0, ((ArithmeticElement<ArithmeticInteger>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
-		assertEquals(0, ((ArithmeticElement<ArithmeticDouble>) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
+		assertEquals(0, ((ArithmeticElement<Real>) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
 	}
 
 	@Test

@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -77,7 +77,7 @@ public class ModuloMorphism extends ModuleMorphism {
             if (x instanceof ArithmeticElement) {
                 ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
                 if (number instanceof ArithmeticInteger) {
-                    return new ArithmeticElement<>(new ArithmeticModulus(number.intValue(), modulus));
+                    return new ArithmeticElement<>(new Modulus(number.intValue(), modulus));
                 }
             }
         }
@@ -86,7 +86,7 @@ public class ModuloMorphism extends ModuleMorphism {
             if (e.getLength() == dimension) {
                 return ArithmeticMultiElement.make(
                         ArithmeticRingRepository.getModulusRing(modulus),
-                        e.getValue().stream().map(i -> new ArithmeticModulus(i.getValue().intValue(), modulus)).collect(Collectors.toList()));
+                        e.getValue().stream().map(i -> new Modulus(i.getValue().intValue(), modulus)).collect(Collectors.toList()));
             }
         }
         throw new MappingException("ModuloMorphism.map: ", x, this);

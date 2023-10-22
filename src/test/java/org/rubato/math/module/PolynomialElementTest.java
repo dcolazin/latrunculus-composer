@@ -2,7 +2,7 @@ package org.rubato.math.module;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -22,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 class PolynomialElementTest {
 
     private PolynomialRing<ArithmeticElement<ArithmeticInteger>> intPolRing;
-    private PolynomialRing<ArithmeticElement<ArithmeticDouble>> realPolRing;
+    private PolynomialRing<ArithmeticElement<Real>> realPolRing;
     private PolynomialRing<ArithmeticElement<Rational>> ratPolRing;
     
     private PolynomialElement<ArithmeticElement<ArithmeticInteger>> i0, i1;
-    private PolynomialElement<ArithmeticElement<ArithmeticDouble>> r0, r1;
+    private PolynomialElement<ArithmeticElement<Real>> r0, r1;
     private PolynomialElement<ArithmeticElement<Rational>> q0, q1;
     
     private PolynomialElement<ArithmeticElement<ArithmeticInteger>> ia, ib, ic, id;
-    private PolynomialElement<ArithmeticElement<ArithmeticDouble>> ra, rb, rc, rd;
+    private PolynomialElement<ArithmeticElement<Real>> ra, rb, rc, rd;
     private PolynomialElement<ArithmeticElement<Rational>> qa, qb, qc, qd;
 
     @BeforeEach
@@ -201,7 +201,7 @@ class PolynomialElementTest {
         i1.invert();
         assertEquals(i1, new PolynomialElement<>(intPolRing, new ArithmeticElement<>(new ArithmeticInteger(1))));
         r1.invert();
-        assertEquals(r1, new PolynomialElement<>(realPolRing, new ArithmeticElement<>(new ArithmeticDouble(1))));
+        assertEquals(r1, new PolynomialElement<>(realPolRing, new ArithmeticElement<>(new Real(1))));
         q1.invert();
         assertEquals(q1, new PolynomialElement<>(ratPolRing, new ArithmeticElement<>(new Rational(1))));
         qd.invert();
@@ -311,9 +311,9 @@ class PolynomialElementTest {
             assertEquals(i1.evaluate(new ArithmeticElement<>(new ArithmeticInteger(-12))), new ArithmeticElement<>(new ArithmeticInteger(1)));
             assertEquals(ib.evaluate(new ArithmeticElement<>(new ArithmeticInteger(-3))), new ArithmeticElement<>(new ArithmeticInteger(-155)));
 
-            assertEquals(r0.evaluate(new ArithmeticElement<>(new ArithmeticDouble(23))), new ArithmeticElement<>(new ArithmeticDouble(0)));
-            assertEquals(r1.evaluate(new ArithmeticElement<>(new ArithmeticDouble(-12))), new ArithmeticElement<>(new ArithmeticDouble(1)));
-            assertEquals(rb.evaluate(new ArithmeticElement<>(new ArithmeticDouble(-3.5))), new ArithmeticElement<>(new ArithmeticDouble( -228.625)));
+            assertEquals(r0.evaluate(new ArithmeticElement<>(new Real(23))), new ArithmeticElement<>(new Real(0)));
+            assertEquals(r1.evaluate(new ArithmeticElement<>(new Real(-12))), new ArithmeticElement<>(new Real(1)));
+            assertEquals(rb.evaluate(new ArithmeticElement<>(new Real(-3.5))), new ArithmeticElement<>(new Real( -228.625)));
 
             assertEquals(q0.evaluate(new ArithmeticElement<>(new Rational(23))), new ArithmeticElement<>(new Rational(0)));
             assertEquals(q1.evaluate(new ArithmeticElement<>(new Rational(-12))), new ArithmeticElement<>(new Rational(1)));
@@ -383,8 +383,8 @@ class PolynomialElementTest {
         assertEquals(ia.getCoefficient(3), new ArithmeticElement<>(new ArithmeticInteger(2)));
         assertEquals(ic.getCoefficient(4), new ArithmeticElement<>(new ArithmeticInteger(0)));
         
-        assertEquals(ra.getCoefficient(3), new ArithmeticElement<>(new ArithmeticDouble(2)));
-        assertEquals(rc.getCoefficient(4), new ArithmeticElement<>(new ArithmeticDouble(0)));
+        assertEquals(ra.getCoefficient(3), new ArithmeticElement<>(new Real(2)));
+        assertEquals(rc.getCoefficient(4), new ArithmeticElement<>(new Real(0)));
 
         assertEquals(qa.getCoefficient(3), new ArithmeticElement<>(new Rational(2)));
         assertEquals(qc.getCoefficient(4), new ArithmeticElement<>(new Rational(0)));
@@ -399,12 +399,12 @@ class PolynomialElementTest {
         assertEquals(ic.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticInteger(24)));
         assertEquals(id.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticInteger(10)));
 
-        assertEquals(r0.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(0)));
-        assertEquals(r1.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(1)));
-        assertEquals(ra.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(8)));
-        assertEquals(rb.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(3)));
-        assertEquals(rc.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(24)));
-        assertEquals(rd.getLeadingCoefficient(), new ArithmeticElement<>(new ArithmeticDouble(2.3)));
+        assertEquals(r0.getLeadingCoefficient(), new ArithmeticElement<>(new Real(0)));
+        assertEquals(r1.getLeadingCoefficient(), new ArithmeticElement<>(new Real(1)));
+        assertEquals(ra.getLeadingCoefficient(), new ArithmeticElement<>(new Real(8)));
+        assertEquals(rb.getLeadingCoefficient(), new ArithmeticElement<>(new Real(3)));
+        assertEquals(rc.getLeadingCoefficient(), new ArithmeticElement<>(new Real(24)));
+        assertEquals(rd.getLeadingCoefficient(), new ArithmeticElement<>(new Real(2.3)));
 
         assertEquals(q0.getLeadingCoefficient(), new ArithmeticElement<>(new Rational(0)));
         assertEquals(q1.getLeadingCoefficient(), new ArithmeticElement<>(new Rational(1)));

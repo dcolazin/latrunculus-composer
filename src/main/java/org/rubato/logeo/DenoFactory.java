@@ -20,9 +20,9 @@
 package org.rubato.logeo;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -69,7 +69,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, double d) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticDouble(d)));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new Real(d)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -85,7 +85,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, double d) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new ArithmeticDouble(d)));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new Real(d)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -100,7 +100,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, double d) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticDouble(d)));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new Real(d)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -164,7 +164,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, int i, int p) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(new Modulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -181,7 +181,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, int i, int p) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(new Modulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -197,7 +197,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, int i, int p) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new ArithmeticModulus(i, p)));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(new Modulus(i, p)));
         }
         catch (ClassCastException | DomainException e) {
             return null;

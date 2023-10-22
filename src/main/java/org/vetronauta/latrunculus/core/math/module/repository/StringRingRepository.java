@@ -21,9 +21,9 @@ package org.vetronauta.latrunculus.core.math.module.repository;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
@@ -62,11 +62,11 @@ public class StringRingRepository {
         if (number instanceof Rational) {
             return (StringRing) QStringRing.ring;
         }
-        if (number instanceof ArithmeticDouble) {
+        if (number instanceof Real) {
             return (StringRing) RStringRing.ring;
         }
-        if (number instanceof ArithmeticModulus) {
-            return (StringRing) getModulusRing(((ArithmeticModulus) number).getModulus());
+        if (number instanceof Modulus) {
+            return (StringRing) getModulusRing(((Modulus) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }
@@ -79,11 +79,11 @@ public class StringRingRepository {
         if (number instanceof Rational) {
             return (ArithmeticRing<N>) QRing.ring;
         }
-        if (number instanceof ArithmeticDouble) {
+        if (number instanceof Real) {
             return (ArithmeticRing<N>) RRing.ring;
         }
-        if (number instanceof ArithmeticModulus) {
-            return (ArithmeticRing<N>) ArithmeticRingRepository.getModulusRing(((ArithmeticModulus) number).getModulus());
+        if (number instanceof Modulus) {
+            return (ArithmeticRing<N>) ArithmeticRingRepository.getModulusRing(((Modulus) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }

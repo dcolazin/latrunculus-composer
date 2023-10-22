@@ -25,7 +25,7 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
@@ -470,11 +470,11 @@ class JAffineGraph
             double[] v = { px[0], py[0]};
             return v;
         }
-        public ArithmeticDouble getX(int i) {
-            return new ArithmeticDouble(px[i]);
+        public Real getX(int i) {
+            return new Real(px[i]);
         }
-        public ArithmeticDouble getY(int i) {
-            return new ArithmeticDouble(py[i]);
+        public Real getY(int i) {
+            return new Real(py[i]);
         }
     }
     

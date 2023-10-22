@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -42,11 +42,11 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ArithmeticDouble>, ArithmeticStringElement<ArithmeticDouble>> {
+public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<Real>, ArithmeticStringElement<Real>> {
 
     public static final RStringProperFreeModule nullModule = new RStringProperFreeModule(0);
 
-    public static FreeModule<?, ArithmeticStringElement<ArithmeticDouble>> make(int dimension) {
+    public static FreeModule<?, ArithmeticStringElement<Real>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -61,7 +61,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     
     
     public ArithmeticStringMultiElement getZero() {
-        List<RingString<ArithmeticDouble>> res = new ArrayList<>(getDimension());
+        List<RingString<Real>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             res.add(RingString.getZero());
         }
@@ -70,7 +70,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     
     
     public ArithmeticStringMultiElement getUnitElement(int i) {
-        List<RingString<ArithmeticDouble>> v = new ArrayList<>(getDimension());
+        List<RingString<Real>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v.add(RingString.getZero());
         }
@@ -128,11 +128,11 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        List<RingString<ArithmeticDouble>> values = new ArrayList<>(getDimension());
+        List<RingString<Real>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
-            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof ArithmeticDouble) {
-                values.add(((ArithmeticStringElement<ArithmeticDouble>)object).getValue());
+            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof Real) {
+                values.add(((ArithmeticStringElement<Real>)object).getValue());
             }
             else {
                 return null;
@@ -180,7 +180,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
                 return null;
             }
             else {
-                List<RingString<ArithmeticDouble>> rstrings = new ArrayList<>(getDimension());
+                List<RingString<Real>> rstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
                     rstrings.add(RStringRing.parse(strings[i]));
                 }

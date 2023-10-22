@@ -6,7 +6,7 @@ import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.util.ObjectGenerator;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -40,10 +40,10 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 		
 		try {
 			for (Denotator currentNote : score.getFactors()) {
-				double currentOnset = ((ArithmeticElement<ArithmeticDouble>)currentNote.getElement(new int[]{0,0})).getValue().doubleValue();
+				double currentOnset = ((ArithmeticElement<Real>)currentNote.getElement(new int[]{0,0})).getValue().doubleValue();
 				double currentPitch = ((ArithmeticElement<Rational>)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
 				double currentLoudness = ((ArithmeticElement<ArithmeticInteger>)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
-				double currentDuration = ((ArithmeticElement<ArithmeticDouble>)currentNote.getElement(new int[]{3,0})).getValue().doubleValue();
+				double currentDuration = ((ArithmeticElement<Real>)currentNote.getElement(new int[]{3,0})).getValue().doubleValue();
 				
 				maxOnset = Math.max(maxOnset, currentOnset);
 				maxDuration = Math.max(maxDuration, currentDuration);

@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -134,9 +134,9 @@ public class TestObjects {
 	}
 	
 	private void createProductRingRealTriples() throws DomainException, RubatoException {
-		ProductElement element1 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(1)), new ArithmeticElement<>(new ArithmeticDouble(2)), new ArithmeticElement<>(new ArithmeticDouble(3)));
-		ProductElement element2 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(4)), new ArithmeticElement<>(new ArithmeticDouble(3)), new ArithmeticElement<>(new ArithmeticDouble(1)));
-		ProductElement element3 = ProductElement.make(new ArithmeticElement<>(new ArithmeticDouble(2)), new ArithmeticElement<>(new ArithmeticDouble(1)), new ArithmeticElement<>(new ArithmeticDouble(5)));
+		ProductElement element1 = ProductElement.make(new ArithmeticElement<>(new Real(1)), new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(3)));
+		ProductElement element2 = ProductElement.make(new ArithmeticElement<>(new Real(4)), new ArithmeticElement<>(new Real(3)), new ArithmeticElement<>(new Real(1)));
+		ProductElement element3 = ProductElement.make(new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(1)), new ArithmeticElement<>(new Real(5)));
 		List<Denotator> triples = new ArrayList<Denotator>();
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element1));
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element2));

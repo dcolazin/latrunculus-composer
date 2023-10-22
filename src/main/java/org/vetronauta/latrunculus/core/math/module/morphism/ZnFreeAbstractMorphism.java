@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -49,7 +49,7 @@ public abstract class ZnFreeAbstractMorphism extends ModuleMorphism {
         if (getDomain().hasElement(x)) {
             int[] v = new int[x.getLength()];
             for (int i = 0; i < x.getLength(); i++) {
-                v[i] = ((ArithmeticElement<ArithmeticModulus>)x).getComponent(i).getValue().getValue();
+                v[i] = ((ArithmeticElement<Modulus>)x).getComponent(i).getValue().getValue();
             }
             return ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus), mapToList(v, modulus));
         }
@@ -58,8 +58,8 @@ public abstract class ZnFreeAbstractMorphism extends ModuleMorphism {
         }
     }
 
-    private List<ArithmeticModulus> mapToList(int[] x, int modulus) {
-        return Arrays.stream(mapValue(x)).mapToObj(element -> new ArithmeticModulus(element, modulus)).collect(Collectors.toList());
+    private List<Modulus> mapToList(int[] x, int modulus) {
+        return Arrays.stream(mapValue(x)).mapToObj(element -> new Modulus(element, modulus)).collect(Collectors.toList());
     }
     
     /**

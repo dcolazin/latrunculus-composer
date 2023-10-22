@@ -19,9 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -79,11 +79,11 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
             if (number instanceof ArithmeticInteger && areAllZAffine(morphisms)) {
                 return makeZFreeMorphism(module.getDimension(), morphisms);
-            } else if (number instanceof ArithmeticModulus && areAllZnAffine(morphisms)) {
+            } else if (number instanceof Modulus && areAllZnAffine(morphisms)) {
                 return makeZnFreeMorphism(module.getDimension(), ((Modular) module).getModulus(), morphisms); //TODO this might not work after the ArithmeticMultiModule refactoring
             } else if (number instanceof Rational && areAllQAffine(morphisms)) {
                 return makeQFreeMorphism(module.getDimension(), morphisms);
-            } else if (number instanceof ArithmeticDouble && areAllRAffine(morphisms)) {
+            } else if (number instanceof Real && areAllRAffine(morphisms)) {
                 return makeRFreeMorphism(module.getDimension(), morphisms);
             } else if (number instanceof Complex && areAllCAffine(morphisms)) {
                 return makeCFreeMorphism((module).getDimension(), morphisms);

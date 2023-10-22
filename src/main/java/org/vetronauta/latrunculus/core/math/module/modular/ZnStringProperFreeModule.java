@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -43,9 +43,9 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ArithmeticModulus>, ArithmeticStringElement<ArithmeticModulus>> {
+public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<Modulus>, ArithmeticStringElement<Modulus>> {
 
-    public static FreeModule<?, ArithmeticStringElement<ArithmeticModulus>> make(int dimension, int modulus) {
+    public static FreeModule<?, ArithmeticStringElement<Modulus>> make(int dimension, int modulus) {
         dimension = Math.max(dimension, 0);
         if (dimension == 1) {
             return ZnStringRing.make(modulus);
@@ -57,7 +57,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
     
     
     public ArithmeticStringMultiElement getZero() {
-        List<RingString<ArithmeticModulus>> res = new ArrayList<>(getDimension());
+        List<RingString<Modulus>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             res.add(RingString.getZero());
         }
@@ -66,7 +66,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
     
     
     public ArithmeticStringMultiElement getUnitElement(int i) {
-        List<RingString<ArithmeticModulus>> v = new ArrayList<>(getDimension());
+        List<RingString<Modulus>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v.add(RingString.getZero());
         }
@@ -130,11 +130,11 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
         }
 
         Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        List<RingString<ArithmeticModulus>> values = new ArrayList<>(getDimension());
+        List<RingString<Modulus>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
-            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof ArithmeticModulus) {
-                values.add(((ArithmeticStringElement<ArithmeticModulus>)object).getValue());
+            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof Modulus) {
+                values.add(((ArithmeticStringElement<Modulus>)object).getValue());
             }
             else {
                 return null;
@@ -188,7 +188,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
                 return null;
             }
             else {
-                List<RingString<ArithmeticModulus>> zstrings = new ArrayList<>(getDimension());
+                List<RingString<Modulus>> zstrings = new ArrayList<>(getDimension());
                 for (int i = 0; i < strings.length; i++) {
                     zstrings.add(ZnStringRing.parse(strings[i], getModulus()));
                 }

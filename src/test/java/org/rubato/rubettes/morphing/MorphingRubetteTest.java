@@ -23,7 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -127,7 +127,7 @@ class MorphingRubetteTest {
 	}
 	
 	private double getDuration(Denotator denotator) throws RubatoException {
-		return ((ArithmeticElement<ArithmeticDouble>)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
+		return ((ArithmeticElement<Real>)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
 	}
 
 }

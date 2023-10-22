@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -160,7 +160,7 @@ public class DenotatorValueExtractor {
 			}
 		} else {
 			String valueName = FormValueFinder.makeValueName(simpleName, currentElement.getModule(), indexString);
-			double value = ((ArithmeticElement<ArithmeticDouble>)currentElement.cast(RRing.ring)).getValue().doubleValue();
+			double value = ((ArithmeticElement<Real>)currentElement.cast(RRing.ring)).getValue().doubleValue();
 			int nextIndex = object.getCurrentOccurrencesOfValueName(valueName);
 			if (parent != null) {
 				Double parentValue = parent.getNthValue(valueName, nextIndex);

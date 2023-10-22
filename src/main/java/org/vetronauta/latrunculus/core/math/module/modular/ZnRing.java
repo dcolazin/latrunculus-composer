@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -38,10 +38,10 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements NumberRing, Modular {
+public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing, Modular {
 
     private ZnRing(int modulus) {
-        super(new ArithmeticModulus(0, modulus), new ArithmeticModulus(1, modulus));
+        super(new Modulus(0, modulus), new Modulus(1, modulus));
         this.modulus = modulus;
     }
 
@@ -54,7 +54,7 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
     }
 
     @Override
-    public ArithmeticMultiModule<ArithmeticModulus> getNullModule() {
+    public ArithmeticMultiModule<Modulus> getNullModule() {
         return new ArithmeticMultiModule<>(this, 0);
     }
 
@@ -64,11 +64,11 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
             return false;
         }
         ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-        return number instanceof ArithmeticModulus && (((ArithmeticModulus) number).getModulus() == modulus);
+        return number instanceof Modulus && (((Modulus) number).getModulus() == modulus);
     }
 
     @Override
-    public FreeModule<?, ArithmeticElement<ArithmeticModulus>> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<Modulus>> getFreeModule(int dimension) {
         return ArithmeticMultiModule.make(this, dimension);
     }
 
@@ -96,7 +96,7 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
     }
 
     
-    public ArithmeticElement<ArithmeticModulus> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<Modulus> createElement(List<ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return elements.get(0).cast(this);
         }
@@ -105,7 +105,7 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
         }
     }
 
-    public ArithmeticElement<ArithmeticModulus> cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<Modulus> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
@@ -115,8 +115,8 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
         return null;
     }
 
-    public ArithmeticElement<ArithmeticModulus> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new ArithmeticModulus(element.getValue().intValue(), modulus));
+    public ArithmeticElement<Modulus> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new Modulus(element.getValue().intValue(), modulus));
     }
 
     public int getModulus() {
@@ -134,10 +134,10 @@ public final class ZnRing extends ArithmeticRing<ArithmeticModulus> implements N
     }
 
     
-    public ArithmeticElement<ArithmeticModulus> parseString(String s) {
+    public ArithmeticElement<Modulus> parseString(String s) {
     	try {
     		int value = Integer.parseInt(TextUtils.unparenthesize(s));
-        	return new ArithmeticElement<>(new ArithmeticModulus(value, modulus));
+        	return new ArithmeticElement<>(new Modulus(value, modulus));
     	}
     	catch (NumberFormatException e) {
     		return null;

@@ -3,9 +3,9 @@ package org.vetronauta.latrunculus.core.math.arith;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -42,7 +42,7 @@ public class ArithmeticParsingUtils {
         if (parsingClass.equals(Rational.class)) {
             return parseRational(s);
         }
-        if (parsingClass.equals(ArithmeticDouble.class)) {
+        if (parsingClass.equals(Real.class)) {
             return parseArithmeticDouble(s);
         }
         throw new NumberFormatException(String.format("parsing class %s is not supported", parsingClass));
@@ -57,13 +57,13 @@ public class ArithmeticParsingUtils {
             return ArithmeticInteger.class;
         }
         if (ring instanceof ZnRing) {
-            return ArithmeticModulus.class;
+            return Modulus.class;
         }
         if (ring instanceof QRing) {
             return Rational.class;
         }
         if (ring instanceof RRing) {
-            return ArithmeticDouble.class;
+            return Real.class;
         }
         if (ring instanceof CRing) {
             return Complex.class;
@@ -114,8 +114,8 @@ public class ArithmeticParsingUtils {
         }
     }
 
-    public static ArithmeticDouble parseArithmeticDouble(String s) {
-        return new ArithmeticDouble(Double.parseDouble(s));
+    public static Real parseArithmeticDouble(String s) {
+        return new Real(Double.parseDouble(s));
     }
 
     public static ArithmeticRing<?> parseRing(String s) {

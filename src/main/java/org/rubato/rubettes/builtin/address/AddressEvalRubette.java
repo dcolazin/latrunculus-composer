@@ -39,9 +39,9 @@ import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
@@ -803,7 +803,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
                 Complex c = ((ArithmeticElement<Complex>)m).getValue();
-                elements0.add(ArithmeticMultiElement.make(RRing.ring, new ArithmeticDouble[] { new ArithmeticDouble(c.getReal()), new ArithmeticDouble(c.getImag()) }));
+                elements0.add(ArithmeticMultiElement.make(RRing.ring, new Real[] { new Real(c.getReal()), new Real(c.getImag()) }));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
             if (select != null) {
@@ -821,14 +821,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         Ring<?> moduleRing = module.getRing();
         if (moduleRing instanceof RRing) {
-            ArithmeticMultiModule<ArithmeticDouble> m = (ArithmeticMultiModule<ArithmeticDouble>)module;
+            ArithmeticMultiModule<Real> m = (ArithmeticMultiModule<Real>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     RConfiguration config = (RConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        ArithmeticDouble[] p = new ArithmeticDouble[] { new ArithmeticDouble(config.px.get(i)), new ArithmeticDouble(config.py.get(i)) };
+                        Real[] p = new Real[] { new Real(config.px.get(i)), new Real(config.py.get(i)) };
                         elementList.addElement(ArithmeticMultiElement.make(RRing.ring, p));
                     }
                 }
@@ -865,7 +865,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZnRing) {
-            ArithmeticMultiModule<ArithmeticModulus> m = (ArithmeticMultiModule<ArithmeticModulus>) module;
+            ArithmeticMultiModule<Modulus> m = (ArithmeticMultiModule<Modulus>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, m.getRing(), elementList.getElements());
                 elementList.clear();
@@ -874,7 +874,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     for (int i = 0; i < config.getSize(); i++) {
                         int modulus = m.getRing().getOne().getValue().getModulus(); //TODO ugly way to get the modulus
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) };
-                        List<ArithmeticModulus> pList = Arrays.stream(p).mapToObj(elementP -> new ArithmeticModulus(elementP, modulus)).collect(Collectors.toList());
+                        List<Modulus> pList = Arrays.stream(p).mapToObj(elementP -> new Modulus(elementP, modulus)).collect(Collectors.toList());
                         elementList.addElement(ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus), pList));
                     }
                 }

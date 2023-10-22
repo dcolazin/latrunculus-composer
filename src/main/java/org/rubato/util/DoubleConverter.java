@@ -19,9 +19,9 @@
 
 package org.rubato.util;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -76,25 +76,25 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         }
     }
 
-    private static class ZnConverter extends DoubleConverter<ArithmeticElement<ArithmeticModulus>> {
+    private static class ZnConverter extends DoubleConverter<ArithmeticElement<Modulus>> {
         public ZnConverter(int modulus) {
             this.modulus = modulus;
         }
-        public double toDouble(ArithmeticElement<ArithmeticModulus> x) {
+        public double toDouble(ArithmeticElement<Modulus> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<ArithmeticModulus> fromDouble(double x) {
-            return new ArithmeticElement<>(new ArithmeticModulus((int)Math.round(x), modulus));
+        public ArithmeticElement<Modulus> fromDouble(double x) {
+            return new ArithmeticElement<>(new Modulus((int)Math.round(x), modulus));
         }
         private int modulus;
     }
     
-    private static final DoubleConverter<ArithmeticElement<ArithmeticDouble>> rconverter = new DoubleConverter<ArithmeticElement<ArithmeticDouble>>() {
-        public double toDouble(ArithmeticElement<ArithmeticDouble> x) {
+    private static final DoubleConverter<ArithmeticElement<Real>> rconverter = new DoubleConverter<ArithmeticElement<Real>>() {
+        public double toDouble(ArithmeticElement<Real> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<ArithmeticDouble> fromDouble(double x) {
-            return new ArithmeticElement<>(new ArithmeticDouble(x));
+        public ArithmeticElement<Real> fromDouble(double x) {
+            return new ArithmeticElement<>(new Real(x));
         }
     };
 

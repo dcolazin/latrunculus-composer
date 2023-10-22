@@ -24,9 +24,9 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -469,7 +469,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the modular integer contained in a ZnElement denotator.
      */
     public int getModInteger() {
-        return ((ArithmeticElement<ArithmeticModulus>)getElement()).getValue().intValue();
+        return ((ArithmeticElement<Modulus>)getElement()).getValue().intValue();
     }    
     
     
@@ -477,7 +477,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the double contained in an RElement denotator.
      */
     public double getReal() {
-        return ((ArithmeticElement<ArithmeticDouble>)getElement()).getValue().doubleValue();
+        return ((ArithmeticElement<Real>)getElement()).getValue().doubleValue();
     }
     
     

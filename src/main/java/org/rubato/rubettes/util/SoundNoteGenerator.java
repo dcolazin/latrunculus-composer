@@ -2,7 +2,7 @@ package org.rubato.rubettes.util;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
@@ -167,10 +167,10 @@ public class SoundNoteGenerator extends NoteGenerator {
 		ArithmeticElement<Rational> modulatorPitch = new ArithmeticElement<>(new Rational(relativeFrequency));
 		ArithmeticElement<ArithmeticInteger> modulatorLoudness = new ArithmeticElement<>(new ArithmeticInteger(relativeAmplitude));
 		List<Denotator> coordinates = new ArrayList<>();
-		coordinates.add(this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new ArithmeticDouble(0))));
+		coordinates.add(this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new Real(0))));
 		coordinates.add(this.createSimpleDenotator(this.pitchForm, modulatorPitch));
 		coordinates.add(this.createSimpleDenotator(this.loudnessForm, modulatorLoudness));
-		coordinates.add(this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new ArithmeticDouble(0))));
+		coordinates.add(this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new Real(0))));
 		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
 		coordinates.add(this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
 		coordinates.add(this.createEmptyModulators());

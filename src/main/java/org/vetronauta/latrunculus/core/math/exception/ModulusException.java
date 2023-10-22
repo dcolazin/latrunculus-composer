@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.exception;
 
 import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 
 /**
  * @author vetronauta
@@ -29,7 +29,7 @@ public class ModulusException extends LatrunculusRuntimeException {
 
     private static final String ERROR_MESSAGE = "Trying to perform operation between %s and %s";
 
-    public ModulusException(ArithmeticModulus a, ArithmeticModulus b) {
+    public ModulusException(Modulus a, Modulus b) {
         super(String.format(ERROR_MESSAGE, a, b));
     }
 

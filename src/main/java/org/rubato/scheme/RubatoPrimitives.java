@@ -21,9 +21,9 @@ package org.rubato.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
@@ -756,13 +756,13 @@ abstract class RubatoPrimitives {
     protected static SExpr moduleElementToSExpr(ModuleElement element) {
         if (element instanceof ArithmeticElement) {
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-            if (number instanceof ArithmeticInteger || number instanceof ArithmeticModulus) {
+            if (number instanceof ArithmeticInteger || number instanceof Modulus) {
                 return new SInteger(number.intValue());
             }
             if (number instanceof Rational) {
                 return SRational.make((Rational) number);
             }
-            if (number instanceof ArithmeticDouble) {
+            if (number instanceof Real) {
                 return SReal.make(number.doubleValue());
             }
             if (number instanceof Complex) {
@@ -797,7 +797,7 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
-            return new ArithmeticElement<>(new ArithmeticDouble(((SReal)sexpr).getDouble()));
+            return new ArithmeticElement<>(new Real(((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
             return new ArithmeticElement<>(((SComplex)sexpr).getComplex());
