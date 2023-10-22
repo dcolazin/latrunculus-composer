@@ -21,10 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,27 +33,9 @@ import java.util.List;
  */
 public final class ZnStringProperFreeElement extends ArithmeticStringMultiElement<ZnStringElement,ArithmeticModulus> {
 
-    //TODO various consistency checks for modulus
-
-    private final int modulus;
-
-    public static FreeElement<?, ZnStringElement> make(List<RingString<ArithmeticModulus>> v, int modulus) {
-        if (v == null || v.isEmpty()) {
-            return new ZnStringProperFreeElement(new ArrayList<>(0), modulus);
-        }
-        else if (v.size() == 1) {
-            return new ZnStringElement(v.get(0), modulus);
-        }
-        return new ZnStringProperFreeElement(v, modulus);
-    }
-
-    public int getModulus() {
-        return modulus;
-    }
 
     private ZnStringProperFreeElement(List<RingString<ArithmeticModulus>> value, int modulus) {
         super(ZnRing.make(modulus), value);
-        this.modulus = modulus;
     }
 
 }

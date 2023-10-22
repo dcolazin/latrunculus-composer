@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.generic;
 
-import lombok.NonNull;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -38,6 +37,8 @@ import java.util.List;
 public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>>
         extends ProperFreeElement<ArithmeticStringMultiElement<T,N>,T> {
 
+    //TODO various consistency checks for modulus
+
     private final List<RingString<N>> value;
     private final ArithmeticRing<N> ring;
     private Module module;
@@ -47,18 +48,16 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         this.value = value;
     }
 
-    public static <Y extends ArithmeticStringElement<Y,X>, X extends ArithmeticNumber<X>> FreeElement<?, Y> make(List<RingString<X>> v) {
-        assert(v != null);
-        return null; //TODO!!!
-        /*
+    public static <Y extends ArithmeticStringElement<Y,X>, X extends ArithmeticNumber<X>> FreeElement<?, Y> make(ArithmeticRing<X> ring, List<RingString<X>> v) {
+        assert(v != null && ring != null);
         if (v.isEmpty()) {
-            return new ArithmeticStringMultiElement<>(new ArrayList<>());
+            return new ArithmeticStringMultiElement<>(ring, new ArrayList<>());
         }
         else if (v.size() == 1) {
             return new ArithmeticStringElement<>(v.get(0));
         }
-        return new ArithmeticStringMultiElement<>(StringRingRepository.getRing(v.get(0)), v);
-         */
+        return new ArithmeticStringMultiElement<>(ring, v);
+
     }
 
     @Override
@@ -151,7 +150,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         for (int i = minlen; i < n; i++) {
             values.add(RingString.getZero());
         }
-        return make(values);
+        return make(ring, values);
     }
 
     @Override

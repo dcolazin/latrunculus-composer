@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
             return this;
         }
         else if (n == 0) {
-            return QStringProperFreeElement.make(new ArrayList<>());
+            return ArithmeticStringMultiElement.make(QRing.ring, new ArrayList<>());
         }
         else {
             List<RingString<Rational>> values = new ArrayList<>(n);
@@ -79,7 +80,7 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
             for (int i = 1; i < n; i++) {
                 values.add(new RingString<>());
             }
-            return QStringProperFreeElement.make(values);
+            return ArithmeticStringMultiElement.make(QRing.ring, values);
         }
     }
 

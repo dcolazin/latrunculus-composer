@@ -61,22 +61,22 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
     
     
-    public ZStringProperFreeElement getZero() {
+    public ArithmeticStringMultiElement getZero() {
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             res.add(RingString.getZero());
         }
-        return (ZStringProperFreeElement) ZStringProperFreeElement.make(res); //TODO do not cast
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ZRing.ring, res); //TODO do not cast
     }
     
     
-    public ZStringProperFreeElement getUnitElement(int i) {
+    public ArithmeticStringMultiElement getUnitElement(int i) {
         List<RingString<ArithmeticInteger>> res = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
             res.add(RingString.getZero());
         }
         res.set(i, RingString.getOne());
-        return (ZStringProperFreeElement) ZStringProperFreeElement.make(res);
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ZRing.ring, res);
     }
     
 
@@ -122,7 +122,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
 
     
-    public ZStringProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticStringMultiElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
@@ -137,11 +137,11 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
                 return null;
             }
         }
-        return (ZStringProperFreeElement) ZStringProperFreeElement.make(values);
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ZRing.ring, values);
     }
     
    
-    public ZStringProperFreeElement cast(ModuleElement element) {
+    public ArithmeticStringMultiElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             ZStringRing ring = ZStringRing.ring;
             List<ModuleElement<?,?>> elementList = new LinkedList<>();
@@ -166,10 +166,10 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
 
     
-    public ZStringProperFreeElement parseString(String string) {
+    public ArithmeticStringMultiElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (ZStringProperFreeElement) ZStringProperFreeElement.make(new ArrayList<>());
+            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ZRing.ring, new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -182,7 +182,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
                 for (int i = 0; i < strings.length; i++) {
                     zstrings.add(ZStringRing.parse(strings[i]));
                 }
-                return (ZStringProperFreeElement) ZStringProperFreeElement.make(zstrings);
+                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ZRing.ring, zstrings);
             }            
         }
         return null;

@@ -21,10 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,21 +32,6 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public final class RStringProperFreeElement extends ArithmeticStringMultiElement<RStringElement,ArithmeticDouble> {
-
-    public static final RStringProperFreeElement nullElement = new RStringProperFreeElement(new ArrayList<>());
-
-    public static FreeElement<?, RStringElement> make(List<RingString<ArithmeticDouble>> v) {
-        assert(v != null);
-        if (v.isEmpty()) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return new RStringElement(v.get(0));
-        }
-        else {
-            return new RStringProperFreeElement(v);
-        }
-    }
 
     private RStringProperFreeElement(List<RingString<ArithmeticDouble>> value) {
         super(RRing.ring, value);

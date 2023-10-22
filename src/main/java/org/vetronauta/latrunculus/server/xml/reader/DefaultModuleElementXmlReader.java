@@ -41,6 +41,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
@@ -561,7 +565,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             for (ZStringElement ringElements : elements) {
                 coefficients.add(ringElements.getValue());
             }
-            return ZStringProperFreeElement.make(coefficients);
+            return ArithmeticStringMultiElement.make(ZRing.ring, coefficients);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
@@ -603,7 +607,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             for (ZnStringElement ringElements : elements) {
                 coefficients.add(ringElements.getValue());
             }
-            return ZnStringProperFreeElement.make(coefficients, modulus0);
+            return ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus0), coefficients);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
@@ -644,7 +648,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             for (QStringElement ringElements : elements) {
                 coefficients.add(ringElements.getValue());
             }
-            return QStringProperFreeElement.make(coefficients);
+            return ArithmeticStringMultiElement.make(QRing.ring, coefficients);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
@@ -685,7 +689,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             for (RStringElement ringElements : elements) {
                 coefficients.add(ringElements.getValue());
             }
-            return RStringProperFreeElement.make(coefficients);
+            return ArithmeticStringMultiElement.make(RRing.ring, coefficients);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);

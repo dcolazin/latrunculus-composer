@@ -60,22 +60,22 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
     
     
-    public RStringProperFreeElement getZero() {
+    public ArithmeticStringMultiElement getZero() {
         List<RingString<ArithmeticDouble>> res = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             res.add(RingString.getZero());
         }
-        return (RStringProperFreeElement) RStringProperFreeElement.make(res); //TODO not cast
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(RRing.ring, res); //TODO not cast
     }
     
     
-    public RStringProperFreeElement getUnitElement(int i) {
+    public ArithmeticStringMultiElement getUnitElement(int i) {
         List<RingString<ArithmeticDouble>> v = new ArrayList<>(getDimension());
         for (int j = 0; j < getDimension(); j++) {
             v.add(RingString.getZero());
         }
         v.set(i, RingString.getOne());
-        return (RStringProperFreeElement) RStringProperFreeElement.make(v);
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(RRing.ring, v);
     }
     
 
@@ -121,7 +121,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
 
     
-    public RStringProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticStringMultiElement createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
@@ -138,11 +138,11 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
             }
         }
 
-        return (RStringProperFreeElement) RStringProperFreeElement.make(values);
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(RRing.ring, values);
     }
     
    
-    public RStringProperFreeElement cast(ModuleElement element) {
+    public ArithmeticStringMultiElement cast(ModuleElement element) {
         if (element.getLength() > getDimension()) {
             RStringRing ring = RStringRing.ring;
             List<ModuleElement<?,?>> elementList = new LinkedList<>();
@@ -167,10 +167,10 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
 
     
-    public RStringProperFreeElement parseString(String string) {
+    public ArithmeticStringMultiElement parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (RStringProperFreeElement) RStringProperFreeElement.make(new ArrayList<>());
+            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(RRing.ring, new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -183,7 +183,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
                 for (int i = 0; i < strings.length; i++) {
                     rstrings.add(RStringRing.parse(strings[i]));
                 }
-                return (RStringProperFreeElement) RStringProperFreeElement.make(rstrings);
+                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(RRing.ring, rstrings);
             }            
         }
         else {

@@ -21,10 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,21 +32,6 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public final class QStringProperFreeElement extends ArithmeticStringMultiElement<QStringElement,Rational> {
-
-    public static final QStringProperFreeElement nullElement = new QStringProperFreeElement(new ArrayList<>());
-
-    public static FreeElement<?, QStringElement> make(List<RingString<Rational>> v) {
-        assert(v != null);
-        if (v.isEmpty()) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return new QStringElement(v.get(0));
-        }
-        else {
-            return new QStringProperFreeElement(v);
-        }
-    }
 
     private QStringProperFreeElement(List<RingString<Rational>> value) {
         super(QRing.ring, value);

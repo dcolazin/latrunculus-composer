@@ -21,10 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,21 +33,6 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public final class ZStringProperFreeElement extends ArithmeticStringMultiElement<ZStringElement,ArithmeticInteger> {
-
-    public static ZStringProperFreeElement nullElement = new ZStringProperFreeElement(new ArrayList<>());
-
-    public static FreeElement<?,ZStringElement> make(List<RingString<ArithmeticInteger>> v) {
-        assert(v != null);
-        if (v.isEmpty()) {
-            return nullElement;
-        }
-        else if (v.size() == 1) {
-            return new ZStringElement(v.get(0));
-        }
-        else {
-            return new ZStringProperFreeElement(v);
-        }
-    }
 
     private ZStringProperFreeElement(List<RingString<ArithmeticInteger>> value) {
         super(ZRing.ring, value);
