@@ -19,12 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
-import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 
 import java.util.ArrayList;
@@ -54,30 +51,8 @@ public final class ZStringProperFreeElement extends ArithmeticStringMultiElement
         }
     }
 
-    public FreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
-            for (int i = 0; i < minlen; i++) {
-                values.add(getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return ZStringProperFreeElement.make(values);
-        }
-    }
-
     private ZStringProperFreeElement(List<RingString<ArithmeticInteger>> value) {
         super(ZRing.ring, value);
-    }
-
-    @Override
-    protected ArithmeticStringMultiElement<ZStringElement, ArithmeticInteger> valueOf(@NonNull List<RingString<ArithmeticInteger>> value) {
-        return new ZStringProperFreeElement(value);
     }
 
 }

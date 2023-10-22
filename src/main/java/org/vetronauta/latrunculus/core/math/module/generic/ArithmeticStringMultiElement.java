@@ -28,7 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +61,6 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
          */
     }
 
-    //TODO is just a temp method
-    protected ArithmeticStringMultiElement<T,N> valueOf(@NonNull List<RingString<N>> value) {
-        return null;
-    }
-
     @Override
     public boolean isZero() {
         RingString<N> zero = RingString.getZero();
@@ -85,7 +79,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
             for (int i = 0; i < getLength(); i++) {
                 res.add(value.get(i).sum(element.value.get(i)));
             }
-            return valueOf(res);
+            return new ArithmeticStringMultiElement<>(ring, res);
         }
         throw new DomainException(this.getModule(), element.getModule());
     }
@@ -107,7 +101,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
             for (int i = 0; i < getLength(); i++) {
                 res.add(value.get(i).difference(element.value.get(i)));
             }
-            return valueOf(res);
+            return new ArithmeticStringMultiElement<>(ring, res);
         }
         throw new DomainException(this.getModule(), element.getModule());
     }
@@ -129,7 +123,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
             for (int i = 0; i < getLength(); i++) {
                 res.add(value.get(i).product(element.value.get(i)));
             }
-            return valueOf(res);
+            return new ArithmeticStringMultiElement<>(ring, res);
         }
         throw new DomainException(this.getModule(), element.getModule());
     }
@@ -146,7 +140,18 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
 
     @Override
     public FreeElement<?, T> resize(int n) {
-        return null; //TODO!!!
+        if (n == getLength()) {
+            return this;
+        }
+        int minlen = Math.min(n, getLength());
+        List<RingString<N>> values = new ArrayList<>(n);
+        for (int i = 0; i < minlen; i++) {
+            values.add(getValue(i));
+        }
+        for (int i = minlen; i < n; i++) {
+            values.add(RingString.getZero());
+        }
+        return make(values);
     }
 
     @Override
@@ -155,7 +160,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).negated());
         }
-        return valueOf(res);
+        return new ArithmeticStringMultiElement<>(ring, res);
     }
 
     @Override
@@ -194,7 +199,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).product(val));
         }
-        return valueOf(res);
+        return new ArithmeticStringMultiElement<>(ring, res);
     }
 
     @Override
@@ -238,7 +243,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         for (int i = 0; i < getLength(); i++) {
             v.add(value.get(i).deepCopy());
         }
-        return valueOf(v);
+        return new ArithmeticStringMultiElement<>(ring, v);
     }
 
     @Override

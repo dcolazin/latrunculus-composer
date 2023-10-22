@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -51,30 +50,8 @@ public final class QStringProperFreeElement extends ArithmeticStringMultiElement
         }
     }
 
-    public FreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            List<RingString<Rational>> values = new ArrayList<>(n);
-            for (int i = 0; i < minlen; i++) {
-                values.add( getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return QStringProperFreeElement.make(values);
-        }
-    }
-
     private QStringProperFreeElement(List<RingString<Rational>> value) {
         super(QRing.ring, value);
-    }
-
-    @Override
-    protected ArithmeticStringMultiElement<QStringElement, Rational> valueOf(@NonNull List<RingString<Rational>> value) {
-        return new QStringProperFreeElement(value);
     }
 
 }

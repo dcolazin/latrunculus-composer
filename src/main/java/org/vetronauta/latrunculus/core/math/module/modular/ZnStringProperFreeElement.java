@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -50,31 +49,8 @@ public final class ZnStringProperFreeElement extends ArithmeticStringMultiElemen
         return new ZnStringProperFreeElement(v, modulus);
     }
 
-    @Override
-    protected ArithmeticStringMultiElement<ZnStringElement, ArithmeticModulus> valueOf(@NonNull List<RingString<ArithmeticModulus>> value) {
-        return new ZnStringProperFreeElement(value, value.get(0).getObjectOne().getModulus());
-    }
-
     public int getModulus() {
         return modulus;
-    }
-    
-    
-    public FreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        }
-        else {
-            int minlen = Math.min(n, getLength());
-            List<RingString<ArithmeticModulus>> values = new ArrayList<>(n);
-            for (int i = 0; i < minlen; i++) {
-                values.add(getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return ZnStringProperFreeElement.make(values, modulus);
-        }
     }
 
     private ZnStringProperFreeElement(List<RingString<ArithmeticModulus>> value, int modulus) {

@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -51,29 +50,8 @@ public final class RStringProperFreeElement extends ArithmeticStringMultiElement
         }
     }
 
-    public FreeElement resize(int n) {
-        if (n == getLength()) {
-            return this;
-        } else {
-            int minlen = Math.min(n, getLength());
-            List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
-            for (int i = 0; i < minlen; i++) {
-                values.add(getValue(i));
-            }
-            for (int i = minlen; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return RStringProperFreeElement.make(values);
-        }
-    }
-
     private RStringProperFreeElement(List<RingString<ArithmeticDouble>> value) {
         super(RRing.ring, value);
-    }
-
-    @Override
-    protected ArithmeticStringMultiElement<RStringElement, ArithmeticDouble> valueOf(@NonNull List<RingString<ArithmeticDouble>> value) {
-        return new RStringProperFreeElement(value);
     }
 
 }
