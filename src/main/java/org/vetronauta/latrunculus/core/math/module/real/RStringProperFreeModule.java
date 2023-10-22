@@ -38,8 +38,7 @@ import java.util.List;
 
 /**
  * Free modules over RStringRing.
- * @see RStringProperFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<RStringElement,ArithmeticDouble>,RStringElement> {
@@ -105,8 +104,9 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof RStringProperFreeElement &&
-                element.getLength() == getDimension());
+        return (element instanceof ArithmeticStringMultiElement &&
+                element.getLength() == getDimension() &&
+                element.getModule().getRing().equals(getRing()));
     }
 
 

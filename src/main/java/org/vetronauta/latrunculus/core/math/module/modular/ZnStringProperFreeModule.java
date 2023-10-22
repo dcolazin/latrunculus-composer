@@ -39,8 +39,7 @@ import java.util.List;
 
 /**
  * Free modules over ZnStringRing.
- * @see ZnStringProperFreeElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ZnStringElement,ArithmeticModulus>,ZnStringElement> {
@@ -101,9 +100,9 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof ZnStringProperFreeElement &&
+        return (element instanceof ArithmeticStringMultiElement &&
                 element.getLength() == getDimension() &&
-                (element).getModule().equals(this));
+                (element).getModule().equals(this) );
     }
 
 

@@ -105,8 +105,9 @@ public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticSt
 
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof QStringProperFreeElement &&
-                element.getLength() == getDimension());
+        return (element instanceof ArithmeticStringMultiElement &&
+                element.getLength() == getDimension()) &&
+                element.getModule().getRing().equals(getRing());
     }
 
 

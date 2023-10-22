@@ -41,16 +41,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
@@ -60,9 +55,8 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElem
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
@@ -112,17 +106,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         if (RStringElement.class.isAssignableFrom(clazz)) {
             return readRStringElement(element, clazz, reader);
         }
-        if (ZStringProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readZStringProperFreeElement(element, clazz, reader);
-        }
-        if (ZnStringProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readZnStringProperFreeElement(element, clazz, reader);
-        }
-        if (QStringProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readQStringProperFreeElement(element, clazz, reader);
-        }
-        if (RStringProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readRStringProperFreeElement(element, clazz, reader);
+        if (ArithmeticStringMultiElement.class.isAssignableFrom(clazz)) {
+            return readArithmeticStringMultiElement(element, clazz, reader);
         }
         if (DirectSumElement.class.isAssignableFrom(clazz)) {
             return readDirectSumElement(element, clazz, reader);
@@ -532,169 +517,47 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    private ModuleElement readZStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readArithmeticStringMultiElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ZStringElement> elements = new LinkedList<ZStringElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ZStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ZStringElement");
-                return null;
-            }
-            ZStringElement ringElement = (ZStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ZStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ZStringElement");
-                    return null;
-                }
-                ringElement = (ZStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            List<RingString<ArithmeticInteger>> coefficients = new ArrayList<>(elements.size());
-            for (ZStringElement ringElements : elements) {
-                coefficients.add(ringElements.getValue());
-            }
-            return ArithmeticStringMultiElement.make(ZRing.ring, coefficients);
-        }
-        else {
+        if (childElement == null) {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
             return null;
         }
+        List<ArithmeticStringElement> elements = new LinkedList<>();
+        ModuleElement moduleElement = reader.parseModuleElement(childElement);
+        if (moduleElement == null) {
+            return null;
+        }
+        if (!(moduleElement instanceof ArithmeticStringElement)) {
+            reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ArithmeticStringElement");
+            return null;
+        }
+        ArithmeticStringElement ringElement = (ArithmeticStringElement) moduleElement;
+        elements.add(ringElement);
+        Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
+        while (next != null) {
+            moduleElement = reader.parseModuleElement(next);
+            if (moduleElement == null) {
+                return null;
+            }
+            if (!(moduleElement instanceof ArithmeticStringElement)) {
+                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ArithmeticStringElement");
+                return null;
+            }
+            ringElement = (ArithmeticStringElement) moduleElement;
+            elements.add(ringElement);
+            next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
+        }
+        List<RingString<?>> coefficients = new ArrayList<>(elements.size());
+        for (ArithmeticStringElement ringElements : elements) {
+            coefficients.add(ringElements.getValue());
+        }
+        return makeArithmeticStringMultiElement(ArithmeticRingRepository.getRing(new ArithmeticElement<>(ringElement.getValue().getObjectOne())), coefficients);
     }
 
-    private ModuleElement readZnStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ZnStringElement> elements = new LinkedList<ZnStringElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ZnStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ZnStringElement");
-                return null;
-            }
-            ZnStringElement ringElement = (ZnStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ZnStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ZnStringElement");
-                    return null;
-                }
-                ringElement = (ZnStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            List<RingString<ArithmeticModulus>> coefficients = new ArrayList<>(elements.size());
-            for (ZnStringElement ringElements : elements) {
-                coefficients.add(ringElements.getValue());
-            }
-            return ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus0), coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
-    }
-
-    private ModuleElement readQStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<QStringElement> elements = new LinkedList<>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof QStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "QStringElement");
-                return null;
-            }
-            QStringElement ringElement = (QStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof QStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "QStringElement");
-                    return null;
-                }
-                ringElement = (QStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            List<RingString<Rational>> coefficients = new ArrayList<>(elements.size());
-            for (QStringElement ringElements : elements) {
-                coefficients.add(ringElements.getValue());
-            }
-            return ArithmeticStringMultiElement.make(QRing.ring, coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
-    }
-
-    private ModuleElement readRStringProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<RStringElement> elements = new LinkedList<RStringElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof RStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "RStringElement");
-                return null;
-            }
-            RStringElement ringElement = (RStringElement)moduleElement;
-            elements.add(ringElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof RStringElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "RStringElement");
-                    return null;
-                }
-                ringElement = (RStringElement)moduleElement;
-                elements.add(ringElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            List<RingString<ArithmeticDouble>> coefficients = new ArrayList<>(elements.size());
-            for (RStringElement ringElements : elements) {
-                coefficients.add(ringElements.getValue());
-            }
-            return ArithmeticStringMultiElement.make(RRing.ring, coefficients);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
+    private <N extends ArithmeticNumber<N>> ModuleElement makeArithmeticStringMultiElement(ArithmeticRing<N> ring, List<? extends RingString<?>> coefficients) {
+        return ArithmeticStringMultiElement.make(ring, (List<RingString<N>>) coefficients);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

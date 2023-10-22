@@ -29,14 +29,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
@@ -81,12 +80,10 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
@@ -202,10 +199,7 @@ public class Dispatcher {
 
         addModuleElement(ArithmeticMultiElement.class);
         
-        addModuleElement(ZStringProperFreeElement.class);
-        addModuleElement(ZnStringProperFreeElement.class);
-        addModuleElement(RStringProperFreeElement.class);
-        addModuleElement(QStringProperFreeElement.class);
+        addModuleElement(ArithmeticStringMultiElement.class);
 
         addModuleElement(PolynomialElement.class);
         addModuleElement(PolynomialProperFreeElement.class);
