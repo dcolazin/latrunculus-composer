@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -42,11 +43,11 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<QStringElement,Rational>,QStringElement> {
+public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<Rational>, ArithmeticStringElement<Rational>> {
 
     public static final QStringProperFreeModule nullModule = new QStringProperFreeModule(0);
 
-    public static FreeModule<?,QStringElement> make(int dimension) {
+    public static FreeModule<?,ArithmeticStringElement<Rational>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -131,7 +132,7 @@ public final class QStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
             if (object instanceof QStringElement) {
-                values.add(((QStringElement) object).getValue());
+                values.add(((ArithmeticStringElement<Rational>) object).getValue());
             }
             else {
                 return null;

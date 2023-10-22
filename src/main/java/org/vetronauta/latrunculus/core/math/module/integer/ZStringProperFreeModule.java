@@ -22,12 +22,12 @@ package org.vetronauta.latrunculus.core.math.module.integer;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -42,11 +42,11 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ZStringElement,ArithmeticInteger>,ZStringElement> {
+public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ArithmeticInteger>,ArithmeticStringElement<ArithmeticInteger>> {
 
     public static final ZStringProperFreeModule nullModule = new ZStringProperFreeModule(0);
 
-    public static FreeModule<?, ZStringElement> make(int dimension) {
+    public static FreeModule<?, ArithmeticStringElement<ArithmeticInteger>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -121,7 +121,7 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
     }
 
     
-    public ArithmeticStringMultiElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticStringMultiElement<ArithmeticInteger> createElement(List<ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
@@ -130,8 +130,8 @@ public final class ZStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         List<RingString<ArithmeticInteger>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             Object object = iter.next();
-            if (object instanceof ZStringElement) {
-                values.add(((ZStringElement)object).getValue());
+            if (object instanceof ArithmeticStringElement) {
+                values.add(((ArithmeticStringElement<ArithmeticInteger>)object).getValue());
             } else {
                 return null;
             }

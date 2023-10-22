@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringEleme
  * 
  * @author Gérard Milmeister
  */
-public final class QStringElement extends ArithmeticStringElement<QStringElement,Rational> {
+public final class QStringElement extends ArithmeticStringElement<Rational> {
 
     /**
      * Constructs a QStringElement from a QString <code>value</code>.
@@ -47,11 +47,6 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
      */
     public QStringElement(String value) {
         super(value);
-    }
-
-    @Override
-    protected QStringElement valueOf(@NonNull RingString<Rational> value) {
-        return new QStringElement(value);
     }
 
     public QStringElement(EntryList<String,Rational> entryList) {

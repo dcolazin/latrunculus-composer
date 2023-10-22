@@ -54,24 +54,24 @@ public class StringRingRepository {
         return modRingMap.computeIfAbsent(modulus, ZnStringRing::make);
     }
 
-    public static <S extends ArithmeticStringElement<S,N>, N extends ArithmeticNumber<N>> StringRing<S> getRing(ArithmeticStringElement<S,N> element) {
+    public static <N extends ArithmeticNumber<N>> StringRing<ArithmeticStringElement<N>> getRing(ArithmeticStringElement<N> element) {
         ArithmeticNumber<N> number = element.getValue().getObjectOne();
         if (number instanceof ArithmeticInteger) {
-            return (StringRing<S>) ZStringRing.ring;
+            return (StringRing) ZStringRing.ring;
         }
         if (number instanceof Rational) {
-            return (StringRing<S>) QStringRing.ring;
+            return (StringRing) QStringRing.ring;
         }
         if (number instanceof ArithmeticDouble) {
-            return (StringRing<S>) RStringRing.ring;
+            return (StringRing) RStringRing.ring;
         }
         if (number instanceof ArithmeticModulus) {
-            return (StringRing<S>) getModulusRing(((ArithmeticModulus) number).getModulus());
+            return (StringRing) getModulusRing(((ArithmeticModulus) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }
 
-    public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getBaseRing(ArithmeticStringElement<?,N> element) {
+    public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getBaseRing(ArithmeticStringElement<N> element) {
         ArithmeticNumber<N> number = element.getValue().getObjectOne();
         if (number instanceof ArithmeticInteger) {
             return (ArithmeticRing<N>) ZRing.ring;

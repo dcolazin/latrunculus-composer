@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -41,11 +42,11 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<RStringElement,ArithmeticDouble>,RStringElement> {
+public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ArithmeticDouble>, ArithmeticStringElement<ArithmeticDouble>> {
 
     public static final RStringProperFreeModule nullModule = new RStringProperFreeModule(0);
 
-    public static FreeModule<?, RStringElement> make(int dimension) {
+    public static FreeModule<?, ArithmeticStringElement<ArithmeticDouble>> make(int dimension) {
         dimension = Math.max(dimension, 0);
         if (dimension == 0) {
             return nullModule;
@@ -131,7 +132,7 @@ public final class RStringProperFreeModule extends ProperFreeModule<ArithmeticSt
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof RStringElement) {
-                values.add(((RStringElement)object).getValue());
+                values.add(((ArithmeticStringElement<ArithmeticDouble>)object).getValue());
             }
             else {
                 return null;

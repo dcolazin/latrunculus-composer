@@ -32,7 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringEleme
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringElement extends ArithmeticStringElement<ZnStringElement,ArithmeticModulus> {
+public final class ZnStringElement extends ArithmeticStringElement<ArithmeticModulus> {
 
     //TODO various consistency checks for modulus
 
@@ -62,12 +62,6 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         super(entryList);
         this.modulus = modulus;
     }
-
-    @Override
-    protected ZnStringElement valueOf(@NonNull RingString<ArithmeticModulus> value) {
-        return new ZnStringElement(value);
-    }
-
 
     private int extractModulus() {
         return getValue().getFactors().stream().findFirst().map(ArithmeticModulus::getModulus).orElseThrow(ZeroDivisorException::new);

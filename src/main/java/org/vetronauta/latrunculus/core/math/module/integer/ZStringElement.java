@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringEleme
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringElement extends ArithmeticStringElement<ZStringElement,ArithmeticInteger> {
+public final class ZStringElement extends ArithmeticStringElement<ArithmeticInteger> {
 
     /**
      * Constructs a ZStringElement from an ordinary String <code>string</code>.
@@ -49,11 +49,6 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
 
     public ZStringElement(EntryList<String,ArithmeticInteger> entryList) {
         super(entryList);
-    }
-
-    @Override
-    protected ZStringElement valueOf(RingString<ArithmeticInteger> value) {
-        return new ZStringElement(value);
     }
 
 }

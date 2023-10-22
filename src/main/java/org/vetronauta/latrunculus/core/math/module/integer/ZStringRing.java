@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -37,17 +38,19 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class ZStringRing extends StringRing<ZStringElement> {
+public final class ZStringRing extends StringRing<ArithmeticStringElement<ArithmeticInteger>> {
 
     public static final ZStringRing ring = new ZStringRing();
 
-    public ZStringElement getZero() {
-        return new ZStringElement(RingString.getZero());
+    public ArithmeticStringElement<ArithmeticInteger> getZero() {
+        //TODO why doesn't it like with the <> operator?
+        return new ArithmeticStringElement<ArithmeticInteger>(RingString.getZero());
     }
 
     
-    public ZStringElement getOne() {
-        return new ZStringElement(RingString.getOne());
+    public ArithmeticStringElement<ArithmeticInteger> getOne() {
+        //TODO why doesn't it like with the <> operator?
+        return new ArithmeticStringElement<ArithmeticInteger>(RingString.getOne());
     }
 
     
@@ -76,7 +79,7 @@ public final class ZStringRing extends StringRing<ZStringElement> {
     }
 
     
-    public FreeModule<?,ZStringElement> getFreeModule(int dimension) {
+    public FreeModule<?,ArithmeticStringElement<ArithmeticInteger>> getFreeModule(int dimension) {
         return ZStringProperFreeModule.make(dimension);
     }
 
@@ -142,12 +145,12 @@ public final class ZStringRing extends StringRing<ZStringElement> {
         return new RingString<>(words, factors);
     }
 
-    public ZStringElement parseString(String string) {
+    public ArithmeticStringElement<ArithmeticInteger> parseString(String string) {
         try {
-            return new ZStringElement(parse(TextUtils.unparenthesize(string)));
+            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
         }
         catch (Exception e) {
-            return new ZStringElement(string);
+            return null;
         }
     }
     

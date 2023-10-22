@@ -34,8 +34,8 @@ import java.util.List;
 /**
  * @author vetronauta
  */
-public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>>
-        extends ProperFreeElement<ArithmeticStringMultiElement<T,N>,T> {
+public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
+        extends ProperFreeElement<ArithmeticStringMultiElement<N>,ArithmeticStringElement<N>> {
 
     //TODO various consistency checks for modulus
 
@@ -48,7 +48,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         this.value = value;
     }
 
-    public static <Y extends ArithmeticStringElement<Y,X>, X extends ArithmeticNumber<X>> FreeElement<?, Y> make(ArithmeticRing<X> ring, List<RingString<X>> v) {
+    public static <X extends ArithmeticNumber<X>> FreeElement<?, ArithmeticStringElement<X>> make(ArithmeticRing<X> ring, List<RingString<X>> v) {
         assert(v != null && ring != null);
         if (v.isEmpty()) {
             return new ArithmeticStringMultiElement<>(ring, new ArrayList<>());
@@ -72,7 +72,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> sum(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public ArithmeticStringMultiElement<N> sum(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             List<RingString<N>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
@@ -84,7 +84,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public void add(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public void add(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
                 value.get(i).add(element.value.get(i));
@@ -94,7 +94,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> difference(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public ArithmeticStringMultiElement<N> difference(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             List<RingString<N>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
@@ -106,7 +106,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public void subtract(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public void subtract(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
                 value.get(i).subtract(element.value.get(i));
@@ -116,7 +116,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> productCW(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public ArithmeticStringMultiElement<N> productCW(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             List<RingString<N>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
@@ -128,7 +128,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public void multiplyCW(ArithmeticStringMultiElement<T,N> element) throws DomainException {
+    public void multiplyCW(ArithmeticStringMultiElement<N> element) throws DomainException {
         if (getLength() == element.getLength()) {
             for (int i = 0; i < getLength(); i++) {
                 value.get(i).multiply(element.value.get(i));
@@ -138,7 +138,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public FreeElement<?, T> resize(int n) {
+    public FreeElement<?, ArithmeticStringElement<N>> resize(int n) {
         if (n == getLength()) {
             return this;
         }
@@ -154,7 +154,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> negated() {
+    public ArithmeticStringMultiElement<N> negated() {
         List<RingString<N>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
             res.add(value.get(i).negated());
@@ -192,7 +192,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> scaled(T element) {
+    public ArithmeticStringMultiElement<N> scaled(ArithmeticStringElement<N> element) {
         RingString<N> val = element.getValue();
         List<RingString<N>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
@@ -202,7 +202,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public void scale(T element) {
+    public void scale(ArithmeticStringElement<N> element) {
         RingString<N> val = element.getValue();
         for (int i = 0; i < getLength(); i++) {
             value.get(i).multiply(val);
@@ -215,14 +215,14 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringElement<T,N> getComponent(int i) {
+    public ArithmeticStringElement<N> getComponent(int i) {
         assert(i < getLength());
         return new ArithmeticStringElement<>(value.get(i));
     }
 
 
     @Override
-    public ArithmeticStringElement<T,N> getRingElement(int i) {
+    public ArithmeticStringElement<N> getRingElement(int i) {
         assert(i < getLength());
         return new ArithmeticStringElement<>(value.get(i));
     }
@@ -237,7 +237,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
     }
 
     @Override
-    public ArithmeticStringMultiElement<T,N> deepCopy() {
+    public ArithmeticStringMultiElement<N> deepCopy() {
         List<RingString<N>> v = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
             v.add(value.get(i).deepCopy());
@@ -250,7 +250,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         if (!(object instanceof ArithmeticStringMultiElement)) {
             return false;
         }
-        ArithmeticStringMultiElement<?,?> e = (ArithmeticStringMultiElement<?,?>) object;
+        ArithmeticStringMultiElement<?> e = (ArithmeticStringMultiElement<?>) object;
         if (getLength() != e.getLength()) {
             return false;
         }
@@ -303,7 +303,7 @@ public class ArithmeticStringMultiElement<T extends ArithmeticStringElement<T,N>
         if (!(object instanceof ArithmeticStringMultiElement) || ! getModule().equals(object.getModule())) {
             return super.compareTo(object);
         }
-        ArithmeticStringMultiElement<?,N> element = (ArithmeticStringMultiElement<?,N>)object;
+        ArithmeticStringMultiElement<N> element = (ArithmeticStringMultiElement<N>)object;
         int l = getLength()-element.getLength();
         if (l != 0) {
             return l;

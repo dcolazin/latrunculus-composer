@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.rational;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -30,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 import java.util.LinkedList;
 
@@ -39,17 +41,17 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class QStringRing extends StringRing<QStringElement> {
+public final class QStringRing extends StringRing<ArithmeticStringElement<Rational>> {
 
     public static final QStringRing ring = new QStringRing();
 
-    public QStringElement getZero() {
-        return new QStringElement(RingString.getZero());
+    public ArithmeticStringElement<Rational> getZero() {
+        return new ArithmeticStringElement<Rational>(RingString.getZero());
     }
 
     
-    public QStringElement getOne() {
-        return new QStringElement(RingString.getOne());
+    public ArithmeticStringElement<Rational> getOne() {
+        return new ArithmeticStringElement<Rational>(RingString.getOne());
     }
 
     
@@ -128,11 +130,10 @@ public final class QStringRing extends StringRing<QStringElement> {
     }
 
     
-    public QStringElement parseString(String string) {
+    public ArithmeticStringElement<Rational> parseString(String string) {
         try {
-            return new QStringElement(parse(TextUtils.unparenthesize(string)));
-        }
-        catch (Exception e) {
+            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
+        } catch (Exception e) {
             return null;
         }
     }

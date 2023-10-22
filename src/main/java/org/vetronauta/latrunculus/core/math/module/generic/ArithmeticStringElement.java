@@ -44,8 +44,7 @@ import java.util.Set;
  * @author vetronauta
  */
 @Getter
-public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N extends ArithmeticNumber<N>> extends StringElement<T>
-        implements FreeElement<T,T> {
+public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends StringElement<ArithmeticStringElement<N>> {
 
     private final RingString<N> value;
 
@@ -68,11 +67,6 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
         this.value = new RingString<>(value);
     }
 
-    //TODO temp method to be removed when fully refactored
-    protected T valueOf(@NonNull RingString<N> value) {
-        return null;
-    }
-
     public boolean isOne() {
         return value.equals(RingString.getOne());
     }
@@ -81,48 +75,48 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
         return value.equals(RingString.getZero());
     }
 
-    public T sum(T element) {
-        return valueOf(getValue().sum(element.getValue()));
+    public ArithmeticStringElement<N> sum(ArithmeticStringElement<N> element) {
+        return new ArithmeticStringElement<>(getValue().sum(element.getValue()));
     }
 
-    public void add(T element) {
+    public void add(ArithmeticStringElement<N> element) {
         value.add(element.getValue());
     }
 
-    public T difference(T element) {
-        return valueOf(getValue().difference(element.getValue()));
+    public ArithmeticStringElement<N> difference(ArithmeticStringElement<N> element) {
+        return new ArithmeticStringElement<>(getValue().difference(element.getValue()));
     }
 
-    public void subtract(T element) {
+    public void subtract(ArithmeticStringElement<N> element) {
         value.subtract(element.getValue());
     }
 
-    public T negated() {
-        return valueOf(getValue().negated());
+    public ArithmeticStringElement<N> negated() {
+        return new ArithmeticStringElement<>(getValue().negated());
     }
 
     public void negate() {
         value.negate();
     }
 
-    public T scaled(T element) throws DomainException {
+    public ArithmeticStringElement<N> scaled(ArithmeticStringElement<N> element) throws DomainException {
         return product(element);
     }
 
-    public void scale(T element) throws DomainException {
+    public void scale(ArithmeticStringElement<N> element) throws DomainException {
         multiply(element);
     }
 
-    public T product(T element) {
-        return valueOf(getValue().product(element.getValue()));
+    public ArithmeticStringElement<N> product(ArithmeticStringElement<N> element) {
+        return new ArithmeticStringElement<>(getValue().product(element.getValue()));
     }
 
-    public void multiply(T element) {
+    public void multiply(ArithmeticStringElement<N> element) {
         value.multiply(element.getValue());
     }
 
 
-    public T inverse() {
+    public ArithmeticStringElement<N> inverse() {
         throw new InverseException("Inverse of "+this+" does not exist.");
     }
 
@@ -132,7 +126,7 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
     }
 
 
-    public T quotient(T element) throws DomainException, DivisionException {
+    public ArithmeticStringElement<N> quotient(ArithmeticStringElement<N> element) throws DomainException, DivisionException {
         if (this.getClass().isAssignableFrom(element.getClass())) {
             // TODO: implement division where possible
             throw new DivisionException(this, element);
@@ -142,7 +136,7 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
         }
     }
 
-    public void divide(T element) throws DomainException, DivisionException {
+    public void divide(ArithmeticStringElement<N> element) throws DomainException, DivisionException {
         if (this.getClass().isAssignableFrom(element.getClass())) {
             // TODO: implement division where possible
             throw new DivisionException(this, element);
@@ -157,7 +151,7 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
         return false;
     }
 
-    public StringRing<T> getRing() {
+    public StringRing<ArithmeticStringElement<N>> getRing() {
         return StringRingRepository.getRing(this);
     }
 
@@ -188,7 +182,7 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
             return true;
         }
         else if (object instanceof ArithmeticStringElement) {
-            return getValue().equals(((ArithmeticStringElement<?,?>)object).getValue());
+            return getValue().equals(((ArithmeticStringElement<?>)object).getValue());
         }
         else {
             return false;
@@ -197,7 +191,7 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
 
     public int compareTo(ModuleElement object) { //TODO probably not correct
         if (object instanceof ArithmeticStringElement) {
-            return getValue().compareTo(((ArithmeticStringElement<?,N>)object).getValue());
+            return getValue().compareTo(((ArithmeticStringElement<N>)object).getValue());
         }
         else {
             return super.compareTo(object);
@@ -209,12 +203,12 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
     }
 
     @Override
-    public T deepCopy() {
-        return valueOf(getValue().deepCopy());
+    public ArithmeticStringElement<N> deepCopy() {
+        return new ArithmeticStringElement<>(getValue().deepCopy());
     }
 
     @Override
-    public FreeElement<?, T> resize(int n) {
+    public FreeElement<?, ArithmeticStringElement<N>> resize(int n) {
         if (n == 1) {
             return this;
         }

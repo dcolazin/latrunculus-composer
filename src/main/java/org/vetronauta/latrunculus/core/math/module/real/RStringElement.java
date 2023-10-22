@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringEleme
  * 
  * @author Gérard Milmeister
  */
-public final class RStringElement extends ArithmeticStringElement<RStringElement,ArithmeticDouble> {
+public final class RStringElement extends ArithmeticStringElement<ArithmeticDouble> {
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
@@ -47,11 +47,6 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
      */
     public RStringElement(String value) {
         super(value);
-    }
-
-    @Override
-    protected RStringElement valueOf(@NonNull RingString<ArithmeticDouble> value) {
-        return new RStringElement(value);
     }
 
     public RStringElement(EntryList<String,ArithmeticDouble> entryList) {

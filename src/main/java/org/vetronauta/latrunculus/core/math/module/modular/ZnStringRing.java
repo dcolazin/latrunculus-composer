@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -39,7 +41,7 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class ZnStringRing extends StringRing<ZnStringElement> {
+public final class ZnStringRing extends StringRing<ArithmeticStringElement<ArithmeticModulus>> {
     
     public static ZnStringRing make(int modulus) {
         assert(modulus > 1);
@@ -47,13 +49,13 @@ public final class ZnStringRing extends StringRing<ZnStringElement> {
     }
     
 
-    public ZnStringElement getZero() {
-        return new ZnStringElement(RingString.getZero(), modulus);
+    public ArithmeticStringElement<ArithmeticModulus> getZero() {
+        return new ArithmeticStringElement<ArithmeticModulus>(RingString.getZero());
     }
 
     
-    public ZnStringElement getOne() {
-        return new ZnStringElement(RingString.getOne(), modulus);
+    public ArithmeticStringElement<ArithmeticModulus> getOne() {
+        return new ArithmeticStringElement<ArithmeticModulus>(RingString.getOne());
     }
 
     
@@ -159,11 +161,10 @@ public final class ZnStringRing extends StringRing<ZnStringElement> {
         return new RingString<>(words, factors);
     }
 
-    public ZnStringElement parseString(String string) {
+    public ArithmeticStringElement<ArithmeticModulus> parseString(String string) {
         try {
-            return new ZnStringElement(parse(TextUtils.unparenthesize(string), getModulus()));
-        }
-        catch (Exception e) {
+            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string), getModulus()));
+        } catch (Exception e) {
             return null;
         }
     }

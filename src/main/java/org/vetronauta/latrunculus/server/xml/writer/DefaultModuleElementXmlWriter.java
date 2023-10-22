@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -34,15 +33,11 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringElement;
-import org.vetronauta.latrunculus.core.math.module.real.RStringElement;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import java.util.List;
@@ -80,11 +75,11 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             return;
         }
         if (object instanceof ArithmeticStringMultiElement) {
-            write((ArithmeticStringMultiElement<?,?>) object, writer);
+            write((ArithmeticStringMultiElement<?>) object, writer);
             return;
         }
         if (object instanceof ArithmeticStringElement) {
-            write((ArithmeticStringElement<?,?>) object, writer);
+            write((ArithmeticStringElement<?>) object, writer);
             return;
         }
         if (object instanceof DirectSumElement) {
@@ -146,7 +141,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
     }
 
-    private void write(ArithmeticStringElement<?,?> element, XMLWriter writer) {
+    private void write(ArithmeticStringElement<?> element, XMLWriter writer) {
         if (element.getValue().getObjectOne() instanceof ArithmeticModulus) {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().getObjectOne()).getModulus());
         } else {
@@ -160,7 +155,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         writer.closeBlock();
     }
 
-    private void write(ArithmeticStringMultiElement<?,?> element, XMLWriter writer) {
+    private void write(ArithmeticStringMultiElement<?> element, XMLWriter writer) {
         if (element.getValue().get(0).getObjectOne() instanceof ArithmeticModulus) {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ArithmeticModulus) element.getValue().get(0).getObjectOne()).getModulus());
         } else {

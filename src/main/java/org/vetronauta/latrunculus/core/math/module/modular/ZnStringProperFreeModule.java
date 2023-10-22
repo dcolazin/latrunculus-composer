@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -42,9 +43,9 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ZnStringElement,ArithmeticModulus>,ZnStringElement> {
+public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<ArithmeticModulus>, ArithmeticStringElement<ArithmeticModulus>> {
 
-    public static FreeModule<?, ZnStringElement> make(int dimension, int modulus) {
+    public static FreeModule<?, ArithmeticStringElement<ArithmeticModulus>> make(int dimension, int modulus) {
         dimension = Math.max(dimension, 0);
         if (dimension == 1) {
             return ZnStringRing.make(modulus);
@@ -133,7 +134,7 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof ZnStringElement) {
-                values.add(((ZnStringElement)object).getValue());
+                values.add(((ArithmeticStringElement<ArithmeticModulus>)object).getValue());
             }
             else {
                 return null;

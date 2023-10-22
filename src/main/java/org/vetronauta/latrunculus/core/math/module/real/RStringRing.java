@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticDouble;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -28,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -38,17 +40,17 @@ import java.util.LinkedList;
  * 
  * @author Gérard Milmeister
  */
-public final class RStringRing extends StringRing<RStringElement> {
+public final class RStringRing extends StringRing<ArithmeticStringElement<ArithmeticDouble>> {
 
     public static final RStringRing ring = new RStringRing();
 
-    public RStringElement getZero() {
-        return new RStringElement(RingString.getZero());
+    public ArithmeticStringElement<ArithmeticDouble> getZero() {
+        return new ArithmeticStringElement<ArithmeticDouble>(RingString.getZero());
     }
 
     
-    public RStringElement getOne() {
-        return new RStringElement(RingString.getOne());
+    public ArithmeticStringElement<ArithmeticDouble> getOne() {
+        return new ArithmeticStringElement<ArithmeticDouble>(RingString.getOne());
     }
 
     
@@ -143,11 +145,10 @@ public final class RStringRing extends StringRing<RStringElement> {
         return new RingString<>(words, factors);
     }
     
-    public RStringElement parseString(String string) {
+    public ArithmeticStringElement<ArithmeticDouble> parseString(String string) {
         try {
-            return new RStringElement(parse(TextUtils.unparenthesize(string)));
-        }
-        catch (Exception e) {
+            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
+        } catch (Exception e) {
             return null;
         }
     }
