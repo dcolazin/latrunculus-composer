@@ -21,17 +21,16 @@ package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
 
@@ -40,62 +39,20 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class ZnStringRing extends StringRing<ArithmeticStringElement<Modulus>> {
+public final class ZnStringRing extends ArithmeticStringRing<Modulus> {
     
     public static ZnStringRing make(int modulus) {
         assert(modulus > 1);
         return new ZnStringRing(modulus);
     }
     
-
-    public ArithmeticStringElement<Modulus> getZero() {
-        return new ArithmeticStringElement<Modulus>(RingString.getZero());
-    }
-
-    
-    public ArithmeticStringElement<Modulus> getOne() {
-        return new ArithmeticStringElement<Modulus>(RingString.getOne());
-    }
-
-    
     public ZnStringProperFreeModule getNullModule() {
         return (ZnStringProperFreeModule)ZnStringProperFreeModule.make(0, modulus);
     }
-    
-    
-    public boolean isField() {
-        return false;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return false;
-    }
 
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
-        if (!(element instanceof ArithmeticStringElement)) {
-            return false;
-        }
-        ArithmeticNumber<?> number = ((ArithmeticStringElement<?>)element).getValue().getObjectOne();
-        return (number instanceof Modulus && ((Modulus) number).getModulus() == modulus);
-    }
-
-    
     public FreeModule getFreeModule(int dimension) {
         return ZnStringProperFreeModule.make(dimension, modulus);
     }
-
-    
-    public ZnRing getFactorRing() {
-        return ZnRing.make(getModulus());
-    }
-
     
     public boolean equals(Object object) {
         if (object == this) {
@@ -108,37 +65,9 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Modul
             return false;
         }
     }
-
-    
-    public ArithmeticStringElement<Modulus> cast(ModuleElement element) {
-        if (element instanceof StringElement) {
-            RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<Modulus>(new RingString<>(rs));
-        }
-        else {
-            ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
-            if (e == null) {
-                return null;
-            }
-            else {
-                return new ArithmeticStringElement<Modulus>(new RingString<>(e.getValue()));
-            }
-        }       
-    }
-
     
     public int getModulus() {
         return modulus;
-    }
-
-    
-    public String toString() {
-        return "ZnStringRing("+getModulus()+")";
-    }
-
-    
-    public String toVisualString() {
-        return "Z_"+getModulus()+"-String";
     }
 
     public static RingString<Modulus> parse(String string, int modulus) {
@@ -170,10 +99,6 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Modul
             return null;
         }
     }
-    
-    public String getElementTypeName() {
-        return "ZnStringRing";
-    }
 
     public int hashCode() {
         return 37*basicHash + modulus;
@@ -181,6 +106,7 @@ public final class ZnStringRing extends StringRing<ArithmeticStringElement<Modul
 
     
     private ZnStringRing(int modulus) {
+        super(ZnRing.make(modulus));
         this.modulus = modulus;
     }
 

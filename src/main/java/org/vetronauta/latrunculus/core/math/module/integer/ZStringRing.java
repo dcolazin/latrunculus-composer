@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -37,79 +38,20 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class ZStringRing extends StringRing<ArithmeticStringElement<ArithmeticInteger>> {
+public final class ZStringRing extends ArithmeticStringRing<ArithmeticInteger> {
 
     public static final ZStringRing ring = new ZStringRing();
 
-    public ArithmeticStringElement<ArithmeticInteger> getZero() {
-        //TODO why doesn't it like with the <> operator?
-        return new ArithmeticStringElement<ArithmeticInteger>(RingString.getZero());
-    }
-
-    
-    public ArithmeticStringElement<ArithmeticInteger> getOne() {
-        //TODO why doesn't it like with the <> operator?
-        return new ArithmeticStringElement<ArithmeticInteger>(RingString.getOne());
-    }
-
-    
     public ZStringProperFreeModule getNullModule() {
         return ZStringProperFreeModule.nullModule;
     }
     
-    
-    public boolean isField() {
-        return false;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return false;
-    }
-
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
-        return element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof ArithmeticInteger;
-    }
-
-    
     public FreeModule<?,ArithmeticStringElement<ArithmeticInteger>> getFreeModule(int dimension) {
         return ZStringProperFreeModule.make(dimension);
     }
-
-    
-    public ZRing getFactorRing() {
-        return ZRing.ring;
-    }
-
     
     public boolean equals(Object object) {
         return this == object;
-    }
-
-    
-    public ArithmeticStringElement<ArithmeticInteger> cast(ModuleElement element) {
-        if (element instanceof StringElement) {
-            RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<ArithmeticInteger>(new RingString<>(rs));
-        }
-        ArithmeticElement<ArithmeticInteger> e = ZRing.ring.cast(element);
-        return e != null ? new ArithmeticStringElement<ArithmeticInteger>(new RingString<>(e.getValue())) : null;
-    }
-
-    
-    public String toString() {
-        return "ZStringRing";
-    }
-    
-
-    public String toVisualString() {
-        return "Z-String";
     }
 
     public static RingString<ArithmeticInteger> parse(String string) {
@@ -142,10 +84,6 @@ public final class ZStringRing extends StringRing<ArithmeticStringElement<Arithm
             return null;
         }
     }
-    
-    public String getElementTypeName() {
-        return "ZStringRing";
-    }
 
     public int hashCode() {
         return basicHash;
@@ -154,5 +92,7 @@ public final class ZStringRing extends StringRing<ArithmeticStringElement<Arithm
     
     private static final int basicHash = "ZStringRing".hashCode();
 
-    private ZStringRing() { /* not allowed */ }
+    private ZStringRing() {
+        super(ZRing.ring);
+    }
 }

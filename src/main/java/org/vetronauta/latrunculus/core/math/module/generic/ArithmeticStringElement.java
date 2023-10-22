@@ -189,6 +189,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         }
     }
 
+    @Override
     public int compareTo(ModuleElement object) { //TODO probably not correct
         if (object instanceof ArithmeticStringElement) {
             return getValue().compareTo(((ArithmeticStringElement<N>)object).getValue());
@@ -198,6 +199,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         }
     }
 
+    @Override
     public int hashCode() {
         return value.hashCode();
     }

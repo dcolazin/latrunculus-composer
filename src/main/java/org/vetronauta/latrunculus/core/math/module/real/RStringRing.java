@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.LinkedList;
@@ -38,77 +39,20 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class RStringRing extends StringRing<ArithmeticStringElement<Real>> {
+public final class RStringRing extends ArithmeticStringRing<Real> {
 
     public static final RStringRing ring = new RStringRing();
 
-    public ArithmeticStringElement<Real> getZero() {
-        return new ArithmeticStringElement<Real>(RingString.getZero());
-    }
-
-    
-    public ArithmeticStringElement<Real> getOne() {
-        return new ArithmeticStringElement<Real>(RingString.getOne());
-    }
-
-    
     public RStringProperFreeModule getNullModule() {
         return RStringProperFreeModule.nullModule;
     }
     
-    
-    public boolean isField() {
-        return false;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return false;
-    }
-
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof Real);
-    }
-
-    
     public FreeModule getFreeModule(int dimension) {
         return RStringProperFreeModule.make(dimension);
     }
-
-    
-    public Ring getFactorRing() {
-        return RRing.ring;
-    }
-
     
     public boolean equals(Object object) {
         return this == object;
-    }
-
-    
-    public ArithmeticStringElement<Real> cast(ModuleElement element) {
-        if (element instanceof StringElement) {
-            RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<Real>(new RingString<>(rs));
-        }
-        ArithmeticElement<Real> e = RRing.ring.cast(element);
-        return e != null ? new ArithmeticStringElement<Real>(new RingString<>(e.getValue())) : null;
-    }
-
-    
-    public String toString() {
-        return "RStringRing";
-    }
-    
-    
-    public String toVisualString() {
-        return "R-String";
     }
 
     public static RingString<Real> parse(String string) {
@@ -140,10 +84,6 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Real>>
             return null;
         }
     }
-    
-    public String getElementTypeName() {
-        return "RStringRing";
-    }
 
     public int hashCode() {
         return basicHash;
@@ -152,5 +92,7 @@ public final class RStringRing extends StringRing<ArithmeticStringElement<Real>>
     
     private static final int basicHash = "RStringRing".hashCode();
 
-    private RStringRing() { /* not allowed */ }
+    private RStringRing() {
+        super(RRing.ring);
+    }
 }

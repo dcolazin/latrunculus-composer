@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 
 import java.util.LinkedList;
 
@@ -40,49 +41,17 @@ import java.util.LinkedList;
  *
  * @author Gérard Milmeister
  */
-public final class QStringRing extends StringRing<ArithmeticStringElement<Rational>> {
+public final class QStringRing extends ArithmeticStringRing<Rational> {
 
     public static final QStringRing ring = new QStringRing();
 
-    public ArithmeticStringElement<Rational> getZero() {
-        return new ArithmeticStringElement<Rational>(RingString.getZero());
-    }
-
-    
-    public ArithmeticStringElement<Rational> getOne() {
-        return new ArithmeticStringElement<Rational>(RingString.getOne());
-    }
-
-    
     public QStringProperFreeModule getNullModule() {
         return QStringProperFreeModule.nullModule;
     }
     
-    
-    public boolean isField() {
-        return false;
-    }
-    
-    
-    public boolean isVectorSpace() {
-        return false;
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) element).getValue().getObjectOne() instanceof Rational);
-    }
-
-    
     public FreeModule getFreeModule(int dimension) {
         return QStringProperFreeModule.make(dimension);
     }
-
-    
-    public Ring getFactorRing() {
-        return QRing.ring;
-    }
-
     
     public boolean equals(Object object) {
         return this == object;
@@ -97,27 +66,6 @@ public final class QStringRing extends StringRing<ArithmeticStringElement<Ration
             return super.compareTo(object);
         }
     }
-
-
-    public ArithmeticStringElement<Rational> cast(ModuleElement element) {
-        if (element instanceof StringElement) {
-            RingString<?> rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<Rational>(new RingString<>(rs));
-        }
-        ArithmeticElement<Rational> e = QRing.ring.cast(element);
-        return e != null ? new ArithmeticStringElement<Rational>(new RingString<>(e.getValue())) : null;
-    }
-
-    
-    public String toString() {
-        return "QStringRing";
-    }
-    
-    
-    public String toVisualString() {
-        return "C-String";
-    }
-
     
     public ArithmeticStringElement<Rational> parseString(String string) {
         try {
@@ -148,11 +96,6 @@ public final class QStringRing extends StringRing<ArithmeticStringElement<Ration
 
         return new RingString<>(words, factors);
     }
-
-    public String getElementTypeName() {
-        return "QStringRing";
-    }
-    
     
     public int hashCode() {
         return basicHash;
@@ -161,5 +104,7 @@ public final class QStringRing extends StringRing<ArithmeticStringElement<Ration
     
     private static final int basicHash = "QStringRing".hashCode();
 
-    private QStringRing() { /* not allowed */ }
+    private QStringRing() {
+        super(QRing.ring);
+    }
 }
