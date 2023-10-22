@@ -27,10 +27,14 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticModulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import java.util.HashMap;
@@ -63,6 +67,23 @@ public class StringRingRepository {
         }
         if (number instanceof ArithmeticModulus) {
             return (StringRing<S>) getModulusRing(((ArithmeticModulus) number).getModulus());
+        }
+        throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
+    }
+
+    public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getBaseRing(ArithmeticStringElement<?,N> element) {
+        ArithmeticNumber<N> number = element.getValue().getObjectOne();
+        if (number instanceof ArithmeticInteger) {
+            return (ArithmeticRing<N>) ZRing.ring;
+        }
+        if (number instanceof Rational) {
+            return (ArithmeticRing<N>) QRing.ring;
+        }
+        if (number instanceof ArithmeticDouble) {
+            return (ArithmeticRing<N>) RRing.ring;
+        }
+        if (number instanceof ArithmeticModulus) {
+            return (ArithmeticRing<N>) ArithmeticRingRepository.getModulusRing(((ArithmeticModulus) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }

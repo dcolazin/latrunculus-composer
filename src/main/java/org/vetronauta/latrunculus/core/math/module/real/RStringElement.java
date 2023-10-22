@@ -67,23 +67,6 @@ public final class RStringElement extends ArithmeticStringElement<RStringElement
         super(entryList);
     }
 
-    public FreeElement resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ArithmeticStringMultiElement.make(RRing.ring, new ArrayList<>());
-        }
-        else {
-            List<RingString<ArithmeticDouble>> values = new ArrayList<>(n);
-            values.add(new RingString<>(getValue()));
-            for (int i = 1; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return ArithmeticStringMultiElement.make(RRing.ring, values);
-        }
-    }
-
     public String toString() {
         return "RStringElement["+getValue()+"]";
     }

@@ -34,6 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -206,7 +208,20 @@ public class ArithmeticStringElement<T extends ArithmeticStringElement<T,N>, N e
 
     @Override
     public FreeElement<?, T> resize(int n) {
-        return null; //TODO!!!
+        if (n == 1) {
+            return this;
+        }
+        else if (n == 0) {
+            return ArithmeticStringMultiElement.make(StringRingRepository.getBaseRing(this), new ArrayList<>());
+        }
+        else {
+            List<RingString<N>> values = new ArrayList<>(n);
+            values.add(new RingString<>(getValue()));
+            for (int i = 1; i < n; i++) {
+                values.add(new RingString<>());
+            }
+            return ArithmeticStringMultiElement.make(StringRingRepository.getBaseRing(this), values);
+        }
     }
 
     public String getElementTypeName() {

@@ -65,23 +65,6 @@ public final class ZStringElement extends ArithmeticStringElement<ZStringElement
         return new ZStringElement(value);
     }
 
-    public FreeElement resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ArithmeticStringMultiElement.make(ZRing.ring, new ArrayList<>(0));
-        }
-        else {
-            List<RingString<ArithmeticInteger>> values = new ArrayList<>(n);
-            values.add(new RingString<>(getValue()));
-            for (int i = 1; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return ArithmeticStringMultiElement.make(ZRing.ring, values);
-        }
-    }
-
     public String toString() {
         return "ZStringElement["+getValue()+"]";
     }

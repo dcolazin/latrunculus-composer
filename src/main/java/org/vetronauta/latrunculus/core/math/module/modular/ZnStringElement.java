@@ -79,22 +79,6 @@ public final class ZnStringElement extends ArithmeticStringElement<ZnStringEleme
         return new ZnStringElement(value);
     }
 
-    public FreeElement resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), new ArrayList<>());
-        }
-        else {
-            List<RingString<ArithmeticModulus>> values = new ArrayList<>(n);
-            values.add(getValue());
-            for (int i = 1; i < n; i++) {
-                values.add(RingString.getZero());
-            }
-            return ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), values);
-        }
-    }
 
     private int extractModulus() {
         return getValue().getFactors().stream().findFirst().map(ArithmeticModulus::getModulus).orElseThrow(ZeroDivisorException::new);

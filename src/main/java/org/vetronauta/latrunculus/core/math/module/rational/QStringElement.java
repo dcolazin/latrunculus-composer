@@ -66,24 +66,7 @@ public final class QStringElement extends ArithmeticStringElement<QStringElement
     public QStringElement(EntryList<String,Rational> entryList) {
         super(entryList);
     }
-
-    public FreeElement resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ArithmeticStringMultiElement.make(QRing.ring, new ArrayList<>());
-        }
-        else {
-            List<RingString<Rational>> values = new ArrayList<>(n);
-            values.add(new RingString<>(getValue()));
-            for (int i = 1; i < n; i++) {
-                values.add(new RingString<>());
-            }
-            return ArithmeticStringMultiElement.make(QRing.ring, values);
-        }
-    }
-
+    
     public String toString() {
         return "QStringElement["+getValue()+"]";
     }
