@@ -19,23 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
-
-import java.util.LinkedList;
 
 /**
  * The ring of QString.
@@ -45,43 +30,6 @@ import java.util.LinkedList;
 public final class QStringRing extends ArithmeticStringRing<Rational> {
 
     public static final QStringRing ring = new QStringRing();
-
-    public ArithmeticStringMultiModule<Rational> getNullModule() {
-        return (ArithmeticStringMultiModule<Rational>) ArithmeticStringMultiModule.make(QStringRing.ring, 0);
-    }
-    
-    public FreeModule getFreeModule(int dimension) {
-        return ArithmeticStringMultiModule.make(QStringRing.ring, dimension);
-    }
-    
-    public boolean equals(Object object) {
-        return this == object;
-    }
-
-    
-    public int compareTo(Module object) {
-        if (this == object) {
-            return 0;
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-    
-    public ArithmeticStringElement<Rational> parseString(String string) {
-        try {
-            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(string)));
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    public int hashCode() {
-        return basicHash;
-    }
-
-    
-    private static final int basicHash = "QStringRing".hashCode();
 
     private QStringRing() {
         super(QRing.ring);

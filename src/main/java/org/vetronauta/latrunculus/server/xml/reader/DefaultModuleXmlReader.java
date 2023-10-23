@@ -242,8 +242,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
     }
 
     private <N extends ArithmeticNumber<N>> Module makeArithmeticMultiModule(ArithmeticRing<N> arithmeticRing, int dimension) {
-        return null; //TODO uncomment when ArithmeticStringRing is non-abstract
-        //return ArithmeticStringMultiModule.make(new ArithmeticStringRing<>(arithmeticRing), dimension);
+        return ArithmeticStringMultiModule.make(new ArithmeticStringRing<>(arithmeticRing), dimension);
     }
 
     private Module readZStringRing(Element element, Class<?> clazz, XMLReader reader) {

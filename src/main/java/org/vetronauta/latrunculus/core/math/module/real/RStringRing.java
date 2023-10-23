@@ -19,12 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 
 /**
@@ -35,33 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 public final class RStringRing extends ArithmeticStringRing<Real> {
 
     public static final RStringRing ring = new RStringRing();
-
-    public ArithmeticStringMultiModule<Real> getNullModule() {
-        return (ArithmeticStringMultiModule) ArithmeticStringMultiModule.make(RStringRing.ring, 0);
-    }
-    
-    public FreeModule getFreeModule(int dimension) {
-        return ArithmeticStringMultiModule.make(RStringRing.ring, dimension);
-    }
-    
-    public boolean equals(Object object) {
-        return this == object;
-    }
-    
-    public ArithmeticStringElement<Real> parseString(String string) {
-        try {
-            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(string)));
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public int hashCode() {
-        return basicHash;
-    }
-
-    
-    private static final int basicHash = "RStringRing".hashCode();
 
     private RStringRing() {
         super(RRing.ring);
