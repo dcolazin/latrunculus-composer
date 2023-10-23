@@ -40,15 +40,15 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
     //TODO various consistency checks for modulus
 
     private final List<RingString<N>> value;
-    private final ArithmeticRing<N> ring;
-    private Module module;
+    private final ArithmeticStringRing<N> ring;
+    private ArithmeticStringMultiModule<N> module;
 
-    protected ArithmeticStringMultiElement(ArithmeticRing<N> ring, List<RingString<N>> value) {
+    protected ArithmeticStringMultiElement(ArithmeticStringRing<N> ring, List<RingString<N>> value) {
         this.ring = ring;
         this.value = value;
     }
 
-    public static <X extends ArithmeticNumber<X>> FreeElement<?, ArithmeticStringElement<X>> make(ArithmeticRing<X> ring, List<RingString<X>> v) {
+    public static <X extends ArithmeticNumber<X>> FreeElement<?, ArithmeticStringElement<X>> make(ArithmeticStringRing<X> ring, List<RingString<X>> v) {
         assert(v != null && ring != null);
         if (v.isEmpty()) {
             return new ArithmeticStringMultiElement<>(ring, new ArrayList<>());
@@ -170,9 +170,9 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
     }
 
     @Override
-    public Module getModule() { //TODO this is wrong, the meaning of getModule is different from usual getModules types
+    public ArithmeticStringMultiModule<N> getModule() {
         if (module == null) {
-            module = ArithmeticMultiModule.make(ring, getLength());
+            module = (ArithmeticStringMultiModule<N>) ArithmeticStringMultiModule.make(ring, getLength());
         }
         return module;
     }

@@ -71,7 +71,7 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
             v.add(RingString.getZero());
         }
         v.set(i, RingString.getOne());
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring.getFactorRing(), v); //TODO not cast
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, v); //TODO not cast
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
         for (int i = 0; i < getDimension(); i++) {
             res.add(RingString.getZero());
         }
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring.getFactorRing(), res); //TODO not cast
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, res); //TODO not cast
     }
 
     @Override
@@ -140,14 +140,14 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
             }
             values.add(((ArithmeticStringElement<N>)object).getValue());
         }
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring.getFactorRing(), values);
+        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, values);
     }
 
     @Override
     public ArithmeticStringMultiElement<N> parseString(String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring.getFactorRing(), new ArrayList<>());
+            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -160,7 +160,7 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
                 for (int i = 0; i < strings.length; i++) {
                     rstrings.add(ArithmeticParsingUtils.parseString(ring, strings[i]));
                 }
-                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring.getFactorRing(), rstrings);
+                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, rstrings);
             }
         }
         else {

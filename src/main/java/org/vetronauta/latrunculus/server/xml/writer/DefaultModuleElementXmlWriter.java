@@ -142,8 +142,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticStringElement<?> element, XMLWriter writer) {
-        if (element.getValue().getObjectOne() instanceof Modulus) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getValue().getObjectOne()).getModulus());
+        if (element.getRing().getFactorRing().getZero().getValue() instanceof Modulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getRing().getFactorRing().getZero().getValue()).getModulus());
         } else {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }
@@ -156,8 +156,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticStringMultiElement<?> element, XMLWriter writer) {
-        if (element.getValue().get(0).getObjectOne() instanceof Modulus) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getValue().get(0).getObjectOne()).getModulus());
+        if (element.getModule().getRing().getFactorRing().getZero().getValue() instanceof Modulus) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((Modulus) element.getModule().getRing().getFactorRing().getZero().getValue()).getModulus());
         } else {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }

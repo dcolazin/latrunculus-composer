@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 
 /**
  * @author vetronauta
@@ -56,7 +57,7 @@ public class FreeUtils {
         if (!(module instanceof FreeModule && (module.checkRingElement(ArithmeticStringElement.class)))) {
             return false;
         }
-        ArithmeticNumber<?> number = ((ArithmeticStringElement<?>) module.getZero()).getValue().getObjectOne();
+        ArithmeticNumber<?> number = ((ArithmeticStringRing<?>) module.getRing()).getFactorRing().getZero().getValue();
         return number instanceof ArithmeticInteger ||
                 number instanceof Modulus ||
                 number instanceof Rational ||

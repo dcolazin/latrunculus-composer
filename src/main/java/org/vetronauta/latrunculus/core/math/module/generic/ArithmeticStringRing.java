@@ -60,7 +60,7 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
         if (!(element instanceof ArithmeticStringElement)) {
             return false;
         }
-        ArithmeticNumber number = ((ArithmeticStringElement)element).getValue().getObjectOne();
+        ArithmeticNumber number = ((ArithmeticStringElement)element).getRing().getFactorRing().getZero().getValue();
         return (factorRing.hasElement(new ArithmeticElement(number)));
     }
 

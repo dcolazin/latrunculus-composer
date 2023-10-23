@@ -42,6 +42,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeElement;
@@ -52,6 +53,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElem
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
@@ -323,7 +325,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ArithmeticStringElement");
             return null;
         }
-        ArithmeticStringElement ringElement = (ArithmeticStringElement) moduleElement;
+        ArithmeticStringElement<?> ringElement = (ArithmeticStringElement<?>) moduleElement;
         elements.add(ringElement);
         Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
         while (next != null) {
@@ -343,11 +345,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         for (ArithmeticStringElement ringElements : elements) {
             coefficients.add(ringElements.getValue());
         }
-        return makeArithmeticStringMultiElement(ArithmeticRingRepository.getRing(new ArithmeticElement<>(ringElement.getValue().getObjectOne())), coefficients);
+        return makeArithmeticStringMultiElement(ringElement, coefficients);
     }
 
-    private <N extends ArithmeticNumber<N>> ModuleElement makeArithmeticStringMultiElement(ArithmeticRing<N> ring, List<? extends RingString<?>> coefficients) {
-        return ArithmeticStringMultiElement.make(ring, (List<RingString<N>>) coefficients);
+    private <N extends ArithmeticNumber<N>> ModuleElement makeArithmeticStringMultiElement(ArithmeticStringElement<N> ringElement, List<? extends RingString<?>> coefficients) {
+        return ArithmeticStringMultiElement.make(StringRingRepository.getRing(ringElement), (List<RingString<N>>) coefficients);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

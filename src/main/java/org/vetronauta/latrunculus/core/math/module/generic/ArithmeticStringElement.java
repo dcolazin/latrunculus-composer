@@ -151,7 +151,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         return false;
     }
 
-    public StringRing<ArithmeticStringElement<N>> getRing() {
+    public ArithmeticStringRing<N> getRing() {
         return StringRingRepository.getRing(this);
     }
 
@@ -215,7 +215,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
             return this;
         }
         else if (n == 0) {
-            return ArithmeticStringMultiElement.make(StringRingRepository.getBaseRing(this), new ArrayList<>());
+            return ArithmeticStringMultiElement.make(StringRingRepository.getRing(this), new ArrayList<>());
         }
         else {
             List<RingString<N>> values = new ArrayList<>(n);
@@ -223,7 +223,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
             for (int i = 1; i < n; i++) {
                 values.add(new RingString<>());
             }
-            return ArithmeticStringMultiElement.make(StringRingRepository.getBaseRing(this), values);
+            return ArithmeticStringMultiElement.make(StringRingRepository.getRing(this), values);
         }
     }
 

@@ -45,8 +45,7 @@ import static java.lang.Math.min;
  * where the a_i are elements in a ring
  * and the s_i are character strings (<code>String</code>).
  */
-public class RingString<T extends ArithmeticNumber<T>>
-        implements DeepCopyable<RingString<T>>, Comparable<RingString<T>>, Serializable {
+public class RingString<T extends ArithmeticNumber<T>> implements DeepCopyable<RingString<T>>, Comparable<RingString<T>>, Serializable {
 
     //TODO null checks everywhere
 
@@ -382,14 +381,14 @@ public class RingString<T extends ArithmeticNumber<T>>
     /**
      * Returns the unit factor object.
      */
-    public T getObjectOne() {
+    private T getObjectOne() {
         return null; //TODO!!! from ring?
     }
 
     /**
      * Returns the zero factor object.
      */
-    public T getObjectZero() {
+    private T getObjectZero() {
         return null; //TODO!!! from ring?
     }
 

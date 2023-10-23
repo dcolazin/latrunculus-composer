@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 public abstract class JSimpleEntry extends JPanel {
 
     public static JSimpleEntry make(Module<?,?> module) {
-        if ( FreeUtils.isUsualFree(module) || FreeUtils.isUsualStringFree(module) ||
+        if (FreeUtils.isUsualFree(module) || FreeUtils.isUsualStringFree(module) ||
             module instanceof PolynomialRing ||
             module instanceof ModularPolynomialRing) {
             return new JSimpleNumberEntry(module);

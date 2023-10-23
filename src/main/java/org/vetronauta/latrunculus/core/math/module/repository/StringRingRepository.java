@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
@@ -54,25 +55,25 @@ public class StringRingRepository {
         return modRingMap.computeIfAbsent(modulus, ZnStringRing::make);
     }
 
-    public static <N extends ArithmeticNumber<N>> StringRing<ArithmeticStringElement<N>> getRing(ArithmeticStringElement<N> element) {
-        ArithmeticNumber<N> number = element.getValue().getObjectOne();
+    public static <N extends ArithmeticNumber<N>> ArithmeticStringRing<N> getRing(ArithmeticStringElement<N> element) {
+        ArithmeticNumber<N> number = element.getRing().getFactorRing().getZero().getValue();
         if (number instanceof ArithmeticInteger) {
-            return (StringRing) ZStringRing.ring;
+            return (ArithmeticStringRing<N>) ZStringRing.ring;
         }
         if (number instanceof Rational) {
-            return (StringRing) QStringRing.ring;
+            return (ArithmeticStringRing<N>) QStringRing.ring;
         }
         if (number instanceof Real) {
-            return (StringRing) RStringRing.ring;
+            return (ArithmeticStringRing<N>) RStringRing.ring;
         }
         if (number instanceof Modulus) {
-            return (StringRing) getModulusRing(((Modulus) number).getModulus());
+            return (ArithmeticStringRing<N>) getModulusRing(((Modulus) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getBaseRing(ArithmeticStringElement<N> element) {
-        ArithmeticNumber<N> number = element.getValue().getObjectOne();
+        ArithmeticNumber<N> number = element.getRing().getFactorRing().getOne().getValue();
         if (number instanceof ArithmeticInteger) {
             return (ArithmeticRing<N>) ZRing.ring;
         }
