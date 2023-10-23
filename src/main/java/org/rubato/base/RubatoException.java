@@ -20,12 +20,15 @@
 package org.rubato.base;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 
 
 /**
  * Base exception for all Rubato code.
  */
-public class RubatoException extends Exception {
+public class RubatoException extends LatrunculusCheckedException {
+
+    //TODO remove...
 
     public RubatoException() { super(); }
 

@@ -169,8 +169,8 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
     }
 
     @Override
-    public Iterator<RingElement<R>> iterator() {
-        return Collections.singleton(this).iterator();
+    public Iterator<R> iterator() {
+        return Collections.singleton((R) this).iterator();
     }
     
     

@@ -79,7 +79,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     }
 
     @Override
-    public Ring<ArithmeticElement<N>> getRing() {
+    public ArithmeticRing<N> getRing() {
         return ring;
     }
 

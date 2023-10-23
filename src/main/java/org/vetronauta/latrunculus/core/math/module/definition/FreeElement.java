@@ -27,12 +27,12 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
  * 
  * @author Gérard Milmeister
  */
-public interface FreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends ModuleElement<E,R>, Iterable<RingElement<R>> {
+public interface FreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends ModuleElement<E,R>, Iterable<R> {
     
     /**
      * Returns the <code>i</code>-th ring component of this free element.
      */
-    RingElement<R> getRingElement(int i);
+    R getRingElement(int i);
     
     /**
      * Returns the componentwise product of this module element and <code>element</code>.

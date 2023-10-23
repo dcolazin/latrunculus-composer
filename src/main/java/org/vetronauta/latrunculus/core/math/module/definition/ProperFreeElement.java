@@ -35,8 +35,8 @@ public abstract class ProperFreeElement<E extends ModuleElement<E,R>, R extends 
     }
     
     
-    public Iterator<RingElement<R>> iterator() {
-        LinkedList<RingElement<R>> elements = new LinkedList<>();
+    public Iterator<R> iterator() {
+        LinkedList<R> elements = new LinkedList<>();
         for (int i = 0; i < getLength(); i++) {
             elements.add(getRingElement(i));
         }

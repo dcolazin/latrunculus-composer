@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.exception;
 
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
+import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
  * 
  * @author Gérard Milmeister
  */
-public final class CompositionException extends LatrunculusCheckedException {
+public final class CompositionException extends RubatoException {
 
     /**
      * Creates a CompositionException with the specified message.
