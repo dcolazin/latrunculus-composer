@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 
 /**
@@ -35,12 +36,12 @@ public final class RStringRing extends ArithmeticStringRing<Real> {
 
     public static final RStringRing ring = new RStringRing();
 
-    public RStringProperFreeModule getNullModule() {
-        return RStringProperFreeModule.nullModule;
+    public ArithmeticStringMultiModule<Real> getNullModule() {
+        return (ArithmeticStringMultiModule) ArithmeticStringMultiModule.make(RStringRing.ring, 0);
     }
     
     public FreeModule getFreeModule(int dimension) {
-        return RStringProperFreeModule.make(dimension);
+        return ArithmeticStringMultiModule.make(RStringRing.ring, dimension);
     }
     
     public boolean equals(Object object) {

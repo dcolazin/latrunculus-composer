@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
@@ -30,11 +31,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeModule;
@@ -45,10 +46,8 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeModu
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
@@ -91,17 +90,8 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         if (RRing.class.isAssignableFrom(clazz)) {
                 return readRRing(element, clazz, reader);
            }
-        if (ZStringProperFreeModule.class.isAssignableFrom(clazz)) {
-                return readZStringProperFreeModule(element, clazz, reader);
-           }
-        if (ZnStringProperFreeModule.class.isAssignableFrom(clazz)) {
-                return readZnStringProperFreeModule(element, clazz, reader);
-           }
-        if (QStringProperFreeModule.class.isAssignableFrom(clazz)) {
-                return readQStringProperFreeModule(element, clazz, reader);
-           }
-        if (RStringProperFreeModule.class.isAssignableFrom(clazz)) {
-                return readRStringProperFreeModule(element, clazz, reader);
+        if (ArithmeticStringMultiModule.class.isAssignableFrom(clazz)) {
+                return readArithmeticStringMultiModule(element, clazz, reader);
            }
         if (ZStringRing.class.isAssignableFrom(clazz)) {
                 return readZStringRing(element, clazz, reader);
@@ -222,7 +212,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         return RRing.ring;
     }
 
-    private Module readZStringProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
+    private Module readArithmeticStringMultiModule(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
 
         if (!element.hasAttribute(DIMENSION_ATTR)) {
@@ -242,43 +232,18 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return ZStringProperFreeModule.make(dimension);
+        Integer modulus = element.hasAttribute(MODULUS_ATTR) ? XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2) : null;
+        ArithmeticRing<?> arithmeticRing = detectRing(element);
+        return makeArithmeticMultiModule(arithmeticRing, dimension);
     }
 
-    private Module readZnStringProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        int modulus0 = XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2);
-        return ZnStringProperFreeModule.make(dimension, modulus0);
+    private ArithmeticRing<?> detectRing(Element element) {
+        return null; //TODO
     }
 
-    private Module readQStringProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        return QStringProperFreeModule.make(dimension);
-    }
-
-    private Module readRStringProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-
-        if (!element.hasAttribute(DIMENSION_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), DIMENSION_ATTR);
-            return null;
-        }
-
-        int dimension;
-        try {
-            dimension = Integer.parseInt(element.getAttribute(DIMENSION_ATTR));
-            if (dimension < 0) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer >= 0.", DIMENSION_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        return RStringProperFreeModule.make(dimension);
+    private <N extends ArithmeticNumber<N>> Module makeArithmeticMultiModule(ArithmeticRing<N> arithmeticRing, int dimension) {
+        return null; //TODO uncomment when ArithmeticStringRing is non-abstract
+        //return ArithmeticStringMultiModule.make(new ArithmeticStringRing<>(arithmeticRing), dimension);
     }
 
     private Module readZStringRing(Element element, Class<?> clazz, XMLReader reader) {

@@ -97,6 +97,9 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
         return this;
     }
 
+    //TODO needed because ProductRing still uses raw types
+    public abstract R parseString(String s);
+
     /**
      * Returns a morphism that translates by <code>element</code>.
      */

@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 
@@ -47,12 +48,12 @@ public final class ZnStringRing extends ArithmeticStringRing<Modulus> {
         return new ZnStringRing(modulus);
     }
     
-    public ZnStringProperFreeModule getNullModule() {
-        return (ZnStringProperFreeModule)ZnStringProperFreeModule.make(0, modulus);
+    public ArithmeticStringMultiModule<Modulus> getNullModule() {
+        return (ArithmeticStringMultiModule<Modulus>) ArithmeticStringMultiModule.make(this, 0);
     }
 
     public FreeModule getFreeModule(int dimension) {
-        return ZnStringProperFreeModule.make(dimension, modulus);
+        return ArithmeticStringMultiModule.make(this, dimension);
     }
     
     public boolean equals(Object object) {

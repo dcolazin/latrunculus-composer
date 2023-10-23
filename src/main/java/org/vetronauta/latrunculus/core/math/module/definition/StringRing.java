@@ -19,17 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import java.util.List;
-
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.real.RStringProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
+
+import java.util.List;
 
 /**
  * The abstract base class for rings with RingString elements.
@@ -77,27 +69,5 @@ public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
     }
     
     public abstract boolean equals(Object obj);
-    
-    public static FreeModule make(Ring ring) {
-        return make(ring, 1);
-    }
 
-    public static FreeModule make(Ring ring, int dimension) {
-        if (ring instanceof ZRing) {
-            return ZStringProperFreeModule.make(dimension);
-        }
-        else if (ring instanceof ZnRing) {
-            return ZnStringProperFreeModule.make(dimension, ((ZnRing)ring).getModulus());
-            
-        }
-        else if (ring instanceof QRing) {
-            return QStringProperFreeModule.make(dimension);
-        }
-        else if (ring instanceof RRing) {
-            return RStringProperFreeModule.make(dimension);
-        }
-        else {
-            return null;
-        }
-    }
 }

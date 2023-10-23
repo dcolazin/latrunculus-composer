@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 
 import java.util.LinkedList;
@@ -45,12 +46,12 @@ public final class QStringRing extends ArithmeticStringRing<Rational> {
 
     public static final QStringRing ring = new QStringRing();
 
-    public QStringProperFreeModule getNullModule() {
-        return QStringProperFreeModule.nullModule;
+    public ArithmeticStringMultiModule<Rational> getNullModule() {
+        return (ArithmeticStringMultiModule<Rational>) ArithmeticStringMultiModule.make(QStringRing.ring, 0);
     }
     
     public FreeModule getFreeModule(int dimension) {
-        return QStringProperFreeModule.make(dimension);
+        return ArithmeticStringMultiModule.make(QStringRing.ring, dimension);
     }
     
     public boolean equals(Object object) {
