@@ -38,7 +38,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConjugationMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;

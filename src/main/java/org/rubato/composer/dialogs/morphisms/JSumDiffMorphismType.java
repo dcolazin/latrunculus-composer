@@ -26,7 +26,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.rubato.composer.components.JMorphismEntry;
-import org.vetronauta.latrunculus.core.math.module.morphism.CompositionException;
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.DifferenceMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;

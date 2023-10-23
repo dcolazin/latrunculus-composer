@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.exception;
 
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
@@ -28,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class DivisionException extends Exception {
+public final class DivisionException extends LatrunculusCheckedException {
 
     private static final String ERROR_MESSAGE = "Cannot divide %s by %s";
 

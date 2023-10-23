@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 
 import java.util.Arrays;

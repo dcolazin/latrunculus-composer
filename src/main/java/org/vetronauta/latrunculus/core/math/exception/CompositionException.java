@@ -17,9 +17,10 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism;
+package org.vetronauta.latrunculus.core.math.exception;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * Exception thrown if composition of morphisms fails.
@@ -27,7 +28,7 @@ import org.rubato.base.RubatoException;
  * 
  * @author Gérard Milmeister
  */
-public final class CompositionException extends RubatoException {
+public final class CompositionException extends LatrunculusCheckedException {
 
     /**
      * Creates a CompositionException with the specified message.
@@ -42,7 +43,7 @@ public final class CompositionException extends RubatoException {
      * with a predefined message generated from <code>f</code> and
      * <code>g</code>, which are the components of the composition, appended.
      */
-    public CompositionException(String msg, ModuleMorphism f, ModuleMorphism g) {
+    public CompositionException(String msg, ModuleMorphism<?,?,?,?> f, ModuleMorphism<?,?,?,?> g) {
         super(msg+"Failed to compose "+f+" and "+g);
     }
 
@@ -52,7 +53,7 @@ public final class CompositionException extends RubatoException {
      * predefined message generated from <code>f</code> and
      * <code>g</code>, which are the components of the composition, appended.
      */
-    public CompositionException(ModuleMorphism f, ModuleMorphism g) {
+    public CompositionException(ModuleMorphism<?,?,?,?> f, ModuleMorphism<?,?,?,?> g) {
         this("", f, g);
     }
 

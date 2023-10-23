@@ -19,12 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.exception;
 
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
+
 /**
  * Exception thrown by various functions involving modular arithmetic.
  * Zero divisors modulo <code>n</code> are numbers <code>a</code> and <code>b</code>,
  * both not zero, such that <code>a</code>*<code>b</code> = 0 mod <code>n</code>.
  */
-public final class ZeroDivisorException extends ArithmeticException {
+public final class ZeroDivisorException extends LatrunculusRuntimeException {
     
     public ZeroDivisorException() { /* do nothing */ }
 
