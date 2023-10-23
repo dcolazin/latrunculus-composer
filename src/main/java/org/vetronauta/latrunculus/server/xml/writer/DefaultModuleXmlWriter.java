@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeM
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
@@ -86,20 +87,8 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((RRing) object, writer);
             return;
         }
-        if (object instanceof ZStringProperFreeModule) {
-            write((ZStringProperFreeModule) object, writer);
-            return;
-        }
-        if (object instanceof ZnStringProperFreeModule) {
-            write((ZnStringProperFreeModule) object, writer);
-            return;
-        }
-        if (object instanceof QStringProperFreeModule) {
-            write((QStringProperFreeModule) object, writer);
-            return;
-        }
-        if (object instanceof RStringProperFreeModule) {
-            write((RStringProperFreeModule) object, writer);
+        if (object instanceof ArithmeticStringMultiModule) {
+            write((ArithmeticStringMultiModule) object, writer);
             return;
         }
         if (object instanceof ZStringRing) {
@@ -179,20 +168,12 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         writer.emptyWithType(MODULE, module.getElementTypeName());
     }
 
-    private void write(ZStringProperFreeModule module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
-    }
-
-    private void write(ZnStringProperFreeModule module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, module.getModulus());
-    }
-
-    private void write(QStringProperFreeModule module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
-    }
-
-    private void write(RStringProperFreeModule module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
+    private void write(ArithmeticStringMultiModule module, XMLWriter writer) {
+        if (module.getRing().getFactorRing().getClass().isAssignableFrom(ZnRing.class)) {
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((Modulus)module.getRing().getFactorRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
+        } else {
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
+        }
     }
 
     private void write(ZStringRing module, XMLWriter writer) {

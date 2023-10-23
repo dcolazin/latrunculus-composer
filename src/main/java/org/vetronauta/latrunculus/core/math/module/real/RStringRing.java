@@ -20,19 +20,11 @@
 package org.vetronauta.latrunculus.core.math.module.real;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-
-import java.util.LinkedList;
 
 /**
  * The ring of RString.
@@ -54,32 +46,10 @@ public final class RStringRing extends ArithmeticStringRing<Real> {
     public boolean equals(Object object) {
         return this == object;
     }
-
-    public static RingString<Real> parse(String string) {
-        String[] terms = TextUtils.split(string.trim(), '+');
-        if (terms.length == 0) {
-            return RingString.getOne();
-        }
-
-        LinkedList<String> words = new LinkedList<>();
-        LinkedList<Real> factors = new LinkedList<>();
-        for (int i = 0; i < terms.length; i++) {
-            String[] term = TextUtils.split(terms[i].trim(), '*');
-            if (term.length < 2) {
-                throw new NumberFormatException();
-            }
-            double f = Double.parseDouble(term[0]);
-            String w = TextUtils.unquote(term[1]);
-            factors.add(new Real(f));
-            words.add(w);
-        }
-
-        return new RingString<>(words, factors);
-    }
     
     public ArithmeticStringElement<Real> parseString(String string) {
         try {
-            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
+            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(string)));
         } catch (Exception e) {
             return null;
         }

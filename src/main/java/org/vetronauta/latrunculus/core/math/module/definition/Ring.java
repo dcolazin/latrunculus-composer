@@ -96,8 +96,6 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
     public Ring<R> getRing() {
         return this;
     }
-    
-    public abstract R parseString(String s);
 
     /**
      * Returns a morphism that translates by <code>element</code>.

@@ -9,12 +9,20 @@ import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
+
+import java.util.LinkedList;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArithmeticParsingUtils {
@@ -120,6 +128,110 @@ public class ArithmeticParsingUtils {
 
     public static ArithmeticRing<?> parseRing(String s) {
         return null; //TODO
+    }
+
+    public static <N extends ArithmeticNumber<N>> RingString<N> parseString(ArithmeticStringRing<N> ring, String s) {
+        if (ring instanceof RStringRing) {
+            return (RingString<N>) parseRString(s);
+        }
+        if (ring instanceof QStringRing) {
+            return (RingString<N>) parseQString(s);
+        }
+        if (ring instanceof ZStringRing) {
+            return (RingString<N>) parseZString(s);
+        }
+        if (ring instanceof ZnStringRing) {
+            return (RingString<N>) parseZnString(s, ((ZnStringRing) ring).getModulus());
+        }
+        throw new NumberFormatException(String.format("parsing string ring %s is not supported", ring));
+    }
+
+    public static RingString<Real> parseRString(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Real> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            double f = Double.parseDouble(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new Real(f));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
+
+    public static RingString<Rational> parseQString(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Rational> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            Rational f = ArithmeticParsingUtils.parseRational(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(f);
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
+
+    public static RingString<ArithmeticInteger> parseZString(String string) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<ArithmeticInteger> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            int f = Integer.parseInt(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new ArithmeticInteger(f));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
+    }
+
+    public static RingString<Modulus> parseZnString(String string, int modulus) {
+        String[] terms = TextUtils.split(string.trim(), '+');
+        if (terms.length == 0) {
+            return RingString.getOne();
+        }
+
+        LinkedList<String> words = new LinkedList<>();
+        LinkedList<Modulus> factors = new LinkedList<>();
+        for (int i = 0; i < terms.length; i++) {
+            String[] term = TextUtils.split(terms[i].trim(), '*');
+            if (term.length < 2) {
+                throw new NumberFormatException();
+            }
+            int f = Integer.parseInt(term[0]);
+            String w = TextUtils.unquote(term[1]);
+            factors.add(new Modulus(f, modulus));
+            words.add(w);
+        }
+
+        return new RingString<>(words, factors);
     }
 
 }

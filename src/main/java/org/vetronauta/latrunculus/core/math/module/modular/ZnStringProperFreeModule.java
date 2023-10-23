@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
@@ -43,7 +44,7 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticStringMultiElement<Modulus>, ArithmeticStringElement<Modulus>> {
+public final class ZnStringProperFreeModule extends ArithmeticStringMultiModule<Modulus> {
 
     public static FreeModule<?, ArithmeticStringElement<Modulus>> make(int dimension, int modulus) {
         dimension = Math.max(dimension, 0);
@@ -55,190 +56,8 @@ public final class ZnStringProperFreeModule extends ProperFreeModule<ArithmeticS
         }
     }
     
-    
-    public ArithmeticStringMultiElement getZero() {
-        List<RingString<Modulus>> res = new ArrayList<>(getDimension());
-        for (int i = 0; i < getDimension(); i++) {
-            res.add(RingString.getZero());
-        }
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), res); //TODO do not cast
-    }
-    
-    
-    public ArithmeticStringMultiElement getUnitElement(int i) {
-        List<RingString<Modulus>> v = new ArrayList<>(getDimension());
-        for (int j = 0; j < getDimension(); j++) {
-            v.add(RingString.getZero());
-        }
-        v.set(i, RingString.getOne());
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), v);
-    }
-    
-
-    public Module getNullModule() {
-        return ZnStringProperFreeModule.make(0, modulus);
-    }
-    
-    
-    public boolean isNullModule() {
-        return getDimension() == 0;
-    }
-
-    
-    public Module getComponentModule(int i) {
-        return ZnStringRing.make(modulus);
-    }
-
-    
-    public Ring getRing() {
-        return ZnStringRing.make(modulus);
-    }
-
-
-    public boolean isVectorSpace() {
-        return false;
-    }
-
-    
-    public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticStringMultiElement &&
-                element.getLength() == getDimension() &&
-                (element).getModule().equals(this) );
-    }
-
-
-    public int compareTo(Module object) {
-        if (object instanceof ZnStringProperFreeModule) {
-            ZnStringProperFreeModule module = (ZnStringProperFreeModule)object;
-            int m = getModulus()-module.getModulus();
-            if (m == 0) {
-                return getDimension()-module.getDimension();
-            }
-            else {
-                return m;
-            }
-        }
-        else {
-            return super.compareTo(object);
-        }
-    }
-
-    
-    public ArithmeticStringMultiElement createElement(List<ModuleElement<?, ?>> elements) {
-        if (elements.size() < getDimension()) {
-            return null;
-        }
-
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
-        List<RingString<Modulus>> values = new ArrayList<>(getDimension());
-        for (int i = 0; i < getDimension(); i++) {
-            ModuleElement object = iter.next();
-            if (object instanceof ArithmeticStringElement && ((ArithmeticStringElement<?>) object).getValue().getObjectOne() instanceof Modulus) {
-                values.add(((ArithmeticStringElement<Modulus>)object).getValue());
-            }
-            else {
-                return null;
-            }
-        }
-
-        return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), values);
-    }
-    
-   
-    public ArithmeticStringMultiElement cast(ModuleElement element) {
-        if (element.getLength() > getDimension()) {
-            Ring ring = getRing();
-            List<ModuleElement<?,?>> elementList = new LinkedList<>();
-            for (int i = 0; i < getDimension(); i++) {
-                ModuleElement e = ring.cast(element.getComponent(i));
-                if (e != null) {
-                    elementList.add(e);
-                }
-                else {
-                    return null;
-                }
-            }
-            return createElement(elementList);
-        }
-        return null;
-    }
-
-    
-    public int getModulus() {
-        return modulus;
-    }
-    
-    
-    public boolean equals(Object object) {
-        return (object instanceof ZnStringProperFreeModule &&
-                getDimension() == ((ZnStringProperFreeModule)object).getDimension() &&
-                getModulus() == ((ZnStringProperFreeModule)object).getModulus());
-    }
-
-    
-    public ArithmeticStringMultiElement parseString(String string) {
-        string = TextUtils.unparenthesize(string);
-        if (string.equals("Null")) {
-            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), new ArrayList<>());
-        }
-        if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
-            string = string.substring(1, string.length()-1);
-            String[] strings = TextUtils.split(string, ',');
-            if (strings.length != getDimension()) {
-                return null;
-            }
-            else {
-                List<RingString<Modulus>> zstrings = new ArrayList<>(getDimension());
-                for (int i = 0; i < strings.length; i++) {
-                    zstrings.add(ZnStringRing.parse(strings[i], getModulus()));
-                }
-                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ArithmeticRingRepository.getModulusRing(getModulus()), zstrings);
-            }            
-        }
-        else {
-            return null;
-        }
-    }
-    
-    
-    public String toString() {
-        return "ZnStringFreeModule["+getDimension()+"]";
-    }
-
-
-    public String toVisualString() {
-        return "Z_"+getModulus()+"-String)^"+getDimension();
-    }
-
-    public String getElementTypeName() {
-        return "ZnStringFreeModule";
-    }
-
-    public int hashCode() {
-        return 11*(37*basicHash + getDimension())+getModulus();        
-    }
-    
-    
-    protected ModuleMorphism _getProjection(int index) {
-        GenericAffineMorphism m = new GenericAffineMorphism(getRing(), getDimension(), 1);
-        m.setMatrix(0, index, getRing().getOne());
-        return m;
-    }
-    
-    
-    protected ModuleMorphism _getInjection(int index) {
-        GenericAffineMorphism m = new GenericAffineMorphism(getRing(), 1, getDimension());
-        m.setMatrix(index, 0, getRing().getOne());
-        return m;
-    }
-
-    
     private ZnStringProperFreeModule(int dimension, int modulus) {
-        super(dimension);
-        this.modulus = modulus;
+        super(ZnStringRing.make(modulus), dimension);
     }
 
-    private int modulus;
-
-    private static final int basicHash = "ZnStringFreeModule".hashCode();
 }

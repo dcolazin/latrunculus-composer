@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.modular;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
@@ -70,31 +71,9 @@ public final class ZnStringRing extends ArithmeticStringRing<Modulus> {
         return modulus;
     }
 
-    public static RingString<Modulus> parse(String string, int modulus) {
-        String[] terms = TextUtils.split(string.trim(), '+');
-        if (terms.length == 0) {
-            return RingString.getOne();
-        }
-
-        LinkedList<String> words = new LinkedList<>();
-        LinkedList<Modulus> factors = new LinkedList<>();
-        for (int i = 0; i < terms.length; i++) {
-            String[] term = TextUtils.split(terms[i].trim(), '*');
-            if (term.length < 2) {
-                throw new NumberFormatException();
-            }
-            int f = Integer.parseInt(term[0]);
-            String w = TextUtils.unquote(term[1]);
-            factors.add(new Modulus(f, modulus));
-            words.add(w);
-        }
-
-        return new RingString<>(words, factors);
-    }
-
     public ArithmeticStringElement<Modulus> parseString(String string) {
         try {
-            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string), getModulus()));
+            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(string)));
         } catch (Exception e) {
             return null;
         }

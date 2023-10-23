@@ -69,32 +69,10 @@ public final class QStringRing extends ArithmeticStringRing<Rational> {
     
     public ArithmeticStringElement<Rational> parseString(String string) {
         try {
-            return new ArithmeticStringElement<>(parse(TextUtils.unparenthesize(string)));
+            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(string)));
         } catch (Exception e) {
             return null;
         }
-    }
-
-    public static RingString<Rational> parse(String string) {
-        String[] terms = TextUtils.split(string.trim(), '+');
-        if (terms.length == 0) {
-            return RingString.getOne();
-        }
-
-        LinkedList<String> words = new LinkedList<>();
-        LinkedList<Rational> factors = new LinkedList<>();
-        for (int i = 0; i < terms.length; i++) {
-            String[] term = TextUtils.split(terms[i].trim(), '*');
-            if (term.length < 2) {
-                throw new NumberFormatException();
-            }
-            Rational f = ArithmeticParsingUtils.parseRational(term[0]);
-            String w = TextUtils.unquote(term[1]);
-            factors.add(f);
-            words.add(w);
-        }
-
-        return new RingString<>(words, factors);
     }
     
     public int hashCode() {
