@@ -17,42 +17,41 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism;
+package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * The abstract base class for morphisms in a composite module.
  * 
  * @author Gérard Milmeister
  */
-public abstract class DirectSumAbstractMorphism extends ModuleMorphism {
+public abstract class DirectSumMorphism<RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<DirectSumElement<RA>,DirectSumElement<RB>,RA,RB> {
 
-    public DirectSumAbstractMorphism(DirectSumModule domain, DirectSumModule codomain) {
+    protected DirectSumMorphism(DirectSumModule<RA> domain, DirectSumModule<RB> codomain) {
         super(domain, codomain);
     }
 
-    
-    public final ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (getDomain().hasElement(x)) {
-            ModuleElement[] components = new ModuleElement[x.getLength()];
-            for (int i = 0; i < x.getLength(); i++) {
-                components[i] = x.getComponent(i);
-            }
-            return mapValue(DirectSumElement.make(components));
-        }
-        else {
+    public final DirectSumElement<RB> map(DirectSumElement<RA> x) throws MappingException {
+        if (!getDomain().hasElement(x)) {
             throw new MappingException("DirectSumAbstractMorphism.map: ", x, this);
         }
+        ModuleElement[] components = new ModuleElement[x.getLength()];
+        for (int i = 0; i < x.getLength(); i++) {
+            components[i] = x.getComponent(i);
+        }
+        return mapValue(DirectSumElement.make(components));
     }
-
     
     /**
      * The low-level map method.
      * This must be implemented by subclasses.
      */
-    public abstract DirectSumElement mapValue(DirectSumElement x);
+    public abstract DirectSumElement<RB> mapValue(DirectSumElement<RA> x);
 }
