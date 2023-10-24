@@ -41,95 +41,95 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         extends Ring<ModularPolynomialElement<B>>
         implements ModularPolynomialFreeModule<ModularPolynomialElement<B>,B> {
 
-    public static ModularPolynomialRing make(PolynomialElement modulus) {
-        if (modulus.getCoefficientRing().isField()) {
-            return new ModularPolynomialRing(modulus);
-        }
-        else {
-            return null;
-        }
+    //TODO is this correct?
+    private final Ring<B> coefficientRing;
+    private final Ring<B> baseRing;
+    private final PolynomialElement<B> modulus;
+    private final PolynomialRing<B> modulusRing;
+    private final String indeterminate;
+
+    private ModularPolynomialRing(PolynomialElement<B> modulus) {
+        this.modulus = modulus;
+        this.indeterminate = modulus.getIndeterminate();
+        this.coefficientRing = modulus.getCoefficientRing();
+        this.baseRing = coefficientRing;
+        this.modulusRing = modulus.getRing();
     }
-    
-    
+
+    public static <X extends RingElement<X>> ModularPolynomialRing<X> make(PolynomialElement<X> modulus) {
+        if (modulus.getCoefficientRing().isField()) {
+            return new ModularPolynomialRing<>(modulus);
+        }
+        return null;
+    }
+
+    @Override
     public String getIndeterminate() {
         return indeterminate;
     }
-    
-    
+
     public boolean hasIndeterminate(String indet) {
         if (getIndeterminate().equals(indet)) {
             return true;
         }
-        else if (coefficientRing instanceof ModularPolynomialRing) {
-            return ((ModularPolynomialRing)coefficientRing).hasIndeterminate(indet);
+        if (coefficientRing instanceof ModularPolynomialRing) {
+            return ((ModularPolynomialRing<?>) coefficientRing).hasIndeterminate(indet);
         }
-        else if (coefficientRing instanceof PolynomialRing) {
-            return ((PolynomialRing)coefficientRing).hasIndeterminate(indet);
+        if (coefficientRing instanceof PolynomialRing) {
+            return ((PolynomialRing<?>) coefficientRing).hasIndeterminate(indet);
         }
-        else {
-            return false;
-        }
+        return false;
     }
-    
     
     public List<String> getIndeterminates() {
         if (coefficientRing instanceof ModularPolynomialRing) {
-            List<String> indeterminates = ((ModularPolynomialRing)coefficientRing).getIndeterminates();
+            List<String> indeterminates = ((ModularPolynomialRing<?>)coefficientRing).getIndeterminates();
             indeterminates.add(0, getIndeterminate());
             return indeterminates;
         }
         else if (coefficientRing instanceof PolynomialRing) {
-            List<String> indeterminates = ((PolynomialRing)coefficientRing).getIndeterminates();
+            List<String> indeterminates = ((PolynomialRing<?>)coefficientRing).getIndeterminates();
             indeterminates.add(0, getIndeterminate());
             return indeterminates;
         }
         else {
-            List<String> indeterminates = new LinkedList<String>();
+            List<String> indeterminates = new LinkedList<>();
             indeterminates.add(getIndeterminate());
             return indeterminates;
         }
     }
-    
-    
-    public Ring<ModularPolynomialElement<B>> getCoefficientRing() {
+
+    public Ring<B> getCoefficientRing() {
         return coefficientRing;
     }
     
-    
-    public Ring getBaseRing() {
+    public Ring<B> getBaseRing() {
         return baseRing;
     }
-    
-    
-    public PolynomialElement getModulus() {
+
+    public PolynomialElement<B> getModulus() {
         return modulus;
     }
     
-    
-    public PolynomialRing getModulusRing() {
+    public PolynomialRing<B> getModulusRing() {
         return modulusRing;
     }
     
-    
-    public ModularPolynomialElement getZero() {
-        return new ModularPolynomialElement(this, new RingElement[] { getCoefficientRing().getZero() } );
+    public ModularPolynomialElement<B> getZero() {
+        return new ModularPolynomialElement<>(this, getCoefficientRing().getZero());
     }
 
-    
-    public ModularPolynomialElement getOne() {
-        return new ModularPolynomialElement(this, new RingElement[] { getCoefficientRing().getOne() } );
+    public ModularPolynomialElement<B> getOne() {
+        return new ModularPolynomialElement<>(this, getCoefficientRing().getOne());
     }
 
-    
     public ModularPolynomialFreeModule getNullModule() {
         return ModularPolynomialProperFreeModule.make(getModulus(), 0);
     }
-    
-    
+
     public boolean isField() {
         return false;
     }
-    
     
     public boolean isVectorSpace() {
         return false;
@@ -139,9 +139,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         if (element instanceof ModularPolynomialElement) {
             return element.getModule().equals(this);
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     
@@ -296,19 +294,4 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     
     private static final int basicHash = "ModularPolynomialRing".hashCode();
 
-
-    private ModularPolynomialRing(PolynomialElement modulus) {
-        this.modulus         = modulus;
-        this.indeterminate   = modulus.getIndeterminate();
-        this.coefficientRing = modulus.getCoefficientRing();
-        this.baseRing        = coefficientRing;
-        this.modulusRing     = modulus.getRing();
-    }
-    
-    
-    private Ring<ModularPolynomialElement<B>>              coefficientRing; //TODO is this correct?
-    private Ring              baseRing;
-    private String            indeterminate;
-    private PolynomialElement modulus;
-    private PolynomialRing    modulusRing;
 }

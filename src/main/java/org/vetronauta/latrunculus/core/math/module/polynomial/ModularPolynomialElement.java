@@ -43,8 +43,8 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
      * @param ring the ring of modular polynomials
      * @param coefficients elements of the coefficient ring
      */
-    public ModularPolynomialElement(ModularPolynomialRing ring, RingElement ... coefficients) {
-        this(ring, new PolynomialElement(ring.getModulusRing(), coefficients));
+    public ModularPolynomialElement(ModularPolynomialRing<B> ring, B... coefficients) {
+        this(ring, new PolynomialElement<>(ring.getModulusRing(), coefficients));
     }
 
     
@@ -421,5 +421,5 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     private PolynomialElement     one;
 
     private static final int basicHash = "ModularPolynomialElement".hashCode();
-    
+
 }
