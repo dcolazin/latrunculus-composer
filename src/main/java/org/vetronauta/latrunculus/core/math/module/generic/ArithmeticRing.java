@@ -55,11 +55,6 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
     }
 
     @Override
-    public final ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    @Override
     public FreeModule<?, ArithmeticElement<N>> getNullModule() {
         return null; //TODO
     }

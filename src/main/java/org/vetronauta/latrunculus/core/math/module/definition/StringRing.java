@@ -32,10 +32,6 @@ import java.util.List;
 public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
 
     public abstract R getOne();
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
 
     @Override
     public StringRing<R> getComponentModule(int i) {

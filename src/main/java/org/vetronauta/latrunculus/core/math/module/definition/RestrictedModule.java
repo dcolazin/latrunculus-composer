@@ -79,7 +79,7 @@ public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElemen
 
     
     public ModuleMorphism getIdentityMorphism() {
-        return new IdentityMorphism(module);
+        return new IdentityMorphism<>(module);
     }
 
     

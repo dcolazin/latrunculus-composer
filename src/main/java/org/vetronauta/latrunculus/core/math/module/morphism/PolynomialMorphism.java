@@ -19,9 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.generic.RingEndomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -32,98 +30,82 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
  * @author Gérard Milmeister
  */
 public class PolynomialMorphism<R extends RingElement<R>> extends RingEndomorphism<R> {
-    
+
+    private final PolynomialElement<R> polynomial;
+
     /**
      * Creates a mapping which evaluates the given <code>polynomial</code>.
      */
     public PolynomialMorphism(PolynomialElement<R> polynomial) {
-        super(polynomial.getRing().getCoefficientRing(), polynomial.getRing().getCoefficientRing());
+        super(polynomial.getRing().getCoefficientRing());
         this.polynomial = polynomial;
     }
 
     
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (x instanceof RingElement) {
-            try {
-                return polynomial.evaluate((RingElement)x);
-            }
-            catch (DomainException e) {
-                throw new MappingException("PolynomialMorphism.map: ", x, this);
-            }
-        }
-        else {
-            throw new MappingException("PolynomialMorphism.map: ", x, this);
-        }
+    public R map(R x) throws MappingException {
+        return polynomial.evaluate(x);
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return polynomial.getDegree() == 1;
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return isIdentity() || polynomial.isZero();
     }
-    
-    
-    public boolean isLinear() {
-        return polynomial.getDegree() == 1
-               && polynomial.getCoefficient(0).isZero();
-    }
-    
 
+    @Override
+    public boolean isLinear() {
+        return polynomial.getDegree() == 1 && polynomial.getCoefficient(0).isZero();
+    }
+
+    @Override
     public boolean isIdentity() {
         return polynomial.getDegree() == 1
                && polynomial.getCoefficient(0).isZero()
                && polynomial.getCoefficient(1).isOne();
     }
-    
 
+    @Override
     public boolean isConstant() {
         return polynomial.getDegree() == 0;
     }
-    
-    
+
     /**
      * Returns the mapping's polynomial.
      */
-    public PolynomialElement getPolynomial() {
+    public PolynomialElement<R> getPolynomial() {
         return polynomial;
     }
-    
-    
-    public ModuleMorphism getRingMorphism() {
+
+    public ModuleMorphism<R,R,R,R> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof PolynomialMorphism) {
-            PolynomialMorphism morphism = (PolynomialMorphism)object;
+            PolynomialMorphism<?> morphism = (PolynomialMorphism<?>)object;
             return polynomial.compareTo(morphism.polynomial);
         }
-        else {
-            return super.compareTo(object);
-        }
+        return super.compareTo(object);
     }
     
-    
+    @Override
     public boolean equals(Object object) {
         if (object == this) {
             return true;
         }
-        else if (object instanceof PolynomialMorphism) {
-            PolynomialMorphism morphism = (PolynomialMorphism)object;
+        if (object instanceof PolynomialMorphism) {
+            PolynomialMorphism<?> morphism = (PolynomialMorphism<?>)object;
             return polynomial.equals(morphism.polynomial);
         }
-        else {
-            return false;
-        }
+        return false;
     }
     
-    
+    @Override
     public String toString() {
         return "PolynomialMorphism["+polynomial+"]";
     }
@@ -131,7 +113,5 @@ public class PolynomialMorphism<R extends RingElement<R>> extends RingEndomorphi
     public String getElementTypeName() {
         return "PolynomialMorphism";
     }
-    
-    
-    private PolynomialElement polynomial;
+
 }

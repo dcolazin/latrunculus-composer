@@ -168,12 +168,6 @@ public final class ProductRing extends Ring<ProductElement> implements ProductFr
         return false;
     }
 
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
     public boolean hasElement(ModuleElement element) {
         return equals(element.getModule());
     }

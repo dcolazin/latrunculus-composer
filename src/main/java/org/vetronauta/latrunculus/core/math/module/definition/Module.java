@@ -45,7 +45,9 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
     /**
      * Returns the identity morphism in this module.
      */
-    ModuleMorphism getIdentityMorphism();
+    default ModuleMorphism getIdentityMorphism() { //TODO should return IdentityMorphism<E,R> ?
+        return ModuleMorphism.getIdentityMorphism(this);
+    }
 
     /**
      * Returns the dimension of this module.

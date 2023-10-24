@@ -37,13 +37,7 @@ public abstract class ProperFreeModule<E extends FreeElement<E,R>, R extends Rin
         dimension = Math.max(dimension, 0);
         this.dimension = dimension;
     }
-    
-    
-    public final ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
 
-    
     public final ModuleMorphism getTranslation(ModuleElement element) {
         return TranslationMorphism.make(this, element);
     }

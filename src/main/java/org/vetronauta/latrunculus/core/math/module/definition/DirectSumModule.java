@@ -90,12 +90,6 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
         }
         return DirectSumElement.make(newComponents);
     }
-    
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-    
 
     public int getDimension() {
         return components.length;

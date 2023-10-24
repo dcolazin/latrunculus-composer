@@ -135,12 +135,6 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return false;
     }
 
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
     public boolean hasElement(ModuleElement element) {
         if (element instanceof ModularPolynomialElement) {
             return element.getModule().equals(this);

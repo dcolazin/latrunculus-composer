@@ -47,27 +47,22 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 public final class PolynomialProperFreeModule<B extends RingElement<B>> extends ProperFreeModule<PolynomialProperFreeElement<B>,PolynomialElement<B>>
         implements PolynomialFreeModule<PolynomialProperFreeElement<B>,B> {
 
-    public static PolynomialFreeModule make(Ring coefficientRing, String indeterminate, int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static <X extends RingElement<X>> PolynomialFreeModule<?,X> make(Ring<X> coefficientRing, String indeterminate, int dimension) {
         if (dimension == 1) {
             return PolynomialRing.make(coefficientRing, indeterminate);
         }
-        else {
-            return new PolynomialProperFreeModule(coefficientRing, indeterminate, dimension);
-        }
+        return new PolynomialProperFreeModule<>(coefficientRing, indeterminate, Math.max(dimension, 0));
+
     }
-    
-    
-    public static PolynomialFreeModule make(PolynomialRing polyRing, int dimension) {
+
+    public static <X extends RingElement<X>> PolynomialFreeModule<?,X> make(PolynomialRing<X> polyRing, int dimension) {
         if (dimension == 1) {
             return polyRing;
         }
-        else {
-            return new PolynomialProperFreeModule(polyRing.getCoefficientRing(), polyRing.getIndeterminate(), dimension);
-        }
+        return new PolynomialProperFreeModule<>(polyRing.getCoefficientRing(), polyRing.getIndeterminate(), dimension);
     }
 
-    
+    @Override
     public PolynomialProperFreeElement<B> getZero() {
         PolynomialElement[] res = new PolynomialElement[getDimension()];
         for (int i = 0; i < getDimension(); i++) {

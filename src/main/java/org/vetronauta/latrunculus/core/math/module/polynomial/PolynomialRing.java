@@ -42,192 +42,168 @@ import java.util.Vector;
  */
 public final class PolynomialRing<R extends RingElement<R>> extends Ring<PolynomialElement<R>> implements PolynomialFreeModule<PolynomialElement<R>,R> {
 
-    public static PolynomialRing make(Ring coefficientRing, String indeterminate) {
-        if (coefficientRing instanceof PolynomialRing) {
-            PolynomialRing r = (PolynomialRing)coefficientRing;
-            if (!r.hasIndeterminate(indeterminate)) {
-                return new PolynomialRing((PolynomialRing)coefficientRing, indeterminate);
-            }
-            else {
-                throw new IllegalArgumentException("Indeterminate "+indeterminate+
-                                                   " occurs in "+coefficientRing);
-            }
+    private final Ring<R> coefficientRing;
+    private final Ring<?> baseRing;
+    private final String indeterminate;
+
+    private PolynomialRing(Ring<R> coefficientRing, String indeterminate) {
+        this.indeterminate = indeterminate;
+        this.coefficientRing = coefficientRing;
+        this.baseRing = coefficientRing instanceof PolynomialRing ? ((PolynomialRing<?>) coefficientRing).baseRing : coefficientRing;
+    }
+
+    public static <X extends RingElement<X>> PolynomialRing<X> make(Ring<X> coefficientRing, String indeterminate) {
+        if (coefficientRing instanceof PolynomialRing && ((PolynomialRing<?>) coefficientRing).hasIndeterminate(indeterminate)) {
+            throw new IllegalArgumentException("Indeterminate " + indeterminate + " occurs in " + coefficientRing);
         }
-        else {
-            return new PolynomialRing(coefficientRing, indeterminate);
-        }
+        return new PolynomialRing<>(coefficientRing, indeterminate);
     }
     
-    
+    @Override
     public String getIndeterminate() {
         return indeterminate;
     }
-    
-    
+
     public boolean hasIndeterminate(String indet) {
         if (getIndeterminate().equals(indet)) {
             return true;
         }
-        else if (coefficientRing instanceof PolynomialRing) {
-            return ((PolynomialRing)coefficientRing).hasIndeterminate(indet);
+        if (coefficientRing instanceof PolynomialRing) {
+            return ((PolynomialRing<?>)coefficientRing).hasIndeterminate(indet);
         }
-        else {
-            return false;
-        }
+        return false;
     }
-    
     
     public List<String> getIndeterminates() {
         if (coefficientRing instanceof PolynomialRing) {
-            List<String> indeterminates = ((PolynomialRing)coefficientRing).getIndeterminates();
+            List<String> indeterminates = ((PolynomialRing<?>)coefficientRing).getIndeterminates();
             indeterminates.add(0, getIndeterminate());
             return indeterminates;
         }
-        else {
-            List<String> indeterminates = new LinkedList<String>();
-            indeterminates.add(getIndeterminate());
-            return indeterminates;
-        }
+        List<String> indeterminates = new LinkedList<>();
+        indeterminates.add(getIndeterminate());
+        return indeterminates;
     }
     
-    
+    @Override
     public Ring<R> getCoefficientRing() {
         return coefficientRing;
     }
-    
-    
-    public Ring getBaseRing() {
+
+    public Ring<?> getBaseRing() {
         return baseRing;
     }
     
-    
-    public PolynomialElement getZero() {
-        return new PolynomialElement(this, new RingElement[] { getCoefficientRing().getZero() } );
+    @Override
+    public PolynomialElement<R> getZero() {
+        return new PolynomialElement<>(this, getCoefficientRing().getZero());
     }
 
-    
-    public PolynomialElement getOne() {
-        return new PolynomialElement(this, new RingElement[] { getCoefficientRing().getOne() } );
+    @Override
+    public PolynomialElement<R> getOne() {
+        return new PolynomialElement<>(this, getCoefficientRing().getOne());
     }
 
-    
-    public PolynomialFreeModule getNullModule() {
+    @Override
+    public PolynomialFreeModule<?,R> getNullModule() {
         return PolynomialProperFreeModule.make(this, 0);
     }
     
-    
+    @Override
     public boolean isField() {
         return false;
     }
     
-    
+    @Override
     public boolean isVectorSpace() {
         return false;
     }
 
-
-    public ModuleMorphism getIdentityMorphism() {
-        return ModuleMorphism.getIdentityMorphism(this);
-    }
-
-    
+    @Override
     public boolean hasElement(ModuleElement element) {
         if (element instanceof PolynomialElement) {
             return element.getModule().equals(this);
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
-    
-    public PolynomialFreeModule getFreeModule(int dimension) {
+    @Override
+    public PolynomialFreeModule<?,R> getFreeModule(int dimension) {
         return PolynomialProperFreeModule.make(this, dimension);
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        else if (object instanceof PolynomialRing) {
-            PolynomialRing r = (PolynomialRing)object;
+        if (object instanceof PolynomialRing) {
+            PolynomialRing<?> r = (PolynomialRing<?>)object;
             return (getCoefficientRing().equals(r.getCoefficientRing()) &&
                         getIndeterminate().equals(r.getIndeterminate()));
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
-    
+    @Override
     public int compareTo(Module object) {
         if (object instanceof PolynomialRing) {
             PolynomialRing p = (PolynomialRing)object;
-            int c;
-            if ((c = getCoefficientRing().compareTo(p.getCoefficientRing())) != 0) {
+            int c = getCoefficientRing().compareTo(p.getCoefficientRing());
+            if (c != 0) {
                 return c;
             }
-            else {
-                return getIndeterminate().compareTo(p.getIndeterminate());
-            }
+            return getIndeterminate().compareTo(p.getIndeterminate());
         }
-        else {
-            return super.compareTo(object);
-        }
+        return super.compareTo(object);
     }
 
-
+    @Override
     public PolynomialElement<R> createElement(List<ModuleElement<?, ?>> elements) {
-        if (elements.size() == 1) {
-            if (hasElement(elements.get(0))) {
+        if (elements.size() == 1 && (hasElement(elements.get(0)))) {
                 return (PolynomialElement)elements.get(0);
-            }
+
         }
-        RingElement[] coeffs = new RingElement[elements.size()];
-        int i = 0;
-        for (ModuleElement e : elements) {
-            coeffs[i] = getCoefficientRing().cast(e);
-            if (coeffs[i] == null) {
+        List<R> coeffs = new ArrayList<>(elements.size());
+        for (ModuleElement<?,?> e : elements) {
+            R currentElement = getCoefficientRing().cast(e);
+            if (currentElement == null) {
                 return null;
             }
+            coeffs.add(currentElement);
         }
-        return new PolynomialElement(this, coeffs);
+        return new PolynomialElement<>(this, coeffs);
     }
 
-    
-    public PolynomialElement cast(ModuleElement element) {
+    @Override
+    public PolynomialElement<R> cast(ModuleElement<?,?> element) {
         if (this.equals(element.getModule())) {
-            return (PolynomialElement)element;
+            return (PolynomialElement<R>) element;
         }
-        else if (element instanceof PolynomialElement) {
-            PolynomialElement p = (PolynomialElement)element;
-            RingElement[] coeffs = p.getCoefficients();
-            RingElement[] newCoeffs = new RingElement[coeffs.length];
-            Ring ring = getCoefficientRing();
-            for (int i = 0; i < coeffs.length; i++) {
-                newCoeffs[i] = (RingElement)ring.cast(coeffs[i]);
-                if (newCoeffs[i] == null) {
+        if (element instanceof PolynomialElement) {
+            PolynomialElement<?> p = (PolynomialElement<?>) element;
+            List<? extends RingElement<?>> coeffs = p.getCoefficients();
+            List<R> newCoeffs = new ArrayList<>(coeffs.size());
+            Ring<R> ring = getCoefficientRing();
+            for (RingElement<?> coeff : coeffs) {
+                R currentCoeff = ring.cast(coeff);
+                if (currentCoeff == null) {
                     return null;
-                }                
+                }
+                newCoeffs.add(currentCoeff);
             }
-            return new PolynomialElement(this, newCoeffs);
+            return new PolynomialElement<>(this, newCoeffs);
         }
-        else if (element instanceof RingElement) {
-            RingElement newCoeff = (RingElement)getCoefficientRing().cast(element);
-            if (newCoeff == null) {
-                return null;
-            }
-            else {
-                return new PolynomialElement(this, new RingElement[] { newCoeff });
+        if (element instanceof RingElement) {
+            R newCoeff = getCoefficientRing().cast(element);
+            if (newCoeff != null) {
+                return new PolynomialElement<>(this, newCoeff);
             }
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
-    
+    @Override
     public String toString() {
         StringBuilder buf = new StringBuilder(40);
         buf.append("PolynomialRing(");
@@ -244,30 +220,30 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return buf.toString();
     }
 
-    
+    @Override
     public String toVisualString() {
-        Ring baseRing = getBaseRing();
-        String s = "";
+        Ring<?> baseRing = getBaseRing();
+        StringBuilder s = new StringBuilder();
         if (baseRing instanceof ProductRing) {
-            s += "(";
-            s += baseRing.toVisualString();
-            s += ")";
+            s.append("(");
+            s.append(baseRing.toVisualString());
+            s.append(")");
         }
         else {
-            s += baseRing.toVisualString();
+            s.append(baseRing.toVisualString());
         }
-        s += "[";
+        s.append("[");
         Iterator<String> iter = getIndeterminates().iterator();
         String in = iter.next();
-        s += in;
+        s.append(in);
         while (iter.hasNext()) {
-            s += ","+iter.next();
+            s.append(",").append(iter.next());
         }
         return s+"]";
     }
     
-    
-    public PolynomialElement parseString(String string) {
+    @Override
+    public PolynomialElement<R> parseString(String string) {
         string = string.trim();
         if (string.equals("0")) {
             return getZero();
@@ -314,8 +290,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         
         return new PolynomialElement(this, ringElements);
     }
-    
-    
+
     private static ArrayList<String> parse(String s) {
         int pos = 0;
         int lastpos = 0;
@@ -343,7 +318,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return m;
     }
 
-    
     private boolean splitTerm(String s, int[] exp, ModuleElement[] factor) {
         String[] timesSplit = splitTimes(s);
         if (timesSplit == null) {
@@ -379,8 +353,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         
         return true;
     }
-    
-    
+
     private String[] splitTimes(String s) {
         int pos = 0;
         int lastpos = 0;
@@ -419,8 +392,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         }
         return m;
     }
-    
-    
+
     private static String[] splitInd(String s) {
         String[] strings = s.split("\\^");
         if (strings.length == 2) {
@@ -438,33 +410,14 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return "PolynomialRing";
     }
 
-    
+    @Override
     public int hashCode() {
         int hashCode = basicHash;
         hashCode ^= coefficientRing.hashCode();
         hashCode ^= indeterminate.hashCode();
         return hashCode;
     }
-
     
     private static final int basicHash = "PolynomialRing".hashCode();
 
-
-    private PolynomialRing(Ring coefficientRing, String indeterminate) {
-        this.indeterminate = indeterminate;
-        this.coefficientRing = coefficientRing;
-        this.baseRing = coefficientRing;
-    }
-    
-    
-    private PolynomialRing(PolynomialRing coefficientRing, String indeterminate) {
-        this.indeterminate = indeterminate;
-        this.coefficientRing = coefficientRing;
-        this.baseRing = ((PolynomialRing)this.coefficientRing).getBaseRing();            
-    }
-    
-    
-    private Ring<R> coefficientRing;
-    private Ring   baseRing;
-    private String indeterminate;
 }
