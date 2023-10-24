@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -38,17 +39,16 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public final class ModularPolynomialProperFreeModule<B extends RingElement<B>>
-        extends ProperFreeModule<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>>
-        implements ModularPolynomialFreeModule<ModularPolynomialProperFreeElement<B>,B> {
+        extends ProperFreeModule<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>> {
 
-    public static ModularPolynomialFreeModule make(PolynomialElement modulus, int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static <X extends RingElement<X>> FreeModule<?,ModularPolynomialElement<X>> make(PolynomialElement<X> modulus, int dimension) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 1) {
             return ModularPolynomialRing.make(modulus);
         }
         else {
             if (modulus.getCoefficientRing().isField()) {
-                return new ModularPolynomialProperFreeModule(modulus, dimension);
+                return new ModularPolynomialProperFreeModule<>(modulus, dimension);
             }
             else {
                 return null;
@@ -76,7 +76,7 @@ public final class ModularPolynomialProperFreeModule<B extends RingElement<B>>
     }
     
 
-    public ModularPolynomialFreeModule getNullModule() {
+    public FreeModule<?,ModularPolynomialElement<B>>  getNullModule() {
         return make(getModulus(), 0);
     }
     

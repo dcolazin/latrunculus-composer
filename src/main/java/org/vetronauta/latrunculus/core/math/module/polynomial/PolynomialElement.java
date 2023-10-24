@@ -72,7 +72,6 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     }
 
     public PolynomialElement(PolynomialRing<R> ring, List<R> coefficients) {
-        assert(CollectionUtils.size(coefficients) > 0);
         this.ring = ring;
         this.coefficients = coefficients;
         normalize();

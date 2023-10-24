@@ -19,13 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,8 +39,7 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public final class ModularPolynomialRing<B extends RingElement<B>>
-        extends Ring<ModularPolynomialElement<B>>
-        implements ModularPolynomialFreeModule<ModularPolynomialElement<B>,B> {
+        extends Ring<ModularPolynomialElement<B>> {
 
     //TODO is this correct?
     private final Ring<B> coefficientRing;
@@ -63,7 +63,6 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return null;
     }
 
-    @Override
     public String getIndeterminate() {
         return indeterminate;
     }
@@ -123,7 +122,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return new ModularPolynomialElement<>(this, getCoefficientRing().getOne());
     }
 
-    public ModularPolynomialFreeModule getNullModule() {
+    public FreeModule<?,ModularPolynomialElement<B>> getNullModule() {
         return ModularPolynomialProperFreeModule.make(getModulus(), 0);
     }
 
@@ -143,7 +142,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
     
-    public ModularPolynomialFreeModule getFreeModule(int dimension) {
+    public FreeModule<?,ModularPolynomialElement<B>> getFreeModule(int dimension) {
         return ModularPolynomialProperFreeModule.make(getModulus(), dimension);
     }
 
@@ -179,53 +178,46 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
 
-    public ModularPolynomialElement createElement(List<ModuleElement<?,?>> elements) {
-        if (elements.size() == 1) {
-            if (hasElement(elements.get(0))) {
-                return (ModularPolynomialElement)elements.get(0);
-            }
+    public ModularPolynomialElement<B> createElement(List<ModuleElement<?,?>> elements) {
+        if (elements.size() == 1 && (hasElement(elements.get(0)))) {
+            return (ModularPolynomialElement<B>) elements.get(0);
         }
-        RingElement[] coeffs = new RingElement[elements.size()];
+        List<B> coeffs = new ArrayList<>(elements.size());
         int i = 0;
-        for (ModuleElement e : elements) {
-            coeffs[i] = (RingElement)getCoefficientRing().cast(e);
-            if (coeffs[i] == null) {
+        for (ModuleElement<?,?> e : elements) {
+            B currentElement = getCoefficientRing().cast(e);
+            if (currentElement == null) {
                 return null;
             }
+            coeffs.add(currentElement);
         }
-        return new ModularPolynomialElement(this, coeffs);
+        return new ModularPolynomialElement<>(this, coeffs);
     }
 
     
-    public ModularPolynomialElement cast(ModuleElement element) {
+    public ModularPolynomialElement<B> cast(ModuleElement<?,?> element) {
         if (this.equals(element.getModule())) {
-            return (ModularPolynomialElement)element;
+            return (ModularPolynomialElement<B>) element;
         }
-        else if (element instanceof PolynomialElement) {
-            PolynomialElement p = (PolynomialElement)element;
-            RingElement[] coeffs = p.getCoefficients();
-            RingElement[] newCoeffs = new RingElement[coeffs.length];
-            Ring ring = getCoefficientRing();
-            for (int i = 0; i < coeffs.length; i++) {
-                newCoeffs[i] = (RingElement)ring.cast(coeffs[i]);
-                if (newCoeffs[i] == null) {
+        if (element instanceof PolynomialElement) {
+            PolynomialElement<?> p = (PolynomialElement<?>) element;
+            List<? extends RingElement<?>> coeffs = p.getCoefficients();
+            List<B> newCoeffs = new ArrayList<>(coeffs.size());
+            Ring<B> ring = getCoefficientRing();
+            for (RingElement<?> coeff : coeffs) {
+                B currentCoeff = ring.cast(coeff);
+                if (currentCoeff == null) {
                     return null;
-                }                
+                }
+                newCoeffs.add(currentCoeff);
             }
-            return new ModularPolynomialElement(this, newCoeffs);
+            return new ModularPolynomialElement<>(this, newCoeffs);
         }
-        else if (element instanceof RingElement) {
-            RingElement newCoeff = (RingElement)getCoefficientRing().cast(element);
-            if (newCoeff == null) {
-                return null;
-            }
-            else {
-                return new ModularPolynomialElement(this, new RingElement[] { newCoeff });
-            }
+        if (element instanceof RingElement) {
+            B newCoeff = getCoefficientRing().cast(element);
+            return newCoeff != null ? new ModularPolynomialElement<>(this, newCoeff) : null;
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
     
@@ -242,26 +234,26 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     
     public String toVisualString() {
         Ring baseRing = getBaseRing();
-        String s = "";
+        StringBuilder s = new StringBuilder();
         if (baseRing instanceof ProductRing) {
-            s += "(";
-            s += baseRing.toVisualString();
-            s += ")";
+            s.append("(");
+            s.append(baseRing.toVisualString());
+            s.append(")");
         }
         else {
-            s += baseRing.toVisualString();
+            s.append(baseRing.toVisualString());
         }
-        s += "[";
+        s.append("[");
         Iterator<String> iter = getIndeterminates().iterator();
         String in = iter.next();
-        s += in;
+        s.append(in);
         while (iter.hasNext()) {
-            s += ","+iter.next();
+            s.append(",").append(iter.next());
         }
-        s += "]/(";
-        s += getModulus().stringRep();
-        s += ")";
-        return s;
+        s.append("]/(");
+        s.append(getModulus().stringRep());
+        s.append(")");
+        return s.toString();
     }
     
     

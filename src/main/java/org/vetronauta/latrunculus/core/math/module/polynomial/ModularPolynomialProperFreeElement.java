@@ -21,6 +21,8 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
@@ -32,9 +34,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> extends ProperFreeElement<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>> implements ModularPolynomialFreeElement<ModularPolynomialProperFreeElement<B>,B> {
+public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> extends ProperFreeElement<ModularPolynomialProperFreeElement<B>,ModularPolynomialElement<B>> {
 
-    public static ModularPolynomialFreeElement make(ModularPolynomialRing ring, ModularPolynomialElement[] v) {
+    public static <X extends RingElement<X>> FreeElement<?,ModularPolynomialElement<X>> make(ModularPolynomialRing<X> ring, ModularPolynomialElement[] v) {
         if (v.length == 1) {
             return v[0];
         }
@@ -220,9 +222,9 @@ public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> 
     }
     
 
-    public ModularPolynomialFreeModule getModule() {
+    public ModularPolynomialProperFreeModule<B> getModule() {
         if (module == null) {
-            module = ModularPolynomialProperFreeModule.make(ring.getModulus(), getLength());
+            module = (ModularPolynomialProperFreeModule<B> ) ModularPolynomialProperFreeModule.make(ring.getModulus(), getLength());
         }
         return module;
     }
@@ -253,7 +255,7 @@ public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> 
     }
     
 
-    public ModularPolynomialFreeElement resize(int n) {
+    public FreeElement<?,ModularPolynomialElement<B>> resize(int n) {
         if (n == getLength()) {
             return this;
         }
@@ -381,7 +383,7 @@ public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> 
 
 
     private ModularPolynomialElement[]  value;
-    private ModularPolynomialFreeModule module = null;
+    private ModularPolynomialProperFreeModule<B>  module = null;
     private ModularPolynomialRing       ring = null;
 
     @Override

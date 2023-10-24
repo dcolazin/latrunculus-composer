@@ -21,13 +21,14 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
@@ -42,10 +43,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -638,7 +637,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 values[i++] = iter.next();
             }
             ModularPolynomialRing rng = values[0].getRing();
-            ModularPolynomialFreeElement result = ModularPolynomialProperFreeElement.make(rng, values);
+            FreeElement<?,? extends ModularPolynomialElement<?>> result = ModularPolynomialProperFreeElement.make(rng, values);
             return result;
         }
         else {

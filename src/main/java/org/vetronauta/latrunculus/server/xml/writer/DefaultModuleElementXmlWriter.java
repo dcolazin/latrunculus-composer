@@ -192,11 +192,11 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         writer.closeBlock();
     }
 
-    private void write(PolynomialElement element, XMLWriter writer) {
+    private void write(PolynomialElement<?> element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(),
                 INDETERMINATE_ATTR, element.getRing().getIndeterminate());
-        for (int i = 0; i < element.getCoefficients().length; i++) {
-            definitionWriter.toXML(element.getCoefficients()[i], writer);
+        for (int i = 0; i < element.getCoefficients().size(); i++) {
+            definitionWriter.toXML(element.getCoefficients().get(i), writer);
         }
         writer.closeBlock();
     }

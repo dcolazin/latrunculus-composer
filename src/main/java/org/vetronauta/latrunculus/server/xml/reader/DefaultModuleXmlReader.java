@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
@@ -38,7 +39,7 @@ import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -414,7 +415,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
                 return null;
             }
             PolynomialElement pe = (PolynomialElement)me;
-            ModularPolynomialFreeModule mpfm = ModularPolynomialProperFreeModule.make(pe, dimension);
+            FreeModule<?, ? extends ModularPolynomialElement<?>> mpfm = ModularPolynomialProperFreeModule.make(pe, dimension);
             return mpfm;
         }
         else {
