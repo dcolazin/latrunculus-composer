@@ -5,7 +5,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.List;

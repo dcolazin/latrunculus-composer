@@ -27,7 +27,7 @@ import org.rubato.base.Unsafe;
 import org.rubato.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.io.PrintStream;

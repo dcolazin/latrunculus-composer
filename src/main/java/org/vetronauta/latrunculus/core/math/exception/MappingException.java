@@ -17,10 +17,11 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism;
+package org.vetronauta.latrunculus.core.math.exception;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * Exception thrown when a module morphism fails to map an element.

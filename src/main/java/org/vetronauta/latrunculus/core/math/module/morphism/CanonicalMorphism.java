@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;

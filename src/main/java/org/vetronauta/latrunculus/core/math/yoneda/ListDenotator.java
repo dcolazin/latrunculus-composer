@@ -29,7 +29,7 @@ import org.rubato.logeo.Lists;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.io.PrintStream;

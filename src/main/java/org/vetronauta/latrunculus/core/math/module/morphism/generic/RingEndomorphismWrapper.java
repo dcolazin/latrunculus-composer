@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
