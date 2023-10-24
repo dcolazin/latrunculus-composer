@@ -20,19 +20,23 @@
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.Wrapper;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The ring of polynomials with coefficients in a specified ring.
@@ -254,21 +258,21 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         
         ArrayList<String> m = parse(TextUtils.unparenthesize(string));
         int[] exp = new int[1];
-        ModuleElement[] factor = new ModuleElement[1];
-        Vector<ModuleElement> terms = new Vector<>(30);
+        Wrapper<R> factor = new Wrapper<>();
+        Vector<R> terms = new Vector<>(30);
         terms.setSize(1);
         int maxexp = 0;
         try {
-            for (int i = 0; i < m.size(); i++) {
-                if (splitTerm(m.get(i), exp, factor)) {
+            for (String s : m) {
+                if (splitTerm(s, exp, factor)) {
                     if (maxexp < exp[0]) {
                         maxexp = exp[0];
                         terms.setSize(exp[0] + 1);
                     }
                     if (terms.get(exp[0]) != null) {
-                        (terms.get(exp[0])).add(factor[0]);
+                        (terms.get(exp[0])).add(factor.get());
                     } else {
-                        terms.set(exp[0], factor[0]);
+                        terms.set(exp[0], factor.get());
                     }
                 } else {
                     return null;
@@ -279,16 +283,15 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
             return null;
         }
         
-        RingElement[] ringElements = new RingElement[terms.size()];
-        for (int i = 0; i < ringElements.length; i++) {
-            RingElement element = (RingElement)terms.get(i);
+        List<R> ringElements = new ArrayList<>(terms.size());
+        for (R element : terms) {
             if (element == null) {
                 element = getCoefficientRing().getZero();
             }
-            ringElements[i] = element;
+            ringElements.add(element);
         }
         
-        return new PolynomialElement(this, ringElements);
+        return new PolynomialElement<>(this, ringElements);
     }
 
     private static ArrayList<String> parse(String s) {
@@ -318,20 +321,17 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return m;
     }
 
-    private boolean splitTerm(String s, int[] exp, ModuleElement[] factor) {
+    private boolean splitTerm(String s, int[] exp, Wrapper<R> factor) {
         String[] timesSplit = splitTimes(s);
-        if (timesSplit == null) {
-            return false;
-        }
-        
+
         String[] indSplit = splitInd(timesSplit[1]);
         if (indSplit == null) {
             return false;
         }
 
         // get coefficient
-        factor[0] = getCoefficientRing().parseString(timesSplit[0]);
-        if (factor[0] == null) {
+        factor.set(getCoefficientRing().parseString(timesSplit[0]));
+        if (factor.get() == null) {
             return false;
         }
         
@@ -347,11 +347,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         catch (NumberFormatException e) {
             return false;
         }
-        if (exp[0] < 0) {
-            return false;
-        }
-        
-        return true;
+        return exp[0] >= 0;
     }
 
     private String[] splitTimes(String s) {
@@ -417,7 +413,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         hashCode ^= indeterminate.hashCode();
         return hashCode;
     }
-    
+
     private static final int basicHash = "PolynomialRing".hashCode();
 
 }

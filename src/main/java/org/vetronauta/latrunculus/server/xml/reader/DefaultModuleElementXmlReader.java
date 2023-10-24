@@ -495,7 +495,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         String indeterminate = element.getAttribute(INDETERMINATE_ATTR);
         Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
         if (childElement != null) {
-            LinkedList<RingElement> elements = new LinkedList<RingElement>();
+            List<RingElement<?>> elements = new LinkedList<>();
             ModuleElement moduleElement = reader.parseModuleElement(childElement);
             if (moduleElement == null) {
                 return null;
@@ -504,7 +504,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "RingElement");
                 return null;
             }
-            RingElement ringElement = (RingElement)moduleElement;
+            RingElement<?> ringElement = (RingElement<?>) moduleElement;
             Ring ring0 = ringElement.getRing();
             elements.add(ringElement);
             Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
@@ -525,12 +525,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(ringElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            RingElement[] coeffs = new RingElement[elements.size()];
-            int i = 0;
-            for (RingElement e : elements) {
-                coeffs[i++] = e;
-            }
-            PolynomialElement result = new PolynomialElement(indeterminate, coeffs);
+            PolynomialElement result = new PolynomialElement(indeterminate, elements);
             return result;
         }
         else {

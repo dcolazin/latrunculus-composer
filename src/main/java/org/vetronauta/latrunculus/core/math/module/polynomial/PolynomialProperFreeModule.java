@@ -47,6 +47,14 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 public final class PolynomialProperFreeModule<B extends RingElement<B>> extends ProperFreeModule<PolynomialProperFreeElement<B>,PolynomialElement<B>>
         implements PolynomialFreeModule<PolynomialProperFreeElement<B>,B> {
 
+    private final PolynomialRing<B> ring;
+
+    private PolynomialProperFreeModule(Ring<B> coefficientRing, String indeterminate, int dimension) {
+        super(dimension);
+        this.ring = PolynomialRing.make(coefficientRing, indeterminate);
+
+    }
+
     public static <X extends RingElement<X>> PolynomialFreeModule<?,X> make(Ring<X> coefficientRing, String indeterminate, int dimension) {
         if (dimension == 1) {
             return PolynomialRing.make(coefficientRing, indeterminate);
@@ -267,16 +275,6 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
         m.setMatrix(index, 0, getRing().getOne());
         return m;
     }
-
-    
-    private PolynomialProperFreeModule(Ring coefficientRing, String indeterminate, int dimension) {
-        super(dimension);
-        this.ring = PolynomialRing.make(coefficientRing, indeterminate);
-        
-    }
-
-    
-    private PolynomialRing ring;
     
     private static final int basicHash = "PolynomialFreeModule".hashCode();    
 }

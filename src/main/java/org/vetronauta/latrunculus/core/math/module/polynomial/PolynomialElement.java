@@ -27,15 +27,13 @@ import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Elements in a ring of polynomials.
@@ -54,10 +52,11 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
      * The array of <code>coefficients</code> contains the coefficient of power <code>n</code>
      * at index <code>n</code>.
      * @param ring the ring of polynomials
-     * @param coefficients elements of the coefficient ring
+     * @param coefficient element of the coefficient ring
      */
-    public PolynomialElement(PolynomialRing<R> ring, R... coefficients) { //TODO use only list constructor
-        this(ring, Arrays.stream(coefficients).collect(Collectors.toList()));
+    public PolynomialElement(PolynomialRing<R> ring, R coefficient) {
+        this(ring, new ArrayList<>());
+        coefficients.add(coefficient);
     }
     
     /**
@@ -68,8 +67,8 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
      * be elements of the the same ring.
      * @param coefficients elements of the coefficient ring
      */
-    public PolynomialElement(String indeterminate, R... coefficients) { //TODO use only list constructor
-        this(PolynomialRing.make(coefficients[0].getRing(), indeterminate), coefficients);
+    public PolynomialElement(String indeterminate, List<R> coefficients) {
+        this(PolynomialRing.make(coefficients.get(0).getRing(), indeterminate), coefficients);
     }
 
     public PolynomialElement(PolynomialRing<R> ring, List<R> coefficients) {
@@ -114,389 +113,179 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
 
     @Override
     public void add(PolynomialElement<R> element) throws DomainException {
-        List<R> otherCoefficients = element.getCoefficients();
-        int len = getCoefficients().size();
-        int otherLen = otherCoefficients.size();
-        int newLen = Math.max(len, otherLen);
-        List<R> newCoefficients;
-        if (newLen > len) {
-            newCoefficients = new ArrayList<>(newLen);
-            for (int i = 0; i < len; i++) {
-                newCoefficients.add(coefficients.get(i));
-            }
-            for (int i = len; i < newLen; i++) {
-                newCoefficients.add(otherCoefficients.get(i));
-            }
-        } else {
-            newCoefficients = coefficients;
-        }
-        for (int i = 0; i < Math.min(len, otherLen); i++) {
-            newCoefficients.get(i).add(otherCoefficients.get(i));
-        }
-        coefficients = newCoefficients;
-        normalize();
+        coefficients = this.sum(element).coefficients;
     }
-    
+
+    @Override
     public PolynomialElement<R> difference(PolynomialElement<R> element) throws DomainException {
         List<R> otherCoefficients = element.getCoefficients();
         int len = getCoefficients().size();
         int otherLen = otherCoefficients.size();
         int newLen = Math.max(len, otherLen);
-        RingElement[] newCoefficients = new RingElement[newLen];
+        List<R> newCoefficients = new ArrayList<>(newLen);
         for (int i = 0; i < len; i++) {
-            newCoefficients[i] = coefficients[i].deepCopy();
+            newCoefficients.add(coefficients.get(i).deepCopy());
         }
         if (newLen > len) {
             for (int i = len; i < newLen; i++) {
-                newCoefficients[i] = otherCoefficients[i].deepCopy();
-                newCoefficients[i].negate();
+                newCoefficients.add(otherCoefficients.get(i).deepCopy().negated());
             }
         }
         for (int i = 0; i < Math.min(len, otherLen); i++) {
-            newCoefficients[i].subtract(otherCoefficients[i]);
+            newCoefficients.get(i).subtract(otherCoefficients.get(i));
         }
-        PolynomialElement res = new PolynomialElement();
-        res.setPolynomialRing(ring);
-        res.setCoefficients(newCoefficients);
-        res.normalize();
-        return res;
-    }
-    
-    public void subtract(PolynomialElement<R> element)
-            throws DomainException {
-        if (getRing().equals(element.getRing())) {
-            try {
-                RingElement[] otherCoefficients = element.getCoefficients();
-                int len = getCoefficients().length;
-                int otherLen = otherCoefficients.length;
-                int newLen = Math.max(len, otherLen);
-                RingElement[] newCoefficients;
-                if (newLen > len) {
-                    newCoefficients = new RingElement[newLen];
-                    for (int i = 0; i < len; i++) {
-                        newCoefficients[i] = coefficients[i];
-                    }
-                    for (int i = len; i < newLen; i++) {
-                        newCoefficients[i] = (RingElement)otherCoefficients[i].negated();
-                    }
-                }
-                else {
-                    newCoefficients = coefficients;
-                }
-                for (int i = 0; i < Math.min(len, otherLen); i++) {
-                    newCoefficients[i].subtract(otherCoefficients[i]);
-                }
-                coefficients = newCoefficients;
-                normalize();
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+        return new PolynomialElement<>(ring, newCoefficients);
     }
 
-    
+    @Override
+    public void subtract(PolynomialElement<R> element) throws DomainException {
+        coefficients = this.difference(element).coefficients;
+    }
+
+    @Override
     public PolynomialElement<R> negated() {
-        RingElement[] newCoefficients = new RingElement[coefficients.length];
-        for (int i = 0; i < coefficients.length; i++) {
-            newCoefficients[i] = (RingElement)coefficients[i].negated();
+        List<R> newCoefficients = new ArrayList<>(coefficients.size());
+        for (R coefficient : coefficients) {
+            newCoefficients.add(coefficient.negated());
         }
-        PolynomialElement res = new PolynomialElement();
-        res.setPolynomialRing(ring);
-        res.setCoefficients(newCoefficients);
-        return res;
+        return new PolynomialElement<>(ring, coefficients);
     }
 
-    
+    @Override
     public void negate() {
-        for (int i = 0; i < coefficients.length; i++) {
-            coefficients[i].negate();
-        }
-    }
-    
-    //TODO FIX!!! the element should be in R, but this is a notion of algebra...
-    public PolynomialElement<R> scaled(PolynomialElement<R> element)
-            throws DomainException {
-        if (ring.getCoefficientRing().hasElement(element)) {
-            return product(element);
-        }
-        else {
-            throw new DomainException(ring.getCoefficientRing(), element.getRing());
-        }
+        coefficients = this.negated().coefficients;
     }
 
-    //TODO FIX!!! the element should be in R, but this is a notion of algebra...
-    public void scale(PolynomialElement<R> element)
-            throws DomainException {
-        if (ring.getCoefficientRing().hasElement(element)) {
-            multiply(element);
-        }
-        else {
-            throw new DomainException(ring.getCoefficientRing(), element.getRing());
-        }
-    }
-    
-    public PolynomialElement<R> product(PolynomialElement<R> element)
-            throws DomainException {
-        if (getRing().equals(element.getRing())) {
-            if (isZero()) { return this; }
-            if (element.isZero()) { return element; }
-            RingElement[] newCoefficients = new RingElement[getDegree()+element.getDegree()+1];
-            int i, j;
-            for (i = 0; i < newCoefficients.length; i++) {
-                newCoefficients[i] = (RingElement) ring.getCoefficientRing().getZero();
-            }
-            for (i = 0; i <= getDegree(); i++) {
-                for (j = 0; j <= element.getDegree(); j++) {
-                    RingElement p = getCoefficient(i).product(element.getCoefficient(j));
-                    newCoefficients[i+j].add(p);
-                }
-            }
-            PolynomialElement res = new PolynomialElement();
-            res.setPolynomialRing(ring);
-            res.setCoefficients(newCoefficients);
-            res.normalize();
-            return res;
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-    }
-    
-    public void multiply(PolynomialElement<R> element)
-            throws DomainException {
-        if (getRing().equals(element.getRing())) {
-            int d0 = Math.max(getDegree(), 0);
-            int d1 = Math.max(element.getDegree(), 0);
-            RingElement[] newCoefficients = new RingElement[d0+d1+1];
-            int i, j;
-            for (i = 0; i < newCoefficients.length; i++) {
-                newCoefficients[i] = (RingElement) ring.getCoefficientRing().getZero();
-            }
-            for (i = 0; i <= d0; i++) {
-                for (j = 0; j <= d1; j++) {
-                    RingElement p = getCoefficient(i).product(element.getCoefficient(j));
-                    newCoefficients[i+j].add(p);
-                }
-            }
-            setPolynomialRing(ring);
-            setCoefficients(newCoefficients);
-            normalize();
-        }
-        else {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+    //TODO for scaled and scale, the element was intended to be in R, but this is a notion of algebra...
+    @Override
+    public PolynomialElement<R> scaled(PolynomialElement<R> element) throws DomainException {
+        return product(element);
     }
 
-    
+    //TODO for scaled and scale, the element was intended to be in R, but this is a notion of algebra...
+    @Override
+    public void scale(PolynomialElement<R> element) throws DomainException {
+        multiply(element);
+    }
+
+    @Override
+    public PolynomialElement<R> product(PolynomialElement<R> element) throws DomainException {
+        if (this.isZero()) {
+            return this;
+        }
+        if (element.isZero()) {
+            return element;
+        }
+        int newDegree = getDegree() + element.getDegree() + 1;
+        List<R> newCoefficients = new ArrayList<>(newDegree);
+        for (int i = 0; i < newDegree; i++) {
+            newCoefficients.add(ring.getCoefficientRing().getZero());
+        }
+        for (int i = 0; i <= getDegree(); i++) {
+            for (int j = 0; j <= element.getDegree(); j++) {
+                R p = getCoefficient(i).product(element.getCoefficient(j));
+                newCoefficients.get(i+j).add(p);
+            }
+        }
+        return new PolynomialElement<>(ring, newCoefficients);
+    }
+
+    @Override
+    public void multiply(PolynomialElement<R> element) throws DomainException {
+        coefficients = this.product(element).coefficients;
+    }
+
+    @Override
     public boolean isInvertible() {
         return getDegree() == 0 && getCoefficient(0).isInvertible();
     }
     
-    
-    public PolynomialElement inverse() {
+    @Override
+    public PolynomialElement<R> inverse() {
         if (isInvertible()) {
-            return new PolynomialElement(getRing(), getCoefficient(0).inverse());
+            return new PolynomialElement<>(getRing(), getCoefficient(0).inverse());
         }
-        else {
-            throw new InverseException("Inverse of "+this+" does not exist");
-        }
+        throw new InverseException("Inverse of "+this+" does not exist");
     }
 
-    
+    @Override
     public void invert() {
-        if (isInvertible()) {
-            setCoefficients(new RingElement[] {getCoefficient(0).inverse()});
-        }
-        else {
-            throw new InverseException("Inverse of "+this+" does not exist");
-        }
-    }
-    
-    public PolynomialElement<R> quotient(PolynomialElement<R> element)
-            throws DomainException, DivisionException {
-        if (getRing().equals(element.getRing())) {
-            PolynomialElement[] remainder = new PolynomialElement[1];
-            PolynomialElement q = quorem(element, remainder);
-            if (remainder[0].getDegree() <= 0) {
-                return q;
-            }
-            else {
-                throw new DivisionException(this, element);
-            }
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
+        coefficients = this.inverse().coefficients;
     }
 
-    public void divide(PolynomialElement<R> element)
-            throws DomainException, DivisionException {
-        if (getRing().equals(element.getRing())) {
-            PolynomialElement[] remainder = new PolynomialElement[1];
-            PolynomialElement q = quorem(element, remainder);
-            if (remainder[0].getDegree() <= 0) {
-                coefficients = q.coefficients;
-            }
-            else {
-                throw new DivisionException(this, element);
-            }
+    @Override
+    public PolynomialElement<R> quotient(PolynomialElement<R> element) throws DomainException, DivisionException {
+        PolynomialElement[] remainder = new PolynomialElement[1];
+        PolynomialElement<R> q = quotientRemainder(element, remainder);
+        if (remainder[0].getDegree() <= 0) {
+            return q;
         }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
+        throw new DivisionException(this, element);
     }
 
+    @Override
+    public void divide(PolynomialElement<R> element) throws DomainException, DivisionException {
+        coefficients = this.quotient(element).coefficients;
+    }
 
-    public boolean divides(RingElement element) {
-        if (element instanceof PolynomialElement) {
-            PolynomialElement pol = (PolynomialElement)element;
-            try {
-                PolynomialElement remainder = pol.rem(this);
-                if (remainder.getDegree() <= 0) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-            catch (DomainException e) {
-                return false;
-            }
-            catch (DivisionException e) {
-                return false;
-            }
+    @Override
+    public boolean divides(RingElement<?> element) {
+        if (!ring.hasElement(element)) {
+            return false;
         }
-        else {
+        PolynomialElement<R> pol = (PolynomialElement<R>)element;
+        try {
+            PolynomialElement<R> remainder = pol.remainder(this);
+            return remainder.getDegree() <= 0;
+        }
+        catch (DomainException | DivisionException  e) {
             return false;
         }
     }
 
-    public PolynomialElement<R> quorem(PolynomialElement<R> element, PolynomialElement[] remainder)
+    public PolynomialElement<R> quotientRemainder(PolynomialElement<R> element, PolynomialElement[] remainder)
             throws DomainException, DivisionException {
-        if (getRing().hasElement(element)) {
-            if (element.isZero()) {
-                throw new DivisionException(this, element);
+        if (element.isZero()) {
+            throw new DivisionException(this, element);
+        }
+        if (getDegree() < element.getDegree()) {
+            remainder[0] = this;
+            return getRing().getZero();
+        }
+        try {
+            List<R> p = new ArrayList<>(coefficients.size());
+            int pdeg = coefficients.size()-1;
+            for (int i = 0; i <= pdeg; i++) {
+                p.add(coefficients.get(i));
             }
-            else if (getDegree() < element.getDegree()) {
-                remainder[0] = this;
-                return getRing().getZero();
-            }
-            try {
-                RingElement[] p = new RingElement[coefficients.length];
-                int pdeg = p.length-1;
-                for (int i = 0; i <= pdeg; i++) { p[i] = coefficients[i]; }
 
-                RingElement[] q = element.coefficients;
-                int qdeg = q.length-1;
+            List<R> q = element.coefficients;
+            int qdeg = q.size() - 1;
 
 
-                RingElement[] quotient = new RingElement[pdeg-qdeg+1];
-                int quotientdeg = quotient.length-1;
+            LinkedList<R> quotient = new LinkedList<>();
 
-                int pi = pdeg;
-                while (pi >= qdeg) {
-                    RingElement q1 = p[pi].quotient(q[qdeg]);
-                    quotient[quotientdeg] = q1;
-                    for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
-                    }
-                    pi--;
-                    quotientdeg--;
+            int pi = pdeg;
+            while (pi >= qdeg) {
+                R q1 = p.get(pi).quotient(q.get(qdeg));
+                quotient.addFirst(q1);
+                for (int i = pi, j = qdeg; j >= 0; i--, j--) {
+                    p.set(i, p.get(i).difference(q1.product(q.get(j))));
                 }
-                remainder[0] = new PolynomialElement(getRing(), p);
-                return new PolynomialElement(getRing(), quotient);
+                pi--;
             }
-            catch (DivisionException e) {
-                throw new DivisionException(this, element);
-            }
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
-    }
-    
-    
-    public PolynomialElement quo(PolynomialElement element)
-            throws DomainException, DivisionException {
-        if (getRing().hasElement(element)) {
-            if (element.isZero()) {
-                throw new DivisionException(this, element);
-            }
-            else if (getDegree() < element.getDegree()) {
-                return getRing().getZero();
-            }
-            try {
-                RingElement[] p = new RingElement[coefficients.length];
-                int pdeg = p.length-1;
-                for (int i = 0; i <= pdeg; i++) { p[i] = coefficients[i]; }
-
-                RingElement[] q = element.coefficients;
-                int qdeg = q.length-1;
-
-
-                RingElement[] quotient = new RingElement[pdeg-qdeg+1];
-                int quotientdeg = quotient.length-1;
-
-                int pi = pdeg;
-                while (pi >= qdeg) {
-                    RingElement q1 = p[pi].quotient(q[qdeg]);
-                    quotient[quotientdeg] = q1;
-                    for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
-                    }
-                    pi--;
-                    quotientdeg--;
-                }
-                return new PolynomialElement(getRing(), quotient);
-            }
-            catch (DivisionException e) {
-                throw new DivisionException(this, element);
-            }
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
+            remainder[0] = new PolynomialElement<>(getRing(), p);
+            return new PolynomialElement<>(getRing(), quotient);
+        } catch (DivisionException e) {
+            throw new DivisionException(this, element);
         }
     }
 
-    
-    public PolynomialElement rem(PolynomialElement element)
-            throws DomainException, DivisionException {
-        if (getRing().hasElement(element)) {
-            if (element.isZero()) {
-                throw new DivisionException(this, element);
-            }
-            else if (getDegree() < element.getDegree()) {
-                return this;
-            }
-            try {
-                RingElement[] p = new RingElement[coefficients.length];
-                int pdeg = p.length-1;
-                for (int i = 0; i <= pdeg; i++) { p[i] = coefficients[i]; }
-
-                RingElement[] q = element.coefficients;
-                int qdeg = q.length-1;
-
-                int pi = pdeg;
-                while (pi >= qdeg) {
-                    RingElement q1 = p[pi].quotient(q[qdeg]);
-                    for (int i = pi, j = qdeg; j >= 0; i--, j--) {
-                        p[i] = (RingElement) p[i].difference(q1.product(q[j]));
-                    }
-                    pi--;
-                }
-                return new PolynomialElement(getRing(), p);
-            }
-            catch (DivisionException e) {
-                throw new DivisionException(this, element);
-            }
-        }
-        else {
-            throw new DomainException(getRing(), element.getRing());
-        }
+    //TODO proper dto
+    public PolynomialElement<R> remainder(PolynomialElement<R> element) throws DomainException, DivisionException {
+        PolynomialElement[] remainder = new PolynomialElement[1];
+        quotientRemainder(element, remainder);
+        return remainder[0];
     }
 
     
@@ -504,31 +293,26 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
      * Returns the greatest common divisior
      * of <code>this</code> and <code>element</code>.
      */
-    public PolynomialElement gcd(PolynomialElement element)
-            throws DomainException, DivisionException {
-        if (getModule().equals(element.getModule())) {
-            PolynomialElement r0 = this;
-            PolynomialElement r1 = element;
-            PolynomialElement remainder;
-            
-            while (!r1.isZero()) {
-                remainder = r0.rem(r1);
-                r0 = r1;
-                r1 = remainder;
-            }
-            RingElement lc = r0.coefficients[r0.coefficients.length-1];
-            if (!lc.isOne()) {
-                for (int i = 0; i < r0.coefficients.length; i++) {
-                    r0.coefficients[i] = r0.coefficients[i].quotient(lc);
-                }
-            }
-            return r0;
+    public PolynomialElement<R> gcd(PolynomialElement<R> element) throws DomainException, DivisionException {
+        PolynomialElement<R> r0 = this;
+        PolynomialElement<R> r1 = element;
+        PolynomialElement<R> remainder;
+
+        while (!r1.isZero()) {
+            remainder = r0.remainder(r1);
+            r0 = r1;
+            r1 = remainder;
         }
-        else {
-            throw new DomainException(getRing(), element.getRing());
+        R lc = r0.coefficients.get(r0.coefficients.size()-1);
+        if (!lc.isOne()) {
+            for (int i = 0; i < r0.coefficients.size(); i++) {
+                r0.coefficients.set(i,  r0.coefficients.get(i).quotient(lc));
+            }
         }
+        return r0;
     }
-    
+
+    //TODO proper dto
     /**
      * The extended Euclidean algorithm.
      * 
@@ -536,7 +320,7 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
      *            res[0]*x + res[1]*y = gcd(x,y)
      * @return the greatest common divisor of x and y, always non negative
      */
-    public PolynomialElement<R> exgcd(PolynomialElement<R> y, PolynomialElement res[])
+    public PolynomialElement<R> extendedGcd(PolynomialElement<R> y, PolynomialElement[] res)
             throws DomainException, DivisionException {
         PolynomialElement<R> x = this;
         PolynomialElement<R> q, r, s, t;
@@ -549,7 +333,7 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
 
         PolynomialElement[] remainder = new PolynomialElement[1];
         while (!r1.isZero()) {
-            q = r0.quorem(r1, remainder);
+            q = r0.quotientRemainder(r1, remainder);
             r = r1;
             s = s1;
             t = t1;
@@ -561,16 +345,16 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
             t0 = t;
         }
 
-        RingElement lc = r0.coefficients[r0.coefficients.length-1];
+        R lc = r0.coefficients.get(r0.coefficients.size()-1);
         if (!lc.isOne()) {
-            for (int i = 0; i < r0.coefficients.length; i++) {
-                r0.coefficients[i] = r0.coefficients[i].quotient(lc);
+            for (int i = 0; i < r0.coefficients.size(); i++) {
+                r0.coefficients.set(i, r0.coefficients.get(i).quotient(lc));
             }
-            for (int i = 0; i < s0.coefficients.length; i++) {
-                s0.coefficients[i] = s0.coefficients[i].quotient(lc);
+            for (int i = 0; i < s0.coefficients.size(); i++) {
+                s0.coefficients.set(i, s0.coefficients.get(i).quotient(lc));
             }
-            for (int i = 0; i < t0.coefficients.length; i++) {
-                t0.coefficients[i] = t0.coefficients[i].quotient(lc);
+            for (int i = 0; i < t0.coefficients.size(); i++) {
+                t0.coefficients.set(i, t0.coefficients.get(i).quotient(lc));
             }
         }
 
@@ -773,34 +557,25 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     @Override
     public int hashCode() {
         int hashCode = basicHash;
-        for (int i = 0; i < coefficients.size(); i++) {
-            hashCode ^= coefficients.get(i).hashCode();
+        for (R coefficient : coefficients) {
+            hashCode ^= coefficient.hashCode();
         }
         return hashCode;
     }
 
-    private void setPolynomialRing(PolynomialRing<R> ring) {
-        this.ring = ring;
-    }
-
-    private void setCoefficients(List<R> coefficients) {
-        this.coefficients = coefficients;
-    }
-
     private void normalize() {
-        if (getDegree() > 0) {
-            int i = getDegree();
-            while (getCoefficient(i).isZero() && i > 0) {
-                i--;
-            }
-            if (i != getDegree()) {
-                R[] newCoefficients = (R[]) new RingElement[i+1];
-                for (int j = 0; j <= i; j++) {
-                    newCoefficients[j] = getCoefficient(j);
-                }
-                setCoefficients(newCoefficients);
-            }
+        if (getDegree() <= 0 || !getLeadingCoefficient().isZero()) {
+            return;
         }
+        int i = getDegree();
+        while (getCoefficient(i).isZero() && i > 0) {
+            i--;
+        }
+        List<R> newCoefficients = new ArrayList<>(i+1);
+        for (int j = 0; j <= i; j++) {
+            newCoefficients.add(getCoefficient(j));
+        }
+        coefficients = newCoefficients;
     }
     
     private static final int basicHash = "PolynomialElement".hashCode();

@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -193,7 +192,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     public ModularPolynomialElement inverse() {
         try {
             PolynomialElement res[] = new PolynomialElement[2];
-            PolynomialElement g = polynomial.exgcd(modulus, res);
+            PolynomialElement g = polynomial.extendedGcd(modulus, res);
             if (g.getDegree() == 0) {
                 return new ModularPolynomialElement(ring, modulus, res[0], one);
             }
@@ -206,7 +205,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     public void invert() {
         try {
             PolynomialElement res[] = new PolynomialElement[2];
-            PolynomialElement g = polynomial.exgcd(modulus, res);
+            PolynomialElement g = polynomial.extendedGcd(modulus, res);
             if (g.getDegree() == 0) {
                 polynomial = res[0];
                 return;
@@ -236,7 +235,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
         if (getRing().equals(element.getRing())) {
             try {
                 PolynomialElement res[] = new PolynomialElement[2];
-                PolynomialElement g = element.polynomial.exgcd(modulus, res);
+                PolynomialElement g = element.polynomial.extendedGcd(modulus, res);
                 if (g.getDegree() == 0) {
                     polynomial = polynomial.product(res[0]);
                     normalize();
@@ -400,7 +399,7 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     
     private void normalize() {
         try {
-            polynomial = polynomial.rem(modulus);
+            polynomial = polynomial.remainder(modulus);
         }
         catch (Exception e) {}
     }
@@ -422,11 +421,5 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     private PolynomialElement     one;
 
     private static final int basicHash = "ModularPolynomialElement".hashCode();
-
-    public static void main(String[] args) {
-        PolynomialRing pr = PolynomialRing.make(QRing.ring, "X");
-        ModularPolynomialRing mpr = ModularPolynomialRing.make(pr.parseString("X^2+1"));
-        ModularPolynomialElement mp = mpr.parseString("3*X^2+X+(-1)");
-        System.out.println(mp);
-    }
+    
 }
