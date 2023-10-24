@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.RingEndomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 
 /**
@@ -30,14 +31,13 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
  * 
  * @author Gérard Milmeister
  */
-public class PolynomialMorphism extends ModuleMorphism {
+public class PolynomialMorphism<R extends RingElement<R>> extends RingEndomorphism<R> {
     
     /**
      * Creates a mapping which evaluates the given <code>polynomial</code>.
      */
-    public PolynomialMorphism(PolynomialElement polynomial) {
-        super(polynomial.getRing().getCoefficientRing(),
-              polynomial.getRing().getCoefficientRing());
+    public PolynomialMorphism(PolynomialElement<R> polynomial) {
+        super(polynomial.getRing().getCoefficientRing(), polynomial.getRing().getCoefficientRing());
         this.polynomial = polynomial;
     }
 

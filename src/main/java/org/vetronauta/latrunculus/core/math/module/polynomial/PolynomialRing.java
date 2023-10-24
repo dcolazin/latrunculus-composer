@@ -464,7 +464,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
     
     
-    private Ring   coefficientRing;
+    private Ring<R> coefficientRing;
     private Ring   baseRing;
     private String indeterminate;
 }

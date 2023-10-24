@@ -642,7 +642,7 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     }
 
     
-    public PolynomialRing getRing() {
+    public PolynomialRing<R> getRing() {
         return ring;
     }
 
@@ -872,7 +872,7 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     private PolynomialElement() {}
 
     
-    private PolynomialRing ring;
+    private PolynomialRing<R> ring;
     private RingElement[]  coefficients;
     
     private static final int basicHash = "PolynomialElement".hashCode();
