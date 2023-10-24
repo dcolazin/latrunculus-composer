@@ -20,13 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -35,17 +30,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -137,7 +130,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
         if (codomain instanceof ProductRing) {
             // embedding of a ring in a product ring
-            return makeProductRingEmbedding(domain, (ProductRing)codomain);
+            return (ModuleMorphism<RX,RY,RX,RY>) makeProductRingEmbedding(domain, (ProductRing)codomain);
         }
         if (codomain instanceof PolynomialRing) {
             // embedding of a ring in a polynomial ring
@@ -219,7 +212,8 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         return "EmbeddingMorphism";
     }
     
-    // Embeddings are inner classes 
+    // Embeddings are inner classes
+    //TODO proper classes...
     
     /**
      * Creates an embedding of a ring in another ring.
@@ -290,30 +284,12 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param index the index of the codomain factor where the ring should be embedded
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    public static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain, final int index) {
+    public static <RX extends RingElement<RX>>
+    EmbeddingMorphism<RX,ProductElement,RX,ProductElement> makeProductRingEmbedding(final Ring<RX> domain, final ProductRing codomain, final int index) {
         if (domain instanceof ProductRing) {
-            return makeProductRingEmbedding((ProductRing)domain, codomain);
+            return (EmbeddingMorphism<RX,ProductElement,RX,ProductElement>) makeProductRingEmbedding((ProductRing)domain, codomain);
         }
-        final Ring[] factors = codomain.getFactors();
-        final int len = factors.length;
-        final ModuleMorphism morphism = make(domain, factors[index]);
-        
-        return new EmbeddingMorphism(domain, codomain) {
-            public ModuleElement mapValue(ModuleElement element) {
-                RingElement r = (RingElement)element;
-                RingElement[] factors0 = new RingElement[len];
-                try {
-                    for (int i = 0; i < len; i++) {
-                        factors0[i] = (RingElement) factors[i].getZero();
-                    }
-                    factors0[index] = (RingElement)morphism.map(r);
-                    return ProductElement.make(factors0);
-                }
-                catch (MappingException e) {
-                    throw new AssertionError("This should never happen!");
-                }
-            }
-        };
+        return new ProductRingIndexEmbedding<>(make(domain, codomain.getFactors()[index]), index, domain, codomain);
     }
 
     
@@ -324,36 +300,20 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static EmbeddingMorphism makeProductRingEmbedding(final Ring domain, final ProductRing codomain) {
+    private static <RX extends RingElement<RX>> EmbeddingMorphism<RX,ProductElement,RX,ProductElement> makeProductRingEmbedding(final Ring<RX> domain, final ProductRing codomain) {
         if (domain instanceof ProductRing) {
-            return makeProductRingEmbedding((ProductRing)domain, codomain);
+            return (EmbeddingMorphism<RX,ProductElement,RX,ProductElement>) makeProductRingEmbedding((ProductRing)domain, codomain);
         }
-        else {
-            Ring[] factors = codomain.getFactors();
-            final int len = factors.length;
-            final ModuleMorphism[] morphisms = new ModuleMorphism[len];
-            for (int i = 0; i < len; i++) {
-                morphisms[i] = make(domain, factors[i]);
-                if (morphisms[i] == null) {
-                    return null;
-                }
+        Ring[] factors = codomain.getFactors();
+        final int len = factors.length;
+        final ModuleMorphism[] morphisms = new ModuleMorphism[len];
+        for (int i = 0; i < len; i++) {
+            morphisms[i] = make(domain, factors[i]);
+            if (morphisms[i] == null) {
+                return null;
             }
-            return new EmbeddingMorphism(domain, codomain) {
-                public ModuleElement mapValue(ModuleElement element) {
-                    RingElement r = (RingElement)element;
-                    RingElement[] factors0 = new RingElement[len];
-                    try {
-                        for (int i = 0; i < len; i++) {
-                            factors0[i] = (RingElement)morphisms[i].map(r);
-                        }
-                        return ProductElement.make(factors0);
-                    }
-                    catch (MappingException e) {
-                        throw new AssertionError("This should never happen!");
-                    }
-                }
-            };
         }
+        return new ProductRingFullEmbedding<>(morphisms, domain, codomain);
     }
     
     
@@ -364,39 +324,22 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param codomain a product ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static EmbeddingMorphism makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
-        EmbeddingMorphism m = null;
-        if (domain.getFactorCount() == codomain.getFactorCount()) {
-            final ModuleMorphism[] ems = new ModuleMorphism[domain.getFactorCount()];
-            for (int i = 0; i < domain.getFactorCount(); i++) {
-                Ring d = domain.getFactor(i);
-                Ring c = codomain.getFactor(i);
-                ModuleMorphism em = make(d, c);
-                if (em == null) {
-                    return null;
-                }
-                ems[i] = em;
-            }
-            m = new EmbeddingMorphism(domain, codomain) {
-                public ModuleElement mapValue(ModuleElement x) {
-                    ProductElement p = (ProductElement)x;
-                    RingElement[] factors = new RingElement[p.getFactorCount()];
-                    try {
-                        for (int i = 0; i < p.getFactorCount(); i++) {
-                            factors[i] = (RingElement) embeds[i].map(p.getFactor(i));
-                        }
-                        return ProductElement.make(factors);
-                    }
-                    catch (MappingException e) {
-                        throw new AssertionError("This should never happen!");
-                    }
-                }
-                private ModuleMorphism[] embeds = ems;
-            };
+    private static EmbeddingMorphism<ProductElement,ProductElement,ProductElement,ProductElement> makeProductRingEmbedding(ProductRing domain, ProductRing codomain) {
+        if (domain.getFactorCount() != codomain.getFactorCount()) {
+            return null;
         }
-        return m;
+        final ModuleMorphism[] ems = new ModuleMorphism[domain.getFactorCount()];
+        for (int i = 0; i < domain.getFactorCount(); i++) {
+            Ring<?> d = domain.getFactor(i);
+            Ring<?> c = codomain.getFactor(i);
+            ModuleMorphism em = make(d, c);
+            if (em == null) {
+                return null;
+            }
+            ems[i] = em;
+        }
+        return new ProductRingEmbedding(ems, domain, codomain);
     }
-
     
     /**
      * Creates an embedding of a ring in a polynomial ring.
@@ -405,52 +348,22 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param codomain a polynomial ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static EmbeddingMorphism makePolynomialEmbedding(final Ring domain, final PolynomialRing codomain) {
-        EmbeddingMorphism m = null;
-        Ring coeffRing = codomain.getCoefficientRing();
+    private static <RX extends RingElement<RX>, RY extends RingElement<RY>>
+    EmbeddingMorphism<RX,PolynomialElement<RY>,RX,PolynomialElement<RY>> makePolynomialEmbedding(final Ring<RX> domain, final PolynomialRing<RY> codomain) {
+        Ring<RY> coeffRing = codomain.getCoefficientRing();
         if (domain instanceof PolynomialRing) {
-            m = makePolynomialEmbedding((PolynomialRing)domain, codomain); 
+            // TODO: not yet implemented
+            throw new UnsupportedOperationException("Not implemented");
+        } else if (coeffRing.equals(domain)) {
+            return new ConstantPolynomialEmbedding<>(domain, (PolynomialRing) codomain);
         }
-        else if (coeffRing.equals(domain)) {
-            m = new EmbeddingMorphism(domain, codomain) {
-                public ModuleElement mapValue(ModuleElement element) {
-                    return new PolynomialElement(codomain, new RingElement[] {(RingElement)element});
-                }
-            };
+        final ModuleMorphism<RX,RY,RX,RY> ringMorphism = make(domain, coeffRing);
+        if (ringMorphism == null) {
+            return null;
         }
-        else {
-            final ModuleMorphism ringMorphism = make(domain, coeffRing);
-            if (ringMorphism != null) {
-                m = new EmbeddingMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        try {
-                            RingElement coeff = (RingElement)ringMorphism.map(element);
-                            return new PolynomialElement(codomain, new RingElement[] {coeff});
-                        }
-                        catch (MappingException e) {
-                            throw new AssertionError("This should never happen!");
-                        }
-                    }
-                };
-            }
-        }
-        return m;
+        return new RingConstantPolynomialEmbedding<>(ringMorphism, domain, codomain);
     }
 
-    
-    /**
-     * Creates an embedding of polynomial ring in a polynomial ring.
-     * 
-     * @param domain a polynomial ring
-     * @param codomain a polynomial ring
-     * @return an embedding or null if such an embedding cannot be constructed
-     */
-    private static EmbeddingMorphism makePolynomialEmbedding(final PolynomialRing domain, final PolynomialRing codomain) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    
     /**
      * Creates an embedding of ring in a string ring.
      * 
@@ -458,50 +371,15 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static ModuleMorphism makeStringEmbedding(final Ring domain, final StringRing codomain) {
-        ModuleMorphism m = null;        
+    private static <RX extends RingElement<RX>, RY extends StringElement<RY>>
+    ModuleMorphism<RX,RY,RX,RY> makeStringEmbedding(final Ring<RX> domain, final StringRing<RY> codomain) {
         if (domain instanceof StringRing) {
-            m = makeStringEmbedding((StringRing)domain, codomain);
+            return make(((StringRing<?>)domain).getFactorRing(), codomain.getFactorRing()) != null ?
+                    new RingEmbeddingMorphism<>(domain, codomain) : null;
         }
-        else {
-            final Ring coeffRing = codomain.getFactorRing();
-            final ModuleMorphism ringMorphism = make(domain, coeffRing);
-            if (ringMorphism != null) {
-                m = new EmbeddingMorphism(domain, codomain) {
-                    public ModuleElement mapValue(ModuleElement element) {
-                        try {
-                            RingElement coeff = (RingElement)ringMorphism.map(element);
-                            return codomain.cast(coeff);
-                        }
-                        catch (MappingException e) {
-                            throw new AssertionError("This should never happen!");
-                        }
-                    }
-                };
-            }
-        }
-        return m;
-    }
-
-    
-    /**
-     * Creates an embedding of string ring in a string ring.
-     * 
-     * @param domain a string ring
-     * @param codomain a string ring
-     * @return an embedding or null if such an embedding cannot be constructed
-     */
-    private static EmbeddingMorphism makeStringEmbedding(final StringRing domain, final StringRing codomain) {
-        if (make(domain.getFactorRing(), codomain.getFactorRing()) != null) {
-            return new EmbeddingMorphism(domain, codomain) {
-                public ModuleElement mapValue(ModuleElement element) {
-                    return codomain.cast(element);
-                }
-            };
-        }
-        else {
-            return null;
-        }
+        final Ring<?> coeffRing = codomain.getFactorRing();
+        final ModuleMorphism<RX,?,RX,?> ringMorphism = make(domain, coeffRing);
+        return ringMorphism != null ? new StringRingEmbedding<>(ringMorphism, domain, codomain) : null;
     }
 
     private static class RingEmbeddingMorphism<RX extends RingElement<RX>, RY extends RingElement<RY>>
@@ -535,7 +413,6 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
     }
 
-    //TODO case 1->n
     private static class ArithmeticMultiEmbedding<N extends ArithmeticNumber<N>, M extends ArithmeticNumber<M>>
         extends EmbeddingMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<M>,ArithmeticElement<N>,ArithmeticElement<M>> {
 
@@ -585,4 +462,138 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
 
     }
+
+    private static class ProductRingIndexEmbedding<RA extends RingElement<RA>, RI extends RingElement<RI>>
+        extends EmbeddingMorphism<RA,ProductElement,RA,ProductElement> {
+
+        private final ModuleMorphism<RA,RI,RA,RI> morphism;
+        private final int index;
+
+        protected ProductRingIndexEmbedding(ModuleMorphism<RA,RI,RA,RI> morphism, int index, Ring<RA> domain, ProductRing codomain) {
+            super(domain, codomain);
+            this.morphism = morphism;
+            this.index = index;
+        }
+
+        public ProductRing getCodomain() {
+            return (ProductRing) super.getCodomain();
+        }
+
+        @Override
+        public ProductElement mapValue(RA element) {
+            RingElement[] factors0 = new RingElement[getCodomain().getFactorCount()];
+            try {
+                for (int i = 0; i < factors0.length; i++) {
+                    factors0[i] = (RingElement) getCodomain().getFactor(i).getZero();
+                }
+                factors0[index] = morphism.map(element);
+                return ProductElement.make(factors0);
+            } catch (MappingException e) {
+                throw new AssertionError("This should never happen!");
+            }
+        }
+    }
+
+    private static class ProductRingFullEmbedding<RA extends RingElement<RA>>
+            extends EmbeddingMorphism<RA,ProductElement,RA,ProductElement> {
+
+        private final ModuleMorphism[] embeddings;
+
+        protected ProductRingFullEmbedding(ModuleMorphism[] embeddings, Ring<RA> domain, ProductRing codomain) {
+            super(domain, codomain);
+            this.embeddings = embeddings;
+        }
+
+        @Override
+        public ProductElement mapValue(RA element) {
+            RingElement[] factors0 = new RingElement[((ProductRing)getCodomain()).getFactorCount()];
+            try {
+                for (int i = 0; i < factors0.length; i++) {
+                    factors0[i] = (RingElement)embeddings[i].map(element);
+                }
+                return ProductElement.make(factors0);
+            }
+            catch (MappingException e) {
+                throw new AssertionError("This should never happen!");
+            }
+        }
+    }
+
+    private static class ProductRingEmbedding extends EmbeddingMorphism<ProductElement,ProductElement,ProductElement,ProductElement> {
+
+        private final ModuleMorphism[] embeddings;
+
+        protected ProductRingEmbedding(ModuleMorphism[] embeddings, ProductRing domain, ProductRing codomain) {
+            super(domain, codomain);
+            this.embeddings = embeddings;
+        }
+
+        @Override
+        public ProductElement mapValue(ProductElement element) {
+            RingElement[] factors = new RingElement[element.getFactorCount()];
+            try {
+                for (int i = 0; i < element.getFactorCount(); i++) {
+                    factors[i] = (RingElement) embeddings[i].map(element.getFactor(i));
+                }
+                return ProductElement.make(factors);
+            } catch (MappingException e) {
+                throw new AssertionError("This should never happen!");
+            }
+        }
+    }
+
+    private static class ConstantPolynomialEmbedding<RA extends RingElement<RA>> extends EmbeddingMorphism<RA,PolynomialElement<RA>,RA,PolynomialElement<RA>> {
+
+        protected ConstantPolynomialEmbedding(Ring<RA> domain, PolynomialRing<RA> codomain) {
+            super(domain, codomain);
+        }
+
+        @Override
+        public PolynomialElement<RA> mapValue(RA element) {
+            return new PolynomialElement<>((PolynomialRing<RA>) getCodomain(), element);
+        }
+    }
+
+    private static class RingConstantPolynomialEmbedding<RA extends RingElement<RA>,RB extends RingElement<RB>>
+        extends EmbeddingMorphism<RA,PolynomialElement<RB>,RA,PolynomialElement<RB>> {
+
+        private final ModuleMorphism<RA,RB,RA,RB> ringMorphism;
+
+        protected RingConstantPolynomialEmbedding(ModuleMorphism<RA,RB,RA,RB> ringMorphism, Ring<RA> domain, PolynomialRing<RB> codomain) {
+            super(domain, codomain);
+            this.ringMorphism = ringMorphism;
+        }
+
+        @Override
+        public PolynomialElement<RB> mapValue(RA element) {
+            try {
+                RB coeff = ringMorphism.map(element);
+                return new PolynomialElement<>((PolynomialRing<RB>) getCodomain(), coeff);
+            } catch (MappingException e) {
+                throw new AssertionError("This should never happen!");
+            }
+        }
+    }
+
+    private static class StringRingEmbedding<RA extends RingElement<RA>,RB extends StringElement<RB>>
+        extends EmbeddingMorphism<RA,RB,RA,RB>{
+
+        private final ModuleMorphism<RA,?,RA,?> ringMorphism;
+
+        protected StringRingEmbedding(ModuleMorphism<RA,?,RA,?> ringMorphism, Ring<RA> domain, StringRing<RB> codomain) {
+            super(domain, codomain);
+            this.ringMorphism = ringMorphism;
+        }
+
+        @Override
+        public RB mapValue(RA element) {
+            try {
+                RingElement coeff = (RingElement)ringMorphism.map(element);
+                return getCodomain().cast(coeff);
+            } catch (MappingException e) {
+                throw new AssertionError("This should never happen!");
+            }
+        }
+    }
+
 }

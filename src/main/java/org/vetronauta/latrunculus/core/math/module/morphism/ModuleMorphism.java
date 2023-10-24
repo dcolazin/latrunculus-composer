@@ -37,6 +37,8 @@ import java.io.Serializable;
 public abstract class ModuleMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
     implements Comparable<ModuleMorphism<?,?,?,?>>, Serializable, MathDefinition, DeepCopyable<ModuleMorphism<A,B,RA,RB>> {
 
+    //TODO make this an interface, to have both RingMorphisms<RA,RB> and Endomorphisms<A,A>
+
     private final Module<A,RA> domain;
     private final Module<B,RB> codomain;
 
