@@ -156,7 +156,7 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
     }
 
     @Override
-    public ModuleElement<?, ArithmeticElement<N>> getComponent(int i) {
+    public ArithmeticElement<N> getComponent(int i) {
         return getRingElement(i);
     }
 

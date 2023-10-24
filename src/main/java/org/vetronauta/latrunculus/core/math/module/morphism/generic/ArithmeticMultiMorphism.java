@@ -8,7 +8,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ArithmeticMultiMorphism<N extends ArithmeticNumber<N>>
@@ -22,17 +21,13 @@ public abstract class ArithmeticMultiMorphism<N extends ArithmeticNumber<N>>
         if (!getDomain().hasElement(x)) {
             throw new MappingException("CFreeAbstractMorphism.map: ", x, this);
         }
-        List<N> list = new ArrayList<>(x.getLength());
-        for (int i = 0; i < x.getLength(); i++) {
-            list.add(((ArithmeticElement<N>) x.getComponent(i)).getValue());
-        }
-        return new ArithmeticMultiElement<>((ArithmeticRing<N>)getDomain().getRing(), mapValue(list));
+        return new ArithmeticMultiElement<>(((ArithmeticMultiModule<N>)getDomain()).getRing(), mapValue(x.getValue()));
     }
 
     /**
      * The low-level map method.
      * This must be implemented by subclasses.
      */
-    public abstract List<ArithmeticElement<N>> mapValue(List<N> list);
+    public abstract List<ArithmeticElement<N>> mapValue(List<ArithmeticElement<N>> list);
 
 }
