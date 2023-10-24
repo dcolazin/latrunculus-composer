@@ -23,11 +23,11 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
@@ -35,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -50,18 +49,15 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuloMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PolynomialMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProductMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 
@@ -307,15 +303,11 @@ public class JMorphismDialog
         else if (m instanceof ProductMorphism) {
             morphismType.setSelectedItem(PRODUCT_TYPE);
         }
-        else if (m instanceof ZnAffineMorphism ||
+        else if (m instanceof ArithmeticAffineMorphism ||
                  m instanceof ZnFreeAffineMorphism ||
-                 m instanceof ZAffineMorphism ||
                  m instanceof ZFreeAffineMorphism ||
-                 m instanceof QAffineMorphism ||
                  m instanceof QFreeAffineMorphism ||
-                 m instanceof RAffineMorphism ||
                  m instanceof RFreeAffineMorphism ||
-                 m instanceof CAffineMorphism ||
                  m instanceof CFreeAffineMorphism) {
             morphismType.setSelectedItem(AFFINE_TYPE);
         }

@@ -21,11 +21,11 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -37,18 +37,14 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
@@ -420,12 +416,13 @@ class JAffineMorphismType
     
     
     public void editMorphism(ModuleMorphism morphism) {
-        if (morphism instanceof ZnAffineMorphism) {
-            ZnAffineMorphism m = (ZnAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Integer.toString(m.getA().intValue()));
-            vectorEntries[0].setText(Integer.toString(m.getB().intValue()));
+        if (morphism instanceof ArithmeticAffineMorphism) {
+            ArithmeticAffineMorphism<?> m = (ArithmeticAffineMorphism<?>) morphism;
+            matrixEntries[0][0].setText(String.valueOf(m.getA()));
+            vectorEntries[0].setText(String.valueOf(m.getB()));
+            return;
         }
-        else if (morphism instanceof ZnFreeAffineMorphism) {
+        if (morphism instanceof ZnFreeAffineMorphism) {
             ZnFreeAffineMorphism m = (ZnFreeAffineMorphism)morphism;
             ZnMatrix matrix = m.getMatrix();
             int[] vector = m.getVector();
@@ -435,11 +432,6 @@ class JAffineMorphismType
                 }
                 vectorEntries[i].setText(Integer.toString(vector[i]));
             }
-        }
-        else if (morphism instanceof ZAffineMorphism) {
-            ZAffineMorphism m = (ZAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Integer.toString(m.getA().intValue()));
-            vectorEntries[0].setText(Integer.toString(m.getB().intValue()));
         }
         else if (morphism instanceof ZFreeAffineMorphism) {
             ZFreeAffineMorphism m = (ZFreeAffineMorphism)morphism;
@@ -452,11 +444,6 @@ class JAffineMorphismType
                 vectorEntries[i].setText(Integer.toString(vector[i]));
             }
         }
-        else if (morphism instanceof QAffineMorphism) {
-            QAffineMorphism m = (QAffineMorphism)morphism;
-            matrixEntries[0][0].setText(m.getA().toString());
-            vectorEntries[0].setText(m.getB().toString());
-        }
         else if (morphism instanceof QFreeAffineMorphism) {
             QFreeAffineMorphism m = (QFreeAffineMorphism)morphism;
             QMatrix matrix = m.getMatrix();
@@ -468,11 +455,6 @@ class JAffineMorphismType
                 vectorEntries[i].setText(vector[i].toString());
             }
         }
-        else if (morphism instanceof RAffineMorphism) {
-            RAffineMorphism m = (RAffineMorphism)morphism;
-            matrixEntries[0][0].setText(Double.toString(m.getA().doubleValue()));
-            vectorEntries[0].setText(Double.toString(m.getB().doubleValue()));
-        }
         else if (morphism instanceof RFreeAffineMorphism) {
             RFreeAffineMorphism m = (RFreeAffineMorphism)morphism;
             RMatrix matrix = m.getMatrix();
@@ -483,11 +465,6 @@ class JAffineMorphismType
                 }
                 vectorEntries[i].setText(Double.toString(vector[i]));
             }
-        }
-        else if (morphism instanceof CAffineMorphism) {
-            CAffineMorphism m = (CAffineMorphism)morphism;
-            matrixEntries[0][0].setText(m.getA().toString());
-            vectorEntries[0].setText(m.getB().toString());
         }
         else if (morphism instanceof CFreeAffineMorphism) {
             CFreeAffineMorphism m = (CFreeAffineMorphism)morphism;

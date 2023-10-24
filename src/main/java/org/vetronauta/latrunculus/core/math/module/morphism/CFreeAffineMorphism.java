@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
 
 import java.util.Arrays;
 
@@ -42,7 +43,7 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
 
     public static ModuleMorphism make(CMatrix A, Complex[] b) {
         if (A.getColumnCount() == 1 && A.getRowCount() == 1 && b.length == 1) {
-            return new CAffineMorphism(A.get(0, 0), b[0]);
+            return new ArithmeticAffineMorphism<>(CRing.ring, A.get(0, 0), b[0]);
         }
         else {
             return new CFreeAffineMorphism(A, b);
