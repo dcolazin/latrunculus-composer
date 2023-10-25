@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
@@ -33,10 +34,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialProperFreeElement<B extends RingElement<B>> extends ProperFreeElement<PolynomialProperFreeElement<B>,PolynomialElement<B>>
-        implements PolynomialFreeElement<PolynomialProperFreeElement<B>,B> {
+public final class PolynomialProperFreeElement<B extends RingElement<B>> extends ProperFreeElement<PolynomialProperFreeElement<B>,PolynomialElement<B>> {
 
-    public static PolynomialFreeElement make(PolynomialRing ring, PolynomialElement[] v) {
+    public static <X extends RingElement<X>> FreeElement<?,PolynomialElement<X>> make(PolynomialRing ring, PolynomialElement[] v) {
         if (v.length == 1) {
             return v[0];
         }
@@ -221,9 +221,9 @@ public final class PolynomialProperFreeElement<B extends RingElement<B>> extends
     }
     
 
-    public PolynomialFreeModule getModule() {
+    public PolynomialProperFreeModule<B> getModule() {
         if (module == null) {
-            module = PolynomialProperFreeModule.make(ring, ring.getIndeterminate(), getLength());
+            module = (PolynomialProperFreeModule<B>) PolynomialProperFreeModule.make(ring, ring.getIndeterminate(), getLength());
         }
         return module;
     }
@@ -249,7 +249,7 @@ public final class PolynomialProperFreeElement<B extends RingElement<B>> extends
     }
     
 
-    public PolynomialFreeElement resize(int n) {
+    public FreeElement<?,PolynomialElement<B>> resize(int n) {
         if (n == getLength()) {
             return this;
         }
@@ -377,8 +377,8 @@ public final class PolynomialProperFreeElement<B extends RingElement<B>> extends
 
 
     private PolynomialElement[]  value;
-    private PolynomialFreeModule module = null;
-    private PolynomialRing       ring = null;
+    private PolynomialProperFreeModule<B> module = null;
+    private PolynomialRing<B>       ring = null;
 
     @Override
     public ModuleElement deepCopy() {

@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.Wrapper;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
@@ -44,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialRing<R extends RingElement<R>> extends Ring<PolynomialElement<R>> implements PolynomialFreeModule<PolynomialElement<R>,R> {
+public final class PolynomialRing<R extends RingElement<R>> extends Ring<PolynomialElement<R>> {
 
     private final Ring<R> coefficientRing;
     private final Ring<?> baseRing;
@@ -63,7 +64,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return new PolynomialRing<>(coefficientRing, indeterminate);
     }
     
-    @Override
     public String getIndeterminate() {
         return indeterminate;
     }
@@ -89,7 +89,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
         return indeterminates;
     }
     
-    @Override
     public Ring<R> getCoefficientRing() {
         return coefficientRing;
     }
@@ -109,8 +108,8 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public PolynomialFreeModule<?,R> getNullModule() {
-        return PolynomialProperFreeModule.make(this, 0);
+    public PolynomialProperFreeModule<R> getNullModule() {
+        return (PolynomialProperFreeModule<R>) PolynomialProperFreeModule.make(this, 0);
     }
     
     @Override
@@ -132,7 +131,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public PolynomialFreeModule<?,R> getFreeModule(int dimension) {
+    public FreeModule<?, PolynomialElement<R>> getFreeModule(int dimension) {
         return PolynomialProperFreeModule.make(this, dimension);
     }
 

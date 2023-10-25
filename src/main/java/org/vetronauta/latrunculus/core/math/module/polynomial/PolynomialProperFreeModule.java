@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
@@ -44,8 +46,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
  * 
  * @author Gérard Milmeister
  */
-public final class PolynomialProperFreeModule<B extends RingElement<B>> extends ProperFreeModule<PolynomialProperFreeElement<B>,PolynomialElement<B>>
-        implements PolynomialFreeModule<PolynomialProperFreeElement<B>,B> {
+public final class PolynomialProperFreeModule<B extends RingElement<B>> extends ProperFreeModule<PolynomialProperFreeElement<B>,PolynomialElement<B>> {
 
     private final PolynomialRing<B> ring;
 
@@ -55,7 +56,7 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
 
     }
 
-    public static <X extends RingElement<X>> PolynomialFreeModule<?,X> make(Ring<X> coefficientRing, String indeterminate, int dimension) {
+    public static <X extends RingElement<X>> FreeModule<?, PolynomialElement<X>> make(Ring<X> coefficientRing, String indeterminate, int dimension) {
         if (dimension == 1) {
             return PolynomialRing.make(coefficientRing, indeterminate);
         }
@@ -63,7 +64,7 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
 
     }
 
-    public static <X extends RingElement<X>> PolynomialFreeModule<?,X> make(PolynomialRing<X> polyRing, int dimension) {
+    public static <X extends RingElement<X>> FreeModule<?, PolynomialElement<X>> make(PolynomialRing<X> polyRing, int dimension) {
         if (dimension == 1) {
             return polyRing;
         }
@@ -91,8 +92,8 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
     }
     
 
-    public PolynomialFreeModule getNullModule() {
-        return make(ring.getCoefficientRing(), ring.getIndeterminate(), 0);
+    public PolynomialProperFreeModule<B> getNullModule() {
+        return (PolynomialProperFreeModule<B>) make(ring.getCoefficientRing(), ring.getIndeterminate(), 0);
     }
     
     

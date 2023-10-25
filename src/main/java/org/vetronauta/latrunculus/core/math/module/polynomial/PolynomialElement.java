@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -42,7 +43,7 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PolynomialElement<R extends RingElement<R>> extends RingElement<PolynomialElement<R>> implements PolynomialFreeElement<PolynomialElement<R>,R> {
+public final class PolynomialElement<R extends RingElement<R>> extends RingElement<PolynomialElement<R>> {
 
     private PolynomialRing<R> ring;
     private List<R> coefficients;
@@ -401,18 +402,16 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
         return isZero() ? Integer.MIN_VALUE : coefficients.size() - 1;
     }
 
-    @Override
     public Ring<R> getCoefficientRing() {
         return getRing().getCoefficientRing();
     }
     
-    @Override
     public String getIndeterminate() {
         return getRing().getIndeterminate();
     }
     
     @Override
-    public PolynomialFreeElement resize(int n) {
+    public FreeElement<?,PolynomialElement<R>> resize(int n) {
         if (n == 1) {
             return this;
         }

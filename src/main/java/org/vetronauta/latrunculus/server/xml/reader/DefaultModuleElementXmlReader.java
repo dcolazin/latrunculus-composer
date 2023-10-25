@@ -48,7 +48,6 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialE
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
@@ -567,8 +566,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 values[i++] = iter.next();
             }
             PolynomialRing rng = values[0].getRing();
-            PolynomialFreeElement result = PolynomialProperFreeElement.make(rng, values);
-            return result;
+            return PolynomialProperFreeElement.make(rng, values);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
