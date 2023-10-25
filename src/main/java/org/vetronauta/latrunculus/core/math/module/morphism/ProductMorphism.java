@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -32,77 +31,67 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductMorphism extends ModuleMorphism {
+public final class ProductMorphism<A extends ModuleElement<A,RA>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,RB,RA,RB> {
+
+    private final ModuleMorphism<A,RB,RA,RB> f;
+    private final ModuleMorphism<A,RB,RA,RB> g;
 
     /**
      * Creates a morphism from <code>f</code> and <code>g</code>.
      * The resulting morphism <i>h</i> is such that <i>h(x) = f(x)*g(x)</i>.
      * The codomain must be a ring
-     *
-     * @throws CompositionException if the product is not valid
      */
-    public static ModuleMorphism make(ModuleMorphism f, ModuleMorphism g)
-            throws CompositionException {
-        if (!f.getDomain().equals(g.getDomain()) ||
-            !f.getCodomain().equals(g.getCodomain()) ||
-            !f.getCodomain().isRing()) {
-            throw new CompositionException("ProductMorphism.make: Cannot multiply "+g+" to "+f);
-        }
-        else if (f.isIdentity()) {
+    public static <X extends ModuleElement<X,RX>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,RY,RX,RY> make(ModuleMorphism<X,RY,RX,RY> f, ModuleMorphism<X,RY,RX,RY> g) {
+        if (f.isIdentity()) {
             return g;
         }
-        else if (g.isIdentity()) {
+        if (g.isIdentity()) {
             return f;
         }
-        else if (f.isConstant() && g.isConstant()) {
-            try {
-                RingElement fe = (RingElement)((ConstantMorphism)f).getValue();
-                RingElement ge = (RingElement)((ConstantMorphism)g).getValue();
-                return getConstantMorphism(f.getDomain(), fe.product(ge));
-            }
-            catch (DomainException e) {
-                throw new AssertionError("Should never happen!");
-            }
+        if (f.isConstant() && g.isConstant()) {
+            RY fe = f.atZero();
+            RY ge = g.atZero();
+            return getConstantMorphism(f.getDomain(), fe.product(ge));
         }
         else {
-            return new ProductMorphism(f, g);
+            return new ProductMorphism<>(f, g);
         }
     }
-    
-    
-    private ProductMorphism(ModuleMorphism f, ModuleMorphism g) {
+
+    private ProductMorphism(ModuleMorphism<A,RB,RA,RB> f, ModuleMorphism<A,RB,RA,RB> g) {
         super(f.getDomain(), f.getCodomain());
         this.f = f;
         this.g = g;
     }
 
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
+    @Override
+    public RB map(A x) throws MappingException {
         try {
-            return ((RingElement)f.map(x)).product((RingElement)g.map(x));
+            return f.map(x).product(g.map(x));
         }
         catch (DomainException e) {
             throw new MappingException("ProductMorphism.map: ", x, this);
         }
     }
     
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return false;
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return f.isRingHomomorphism() && g.isRingHomomorphism();
     }
     
-    
+    @Override
     public boolean isLinear() {
         return false;
     }
     
-    
+    @Override
     public boolean isConstant() {
         return f.isConstant() && g.isConstant();
     }
@@ -111,7 +100,7 @@ public final class ProductMorphism extends ModuleMorphism {
     /**
      * Returns the first morphism <i>f</i> of the product <i>f*g</i>.
      */
-    public ModuleMorphism getFirstMorphism() {
+    public ModuleMorphism<A,RB,RA,RB> getFirstMorphism() {
         return f;
     }
     
@@ -119,19 +108,19 @@ public final class ProductMorphism extends ModuleMorphism {
     /**
      * Returns the second morphism <i>g</i> of the sum <i>f*g</i>.
      */
-    public ModuleMorphism getSecondMorphism() {
+    public ModuleMorphism<A,RB,RA,RB> getSecondMorphism() {
         return g;
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public ModuleMorphism<RA,RB,RA,RB> getRingMorphism() {
         return f.getRingMorphism();
     }
 
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof ProductMorphism) {
-            ProductMorphism morphism = (ProductMorphism)object;
+            ProductMorphism<?,?,?> morphism = (ProductMorphism<?,?,?>) object;
             int comp = f.compareTo(morphism.f);
             if (comp == 0) {
                 return g.compareTo(morphism.g);
@@ -145,10 +134,10 @@ public final class ProductMorphism extends ModuleMorphism {
         }
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (object instanceof ProductMorphism) {
-            ProductMorphism m = (ProductMorphism)object;
+            ProductMorphism<?,?,?> m = (ProductMorphism<?,?,?>) object;
             return f.equals(m.f) && g.equals(m.g);
         }
         else {
@@ -156,7 +145,7 @@ public final class ProductMorphism extends ModuleMorphism {
         }
     }
     
-    
+    @Override
     public String toString() {
         return "ProductMorphism["+f+","+g+"]";
     }
@@ -164,8 +153,5 @@ public final class ProductMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "SumMorphism";
     }
-    
-    
-    private ModuleMorphism f;
-    private ModuleMorphism g;
+
 }

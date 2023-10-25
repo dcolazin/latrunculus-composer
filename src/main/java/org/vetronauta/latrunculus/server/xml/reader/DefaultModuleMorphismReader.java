@@ -1242,14 +1242,8 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             if (f0 == null || g0 == null) {
                 return null;
             }
-            try {
-                ModuleMorphism morphism = ProductMorphism.make(f0, g0);
-                return morphism;
-            }
-            catch (CompositionException e) {
-                reader.setError("Cannot take the product of the two morphisms %1 and %2.", f0, g0);
-                return null;
-            }
+            ModuleMorphism morphism = ProductMorphism.make(f0, g0);
+            return morphism;
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_MORPHISM);
