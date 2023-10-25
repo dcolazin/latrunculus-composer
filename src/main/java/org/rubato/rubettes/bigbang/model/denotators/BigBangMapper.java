@@ -56,8 +56,8 @@ public class BigBangMapper extends BigBangManipulator {
 	
 	private DenotatorPath mapAndAddNextSiblings(DenotatorPath firstSiblingPath, Iterator<DenotatorPath> objectPathsIterator, TransformationPaths transformationPaths) {
 		//PerformanceCheck.startTask(".first_sib");
-		List<Denotator> siblings = new ArrayList<Denotator>();
-		List<DenotatorPath> siblingsPaths = new ArrayList<DenotatorPath>();
+		List<Denotator> siblings = new ArrayList<>();
+		List<DenotatorPath> siblingsPaths = new ArrayList<>();
 		
 		Denotator firstSibling = this.denotatorManager.getAbsoluteObject(firstSiblingPath);
 		if (firstSibling != null) {
@@ -96,7 +96,7 @@ public class BigBangMapper extends BigBangManipulator {
 	 */
 	private void mapAndReplaceOrAdd(List<Denotator> objects, DenotatorPath anchorPath, List<DenotatorPath> siblingsPaths, ModuleMorphism morphism, TransformationPaths transformationPaths) {
 		if (objects.size() > 0) {
-			List<Denotator> mappedObjects = new ArrayList<Denotator>();
+			List<Denotator> mappedObjects = new ArrayList<>();
 			ArbitraryDenotatorMapper mapper = new ArbitraryDenotatorMapper(morphism, transformationPaths);
 			for (int i = 0; i < objects.size(); i++) {
 				Denotator currentObject = objects.get(i);

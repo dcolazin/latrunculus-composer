@@ -44,21 +44,22 @@ import java.util.List;
  * @author flo
  * TODO: make everything DenotatorPath!! (adjust wallpaper rubette)
  */
-public class ArbitraryDenotatorMapper {
+public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>> {
 	
-	private ModuleMorphism morphism;
-	private TransformationPaths transformationPaths;
-	private Module domain;
-	private int domainDim, codomainDim;
+	private ModuleMorphism<A,B,RA,RB> morphism;
+	private final TransformationPaths transformationPaths;
+	private Module<A,RA> domain;
+	private int domainDim;
+	private int codomainDim;
 	private List<ModuleMorphism> injectionMorphisms;
 	
-	public ArbitraryDenotatorMapper(ModuleMorphism morphism, TransformationPaths paths) {
+	public ArbitraryDenotatorMapper(ModuleMorphism<A,B,RA,RB> morphism, TransformationPaths paths) {
 		this.transformationPaths = paths;
 		this.init(morphism);
 	}
 	
 	//define morphism-specific variables
-	private void init(ModuleMorphism morphism) {
+	private void init(ModuleMorphism<A,B,RA,RB> morphism) {
 		this.morphism = morphism;
 		this.domain = this.morphism.getDomain();
 		this.domainDim = this.domain.getDimension();
@@ -72,7 +73,7 @@ public class ArbitraryDenotatorMapper {
 	 */
 	public PowerDenotator getMappedPowerDenotator(PowerDenotator input) throws RubatoException {
 		//prepare output
-		PowerDenotator output = new PowerDenotator(NameDenotator.make(""), input.getAddress(), input.getPowerForm(), new ArrayList<Denotator>());
+		PowerDenotator output = new PowerDenotator(NameDenotator.make(""), input.getAddress(), input.getPowerForm(), new ArrayList<>());
 		
 		if (this.transformationPaths != null && this.transformationPaths.getDomainDim() == this.domainDim
 				&& this.transformationPaths.getCodomainDim() == this.codomainDim) {
@@ -288,23 +289,23 @@ public class ArbitraryDenotatorMapper {
 	 * example: c:Q^2, then return [Q->Q^2, Q->Q^2]
 	 * TODO: does not work for product rings, does it?
 	 */
-	private List<ModuleMorphism> makeInjectionMorphisms(Module codomain) {
-		List<ModuleMorphism> injections = new ArrayList<ModuleMorphism>();
+	private List<ModuleMorphism> makeInjectionMorphisms(Module<A,RA> codomain) {
+		List<ModuleMorphism> injections = new ArrayList<>();
 		int codim = codomain.getDimension();
-		Ring ring = codomain.getRing();
+		Ring<RA> ring = codomain.getRing();
 		for (int i = 0; i < codim; i++) {
 			injections.add(this.makeInjectionMorphism(ring, codim, i));
 		}
 		return injections;
 	}
 	
-	private ModuleMorphism makeInjectionMorphism(Ring ring, int codomainDim, int index) {
+	private ModuleMorphism makeInjectionMorphism(Ring<RA> ring, int codomainDim, int index) {
 		if (ring instanceof ProductRing) {
 			ProductRing product = (ProductRing)ring;
 			return EmbeddingMorphism.makeProductRingEmbedding(product.getFactor(index), product, index);
 		}
 		GenericAffineMorphism injection = new GenericAffineMorphism(ring, 1, codomainDim);
-		RingElement one = (RingElement)new ArithmeticElement<>(new ArithmeticInteger(1)).cast(ring);
+		RA one = ring.getOne();
 		injection.setMatrix(index, 0, one);
 		return injection;
 	}
