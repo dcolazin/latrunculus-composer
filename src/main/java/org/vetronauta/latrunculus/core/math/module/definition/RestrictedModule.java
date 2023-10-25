@@ -23,7 +23,6 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 
 import java.util.List;
 
@@ -142,12 +141,6 @@ public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElemen
     public boolean hasElement(ModuleElement element) {
         return element.getModule().equals(this);
     }
-
-    
-    public ModuleMorphism getTranslation(ModuleElement element) {
-        return TranslationMorphism.make(module, element);
-    }
-
     
     public RestrictedElement cast(ModuleElement element) {
         ModuleElement res = module.cast(element);

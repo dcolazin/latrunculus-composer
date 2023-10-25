@@ -20,8 +20,6 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -187,12 +185,6 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
             return fill(elements);
         }
     }
-
-
-    public ModuleMorphism getTranslation(ModuleElement element) {
-        return TranslationMorphism.make(this, element);
-    }
-
 
     public int compareTo(Module object) {
         if (object instanceof DirectSumModule) {

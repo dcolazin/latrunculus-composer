@@ -56,7 +56,7 @@ class JTranslateMorphismType extends JMorphismType implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         ModuleElement value = simpleEntry.getValue();
         if (value != null) {
-            container.setMorphism(TranslationMorphism.make(container.getDomain(), value));
+            container.setMorphism(new TranslationMorphism(value));
         }
         else {
             container.setMorphism(null);

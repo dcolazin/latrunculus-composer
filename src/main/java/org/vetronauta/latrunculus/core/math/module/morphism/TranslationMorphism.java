@@ -19,97 +19,75 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
 
 /**
  * Morphism that represents a translation in an arbitrary module.
  * 
  * @author Gérard Milmeister
  */
-public final class TranslationMorphism extends ModuleMorphism {
+public final class TranslationMorphism<A extends ModuleElement<A,RA>, RA extends RingElement<RA>> extends Endomorphism<A,RA> {
 
-    /**
-     * Create a morphism in module <code>module</code> translated by <code>element</code>.
-     * The resulting morphism <i>h</i> is such that <i>h(x) = x+element</i>.
-     * 
-     * @return null if translation is not valid
-     */
-    public static ModuleMorphism make(Module module, ModuleElement element) {
-        if (!module.hasElement(element)) {
-            return null;
-        }
-        else {
-            return new TranslationMorphism(module, element);
-        }
+    private final A translate;
+
+    public TranslationMorphism(A translate) {
+        super(translate.getModule());
+        this.translate = translate;
     }
 
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (getDomain().hasElement(x)) {
-            try {
-                return x.sum(translate);
-            }
-            catch (DomainException e) {
-                throw new MappingException("TranslationMorphism.map: ", x, this);
-            }
-        }
-        else {
-            throw new MappingException("TranslationMorphism.map: ", x, this);
-        }
+    @Override
+    public A map(A x) {
+        return x.sum(translate);
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return getDomain().isRing() && translate.isZero(); 
     }
     
-    
+    @Override
     public boolean isLinear() {
         return translate.isZero();
     }
     
-    
+    @Override
     public boolean isIdentity() {
         return translate.isZero();
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public IdentityMorphism<RA, RA> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
-    
     /**
      * Returns the translate <i>t</i> of <i>h(x) = x+t</i>.
      */
-    public ModuleElement getTranslate() {
+    public A getTranslate() {
         return translate;
     }
-    
 
+
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof TranslationMorphism) {
-            TranslationMorphism morphism = (TranslationMorphism)object;
+            TranslationMorphism<?,?> morphism = (TranslationMorphism<?,?>)object;
             return translate.compareTo(morphism.translate);
         }
-        else {
-            return super.compareTo(object);
-        }
+        return super.compareTo(object);
     }
     
-    
+    @Override
     public boolean equals(Object object) {
         if (object instanceof TranslationMorphism) {
-            TranslationMorphism morphism = (TranslationMorphism)object;
+            TranslationMorphism<?,?> morphism = (TranslationMorphism<?,?>)object;
             return translate.equals(morphism.translate);
         }
         else {
@@ -117,7 +95,7 @@ public final class TranslationMorphism extends ModuleMorphism {
         }
     }
     
-    
+    @Override
     public String toString() {
         return "TranslationMorphism["+translate+"]";
     }
@@ -125,13 +103,5 @@ public final class TranslationMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "TranslationMorphism"; 
     }
-    
-    
-    private TranslationMorphism(Module domain, ModuleElement translate) {
-        super(domain, domain);
-        this.translate = translate;
-    }
 
-    
-    private ModuleElement translate;
 }

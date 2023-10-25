@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 
 /**
  * The abstract base class for <code>proper</code> free modules.
@@ -37,11 +36,6 @@ public abstract class ProperFreeModule<E extends FreeElement<E,R>, R extends Rin
         dimension = Math.max(dimension, 0);
         this.dimension = dimension;
     }
-
-    public final ModuleMorphism getTranslation(ModuleElement element) {
-        return TranslationMorphism.make(this, element);
-    }
-
     
     public final ModuleMorphism getProjection(int index) {
         if (index < 0) { index = 0; }

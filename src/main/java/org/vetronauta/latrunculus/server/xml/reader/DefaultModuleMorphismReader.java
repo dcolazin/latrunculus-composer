@@ -1443,7 +1443,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
                 return null;
             }
             try {
-                ModuleMorphism morphism = TranslationMorphism.make(f, trslte);
+                ModuleMorphism morphism = new TranslationMorphism(trslte);
                 return morphism;
             }
             catch (IllegalArgumentException e) {

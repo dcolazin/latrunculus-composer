@@ -85,11 +85,6 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
     boolean hasElement(ModuleElement<?,?> element);
 
     /**
-     * Returns a morphism that translates by <code>element</code>.
-     */
-    ModuleMorphism getTranslation(ModuleElement<?,?> element);
-
-    /**
      * Casts <code>element</code> to an element in this module if possible.
      * @return null if cast is not possible
      */

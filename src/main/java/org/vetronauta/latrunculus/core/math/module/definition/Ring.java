@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 
 /**
  * The abstract base class for rings.
@@ -100,13 +99,6 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
     //TODO needed because ProductRing still uses raw types
     public abstract R parseString(String s);
 
-    /**
-     * Returns a morphism that translates by <code>element</code>.
-     */
-    public ModuleMorphism getTranslation(ModuleElement<?,?> element) {
-        return TranslationMorphism.make(this, element);
-    }
-    
     public int compareTo(Module object) {
         return toString().compareTo(object.toString());
     }
