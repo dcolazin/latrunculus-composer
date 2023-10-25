@@ -20,10 +20,10 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
  * A projection from a ProductRing to one its factors.
@@ -32,7 +32,14 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
  * @see ProductRing
  * @author Gérard Milmeister
  */
-public class ProjectionMorphism extends ModuleMorphism {
+public class ProjectionMorphism<R extends RingElement<R>> extends ModuleMorphism<ProductElement,R,ProductElement,R> {
+
+    private final int index;
+
+    private ProjectionMorphism(ProductRing domain, Ring<R> codomain, int index) {
+        super(domain, codomain);
+        this.index = index;
+    }
 
     /**
      * Creates a projection from <code>domain</code> to the factor <code>i</code>
@@ -40,15 +47,15 @@ public class ProjectionMorphism extends ModuleMorphism {
      * @param domain a product ring
      * @param i the index of codomain factor
      */
-    public static ProjectionMorphism make(ProductRing domain, int i) {
+    public static ProjectionMorphism<?> make(ProductRing domain, int i) {
         if (i < 0) {
             i = 0;
         }
         else if (i >= domain.getFactorCount()) {
             i = domain.getFactorCount()-1;
         }
-        Ring codomain = domain.getFactor(i);
-        return new ProjectionMorphism(domain, codomain, i);
+        Ring<?> codomain = domain.getFactor(i);
+        return new ProjectionMorphism<>(domain, codomain, i);
     }
     
 
@@ -59,32 +66,31 @@ public class ProjectionMorphism extends ModuleMorphism {
         return index;
     }
     
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
+    @Override
+    public R map(ProductElement x) throws MappingException {
         if (!getDomain().hasElement(x)) {
             throw new MappingException("ProjectionMorphism.map: ", x, this);
         }
-        return ((ProductElement)x).getFactor(index);
+        return (R) x.getFactor(index);
     }
 
-    
+    @Override
     public boolean isRingHomomorphism() {
         return true;
     }
-    
-    
-    public ModuleMorphism getRingMorphism() {
+
+    @Override
+    public ProjectionMorphism<R> getRingMorphism() {
         return this;
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
         else if (object instanceof ProjectionMorphism) {
-            ProjectionMorphism m = (ProjectionMorphism)object;
+            ProjectionMorphism<?> m = (ProjectionMorphism<?>)object;
             return getDomain().equals(m.getDomain()) && getIndex() == m.getIndex();
         }
         else {
@@ -92,10 +98,10 @@ public class ProjectionMorphism extends ModuleMorphism {
         }
     }
 
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof ProjectionMorphism) {
-            ProjectionMorphism m = (ProjectionMorphism)object;
+            ProjectionMorphism<?> m = (ProjectionMorphism<?>)object;
             int res = getDomain().compareTo(m.getDomain());
             if (res == 0) {
                 return getIndex()-m.getIndex();
@@ -109,7 +115,7 @@ public class ProjectionMorphism extends ModuleMorphism {
         }
     }
 
-    
+    @Override
     public String toString() {
         return "ProductProjectMorphism["+getDomain()+","+index+"]";
     }
@@ -117,13 +123,5 @@ public class ProjectionMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "ProjectionMorphism";
     }
-    
-    
-    private ProjectionMorphism(ProductRing domain, Ring codomain, int index) {
-        super(domain, codomain);
-        this.index = index;
-    }
-    
-    
-    private int index;
+
 }
