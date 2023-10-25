@@ -32,7 +32,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public class ProductElement extends RingElement<ProductElement> implements ProductFreeElement<ProductElement,ProductElement> {
+public class ProductElement extends RingElement<ProductElement> {
 
     /**
      * Creates a new product element <i>e1</i>x<i>e1</i>.
@@ -376,7 +376,7 @@ public class ProductElement extends RingElement<ProductElement> implements Produ
     }
 
     
-    public ProductFreeElement resize(int n) {
+    public FreeElement<?,ProductElement> resize(int n) {
         if (n == 1) {
             return this;
         }

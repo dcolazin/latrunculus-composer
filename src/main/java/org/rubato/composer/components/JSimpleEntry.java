@@ -20,9 +20,11 @@
 package org.rubato.composer.components;
 
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 
@@ -39,8 +41,8 @@ public abstract class JSimpleEntry extends JPanel {
             module instanceof ModularPolynomialRing) {
             return new JSimpleNumberEntry(module);
         }
-        else if (module instanceof ProductFreeModule) {
-            return new JSimpleProductEntry((ProductFreeModule)module);
+        else if (module.getRing() instanceof ProductRing) {
+            return new JSimpleProductEntry((FreeModule<?, ProductElement>)module);
         }
         else {
             return null;

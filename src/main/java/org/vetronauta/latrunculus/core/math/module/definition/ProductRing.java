@@ -37,7 +37,7 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductRing extends Ring<ProductElement> implements ProductFreeModule<ProductElement,ProductElement> {
+public final class ProductRing extends Ring<ProductElement> {
     
     /**
      * Creates a new product ring <i>r1</i>x<i>r2</i>.
@@ -139,7 +139,7 @@ public final class ProductRing extends Ring<ProductElement> implements ProductFr
     }
 
 
-    public ProductFreeModule getNullModule() {
+    public FreeModule<?, ProductElement> getNullModule() {
         return ProductProperFreeModule.make(this, 0);
     }
     
@@ -173,7 +173,7 @@ public final class ProductRing extends Ring<ProductElement> implements ProductFr
     }
 
     
-    public ProductFreeModule getFreeModule(int dimension) {
+    public FreeModule<?, ProductElement> getFreeModule(int dimension) {
         return ProductProperFreeModule.make(this, dimension);
     }
 

@@ -33,10 +33,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductProperFreeModule extends ProperFreeModule<ProductProperFreeElement,ProductElement> implements ProductFreeModule<ProductProperFreeElement,ProductElement> {
+public final class ProductProperFreeModule extends ProperFreeModule<ProductProperFreeElement,ProductElement> {
 
-    public static FreeModule make(Ring[] rings, int dimension) {
-        dimension = (dimension < 0)?0:dimension;
+    public static FreeModule<?, ProductElement> make(Ring[] rings, int dimension) {
+        dimension = Math.max(dimension, 0);
         if (dimension == 1) {
             return ProductRing.make(rings);
         }
@@ -51,7 +51,7 @@ public final class ProductProperFreeModule extends ProperFreeModule<ProductPrope
     }
 
     
-    public static ProductFreeModule make(ProductRing ring, int dimension) {
+    public static FreeModule<?, ProductElement> make(ProductRing ring, int dimension) {
         if (dimension == 1) {
             return ring;
         }

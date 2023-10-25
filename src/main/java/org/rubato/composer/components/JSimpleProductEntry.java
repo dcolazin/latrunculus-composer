@@ -19,26 +19,24 @@
 
 package org.rubato.composer.components;
 
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductFreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-
 public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
 
-    public JSimpleProductEntry(ProductFreeModule module) {
+    public JSimpleProductEntry(FreeModule<?,ProductElement> module) {
         this.module = module;
         createContent();
     }
@@ -46,7 +44,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
     
     private void createContent() {
         int dim = module.getDimension();
-        simpleEntries = new ArrayList<ArrayList<JSimpleEntry>>();
+        simpleEntries = new ArrayList<>();
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         setLayout(gbl);
@@ -84,7 +82,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
 
     
     private JPanel createValuePanel(ProductRing ring) {
-        ArrayList<JSimpleEntry> valueEntries = new ArrayList<JSimpleEntry>();
+        ArrayList<JSimpleEntry> valueEntries = new ArrayList<>();
         JPanel valuePanel = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -149,9 +147,8 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
     
     
     public void setValue(ModuleElement element) {
-        ProductFreeElement el = (ProductFreeElement)element;
         for (int i = 0; i < simpleEntries.size(); i++) {
-            ProductElement pel = (ProductElement)el.getComponent(i);
+            ProductElement pel = (ProductElement)element.getComponent(i);
             ArrayList<JSimpleEntry> valueEntries = simpleEntries.get(i);
             for (int j = 0; j < valueEntries.size(); j++) {
                 JSimpleEntry entry = valueEntries.get(j);
@@ -162,5 +159,5 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
     
     
     private ArrayList<ArrayList<JSimpleEntry>> simpleEntries;
-    private ProductFreeModule module = null;
+    private FreeModule<?,ProductElement> module;
 }

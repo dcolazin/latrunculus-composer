@@ -29,12 +29,12 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
  * 
  * @author Gérard Milmeister
  */
-public final class ProductProperFreeElement extends ProperFreeElement<ProductProperFreeElement,ProductElement> implements ProductFreeElement<ProductProperFreeElement,ProductElement> {
+public final class ProductProperFreeElement extends ProperFreeElement<ProductProperFreeElement,ProductElement> {
 
     /**
      * Creates a new product free element over the specified ring with given components.
      */
-    public static ProductFreeElement make(ProductRing ring, ProductElement[] v) {
+    public static FreeElement<?,ProductElement> make(ProductRing ring, ProductElement[] v) {
         if (v.length == 1) {
             return v[0];
         }
@@ -48,7 +48,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
      * Creates a new product free element over the specified ring with given components.
      * In this case <code>v</code> must be of length > 0.
      */
-    public static ProductFreeElement make(ProductElement[] v) {
+    public static FreeElement<?,ProductElement> make(ProductElement[] v) {
         if (v.length == 1) {
             return v[0];
         }
@@ -215,7 +215,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
     }
     
 
-    public ProductFreeModule getModule() {
+    public Module<ProductProperFreeElement, ProductElement> getModule() {
         if (module == null) {
             module = ProductProperFreeModule.make(getRing(), getLength());
         }
@@ -244,7 +244,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
     }
     
 
-    public ProductFreeElement resize(int n) {
+    public FreeElement<?,ProductElement> resize(int n) {
         if (n == getLength()) {
             return this;
         }
@@ -377,7 +377,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
 
     
     private final ProductElement[]  value;
-    private ProductFreeModule module;
+    private FreeModule<ProductProperFreeElement, ProductElement> module;
     private ProductRing       ring;
 
     @Override
