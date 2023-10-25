@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -29,7 +28,17 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
  * 
  * @author Gérard Milmeister
  */
-public final class ScaledMorphism extends ModuleMorphism {
+public final class ScaledMorphism<A extends ModuleElement<A, RA>, B extends ModuleElement<B, RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphism<A,B,RA,RB> {
+
+    private final ModuleMorphism<A,B,RA,RB> f;
+    private final RB scalar;
+
+    private ScaledMorphism(ModuleMorphism<A,B,RA,RB> f, RB scalar) {
+        super(f.getDomain(), f.getCodomain());
+        this.f = f;
+        this.scalar = scalar;
+    }
 
     /**
      * Create a morphism from <code>f</code> and scalar <code>value</code>.
@@ -38,47 +47,35 @@ public final class ScaledMorphism extends ModuleMorphism {
      * 
      * @return null if <code>f</code> cannot be scaled by <code>value</code> 
      */
-    public static ModuleMorphism make(ModuleMorphism f, RingElement scalar) {
-        if (!f.getCodomain().getRing().hasElement(scalar)) {
-            return null;
-        }
+    public static <X extends ModuleElement<X, RX>, Y extends ModuleElement<Y, RY>, RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<X,Y,RX,RY> make(ModuleMorphism<X,Y,RX,RY> f, RY scalar) {
         if (scalar.isOne()) {
             return f;
         }
-        else if (scalar.isZero()) {
-            return getConstantMorphism(f.getCodomain(), f.getCodomain().getZero());
+        if (scalar.isZero()) {
+            return getConstantMorphism(f.getDomain(), f.getCodomain().getZero());
         }
-        else if (f.isConstant()) {
+        if (f.isConstant()) {
             try {
-                return new ConstantMorphism(f.getDomain(), f.map(f.getDomain().getZero()).scaled(scalar));
-            }
-            catch (DomainException e) {
-                throw new AssertionError("This should never happen!");
+                return new ConstantMorphism<>(f.getDomain(), f.map(f.getDomain().getZero()).scaled(scalar));
             }
             catch (MappingException e) {
                 throw new AssertionError("This should never happen!");
             }
+
         }
-        else {
-            return new ScaledMorphism(f, scalar);
-        }
+        return new ScaledMorphism<>(f, scalar);
     }
     
     
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        try {
-            return f.map(x).scaled(scalar);
-        }
-        catch (DomainException e) {
-            throw new MappingException("ScaledMorphism.map: ", x, this);
-        }
+    public B map(A x) throws MappingException {
+        return f.map(x).scaled(scalar);
     }
 
-    
+    @Override
     public int compareTo(ModuleMorphism object) {
         if (object instanceof ScaledMorphism) {
-            ScaledMorphism m = (ScaledMorphism)object;
+            ScaledMorphism<?,?,?,?> m = (ScaledMorphism<?,?,?,?>) object;
             int comp = f.compareTo(m.f);
             if (comp == 0) {
                 return scalar.compareTo(m.scalar);
@@ -92,23 +89,23 @@ public final class ScaledMorphism extends ModuleMorphism {
         }
     }
     
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return f.isModuleHomomorphism();
     }
 
-    
+    @Override
     public boolean isLinear() {
         return f.isLinear();
     }
 
-    
+    @Override
     public boolean isConstant() {
         return f.isConstant();
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public ModuleMorphism<RA, RB, RA, RB> getRingMorphism() {
         return f.getRingMorphism();
     }
 
@@ -116,7 +113,7 @@ public final class ScaledMorphism extends ModuleMorphism {
     /**
      * Returns the morphism <i>f</i> from <i>a*f</i>.
      */
-    public ModuleMorphism getMorphism() {
+    public ModuleMorphism<A,B,RA,RB> getMorphism() {
         return f;
     }
     
@@ -124,21 +121,20 @@ public final class ScaledMorphism extends ModuleMorphism {
     /**
      * Returns the scalar <i>a</i> from <i>a*f</i>.
      */
-    public RingElement getScalar() {
+    public RB getScalar() {
         return scalar;
     }
     
-    
+    @Override
     public boolean equals(Object object) {
         if (object instanceof ScaledMorphism) {
-            ScaledMorphism morphism = (ScaledMorphism)object;
+            ScaledMorphism<?,?,?,?> morphism = (ScaledMorphism<?,?,?,?>) object;
             return f.equals(morphism.f) && scalar.equals(morphism.scalar);
         }
         else {
             return false;
         }
     }
-    
     
     public String toString() {
         return "ScaledMorphism["+f+","+scalar+"]";
@@ -147,15 +143,5 @@ public final class ScaledMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "ScaledMorphism";
     }
-    
-    
-    private ScaledMorphism(ModuleMorphism f, RingElement scalar) {
-        super(f.getDomain(), f.getCodomain());
-        this.f = f;
-        this.scalar = scalar;
-    }
 
-    
-    private ModuleMorphism f;
-    private RingElement    scalar;
 }
