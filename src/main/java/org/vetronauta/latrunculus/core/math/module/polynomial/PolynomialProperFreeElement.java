@@ -381,7 +381,7 @@ public final class PolynomialProperFreeElement<B extends RingElement<B>> extends
     private PolynomialRing<B>       ring = null;
 
     @Override
-    public ModuleElement deepCopy() {
+    public PolynomialProperFreeElement deepCopy() {
         PolynomialElement[] v = new PolynomialElement[getLength()];
         for (int i = 0; i < getLength(); i++) {
             v[i] = value[i].deepCopy();

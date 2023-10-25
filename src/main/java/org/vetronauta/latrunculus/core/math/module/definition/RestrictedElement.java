@@ -229,7 +229,7 @@ public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingEleme
     private final B    moduleElement;
 
     @Override
-    public ModuleElement deepCopy() {
+    public RestrictedElement deepCopy() {
         return new RestrictedElement(module, moduleElement.deepCopy());
     }
 }

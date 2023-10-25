@@ -25,7 +25,10 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A generic basis morphism is defined by the values at the basis
@@ -33,7 +36,21 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
  * 
  * @author Gérard Milmeister
  */
-public class GenericBasisMorphism extends ModuleMorphism {
+public class GenericBasisMorphism<A extends FreeElement<A,R>, B extends ModuleElement<B,R>, R extends RingElement<R>>
+        extends ModuleMorphism<A,B,R,R> {
+
+    private final List<B> fi;
+    private final List<B> fit;
+
+    private GenericBasisMorphism(FreeModule<A,R> domain, Module<B,R> codomain, List<B> fi) {
+        super(domain, codomain);
+        this.fi = fi;
+        this.fit = new ArrayList<>();
+        fit.add(fi.get(0));
+        for (int i = 1; i < fi.size(); i++) {
+            fit.add(fi.get(i).difference(fi.get(0)));
+        }
+    }
 
     /**
      * Creates generic basis morphism with the free module <code>domain</code>
@@ -45,43 +62,30 @@ public class GenericBasisMorphism extends ModuleMorphism {
      * 
      * @throws DomainException if rings don't match
      */
-    public static GenericBasisMorphism make(FreeModule domain, Module codomain, ModuleElement[] fi)
-            throws DomainException {
-        if (domain.getRing().equals(codomain.getRing())) {
-            ModuleElement[] fis = new ModuleElement[domain.getDimension()+1];
-            int i;
-            for (i = 0; i < fis.length; i++) {
-                fis[i] = codomain.getZero();
-            }
-            for (i = 0; i < Math.min(fis.length, fi.length); i++) {
-                if (codomain.hasElement(fi[i])) {
-                    fis[i] = fi[i];
-                }
-                else {
-                    throw new DomainException(codomain, fi[i].getModule());
-                }
-            }
-            return new GenericBasisMorphism(domain, codomain, fis);
+    public static <X extends FreeElement<X,T>, Y extends ModuleElement<Y,T>, T extends RingElement<T>>
+    GenericBasisMorphism<X,Y,T> make(FreeModule<X,T> domain, Module<Y,T> codomain, List<Y> fi) throws DomainException {
+        List<Y> fis = new ArrayList<>(domain.getDimension()+1);
+        for (int i = 0; i < domain.getDimension()+1; i++) {
+            fis.add(codomain.getZero());
         }
-        else {
-            throw new DomainException(domain.getRing(), codomain.getRing());
+        for (int i = 0; i < Math.min(fis.size(), fi.size()); i++) {
+            if (codomain.hasElement(fi.get(i))) {
+                fis.set(i, fi.get(i));
+            }
+            else {
+                throw new DomainException(codomain, fi.get(i).getModule());
+            }
         }
+        return new GenericBasisMorphism<>(domain, codomain, fis);
     }
     
-    
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
+    @Override
+    public B map(A x) throws MappingException {
         if (inDomain(x)) {
-            FreeElement v = (FreeElement)x;
-            ModuleElement res = (ModuleElement) fit[0].deepCopy();
-            try {
-                for (int i = 0; i < v.getLength(); i++) {
-                    ModuleElement tmp = fit[i+1].scaled(v.getRingElement(i));
-                    res.add(tmp);
-                }
-            }
-            catch (DomainException e) {
-                throw new AssertionError("Should never happen");
+            B res = fit.get(0).deepCopy();
+            for (int i = 0; i < x.getLength(); i++) {
+                B tmp = fit.get(i+1).scaled(x.getRingElement(i));
+                res.add(tmp);
             }
             return res;
         }
@@ -90,46 +94,41 @@ public class GenericBasisMorphism extends ModuleMorphism {
         }
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
     
-    
+    @Override
     public boolean isRingHomomorphism() {
         return false;
     }
     
-    
-    public ModuleMorphism getRingMorphism() {
+    @Override
+    public ModuleMorphism<R,R,R,R> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
     
-    
+    @Override
     public boolean isLinear() {
-        return fi[0].isZero();
+        return fi.get(0).isZero();
     }
 
-    
+    @Override
     public boolean equals(Object object) {
-        if (object instanceof GenericBasisMorphism) {
-            GenericBasisMorphism morphism = (GenericBasisMorphism)object;
-            if (getDomain().equals(morphism.getDomain()) &&
-                getCodomain().equals(morphism.getCodomain())) {
-                for (int i = 0; i < fit.length; i++) {
-                    if (!fit[i].equals(morphism.fit[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
+        if (!(object instanceof GenericBasisMorphism)) {
+            return false;
+        }
+        GenericBasisMorphism<?,?,?> morphism = (GenericBasisMorphism<?,?,?>) object;
+        if (!getDomain().equals(morphism.getDomain()) || !getCodomain().equals(morphism.getCodomain())) {
+            return false;
+        }
+        for (int i = 0; i < fit.size(); i++) {
+            if (!fit.get(i).equals(morphism.fit.get(i))) {
                 return false;
             }
         }
-        else {
-            return false;
-        }
+        return true;
     }
 
     
@@ -141,40 +140,21 @@ public class GenericBasisMorphism extends ModuleMorphism {
         buf.append(getCodomain());
         buf.append(",");
         buf.append("(");
-        buf.append(fi[0]);
-        for (int i = 1; i < fi.length; i++) {
+        buf.append(fi.get(0));
+        for (int i = 1; i < fi.size(); i++) {
             buf.append(",");
-            buf.append(fi[i]);
+            buf.append(fi.get(i));
         }
         buf.append(")]");
         return buf.toString();
     }
 
-    public ModuleElement[] getModuleElements() {
+    public List<B> getModuleElements() {
         return fi;
     }
 
     public String getElementTypeName() {
         return "GenericBasisMorphism";
     }
-    
-    
-    private GenericBasisMorphism(FreeModule domain, Module codomain, ModuleElement[] fi) {
-        super(domain, codomain);
-        this.fi = fi;
-        fit = new ModuleElement[fi.length];
-        fit[0] = fi[0];
-        try {
-            for (int i = 1; i < fi.length; i++) {
-                fit[i] = fi[i].difference(fi[0]);
-            }
-        }
-        catch (DomainException e) {
-            throw new AssertionError("Should never happen");            
-        }
-    }
-    
-    
-    private ModuleElement[] fi;
-    private ModuleElement[] fit;
+
 }

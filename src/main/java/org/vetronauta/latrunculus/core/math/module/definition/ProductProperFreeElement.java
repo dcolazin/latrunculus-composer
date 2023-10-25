@@ -215,9 +215,9 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
     }
     
 
-    public Module<ProductProperFreeElement, ProductElement> getModule() {
+    public FreeModule<ProductProperFreeElement, ProductElement> getModule() {
         if (module == null) {
-            module = ProductProperFreeModule.make(getRing(), getLength());
+            module = (FreeModule<ProductProperFreeElement, ProductElement>) ProductProperFreeModule.make(getRing(), getLength());
         }
         return module;
     }
@@ -381,7 +381,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
     private ProductRing       ring;
 
     @Override
-    public ModuleElement deepCopy() {
+    public ProductProperFreeElement deepCopy() {
         ProductElement[] v = new ProductElement[getLength()];
         for (int i = 0; i < getLength(); i++) {
             v[i] = value[i].deepCopy();

@@ -31,7 +31,7 @@ import java.io.Serializable;
  * 
  * @author Gérard Milmeister
  */
-public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends DeepCopyable<ModuleElement<E,R>>, Serializable, Comparable<ModuleElement<?,?>>, MathDefinition {
+public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingElement<R>> extends DeepCopyable<E>, Serializable, Comparable<ModuleElement<?,?>>, MathDefinition {
 
     //TODO null checks!
 

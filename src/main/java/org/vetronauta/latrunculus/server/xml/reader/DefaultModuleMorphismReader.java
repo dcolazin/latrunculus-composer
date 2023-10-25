@@ -75,6 +75,7 @@ import org.w3c.dom.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.B_ATTR;
@@ -1107,21 +1108,17 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
                 if (codomain == null) {
                     return null;
                 }
-                ArrayList<ModuleElement> elementList = new ArrayList<ModuleElement>();
+                List<ModuleElement> elementList = new ArrayList<>();
                 childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
                 while (childElement != null) {
-                    ModuleElement melement = reader.parseModuleElement(childElement);
+                    ModuleElement<?,?> melement = reader.parseModuleElement(childElement);
                     if (melement == null) {
                         return null;
                     }
                     elementList.add(melement);
                 }
-                ModuleElement[] elements = new ModuleElement[elementList.size()];
-                for (int i = 0; i < elements.length; i++) {
-                    elements[i] = elementList.get(i);
-                }
                 try {
-                    GenericBasisMorphism morphism = GenericBasisMorphism.make((FreeModule)domain, codomain, elements);
+                    GenericBasisMorphism morphism = GenericBasisMorphism.make((FreeModule)domain, codomain, elementList);
                     return morphism;
                 }
                 catch (DomainException e) {

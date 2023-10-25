@@ -26,7 +26,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.rubato.composer.components.JMorphismEntry;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProductMorphism;
 
@@ -57,12 +56,7 @@ class JProductMorphismType extends JMorphismType implements ActionListener {
         ModuleMorphism first = firstMorphism.getMorphism();
         ModuleMorphism second = secondMorphism.getMorphism();
         if (first != null && second != null) {
-            try {
-                container.setMorphism(ProductMorphism.make(first, second));                    
-            }
-            catch (CompositionException ex) {
-                container.setMorphism(null);
-            }
+            container.setMorphism(ProductMorphism.make(first, second));
         }
     }
     

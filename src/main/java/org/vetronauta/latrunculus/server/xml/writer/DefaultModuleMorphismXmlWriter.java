@@ -420,12 +420,12 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.closeBlock();
     }
 
-    private void write(GenericBasisMorphism morphism, XMLWriter writer) {
+    private void write(GenericBasisMorphism<?,?,?> morphism, XMLWriter writer) {
         writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName());
         definitionWriter.toXML(morphism.getDomain(), writer);
         definitionWriter.toXML(morphism.getCodomain(), writer);
-        for (int i = 0; i < morphism.getModuleElements().length; i++) {
-            definitionWriter.toXML(morphism.getModuleElements()[i], writer);
+        for (int i = 0; i < morphism.getModuleElements().size(); i++) {
+            definitionWriter.toXML(morphism.getModuleElements().get(i), writer);
         }
         writer.closeBlock();
     }
