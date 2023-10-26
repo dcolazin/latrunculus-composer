@@ -19,13 +19,15 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
 /**
  * Matrixes over real numbers.
  */
-public class RMatrix extends Matrix {
+public class RMatrix extends Matrix<Real> {
 
     /**
      * Creates a real <code>rows</code> x <code>cols</code> matrix

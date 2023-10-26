@@ -23,11 +23,12 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 
 /**
  * Matrixes over modular integers.
  */
-public final class ZnMatrix extends Matrix {
+public final class ZnMatrix extends Matrix<Modulus> {
     
     /**
      * Creates an integer mod <code>modulus</code>

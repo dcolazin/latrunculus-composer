@@ -26,7 +26,7 @@ package org.vetronauta.latrunculus.core.math.matrix;
  * 
  * @author Gérard Milmeister
  */
-public abstract class Matrix implements Comparable<Matrix> {
+public abstract class Matrix<A> implements Comparable<Matrix<?>> {
 
     /**
      * Returns the number of rows of this matrix.

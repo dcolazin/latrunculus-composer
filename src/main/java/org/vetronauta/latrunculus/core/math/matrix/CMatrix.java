@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 /**
  * Matrixes over complex numbers.
  */
-public class CMatrix extends Matrix {
+public class CMatrix extends Matrix<Complex> {
     
     /**
      * Creates a complex <code>rows</code> x <code>cols</code> matrix

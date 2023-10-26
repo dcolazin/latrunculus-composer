@@ -19,12 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+
 import java.util.Arrays;
 
 /**
  * Matrixes over integers.
  */
-public final class ZMatrix extends Matrix {
+public final class ZMatrix extends Matrix<ArithmeticInteger> {
     
     /**
      * Creates an integer <code>rows</code> x <code>cols</code> matrix

@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 /**
  * Matrixes over rational numbers.
  */
-public class QMatrix extends Matrix {
+public class QMatrix extends Matrix<Rational> {
     
     /**
      * Creates a rational <code>rows</code> x <code>cols</code> matrix
@@ -158,7 +158,7 @@ public class QMatrix extends Matrix {
             return;
         }
         Rational[][] coeffs = makeArray(rows, columns);
-        int min_rows = rows < this.rows ? rows : this.rows;
+        int min_rows = Math.min(rows, this.rows);
         for (int r = 0; r < min_rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, columns);
         }
@@ -172,7 +172,7 @@ public class QMatrix extends Matrix {
             return;
         }
         Rational[][] coeffs = makeArray(rows, cols);
-        int min_cols = cols < this.columns ? cols : this.columns;
+        int min_cols = Math.min(cols, this.columns);
         for (int r = 0; r < rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, min_cols);
         }
@@ -865,7 +865,7 @@ public class QMatrix extends Matrix {
         }
         return res;
     }
-    
 
     private Rational[][] coefficients;
+
 }
