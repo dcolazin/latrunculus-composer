@@ -19,8 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.Arrays;
 
@@ -35,7 +39,7 @@ public final class RFreeAffineMorphism extends RFreeAbstractMorphism {
 
     public static ModuleMorphism make(RMatrix A, double[] b) {
         if (A.getColumnCount() == 1 && A.getRowCount() == 1 && b.length == 1) {
-            return new RAffineMorphism(A.get(0, 0), b[0]);
+            return new ArithmeticAffineRingMorphism<>(RRing.ring, new ArithmeticElement<>(new Real(A.get(0, 0))), new ArithmeticElement<>(new Real(b[0])));
         }
         else {
             return new RFreeAffineMorphism(A, b);

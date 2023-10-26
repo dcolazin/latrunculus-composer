@@ -30,16 +30,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
@@ -95,8 +96,8 @@ class WallpaperRubetteTest {
 		} catch (RubatoException e) { e.printStackTrace(); }
 		this.rubette = (WallpaperRubette)new WallpaperRubette().newInstance();
 		this.rubette.setInputForm(this.scoreForm);
-		this.morphisms = new ArrayList<ModuleMorphism>();
-		this.morphisms.add(new RAffineMorphism(2, 1));
+		this.morphisms = new ArrayList<>();
+		this.morphisms.add(new ArithmeticAffineRingMorphism<>(RRing.ring, new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(1))));
 		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{1,1},{1,1}}), new double[]{1,2}));
 	}
 	
@@ -116,7 +117,7 @@ class WallpaperRubetteTest {
 
 	@Test
 	void testMapDenotatorInteger() throws RubatoException {
-		this.morphisms.add(new ZAffineMorphism(2, 1));
+		this.morphisms.add(new ArithmeticAffineRingMorphism<>(ZRing.ring, new ArithmeticElement<>(new ArithmeticInteger(2)), new ArithmeticElement<>(new ArithmeticInteger(1))));
 		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ArithmeticElement<>(new ArithmeticInteger(3)));
 		((LimitDenotator)this.denotator.getFactor(0)).setFactor(2, newLoudness);
 

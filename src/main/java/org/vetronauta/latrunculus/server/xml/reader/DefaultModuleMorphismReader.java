@@ -20,8 +20,10 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
@@ -34,11 +36,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConjugationMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
@@ -54,19 +56,16 @@ import org.vetronauta.latrunculus.core.math.module.morphism.PolynomialMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProductMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProjectionMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ReorderMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -101,20 +100,8 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
 
     @Override
     public ModuleMorphism fromXML(Element element, Class<? extends ModuleMorphism> clazz, XMLReader reader) {
-        if (CAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readCAffineMorphism(element, clazz, reader);
-        }
-        if (QAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readQAffineMorphism(element, clazz, reader);
-        }
-        if (RAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readRAffineMorphism(element, clazz, reader);
-        }
-        if (ZnAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readZnAffineMorphism(element, clazz, reader);
-        }
-        if (ZAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readZAffineMorphism(element, clazz, reader);
+        if (ArithmeticAffineRingMorphism.class.isAssignableFrom(clazz)) {
+            return readArithmeticAffineRingMorphism(element, clazz, reader);
         }
         if (CFreeAffineMorphism.class.isAssignableFrom(clazz)) {
             return readCFreeAffineMorphism(element, clazz, reader);
@@ -197,7 +184,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         return null;
     }
 
-    private ModuleMorphism readCAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
+    private ArithmeticAffineRingMorphism<?> readArithmeticAffineRingMorphism(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute("a")) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), A_ATTR);
@@ -208,166 +195,27 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        Complex a0;
-        Complex b0;
+        ArithmeticNumber<?> a0;
+        ArithmeticNumber<?> b0;
         try {
-            a0 = ArithmeticParsingUtils.parseComplex(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
+            a0 = ArithmeticParsingUtils.parse(element.getAttribute(A_ATTR));
+        } catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a complex number.", A_ATTR, getElementTypeName(clazz));
             return null;
         }
         try {
-            b0 = ArithmeticParsingUtils.parseComplex(element.getAttribute(B_ATTR));
+            b0 = ArithmeticParsingUtils.parse(element.getAttribute(B_ATTR));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be a complex number.", B_ATTR, getElementTypeName(clazz));
             return null;
         }
 
-        return new CAffineMorphism(a0, b0);
+        return new ArithmeticAffineRingMorphism(getRing(element), new ArithmeticElement(a0), new ArithmeticElement(b0));
     }
 
-    private ModuleMorphism readQAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(A_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), A_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(B_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), B_ATTR);
-            return null;
-        }
-
-        Rational aValue;
-        Rational bValue;
-        try {
-            aValue = ArithmeticParsingUtils.parseRational(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a rational number.", A_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-        try {
-            bValue = ArithmeticParsingUtils.parseRational(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a rational number.", B_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        return new QAffineMorphism(aValue, bValue);
-    }
-
-    private ModuleMorphism readRAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(A_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), A_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(B_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), B_ATTR);
-            return null;
-        }
-
-        double a0;
-        double b0;
-        try {
-            a0 = Double.parseDouble(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a real number.", A_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-        try {
-            b0 = Double.parseDouble(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be a real number.", B_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        return new RAffineMorphism(a0, b0);
-    }
-
-    private ModuleMorphism readZnAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(A_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), A_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(B_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), B_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(MODULUS_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), MODULUS_ATTR);
-            return null;
-        }
-
-        int a0;
-        int b0;
-        int modulus0;
-
-        try {
-            modulus0 = Integer.parseInt(element.getAttribute(MODULUS_ATTR));
-            if (modulus0 < 2) {
-                throw new NumberFormatException();
-            }
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer > 1.", MODULUS_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        try {
-            a0 = Integer.parseInt(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", A_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        try {
-            b0 = Integer.parseInt(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", B_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        return new ZnAffineMorphism(a0, b0, modulus0);
-    }
-    
-    private ModuleMorphism readZAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!element.hasAttribute(A_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), A_ATTR);
-            return null;
-        }
-        if (!element.hasAttribute(B_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), B_ATTR);
-            return null;
-        }
-
-        int a0;
-        int b0;
-        try {
-            a0 = Integer.parseInt(element.getAttribute(A_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", A_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-        try {
-            b0 = Integer.parseInt(element.getAttribute(B_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", B_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        return new ZAffineMorphism(a0, b0);
+    private ArithmeticRing<?> getRing(Element element) {
+        return null; //TODO
     }
 
     private ModuleMorphism readCFreeAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {

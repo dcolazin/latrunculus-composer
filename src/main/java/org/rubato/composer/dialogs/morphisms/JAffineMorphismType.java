@@ -201,7 +201,7 @@ class JAffineMorphismType
                     Complex[] v = graph.getCVector();
                     for (int i = 0; i < 2; i++) {
                         for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, m.get(i, j).toString());
+                            setMatrixEntry(i, j, m.getNumber(i, j).toString());
                         }
                         setVectorEntry(i, v[i].toString());
                     }
@@ -472,7 +472,7 @@ class JAffineMorphismType
             Complex[] vector = m.getVector();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(matrix.get(i, j).toString());
+                    matrixEntries[i][j].setText(matrix.getNumber(i, j).toString());
                 }
                 vectorEntries[i].setText(vector[i].toString());
             }

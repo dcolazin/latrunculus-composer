@@ -19,14 +19,20 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
  * Matrixes over complex numbers.
  */
-public class CMatrix extends Matrix<Complex> {
+public class CMatrix extends ArithmeticMatrix<Complex> {
     
     /**
      * Creates a complex <code>rows</code> x <code>cols</code> matrix
@@ -36,8 +42,62 @@ public class CMatrix extends Matrix<Complex> {
         super(rows, cols);
         coefficients = makeArray(rows, columns);
     }
-    
-    
+
+    @Override
+    public ArithmeticMatrix<Complex> product(ArithmeticMatrix<Complex> matrix) {
+        if (!(matrix instanceof CMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return product((CMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Complex> sum(ArithmeticMatrix<Complex> matrix) {
+        if (!(matrix instanceof CMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return sum((CMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Complex> difference(ArithmeticMatrix<Complex> matrix) {
+        if (!(matrix instanceof CMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return difference((CMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Complex> scaled(ArithmeticElement<Complex> element) {
+        return scaled(element.getValue());
+    }
+
+    @Override
+    public ArithmeticMultiElement<Complex> product(ArithmeticMultiElement<Complex> vector) {
+        Complex[] cvector = product(vector.getValue().stream().map(ArithmeticElement::getValue).toArray());
+        return new ArithmeticMultiElement<>(vector.getRing(), Arrays.stream(cvector).map(ArithmeticElement::new).collect(Collectors.toList()));
+    }
+
+    @Override
+    public ArithmeticElement<Complex> get(int i, int j) {
+        return new ArithmeticElement<>(getNumber(i,j));
+    }
+
+    @Override
+    public ArithmeticMultiElement<Complex> getColumn(int j) {
+        List<ArithmeticElement<Complex>> list = new ArrayList<>(rows);
+        for (int i = 0; i < rows; i++) {
+            list.add(new ArithmeticElement<>(coefficients[i][j]));
+        }
+        return new ArithmeticMultiElement<>(CRing.ring, list);
+    }
+
+    @Override
+    public ArithmeticMultiElement<Complex> getRow(int i) {
+        return new ArithmeticMultiElement<>(CRing.ring, Arrays.stream(coefficients[i]).map(ArithmeticElement::new).collect(Collectors.toList()));
+    }
+
+
     /**
      * Creates a complex <code>rows</code> x <code>cols</code> matrix
      * with all coefficients set to <code>value</code>.
@@ -156,7 +216,7 @@ public class CMatrix extends Matrix<Complex> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public Complex get(int row, int col) {
+    public Complex getNumber(int row, int col) {
         return coefficients[row][col];
     }
     
@@ -746,7 +806,20 @@ public class CMatrix extends Matrix<Complex> {
         }
         return product;
     }
-    
+
+    /**
+     * Returns the product of this matrix with <code>vector</code>.
+     */
+    public Complex[] product(Object[] vector) {
+        if (columns != vector.length) {
+            throw new ArithmeticException("Unmatched matrix dimensions.");
+        }
+        Complex[] cvector = new Complex[vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            cvector[i] = (Complex) vector[i];
+        }
+        return product(cvector);
+    }
 
     /**
      * Returns the product of this matrix with <code>vector</code>.

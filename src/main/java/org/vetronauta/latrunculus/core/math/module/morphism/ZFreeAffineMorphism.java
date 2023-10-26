@@ -19,8 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 
 import java.util.Arrays;
 
@@ -35,7 +39,8 @@ public final class ZFreeAffineMorphism extends ZFreeAbstractMorphism {
 
     public static ModuleMorphism make(ZMatrix A, int[] b) {
         if (A.getColumnCount() == 1 && A.getRowCount() == 1 && b.length == 1) {
-            return new ZAffineMorphism(A.get(0, 0), b[0]);
+            return new ArithmeticAffineRingMorphism<>(ZRing.ring, new ArithmeticElement<>(new ArithmeticInteger(A.get(0, 0))),
+                    new ArithmeticElement<>(new ArithmeticInteger(b[0])));
         }
         else {
             return new ZFreeAffineMorphism(A, b);

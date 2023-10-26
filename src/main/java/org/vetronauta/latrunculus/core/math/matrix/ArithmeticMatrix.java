@@ -4,8 +4,6 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
-import java.util.List;
-
 public abstract class ArithmeticMatrix<N extends ArithmeticNumber<N>> extends Matrix<N> {
 
     //TODO make this a ModuleElement...

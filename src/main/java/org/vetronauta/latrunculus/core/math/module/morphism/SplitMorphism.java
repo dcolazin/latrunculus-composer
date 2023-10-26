@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -38,9 +39,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
+import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.EndomorphismWrapper;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -216,23 +223,27 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
     }
 
     private static boolean areAllZAffine(List<ModuleMorphism> morphisms) {
-        return morphisms.stream().allMatch(m -> m instanceof ZFreeAffineMorphism || m instanceof ZAffineMorphism);
+        return morphisms.stream().allMatch(m -> isAffine(m) && m.getDomain().getRing() instanceof ZRing);
     }
 
     private static boolean areAllZnAffine(List<ModuleMorphism> morphisms) {
-        return morphisms.stream().allMatch(m -> m instanceof ZnFreeAffineMorphism || m instanceof ZnAffineMorphism);
+        return morphisms.stream().allMatch(m -> isAffine(m) && m.getDomain().getRing() instanceof ZnRing);
     }
 
     private static boolean areAllQAffine(List<ModuleMorphism> morphisms) {
-        return morphisms.stream().allMatch(m -> m instanceof QFreeAffineMorphism || m instanceof QAffineMorphism);
+        return morphisms.stream().allMatch(m -> isAffine(m) && m.getDomain().getRing() instanceof QRing);
     }
 
     private static boolean areAllRAffine(List<ModuleMorphism> morphisms) {
-        return morphisms.stream().allMatch(m -> m instanceof RFreeAffineMorphism || m instanceof RAffineMorphism);
+        return morphisms.stream().allMatch(m -> isAffine(m) && m.getDomain().getRing() instanceof RRing);
     }
 
     private static boolean areAllCAffine(List<ModuleMorphism> morphisms) {
-        return morphisms.stream().allMatch(m -> m instanceof CFreeAffineMorphism || m instanceof CAffineMorphism);
+        return morphisms.stream().allMatch(m -> isAffine(m) && m.getDomain().getRing() instanceof CRing);
+    }
+
+    private static boolean isAffine(ModuleMorphism<?,?,?,?> morphism) {
+        return morphism instanceof ArithmeticAffineFreeMorphism || morphism instanceof ArithmeticAffineRingMorphism;
     }
 
     private static Endomorphism makeZFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
@@ -252,9 +263,9 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 }
                 i += d;
             }
-            else if (m instanceof ZAffineMorphism) {
-                A.set(i, i, ((ZAffineMorphism)m).getA().getValue().intValue());
-                b[i] = ((ZAffineMorphism)m).getB().getValue().intValue();
+            else if (m instanceof ArithmeticAffineRingMorphism) {
+                A.set(i, i, ((ArithmeticAffineRingMorphism<ArithmeticInteger>)m).getA().getValue().intValue());
+                b[i] = ((ArithmeticAffineRingMorphism<ArithmeticInteger>)m).getB().getValue().intValue();
             }
         }
         return new EndomorphismWrapper(ZFreeAffineMorphism.make(A, b));
@@ -278,9 +289,9 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 }
                 i += d;
             }
-            else if (m instanceof ZnAffineMorphism) {
-                A.set(i, i, ((ZnAffineMorphism)m).getA().getValue().intValue());
-                b[i] = ((ZnAffineMorphism)m).getB().getValue().intValue();
+            else if (m instanceof ArithmeticAffineRingMorphism) {
+                A.set(i, i, ((ArithmeticAffineRingMorphism<Modulus>)m).getA().getValue().intValue());
+                b[i] = ((ArithmeticAffineRingMorphism<Modulus>)m).getB().getValue().intValue();
             }
         }
         return new EndomorphismWrapper(ZnFreeAffineMorphism.make(A, b));
@@ -304,9 +315,9 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 }
                 i += d;
             }
-            else if (m instanceof QAffineMorphism) {
-                A.set(i, i, ((QAffineMorphism)m).getA().getValue());
-                b[i] = ((QAffineMorphism)m).getB().getValue();
+            else if (m instanceof ArithmeticAffineRingMorphism) {
+                A.set(i, i, ((ArithmeticAffineRingMorphism<Rational>)m).getA().getValue());
+                b[i] = ((ArithmeticAffineRingMorphism<Rational>)m).getB().getValue();
             }
         }
         return new EndomorphismWrapper(QFreeAffineMorphism.make(A, b));
@@ -330,9 +341,9 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 }
                 i += d;
             }
-            else if (m instanceof RAffineMorphism) {
-                A.set(i, i, ((RAffineMorphism)m).getA().getValue().doubleValue());
-                b[i] = ((RAffineMorphism)m).getB().getValue().doubleValue();
+            else if (m instanceof ArithmeticAffineRingMorphism) {
+                A.set(i, i, ((ArithmeticAffineRingMorphism<Real>)m).getA().getValue().doubleValue());
+                b[i] = ((ArithmeticAffineRingMorphism<Real>)m).getB().getValue().doubleValue();
             }
         }
         return new EndomorphismWrapper(RFreeAffineMorphism.make(A, b));
@@ -350,15 +361,15 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 int d = b1.length;
                 for (int j = 0; j < d; j++) {
                     for (int k = 0; k < d; k++) {
-                        A.set(i+j, i+k, A1.get(j, k));
+                        A.set(i+j, i+k, A1.getNumber(j, k));
                     }
                     b[i+j] = b1[j];
                 }
                 i += d;
             }
-            else if (m instanceof CAffineMorphism) {
-                A.set(i, i, ((CAffineMorphism)m).getA().getValue());
-                b[i] = ((CAffineMorphism)m).getB().getValue();
+            else if (m instanceof ArithmeticAffineRingMorphism) {
+                A.set(i, i, ((ArithmeticAffineRingMorphism<Complex>)m).getA().getValue());
+                b[i] = ((ArithmeticAffineRingMorphism<Complex>)m).getB().getValue();
             }
         }
         return new EndomorphismWrapper(CFreeAffineMorphism.make(A, b));

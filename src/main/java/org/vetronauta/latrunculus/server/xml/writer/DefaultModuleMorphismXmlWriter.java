@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.morphism.CAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
@@ -40,19 +39,16 @@ import org.vetronauta.latrunculus.core.math.module.morphism.PolynomialMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProductMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProjectionMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ReorderMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.A_ATTR;
@@ -79,24 +75,8 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
 
     @Override
     public void toXML(ModuleMorphism object, XMLWriter writer) {
-        if (object instanceof CAffineMorphism) {
-            write((CAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof QAffineMorphism) {
-            write((QAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof RAffineMorphism) {
-            write((RAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof ZnAffineMorphism) {
-            write((ZnAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof ZAffineMorphism) {
-            write((ZAffineMorphism) object, writer);
+        if (object instanceof ArithmeticAffineRingMorphism) {
+            write((ArithmeticAffineRingMorphism) object, writer);
             return;
         }
         if (object instanceof CFreeAffineMorphism) {
@@ -204,23 +184,7 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         }
     }
 
-    private void write(CAffineMorphism morphism, XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
-    }
-
-    private void write(QAffineMorphism morphism, XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
-    }
-
-    private void write(RAffineMorphism morphism, XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
-    }
-
-    private void write(ZnAffineMorphism morphism, XMLWriter writer) {
-        writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), MODULUS_ATTR, morphism.getModulus(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
-    }
-
-    private void write(ZAffineMorphism morphism, XMLWriter writer) {
+    private void write(ArithmeticAffineRingMorphism morphism, XMLWriter writer) {
         writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
     }
 
@@ -232,7 +196,7 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
                 if (i != 0 || j != 0) {
                     s += ",";
                 }
-                s += morphism.getMatrix().get(i, j);
+                s += morphism.getMatrix().getNumber(i, j);
             }
         }
         writer.openInline(A_ATTR);
