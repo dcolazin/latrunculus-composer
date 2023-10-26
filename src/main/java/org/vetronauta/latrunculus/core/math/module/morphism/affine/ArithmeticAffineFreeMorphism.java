@@ -35,4 +35,20 @@ public abstract class ArithmeticAffineFreeMorphism<A extends FreeElement<A, Arit
         super(domain, codomain);
     }
 
+    public ArithmeticRing<N> getBaseRing() {
+        return (ArithmeticRing<N>) getDomain().getRing();
+    }
+
+    @Override
+    public boolean isModuleHomomorphism() {
+        return true;
+    }
+
+    @Override
+    public boolean isLinear() {
+        return getVector().stream().allMatch(ArithmeticElement::isZero);
+    }
+
+    public abstract List<ArithmeticElement<N>> getVector();
+
 }
