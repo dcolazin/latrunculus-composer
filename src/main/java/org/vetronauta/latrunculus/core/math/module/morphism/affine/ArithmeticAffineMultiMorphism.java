@@ -4,6 +4,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
@@ -11,18 +13,17 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,N> {
 
     private final ArithmeticMatrix<N> matrix;
-    private final List<ArithmeticElement<N>> vector;
+    private final ArithmeticMultiElement<N> vector;
 
-    public ArithmeticAffineMultiMorphism(ArithmeticRing<N> ring, ArithmeticMatrix<N> matrix, List<N> vector) {
+    public ArithmeticAffineMultiMorphism(ArithmeticRing<N> ring, ArithmeticMatrix<N> matrix, ArithmeticMultiElement<N> vector) {
         super(new ArithmeticMultiModule<>(ring, matrix.getColumnCount()), new ArithmeticMultiModule<>(ring, matrix.getRowCount()));
         this.matrix = matrix;
-        this.vector = vector.stream().map(ArithmeticElement::new).collect(Collectors.toList());
+        this.vector = vector;
     }
 
     @Override
@@ -30,15 +31,11 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         if (!getDomain().hasElement(x)) {
             throw new MappingException("ArithmeticAffineMultiMorphism.map: ", x, this);
         }
-        return new ArithmeticMultiElement<>((ArithmeticRing<N>) getDomain().getRing(), mapValue(x.getValue()));
-    }
-
-    private List<ArithmeticElement<N>> mapValue(List<ArithmeticElement<N>> value) {
-        return null; //TODO
+        return matrix.product(x).sum(vector);
     }
 
     @Override
-    public List<ArithmeticElement<N>> getVector() {
+    public ArithmeticMultiElement<N> getVector() {
         return vector;
     }
 
@@ -53,7 +50,16 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
     }
 
     @Override
-    public ModuleMorphism compose(ModuleMorphism morphism) throws CompositionException {
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,ArithmeticMultiElement<N>,RC,ArithmeticElement<N>>
+    compose(ModuleMorphism<C,ArithmeticMultiElement<N>,RC,ArithmeticElement<N>> morphism) throws CompositionException {
+        if (!composable(this, morphism)) {
+            throw new CompositionException("CompositionMorphism.make: Cannot compose " + this + " with " + morphism);
+        }
+        if (morphism instanceof ArithmeticAffineMultiMorphism) {
+            ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism<N>) morphism;
+            return (ModuleMorphism<C, ArithmeticMultiElement<N>, RC, ArithmeticElement<N>>)
+                    new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), matrix.product(other.vector).sum(vector));
+        }
         return super.compose(morphism);  //TODO see CFreeAffineMorphism
     }
 
@@ -74,7 +80,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
 
     @Override
     public ArithmeticMultiElement<N> atZero() {
-        return new ArithmeticMultiElement<>(getBaseRing(), vector);
+        return vector.deepCopy();
     }
 
     @Override
@@ -87,13 +93,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         if (comp != 0) {
             return comp;
         }
-        for (int i = 0; i < vector.size(); i++) {
-            int comp1 = vector.get(i).compareTo(morphism.vector.get(i));
-            if (comp1 != 0) {
-                return comp1;
-            }
-        }
-        return 0;
+        return vector.compareTo(morphism.getVector());
     }
 
     @Override
@@ -102,15 +102,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
             return false;
         }
         ArithmeticAffineMultiMorphism<?> morphism = (ArithmeticAffineMultiMorphism<?>)object;
-        if (!matrix.equals(morphism.matrix)) {
-            return false;
-        }
-        for (int i = 0; i < vector.size(); i++) {
-            if (!vector.get(i).equals(morphism.vector.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return matrix.equals(morphism.matrix) && vector.equals(morphism.vector);
     }
 
     @Override

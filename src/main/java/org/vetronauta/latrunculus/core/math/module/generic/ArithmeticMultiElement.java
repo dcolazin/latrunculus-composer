@@ -220,6 +220,10 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         }
     }
 
+    public ArithmeticElement<N> scalarProduct(ArithmeticMultiElement<N> other) {
+        return this.productCW(other).getValue().stream().reduce(ArithmeticElement::sum).orElse(null);
+    }
+
     @Override
     public double[] fold(ModuleElement<?, ?>[] elements) {
         return FoldingModule.multiFold(ring, elements, getLength());

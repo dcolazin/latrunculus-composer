@@ -38,17 +38,17 @@ import org.vetronauta.latrunculus.core.math.module.morphism.endo.RingEndomorphis
 @Getter
 public class ArithmeticAffineRingMorphism<N extends ArithmeticNumber<N>> extends ArithmeticRingEndomorphism<N> {
 
-    private final N a;
-    private final N b;
+    private final ArithmeticElement<N> a;
+    private final ArithmeticElement<N> b;
 
-    public ArithmeticAffineRingMorphism(Ring<ArithmeticElement<N>> domain, N a, N b) {
+    public ArithmeticAffineRingMorphism(Ring<ArithmeticElement<N>> domain, ArithmeticElement<N> a, ArithmeticElement<N> b) {
         super(domain);
         this.a = a;
         this.b = b;
     }
 
     @Override
-    public N mapValue(N x) {
+    public ArithmeticElement<N> map(ArithmeticElement<N> x) {
         return a.product(x).sum(b);
     }
 
@@ -94,12 +94,12 @@ public class ArithmeticAffineRingMorphism<N extends ArithmeticNumber<N>> extends
         if (element.isZero()) {
             return new RingEndomorphismWrapper<>(getConstantMorphism(element));
         }
-        return new ArithmeticAffineRingMorphism<>(getDomain(), getA().product(element.getValue()), getB().product(element.getValue()));
+        return new ArithmeticAffineRingMorphism<>(getDomain(), getA().product(element), getB().product(element));
     }
 
     @Override
     public ArithmeticElement<N> atZero() {
-        return new ArithmeticElement<>(getB());
+        return getB().deepCopy();
     }
 
     @Override

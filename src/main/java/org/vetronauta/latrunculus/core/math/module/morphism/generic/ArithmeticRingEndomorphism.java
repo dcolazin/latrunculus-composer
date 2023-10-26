@@ -34,17 +34,6 @@ public abstract class ArithmeticRingEndomorphism<N extends ArithmeticNumber<N>> 
         super(domain);
     }
 
-    public final ArithmeticElement<N> map(ArithmeticElement<N> x) {
-        return new ArithmeticElement<>(mapValue(x.getValue()));
-    }
-
-    /**
-     * Maps the number value <code>x</code> under this morphism.
-     * This method must be implemented by a specific morphism.
-     */
-    public abstract N mapValue(N x);
-
-
     public ModuleMorphism getRingMorphism() {
         return getIdentityMorphism(getDomain());
     }

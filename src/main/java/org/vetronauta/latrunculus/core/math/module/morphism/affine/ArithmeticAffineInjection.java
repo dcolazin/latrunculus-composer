@@ -9,19 +9,16 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticElement<N>,ArithmeticMultiElement<N>,N> {
 
-    private final List<ArithmeticElement<N>> matrix;
-    private final List<ArithmeticElement<N>> vector;
+    private final ArithmeticMultiElement<N> matrix;
+    private final ArithmeticMultiElement<N> vector;
 
-    public ArithmeticAffineInjection(ArithmeticRing<N> ring, List<N> matrix, List<N> vector) {
-        super(ring, new ArithmeticMultiModule<>(ring, matrix.size()));
-        this.matrix = matrix.stream().map(ArithmeticElement::new).collect(Collectors.toList());
-        this.vector = vector.stream().map(ArithmeticElement::new).collect(Collectors.toList());
+    public ArithmeticAffineInjection(ArithmeticRing<N> ring, ArithmeticMultiElement<N> matrix, ArithmeticMultiElement<N> vector) {
+        super(ring, new ArithmeticMultiModule<>(ring, matrix.getLength()));
+        this.matrix = matrix;
+        this.vector = vector;
     }
 
     @Override
@@ -29,21 +26,17 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
         if (!getDomain().hasElement(x)) {
             throw new MappingException("ArithmeticAffineInjection.map: ", x, this);
         }
-        return new ArithmeticMultiElement<>((ArithmeticRing<N>) getDomain().getRing(), mapValue(x));
-    }
-
-    private List<ArithmeticElement<N>> mapValue(ArithmeticElement<N> value) {
-        return null; //TODO
+        return matrix.scaled(x).sum(vector);
     }
 
     @Override
-    public List<ArithmeticElement<N>> getVector() {
-        return vector;
+    public ArithmeticMultiElement<N> getVector() {
+        return vector.deepCopy();
     }
 
     @Override
     public boolean isConstant() {
-        return matrix.stream().allMatch(ArithmeticElement::isZero);
+        return matrix.isZero();
     }
 
     @Override
@@ -75,23 +68,11 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
         if (!getBaseRing().equals(morphism.getBaseRing())) {
             return getBaseRing().compareTo(morphism.getBaseRing());
         }
-        int comp = matrix.size() - morphism.matrix.size();
+        int comp = matrix.compareTo(morphism.matrix);
         if (comp != 0) {
             return comp;
         }
-        for (int i = 0; i < matrix.size(); i++) {
-            int comp1 = matrix.get(i).compareTo(morphism.matrix.get(i));
-            if (comp1 != 0) {
-                return comp1;
-            }
-        }
-        for (int i = 0; i < vector.size(); i++) {
-            int comp1 = vector.get(i).compareTo(morphism.vector.get(i));
-            if (comp1 != 0) {
-                return comp1;
-            }
-        }
-        return 0;
+        return vector.compareTo(morphism.vector);
     }
 
     @Override
@@ -100,17 +81,7 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
             return false;
         }
         ArithmeticAffineInjection<?> morphism = (ArithmeticAffineInjection<?>) object;
-        for (int i = 0; i < matrix.size(); i++) {
-            if (!matrix.get(i).equals(morphism.matrix.get(i))) {
-                return false;
-            }
-        }
-        for (int i = 0; i < vector.size(); i++) {
-            if (!vector.get(i).equals(morphism.vector.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return matrix.equals(morphism.matrix) && vector.equals(morphism.vector);
     }
 
     @Override

@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepo
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author vetronauta
@@ -39,13 +40,20 @@ import java.util.List;
 @Getter
 public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElement<ArithmeticElement<N>> {
 
-    //TODO ditch ArithmeticNumber and just use ArithmeticElement?
 
     @NonNull
     private N value;
 
     public ArithmeticElement(@NonNull N value) {
         this.value = value;
+    }
+
+    public static <X extends ArithmeticNumber<X>> List<ArithmeticElement<X>> listOf(List<X> list) {
+        return list.stream().map(ArithmeticElement::new).collect(Collectors.toList());
+    }
+
+    public static <X extends ArithmeticNumber<X>> List<X> numbersOf(List<ArithmeticElement<X>> list) {
+        return list.stream().map(ArithmeticElement::getValue).collect(Collectors.toList());
     }
 
     @Override

@@ -43,7 +43,7 @@ public final class CFreeAffineMorphism extends CFreeAbstractMorphism {
 
     public static ModuleMorphism make(CMatrix A, Complex[] b) {
         if (A.getColumnCount() == 1 && A.getRowCount() == 1 && b.length == 1) {
-            return new ArithmeticAffineRingMorphism<>(CRing.ring, A.get(0, 0), b[0]);
+            return new ArithmeticAffineRingMorphism<>(CRing.ring, new ArithmeticElement<>(A.get(0, 0)), new ArithmeticElement<>(b[0]));
         }
         else {
             return new CFreeAffineMorphism(A, b);
