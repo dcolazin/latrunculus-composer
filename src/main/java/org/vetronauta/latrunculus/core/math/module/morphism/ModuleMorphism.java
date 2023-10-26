@@ -26,8 +26,8 @@ import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.EndomorphismWrapper;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.EndomorphismWrapper;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 import java.io.Serializable;
 

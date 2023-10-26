@@ -17,13 +17,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism.generic;
+package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticRingEndomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.RingEndomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.RingEndomorphismWrapper;
 
 /**
  * Affine morphism in a ring.

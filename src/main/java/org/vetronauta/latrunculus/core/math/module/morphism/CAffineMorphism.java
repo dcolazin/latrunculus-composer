@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
 
 /**
  * Affine morphism in <i>C</i>.

@@ -32,7 +32,7 @@ import org.rubato.composer.components.JMorphismEntry;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 class JPowerMorphismType
         extends JMorphismType 

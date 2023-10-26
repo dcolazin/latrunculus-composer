@@ -23,7 +23,7 @@ import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 /**
  * Morphism that represents an iterated arbitrary morphism.

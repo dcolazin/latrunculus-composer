@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism.generic;
+package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;

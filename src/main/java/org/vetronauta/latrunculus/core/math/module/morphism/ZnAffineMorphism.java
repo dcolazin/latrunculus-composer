@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
 
 /**
  * Affine morphism in <i>Zn</i>.

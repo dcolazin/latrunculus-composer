@@ -11,15 +11,15 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import java.util.List;
 
 public abstract class ArithmeticMultiMorphism<N extends ArithmeticNumber<N>>
-        extends ModuleMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,ArithmeticElement<N>,ArithmeticElement<N>> {
+        extends ArithmeticFreeMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,N> {
 
-    protected ArithmeticMultiMorphism(ArithmeticRing<N> ring, int domDim, int codomDim) {
-        super(new ArithmeticMultiModule<>(ring, domDim), new ArithmeticMultiModule<>(ring, codomDim));
+    protected ArithmeticMultiMorphism(ArithmeticRing<N> ring, int domainDim, int codomainDim) {
+        super(new ArithmeticMultiModule<>(ring, domainDim), new ArithmeticMultiModule<>(ring, codomainDim));
     }
 
     public final ArithmeticMultiElement<N> map(ArithmeticMultiElement<N> x) throws MappingException {
         if (!getDomain().hasElement(x)) {
-            throw new MappingException("CFreeAbstractMorphism.map: ", x, this);
+            throw new MappingException("ArithmeticMultiMorphism.map: ", x, this);
         }
         return new ArithmeticMultiElement<>(((ArithmeticMultiModule<N>)getDomain()).getRing(), mapValue(x.getValue()));
     }

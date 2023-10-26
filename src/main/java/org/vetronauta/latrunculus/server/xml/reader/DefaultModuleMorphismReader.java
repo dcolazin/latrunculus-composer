@@ -67,7 +67,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ZAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;

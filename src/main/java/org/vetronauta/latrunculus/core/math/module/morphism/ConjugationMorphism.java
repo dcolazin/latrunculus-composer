@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.

@@ -39,8 +39,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.EndomorphismWrapper;
-import org.vetronauta.latrunculus.core.math.module.morphism.generic.Endomorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.EndomorphismWrapper;
+import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 import java.util.LinkedList;
 import java.util.List;
