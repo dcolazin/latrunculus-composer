@@ -6,6 +6,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 
+import java.util.List;
+
 public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>, ArithmeticElement<N>,N> {
 
@@ -15,6 +17,13 @@ public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
 
     @Override
     public ArithmeticElement<N> map(ArithmeticMultiElement<N> x) throws MappingException {
+        if (!getDomain().hasElement(x)) {
+            throw new MappingException("ArithmeticAffineProjection.map: ", x, this);
+        }
+        return mapValue(x.getValue());
+    }
+
+    private ArithmeticElement<N> mapValue(List<ArithmeticElement<N>> value) {
         return null; //TODO
     }
 
