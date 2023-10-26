@@ -44,7 +44,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
@@ -416,8 +416,8 @@ class JAffineMorphismType
     
     
     public void editMorphism(ModuleMorphism morphism) {
-        if (morphism instanceof ArithmeticAffineMorphism) {
-            ArithmeticAffineMorphism<?> m = (ArithmeticAffineMorphism<?>) morphism;
+        if (morphism instanceof ArithmeticAffineRingMorphism) {
+            ArithmeticAffineRingMorphism<?> m = (ArithmeticAffineRingMorphism<?>) morphism;
             matrixEntries[0][0].setText(String.valueOf(m.getA()));
             vectorEntries[0].setText(String.valueOf(m.getB()));
             return;

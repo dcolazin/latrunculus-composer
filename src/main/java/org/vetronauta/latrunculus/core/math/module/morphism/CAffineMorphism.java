@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 
 /**
  * Affine morphism in <i>C</i>.
@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAff
  * 
  * @author Gérard Milmeister
  */
-public final class CAffineMorphism extends ArithmeticAffineMorphism<Complex> {
+public final class CAffineMorphism extends ArithmeticAffineRingMorphism<Complex> {
 
     /**
      * Constructs an affine morphism <i>h(x) = a*x+b</i>.

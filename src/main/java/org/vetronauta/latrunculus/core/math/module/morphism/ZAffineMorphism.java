@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 
 /**
  * Affine morphism in the <i>Z</i>.
@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAff
  * 
  * @author Gérard Milmeister
  */
-public final class ZAffineMorphism extends ArithmeticAffineMorphism<ArithmeticInteger> {
+public final class ZAffineMorphism extends ArithmeticAffineRingMorphism<ArithmeticInteger> {
 
     /**
      * Creates an affine morphism <i>h(x) = a*x+b</i>.

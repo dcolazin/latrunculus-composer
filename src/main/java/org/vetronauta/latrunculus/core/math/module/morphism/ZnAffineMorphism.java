@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 
 /**
  * Affine morphism in <i>Zn</i>.
@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAff
  * 
  * @author Gérard Milmeister
  */
-public final class ZnAffineMorphism extends ArithmeticAffineMorphism<Modulus> {
+public final class ZnAffineMorphism extends ArithmeticAffineRingMorphism<Modulus> {
 
     public ZnAffineMorphism(int a, int b, int modulus) {
         super(ArithmeticRingRepository.getModulusRing(modulus), new Modulus(a, modulus), new Modulus(b, modulus));

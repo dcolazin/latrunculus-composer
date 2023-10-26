@@ -36,12 +36,12 @@ import org.vetronauta.latrunculus.core.math.module.morphism.endo.RingEndomorphis
  * @author vetronauta
  */
 @Getter
-public class ArithmeticAffineMorphism<N extends ArithmeticNumber<N>> extends ArithmeticRingEndomorphism<N> {
+public class ArithmeticAffineRingMorphism<N extends ArithmeticNumber<N>> extends ArithmeticRingEndomorphism<N> {
 
     private final N a;
     private final N b;
 
-    public ArithmeticAffineMorphism(Ring<ArithmeticElement<N>> domain, N a, N b) {
+    public ArithmeticAffineRingMorphism(Ring<ArithmeticElement<N>> domain, N a, N b) {
         super(domain);
         this.a = a;
         this.b = b;
@@ -77,16 +77,16 @@ public class ArithmeticAffineMorphism<N extends ArithmeticNumber<N>> extends Ari
         return a.isZero();
     }
 
-    public ArithmeticAffineMorphism<N> compose(ArithmeticAffineMorphism<N> morphism) {
-        return new ArithmeticAffineMorphism<>(getDomain(), a.product(morphism.a), a.product(morphism.b).sum(b));
+    public ArithmeticAffineRingMorphism<N> compose(ArithmeticAffineRingMorphism<N> morphism) {
+        return new ArithmeticAffineRingMorphism<>(getDomain(), a.product(morphism.a), a.product(morphism.b).sum(b));
     }
 
-    public ArithmeticAffineMorphism<N> sum(ArithmeticAffineMorphism<N> morphism) {
-        return new ArithmeticAffineMorphism<>(getDomain(), a.sum(morphism.a), b.sum(morphism.b));
+    public ArithmeticAffineRingMorphism<N> sum(ArithmeticAffineRingMorphism<N> morphism) {
+        return new ArithmeticAffineRingMorphism<>(getDomain(), a.sum(morphism.a), b.sum(morphism.b));
     }
 
-    public ArithmeticAffineMorphism<N> difference(ArithmeticAffineMorphism<N> morphism) {
-        return new ArithmeticAffineMorphism<>(getDomain(), a.difference(morphism.a),b.difference(morphism.b));
+    public ArithmeticAffineRingMorphism<N> difference(ArithmeticAffineRingMorphism<N> morphism) {
+        return new ArithmeticAffineRingMorphism<>(getDomain(), a.difference(morphism.a),b.difference(morphism.b));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ArithmeticAffineMorphism<N extends ArithmeticNumber<N>> extends Ari
         if (element.isZero()) {
             return new RingEndomorphismWrapper<>(getConstantMorphism(element));
         }
-        return new ArithmeticAffineMorphism<>(getDomain(), getA().product(element.getValue()), getB().product(element.getValue()));
+        return new ArithmeticAffineRingMorphism<>(getDomain(), getA().product(element.getValue()), getB().product(element.getValue()));
     }
 
     @Override
@@ -104,8 +104,8 @@ public class ArithmeticAffineMorphism<N extends ArithmeticNumber<N>> extends Ari
 
     @Override
     public int compareTo(ModuleMorphism object) {
-        if (object instanceof ArithmeticAffineMorphism && getDomain().equals(object.getDomain())) {
-            ArithmeticAffineMorphism<N> morphism = (ArithmeticAffineMorphism<N>) object;
+        if (object instanceof ArithmeticAffineRingMorphism && getDomain().equals(object.getDomain())) {
+            ArithmeticAffineRingMorphism<N> morphism = (ArithmeticAffineRingMorphism<N>) object;
             int comp = a.compareTo(morphism.a);
             if (comp == 0) {
                 return b.compareTo(morphism.b);
@@ -118,10 +118,10 @@ public class ArithmeticAffineMorphism<N extends ArithmeticNumber<N>> extends Ari
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof ArithmeticAffineMorphism)) {
+        if (!(object instanceof ArithmeticAffineRingMorphism)) {
             return false;
         }
-        ArithmeticAffineMorphism<?> other = (ArithmeticAffineMorphism<?>) object;
+        ArithmeticAffineRingMorphism<?> other = (ArithmeticAffineRingMorphism<?>) object;
         return getDomain().equals(other.getDomain()) && a.equals(other.a) && b.equals(other.b);
     }
 

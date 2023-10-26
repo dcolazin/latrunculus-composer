@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 
 /**
@@ -29,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.rational.QRing;
  * 
  * @author Gérard Milmeister
  */
-public class QAffineMorphism extends ArithmeticAffineMorphism<Rational> {
+public class QAffineMorphism extends ArithmeticAffineRingMorphism<Rational> {
 
     public QAffineMorphism(Rational a, Rational b) {
         super(QRing.ring, a, b);

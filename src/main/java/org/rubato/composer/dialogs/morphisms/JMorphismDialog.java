@@ -57,7 +57,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 
@@ -303,7 +303,7 @@ public class JMorphismDialog
         else if (m instanceof ProductMorphism) {
             morphismType.setSelectedItem(PRODUCT_TYPE);
         }
-        else if (m instanceof ArithmeticAffineMorphism ||
+        else if (m instanceof ArithmeticAffineRingMorphism ||
                  m instanceof ZnFreeAffineMorphism ||
                  m instanceof ZFreeAffineMorphism ||
                  m instanceof QFreeAffineMorphism ||
