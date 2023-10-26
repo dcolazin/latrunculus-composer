@@ -9,9 +9,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>, ArithmeticElement<N>,N> {
 
@@ -44,22 +41,22 @@ public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
 
     @Override
     public ModuleMorphism compose(ModuleMorphism morphism) throws CompositionException {
-        return super.compose(morphism);  //TODO see CFreeAffineMorphism
+        return super.compose(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism sum(ModuleMorphism morphism) throws CompositionException {
-        return super.sum(morphism);  //TODO see CFreeAffineMorphism
+        return super.sum(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism difference(ModuleMorphism morphism) throws CompositionException {
-        return super.difference(morphism);  //TODO see CFreeAffineMorphism
+        return super.difference(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism scaled(ArithmeticElement<N> element) throws CompositionException {
-        return super.scaled(element); //TODO see CFreeAffineMorphism
+        return super.scaled(element); //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override

@@ -12,8 +12,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.List;
-
 public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,N> {
 
@@ -59,22 +57,36 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
             ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism) morphism;
             return (ModuleMorphism) new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), matrix.product(other.vector).sum(vector));
         }
-        return super.compose(morphism);  //TODO see CFreeAffineMorphism
+        if (morphism instanceof ArithmeticAffineInjection) {
+            ArithmeticAffineInjection<N> other = (ArithmeticAffineInjection) morphism;
+            return (ModuleMorphism) new ArithmeticAffineInjection<>(getBaseRing(), matrix.product(other.getMatrix()), matrix.product(other.getVector()).sum(vector));
+        }
+        return super.compose(morphism);
     }
 
     @Override
-    public ModuleMorphism sum(ModuleMorphism morphism) throws CompositionException {
-        return super.sum(morphism);  //TODO see CFreeAffineMorphism
+    public ModuleMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,ArithmeticElement<N>,ArithmeticElement<N>>
+    sum(ModuleMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,ArithmeticElement<N>,ArithmeticElement<N>> morphism) throws CompositionException {
+        if (morphism instanceof ArithmeticAffineMultiMorphism) {
+            ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism<N>) morphism;
+            return new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.sum(other.matrix), vector.sum(other.vector));
+        }
+        return super.sum(morphism);
     }
 
     @Override
-    public ModuleMorphism difference(ModuleMorphism morphism) throws CompositionException {
-        return super.difference(morphism);  //TODO see CFreeAffineMorphism
+    public ModuleMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,ArithmeticElement<N>,ArithmeticElement<N>>
+    difference(ModuleMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,ArithmeticElement<N>,ArithmeticElement<N>> morphism) throws CompositionException {
+        if (morphism instanceof ArithmeticAffineMultiMorphism) {
+            ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism<N>) morphism;
+            return new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.difference(other.matrix), vector.difference(other.vector));
+        }
+        return super.difference(morphism);
     }
 
     @Override
-    public ModuleMorphism scaled(ArithmeticElement<N> element) throws CompositionException {
-        return super.scaled(element); //TODO see CFreeAffineMorphism
+    public ArithmeticAffineMultiMorphism<N> scaled(ArithmeticElement<N> element) throws CompositionException {
+        return new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.scaled(element), vector.scaled(element));
     }
 
     @Override

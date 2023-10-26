@@ -34,6 +34,10 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
         return vector.deepCopy();
     }
 
+    public ArithmeticMultiElement<N> getMatrix() {
+        return matrix.deepCopy();
+    } //TODO common logic
+
     @Override
     public boolean isConstant() {
         return matrix.isZero();
@@ -41,22 +45,22 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
 
     @Override
     public ModuleMorphism compose(ModuleMorphism morphism) throws CompositionException {
-        return super.compose(morphism);  //TODO see CFreeAffineMorphism
+        return super.compose(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism sum(ModuleMorphism morphism) throws CompositionException {
-        return super.sum(morphism);  //TODO see CFreeAffineMorphism
+        return super.sum(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism difference(ModuleMorphism morphism) throws CompositionException {
-        return super.difference(morphism);  //TODO see CFreeAffineMorphism
+        return super.difference(morphism);  //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
     public ModuleMorphism scaled(ArithmeticElement<N> element) throws CompositionException {
-        return super.scaled(element); //TODO see CFreeAffineMorphism
+        return super.scaled(element); //TODO see ArithmeticAffineMultiMorphism
     }
 
     @Override
