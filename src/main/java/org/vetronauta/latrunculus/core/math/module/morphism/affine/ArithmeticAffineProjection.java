@@ -5,14 +5,20 @@ import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.List;
 
 public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>, ArithmeticElement<N>,N> {
 
-    protected ArithmeticAffineProjection(ArithmeticMultiModule<N> domain) {
-        super(domain, domain.getRing());
+    private final List<N> matrix;
+    private final N vector;
+
+    public ArithmeticAffineProjection(ArithmeticRing<N> ring, List<N> matrix, N vector) {
+        super(new ArithmeticMultiModule<>(ring, matrix.size()), ring);
+        this.matrix = matrix;
+        this.vector = vector;
     }
 
     @Override
