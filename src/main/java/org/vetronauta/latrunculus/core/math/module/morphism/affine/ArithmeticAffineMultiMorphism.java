@@ -56,9 +56,8 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
             throw new CompositionException("CompositionMorphism.make: Cannot compose " + this + " with " + morphism);
         }
         if (morphism instanceof ArithmeticAffineMultiMorphism) {
-            ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism<N>) morphism;
-            return (ModuleMorphism<C, ArithmeticMultiElement<N>, RC, ArithmeticElement<N>>)
-                    new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), matrix.product(other.vector).sum(vector));
+            ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism) morphism;
+            return (ModuleMorphism) new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), matrix.product(other.vector).sum(vector));
         }
         return super.compose(morphism);  //TODO see CFreeAffineMorphism
     }

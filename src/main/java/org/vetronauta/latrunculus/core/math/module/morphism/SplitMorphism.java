@@ -253,8 +253,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof ZAffineMorphism) {
-                A.set(i, i, ((ZAffineMorphism)m).getA().intValue());
-                b[i] = ((ZAffineMorphism)m).getB().intValue();
+                A.set(i, i, ((ZAffineMorphism)m).getA().getValue().intValue());
+                b[i] = ((ZAffineMorphism)m).getB().getValue().intValue();
             }
         }
         return new EndomorphismWrapper(ZFreeAffineMorphism.make(A, b));
@@ -279,8 +279,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof ZnAffineMorphism) {
-                A.set(i, i, ((ZnAffineMorphism)m).getA().intValue());
-                b[i] = ((ZnAffineMorphism)m).getB().intValue();
+                A.set(i, i, ((ZnAffineMorphism)m).getA().getValue().intValue());
+                b[i] = ((ZnAffineMorphism)m).getB().getValue().intValue();
             }
         }
         return new EndomorphismWrapper(ZnFreeAffineMorphism.make(A, b));
@@ -305,8 +305,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof QAffineMorphism) {
-                A.set(i, i, ((QAffineMorphism)m).getA());
-                b[i] = ((QAffineMorphism)m).getB();
+                A.set(i, i, ((QAffineMorphism)m).getA().getValue());
+                b[i] = ((QAffineMorphism)m).getB().getValue();
             }
         }
         return new EndomorphismWrapper(QFreeAffineMorphism.make(A, b));
@@ -331,8 +331,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof RAffineMorphism) {
-                A.set(i, i, ((RAffineMorphism)m).getA().doubleValue());
-                b[i] = ((RAffineMorphism)m).getB().doubleValue();
+                A.set(i, i, ((RAffineMorphism)m).getA().getValue().doubleValue());
+                b[i] = ((RAffineMorphism)m).getB().getValue().doubleValue();
             }
         }
         return new EndomorphismWrapper(RFreeAffineMorphism.make(A, b));
@@ -357,8 +357,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 i += d;
             }
             else if (m instanceof CAffineMorphism) {
-                A.set(i, i, ((CAffineMorphism)m).getA());
-                b[i] = ((CAffineMorphism)m).getB();
+                A.set(i, i, ((CAffineMorphism)m).getA().getValue());
+                b[i] = ((CAffineMorphism)m).getB().getValue();
             }
         }
         return new EndomorphismWrapper(CFreeAffineMorphism.make(A, b));

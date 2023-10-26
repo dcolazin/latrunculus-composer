@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 
@@ -36,7 +37,7 @@ public final class ZAffineMorphism extends ArithmeticAffineRingMorphism<Arithmet
      * Creates an affine morphism <i>h(x) = a*x+b</i>.
      */
     public ZAffineMorphism(int a, int b) {
-        super(ZRing.ring, new ArithmeticInteger(a), new ArithmeticInteger(b));
+        super(ZRing.ring, new ArithmeticElement<>(new ArithmeticInteger(a)), new ArithmeticElement<>(new ArithmeticInteger(b)));
     }
 
 }
