@@ -22,19 +22,19 @@
 package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
-import org.vetronauta.latrunculus.core.math.yoneda.map.EmptyMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.map.EmptyMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -48,12 +48,16 @@ import java.util.LinkedList;
  */
 public final class CompoundMorphism extends YonedaMorphism {
 
+    private final IdentityMorphism domain;
+    private final IdentityMorphism codomain;
+    private MorphismMap map;
+
     /**
      * Creates a morphism between two general objects.
      * For morphisms between modules, see other constructors below.
      */
     public CompoundMorphism(IdentityMorphism domain, IdentityMorphism codomain, MorphismMap map) {
-        this(map);
+        this.map = map != null ? map : EmptyMorphismMap.emptyMorphismMap;
         this.domain = domain;
         this.codomain = codomain;
     }
@@ -202,7 +206,7 @@ public final class CompoundMorphism extends YonedaMorphism {
     }
     
     
-    public boolean fullEquals(YonedaMorphism m, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(YonedaMorphism m, Map<Object,Object> s) {
         if (this == m) {
             return true;
         }
@@ -218,12 +222,12 @@ public final class CompoundMorphism extends YonedaMorphism {
     }
 
 
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         return map.getFormDependencies(list); 
     }
     
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return map.getDenotatorDependencies(list); 
     }
     
@@ -245,33 +249,15 @@ public final class CompoundMorphism extends YonedaMorphism {
     }
     
 
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         return (domain.resolveReferences(dict, history) &&
                 codomain.resolveReferences(dict, history) &&
                 map.resolveReferences(dict, history));
     }
-    
-    
-    /**
-     * Creates a morphism with the given map.
-     * If map == null, use an empty morphism map. 
-     */
-    protected CompoundMorphism(MorphismMap map) { 
-        if (map != null) {
-            this.map = map;
-        }
-        else {
-            this.map = EmptyMorphismMap.emptyMorphismMap;
-        }
-    }
-    
+
 
     protected int getMorphOrder() {
         return 0xAFFE; 
     }
 
-    
-    private IdentityMorphism domain;
-    private IdentityMorphism codomain;    
-    private MorphismMap      map;    
 }

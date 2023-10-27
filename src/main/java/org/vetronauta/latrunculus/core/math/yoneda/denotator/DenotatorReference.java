@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A placeholder for denotators that are not yet known.
@@ -153,7 +154,7 @@ public final class DenotatorReference extends Denotator {
     
     
     @Override
-    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDependencies(List<Denotator> list) {
         throw new Error("Fatal error: DenotatorReference.getDependencies never be called");
     }
     

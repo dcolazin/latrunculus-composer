@@ -21,19 +21,19 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import java.io.Serializable;
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation or "formula" of a morphism.
@@ -75,11 +75,11 @@ public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<Morph
      */
     MorphismMap changeAddress(ModuleMorphism morphism);
 
-    boolean fullEquals(MorphismMap m, IdentityHashMap<Object,Object> s);
-    
-    LinkedList<Form> getFormDependencies(LinkedList<Form> list);
-    
-    LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
+    boolean fullEquals(MorphismMap m, Map<Object,Object> s);
+
+    List<Form> getFormDependencies(List<Form> list);
+
+    List<Denotator> getDenotatorDependencies(List<Denotator> list);
    
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
+    boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history);
 }

@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.DenotatorReference;
@@ -30,10 +30,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.IdentityHashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 
@@ -291,7 +290,7 @@ public final class AutoListMorphismMap implements MorphismMap {
     }
     
     
-    public boolean fullEquals(MorphismMap map, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         if (this == map) {
             return true;
         }
@@ -313,12 +312,12 @@ public final class AutoListMorphismMap implements MorphismMap {
     }
 
 
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> dependencyList) {
+    public List<Form> getFormDependencies(List<Form> dependencyList) {
         return dependencyList;
     }
 
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> depList) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> depList) {
         for (Denotator d : this.getFactors()) {
             depList = d.getDependencies(depList);
         }
@@ -330,7 +329,7 @@ public final class AutoListMorphismMap implements MorphismMap {
      * Resolves all references.
      * @return true iff all references have been resolved.
      */
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         for (int i = 0; i < getFactorCount(); i++) {
             Denotator d = getFactor(i);
             if (d instanceof DenotatorReference) {

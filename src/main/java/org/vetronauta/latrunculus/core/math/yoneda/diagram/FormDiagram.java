@@ -30,9 +30,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Diagram of forms.
@@ -42,7 +41,7 @@ import java.util.List;
  * @author Stefan Göller
  */
 
-public final class FormDiagram extends Diagram {
+public final class FormDiagram implements Diagram {
 
     /**
      * Creates a diagram with the given <code>form</code> as its single vertex.
@@ -81,13 +80,11 @@ public final class FormDiagram extends Diagram {
         Form[] oldForms = forms;
         ArrayList<YonedaMorphism>[][] oldMorphisms = morphisms;
         allocate(oldForms.length+1);
-        for (int j = 0; j < i; j++) {
-            forms[j] = oldForms[j];
+        if (i >= 0) {
+            System.arraycopy(oldForms, 0, forms, 0, i);
         }
         forms[i] = oldForms[i];
-        for (int j = i; j < oldForms.length; j++) {
-            forms[j+1] = oldForms[j];
-        }
+        System.arraycopy(oldForms, i, forms, i + 1, oldForms.length - i);
         for (int j = 0; j < oldForms.length; j++) {
             for (int k = 0; k < oldForms.length; k++) {
                 int x = (j < i)?j:j+1;
@@ -159,7 +156,7 @@ public final class FormDiagram extends Diagram {
 
     public void deleteArrow(int i, int j, int n) {
         morphisms[i][j].remove(n);
-        if (morphisms[i][j].size() == 0) {
+        if (morphisms[i][j].isEmpty()) {
             morphisms[i][j] = null;
         }
     }
@@ -167,7 +164,7 @@ public final class FormDiagram extends Diagram {
     
     public void appendArrow(int i, int j, YonedaMorphism morphism) {
         if (morphisms[i][j] == null) {
-            morphisms[i][j] = new ArrayList<YonedaMorphism>();
+            morphisms[i][j] = new ArrayList<>();
         }
         morphisms[i][j].add(morphism);
     }
@@ -213,7 +210,7 @@ public final class FormDiagram extends Diagram {
         }
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
@@ -257,9 +254,7 @@ public final class FormDiagram extends Diagram {
     public FormDiagram deepCopy() {
         FormDiagram diagram = new FormDiagram();
         diagram.allocate(forms.length);
-        for (int i = 0; i < forms.length; i++) {
-            diagram.forms[i] = forms[i];
-        }
+        System.arraycopy(forms, 0, diagram.forms, 0, forms.length);
         for (int i = 0; i < forms.length; i++) {
             for (int j = 0; j < forms.length; j++) {
                 diagram.morphisms[i][j] = new ArrayList<>(morphisms[i][j]);
@@ -269,7 +264,7 @@ public final class FormDiagram extends Diagram {
     }
 
 
-    public boolean fullEquals(Diagram diagram, IdentityHashMap<Object,Object> history) {
+    public boolean fullEquals(Diagram diagram, Map<Object,Object> history) {
         if (this == diagram) {
             return true;
         }
@@ -310,7 +305,7 @@ public final class FormDiagram extends Diagram {
     } 
     
     
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         for (int i = 0; i < getFormCount(); i++) {
             Form form = getForm(i);
             if (form instanceof FormReference) {
@@ -328,7 +323,7 @@ public final class FormDiagram extends Diagram {
     }
 
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         for (int i = 0; i < getFormCount(); i++) {
             list = getForm(i).getDependencies(list);
         }
@@ -336,7 +331,7 @@ public final class FormDiagram extends Diagram {
     }
 
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return list;
     }
 

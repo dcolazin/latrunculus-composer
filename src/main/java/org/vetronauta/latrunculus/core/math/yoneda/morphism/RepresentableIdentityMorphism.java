@@ -26,14 +26,14 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Identity morphism representing a module "object".
@@ -171,17 +171,17 @@ public final class RepresentableIdentityMorphism<A extends ModuleElement<A,R>, R
     }
 
     
-    public boolean fullEquals(YonedaMorphism m, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(YonedaMorphism m, Map<Object,Object> s) {
         return equals(m);
     }
     
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         return list;
     }
     
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return list;
     }
     
@@ -213,7 +213,7 @@ public final class RepresentableIdentityMorphism<A extends ModuleElement<A,R>, R
     }
 
 
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         return true;
     }
     

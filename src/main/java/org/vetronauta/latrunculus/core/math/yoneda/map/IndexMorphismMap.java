@@ -22,16 +22,16 @@
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.DenotatorReference;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Morphism map containing a morphism and an index (for type colimit).
@@ -107,7 +107,7 @@ public final class IndexMorphismMap implements MorphismMap {
         }
     }
 
-    public boolean fullEquals(MorphismMap map, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         if (this == map) {
             return true;
         }
@@ -116,9 +116,7 @@ public final class IndexMorphismMap implements MorphismMap {
             if (getIndex() != m.getIndex()) {
                 return false;
             }
-            if (getFactor().equals(m.getFactor())) {
-                return true;
-            }
+            return getFactor().equals(m.getFactor());
         }
         return false;
     }
@@ -162,17 +160,17 @@ public final class IndexMorphismMap implements MorphismMap {
     }
     
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         return list;
     }
     
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return factor.getDependencies(list);
     }
     
     
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         Denotator d = getFactor();
         if (d instanceof DenotatorReference) {
             Denotator newDenotator = dict.getDenotator(d.getNameString());

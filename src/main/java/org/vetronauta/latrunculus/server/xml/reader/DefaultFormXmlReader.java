@@ -161,8 +161,7 @@ public class DefaultFormXmlReader implements LatrunculusXmlReader<Form> {
             childElement = XMLReader.getNextSibling(childElement, FORM);
         }
 
-        LimitForm limitForm = new LimitForm(NameDenotator.make(element.getAttribute("name")), forms);
-        limitForm.setLabels(labels);
+        LimitForm limitForm = new LimitForm(NameDenotator.make(element.getAttribute("name")), forms, labels);
         if (references) {
             reader.addFormToBeResolved(limitForm);
         }
@@ -211,8 +210,7 @@ public class DefaultFormXmlReader implements LatrunculusXmlReader<Form> {
             childElement = XMLReader.getNextSibling(childElement, FORM);
         }
 
-        ColimitForm colimitForm = new ColimitForm(NameDenotator.make(element.getAttribute(NAME_ATTR)), forms);
-        colimitForm.setLabels(labels);
+        ColimitForm colimitForm = new ColimitForm(NameDenotator.make(element.getAttribute(NAME_ATTR)), forms, labels);
         if (references) {
             reader.addFormToBeResolved(colimitForm);
         }

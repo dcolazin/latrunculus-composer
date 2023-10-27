@@ -21,8 +21,8 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.diagram;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
@@ -39,27 +39,27 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
  * @author Stefan Göller
  */
 
-public abstract class Diagram implements Yoneda, MathDefinition {
+public interface Diagram extends Yoneda, MathDefinition {
 
     /**
      * Returns the vertex at position <code>i</code>.
      */
-    public abstract Yoneda getVertex(int i);
+    Yoneda getVertex(int i);
 
     /**
      * Returns the number of vertexes.
      */
-    public abstract int getVertexCount();
+    int getVertexCount();
 
     /**
      * Deletes the vertex at position <code>i</code>.
      */
-    public abstract void deleteVertex(int i);
+    void deleteVertex(int i);
     
     /**
      * Deletes all vertexes in this diagram.
      */
-    public void deleteVertexes() {
+    default void deleteVertexes() {
         for (int i = 0; i < getVertexCount(); i++) {
             deleteVertex(0);
         }
@@ -68,63 +68,56 @@ public abstract class Diagram implements Yoneda, MathDefinition {
     /**
      * Returns the <code>n</code>-th arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public abstract YonedaMorphism getArrow(int i, int j, int n);
+    YonedaMorphism getArrow(int i, int j, int n);
 
     /**
      * Returns the number of arrows from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public abstract int getArrowCount(int i, int j);
+    int getArrowCount(int i, int j);
 
     /**
      * Inserts an arrow from vertex <code>i</code> to vertex <code>j</code> at position <code>n</code>.
      */
-    public abstract void insertArrow(int i, int j, int n, YonedaMorphism morphism);
+    void insertArrow(int i, int j, int n, YonedaMorphism morphism);
 
     /**
      * Appends an arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public void appendArrow(int i, int j, YonedaMorphism morphism) {
+    default void appendArrow(int i, int j, YonedaMorphism morphism) {
         insertArrow(i, j, getArrowCount(i, j), morphism);
     }
 
     /**
      * Deletes the <code>n</code>-th arrow from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public abstract void deleteArrow(int i, int j, int n);
+    void deleteArrow(int i, int j, int n);
     
     /**
      * Deletes all arrows from vertex <code>i</code> to vertex <code>j</code>.
      */
-    public void deleteArrows(int i, int j) {
+    default void deleteArrows(int i, int j) {
         for (int n = 0; n < getArrowCount(i, j); n++) {
             deleteArrow(i, j, 0);
         }
     }
     
-    public abstract LinkedList<Form> getFormDependencies(LinkedList<Form> list);
-    
-    public abstract LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
+    List<Form> getFormDependencies(List<Form> list);
+
+    List<Denotator> getDenotatorDependencies(List<Denotator> list);
     
     /**
      * Resolve references resulting from parsing.
      * 
      * @return true iff all references have been resolved
      */
-    public abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
+    boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history);
     
-    public abstract int compareTo(Yoneda object);
+    int compareTo(Yoneda object);
     
     /**
      * Returns a hash code for this diagram.
      */
-    public abstract int hashCode();
+    int hashCode();
     
-    /**
-     * Returns true if this diagram is equal to the specified object.
-     */
-    public boolean equals(Object object) { 
-        return (compareTo((Yoneda)object) == 0);
-    }
-    
-    public abstract boolean fullEquals(Diagram d, IdentityHashMap<Object,Object> s);
+    boolean fullEquals(Diagram d, Map<Object,Object> s);
 }

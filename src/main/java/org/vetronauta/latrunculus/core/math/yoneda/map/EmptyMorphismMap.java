@@ -25,11 +25,11 @@ import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Empty morphism map to avoid null references.
@@ -77,31 +77,26 @@ public final class EmptyMorphismMap implements MorphismMap {
 
 
     public boolean equals(Object object) {
-        if (object instanceof EmptyMorphismMap) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return object instanceof EmptyMorphismMap;
     }
    
 
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         return list;
     }
     
     
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return list;
     }
     
     
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         return true;
     }
     
     
-    public boolean fullEquals(MorphismMap map, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         return this.equals(map);
     }
     

@@ -20,14 +20,14 @@
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.IdentityHashMap;
+import java.util.Map;
 
 /**
  * Morphism map containing a constant module morphism.
@@ -126,7 +126,7 @@ public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
     }
    
    
-    public boolean fullEquals(MorphismMap map, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         return equals(map);
     }
 

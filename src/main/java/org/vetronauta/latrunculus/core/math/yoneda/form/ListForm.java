@@ -32,8 +32,10 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphi
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
-import java.util.IdentityHashMap;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * List form class.
@@ -85,29 +87,17 @@ public class ListForm extends Form {
         if (registered && f.registered) {
             return getName().equals(f.getName());
         }
-        else {
-            return fullEquals(f);
-        }
-    }
-
-
-    public boolean fullEquals(ListForm f) {
-        return fullEquals(f, new IdentityHashMap<Object,Object>());
-    }
-
-
-    public boolean fullEquals(ListForm f, IdentityHashMap<Object,Object> s) {
         if (this == f) {
             return true;
         }
         else if (!getName().equals(f.getName())) {
             return false;
         }
-        s.put(this, f);
-        return identifier.fullEquals(f.identifier, s);
+        Map<Object,Object> map = new HashMap<>();
+        map.put(this, f);
+        return identifier.fullEquals(f.identifier, map);
     }
 
-    
     /**
      * Returns the number of coordinate forms.
      */
@@ -139,7 +129,7 @@ public class ListForm extends Form {
     }
 
 
-    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public List<Form> getDependencies(List<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
             return identifier.getFormDependencies(list);

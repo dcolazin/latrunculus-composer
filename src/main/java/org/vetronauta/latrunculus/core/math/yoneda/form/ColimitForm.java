@@ -21,21 +21,19 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +66,7 @@ public final class ColimitForm extends Form {
     /**
      * Builds a colimit identity form using a list of forms.
      */
-    public ColimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
+    public ColimitForm(NameDenotator name, List<Form> forms, Map<String, Integer> labels) {
         super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.COLIMIT));
         setLabels(labels);
     }
@@ -107,31 +105,17 @@ public final class ColimitForm extends Form {
         if (registered && f.registered) {
             return getName().equals(f.getName());
         }
-        else {
-            return fullEquals(f);
-        }
-    }
-
-
-    /**
-     * Compares for full equality in the case of non-registered forms. 
-     */
-    public boolean fullEquals(ColimitForm f) {
-        return fullEquals(f, new IdentityHashMap<>());
-    }
-
-
-    public boolean fullEquals(ColimitForm f, IdentityHashMap<Object,Object> s) {
         if (this == f) {
             return true;
         }
         else if (!getName().equals(f.getName())) {
             return false;
         }
-        s.put(this, f);
-        return identifier.fullEquals(f.identifier, s);
+        Map<Object,Object> map = new HashMap<>();
+        map.put(this, f);
+        return identifier.fullEquals(f.identifier, map);
     }
-    
+
 
     /**
      * Returns the number of coordinate forms.
@@ -187,8 +171,7 @@ public final class ColimitForm extends Form {
         }
     }
     
-    @Internal
-    public void setLabels(HashMap<String,Integer> labels) { //TODO find a better way to keep this private
+    private void setLabels(Map<String,Integer> labels) {
         if (labels == null) {
             labelMap = null;
             reverseLabelMap = null;
@@ -269,7 +252,7 @@ public final class ColimitForm extends Form {
         return identifier;
     }
 
-    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public List<Form> getDependencies(List<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
             return identifier.getFormDependencies(list);
@@ -345,22 +328,21 @@ public final class ColimitForm extends Form {
 
     
     protected double getDimension(int maxDepth, int depth) {
-        double dimension = 0.0;
-        double one_by_n = 1.0;
-        
-        if (depth > maxDepth) return 1.0;
+        if (depth > maxDepth) {
+            return 1.0;
+        }
         
         FormDiagram d = (FormDiagram)identifier.getCodomainDiagram();
-        dimension = d.getVertexCount();
-        one_by_n = 1.0 / dimension;
+        double dimension = d.getVertexCount();
+        double oneByN = 1.0 / dimension;
         for (int i = 0; i < dimension; i++) {
-            dimension += one_by_n * (1.0 - 1.0 / d.getForm(0).getDimension(maxDepth, depth + 1));
+            dimension += oneByN * (1.0 - 1.0 / d.getForm(0).getDimension(maxDepth, depth + 1));
         }
         
         return dimension;
     }
 
 
-    private HashMap<String,Integer> labelMap = null;
+    private Map<String,Integer> labelMap = null;
     private String[] reverseLabelMap = null;
 }

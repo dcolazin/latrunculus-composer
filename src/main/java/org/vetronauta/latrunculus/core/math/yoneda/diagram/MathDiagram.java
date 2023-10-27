@@ -22,6 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.diagram;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -32,6 +33,8 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Math diagram class (vertexes are morphisms).
@@ -40,7 +43,10 @@ import java.util.ListIterator;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public class MathDiagram extends Diagram {
+public class MathDiagram implements Diagram {
+
+    private final List<YonedaMorphism> vertexes;
+    private List<List<YonedaMorphism>> arrows;
 
     /**
      * Creates a diagram with a single vertex.
@@ -68,15 +74,15 @@ public class MathDiagram extends Diagram {
     /**
      * Creates a diagram with a list of vertexes and list of arrows.
      */
-    public MathDiagram(List<YonedaMorphism> vertexes, List<ArrayList<YonedaMorphism>> arrows) {
+    public MathDiagram(List<YonedaMorphism> vertexes, List<? extends List<YonedaMorphism>> arrows) {
         int size = vertexes.size();
         if(arrows.size() != size*size) {
             throw new IllegalArgumentException("mismatching vertex and arrow list sizes");
         }
-        this.vertexes = new ArrayList<YonedaMorphism>(vertexes);
-        this.arrows = new ArrayList<ArrayList<YonedaMorphism>>(size*size);
+        this.vertexes = new ArrayList<>(vertexes);
+        this.arrows = new ArrayList<>(size*size);
         for (int i = 0; i < size*size; i++) {
-            this.arrows.add(new ArrayList<YonedaMorphism>(arrows.get(i)));
+            this.arrows.add(new ArrayList<>(arrows.get(i)));
         }
     }
     
@@ -147,7 +153,7 @@ public class MathDiagram extends Diagram {
      */
     public final int getArrowCount() {
         int c = 0;
-        for (ArrayList<YonedaMorphism> a : arrows) {
+        for (List<YonedaMorphism> a : arrows) {
             if (a != null) {
                 c += a.size();
             }
@@ -179,44 +185,19 @@ public class MathDiagram extends Diagram {
 
 
     public final void deleteArrows(int i, int j) {
-        arrows.add(vertexes.size() * i + j, new ArrayList<YonedaMorphism>());
+        arrows.add(vertexes.size() * i + j, new ArrayList<>());
     }
 
     public MathDiagram deepCopy() {
-        MathDiagram d = new MathDiagram(vertexes, arrows);
-        
-        //$$$RA how deep should we copy here?
-        //int size = vertexes.size();
-        //for (int i = 0; i < size; i++)
-        //    d.vertexes.set(i, ((Yoneda)vertexes.get(i)).clone());
-        //for (int i = 0; i < size*size; i++)
-        //    d.arrows.set(i, ((Morphism)arrows.get(i)).clone());
-
-        return d;
+        List<YonedaMorphism> vertexesCopy = vertexes.stream().map(YonedaMorphism::deepCopy).collect(Collectors.toList());
+        List<List<YonedaMorphism>> arrowsCopy = arrows.stream().map(list -> list.stream().map(YonedaMorphism::deepCopy).collect(Collectors.toList())).collect(Collectors.toList());
+        return new MathDiagram(vertexesCopy, arrowsCopy);
     }
-    
-
-    protected MathDiagram() {
-        vertexes = new ArrayList<>();
-        arrows = new ArrayList<>();
-    }
-        
 
     protected MathDiagram(int n) {
-        vertexes = new ArrayList<YonedaMorphism>(n);
-        arrows = new ArrayList<ArrayList<YonedaMorphism>>(n*n);
+        vertexes = new ArrayList<>(n);
+        arrows = new ArrayList<>(n*n);
     }
-
-
-    protected final ArrayList<YonedaMorphism> getVertexes() {
-        return vertexes;
-    }
-    
-
-    protected final ArrayList<ArrayList<YonedaMorphism>> getArrows() {
-        return arrows;
-    }    
-
 
     protected final void set(int i, Object object) {
         vertexes.set(i, (YonedaMorphism)object);
@@ -227,12 +208,12 @@ public class MathDiagram extends Diagram {
         int oldSize = vertexes.size();
         int newSize = oldSize+1;
         vertexes.add(i, (YonedaMorphism)object);
-        ArrayList<ArrayList<YonedaMorphism>> a = new ArrayList<ArrayList<YonedaMorphism>>(newSize*newSize);
-        ListIterator<ArrayList<YonedaMorphism>> m = arrows.listIterator();
+        List<List<YonedaMorphism>> a = new ArrayList<>(newSize*newSize);
+        ListIterator<List<YonedaMorphism>> m = arrows.listIterator();
         for (int ii = 0; ii < newSize; ii++) {
             for (int jj = 0; jj < newSize; jj++) {
                 if((ii % newSize == i) || (jj % newSize == i)) {
-                    a.add(new ArrayList<YonedaMorphism>());
+                    a.add(new ArrayList<>());
                 }
                 else {
                     a.add(m.next());
@@ -247,8 +228,8 @@ public class MathDiagram extends Diagram {
         int oldSize = vertexes.size();
         int newSize = oldSize-1;
         vertexes.remove(i);
-        ArrayList<ArrayList<YonedaMorphism>> a = new ArrayList<ArrayList<YonedaMorphism>>(newSize*newSize);
-        ListIterator<ArrayList<YonedaMorphism>> m = arrows.listIterator();
+        List<List<YonedaMorphism>> a = new ArrayList<>(newSize*newSize);
+        ListIterator<List<YonedaMorphism>> m = arrows.listIterator();
         for (int ii = 0; ii < oldSize; ii++) {
             for (int jj = 0; jj < oldSize; jj++) {
                 if((ii % oldSize == i) || (jj % oldSize == i)) {
@@ -271,46 +252,43 @@ public class MathDiagram extends Diagram {
     
     public int hashCode() {
         int hashcode = 7;
-        ListIterator<YonedaMorphism> iter = vertexes.listIterator();
-        while (iter.hasNext()) {
-            hashcode = 37*hashcode + iter.next().hashCode();
+        for (YonedaMorphism vertex : vertexes) {
+            hashcode = 37 * hashcode + vertex.hashCode();
         }
         return hashcode;
     }
     
 
-    public boolean fullEquals(Diagram d, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(Diagram d, Map<Object,Object> s) {
         if (this == d) {
             return true;
         }
-        else if (!(d instanceof MathDiagram)) {
+        if (!(d instanceof MathDiagram)) {
             return false;
         }
-        else {
-            MathDiagram md = (MathDiagram) d;
-            if (getVertexCount() != md.getVertexCount()) {
+        MathDiagram md = (MathDiagram) d;
+        if (getVertexCount() != md.getVertexCount()) {
+            return false;
+        }
+        for (int i = 0; i < getVertexCount(); i++) {
+            if (!((YonedaMorphism)getVertex(i)).fullEquals((YonedaMorphism)md.getVertex(i), s)) {
                 return false;
             }
-            for (int i = 0; i < getVertexCount(); i++) {
-                if (!((YonedaMorphism)getVertex(i)).fullEquals((YonedaMorphism)md.getVertex(i), s)) {
-                    return false;
-                }
-            }
-            return true;
         }
-    }
-    
-    
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
         return true;
     }
     
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+        return true;
+    }
+    
+    
+    public List<Form> getFormDependencies(List<Form> list) {
         for (YonedaMorphism m : vertexes) {
             list = m.getFormDependencies(list);
         }
-        for (ArrayList<YonedaMorphism> a : arrows) {
+        for (List<YonedaMorphism> a : arrows) {
             for (YonedaMorphism m : a) {
                 if (m != null) {
                     list = m.getFormDependencies(list);
@@ -321,15 +299,20 @@ public class MathDiagram extends Diagram {
     }
     
 
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return list;
     }
 
     public String getElementTypeName() {
         return "MathDiagram";
     }
-    
 
-    private ArrayList<YonedaMorphism> vertexes;
-    private ArrayList<ArrayList<YonedaMorphism>> arrows;
+    /**
+     * Returns true if this diagram is equal to the specified object.
+     */
+    @Override
+    public boolean equals(Object object) {
+        return (compareTo((Yoneda)object) == 0);
+    }
+
 }

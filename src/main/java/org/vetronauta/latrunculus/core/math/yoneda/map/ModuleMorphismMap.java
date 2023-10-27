@@ -23,17 +23,17 @@ package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.exception.CompositionException;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Morphism map containing a module morphism (for type simple).
@@ -128,7 +128,7 @@ public class ModuleMorphismMap implements MorphismMap {
     }
    
    
-    public boolean fullEquals(MorphismMap map, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         return equals(map);
     }
 
@@ -258,21 +258,21 @@ public class ModuleMorphismMap implements MorphismMap {
     }
 
     
-    public LinkedList<Form> getFormDependencies(LinkedList<Form> list) {
+    public List<Form> getFormDependencies(List<Form> list) {
         return list;
     }
-    
-    
-    public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list) {
+
+
+    public List<Denotator> getDenotatorDependencies(List<Denotator> list) {
         return list;
     }
-    
+
     
     /**
      * Resolves the references resulting from parsing.
      * @return true iff all references have been resolved.
      */
-    public boolean resolveReferences(RubatoDictionary reader, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary reader, Map<Object,Object> history) {
         return true;
     }
     

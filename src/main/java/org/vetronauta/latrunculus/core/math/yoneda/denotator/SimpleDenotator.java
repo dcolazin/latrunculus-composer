@@ -51,6 +51,7 @@ import org.w3c.dom.Element;
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM_ATTR;
@@ -674,7 +675,7 @@ public final class SimpleDenotator extends Denotator {
     
     
     @Override
-    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDependencies(List<Denotator> list) {
         if (!list.contains(this)) {
             list.add(this);
         }

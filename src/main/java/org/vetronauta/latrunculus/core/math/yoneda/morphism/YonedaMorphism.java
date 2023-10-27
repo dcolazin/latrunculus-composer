@@ -34,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract base class for morphisms.
@@ -145,12 +145,12 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
     /**
      * Adds the form dependencies of this morphism to <code>list</code>.
      */
-    public abstract LinkedList<Form> getFormDependencies(LinkedList<Form> list);
+    public abstract List<Form> getFormDependencies(List<Form> list);
 
     /**
      * Adds the denotator dependencies of this morphism to <code>list</code>.
      */
-    public abstract LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> list);
+    public abstract List<Denotator> getDenotatorDependencies(List<Denotator> list);
     
     public int compareTo(YonedaMorphism object) {
          return getClass().getName().compareTo(object.getClass().getName());
@@ -161,14 +161,14 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
      */
     public abstract boolean equals(Object object);
     
-    public abstract boolean fullEquals(YonedaMorphism m, IdentityHashMap<Object,Object> s);
+    public abstract boolean fullEquals(YonedaMorphism m, Map<Object,Object> s);
     
     /**
      * Resolve the references in this morphism resulting from parsing.
      * 
      * @return true iff all references have been resolved.
      */
-    public abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
+    public abstract boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history);
 
     /**
      * Returns a hash code for this morphism.

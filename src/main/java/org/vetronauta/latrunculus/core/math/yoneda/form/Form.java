@@ -32,9 +32,11 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract base class for forms.
@@ -194,7 +196,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * @param s a map containing a history of already encountered forms,
      *          used to break recursion
      */
-    public boolean fullEquals(Form f, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(Form f, Map<Object,Object> s) {
         if (this == f) {
             return true;
         }
@@ -279,8 +281,8 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * Returns a list of the forms that this form depends on.
      * A form always depends on itself.
      */
-    public final LinkedList<Form> getDependencies() {
-        return getDependencies(new LinkedList<Form>());
+    public final List<Form> getDependencies() {
+        return getDependencies(new ArrayList<>());
     }
     
     
@@ -290,7 +292,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * 
      * @return the changed list
      */
-    public abstract LinkedList<Form> getDependencies(LinkedList<Form> list);
+    public abstract List<Form> getDependencies(List<Form> list);
 
     
     /**
@@ -368,13 +370,11 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * @return true iff all references have been resolved.
      */
     public boolean resolveReferences(RubatoDictionary dict) {
-        IdentityHashMap<?,?> history = new IdentityHashMap<>();
-        return resolveReferences(dict, history);
+        return resolveReferences(dict, new IdentityHashMap<>());
     }
     
     
-    @SuppressWarnings("unchecked")
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         if (history.containsKey(this)) {
             return true;
         }

@@ -21,7 +21,6 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
@@ -35,7 +34,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -68,11 +66,24 @@ public final class LimitForm extends Form {
     /**
      * Builds a limit identity form using a list of forms.
      */
-    public LimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
+    public LimitForm(NameDenotator name, List<Form> forms, Map<String, Integer> labels) {
         super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.LIMIT));
         setLabels(labels);
     }
 
+    private void setLabels(Map<String,Integer> labels) {
+        if (labels == null) {
+            labelMap = null;
+            reverseLabelMap = null;
+        }
+        else {
+            labelMap = labels;
+            reverseLabelMap = new String[labels.size()];
+            for (String label : labelMap.keySet()) {
+                reverseLabelMap[labelMap.get(label)] = label;
+            }
+        }
+    }
     
     /**
      * Builds a limit identity form using a diagram.
@@ -104,28 +115,16 @@ public final class LimitForm extends Form {
         if (registered && f.registered) {
             return getName().equals(f.getName());
         }
-        else {
-            return fullEquals(f);
-        }
-    }
-
-
-    public boolean fullEquals(LimitForm f) {
-        return fullEquals(f, new IdentityHashMap<>());
-    }
-
-
-    public boolean fullEquals(LimitForm f, IdentityHashMap<Object,Object> s) {
         if (this == f) {
             return true;
         }
-        else if (!getName().equals(f.getName())) {
+        if (!getName().equals(f.getName())) {
             return false;
         }
-        s.put(this, f);
-        return identifier.fullEquals(f.identifier, s);
+        Map<Object, Object> map = new HashMap<>();
+        map.put(this, f);
+        return identifier.fullEquals(f.identifier, map);
     }
-    
 
     /**
      * Returns the number of coordinate forms.
@@ -175,7 +174,7 @@ public final class LimitForm extends Form {
             reverseLabelMap = null;
         }
         else {
-            labelMap = new HashMap<String,Integer>();
+            labelMap = new HashMap<>();
             reverseLabelMap = new String[labels.size()];
             int i = 0;
             for (String label : labels.subList(0, getFormCount())) {
@@ -185,22 +184,6 @@ public final class LimitForm extends Form {
             }
         }
     }
-
-    @Internal
-    public void setLabels(HashMap<String,Integer> labels) { //TODO find a better way to keep this private
-        if (labels == null) {
-            labelMap = null;
-            reverseLabelMap = null;
-        }
-        else {
-            labelMap = labels;
-            reverseLabelMap = new String[labels.size()];
-            for (String label : labelMap.keySet()) {
-                reverseLabelMap[labelMap.get(label)] = label;
-            }
-        }
-    }
-    
     
     /**
      * Returns the index corresponding to the given label.
@@ -261,7 +244,7 @@ public final class LimitForm extends Form {
     }
 
 
-    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public List<Form> getDependencies(List<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
             return identifier.getFormDependencies(list);
@@ -277,7 +260,7 @@ public final class LimitForm extends Form {
      * Returns a default denotator of this limit form.
      */
     public Denotator createDefaultDenotator() {
-        LinkedList<Denotator> cds = new LinkedList<Denotator>();
+        LinkedList<Denotator> cds = new LinkedList<>();
         for (int i = 0; i < getFormCount(); i++) {
             cds.add(getForm(i).createDefaultDenotator());
         }
@@ -364,6 +347,6 @@ public final class LimitForm extends Form {
     }
     
     
-    private HashMap<String,Integer> labelMap = null;
+    private Map<String,Integer> labelMap = null;
     private String[] reverseLabelMap = null;
 }

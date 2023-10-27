@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.io.PrintStream;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A placeholder for forms that are not yet known.
@@ -81,7 +82,7 @@ public final class FormReference extends Form {
         out.println("Reference");
     }
 
-    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public List<Form> getDependencies(List<Form> list) {
         throw new UnsupportedOperationException();
     }
     

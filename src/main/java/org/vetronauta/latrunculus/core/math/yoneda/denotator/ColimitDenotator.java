@@ -54,6 +54,8 @@ import java.util.List;
  */
 public final class ColimitDenotator extends Denotator implements FactorDenotator {
 
+    private int index;
+
     /**
      * Creates a colimit denotator.
      * 
@@ -607,7 +609,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
 
     
     @Override
-    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDependencies(List<Denotator> list) {
         if (!list.contains(this)) {
             list.add(this);
             list = getCoordinate().getDenotatorDependencies(list);
@@ -657,27 +659,17 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         return res;
     }
 
-    
-    /**
-     * Returns true iff this denotator is correctly built.
-     */
     @Internal
-    public boolean _is_valid() {
+    private boolean _is_valid() {
         if (getIndex() >= getColimitForm().getFormCount()) {
             return false;
         }
-        else {
-            try {
-                checkDenotator(getFactor(), getColimitForm().getForm(getIndex()), getAddress());
-            }
-            catch (RubatoAddressException e) {
-                return false;
-            }
-            catch (RubatoFormException e) {
-                return false;
-            }
-            return true;
+        try {
+            checkDenotator(getFactor(), getColimitForm().getForm(getIndex()), getAddress());
+        } catch (RubatoAddressException | RubatoFormException e) {
+            return false;
         }
+        return true;
     }
     
     
@@ -690,6 +682,4 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         setIndex(index);
     }
     
-    
-    private int index;
 }

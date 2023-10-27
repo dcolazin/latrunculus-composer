@@ -682,7 +682,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
 
     
     @Override
-    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public List<Denotator> getDependencies(List<Denotator> list) {
         if (!list.contains(this)) {
             list.add(this);
             list = getCoordinate().getDenotatorDependencies(list);

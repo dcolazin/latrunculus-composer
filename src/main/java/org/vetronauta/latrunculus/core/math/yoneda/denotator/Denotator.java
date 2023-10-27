@@ -40,8 +40,12 @@ import org.vetronauta.latrunculus.core.math.exception.RubatoFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract base class for denotators.
@@ -465,12 +469,12 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * Returns a list of the named denotators that this denotator depends on.
      * A named denotator always depends on itself.
      */
-    public final LinkedList<Denotator> getDependencies() {
-        return getDependencies(new LinkedList<>());
+    public final List<Denotator> getDependencies() {
+        return getDependencies(new ArrayList<>());
     }
     
     
-    public abstract LinkedList<Denotator> getDependencies(LinkedList<Denotator> list);
+    public abstract List<Denotator> getDependencies(List<Denotator> list);
 
 
     /**
@@ -480,13 +484,12 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @return true if all references have been resolved
      */
     public boolean resolveReferences(RubatoDictionary dict) {
-        IdentityHashMap<?,?> history = new IdentityHashMap<>();
+        Map<Object,Object> history = new HashMap<>();
         return resolveReferences(dict, history);
     }
     
 
-    @SuppressWarnings("unchecked")
-    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
+    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
         if (history.containsKey(this)) {
             return true;
         }

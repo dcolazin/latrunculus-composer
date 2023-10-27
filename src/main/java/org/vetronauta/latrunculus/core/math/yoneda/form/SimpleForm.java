@@ -32,8 +32,10 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.RepresentableIdentit
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
-import java.util.IdentityHashMap;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Simple form class.
@@ -94,33 +96,16 @@ public final class SimpleForm extends Form {
         if (registered && f.registered) {
             return getName().equals(f.getName());
         }
-        else {
-            return fullEquals(f);
-        }
-    }
-
-
-    public boolean fullEquals(SimpleForm f) {
-        return fullEquals(f, new IdentityHashMap<Object,Object>());
-    }
-
-
-    public boolean fullEquals(SimpleForm f, IdentityHashMap<Object,Object> s) {
         if (this == f) {
             return true;
         }
         else if (!getName().equals(f.getName())) {
             return false;
         }
-        s.put(this, f);
-        return identifier.fullEquals(f.identifier, s);
+        Map<Object,Object> map = new HashMap<>();
+        map.put(this, f);
+        return identifier.fullEquals(f.identifier, map);
     }
-    
-
-    public boolean iscomplete() {
-        return identifier != null;
-    }
-
 
     /**
      * Returns the number of coordinate forms.
@@ -178,7 +163,7 @@ public final class SimpleForm extends Form {
     }
 
 
-    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public List<Form> getDependencies(List<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
         }
