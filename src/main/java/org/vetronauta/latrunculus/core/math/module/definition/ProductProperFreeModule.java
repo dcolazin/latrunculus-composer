@@ -140,17 +140,17 @@ public final class ProductProperFreeModule extends ProperFreeModule<ProductPrope
     }
 
     
-    public ProductProperFreeElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ProductProperFreeElement createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
 
         ProductElement[] components = new ProductElement[getDimension()];
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
+        Iterator<? extends ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof ProductElement) {
-                ProductElement productElement = (ProductElement)object.cast(getRing());
+                ProductElement productElement = getRing().cast(object);
                 if (productElement == null) {
                     return null;
                 }

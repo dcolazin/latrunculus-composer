@@ -201,12 +201,12 @@ public final class ProductRing extends Ring<ProductElement> {
     }
 
 
-    public ProductElement createElement(List<ModuleElement<?, ?>> elements) {
+    public ProductElement createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (elements.size() < getFactorCount()) {
             return null;
         }
         RingElement[] ringElements = new RingElement[getFactorCount()];
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
+        Iterator<? extends ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getFactorCount(); i++) {
             ModuleElement object = iter.next();
             if (object instanceof RingElement) {

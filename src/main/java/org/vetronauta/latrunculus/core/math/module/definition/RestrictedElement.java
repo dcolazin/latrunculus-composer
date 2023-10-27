@@ -161,18 +161,6 @@ public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingEleme
         return moduleElement;
     }
     
-    
-    public ModuleElement cast(Module module) {
-        ModuleElement res = module.cast(moduleElement);
-        if (res == null) {
-            return null;
-        }
-        else {
-            return new RestrictedElement(this.module, res);
-        }
-    }
-
-    
     public String stringRep(boolean ... parens) {
         // TODO: not yet implemented
         throw new UnsupportedOperationException("Not implemented");

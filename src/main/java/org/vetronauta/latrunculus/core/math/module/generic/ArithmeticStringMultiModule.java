@@ -125,11 +125,11 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
     }
 
     @Override
-    public ArithmeticStringMultiElement<N> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticStringMultiElement<N> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
+        Iterator<? extends ModuleElement<?, ?>> iter = elements.iterator();
         List<RingString<N>> values = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
             ModuleElement<?,?> object = iter.next();

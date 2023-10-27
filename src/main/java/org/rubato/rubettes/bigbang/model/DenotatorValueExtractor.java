@@ -1,25 +1,23 @@
 package org.rubato.rubettes.bigbang.model;
 
+import org.rubato.base.RubatoException;
+import org.rubato.rubettes.util.DenotatorPath;
+import org.rubato.rubettes.util.FormValueFinder;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
-import org.rubato.rubettes.util.DenotatorPath;
-import org.rubato.rubettes.util.FormValueFinder;
 
 //TODO: deal with case that different occurences of same form have independent maxima!!!  
 public class DenotatorValueExtractor {
@@ -161,7 +159,7 @@ public class DenotatorValueExtractor {
 			}
 		} else {
 			String valueName = FormValueFinder.makeValueName(simpleName, currentElement.getModule(), indexString);
-			double value = ((ArithmeticElement<Real>)currentElement.cast(RRing.ring)).getValue().doubleValue();
+			double value = RRing.ring.cast(currentElement).getValue().doubleValue();
 			int nextIndex = object.getCurrentOccurrencesOfValueName(valueName);
 			if (parent != null) {
 				Double parentValue = parent.getNthValue(valueName, nextIndex);

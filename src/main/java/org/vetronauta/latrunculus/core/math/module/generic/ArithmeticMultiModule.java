@@ -97,7 +97,7 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     public ArithmeticMultiElement<N> cast(ModuleElement<?, ?> element) {
         if (element.getLength() == getDimension()) {
             if (element instanceof DirectSumElement) {
-                return element.cast(this);
+                return this.createElement(element.flatComponentList());
             }
             List<ArithmeticElement<N>> elements = new ArrayList<>(getDimension());
             for (int i = 0; i < getDimension(); i++) {
@@ -113,14 +113,14 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     }
 
     @Override
-    public ArithmeticMultiElement<N> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticMultiElement<N> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
         List<ArithmeticElement<N>> values = new ArrayList<>(getDimension());
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
+        Iterator<? extends ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
-            ArithmeticElement<N> castElement = iter.next().cast(ring);
+            ArithmeticElement<N> castElement = ring.cast(iter.next());
             if (castElement == null) {
                 return null;
             }

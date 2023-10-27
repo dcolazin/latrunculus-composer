@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 public class ProductElement extends RingElement<ProductElement> {
+
+    //TODO ProductElement<R>
 
     /**
      * Creates a new product element <i>e1</i>x<i>e1</i>.
@@ -106,7 +109,7 @@ public class ProductElement extends RingElement<ProductElement> {
         RingElement newFactors[] = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
             RingElement currentValue = getValue(i);
-            newFactors[i] = (RingElement) currentValue.sum(element.getValue(i).cast(currentValue.getModule()));
+            newFactors[i] = (RingElement) currentValue.getModule().cast(currentValue.sum(element.getValue(i)));
         }
         return new ProductElement(newFactors);
     }
@@ -120,7 +123,7 @@ public class ProductElement extends RingElement<ProductElement> {
         }
         for (int i = 0; i < getFactorCount(); i++) {
             RingElement currentValue = getValue(i);
-            currentValue = (RingElement) currentValue.sum(element.getValue(i).cast(currentValue.getModule()));
+            currentValue = (RingElement) currentValue.getModule().cast(currentValue.sum(element.getValue(i)));
             factors[i] = currentValue;
         }
     }
@@ -136,7 +139,7 @@ public class ProductElement extends RingElement<ProductElement> {
         RingElement[] newFactors = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
             RingElement currentValue = getValue(i);
-            newFactors[i] = (RingElement) currentValue.difference(element.getValue(i).cast(currentValue.getModule()));
+            newFactors[i] = (RingElement) currentValue.getModule().cast(currentValue.difference(element.getValue(i)));
         }
         return new ProductElement(newFactors);
     }
@@ -151,7 +154,7 @@ public class ProductElement extends RingElement<ProductElement> {
         }
         for (int i = 0; i < getFactorCount(); i++) {
             RingElement currentValue = getValue(i);
-            currentValue = (RingElement) currentValue.difference(element.getValue(i).cast(currentValue.getModule()));
+            currentValue = (RingElement) currentValue.getModule().cast(currentValue.difference(element.getValue(i)));
             factors[i] = currentValue;
         }
     }
@@ -193,7 +196,7 @@ public class ProductElement extends RingElement<ProductElement> {
         RingElement newFactors[] = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
             RingElement currentValue = getValue(i);
-            newFactors[i] = currentValue.product((RingElement) element.getValue(i).cast(currentValue.getModule()));
+            newFactors[i] = currentValue.product((RingElement) currentValue.getModule().cast(element.getValue(i)));
         }
         return new ProductElement(newFactors);
     }
@@ -208,19 +211,14 @@ public class ProductElement extends RingElement<ProductElement> {
         }
         for (int i = 0; i < getFactorCount(); i++) {
             RingElement currentValue = getValue(i);
-            currentValue = currentValue.product((RingElement) element.getValue(i).cast(currentValue.getModule()));
+            currentValue = currentValue.product((RingElement) currentValue.getModule().cast(element.getValue(i)));
             factors[i] = currentValue;
         }
     }
 
     
     public boolean isInvertible() {
-        for (int i = 0; i < factors.length; i++) {
-            if (!factors[i].isInvertible()) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(factors).allMatch(RingElement::isInvertible);
     }
     
     
@@ -248,7 +246,7 @@ public class ProductElement extends RingElement<ProductElement> {
         try {
             for (int i = 0; i < newFactors.length; i++) {
                 RingElement currentValue = getValue(i);
-                newFactors[i] = currentValue.quotient((RingElement) element.getValue(i).cast(currentValue.getModule()));
+                newFactors[i] = currentValue.quotient((RingElement) currentValue.getModule().cast(element.getValue(i)));
             }
         }
         catch (DivisionException e) {
@@ -265,7 +263,7 @@ public class ProductElement extends RingElement<ProductElement> {
         try {
             for (int i = 0; i < getFactorCount(); i++) {
                 RingElement currentValue = getValue(i);
-                currentValue = currentValue.quotient((RingElement) element.getValue(i).cast(currentValue.getModule()));
+                currentValue = currentValue.quotient((RingElement) currentValue.getModule().cast(element.getValue(i)));
                 factors[i] = currentValue;
             }
         }

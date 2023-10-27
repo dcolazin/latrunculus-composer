@@ -154,7 +154,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public PolynomialElement<R> createElement(List<ModuleElement<?, ?>> elements) {
+    public PolynomialElement<R> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (elements.size() == 1 && (hasElement(elements.get(0)))) {
                 return (PolynomialElement)elements.get(0);
 

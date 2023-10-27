@@ -65,9 +65,9 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
 
     @Override
-    public ArithmeticElement<Complex> createElement(List<ModuleElement<?,?>> elements) {
+    public ArithmeticElement<Complex> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return this.cast(elements.get(0));
         }
         return null;
     }
@@ -78,7 +78,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
             return cast(((ArithmeticElement<?>) element).getValue());
         }
         if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return this.cast(element.flatComponentList().get(0));
         }
         return null;
     }

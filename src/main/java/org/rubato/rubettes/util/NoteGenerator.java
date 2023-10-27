@@ -405,7 +405,7 @@ public abstract class NoteGenerator {
 	
 	public void modifyNoteDenotator(LimitDenotator note, int[] elementPath, double value) {
 		try {
-			ModuleElement newElement = new ArithmeticElement<>(new Real(value)).cast(note.getElement(elementPath).getModule());
+			ModuleElement newElement = note.getElement(elementPath).getModule().cast(new ArithmeticElement<>(new Real(value)));
 			SimpleForm form = (SimpleForm)note.getFactor(elementPath[0]).getForm();
 			Denotator newCoordinate = this.createSimpleDenotator(form, newElement);
 			note.setFactor(elementPath[0], newCoordinate);
@@ -416,7 +416,7 @@ public abstract class NoteGenerator {
 	
 	public Double getDoubleValue(Denotator note, int[] elementPath) {
 		try {
-			return ((ArithmeticElement<Real>)note.getElement(elementPath).cast(RRing.ring)).getValue().doubleValue();
+			return RRing.ring.cast(note.getElement(elementPath)).getValue().doubleValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return null;

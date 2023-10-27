@@ -40,7 +40,7 @@ public class NearestNeighborFinder {
 	private int[][] elementPaths;
 	
 	public NearestNeighborFinder(int[][] elementPaths) {
-		this.neighbors = new TreeSet<Denotator>();
+		this.neighbors = new TreeSet<>();
 		this.elementPaths = elementPaths;
 	}
 	
@@ -87,7 +87,7 @@ public class NearestNeighborFinder {
 			//getElementPath verschnellern!!
 			int[] currentPath = this.elementPaths[i];
 			try {
-				key[i] = ((ArithmeticElement<Real>) denotator.getElement(currentPath).cast(RRing.ring)).getValue().doubleValue();
+				key[i] = RRing.ring.cast(denotator.getElement(currentPath)).getValue().doubleValue();
 			} catch (RubatoException e) { e.printStackTrace(); }
 		}
 		return key;

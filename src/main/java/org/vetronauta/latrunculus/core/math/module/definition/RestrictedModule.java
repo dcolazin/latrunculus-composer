@@ -156,7 +156,7 @@ public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElemen
     }
 
     
-    public RestrictedElement createElement(List<ModuleElement<?, ?>> elements) {
+    public RestrictedElement createElement(List<? extends ModuleElement<?, ?>> elements) {
         ModuleElement res = module.createElement(elements);
         if (res != null) {
             try {

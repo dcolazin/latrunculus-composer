@@ -145,12 +145,12 @@ public final class ModularPolynomialProperFreeModule<B extends RingElement<B>>
     }
 
     
-    public ModularPolynomialProperFreeElement<B> createElement(List<ModuleElement<?,?>> elements) {
+    public ModularPolynomialProperFreeElement<B> createElement(List<? extends ModuleElement<?,?>> elements) {
         if (elements.size() < getDimension()) {
             return null;
         }
         ModularPolynomialElement[] values = new ModularPolynomialElement[getDimension()];
-        Iterator<ModuleElement<?, ?>> iter = elements.iterator();
+        Iterator<? extends ModuleElement<?, ?>> iter = elements.iterator();
         for (int i = 0; i < getDimension(); i++) {
             values[i] = ring.cast(iter.next());
             if (values[i] == null) {

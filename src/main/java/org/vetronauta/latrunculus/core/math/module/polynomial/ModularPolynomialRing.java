@@ -178,7 +178,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
 
-    public ModularPolynomialElement<B> createElement(List<ModuleElement<?,?>> elements) {
+    public ModularPolynomialElement<B> createElement(List<? extends ModuleElement<?,?>> elements) {
         if (elements.size() == 1 && (hasElement(elements.get(0)))) {
             return (ModularPolynomialElement<B>) elements.get(0);
         }

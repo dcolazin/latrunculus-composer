@@ -441,17 +441,17 @@ class PolynomialElementTest {
 
     @Test
     void testCast() {
-        assertEquals(ia.cast(intPolRing), ia);
-        assertEquals(ia.cast(realPolRing), ra);
-        assertEquals(ia.cast(ratPolRing), qa);
+        assertEquals(intPolRing.cast(ia), ia);
+        assertEquals(realPolRing.cast(ia), ra);
+        assertEquals(ratPolRing.cast(ia), qa);
 
-        assertEquals(ra.cast(intPolRing), ia);
-        assertEquals(ra.cast(realPolRing), ra);
-        assertEquals(ra.cast(ratPolRing), qa);
+        assertEquals(intPolRing.cast(ra), ia);
+        assertEquals(realPolRing.cast(ra), ra);
+        assertEquals(ratPolRing.cast(ra), qa);
 
-        assertEquals(qa.cast(intPolRing), ia);
-        assertEquals(qa.cast(realPolRing), ra);
-        assertEquals(qa.cast(ratPolRing), qa);
+        assertEquals(intPolRing.cast(qa), ia);
+        assertEquals(realPolRing.cast(qa), ra);
+        assertEquals(ratPolRing.cast(qa), qa);
     }
 
     @Test

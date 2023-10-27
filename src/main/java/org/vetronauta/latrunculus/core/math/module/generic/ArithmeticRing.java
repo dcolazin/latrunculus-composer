@@ -70,7 +70,7 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
     }
 
     @Override
-    public ArithmeticElement<N> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<N> createElement(List<? extends ModuleElement<?, ?>> elements) {
         return null; //TODO
     }
 

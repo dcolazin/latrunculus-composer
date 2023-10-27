@@ -380,32 +380,18 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         return x[0].fold(x);
     }
 
-    @Override
-    public ModuleElement cast(Module module) {
-        List<ModuleElement> flattenedList = flatten();
-        if (module instanceof DirectSumModule) {
-            return ((DirectSumModule)module).fill(flattenedList);
-        }
-        else {
-            return module.createElement(flattenedList);
-        }
-    }
-
-    
-    public List<ModuleElement> flatten() {
-        LinkedList<ModuleElement> flattenedList = new LinkedList<>();
-        flatten(flattenedList);
+    public List<ModuleElement<?,R>> flatComponentList() {
+        List<ModuleElement<?,R>> flattenedList = new LinkedList<>();
+        flatComponentList(flattenedList);
         return flattenedList;
     }
-    
-    
-    private void flatten(LinkedList<ModuleElement> list) {
+
+    private void flatComponentList(List<ModuleElement<?,R>> list) {
         for (int i = 0; i < getLength(); i++) {
-            ModuleElement component = getComponent(i);
+            ModuleElement<?,R> component = getComponent(i);
             if (component instanceof DirectSumElement) {
-                ((DirectSumElement)component).flatten(list);
-            }
-            else {
+                ((DirectSumElement<R>) component).flatComponentList(list);
+            } else {
                 for (int j = 0; j < component.getLength(); j++) {
                     list.add(component.getComponent(j));
                 }
@@ -413,7 +399,6 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         }
     }
 
-    
     private static boolean checkComponents(ModuleElement[] components) {
         Ring ring = components[0].getModule().getRing();
         for (int i = 1; i < components.length; i++) {

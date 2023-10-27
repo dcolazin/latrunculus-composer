@@ -140,7 +140,7 @@ public class ObjectGenerator {
 			} else if (valuePath.getEndForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
 				SimpleDenotator simple = (SimpleDenotator)denotator.get(valuePath.toIntArray());
 				if (simple != null) {
-					return ((ArithmeticElement<Real>)simple.getElement().cast(RRing.ring)).getValue().doubleValue();
+					return RRing.ring.cast(simple.getElement()).getValue().doubleValue();
 				}
 				return null;
 			}
@@ -158,7 +158,7 @@ public class ObjectGenerator {
 				element = element.getComponent(i);
 			}
 		}
-		return ((ArithmeticElement<Real>)element.cast(RRing.ring)).getValue().doubleValue();
+		return RRing.ring.cast(element).getValue().doubleValue();
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public class ObjectGenerator {
 	}
 	
 	private DenotatorPath findFormInDenotator(Form form, Denotator denotator) {
-		PriorityQueue<DenotatorPath> subPathsQueue = new PriorityQueue<DenotatorPath>();
+		PriorityQueue<DenotatorPath> subPathsQueue = new PriorityQueue<>();
 		subPathsQueue.add(new DenotatorPath(denotator.getForm()));
 		while (!subPathsQueue.isEmpty()) {
 			DenotatorPath currentSubPath = subPathsQueue.poll();
@@ -365,7 +365,7 @@ public class ObjectGenerator {
 		try {
 			SimpleDenotator oldSimple = (SimpleDenotator)object.get(simplePath);
 			if (oldSimple != null) {
-				ModuleElement newElement = new ArithmeticElement<>(new Real(value)).cast(oldSimple.getElement().getModule());
+				ModuleElement newElement = oldSimple.getElement().getModule().cast(new ArithmeticElement<>(new Real(value)));
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
@@ -399,13 +399,13 @@ public class ObjectGenerator {
 					factors.add(productElement.getFactor(i));
 				}
 			}
-			return ProductElement.make(factors).cast(productElement.getModule());
+			return productElement.getModule().cast(ProductElement.make(factors));
 		} else if (currentDimension > 1) {
-			List<ArithmeticElement<Real>> values = ((ArithmeticMultiElement<Real>)currentElement.cast(ArithmeticMultiModule.make(RRing.ring, currentDimension))).getValue();
+			List<ArithmeticElement<Real>> values = new ArithmeticMultiModule(RRing.ring, currentDimension).cast(currentElement).getValue();
 			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new Real(value)));
-			return new ArithmeticMultiElement(RRing.ring, values).cast(currentElement.getModule());
+			return currentElement.getModule().cast(new ArithmeticMultiElement(RRing.ring, values));
 		} else {
-			return new ArithmeticElement<>(new Real(value)).cast(currentElement.getModule());
+			return currentElement.getModule().cast(new ArithmeticElement<>(new Real(value)));
 		}
 	}
 

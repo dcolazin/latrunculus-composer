@@ -75,9 +75,9 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
         return super.compareTo(object);
     }
     
-    public ArithmeticElement<Rational> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<Rational> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return this.cast(elements.get(0));
         }
         else {
             return null;
@@ -89,7 +89,7 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
             return cast((ArithmeticElement<?>) element);
         }
         if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return this.cast(element.flatComponentList().get(0));
         }
         return null;
     }

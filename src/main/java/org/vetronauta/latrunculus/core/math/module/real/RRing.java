@@ -73,9 +73,9 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
     }
 
 
-    public ArithmeticElement<Real> createElement(List<ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<Real> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return this.cast(elements.get(0));
         }
         else {
             return null;
@@ -88,7 +88,7 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
             return cast((ArithmeticElement<?>) element);
         }
         if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return this.cast(element.flatComponentList().get(0));
         }
         return null;
     }

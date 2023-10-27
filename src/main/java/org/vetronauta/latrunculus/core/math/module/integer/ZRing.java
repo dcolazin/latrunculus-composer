@@ -80,21 +80,21 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
         return super.compareTo(object);
     }
 
-
-    public ArithmeticElement<ArithmeticInteger> createElement(List<ModuleElement<?, ?>> elements) {
+    @Override
+    public ArithmeticElement<ArithmeticInteger> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return this.cast(elements.get(0));
         }
         return null;
     }
 
-    
+    @Override
     public ArithmeticElement<ArithmeticInteger> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
         if (element instanceof DirectSumElement) {
-            return element.cast(this);
+            return this.cast(element.flatComponentList().get(0));
         }
         return null;
     }

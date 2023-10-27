@@ -187,7 +187,7 @@ public class Alterator {
 		//set starting values
 		Denotator currentDenotator = denotators.next();
 		for (int i = 0; i < paths.length; i++) {
-			double currentDouble = ((ArithmeticElement<Real>)currentDenotator.getElement(paths[i]).cast(RRing.ring)).getValue().doubleValue();
+			double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue().doubleValue();
 			minima[i] = currentDouble;
 			maxima[i] = currentDouble;
 		}
@@ -195,7 +195,7 @@ public class Alterator {
 		while (denotators.hasNext()) {
 			currentDenotator = denotators.next();
 			for (int i = 0; i < paths.length; i++) {
-				double currentDouble = ((ArithmeticElement<Real>)currentDenotator.getElement(paths[i]).cast(RRing.ring)).getValue().doubleValue();
+				double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue().doubleValue();
 				if (currentDouble > maxima[i]) {
 					maxima[i] = currentDouble;
 				}
@@ -260,7 +260,7 @@ public class Alterator {
 	private double[] getCastDoubleValues(Denotator denotator, int[][] paths) throws RubatoException{
 		double[] values = new double[paths.length];
 		for (int i = 0; i < values.length; i++) {
-			values[i] = ((ArithmeticElement<Real>)denotator.getElement(paths[i]).cast(RRing.ring)).getValue().doubleValue();
+			values[i] = RRing.ring.cast(denotator.getElement(paths[i])).getValue().doubleValue();
 		}
 		return values;
 	}

@@ -24,6 +24,8 @@ import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The interface for elements in a module.
@@ -65,6 +67,17 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
      * Returns the <code>i</code>-th component element.
      */
     ModuleElement<?,R> getComponent(int i);
+
+    /**
+     * Returns the ordered component list
+     */
+    default List<ModuleElement<?,R>> flatComponentList() {
+        List<ModuleElement<?,R>> list = new ArrayList<>();
+        for (int i = 0; i < this.getLength(); i++) {
+            list.add(this.getComponent(i));
+        }
+        return list;
+    }
 
     /**
      * Returns the sum of this module element and <code>element</code>.
@@ -119,19 +132,9 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
     Module<E,R> getModule();
 
     /**
-     * Tries to cast this element to an element in the given module.
-     * @return a new module element in the required module
-     *         and null if the cast cannot be performed. 
-     */
-    //TODO is it really necessary to have this, when most of the time is module.cast(this) ?
-    default <T extends ModuleElement<T,S>, S extends RingElement<S>> T cast(Module<T,S> module) {
-        return module.cast(this);
-    }
-
-    /**
      * Returns a string representation of this module element.
      * The representation is meant to be parseable.
-     * If the argument parens is present then the the representation
+     * If the argument parens is present then the representation
      * is parenthesized if necessary.
      */
     String stringRep(boolean... parens);

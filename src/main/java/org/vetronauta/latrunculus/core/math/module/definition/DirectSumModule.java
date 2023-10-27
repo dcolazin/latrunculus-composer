@@ -116,7 +116,7 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
     
 
-    public DirectSumElement<R> createElement(List<ModuleElement<?,?>> elements) {
+    public DirectSumElement<R> createElement(List<? extends ModuleElement<?,?>> elements) {
 	   if (elements.size() < getDimension()) {
 	       return null;
 	   }
@@ -140,7 +140,7 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
 
     
-    public DirectSumElement fill(List<ModuleElement> elements) {
+    public DirectSumElement<R> fill(List<ModuleElement<?,?>> elements) {
         ModuleElement[] newElements = new ModuleElement[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
             Module component = getComponentModule(i);
@@ -170,17 +170,8 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
 
     
-    public DirectSumElement cast(ModuleElement element) {
-        if (element instanceof DirectSumElement) {
-            return (DirectSumElement)element.cast(this);
-        }
-        else {
-            LinkedList<ModuleElement> elements = new LinkedList<ModuleElement>();
-            for (int i = 0; i < element.getLength(); i++) {
-                elements.add(element.getComponent(i));
-            }
-            return fill(elements);
-        }
+    public DirectSumElement<R> cast(ModuleElement element) {
+        return fill(element.flatComponentList());
     }
 
     public int compareTo(Module object) {

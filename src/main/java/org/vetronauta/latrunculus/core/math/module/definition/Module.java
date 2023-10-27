@@ -91,7 +91,7 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
      * @return null if no element in this module can be created from
      *         the arguments.
      */
-    E createElement(List<ModuleElement<?,?>> elements);
+    E createElement(List<? extends ModuleElement<?,?>> elements);
 
     /**
      * Returns a human readable string representation of this module.

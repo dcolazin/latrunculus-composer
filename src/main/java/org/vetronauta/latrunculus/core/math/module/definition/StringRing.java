@@ -40,9 +40,9 @@ public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
     
     public abstract boolean hasElement(ModuleElement e);
     
-    public R createElement(List<ModuleElement<?, ?>> elements) {
+    public R createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
-            return elements.get(0).cast(this);
+            return this.cast(elements.get(0));
         }
         else {
             return null;
