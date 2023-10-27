@@ -20,30 +20,18 @@
 package org.rubato.composer.components;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.LinkedList;
 
 public class JSimpleNumberEntry
@@ -127,38 +115,7 @@ public class JSimpleNumberEntry
 
     
     public static String getSymbol(Module<?,?> module) {
-        String s = "";  
-        if (module instanceof FreeModule) {
-            if (module.checkRingElement(ArithmeticElement.class)) {
-                ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
-                if (number instanceof ArithmeticInteger) {
-                    s = "Z";
-                } else if (number instanceof Modulus) {
-                    s = "Z" + ((ZnRing) module.getRing()).getModulus();
-                } else if (number instanceof Real) {
-                    s = "R";
-                } else if (number instanceof Complex) {
-                    s = "C";
-                } else if (number instanceof Rational) {
-                    s = "Q";
-                }
-            } else if (module instanceof ZStringRing) {
-                s = "Z-String"; 
-            } else if (module instanceof ZnStringRing) {
-                s = "Z_" + ((ZnRing) module.getRing()).getModulus() + "-String";
-            } else if (module instanceof RStringRing) {
-                s = "R-String"; 
-            } else if (module instanceof QStringRing) {
-                s = "Q-String"; 
-            } else if (module instanceof PolynomialRing) {
-                PolynomialRing r = (PolynomialRing) module;
-                s = getSymbol(r.getCoefficientRing()) + "[" + r.getIndeterminate() + "]";  
-            } else if (module instanceof ModularPolynomialRing) {
-                ModularPolynomialRing r = (ModularPolynomialRing) module;
-                s = getSymbol(r.getCoefficientRing()) + "[" + r.getIndeterminate() + "]/(" + r.getModulus().stringRep() + ")";  
-            }
-        }
-        return s;
+        return module.getRing().toVisualString();
     }
     
     

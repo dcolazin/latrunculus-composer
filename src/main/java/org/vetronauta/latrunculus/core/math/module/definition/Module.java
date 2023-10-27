@@ -33,10 +33,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
  */
 public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> extends Serializable, Comparable<Module<?,?>>, MathDefinition {
 
-    default boolean checkRingElement(Class<? extends RingElement> clazz) { //TODO check
-        return getZero().getClass().isAssignableFrom(clazz);
-    }
-
     /**
      * Returns the zero element in this module.
      */

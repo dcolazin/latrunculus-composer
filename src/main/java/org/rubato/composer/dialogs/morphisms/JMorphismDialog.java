@@ -34,6 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -84,6 +86,8 @@ import java.util.Collections;
 import static org.rubato.composer.Utilities.installEnterKey;
 import static org.rubato.composer.Utilities.installEscapeKey;
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.core.math.module.FreeUtils.isArithmetic;
+import static org.vetronauta.latrunculus.core.math.module.FreeUtils.retrieveNumber;
 
 /**
  * ModuleMorphism creator dialog.
@@ -444,13 +448,13 @@ public class JMorphismDialog
                 if (domain.equals(codomain)) {
                     items.add(SPLIT_TYPE);
                 }
-                if (domain.checkRingElement(ArithmeticElement.class)) {
-                    ArithmeticNumber<?> domainNumber = ((ArithmeticElement<?>) domain.getZero()).getValue();
+                if (isArithmetic(domain)) {
+                    ArithmeticNumber<?> domainNumber = retrieveNumber(domain);
                     if (domainNumber instanceof Complex && domain.equals(codomain)) {
                         items.add(CONJUGATION_TYPE);
                     }
-                    if (codomain.checkRingElement(ArithmeticElement.class)) {
-                        ArithmeticNumber<?> codomainNumber = ((ArithmeticElement<?>) codomain.getZero()).getValue();
+                    if (isArithmetic(codomain)) {
+                        ArithmeticNumber<?> codomainNumber = retrieveNumber(codomain);
                         if (domainNumber instanceof Real && codomainNumber instanceof Real &&
                                 domain.getDimension() == 2 && codomain.getDimension() == 2) {
                             items.add(GEOMETRY_TYPE);
@@ -483,7 +487,6 @@ public class JMorphismDialog
         }
         updateButtonState();
     }
-    
     
     protected void updateDomain() {
         domain = domainEntry.getModule();

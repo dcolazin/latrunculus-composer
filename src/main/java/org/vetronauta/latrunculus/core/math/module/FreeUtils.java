@@ -21,17 +21,16 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 /**
  * @author vetronauta
@@ -41,10 +40,10 @@ public class FreeUtils {
 
     //TODO temp method...
     public static boolean isUsualFree(Module<?,?> module) {
-        if (!(module instanceof FreeModule && module.checkRingElement(ArithmeticElement.class))) {
+        if (!isArithmetic(module)) {
             return false;
         }
-        ArithmeticNumber<?> number = ((ArithmeticElement<?>) module.getZero()).getValue();
+        ArithmeticNumber<?> number = retrieveNumber(module);
         return number instanceof ArithmeticInteger ||
                 number instanceof Modulus ||
                 number instanceof Rational ||
@@ -54,13 +53,21 @@ public class FreeUtils {
 
     //TODO temp method...
     public static boolean isUsualStringFree(Module<?,?> module) {
-        if (!(module instanceof FreeModule && (module.checkRingElement(ArithmeticStringElement.class)))) {
+        if (!isArithmetic(module)) {
             return false;
         }
-        ArithmeticNumber<?> number = ((ArithmeticStringRing<?>) module.getRing()).getFactorRing().getZero().getValue();
-        return number instanceof ArithmeticInteger ||
-                number instanceof Modulus ||
-                number instanceof Rational ||
-                number instanceof Real;
+        ArithmeticNumber<?> number = retrieveNumber(module);
+        return number instanceof RingString;
+    }
+
+    public static boolean isArithmetic(Module<?,?> module) {
+        return module instanceof ArithmeticRing || module instanceof ArithmeticMultiModule;
+    }
+
+    public static ArithmeticNumber<?> retrieveNumber(Module<?,?> module) {
+        if (module instanceof ArithmeticRing) {
+            return ((ArithmeticRing<?>) module).getZero().getValue();
+        }
+        return ((ArithmeticMultiModule<?>) module).getRing().getZero().getValue();
     }
 }
