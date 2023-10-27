@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -34,175 +35,149 @@ import java.util.Map;
  *
  * @author Gérard Milmeister
  */
-public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
+public final class ConstantModuleMorphismMap<A extends ModuleElement<A,RA>, B extends ModuleElement<B,RB>, RA extends RingElement<RA>, RB extends RingElement<RB>>
+        extends ModuleMorphismMap<A,B,RA,RB> {
+
+    private final B moduleElement;
+    private Module<A,RA> domain;
+    private Module<B,RB> codomain;
 
     /**
      * Creates a constant morphism with constant <code>element</code>.
      * The codomain is domain of the element.
      * The domain is the null module corresponding to the codomain. 
      */
-    public ConstantModuleMorphismMap(ModuleElement element) {
-        super();
-        this.codomain = null;
-        this.domain = null;
+    public ConstantModuleMorphismMap(B element) {
+        //TODO a little wrong: extend this class to a <NullElement<RA>,A,RA,RA> class...
+        super((ModuleMorphism) new ConstantMorphism<>(element.getModule().getNullModule(), element));
         this.moduleElement = element;
     }
-
     
     /**
      * Creates a constant morphism with constant <code>element</code>.
      * The codomain is domain of the element.
      * The domain is the specified one. 
      */
-    public ConstantModuleMorphismMap(Module domain, ModuleElement element) {
-        super();
+    public ConstantModuleMorphismMap(Module<A,RA> domain, B element) {
+        super(new ConstantMorphism<>(domain, element));
         this.moduleElement = element;
         this.domain = domain;
-        this.codomain = null;
     }
 
-    
-    public ModuleElement getElement() {
+    @Override
+    public B getElement() {
         return moduleElement;
     }
 
-    
-    public ModuleMorphism getMorphism() {
-        if (moduleMorphism == null) {
-            moduleMorphism = new ConstantMorphism(getDomain(), getElement());
-        }
-        return moduleMorphism;
+    @Override
+    public ModuleMorphism<A,B,RA,RB> getMorphism() {
+        return super.getMorphism();
     }
     
-    
-    public Module getDomain() {
-        if (domain == null) {
-            domain = getCodomain().getNullModule();
-        }
+    @Override
+    public Module<A,RA> getDomain() {
         return domain;
     }
 
-
-    public Module getCodomain() {
+    @Override
+    public Module<B,RB> getCodomain() {
         if (codomain == null) {
             codomain = moduleElement.getModule();
         }
         return codomain;
     }
 
-    
-    public void setElement(ModuleElement element) {
-        assert(element.getModule().equals(getCodomain()));
-        this.moduleElement = element;
-    }
-
-    
+    @Override
     public int compareTo(MorphismMap object) {
         if (object instanceof ConstantModuleMorphismMap) {
-            return moduleElement.compareTo(((ConstantModuleMorphismMap)object).getElement());
+            return moduleElement.compareTo(((ConstantModuleMorphismMap<?,?,?,?>)object).getElement());
         }
-        else if (object instanceof ModuleMorphismMap) {
-            return getMorphism().compareTo(((ModuleMorphismMap)object).getMorphism());
+        if (object instanceof ModuleMorphismMap) {
+            return getMorphism().compareTo(((ModuleMorphismMap<?,?,?,?>)object).getMorphism());
         }
-        else {
-            throw new UnsupportedOperationException("Not implemented");
-        }
+        throw new UnsupportedOperationException("Not implemented");
     }
 
-    
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        else if (object instanceof ConstantModuleMorphismMap) {
-            return moduleElement.equals(((ConstantModuleMorphismMap)object).getElement());
+        if (object instanceof ConstantModuleMorphismMap) {
+            return moduleElement.equals(((ConstantModuleMorphismMap<?,?,?,?>)object).getElement());
         }
-        else if (object instanceof ModuleMorphismMap) {
+        if (object instanceof ModuleMorphismMap) {
             return getMorphism().equals(((ModuleMorphismMap)object).getMorphism());
         }
-        else {
-            return false;
-        }
+        return false;
     }
    
-   
+    @Override
     public boolean fullEquals(MorphismMap map, Map<Object,Object> s) {
         return equals(map);
     }
 
-    
-    public ModuleElement map(ModuleElement element) {
+    @Override
+    public B map(A element) {
         return this.moduleElement;
     }
 
-    
+    @Override
     public MorphismMap at(ModuleElement element) {
         if (domain == null || getDomain().isNullModule()) {
             return this;
         }
-        else {
-            return new ConstantModuleMorphismMap(getDomain().getNullModule(), getElement());
-        }
+        return new ConstantModuleMorphismMap<>(getDomain().getNullModule(), getElement());
     }
     
-    
-    public ModuleMorphismMap changeDomain(ModuleMorphism morphism) {
-        if (morphism.getCodomain().equals(getDomain())) {
-            Module newDomain = morphism.getDomain();
-            if (newDomain.equals(getDomain())) {
-                return this;
-            }
-            else {
-                return new ConstantModuleMorphismMap(newDomain, getElement());
-            }
-        }
-        else {
+    @Override
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphismMap<C,B,RC,RB>
+    changeDomain(ModuleMorphism<C,A,RC,RA> otherMorphism) {
+        if (!otherMorphism.getCodomain().equals(getDomain())) {
             return null;
         }
+        Module<C,RC> newDomain = otherMorphism.getDomain();
+        if (newDomain.equals(getDomain())) {
+            return (ModuleMorphismMap) this;
+        }
+        return new ConstantModuleMorphismMap<>(newDomain, getElement());
     }
     
-
-    public ModuleMorphismMap changeDomain(Module newAddress) {
-        return new ConstantModuleMorphismMap(newAddress, getElement());
+    @Override
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphismMap<C,B,RC,RB>
+    changeDomain(Module<C,RC> newDomain) {
+        return new ConstantModuleMorphismMap<>(newDomain, getElement());
     }
 
-    
-    public ModuleMorphismMap map(ModuleMorphism morphism)
-            throws RubatoException {
-        if (morphism.getDomain().equals(morphism.getCodomain())) {
-            ModuleElement res = morphism.map(moduleElement);
-            return new ConstantModuleMorphismMap(getDomain(), res);
+    @Override
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphismMap<C,B,RC,RB>
+    map(ModuleMorphism<C,A,RC,RA> otherMorphism) throws RubatoException {
+        if (otherMorphism.getDomain().equals(otherMorphism.getCodomain())) {
+            return new ConstantModuleMorphismMap<>(otherMorphism.getDomain(), getElement());
         }
         throw new RubatoException("ConstantModuleMorphismMap.map: Domain and codomain of morphism must be equal");
     }
     
-    
-    public ModuleMorphismMap sum(ModuleMorphismMap map) {
+    @Override
+    public ModuleMorphismMap<A,B,RA,RB> sum(ModuleMorphismMap<A,B,RA,RB> map) {
         if (map instanceof ConstantModuleMorphismMap) {
-            ConstantModuleMorphismMap nullMap = (ConstantModuleMorphismMap)map;
-            try {
-                return new ConstantModuleMorphismMap(getElement().sum(nullMap.getElement()));
-            }
-            catch (DomainException e) {
-                return null;
-            }
+            ConstantModuleMorphismMap<A,B,RA,RB> nullMap = (ConstantModuleMorphismMap<A,B,RA,RB>) map;
+            return new ConstantModuleMorphismMap<>(getElement().sum(nullMap.getElement()));
         }
-        else {
-            try {
-                return new ModuleMorphismMap(getMorphism().sum(map.getMorphism()));
-            }
-            catch (CompositionException e) {
-                return null;
-            }
+        try {
+            return new ModuleMorphismMap<>(getMorphism().sum(map.getMorphism()));
+        }
+        catch (CompositionException e) {
+            return null;
         }
     }
     
-    
-    public ModuleMorphismMap difference(ModuleMorphismMap map) {
+    @Override
+    public ModuleMorphismMap<A,B,RA,RB> difference(ModuleMorphismMap<A,B,RA,RB> map) {
         if (map instanceof ConstantModuleMorphismMap) {
-            ConstantModuleMorphismMap nullMap = (ConstantModuleMorphismMap)map;
+            ConstantModuleMorphismMap<A,B,RA,RB> nullMap = (ConstantModuleMorphismMap<A,B,RA,RB>) map;
             try {
-                return new ConstantModuleMorphismMap(getElement().difference(nullMap.getElement()));
+                return new ConstantModuleMorphismMap<>(getElement().difference(nullMap.getElement()));
             }
             catch (DomainException e) {
                 return null;
@@ -210,7 +185,7 @@ public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
         }
         else {
             try {
-                return new ModuleMorphismMap(getMorphism().difference(map.getMorphism()));
+                return new ModuleMorphismMap<>(getMorphism().difference(map.getMorphism()));
             }
             catch (CompositionException e) {
                 return null;
@@ -218,31 +193,29 @@ public final class ConstantModuleMorphismMap extends ModuleMorphismMap {
         }
     }
 
-    
+    @Override
     public boolean isConstant() {
         return true;
     }
 
     @Override
-    public ModuleMorphismMap deepCopy() {
-        return new ConstantModuleMorphismMap(moduleElement);
+    public ConstantModuleMorphismMap<A,B,RA,RB> deepCopy() {
+        return new ConstantModuleMorphismMap<>(moduleElement.deepCopy());
     }
 
+    @Override
     public String toString() {
         return "ConstantModuleMorphismMap["+moduleElement+"]";
     }
 
+    @Override
     public String getElementTypeName() {
         return "ConstantModuleMorphismMap";
     }
     
-    
+    @Override
     public int hashCode() {
         return moduleElement.hashCode();
     }
 
-
-    private ModuleElement  moduleElement;
-    private Module         domain   = null;
-    private Module         codomain = null;
 }

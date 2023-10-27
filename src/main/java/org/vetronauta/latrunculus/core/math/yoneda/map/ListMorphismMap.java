@@ -107,8 +107,7 @@ public final class ListMorphismMap implements MorphismMap {
      */
     public Denotator removeFactor(int index) {
     	if (index < list.size()) {
-    		Denotator removed = list.remove(index);
-    		return removed;
+            return list.remove(index);
     	}
     	throw new IndexOutOfBoundsException(index+" > "+(list.size()-1));
     }
@@ -187,7 +186,7 @@ public final class ListMorphismMap implements MorphismMap {
         int size = list.size();
         if (size < 2) return;
         Denotator d = list.get(0);
-        ArrayList<Denotator> newlist = new ArrayList<Denotator>();
+        ArrayList<Denotator> newlist = new ArrayList<>();
         newlist.add(d);
         for (int i = 1; i < size; i++) {
             Denotator next = list.get(i);
@@ -418,7 +417,7 @@ public final class ListMorphismMap implements MorphismMap {
     }
 
 
-    protected ListMorphismMap(ArrayList<Denotator> list) {
+    private ListMorphismMap(ArrayList<Denotator> list) {
         this.list = list;
     }
     
