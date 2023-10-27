@@ -56,7 +56,7 @@ public class StringRingRepository {
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticStringRing<N> getRing(ArithmeticStringElement<N> element) {
-        ArithmeticNumber<N> number = element.getRing().getFactorRing().getZero().getValue();
+        ArithmeticNumber<N> number = element.getValue().getFactors().stream().findFirst().orElse(null);
         if (number instanceof ArithmeticInteger) {
             return (ArithmeticStringRing<N>) ZStringRing.ring;
         }
@@ -69,7 +69,7 @@ public class StringRingRepository {
         if (number instanceof Modulus) {
             return (ArithmeticStringRing<N>) getModulusRing(((Modulus) number).getModulus());
         }
-        throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
+        throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", element));
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getBaseRing(ArithmeticStringElement<N> element) {
