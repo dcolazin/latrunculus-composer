@@ -13,7 +13,7 @@ package org.rubato.composer.denobrowser;
 
 import java.util.EventListener;
 
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 /**
  * @author Gérard Milmeister

@@ -22,20 +22,20 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import java.util.*;
 
 /**
- * The unique respresention of names.
+ * The unique representation of names.
  * 
  * @author Gérard Milmeister
  */
 public final class NameEntry implements Comparable<NameEntry> {
 
     public NameEntry() {
-        names = new ArrayList<String>();
+        names = new ArrayList<>();
     }
     
     
     public NameEntry(String name) {
         String[] s = name.split("/");
-        names = new ArrayList<String>();
+        names = new ArrayList<>();
         for (int i = 0; i < s.length; i++) {
             names.add(s[i]);
         }
@@ -202,5 +202,5 @@ public final class NameEntry implements Comparable<NameEntry> {
     }
 
     
-    private static HashMap<NameEntry,NameEntry> nameTable = new HashMap<NameEntry,NameEntry>();           
+    private static HashMap<NameEntry,NameEntry> nameTable = new HashMap<>();
 }

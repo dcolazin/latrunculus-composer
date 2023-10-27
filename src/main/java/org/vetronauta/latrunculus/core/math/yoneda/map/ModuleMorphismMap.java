@@ -19,7 +19,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
@@ -29,6 +29,8 @@ import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -301,7 +303,7 @@ public class ModuleMorphismMap implements MorphismMap {
     /**
      * Creates a module morphism map with the specified module morphism.
      */
-    protected ModuleMorphismMap(ModuleMorphism morphism) {
+    public ModuleMorphismMap(ModuleMorphism morphism) {
         this.moduleMorphism = morphism;
     }
     

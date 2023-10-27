@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
-import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
-import org.vetronauta.latrunculus.core.math.yoneda.MathDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.MathDiagram;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 

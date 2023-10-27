@@ -29,12 +29,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 abstract class LimitSimpleReformer extends LimitReformer {
 

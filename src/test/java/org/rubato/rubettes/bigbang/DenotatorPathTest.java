@@ -17,12 +17,12 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMulti
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 import java.util.ArrayList;
 import java.util.List;

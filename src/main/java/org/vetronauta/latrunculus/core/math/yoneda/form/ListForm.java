@@ -19,10 +19,15 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
@@ -132,9 +137,9 @@ public class ListForm extends Form {
     public FormDiagram getFormDiagram() {
         return (FormDiagram)getIdentifier().getCodomainDiagram();
     }
-    
-    
-    protected LinkedList<Form> getDependencies(LinkedList<Form> list) {
+
+
+    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
             return identifier.getFormDependencies(list);

@@ -21,14 +21,14 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.yoneda.AutoListMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.IndexMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.ListMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.AutoListMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.map.EmptyMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.IndexMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDEX_ATTR;

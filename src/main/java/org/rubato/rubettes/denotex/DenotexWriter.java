@@ -24,13 +24,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 
 public abstract class DenotexWriter {
 

@@ -20,10 +20,10 @@
 package org.rubato.composer.dialogs;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;

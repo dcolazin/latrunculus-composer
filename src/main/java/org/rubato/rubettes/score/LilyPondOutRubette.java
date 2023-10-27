@@ -35,9 +35,9 @@ import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 
 /**
  * A rubette that converts a Score denotator to LilyPond code and writes it to a file

@@ -35,13 +35,13 @@ import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 
 public class JPowerListDenotatorEntry
         extends AbstractDenotatorEntry

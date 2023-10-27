@@ -25,16 +25,16 @@ import java.util.List;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 
 abstract class ColimitReformer extends Reformer {
 

@@ -17,12 +17,13 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import java.util.Iterator;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 /**
  * Interface for denotators that have factors.

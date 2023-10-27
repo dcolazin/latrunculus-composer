@@ -37,7 +37,7 @@ import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

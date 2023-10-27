@@ -23,8 +23,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
 public class MidiChange implements Comparable<MidiChange> {
 

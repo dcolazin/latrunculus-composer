@@ -26,12 +26,12 @@ import org.rubato.logeo.functions.Function;
 import org.rubato.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.ListMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 
 
 /**

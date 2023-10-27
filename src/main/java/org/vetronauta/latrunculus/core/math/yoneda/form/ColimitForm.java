@@ -19,11 +19,17 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
@@ -35,49 +41,52 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Limit form class.
+ * Colimit form class.
  *
  * @author Gérard Milmeister
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public final class LimitForm extends Form {
+public final class ColimitForm extends Form {
 
     /**
      * Generic form constructor.
      */
-    public LimitForm(NameDenotator name, YonedaMorphism identifier) {
+    public ColimitForm(NameDenotator name, YonedaMorphism identifier) {
         super(name, identifier);
     }
 
 
     /**
-     * Builds a limit identity form using a list of forms.
+     * Builds a colimit identity form using a list of forms.
      */
-    public LimitForm(NameDenotator name, List<Form> forms) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.LIMIT));
+    public ColimitForm(NameDenotator name, List<Form> forms) {
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.COLIMIT));
     }
 
 
     /**
-     * Builds a limit identity form using a list of forms.
+     * Builds a colimit identity form using a list of forms.
      */
-    public LimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.LIMIT));
+    public ColimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.COLIMIT));
         setLabels(labels);
     }
 
-    
+
     /**
-     * Builds a limit identity form using a diagram.
+     * Builds a colimit identity form using a diagram.
      */
-    public LimitForm(NameDenotator name, Diagram diagram) {
-        super(name, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIMIT));
+    public ColimitForm(NameDenotator name, Diagram diagram) {
+        super(name, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.COLIMIT));
     }
 
     
+    /**
+     * Returns the type of the form.
+     */
     public FormDenotatorTypeEnum getType() {
-        return FormDenotatorTypeEnum.LIMIT;
+        return FormDenotatorTypeEnum.COLIMIT;
     }
 
 
@@ -85,8 +94,8 @@ public final class LimitForm extends Form {
         if (this == object) {
             return true;
         }
-        else if (object instanceof LimitForm) {
-            return equals((LimitForm)object);
+        else if (object instanceof ColimitForm) {
+            return equals((ColimitForm)object);
         }
         else {
             return false;
@@ -94,7 +103,7 @@ public final class LimitForm extends Form {
     }
 
 
-    public boolean equals(LimitForm f) {
+    public boolean equals(ColimitForm f) {
         if (registered && f.registered) {
             return getName().equals(f.getName());
         }
@@ -104,12 +113,15 @@ public final class LimitForm extends Form {
     }
 
 
-    public boolean fullEquals(LimitForm f) {
+    /**
+     * Compares for full equality in the case of non-registered forms. 
+     */
+    public boolean fullEquals(ColimitForm f) {
         return fullEquals(f, new IdentityHashMap<>());
     }
 
 
-    public boolean fullEquals(LimitForm f, IdentityHashMap<Object,Object> s) {
+    public boolean fullEquals(ColimitForm f, IdentityHashMap<Object,Object> s) {
         if (this == f) {
             return true;
         }
@@ -125,7 +137,7 @@ public final class LimitForm extends Form {
      * Returns the number of coordinate forms.
      */
     public int getFormCount() {
-        return getFormDiagram().getFormCount();
+        return ((FormDiagram)getIdentifier().getCodomainDiagram()).getFormCount();
     }
     
 
@@ -135,10 +147,10 @@ public final class LimitForm extends Form {
      * @return the form at coordinate position i
      */
     public Form getForm(int i) {
-        return getFormDiagram().getForm(i);
+        return ((FormDiagram)getIdentifier().getCodomainDiagram()).getForm(i);
     }
     
-    
+
     /**
      * Returns a coordinate form.
      * @param label the name of the coordinate form
@@ -148,17 +160,12 @@ public final class LimitForm extends Form {
             throws RubatoException {
         int i = labelToIndex(label);
         if (i < 0) {
-            throw new RubatoException("LimitForm.getForm: Label %%1 does not exist", label);
+            throw new RubatoException("ColimitForm.getForm: Label %1 does not exist", label);
         }
         return getForm(i);
     }
-
     
-    public FormDiagram getFormDiagram() {
-        return (FormDiagram)getIdentifier().getCodomainDiagram();
-    }
 
-    
     /**
      * Sets the labels for the factors of the form.
      * Labels are assigned in the order they occur in the list <code>labels</code>.
@@ -169,7 +176,7 @@ public final class LimitForm extends Form {
             reverseLabelMap = null;
         }
         else {
-            labelMap = new HashMap<String,Integer>();
+            labelMap = new HashMap<>();
             reverseLabelMap = new String[labels.size()];
             int i = 0;
             for (String label : labels.subList(0, getFormCount())) {
@@ -179,7 +186,7 @@ public final class LimitForm extends Form {
             }
         }
     }
-
+    
     @Internal
     public void setLabels(HashMap<String,Integer> labels) { //TODO find a better way to keep this private
         if (labels == null) {
@@ -224,7 +231,7 @@ public final class LimitForm extends Form {
             return i;
         }
     }
-
+    
     
     /**
      * Returns the label corresponding to the given index <code>i</code>.
@@ -253,31 +260,30 @@ public final class LimitForm extends Form {
     public boolean hasLabels() {
         return labelMap != null;
     }
-    
-    
-    protected LinkedList<Form> getDependencies(LinkedList<Form> list) {
+
+    public Map<String, Integer> getLabelMap() {
+        return labelMap;
+    }
+
+    public YonedaMorphism getIdentifier() {
+        return identifier;
+    }
+
+    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
         if (!list.contains(this)) {
             list.add(this);
             return identifier.getFormDependencies(list);
         }
         return list;
     }
-
-    public Map<String, Integer> getLabelMap() {
-        return labelMap;
-    }
         
     /**
-     * Returns a default denotator of this limit form.
+     * Returns a default denotator of this colimit form.
      */
     public Denotator createDefaultDenotator() {
-        LinkedList<Denotator> cds = new LinkedList<Denotator>();
-        for (int i = 0; i < getFormCount(); i++) {
-            cds.add(getForm(i).createDefaultDenotator());
-        }
-        LimitDenotator res = null;
+        Denotator res = null;
         try {
-            res = new LimitDenotator(null, this, cds);
+            res = new ColimitDenotator(null, this, 0, getForm(0).createDefaultDenotator());
         }
         catch (RubatoException e) {
             e.printStackTrace();
@@ -287,16 +293,12 @@ public final class LimitForm extends Form {
 
     
     /**
-     * Returns a default denotator of this limit form with the given address.
+     * Returns a default denotator of this colimit form with the given address.
      */
     public Denotator createDefaultDenotator(Module address) {
-        LinkedList<Denotator> cds = new LinkedList<Denotator>();
-        for (int i = 0; i < getFormCount(); i++) {
-            cds.add(getForm(i).createDefaultDenotator(address));
-        }
-        LimitDenotator res = null;
+        Denotator res = null;
         try {
-            res = new LimitDenotator(null, this, cds);
+            res = new ColimitDenotator(null, address, this, 0, getForm(0).createDefaultDenotator());
         }
         catch (RubatoException e) {
             e.printStackTrace();
@@ -309,7 +311,7 @@ public final class LimitForm extends Form {
         StringBuilder buf = new StringBuilder(50);
         buf.append("[");
         buf.append(getNameString());
-        buf.append(":.limit(");
+        buf.append(":.colimit(");
         buf.append(getForm(0).getNameString());
         for (int i = 1; i < getFormCount(); i++) {
             buf.append(",");
@@ -323,7 +325,7 @@ public final class LimitForm extends Form {
     protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: limit");
+        out.println("; Type: colimit");
 
         indent += 4;
     
@@ -332,12 +334,12 @@ public final class LimitForm extends Form {
             out.println("...");
         }
         else {
-	        recursionCheckStack.addFirst(this);
-	        FormDiagram d = (FormDiagram)getIdentifier().getCodomainDiagram();
-	        for (int i = 0; i < d.getFormCount(); i++) {
-	            d.getForm(i).display(out, recursionCheckStack, indent);
-	        }
-	        recursionCheckStack.removeFirst();
+            recursionCheckStack.addFirst(this);
+            FormDiagram d = (FormDiagram)getIdentifier().getCodomainDiagram();
+            for (int i = 0; i < d.getFormCount(); i++) {
+                d.getForm(i).display(out, recursionCheckStack, indent);
+            }
+            recursionCheckStack.removeFirst();
         }
     }    
 
@@ -348,16 +350,17 @@ public final class LimitForm extends Form {
         
         if (depth > maxDepth) return 1.0;
         
-        dimension = getFormCount();
+        FormDiagram d = (FormDiagram)identifier.getCodomainDiagram();
+        dimension = d.getVertexCount();
         one_by_n = 1.0 / dimension;
         for (int i = 0; i < dimension; i++) {
-            dimension += one_by_n * (1.0 - 1.0 / getForm(0).getDimension(maxDepth, depth + 1));
+            dimension += one_by_n * (1.0 - 1.0 / d.getForm(0).getDimension(maxDepth, depth + 1));
         }
         
         return dimension;
     }
-    
-    
+
+
     private HashMap<String,Integer> labelMap = null;
     private String[] reverseLabelMap = null;
 }

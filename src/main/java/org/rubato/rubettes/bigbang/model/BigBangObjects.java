@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.operations.AbstractOperation;
 import org.rubato.rubettes.util.CoolFormRegistrant;

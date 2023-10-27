@@ -19,12 +19,16 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
@@ -286,7 +290,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * 
      * @return the changed list
      */
-    protected abstract LinkedList<Form> getDependencies(LinkedList<Form> list);
+    public abstract LinkedList<Form> getDependencies(LinkedList<Form> list);
 
     
     /**
@@ -370,7 +374,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     
     
     @SuppressWarnings("unchecked")
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
         if (history.containsKey(this)) {
             return true;
         }

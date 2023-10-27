@@ -17,12 +17,16 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
@@ -150,7 +154,7 @@ public final class NameForm extends ListForm {
     }
 
 
-    protected LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
         return list;
     }    
 

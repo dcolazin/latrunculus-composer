@@ -7,12 +7,12 @@ import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 
 public class MacroNoteGenerator extends NoteGenerator {
 	

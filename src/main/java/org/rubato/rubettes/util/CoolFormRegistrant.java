@@ -7,14 +7,14 @@ import org.rubato.base.Repository;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
-import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 public class CoolFormRegistrant {
 	

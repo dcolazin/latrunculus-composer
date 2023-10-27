@@ -22,10 +22,10 @@
 package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
-import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.map.EmptyMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 
 /**
  * Abstract base class for identity morphisms.

@@ -19,7 +19,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
@@ -31,6 +31,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
+import org.vetronauta.latrunculus.core.math.exception.RubatoAddressException;
+import org.vetronauta.latrunculus.core.math.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
@@ -666,7 +673,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
 
     
     @Override
-    protected LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
         if (!list.contains(this)) {
             list.add(this);
             list = getCoordinate().getDenotatorDependencies(list);

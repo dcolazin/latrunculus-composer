@@ -30,8 +30,8 @@ import javax.sound.midi.*;
 
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 /**
  * This class reads in a MIDI file an converts it to a denotator of form Score.

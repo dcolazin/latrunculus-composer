@@ -34,9 +34,9 @@ import javax.swing.event.CaretListener;
 import org.rubato.base.Repository;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JStatusline;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
+import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;
 
 
 public class JFormDialog

@@ -34,8 +34,8 @@ import javax.swing.*;
 
 import org.rubato.base.Repository;
 import org.rubato.composer.components.JSelectForm;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 class Select2DDialog

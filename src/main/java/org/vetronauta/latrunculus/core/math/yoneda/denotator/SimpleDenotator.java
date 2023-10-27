@@ -19,7 +19,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
@@ -37,6 +37,12 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -668,7 +674,7 @@ public final class SimpleDenotator extends Denotator {
     
     
     @Override
-    protected LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
         if (!list.contains(this)) {
             list.add(this);
         }

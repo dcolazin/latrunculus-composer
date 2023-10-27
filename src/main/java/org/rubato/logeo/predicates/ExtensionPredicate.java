@@ -23,10 +23,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 
 
 /**

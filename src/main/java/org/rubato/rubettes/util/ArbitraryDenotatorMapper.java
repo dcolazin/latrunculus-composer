@@ -19,11 +19,11 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProjectionMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 import java.util.ArrayList;
 import java.util.Iterator;

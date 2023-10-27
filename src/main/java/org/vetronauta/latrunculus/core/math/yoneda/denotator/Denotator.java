@@ -19,7 +19,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +32,11 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.exception.RubatoAddressException;
+import org.vetronauta.latrunculus.core.math.exception.RubatoFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
@@ -461,11 +466,11 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * A named denotator always depends on itself.
      */
     public final LinkedList<Denotator> getDependencies() {
-        return getDependencies(new LinkedList<Denotator>());
+        return getDependencies(new LinkedList<>());
     }
     
     
-    protected abstract LinkedList<Denotator> getDependencies(LinkedList<Denotator> list);
+    public abstract LinkedList<Denotator> getDependencies(LinkedList<Denotator> list);
 
 
     /**
@@ -475,13 +480,13 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @return true if all references have been resolved
      */
     public boolean resolveReferences(RubatoDictionary dict) {
-        IdentityHashMap<?,?> history = new IdentityHashMap<Object,Object>();
+        IdentityHashMap<?,?> history = new IdentityHashMap<>();
         return resolveReferences(dict, history);
     }
     
 
     @SuppressWarnings("unchecked")
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap history) {
         if (history.containsKey(this)) {
             return true;
         }

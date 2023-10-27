@@ -17,12 +17,13 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -152,7 +153,7 @@ public final class DenotatorReference extends Denotator {
     
     
     @Override
-    protected LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
+    public LinkedList<Denotator> getDependencies(LinkedList<Denotator> list) {
         throw new Error("Fatal error: DenotatorReference.getDependencies never be called");
     }
     

@@ -13,7 +13,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import org.rubato.rubettes.bigbang.model.undo.UndoManager;
 
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.BigBangLayers;
 import org.rubato.rubettes.bigbang.view.View;

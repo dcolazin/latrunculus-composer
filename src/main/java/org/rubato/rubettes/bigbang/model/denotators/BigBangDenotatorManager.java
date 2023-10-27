@@ -11,12 +11,12 @@ import java.util.TreeSet;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.rubato.rubettes.bigbang.BigBangRubette;
 import org.rubato.rubettes.bigbang.model.ObjectPathFinder;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;

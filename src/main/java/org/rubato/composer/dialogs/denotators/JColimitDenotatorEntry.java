@@ -33,10 +33,10 @@ import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 
 public class JColimitDenotatorEntry
         extends AbstractDenotatorEntry

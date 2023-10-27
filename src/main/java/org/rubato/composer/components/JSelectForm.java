@@ -33,7 +33,7 @@ import org.rubato.base.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.forms.TempDictionary;
-import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 

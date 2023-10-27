@@ -19,13 +19,16 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.DenotatorReference;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -42,7 +45,7 @@ public final class IndexMorphismMap implements MorphismMap {
     /**
      * Creates an IndexMorphismMap.
      */
-    public IndexMorphismMap(int index, Denotator factor) { 
+    public IndexMorphismMap(int index, Denotator factor) {
         this.index = index;
         this.factor = factor;
     }

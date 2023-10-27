@@ -33,5 +33,5 @@ import java.io.Serializable;
  * @author Stefan Göller
  */
 public interface Yoneda extends DeepCopyable<Yoneda>, Serializable {
-    
+
 }

@@ -1,7 +1,5 @@
 /*
- * Copyright (C) 2002, 2005 Gérard Milmeister
- * Copyright (C) 2002 Stefan Müller
- * Copyright (C) 2002 Stefan Göller
+ * Copyright (C) 2007 Florian Thalmann
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of version 2 of the GNU General Public
@@ -19,76 +17,69 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.map;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.DenotatorReference;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeMap;
 
 
 /**
- * Morphism map containing a list of morphisms (for limit and power types).
+ * Morphism map containing a set of morphisms (for power types).
  *
- * @author Gérard Milmeister
- * @author Stefan Müller
- * @author Stefan Göller
+ * @author Florian Thalmann
  */
-public final class ListMorphismMap implements MorphismMap {
+public final class AutoListMorphismMap implements MorphismMap {
     
+	private TreeMap<Denotator,Integer> indexMap;
+	private ArrayList<Denotator> currentFactors;
+    private boolean indexUpdateNecessary;
+    private boolean listUpdateNecessary;
+	
     /**
-     * Creates a ListMorphismMap of initial capacity <code>n</code>.
+     * Creates an empty FastListMorphismMap.
      */
-    public ListMorphismMap(int n) {
-        list = new ArrayList<>(n);
+    public AutoListMorphismMap() {
+        this.indexMap = new TreeMap<>();
+        this.currentFactors = new ArrayList<>();
     }
     
 
     /**
-     * Creates a ListMorphismMap.
+     * Creates a FastListMorphismMap.
      */
-    public ListMorphismMap(Collection<Denotator> denotators) {        
-        list = new ArrayList<>(denotators);
-    }
-
-    
-    /**
-     * Creates a ListMorphismMap of initial capacity 0.
-     */
-    public ListMorphismMap() {       
-        this(0);        
+    public AutoListMorphismMap(Collection<Denotator> denotators) {
+    	this.initMap(denotators);
+    	this.currentFactors = new ArrayList<>(this.indexMap.keySet());
     }
     
+    private void initMap(Collection<Denotator> denotators) {
+    	this.indexMap = new TreeMap<>();
+    	int currentIndex = 0;
+    	for (Denotator currentDenotator: denotators) {
+    		this.indexMap.put(currentDenotator, currentIndex);
+    		currentIndex++;
+    	}
+    }
 
     /**
      * Returns the factor at position <code>index</code>.
      */
     public Denotator getFactor(int index) {
-        return list.get(index);
-    }
-
-
-    /**
-     * Sets the factor at position <code>index</code> to <code>d</code>.
-     */
-    public void setFactor(int index, Denotator d) {
-        list.set(index, d); 
-    }
-    
-
-    /**
-     * Inserts the factor <code>d</code> at position <code>index</code>.
-     */
-    public void insertFactor(int index, Denotator d) {
-        list.add(index, d); 
+    	return this.getFactors().get(index);
     }
     
 
@@ -96,26 +87,34 @@ public final class ListMorphismMap implements MorphismMap {
      * Appends the factor <code>d</code>.
      */
     public void appendFactor(Denotator d) {
-        list.add(d);
+    	this.indexMap.put(d, null);
+    	this.indexUpdateNecessary = true;
+    	this.listUpdateNecessary = true;
     }
+    
+    
+    public void replaceFactor(int index, Denotator newD) {
+    	this.removeFactor(index);
+    	this.appendFactor(newD);
+    }
+    
+    
+    public void replaceFactor(Denotator oldD, Denotator newD) {
+    	this.indexMap.remove(oldD);
+    	this.appendFactor(newD);
+    }
+    
     
     /**
      * Removes the factor at <code>index</code>.
      */
     public Denotator removeFactor(int index) {
-    	if (index < list.size()) {
-    		Denotator removed = list.remove(index);
+    	if (index < this.indexMap.size()) {
+    		Denotator removed = this.getFactors().remove(index);
+    		this.indexMap.remove(removed);
+    		this.indexUpdateNecessary = true;
     		return removed;
-    	}
-    	throw new IndexOutOfBoundsException(index+" > "+(list.size()-1));
-    }
-    
-
-    /**
-     * Prepends the factor <code>d</code>.
-     */
-    public void prependFactor(Denotator d) {
-        list.add(0, d);
+    	} else throw new IndexOutOfBoundsException(index+" > "+(this.indexMap.size()-1));
     }
     
 
@@ -123,7 +122,7 @@ public final class ListMorphismMap implements MorphismMap {
      * Returns the number of factors.
      */
     public int getFactorCount() {
-        return list.size();
+        return this.indexMap.size();
     }
 
     
@@ -131,69 +130,29 @@ public final class ListMorphismMap implements MorphismMap {
      * Returns the list of factors.
      */
     public ArrayList<Denotator> getFactors() {
-        return list;
+    	if (this.listUpdateNecessary) {
+    		this.currentFactors = new ArrayList<>(this.indexMap.keySet());
+    		this.listUpdateNecessary = false;
+    	}
+    	return this.currentFactors;
     }
     
     /**
      * Returns the position index of factor <code>d</code>
      */
     public int indexOf(Denotator d) {
-    	return list.indexOf(d);
+    	this.updateIndices();
+    	Integer index = this.indexMap.get(d);
+    	if (index != null) {
+    		return index;
+    	} else return -1;
     }
     
-
-    /**
-     * Sorts the list.
-     */
-    public void sort() {
-        Collections.sort(list);
-    }
-    
-    
-    /**
-     * Returns true iff the list is actually a set, i.e.,
-     * without null objects, sorted and without duplicates.
-     */
-    public boolean isSet() {
-        if (list.size() < 2) {
-            return true;
-        }
-        else {
-            Iterator<Denotator> iter = list.iterator();
-            Denotator d = iter.next();
-            if (d == null) {
-                return false;
-            }
-            while (iter.hasNext()) {
-                Denotator next = iter.next();
-                if (next == null || d.compareTo(next) >= 0) {
-                    return false;
-                }
-                d = next;
-            }
-            return true;
-        }
-    }
-    
-
-    /**
-     * Removes duplicates from the list.
-     * Requires that the list has been sorted before.
-     */
-    public void removeDuplicates() {
-        int size = list.size();
-        if (size < 2) return;
-        Denotator d = list.get(0);
-        ArrayList<Denotator> newlist = new ArrayList<Denotator>();
-        newlist.add(d);
-        for (int i = 1; i < size; i++) {
-            Denotator next = list.get(i);
-            if (!d.equals(next)) {
-                newlist.add(next);
-                d = next;
-            }
-        }
-        list = newlist;
+    private void updateIndices() {
+    	if (this.indexUpdateNecessary) {
+    		this.initMap(this.indexMap.keySet());
+    		this.indexUpdateNecessary = false;
+    	}
     }
 
 
@@ -201,7 +160,7 @@ public final class ListMorphismMap implements MorphismMap {
      * Returns an iterator over the factors.
      */
     public Iterator<Denotator> iterator() {
-        return list.listIterator();    
+        return this.getFactors().listIterator();    
     }
 
 
@@ -209,8 +168,8 @@ public final class ListMorphismMap implements MorphismMap {
         if (this == object) {
             return 0;
         }
-        else if (object instanceof ListMorphismMap) {
-            return compareTo((ListMorphismMap)object);
+        else if (object instanceof AutoListMorphismMap) {
+            return compareTo((AutoListMorphismMap)object);
         }
         else {
             return getClass().toString().compareTo(object.getClass().toString());
@@ -218,11 +177,11 @@ public final class ListMorphismMap implements MorphismMap {
     }
     
     
-    public int compareTo(ListMorphismMap other) {
+    public int compareTo(AutoListMorphismMap other) {
         int aCount = getFactorCount();
         int bCount = other.getFactorCount();   
-        ArrayList<Denotator> aList = list;
-        ArrayList<Denotator> bList = other.list;
+        ArrayList<Denotator> aList = this.getFactors();
+        ArrayList<Denotator> bList = other.getFactors();
         int c = 0;
         for (int i = 0; i < Math.min(aCount, bCount); i++) {
             if ((c = aList.get(i).compareTo(bList.get(i))) != 0) {
@@ -240,7 +199,7 @@ public final class ListMorphismMap implements MorphismMap {
      */
     public MorphismMap at(ModuleElement element)
             throws MappingException {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>(list);
+        ArrayList<Denotator> newList = this.getFactors();
         boolean changed = false;
         for (int i = 0; i < newList.size(); i++) {            
             Denotator oldD = newList.get(i);
@@ -251,7 +210,7 @@ public final class ListMorphismMap implements MorphismMap {
             newList.set(i, newD);
         }
         if (changed) {
-            return new ListMorphismMap(newList);
+            return new AutoListMorphismMap(newList);
         }
         else {
             return this;
@@ -260,33 +219,33 @@ public final class ListMorphismMap implements MorphismMap {
 
     
     public MorphismMap changeAddress(Module address) {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>();
-        for (Denotator d : list) {
+        ArrayList<Denotator> newList = new ArrayList<>();
+        for (Denotator d : this.getFactors()) {
             Denotator newD = d.changeAddress(address);
             if (newD == null) {
                 return null;
             }
             newList.add(newD);
         }
-        return new ListMorphismMap(newList);
+        return new AutoListMorphismMap(newList);
     }
     
     
     public MorphismMap changeAddress(ModuleMorphism morphism) {
-        ArrayList<Denotator> newList = new ArrayList<Denotator>();
-        for (Denotator d : list) {
+        ArrayList<Denotator> newList = new ArrayList<>();
+        for (Denotator d : this.getFactors()) {
             Denotator newD = d.changeAddress(morphism);
             if (newD == null) {
                 return null;
             }
             newList.add(newD);
         }
-        return new ListMorphismMap(newList);
+        return new AutoListMorphismMap(newList);
     }
     
     
     public boolean isConstant() {
-        for (Denotator d : list) {
+        for (Denotator d : this.getFactors()) {
             if (!d.isConstant()) {
                 return false;
             }
@@ -297,22 +256,23 @@ public final class ListMorphismMap implements MorphismMap {
     public String getElementTypeName() {
         return "ListMorphismMap";
     }
-
+    
     @Override
-    public ListMorphismMap deepCopy() {
-        ArrayList<Denotator> newList = new ArrayList<>(list.size());
-        for (Denotator d : list) {
-            newList.add(d.deepCopy());
+    public AutoListMorphismMap deepCopy() {
+    	ArrayList<Denotator> copiedFactors = new ArrayList<>();
+        for (Denotator d : this.getFactors()) {
+        	copiedFactors.add(d.deepCopy());
         }
-        return new ListMorphismMap(newList);
+        return new AutoListMorphismMap(copiedFactors);
     }
+    
 
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        else if (object instanceof ListMorphismMap) {
-            ListMorphismMap m = (ListMorphismMap)object;
+        else if (object instanceof AutoListMorphismMap) {
+        	AutoListMorphismMap m = (AutoListMorphismMap)object;
             if (getFactorCount() != m.getFactorCount()) {
                 return false;
             }
@@ -335,8 +295,8 @@ public final class ListMorphismMap implements MorphismMap {
         if (this == map) {
             return true;
         }
-        else if (map instanceof ListMorphismMap) {
-            ListMorphismMap lm = (ListMorphismMap)map;
+        else if (map instanceof AutoListMorphismMap) {
+        	AutoListMorphismMap lm = (AutoListMorphismMap)map;
             if (getFactorCount() != lm.getFactorCount()) {
                 return false;
             }
@@ -359,7 +319,7 @@ public final class ListMorphismMap implements MorphismMap {
 
     
     public LinkedList<Denotator> getDenotatorDependencies(LinkedList<Denotator> depList) {
-        for (Denotator d : list) {
+        for (Denotator d : this.getFactors()) {
             depList = d.getDependencies(depList);
         }
         return depList;
@@ -378,7 +338,7 @@ public final class ListMorphismMap implements MorphismMap {
                 if (newDenotator == null) {
                     return false;
                 }
-                setFactor(i, newDenotator);
+                replaceFactor(d, newDenotator);
             }
             else {
                 return d.resolveReferences(dict, history);
@@ -390,7 +350,8 @@ public final class ListMorphismMap implements MorphismMap {
     
     public String toString() {
         StringBuilder buf = new StringBuilder();
-        buf.append("ListMorphismMap[");
+        buf.append("AutoListMorphismMap[");
+        List<Denotator> list = this.getFactors();
         if (list.size() > 0) {
            buf.append(list.get(0)); 
            for (int i = 1; i < list.size(); i++) {
@@ -402,23 +363,16 @@ public final class ListMorphismMap implements MorphismMap {
         return buf.toString();
     }
 
-    
+
     /**
      * Returns a hash code of this list morphism map.
      */
     public int hashCode() {
         int hash = 7;
-        for (Denotator d : list) {
+        for (Denotator d : this.getFactors()) {
             hash = 37*hash + d.hashCode();
         }
         return hash;
     }
-
-
-    protected ListMorphismMap(ArrayList<Denotator> list) {
-        this.list = list;
-    }
     
-    
-    private ArrayList<Denotator> list;
 }

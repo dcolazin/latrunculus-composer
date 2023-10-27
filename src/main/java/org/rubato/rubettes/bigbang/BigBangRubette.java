@@ -6,7 +6,7 @@ import org.rubato.base.AbstractRubette;
 import org.rubato.base.RubatoConstants;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.view.model.BigBangSwingView;

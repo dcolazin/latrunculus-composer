@@ -3,7 +3,7 @@ package org.rubato.rubettes.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 
 public class ContrapuntalVoice {
 	

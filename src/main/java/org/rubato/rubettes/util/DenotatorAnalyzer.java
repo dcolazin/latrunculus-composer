@@ -2,8 +2,8 @@ package org.rubato.rubettes.util;
 
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 
 public class DenotatorAnalyzer {
 	

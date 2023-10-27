@@ -17,10 +17,13 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.io.PrintStream;
 import java.util.LinkedList;
@@ -78,7 +81,7 @@ public final class FormReference extends Form {
         out.println("Reference");
     }
 
-    protected LinkedList<Form> getDependencies(LinkedList<Form> list) {
+    public LinkedList<Form> getDependencies(LinkedList<Form> list) {
         throw new UnsupportedOperationException();
     }
     
