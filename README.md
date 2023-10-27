@@ -26,6 +26,10 @@ $ mvn javadoc:javadoc
 * [x] Build with Maven
 * [x] Update to Java 8
 * [ ] Be ready to be able to update to Java 11 when needed (and consider updating)
+* [ ] Separation of the server "core" components and of the client "gui" components
+  * [ ] latrunculus-core (math library)
+  * [ ] latrunculus-server
+  * [ ] latrunculus-swing-client
 * [ ] Move the BigBang rubette to a different jar, as many dependencies are required for this rubette and not for the core composer?
 * [ ] Handle all the dependencies in the pom, without having a separate script to install the libraries
 * [ ] Review the rubette loading
@@ -35,7 +39,6 @@ $ mvn javadoc:javadoc
 * [ ] Linting and improve maintainability
 * [ ] SLF4J
 * [ ] Review i18n
-* [ ] Separation of the server "core" components and of the client "gui" components
 * [ ] Move package org.rubato to org.vetronauta.latrunculus
 * [ ] Initial splash art
 
