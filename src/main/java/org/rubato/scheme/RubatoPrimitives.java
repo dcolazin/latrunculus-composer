@@ -37,6 +37,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
@@ -205,10 +206,10 @@ abstract class RubatoPrimitives {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
                 if (arg instanceof SForm) {
-                    return SBoolean.make(((SForm)arg).getForm().getType() == Form.SIMPLE);
+                    return SBoolean.make(((SForm)arg).getForm().getType() == FormDenotatorTypeEnum.SIMPLE);
                 }
                 else if (arg instanceof SDenotator) {
-                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == Denotator.SIMPLE);
+                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == FormDenotatorTypeEnum.SIMPLE);
                 }
                 else {
                     eval.addError("type-simple?: expected argument of type form or denotator, but got %1", arg);
@@ -228,10 +229,10 @@ abstract class RubatoPrimitives {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
                 if (arg instanceof SForm) {
-                    return SBoolean.make(((SForm)arg).getForm().getType() == Form.LIMIT);
+                    return SBoolean.make(((SForm)arg).getForm().getType() == FormDenotatorTypeEnum.LIMIT);
                 }
                 else if (arg instanceof SDenotator) {
-                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == Denotator.LIMIT);
+                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == FormDenotatorTypeEnum.LIMIT);
                 }
                 else {
                     eval.addError("type-limit?: expected argument of type form or denotator, but got %1", arg);
@@ -251,10 +252,10 @@ abstract class RubatoPrimitives {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
                 if (arg instanceof SForm) {
-                    return SBoolean.make(((SForm)arg).getForm().getType() == Form.COLIMIT);
+                    return SBoolean.make(((SForm)arg).getForm().getType() == FormDenotatorTypeEnum.COLIMIT);
                 }
                 else if (arg instanceof SDenotator) {
-                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == Denotator.COLIMIT);
+                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == FormDenotatorTypeEnum.COLIMIT);
                 }
                 else {
                     eval.addError("type-colimit?: expected argument of type form or denotator, but got %1", arg);
@@ -274,10 +275,10 @@ abstract class RubatoPrimitives {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
                 if (arg instanceof SForm) {
-                    return SBoolean.make(((SForm)arg).getForm().getType() == Form.POWER);
+                    return SBoolean.make(((SForm)arg).getForm().getType() == FormDenotatorTypeEnum.POWER);
                 }
                 else if (arg instanceof SDenotator) {
-                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == Denotator.POWER);
+                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == FormDenotatorTypeEnum.POWER);
                 }
                 else {
                     eval.addError("type-power?: expected argument of type form or denotator, but got %1", arg);
@@ -297,10 +298,10 @@ abstract class RubatoPrimitives {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
                 if (arg instanceof SForm) {
-                    return SBoolean.make(((SForm)arg).getForm().getType() == Form.LIST);
+                    return SBoolean.make(((SForm)arg).getForm().getType() == FormDenotatorTypeEnum.LIST);
                 }
                 else if (arg instanceof SDenotator) {
-                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == Denotator.LIST);
+                    return SBoolean.make(((SDenotator)arg).getDenotator().getType() == FormDenotatorTypeEnum.LIST);
                 }
                 else {
                     eval.addError("type-list?: expected argument of type form or denotator, but got %1", arg);
@@ -593,23 +594,23 @@ abstract class RubatoPrimitives {
                 form = ((SForm)arg2).getForm();
                 Denotator d = null;
                 switch (form.getType()) {
-                case Form.SIMPLE: {
+                case SIMPLE: {
                     d = makeSimple(eval, name, form, arg3);
                     break;
                 }
-                case Form.LIMIT: {
+                case LIMIT: {
                     d = makeLimit(eval, name, form, arg3);
                     break;
                 }
-                case Form.COLIMIT: {
+                case COLIMIT: {
                     d = makeColimit(eval, name, form, arg3);
                     break;
                 }
-                case Form.POWER: {
+                case POWER: {
                     d = makePowerList(eval, name, form, arg3);
                     break;
                 }
-                case Form.LIST: {
+                case LIST: {
                     d = makePowerList(eval, name, form, arg3);
                     break;
                 }
@@ -665,20 +666,20 @@ abstract class RubatoPrimitives {
         return ListPrimitives.reverse(res, NULL);
     }    
     
-    protected static Symbol type_of(int type) {
-        if (type == Yoneda.SIMPLE) {
+    protected static Symbol type_of(FormDenotatorTypeEnum type) {
+        if (type == FormDenotatorTypeEnum.SIMPLE) {
             return simple_sym;
         }
-        else if (type == Yoneda.LIMIT) {
+        else if (type == FormDenotatorTypeEnum.LIMIT) {
             return limit_sym;
         }
-        else if (type == Yoneda.COLIMIT) {
+        else if (type == FormDenotatorTypeEnum.COLIMIT) {
             return colimit_sym;
         }
-        else if (type == Yoneda.POWER) {
+        else if (type == FormDenotatorTypeEnum.POWER) {
             return power_sym;
         }
-        else if (type == Yoneda.LIST) {
+        else if (type == FormDenotatorTypeEnum.LIST) {
             return list_sym;
         }
         else {

@@ -85,7 +85,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * Returns the type of the denotator.
      * @return type as an integer
      */
-    public abstract int getType();
+    public abstract FormDenotatorTypeEnum getType();
 
     /**
      * Sets both coordinates of the denotator.

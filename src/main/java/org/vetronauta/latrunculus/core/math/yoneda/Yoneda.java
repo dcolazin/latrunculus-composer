@@ -33,12 +33,5 @@ import java.io.Serializable;
  * @author Stefan Göller
  */
 public interface Yoneda extends DeepCopyable<Yoneda>, Serializable {
-
-    //TODO enum
-    int SIMPLE  = 0;
-    int LIMIT   = 1;
-    int COLIMIT = 2;
-    int POWER   = 3;
-    int LIST    = 4;
-
+    
 }

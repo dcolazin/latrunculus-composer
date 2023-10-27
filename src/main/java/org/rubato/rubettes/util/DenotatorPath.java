@@ -13,6 +13,7 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -65,9 +66,9 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 		this.elementPathIndex = -1;
 		for (int i = 0; i < this.indices.size(); i++) {
 			int currentIndex = this.indices.get(i);
-			if (currentForm.getType() == Yoneda.POWER || currentForm.getType() == Yoneda.LIST) {
+			if (currentForm.getType() == FormDenotatorTypeEnum.POWER || currentForm.getType() == FormDenotatorTypeEnum.LIST) {
 				currentForm = currentForm.getForm(0);
-			} else if (currentForm.getType() != Yoneda.SIMPLE) {
+			} else if (currentForm.getType() != FormDenotatorTypeEnum.SIMPLE) {
 				if (currentForm.getFormCount() <= currentIndex) {
 					//hahaha
 					try { throw new RubatoException("Illegal DenotatorPath: " + this.baseForm.getNameString() + ": " + this); }
@@ -209,7 +210,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 		}
 		for (int i = 0; i < this.indices.size(); i++) {
 			Form currentParentForm = this.subPath(0, i+1).getParentForm();
-			if (currentParentForm.getType() != Yoneda.POWER && currentParentForm.getType() != Yoneda.LIST) {
+			if (currentParentForm.getType() != FormDenotatorTypeEnum.POWER && currentParentForm.getType() != FormDenotatorTypeEnum.LIST) {
 				if (this.indices.get(i) != path.indices.get(i)) {
 					return false;
 				}
@@ -258,8 +259,8 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 	 * @return the path of the childIndex-th child of this path, regardless wether it exists or not
 	 */
 	public DenotatorPath getChildPath(int childIndex) {
-		if (this.endForm.getFormCount() > childIndex || this.endForm.getType() == Yoneda.POWER || this.endForm.getType() == Yoneda.LIST
-				|| (this.endForm.getType() == Yoneda.SIMPLE && this.getSubModuleOrRing(childIndex) != null)) {
+		if (this.endForm.getFormCount() > childIndex || this.endForm.getType() == FormDenotatorTypeEnum.POWER || this.endForm.getType() == FormDenotatorTypeEnum.LIST
+				|| (this.endForm.getType() == FormDenotatorTypeEnum.SIMPLE && this.getSubModuleOrRing(childIndex) != null)) {
 			DenotatorPath childPath = this.clone();
 			childPath.add(childIndex);
 			return childPath;
@@ -321,7 +322,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 		DenotatorPath currentPath = this.getParentPath();
 		List<DenotatorPath> parentColimitPaths = new ArrayList<>();
 		while (currentPath != null) {
-			if (currentPath.getEndForm().getType() == Yoneda.COLIMIT) {
+			if (currentPath.getEndForm().getType() == FormDenotatorTypeEnum.COLIMIT) {
 				parentColimitPaths.add(currentPath);
 			}
 			currentPath = currentPath.getParentPath();
@@ -336,7 +337,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 	public DenotatorPath getTopPath() {
 		DenotatorPath currentPath = this;
 		Form currentParentForm = currentPath.getParentForm();
-		while(currentParentForm != null && currentParentForm.getType() != Yoneda.POWER && currentParentForm.getType() != Yoneda.LIST) {
+		while(currentParentForm != null && currentParentForm.getType() != FormDenotatorTypeEnum.POWER && currentParentForm.getType() != FormDenotatorTypeEnum.LIST) {
 			currentPath = currentPath.getParentPath();
 			currentParentForm = currentPath.getParentForm();
 		}
@@ -381,7 +382,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 		if (this.size() >= path.size()) {
 			if (this.subPath(0, path.size()).equals(path)) {
 				for (int i = path.size()+1; i < this.size(); i++) {
-					if (this.subPath(0, i).getEndForm().getType() == Yoneda.POWER) {
+					if (this.subPath(0, i).getEndForm().getType() == FormDenotatorTypeEnum.POWER) {
 						return false;
 					}
 				}
@@ -451,7 +452,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 	}
 		
 	private Module getSubModuleOrRing(int index) {
-		if (this.endForm.getType() == Yoneda.SIMPLE && this.module == null) {
+		if (this.endForm.getType() == FormDenotatorTypeEnum.SIMPLE && this.module == null) {
 			return this.getSubModule(((SimpleForm)this.endForm).getModule(), index); 
 		} else if (this.module != null) {
 			return this.getSubModule(this.module, index);
@@ -483,7 +484,7 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 			DenotatorPath currentPath = pathQueue.poll();
 			Form currentForm = currentPath.getEndForm();
 			//TODO: LIST TOO, change all names!!!
-			if (currentForm.getType() == Yoneda.POWER || currentForm.getType() == Yoneda.LIST) {
+			if (currentForm.getType() == FormDenotatorTypeEnum.POWER || currentForm.getType() == FormDenotatorTypeEnum.LIST) {
 				if (foundCount >= powersetIndex) {
 					return currentPath;
 				}

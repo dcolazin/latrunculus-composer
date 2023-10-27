@@ -63,7 +63,7 @@ public class DefaultYonedaMorphismXmlWriter implements LatrunculusXmlWriter<Yone
     }
 
     private void write(ProperIdentityMorphism morphism, XMLWriter writer) {
-        writer.openBlockWithType(MORPHISM, morphism.getElementTypeName(), FORMTYPE_ATTR, Form.typeToString(morphism.getType()).toLowerCase());
+        writer.openBlockWithType(MORPHISM, morphism.getElementTypeName(), FORMTYPE_ATTR, morphism.getType());
         definitionWriter.toXML(morphism.getDiagram(), writer);
         writer.closeBlock();
     }

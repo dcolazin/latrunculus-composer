@@ -27,6 +27,7 @@ import java.util.Map.Entry;
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.IndexMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.ListMorphismMap;
@@ -42,7 +43,7 @@ public final class Linker {
         // reset connector first (because of circular forms)
         form.setConnector(null);
 
-        if (form.getType() != Yoneda.SIMPLE) {
+        if (form.getType() != FormDenotatorTypeEnum.SIMPLE) {
             for (int i = 0; i < list.size(); i++) {
                 NameEntry name = (NameEntry)list.get(i);
                 Form ff = symtab.forms().get(name);
@@ -62,7 +63,7 @@ public final class Linker {
 
         // replace all morphism maps that contain forward declared denotators
         switch(form.getType()) {
-            case Yoneda.COLIMIT: {
+            case COLIMIT: {
                 IndexMorphismMap map = (IndexMorphismMap)deno.getCoordinate().getMap();
                 Denotator d = map.getFactor();
                 NameEntry name = (NameEntry)d.getConnector();
@@ -77,9 +78,9 @@ public final class Linker {
                 }
                 break;
             }
-            case Yoneda.LIMIT: 
-            case Yoneda.POWER: 
-            case Yoneda.LIST: {
+            case LIMIT:
+            case POWER:
+            case LIST: {
                 ListMorphismMap map = (ListMorphismMap)deno.getCoordinate().getMap();
                 for (int i = 0; i < map.getFactorCount(); i++) {
                     Denotator d = map.getFactor(i);

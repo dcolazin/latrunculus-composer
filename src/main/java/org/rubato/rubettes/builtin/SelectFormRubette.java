@@ -37,6 +37,7 @@ import org.rubato.logeo.Select;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -111,7 +112,7 @@ public class SelectFormRubette extends AbstractRubette {
         if (properties == null) {
             properties = new JPanel();            
             properties.setLayout(new BorderLayout());
-            selectForm = new JSelectForm(Repository.systemRepository(), Form.LIST, Form.POWER);
+            selectForm = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.LIST, FormDenotatorTypeEnum.POWER);
             selectForm.setForm(outputForm);
             properties.add(selectForm, BorderLayout.CENTER);
         }

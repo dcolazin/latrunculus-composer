@@ -7,6 +7,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
@@ -139,20 +140,20 @@ public class FormValueFinder {
 	private void findValues(DenotatorPath currentPath, boolean searchThroughPowersets, int currentSearchDepth, DenotatorObject currentObject) {
 		if (currentSearchDepth < this.MAX_SEARCH_DEPTH) {
 			Form currentForm = currentPath.getEndForm();
-			if (currentPath.size() == 0 && currentForm.getType() != Form.POWER && currentForm.getType() != Form.LIST) {
+			if (currentPath.size() == 0 && currentForm.getType() != FormDenotatorTypeEnum.POWER && currentForm.getType() != FormDenotatorTypeEnum.LIST) {
 				this.addObject(currentObject);
 			}
-			if (currentForm.getType() == Form.SIMPLE) {
+			if (currentForm.getType() == FormDenotatorTypeEnum.SIMPLE) {
 				this.addValueNames(currentForm.getNameString(), ((SimpleForm)currentForm).getModule(), currentPath, "", currentObject);
-			} else if (currentForm.getType() == Form.LIMIT || currentForm.getType() == Form.COLIMIT) {
-				if (currentForm.getType() == Form.COLIMIT) {
+			} else if (currentForm.getType() == FormDenotatorTypeEnum.LIMIT || currentForm.getType() == FormDenotatorTypeEnum.COLIMIT) {
+				if (currentForm.getType() == FormDenotatorTypeEnum.COLIMIT) {
 					this.formContainsColimits = true;
 					currentObject.addColimit((ColimitForm)currentForm, currentPath);
 				}
 				for (int i = 0; i < currentForm.getForms().size(); i++) {
 					this.findValues(currentPath.getChildPath(i), searchThroughPowersets, currentSearchDepth+1, currentObject);
 				}
-			} else if (searchThroughPowersets && (currentForm.getType() == Form.POWER || currentForm.getType() == Form.LIST)) {
+			} else if (searchThroughPowersets && (currentForm.getType() == FormDenotatorTypeEnum.POWER || currentForm.getType() == FormDenotatorTypeEnum.LIST)) {
 				Form childForm;
 				if (currentForm instanceof PowerForm) {
 					childForm = ((PowerForm)currentForm).getForm();

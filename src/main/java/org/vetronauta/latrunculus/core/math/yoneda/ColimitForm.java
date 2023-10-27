@@ -55,7 +55,7 @@ public final class ColimitForm extends Form {
      * Builds a colimit identity form using a list of forms.
      */
     public ColimitForm(NameDenotator name, List<Form> forms) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), COLIMIT));
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.COLIMIT));
     }
 
 
@@ -63,7 +63,7 @@ public final class ColimitForm extends Form {
      * Builds a colimit identity form using a list of forms.
      */
     public ColimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), COLIMIT));
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.COLIMIT));
         setLabels(labels);
     }
 
@@ -72,15 +72,15 @@ public final class ColimitForm extends Form {
      * Builds a colimit identity form using a diagram.
      */
     public ColimitForm(NameDenotator name, Diagram diagram) {
-        super(name, new ProperIdentityMorphism(diagram, COLIMIT));
+        super(name, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.COLIMIT));
     }
 
     
     /**
      * Returns the type of the form.
      */
-    public int getType() {
-        return COLIMIT;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.COLIMIT;
     }
 
 
@@ -111,7 +111,7 @@ public final class ColimitForm extends Form {
      * Compares for full equality in the case of non-registered forms. 
      */
     public boolean fullEquals(ColimitForm f) {
-        return fullEquals(f, new IdentityHashMap<Object,Object>());
+        return fullEquals(f, new IdentityHashMap<>());
     }
 
 
@@ -170,7 +170,7 @@ public final class ColimitForm extends Form {
             reverseLabelMap = null;
         }
         else {
-            labelMap = new HashMap<String,Integer>();
+            labelMap = new HashMap<>();
             reverseLabelMap = new String[labels.size()];
             int i = 0;
             for (String label : labels.subList(0, getFormCount())) {

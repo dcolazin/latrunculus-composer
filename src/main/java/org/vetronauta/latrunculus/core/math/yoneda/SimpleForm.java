@@ -68,8 +68,8 @@ public final class SimpleForm extends Form {
     /**
      * Returns the type of the form.
      */
-    public int getType() {
-        return SIMPLE;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.SIMPLE;
     }
     
 

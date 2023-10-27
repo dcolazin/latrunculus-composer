@@ -36,6 +36,7 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JSelectForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 class Select2DDialog
         extends JPanel
@@ -79,7 +80,7 @@ class Select2DDialog
     
     public void setForm(Form form) {
         if (this.form != form &&
-            (form.getType() == Form.POWER || form.getType() == Form.LIST)) {
+            (form.getType() == FormDenotatorTypeEnum.POWER || form.getType() == FormDenotatorTypeEnum.LIST)) {
             this.form = form;
             selectForm.setForm(form);
             removeAllSelections();
@@ -126,7 +127,7 @@ class Select2DDialog
         
         Box topBox = Box.createHorizontalBox();
         topBox.add(Box.createHorizontalGlue());
-        selectForm = new JSelectForm(rep, Form.LIST, Form.POWER);
+        selectForm = new JSelectForm(rep, FormDenotatorTypeEnum.LIST, FormDenotatorTypeEnum.POWER);
         selectForm.setBorder(makeTitledBorder(SELECTFORM_TITLE));
         selectForm.addActionListener(this);
         topBox.add(selectForm);

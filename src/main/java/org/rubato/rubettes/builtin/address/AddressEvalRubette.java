@@ -63,6 +63,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
@@ -700,7 +701,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         else if (type == EVAL_TYPE_LIST) {
             Box box = Box.createVerticalBox();
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), Yoneda.POWER, Yoneda.LIST);
+            outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
             outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
             outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
             if (outputForm != null) {
@@ -768,7 +769,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             typePanel.add(listButton);
             box.add(typePanel);            
             
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), Yoneda.POWER, Yoneda.LIST);
+            outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
             outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
             outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
             if (outputForm != null) {

@@ -47,6 +47,7 @@ import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -84,7 +85,7 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
 		this.setOutCount(1);
 		this.globalStartDegree = 0.0;
 		this.globalEndDegree = 1.0;
-		this.selectInputForm = new JSelectForm(Repository.systemRepository(), Form.POWER);
+		this.selectInputForm = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER);
 		this.dimensionsTable = new JAlterationDimensionsTable(this);
 		this.statusline = new JStatusline();
 		this.alterator = new Alterator(this.dimensionsTable);

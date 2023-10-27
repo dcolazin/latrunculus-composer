@@ -37,6 +37,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
@@ -69,19 +70,19 @@ public class ConstructorRubette extends AbstractRubette {
             return;            
         }
         switch (form.getType()) {
-            case Form.LIMIT: {
+            case LIMIT: {
                 createLimit();
                 break;
             }
-            case Form.COLIMIT: {
+            case COLIMIT: {
                 createColimit();
                 break;
             }
-            case Form.LIST: {
+            case LIST: {
                 createList();
                 break;
             }
-            case Form.POWER: {
+            case POWER: {
                 createPower();
                 break;
             }
@@ -232,11 +233,11 @@ public class ConstructorRubette extends AbstractRubette {
         if (properties == null) {
             properties = new JPanel();            
             properties.setLayout(new BorderLayout());
-            ArrayList<Integer> types = new ArrayList<Integer>();
-            types.add(Form.LIMIT);
-            types.add(Form.COLIMIT);
-            types.add(Form.POWER);
-            types.add(Form.LIST);
+            ArrayList<FormDenotatorTypeEnum> types = new ArrayList<>();
+            types.add(FormDenotatorTypeEnum.LIMIT);
+            types.add(FormDenotatorTypeEnum.COLIMIT);
+            types.add(FormDenotatorTypeEnum.POWER);
+            types.add(FormDenotatorTypeEnum.LIST);
             formSelector = new JSelectForm(Repository.systemRepository(), types);
             if (form != null) {
                 formSelector.setForm(form);
@@ -289,8 +290,8 @@ public class ConstructorRubette extends AbstractRubette {
             this.form = form;
             formName = form.getNameString()+": "+form.getTypeString(); 
             switch (form.getType()) {
-                case Form.LIST:
-                case Form.POWER: {
+                case LIST:
+                case POWER: {
                     int formCount = 8;
                     Form factorForm = form.getForm(0);
                     setInCount(formCount);
@@ -300,8 +301,8 @@ public class ConstructorRubette extends AbstractRubette {
                     }
                     break;
                 }
-                case Form.LIMIT:
-                case Form.COLIMIT: {
+                case LIMIT:
+                case COLIMIT: {
                     int formCount = form.getFormCount();
                     setInCount(formCount);
                     inTip = new String[formCount];

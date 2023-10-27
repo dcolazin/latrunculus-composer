@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 
 import java.util.IdentityHashMap;
@@ -91,8 +92,8 @@ public final class RepresentableIdentityMorphism<A extends ModuleElement<A,R>, R
         return (lowValue != null) && (highValue != null);
     }
 
-    public int getType() {
-        return SIMPLE;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.SIMPLE;
     }
 
     public boolean isRepresentable() {

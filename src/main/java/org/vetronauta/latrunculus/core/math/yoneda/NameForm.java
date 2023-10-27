@@ -61,8 +61,8 @@ public final class NameForm extends ListForm {
     /**
      * Returns the type of the form.
      */
-    public int getType() {
-        return LIST;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.LIST;
     }
     
 
@@ -71,7 +71,7 @@ public final class NameForm extends ListForm {
      */
     public YonedaMorphism getIdentifier() {
         if (identifier == null) {
-            identifier = new ProperIdentityMorphism(new FormDiagram(stringForm), LIST);
+            identifier = new ProperIdentityMorphism(new FormDiagram(stringForm), FormDenotatorTypeEnum.LIST);
         }
         return identifier;
     }

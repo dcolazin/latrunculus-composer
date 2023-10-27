@@ -14,6 +14,7 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.ListDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.rubato.rubettes.bigbang.BigBangRubette;
@@ -88,7 +89,7 @@ public class BigBangDenotatorManager {
 	public OperationPathResults setOrAddComposition(Denotator composition) {
 		Denotator convertedComposition = this.objectGenerator.convertDenotatorIfCompatible(composition);
 		if (convertedComposition != null) {
-			if (convertedComposition.getForm().getType() == Form.POWER || convertedComposition.getForm().getType() == Form.LIST) {
+			if (convertedComposition.getForm().getType() == FormDenotatorTypeEnum.POWER || convertedComposition.getForm().getType() == FormDenotatorTypeEnum.LIST) {
 				return this.addComposition(convertedComposition);
 			}
 			this.setComposition(convertedComposition);
@@ -101,7 +102,7 @@ public class BigBangDenotatorManager {
 	//add all elements of the given factordenotator to the present composition
 	private OperationPathResults addComposition(Denotator composition) {
 		Form baseForm = this.objectGenerator.getBaseForm();
-		if (baseForm.getType() == Form.POWER || baseForm.getType() == Form.LIST) {
+		if (baseForm.getType() == FormDenotatorTypeEnum.POWER || baseForm.getType() == FormDenotatorTypeEnum.LIST) {
 			DenotatorPath topPowersetPath = new DenotatorPath(baseForm, new int[]{});
 			this.addObjectsToParent(((FactorDenotator)composition).getFactors(), topPowersetPath);
 			//find new paths since added factors may have several levels

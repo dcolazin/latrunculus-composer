@@ -51,15 +51,15 @@ public class ListForm extends Form {
      * Builds a list identity form.
      */
     public ListForm(NameDenotator name, Form form) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(form), LIST));
+        super(name, new ProperIdentityMorphism(new FormDiagram(form), FormDenotatorTypeEnum.LIST));
     }
     
 
     /**
      * Returns the type of the form.
      */
-    public int getType() {
-        return LIST;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.LIST;
     }
 
 

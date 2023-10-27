@@ -35,6 +35,7 @@ import org.rubato.base.Repository;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JStatusline;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
 
 
@@ -144,19 +145,19 @@ public class JFormDialog
     private void fillFormPanel() {
         formPanel.removeAll();
         JComponent comp = null;
-        if (type == Form.SIMPLE) {
+        if (type == FormDenotatorTypeEnum.SIMPLE) {
             SimpleFormEntry entry = new SimpleFormEntry();
             entry.addActionListener(this);
             formEntry = entry;
             comp = entry;
         }
-        else if (type == Form.LIMIT || type == Form.COLIMIT) {
+        else if (type == FormDenotatorTypeEnum.LIMIT || type == FormDenotatorTypeEnum.COLIMIT) {
             LimitColimitFormEntry entry = new LimitColimitFormEntry(dict, type);
             entry.addActionListener(this);
             formEntry = entry;
             comp = entry;
         }
-        else if (type == Form.LIST || type == Form.POWER) {
+        else if (type == FormDenotatorTypeEnum.LIST || type == FormDenotatorTypeEnum.POWER) {
             ListPowerFormEntry entry = new ListPowerFormEntry(dict, type);            
             entry.addActionListener(this);
             formEntry = entry;
@@ -292,18 +293,18 @@ public class JFormDialog
     
     
     private static class Type {
-        public Type(String s, int t) { typeString = s; type = t; }
+        public Type(String s, FormDenotatorTypeEnum t) { typeString = s; type = t; }
         public String toString() { return typeString; }
         String typeString;
-        int type;
+        FormDenotatorTypeEnum type;
     }
     
 
-    private static final Type simpleType  = new Type("Simple", Form.SIMPLE);
-    private static final Type limitType   = new Type("Limit", Form.LIMIT);
-    private static final Type colimitType = new Type("Colimit", Form.COLIMIT);
-    private static final Type listType    = new Type("List", Form.LIST);
-    private static final Type powerType   = new Type("Power", Form.POWER);
+    private static final Type simpleType  = new Type("Simple", FormDenotatorTypeEnum.SIMPLE);
+    private static final Type limitType   = new Type("Limit", FormDenotatorTypeEnum.LIMIT);
+    private static final Type colimitType = new Type("Colimit", FormDenotatorTypeEnum.COLIMIT);
+    private static final Type listType    = new Type("List", FormDenotatorTypeEnum.LIST);
+    private static final Type powerType   = new Type("Power", FormDenotatorTypeEnum.POWER);
     
     private JTextField  nameField;
     private JStatusline statusline;
@@ -317,7 +318,7 @@ public class JFormDialog
     private Color nameFieldBg;
     private static final Color ERROR_BG_COLOR = Utilities.ERROR_BG_COLOR;
     
-    private int type = Form.SIMPLE;
+    private FormDenotatorTypeEnum type = FormDenotatorTypeEnum.SIMPLE;
     
     private FormReference formRef = null;
     private Form resultForm = null;

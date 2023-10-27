@@ -78,20 +78,20 @@ public class Apply {
         }
 
         switch (d.getForm().getType()) {
-            case Form.LIST: {
+            case LIST: {
                 applyList((ListDenotator)d, p, f);
                 break;
             }
                 
-            case Form.POWER: {
+            case POWER: {
                 applyPower((PowerDenotator)d, p, f);
                 break;
             }
-            case Form.LIMIT: {
+            case LIMIT: {
                 applyLimit((LimitDenotator)d, p, f);
                 break;
             }
-            case Form.COLIMIT: {
+            case COLIMIT: {
                 applyColimit((ColimitDenotator)d, p, f);
                 break;
             }

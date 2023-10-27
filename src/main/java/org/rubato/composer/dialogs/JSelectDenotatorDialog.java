@@ -34,6 +34,7 @@ import javax.swing.event.ListSelectionListener;
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 public final class JSelectDenotatorDialog extends JDialog {
 
@@ -47,11 +48,11 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
     
     
-    public static Denotator showDialog(Component comp, RubatoDictionary dict, int type) {
+    public static Denotator showDialog(Component comp, RubatoDictionary dict, FormDenotatorTypeEnum type) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectDenotatorDialog dialog = new JSelectDenotatorDialog(frame, comp, type);
         Collection<Denotator> allDenos = dict.getDenotators();
-        ArrayList<Denotator> denoList = new ArrayList<Denotator>();
+        ArrayList<Denotator> denoList = new ArrayList<>();
         for (Denotator d : allDenos) {
             if (d.getType() == type) {
                 denoList.add(d);
@@ -68,7 +69,7 @@ public final class JSelectDenotatorDialog extends JDialog {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectDenotatorDialog dialog = new JSelectDenotatorDialog(frame, comp, form);
         Collection<Denotator> allDenos = dict.getDenotators();
-        ArrayList<Denotator> denoList = new ArrayList<Denotator>();
+        ArrayList<Denotator> denoList = new ArrayList<>();
         for (Denotator d : allDenos) {
             if (d.hasForm(form)) {
                 denoList.add(d);
@@ -94,7 +95,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
     
     
-    private JSelectDenotatorDialog(Frame frame, Component comp, int type) {
+    private JSelectDenotatorDialog(Frame frame, Component comp, FormDenotatorTypeEnum type) {
         super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
         createContents();
         infoLabel.setText(Messages.getString("JSelectDenotatorDialog.type")+": "+type);  
@@ -129,12 +130,10 @@ public final class JSelectDenotatorDialog extends JDialog {
                 super.mouseClicked(e);
             }
         });
-        denotatorList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    DenotatorInfo info = (DenotatorInfo)denotatorList.getSelectedValue();
-                    setValue(info.denotator);
-                }
+        denotatorList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                DenotatorInfo info = (DenotatorInfo)denotatorList.getSelectedValue();
+                setValue(info.denotator);
             }
         });
         JScrollPane scrollPane = new JScrollPane(denotatorList);
@@ -144,19 +143,11 @@ public final class JSelectDenotatorDialog extends JDialog {
         buttonPanel.setLayout(new GridLayout(1, 2, 5, 5));
         
         cancelButton = new JButton(Messages.getString("JSelectDenotatorDialog.cancel")); 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cancel();
-            }
-        });
+        cancelButton.addActionListener(e -> cancel());
         buttonPanel.add(cancelButton);
         
         okButton = new JButton(Messages.getString("JSelectDenotatorDialog.ok")); 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ok();
-            } 
-        });
+        okButton.addActionListener(e -> ok());
         buttonPanel.add(okButton);
         
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -179,7 +170,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
     
     
-    protected void setValue(Denotator d) {
+    private void setValue(Denotator d) {
         value = d;
     }
     
@@ -189,19 +180,19 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
     
     
-    protected void cancel() {
+    private void cancel() {
         setValue(null);
         setVisible(false);
     }
     
     
-    protected void ok() {
+    private void ok() {
         setVisible(false);        
     }
     
     
     private JLabel    infoLabel;
-    protected JList   denotatorList;
+    private JList   denotatorList;
     private JButton   cancelButton;
     private JButton   okButton;
     private Denotator value;

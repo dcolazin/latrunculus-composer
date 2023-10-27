@@ -35,6 +35,7 @@ import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
@@ -241,7 +242,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
             this.properties = new JPanel();            
             this.properties.setLayout(new BorderLayout());
 			
-            this.selectForm = new JSelectForm(Repository.systemRepository(), Form.POWER);
+            this.selectForm = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER);
             this.selectForm.setBorder(Utilities.makeTitledBorder("Input form"));
             this.selectForm.addActionListener(this);
             this.properties.add(this.selectForm, BorderLayout.NORTH);

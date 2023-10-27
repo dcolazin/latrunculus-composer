@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
@@ -80,7 +81,7 @@ public class ModuleMorphismFunction extends AbstractFunction {
         if (denotators.length != 1) {
             throw new RubatoException("Number of arguments must be "+getArity());
         }
-        else if (denotators[0].getType() != Denotator.SIMPLE) {
+        else if (denotators[0].getType() != FormDenotatorTypeEnum.SIMPLE) {
             throw new RubatoException("Argument denotator must be of type simple");
         }
         else {

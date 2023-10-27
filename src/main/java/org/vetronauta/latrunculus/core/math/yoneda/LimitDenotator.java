@@ -81,7 +81,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
         catch (RubatoException e) {
             throw e;
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIMIT), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIMIT), map));
     }
     
 
@@ -120,7 +120,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
         catch (RubatoException e) {
             throw e;
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIMIT), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIMIT), map));
     }
 
     
@@ -130,8 +130,8 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
      * @return type as an integer
      */
     @Override
-    public int getType() {
-        return LIMIT;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.LIMIT;
     }
     
     
@@ -617,7 +617,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+Form.typeToString(getForm().getType()));
+        out.print("; Type: "+getForm().getType());
         out.println("; Address: "+getAddress());
 
         indent += 4;
@@ -649,7 +649,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
                                               LimitForm form, List<Denotator> denoList) {
         ListMorphismMap map = new ListMorphismMap(denoList);
         FormDiagram diagram = form.getFormDiagram();
-        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIMIT), map);
+        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIMIT), map);
         LimitDenotator res = new LimitDenotator(name, form, coordinate, coordinate);
         assert(res._is_valid());
         return res;

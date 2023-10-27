@@ -79,19 +79,19 @@ public final class Map {
         }
 
         switch (d.getForm().getType()) {
-            case Form.LIST: {
+            case LIST: {
                 return mapList((ListDenotator)d, p, f);
             }
-            case Form.POWER: {
+            case POWER: {
                 return mapPower((PowerDenotator)d, p, f);
             }
-            case Form.LIMIT: {
+            case LIMIT: {
                 return mapLimit((LimitDenotator)d, p, f);
             }
-            case Form.COLIMIT: {
+            case COLIMIT: {
                 return mapColimit((ColimitDenotator)d, p, f);
             }
-            case Form.SIMPLE: {
+            case SIMPLE: {
                 return d;
             }
             default: {

@@ -33,6 +33,7 @@ import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.rubato.composer.dialogs.denotators.JDenotatorDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 
 public class JSelectDenotator extends JPanel implements ActionListener {
@@ -43,7 +44,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     }
 
     
-    public JSelectDenotator(RubatoDictionary dict, int type) {
+    public JSelectDenotator(RubatoDictionary dict, FormDenotatorTypeEnum type) {
         this.type = type;
         this.dict = dict;
         createLayout();
@@ -102,8 +103,8 @@ public class JSelectDenotator extends JPanel implements ActionListener {
         if (form != null) {
             buf.append(form.getNameString());
         }
-        else if (type >= 0) {
-            buf.append(Form.typeToString(type));
+        else if (type != null) {
+            buf.append(type);
         }
         setBorder(makeTitledBorder(buf.toString()));
         
@@ -146,7 +147,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     
     protected void selectDenotator() {
         Denotator res = null;
-        if (type >= 0) {
+        if (type != null) {
             res = JSelectDenotatorDialog.showDialog(this, dict, type);
         }
         else if (form != null) {
@@ -227,7 +228,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     private JButton     selectButton;
     
     private Form      form      = null;
-    private int       type      = -1;
+    private FormDenotatorTypeEnum type      = null;
     private String    label     = null;
     private Denotator denotator = null;
     

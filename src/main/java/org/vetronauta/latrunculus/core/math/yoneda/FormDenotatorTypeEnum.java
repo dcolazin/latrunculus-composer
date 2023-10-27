@@ -19,12 +19,24 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author vetronauta
  */
 public enum FormDenotatorTypeEnum {
 
-    SIMPLE, LIMIT, COLIMIT, LIST, POWER;
+    SIMPLE, LIMIT, COLIMIT, POWER, LIST;
+
+    public static FormDenotatorTypeEnum of(String s) {
+        for (FormDenotatorTypeEnum fd : FormDenotatorTypeEnum.values()) {
+            if (StringUtils.equalsIgnoreCase(s, fd.name())) {
+                return fd;
+            }
+        }
+        return null;
+    }
 
     public static Class<? extends Denotator> denotatorClassOf(String type) {
         if (type == null) {

@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.rubato.rubettes.util.DenotatorPath;
 
@@ -22,7 +23,7 @@ public class ObjectPathFinder {
 	public Set<DenotatorPath> findPaths(Denotator currentDenotator) {
 		DenotatorPath topPath = new DenotatorPath(currentDenotator.getForm());
 		this.addObjectPathsToNewPaths(currentDenotator, topPath);
-		if (currentDenotator.getForm().getType() != Denotator.POWER) {
+		if (currentDenotator.getForm().getType() != FormDenotatorTypeEnum.POWER) {
 			this.foundObjectPaths.add(topPath);
 		}
 		return this.foundObjectPaths;
@@ -34,8 +35,8 @@ public class ObjectPathFinder {
 	
 	//recursive search method
 	private void addObjectPathsToNewPaths(Denotator currentDenotator, DenotatorPath currentPath) {
-		int denotatorType = currentDenotator.getType();
-		if (currentDenotator.getType() == Denotator.POWER || currentDenotator.getType() == Denotator.LIST) {
+		FormDenotatorTypeEnum denotatorType = currentDenotator.getType();
+		if (currentDenotator.getType() == FormDenotatorTypeEnum.POWER || currentDenotator.getType() == FormDenotatorTypeEnum.LIST) {
 			this.powersetOrListFound = true;
 			FactorDenotator currentFactorDenotator = (FactorDenotator)currentDenotator;
 			for (int i = 0; i < currentFactorDenotator.getFactorCount(); i++) {
@@ -43,13 +44,13 @@ public class ObjectPathFinder {
 				this.foundObjectPaths.add(currentChildPath);
 				this.addObjectPathsToNewPaths(currentFactorDenotator.getFactor(i), currentChildPath);
 			}
-		} else if (denotatorType == Denotator.LIMIT) {
+		} else if (denotatorType == FormDenotatorTypeEnum.LIMIT) {
 			LimitDenotator currentLimit = (LimitDenotator)currentDenotator;
 			for (int i = 0; i < currentLimit.getFactorCount(); i++) {
 				Denotator currentChild = currentLimit.getFactor(i);
 				this.addObjectPathsToNewPaths(currentChild, currentPath.getChildPath(i));
 			}
-		} else if (denotatorType == Denotator.COLIMIT) {
+		} else if (denotatorType == FormDenotatorTypeEnum.COLIMIT) {
 			ColimitDenotator currentColimit = (ColimitDenotator)currentDenotator;
 			Denotator onlyChild = currentColimit.getFactor();
 			int childIndex = currentColimit.getIndex();

@@ -47,7 +47,7 @@ public final class DenotatorReference extends Denotator {
     
     
     @Override
-    public int getType() {
+    public FormDenotatorTypeEnum getType() {
         throw new Error("Fatal error: DenotatorReference.getType should never be called.");
     }
     

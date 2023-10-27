@@ -27,6 +27,7 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
 public class BrowseView 
@@ -96,7 +97,7 @@ public class BrowseView
 	public void valueChanged(int level, Denotator d) {
 		for (int i = level+1; i <= maxLevel; i++)
 			listViews[i] = new ListView();
-		if (d.getForm().getType() != Form.SIMPLE) {
+		if (d.getForm().getType() != FormDenotatorTypeEnum.SIMPLE) {
 			Denotator[] denos = makeDenoList(d);
 			maxLevel = level+1;
 			listViews[maxLevel] = new DenoListView(d, denos, maxLevel);
@@ -151,18 +152,18 @@ public class BrowseView
 		Form form = d.getForm();
 		Denotator[] denos = null;
 		switch (form.getType()) {
-			case Form.LIMIT: {
+			case LIMIT: {
 				denos = new Denotator[((FactorDenotator)d).getFactorCount()];
 				((FactorDenotator)d).getFactors().toArray(denos);
 				break;
 			}
-			case Form.COLIMIT: {
+			case COLIMIT: {
 				denos = new Denotator[((FactorDenotator)d).getFactorCount()];
 				((FactorDenotator)d).getFactors().toArray(denos);
 				break;
 			}
-			case Form.POWER: 
-			case Form.LIST: {
+			case POWER:
+			case LIST: {
 				denos = new Denotator[((FactorDenotator)d).getFactorCount()];
 				((FactorDenotator)d).getFactors().toArray(denos);
 				break;

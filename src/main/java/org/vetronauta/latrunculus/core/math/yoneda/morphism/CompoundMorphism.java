@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 
 import java.util.IdentityHashMap;
@@ -94,12 +95,12 @@ public final class CompoundMorphism extends YonedaMorphism {
     }
     
     
-    public int getDomainType() {
+    public FormDenotatorTypeEnum getDomainType() {
         return domain.getType();
     }
     
     
-    public int getCodomainType() {
+    public FormDenotatorTypeEnum getCodomainType() {
         return codomain.getType();
     }
     

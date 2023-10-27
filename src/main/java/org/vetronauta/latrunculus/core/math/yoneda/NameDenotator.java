@@ -347,7 +347,7 @@ public final class NameDenotator extends ListDenotator {
             Denotator deno = makeDenotator(stringForm, nameEntry.getString(i)); 
             map.appendFactor(deno);
         }
-        return new CompoundMorphism(ZRing.nullModule, new ProperIdentityMorphism(diagram, LIST), map);
+        return new CompoundMorphism(ZRing.nullModule, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIST), map);
     }
     
     private        NameEntry   nameEntry  = null;
@@ -357,6 +357,6 @@ public final class NameDenotator extends ListDenotator {
     private static HashMap<String,Denotator> nameTab    = null;    
 
     static {
-        nameTab = new HashMap<String,Denotator>();
+        nameTab = new HashMap<>();
     }
 }

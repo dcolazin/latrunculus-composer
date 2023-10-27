@@ -51,15 +51,15 @@ public final class PowerForm extends Form {
      * Builds a power identity form.
      */
     public PowerForm(NameDenotator name, Form form) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(form), POWER));
+        super(name, new ProperIdentityMorphism(new FormDiagram(form), FormDenotatorTypeEnum.POWER));
     }
 
     
     /**
      * Returns the type of the form.
      */
-    public int getType() {
-        return POWER;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.POWER;
     }
 
 

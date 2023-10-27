@@ -9,6 +9,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
@@ -129,14 +130,14 @@ public class CoolFormRegistrant {
 		this.registerLimitForm("DetunableSpectrum", PITCH_FORM, detunableOvertones);
 		
 		//FM
-		FM_SET_FORM = new FormReference("FMSet", Form.POWER);
+		FM_SET_FORM = new FormReference("FMSet", FormDenotatorTypeEnum.POWER);
 		FM_NODE_FORM = this.registerLimitForm("FMNode", partial, FM_SET_FORM);
 		FM_SET_FORM = this.registerPowerForm("FMSet", FM_NODE_FORM);
 		FM_SET_FORM.resolveReferences(REPOSITORY);
 		
 		//GenericSound
 		LimitForm anchorSound = this.registerLimitForm("AnchorSound", LOUDNESS_FORM, PITCH_FORM, OVERTONE_INDEX_FORM);
-		Form genericSound = new FormReference("GenericSound", Form.LIMIT);
+		Form genericSound = new FormReference("GenericSound", FormDenotatorTypeEnum.LIMIT);
 		ListForm satelliteSounds = this.registerListForm("SatelliteSounds", genericSound);
 		OPERATION_FORM = this.registerZnModuleForm("Operation", 3);
 		genericSound = this.registerLimitForm("GenericSound", anchorSound, satelliteSounds, OPERATION_FORM);
@@ -153,14 +154,14 @@ public class CoolFormRegistrant {
 		genericSound.resolveReferences(REPOSITORY);*/
 		
 		//SoundNote
-		Form modulators = new FormReference("Modulators", Form.POWER);
+		Form modulators = new FormReference("Modulators", FormDenotatorTypeEnum.POWER);
 		//TODO may introduce pan...
 		SOUND_NOTE_FORM = this.registerLimitForm("SoundNote", ONSET_FORM, PITCH_FORM, LOUDNESS_FORM, DURATION_FORM, VOICE_FORM, modulators);
 		modulators = this.registerPowerForm("Modulators", SOUND_NOTE_FORM);
 		modulators.resolveReferences(REPOSITORY);
 		
 		//SoundScore
-		Form soundScore = new FormReference("SoundScore", Form.POWER);
+		Form soundScore = new FormReference("SoundScore", FormDenotatorTypeEnum.POWER);
 		LimitForm soundNode = this.registerLimitForm("SoundNode", SOUND_NOTE_FORM, soundScore);
 		soundScore = this.registerPowerForm("SoundScore", soundNode);
 		soundScore.resolveReferences(REPOSITORY);

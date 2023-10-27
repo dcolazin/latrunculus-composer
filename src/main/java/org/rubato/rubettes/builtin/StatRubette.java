@@ -44,6 +44,7 @@ import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
@@ -290,7 +291,7 @@ public class StatRubette extends AbstractRubette {
     
     public String getInfo() {
         String s = opNames[op];
-        if (form != null && form.getType() == Form.SIMPLE) {
+        if (form != null && form.getType() == FormDenotatorTypeEnum.SIMPLE) {
             s += "("+form.getNameString()+")";
         }
         return s;
@@ -325,7 +326,7 @@ public class StatRubette extends AbstractRubette {
             properties = new JPanel();
             properties.setLayout(new BorderLayout());
             
-            selectForm = new JSelectForm(Repository.systemRepository(), Form.SIMPLE);
+            selectForm = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.SIMPLE);
             selectForm.setBorder(makeTitledBorder("Form to extract"));
             selectForm.setForm(form);
             properties.add(selectForm, BorderLayout.NORTH);

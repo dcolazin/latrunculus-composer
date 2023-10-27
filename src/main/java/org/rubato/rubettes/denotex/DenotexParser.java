@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepo
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
@@ -161,9 +162,10 @@ public final class DenotexParser implements DenotexParserConstants {
     }
 
 
-    private void checkDelimiters(int real, int expected) throws ParseException {
-        if (real != expected)
-            throw parseError("Delimiters do not match type '" + Form.typeToString(expected) + "'");
+    private void checkDelimiters(FormDenotatorTypeEnum real, FormDenotatorTypeEnum expected) throws ParseException {
+        if (real != expected) {
+            throw parseError("Delimiters do not match type '" + expected + "'");
+        }
     }
 
 
@@ -187,14 +189,14 @@ public final class DenotexParser implements DenotexParserConstants {
     }
 
 
-    private Form defineForm(NameEntry name, int type, List crs) throws ParseException {
+    private Form defineForm(NameEntry name, FormDenotatorTypeEnum type, List crs) throws ParseException {
         if (t.forms().get(name) != null)
             throw parseError("Form '" + name + "' already defined.");
 
         Form form = null;
         NameDenotator n = NameDenotator.make(name);
         switch(type) {
-            case Yoneda.SIMPLE: {
+            case SIMPLE: {
                 try {
                     if (crs.size() == 1)
                         form = new SimpleForm(n, (Module)crs.get(0));
@@ -205,7 +207,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 } catch(Exception e) { throw parseError("Form build failed: " + e.getMessage()); }
                 break;
             }
-            case Yoneda.LIMIT: {
+            case LIMIT: {
                 try {
                     List l = new ArrayList(crs.size());
                     for (int i = 0; i < crs.size(); i++) l.add(null);
@@ -213,7 +215,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 } catch(Exception e) { throw parseError("Form build failed: " + e.getMessage()); }
                 break;
             }
-            case Yoneda.COLIMIT: {
+            case COLIMIT: {
                 try {
                     List l = new ArrayList(crs.size());
                     for (int i = 0; i < crs.size(); i++) l.add(null);
@@ -221,14 +223,14 @@ public final class DenotexParser implements DenotexParserConstants {
                 } catch(Exception e) { throw parseError("Form build failed: " + e.getMessage()); }
                 break;
             }
-            case Yoneda.POWER: {
+            case POWER: {
                 try {
                     // WRONG:
                     // form = new SimpleForm(n, null);
                 } catch(Exception e) { throw parseError("Form build failed: " + e.getMessage()); }
                 break;
             }
-            case Yoneda.LIST: {
+            case LIST: {
                 try {
                     // WRONG:
                     // form = new SimpleForm(n, null);
@@ -565,8 +567,7 @@ public final class DenotexParser implements DenotexParserConstants {
       sname = id();
                          name.add(sname);
     }
-        {if (true) return name;}
-    throw new Error("Missing return statement in function");
+      return name;
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -574,7 +575,6 @@ public final class DenotexParser implements DenotexParserConstants {
 ////////////////////////////////////////////////////////////////////////////////
   final public void formDefinition() throws ParseException {
     NameEntry name; // form name
-    int type;       // space type
     List clist;
     name = formName();
     jj_consume_token(31);
@@ -588,107 +588,94 @@ public final class DenotexParser implements DenotexParserConstants {
       
     }
     jj_consume_token(32);
-    type = spaceType();
+    FormDenotatorTypeEnum type = spaceType();
     clist = crs(type);
-        defineForm(name, type, clist);
+    defineForm(name, type, clist);
   }
 
-  final public List crs(int type) throws ParseException {
-    List clist;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 26:
-      clist = simpleCrs(type);
-      break;
-    case 33:
-      clist = limitCrs(type);
-      break;
-    case 35:
-      clist = colimitCrs(type);
-      break;
-    case 37:
-      clist = powerCrs(type);
-      break;
-    case LIST_O:
-      clist = listCrs(type);
-      break;
-    default:
-      jj_la1[8] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+    final public List crs(FormDenotatorTypeEnum type) throws ParseException {
+        switch ((jj_ntk==-1) ? jj_ntk() : jj_ntk) {
+            case 26:
+                checkDelimiters(FormDenotatorTypeEnum.SIMPLE, type);
+                return simpleCrs();
+            case 33:
+                checkDelimiters(FormDenotatorTypeEnum.LIMIT, type);
+                return limitCrs();
+            case 35:
+                checkDelimiters(FormDenotatorTypeEnum.COLIMIT, type);
+                return colimitCrs();
+            case 37:
+                checkDelimiters(FormDenotatorTypeEnum.POWER, type);
+                return powerCrs();
+            case 20:
+                checkDelimiters(FormDenotatorTypeEnum.LIST, type);
+                return listCrs();
+            default:
+              jj_la1[8] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+        }
     }
-      {if (true) return clist;}
-    throw new Error("Missing return statement in function");
-  }
 
-final public List simpleCrs(int type) throws ParseException {
-    checkDelimiters(Yoneda.SIMPLE, type);
-    List c = new ArrayList(1);
-    Module m;
-    ModuleElement lo = null;
-    ModuleElement hi = null;
-    jj_consume_token(26);
-    m = module();
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 29:
-      jj_consume_token(29);
-      lo = moduleElement(m);
-      jj_consume_token(29);
-      hi = moduleElement(m);
-      break;
-    default:
-      jj_la1[9] = jj_gen;
-      
-    }
-    jj_consume_token(27);
+    final public List simpleCrs() throws ParseException {
+        List c = new ArrayList(1);
+        Module m;
+        ModuleElement lo = null;
+        ModuleElement hi = null;
+        jj_consume_token(26);
+        m = module();
+        switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            case 29:
+                jj_consume_token(29);
+                lo = moduleElement(m);
+                jj_consume_token(29);
+                hi = moduleElement(m);
+                break;
+            default:
+                jj_la1[9] = jj_gen;
+
+        }
+        jj_consume_token(27);
         c.add(m);
         c.add(lo);
         c.add(hi);
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
-  }
+        return c;
+    }
 
-  final public List limitCrs(int type) throws ParseException {
-    checkDelimiters(Yoneda.LIMIT, type);
+  final public List limitCrs() throws ParseException {
     List names;
     jj_consume_token(33);
     names = formNameList();
     jj_consume_token(34);
-      {if (true) return names;}
-    throw new Error("Missing return statement in function");
+    return names;
   }
 
-  final public List colimitCrs(int type) throws ParseException {
-    checkDelimiters(Yoneda.COLIMIT, type);
+  final public List colimitCrs() throws ParseException {
     List names;
     jj_consume_token(35);
     names = formNameList();
     jj_consume_token(36);
-      {if (true) return names;}
-    throw new Error("Missing return statement in function");
+    return names;
   }
 
-  final public List powerCrs(int type) throws ParseException {
-    checkDelimiters(Yoneda.POWER, type);
+  final public List powerCrs() throws ParseException {
     List names = new ArrayList(1);
     NameEntry name;
     jj_consume_token(37);
     name = formName();
     jj_consume_token(38);
-        names.add(name);
-        {if (true) return names;}
-    throw new Error("Missing return statement in function");
+    names.add(name);
+    return names;
   }
 
-  final public List listCrs(int type) throws ParseException {
-    checkDelimiters(Yoneda.LIST, type);
+  final public List listCrs() throws ParseException {
     List names = new ArrayList(1);
     NameEntry name;
     jj_consume_token(LIST_O);
     name = formName();
     jj_consume_token(LIST_C);
-        names.add(name);
-        {if (true) return names;}
-    throw new Error("Missing return statement in function");
+    names.add(name);
+    return names;
   }
 
   final public List formNameList() throws ParseException {
@@ -708,10 +695,9 @@ final public List simpleCrs(int type) throws ParseException {
       }
       jj_consume_token(29);
       name = formName();
-                                                                      names.add(name);
+      names.add(name);
     }
-        {if (true) return names;}
-    throw new Error("Missing return statement in function");
+      return names;
   }
 
   final public NameEntry formName() throws ParseException {
@@ -743,36 +729,23 @@ final public List simpleCrs(int type) throws ParseException {
       sname = id();
                          name.add(sname);
     }
-        if (root) {
-                    {if (true) return NameEntry.lookup(name);}
-                }
-                else {
-                        {if (true) return getNSName(name);}
-                }
-    throw new Error("Missing return statement in function");
+    if (root) {
+        return NameEntry.lookup(name);
+    }
+    return getNSName(name);
   }
 
-  final public int spaceType() throws ParseException {
-    String type;
-    type = id();
-        try {
-            {if (true) return Form.stringToType(type);}
-        }
-        catch(Exception e) {
-            {if (true) throw parseError("Illegal space type '" + type + "'");}
-        }
-    throw new Error("Missing return statement in function");
-  }
+    final public FormDenotatorTypeEnum spaceType() throws ParseException {
+      return FormDenotatorTypeEnum.of(id());
+    }
 
-  final public void morphism() throws ParseException {
-    id();
-        {if (true) throw parseError("Morphisms not supported yet");}
-  }
+    final public void morphism() throws ParseException {
+        throw parseError("Morphisms not supported yet");
+    }
 
-  final public void diagram() throws ParseException {
-    id();
-        {if (true) throw parseError("Diagrams not supported yet");}
-  }
+    final public void diagram() throws ParseException {
+        throw parseError("Diagrams not supported yet");
+    }
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////// DENOTATOR DEFINITIONS /////////////////////////////////////
@@ -801,27 +774,29 @@ final public List simpleCrs(int type) throws ParseException {
     a = address();
     jj_consume_token(39);
     fname = formName();
-        if (expectedAddress != null && expectedAddress.compareTo(a) != 0)
-            {if (true) throw parseError("Expected address " + expectedAddress +
-                                     ", got address " + a);}
+        if (expectedAddress != null && expectedAddress.compareTo(a) != 0) {
+            throw parseError("Expected address " + expectedAddress +
+                    ", got address " + a);
+        }
 
         f = lookupForm(fname);
-        if (f == null)
-            {if (true) throw parseError("Form '" + fname + "' not defined.");}
-        if (expectedForm != null && !expectedForm.equals(f))
-            {if (true) throw parseError("DenotexParser.denotatorDefinition: Expected form '"+
-                                        expectedForm.getNameString()+
-                                        "', got form '" + f.getNameString() + "'");}
+        if (f == null) {
+            throw parseError("Form '" + fname + "' not defined.");
+        }
+        if (expectedForm != null && !expectedForm.equals(f)) {
+            throw parseError("DenotexParser.denotatorDefinition: Expected form '"+
+                    expectedForm.getNameString()+
+                    "', got form '" + f.getNameString() + "'");
+        }
 
         try {
             Linker.link(f, t, rep);
         }
         catch(Exception e) {
-            {if (true) throw parseError("Form '" + f + "' could not be linked: " + e.getMessage());}
+            throw parseError("Form '" + f + "' could not be linked: " + e.getMessage());
         }
     c = cds(a, f);
-        {if (true) return defineDenotator(name, a, f, c);}
-    throw new Error("Missing return statement in function");
+      return defineDenotator(name, a, f, c);
   }
 
   final public Module address() throws ParseException {
@@ -835,10 +810,10 @@ final public List simpleCrs(int type) throws ParseException {
       jj_la1[14] = jj_gen;
       
     }
-        if (a == null)
+        if (a == null) {
             a = ZRing.nullModule;
-        {if (true) return a;}
-    throw new Error("Missing return statement in function");
+        }
+      return a;
   }
 
   final public List cds(Module address, Form form) throws ParseException {
@@ -864,12 +839,11 @@ final public List simpleCrs(int type) throws ParseException {
       jj_consume_token(-1);
       throw new ParseException();
     }
-        {if (true) return l;}
-    throw new Error("Missing return statement in function");
+      return l;
   }
 
   final public List simpleCds(Module address, Form form) throws ParseException {
-    checkDelimiters(Yoneda.SIMPLE, form.getType());
+    checkDelimiters(FormDenotatorTypeEnum.SIMPLE, form.getType());
     Module m = form.getIdentifier().getCodomainModule();
     List c = new ArrayList(1);
     ModuleElement e;
@@ -877,19 +851,19 @@ final public List simpleCrs(int type) throws ParseException {
     e = moduleElement(m);
     jj_consume_token(27);
         c.add(e);
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
+      return c;
   }
 
   final public List limitCds(Module address, Form form) throws ParseException {
-    checkDelimiters(Yoneda.LIMIT, form.getType());
+    checkDelimiters(FormDenotatorTypeEnum.LIMIT, form.getType());
     FormDiagram diag = (FormDiagram)form.getIdentifier().getCodomainDiagram();
     List c = new ArrayList();
     Denotator d;
     int index = 0;
     jj_consume_token(33);
-        if (index >= diag.getFormCount())
-            {if (true) throw parseError("Too many elements in limit: " + index);}
+        if (index >= diag.getFormCount()) {
+            throw parseError("Too many elements in limit: " + index);
+        }
     d = denotator(address, diag.getForm(index++));
       c.add(d);
     label_9:
@@ -903,20 +877,21 @@ final public List simpleCrs(int type) throws ParseException {
         break label_9;
       }
       jj_consume_token(29);
-            if (index >= diag.getFormCount())
-                {if (true) throw parseError("Too many elements in limit: " + index);}
+            if (index >= diag.getFormCount()) {
+                throw parseError("Too many elements in limit: " + index);
+            }
       d = denotator(address, diag.getForm(index++));
           c.add(d);
     }
     jj_consume_token(34);
-        if (index < diag.getFormCount())
-                {if (true) throw parseError("Not enough elements in limit: " + index);}
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
+        if (index < diag.getFormCount()) {
+            throw parseError("Not enough elements in limit: " + index);
+        }
+      return c;
   }
 
   final public List colimitCds(Module address, Form form) throws ParseException {
-    checkDelimiters(Yoneda.COLIMIT, form.getType());
+    checkDelimiters(FormDenotatorTypeEnum.COLIMIT, form.getType());
     FormDiagram diag = (FormDiagram)form.getIdentifier().getCodomainDiagram();
     List c = new ArrayList(2);
     Token p;
@@ -924,19 +899,19 @@ final public List simpleCrs(int type) throws ParseException {
     jj_consume_token(35);
     p = jj_consume_token(INTEGER_LITERAL);
         int index = Integer.parseInt(p.image);
-        if (index < 0 || index >= diag.getFormCount())
-            {if (true) throw parseError("Colimit index out of range: " + index);}
+        if (index < 0 || index >= diag.getFormCount()) {
+            throw parseError("Colimit index out of range: " + index);
+        }
     jj_consume_token(29);
     d = denotator(address, diag.getForm(index));
     jj_consume_token(36);
         c.add(new Integer(index));
         c.add(d);
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
+      return c;
   }
 
   final public List powerCds(Module address, Form form) throws ParseException {
-    checkDelimiters(Yoneda.POWER, form.getType());
+    checkDelimiters(FormDenotatorTypeEnum.POWER, form.getType());
     FormDiagram diag = (FormDiagram)form.getIdentifier().getCodomainDiagram();
     Form ff = diag.getForm(0);
     List c = new ArrayList();
@@ -979,12 +954,11 @@ final public List simpleCrs(int type) throws ParseException {
       
     }
     jj_consume_token(38);
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
+      return c;
   }
 
   final public List listCds(Module address, Form form) throws ParseException {
-    checkDelimiters(Yoneda.LIST, form.getType());
+    checkDelimiters(FormDenotatorTypeEnum.LIST, form.getType());
     FormDiagram diag = (FormDiagram)form.getIdentifier().getCodomainDiagram();
     Form ff = diag.getForm(0);
     List c = new ArrayList();
@@ -1027,8 +1001,7 @@ final public List simpleCrs(int type) throws ParseException {
       
     }
     jj_consume_token(LIST_C);
-        {if (true) return c;}
-    throw new Error("Missing return statement in function");
+      return c;
   }
 
   final public Denotator denotator(Module address, Form form) throws ParseException {
@@ -1054,22 +1027,23 @@ final public List simpleCrs(int type) throws ParseException {
                 d.setConnector(name);
             }
             else {
-                if (address.compareTo(d.getAddress()) != 0)
-                    {if (true) throw parseError("Expected address " + address +
-                                     ", got address " + d.getAddress());}
+                if (address.compareTo(d.getAddress()) != 0) {
+                    throw parseError("Expected address " + address +
+                            ", got address " + d.getAddress());
+                }
             }
         }
-        {if (true) return d;}
+        return d;
     } else if (jj_2_6(2)) {
       d = denotatorDefinition(null, address, form);
-                {if (true) return d;}
+        return d;
     } else if (jj_2_7(2)) {
             Module m = form.getIdentifier().getCodomainModule();
         List c = new ArrayList(1);
                 LinkedList elements;
       elements = basicElement(m);
         c.add(m.createElement(elements));
-        {if (true) return defineDenotator(null, address, form, c);}
+        return defineDenotator(null, address, form, c);
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LIST_O:
@@ -1079,15 +1053,13 @@ final public List simpleCrs(int type) throws ParseException {
       case 37:
                 List c;
         c = cds(address, form);
-        {if (true) return defineDenotator(null, address, form, c);}
-        break;
+          return defineDenotator(null, address, form, c);
       default:
         jj_la1[22] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public NameEntry denotatorName() throws ParseException {
@@ -1120,12 +1092,11 @@ final public List simpleCrs(int type) throws ParseException {
                          name.add(sname);
     }
         if (root) {
-                    {if (true) return NameEntry.lookup(name);}
-                }
+            return NameEntry.lookup(name);
+        }
                 else {
-                        {if (true) return getNSName(name);}
+            return getNSName(name);
                 }
-    throw new Error("Missing return statement in function");
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1137,16 +1108,16 @@ final public List simpleCrs(int type) throws ParseException {
     n = moduleName();
     jj_consume_token(31);
     m = module();
-        if (t.modules().get(n) != null)
-            {if (true) throw parseError("Module '" + n + "' already defined.");}
+        if (t.modules().get(n) != null) {
+            throw parseError("Module '" + n + "' already defined.");
+        }
         t.modules().put(n, m);
   }
 
   final public String moduleName() throws ParseException {
     Token t;
     t = jj_consume_token(IDENTIFIER);
-        {if (true) return t.image;}
-    throw new Error("Missing return statement in function");
+      return t.image;
   }
 
   final public Module module() throws ParseException {
@@ -1154,8 +1125,7 @@ final public List simpleCrs(int type) throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
       m = basicModule();
-        {if (true) return m;}
-      break;
+        return m;
     case 37:
                 List l = new LinkedList();
       jj_consume_token(37);
@@ -1186,14 +1156,12 @@ final public List simpleCrs(int type) throws ParseException {
       jj_consume_token(38);
         // WRONG:
         // return new CompositeModule((Module[])l.toArray(new Module[0]));
-        {if (true) return null;}
-      break;
+        return null;
     default:
       jj_la1[27] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public Module basicModule() throws ParseException {
@@ -1219,31 +1187,30 @@ final public List simpleCrs(int type) throws ParseException {
       jj_la1[29] = jj_gen;
       
     }
-        if (isBasicType(n))
-           {if (true) return makeModule(n, sub, sup);}
-        else {
-            if (sub != -1 || sup != -1)
-                {if (true) throw parseError("Sub- or superscript not allowed for module name.");}
+        if (isBasicType(n)) {
+            return makeModule(n, sub, sup);
+        } else {
+            if (sub != -1 || sup != -1) {
+                throw parseError("Sub- or superscript not allowed for module name.");
+            }
             Module m = t.modules().get(n);
-            if (m == null)
-                {if (true) throw parseError("Module '" + n + "' not defined.");}
-            {if (true) return m;}
+            if (m == null) {
+                throw parseError("Module '" + n + "' not defined.");
+            }
+            return m;
         }
-    throw new Error("Missing return statement in function");
   }
 
   final public String basicType() throws ParseException {
     Token t;
     t = jj_consume_token(IDENTIFIER);
-        {if (true) return t.image;}
-    throw new Error("Missing return statement in function");
+      return t.image;
   }
 
   final public ModuleElement moduleElement(Module m) throws ParseException {
     LinkedList elements;
     elements = compositeElement(m);
-        {if (true) return m.createElement(elements);}
-    throw new Error("Missing return statement in function");
+      return m.createElement(elements);
   }
 
   final public LinkedList compositeElement(Module m) throws ParseException {
@@ -1256,8 +1223,7 @@ final public List simpleCrs(int type) throws ParseException {
     case 42:
     case 43:
       elements = basicElement(m);
-        {if (true) return elements;}
-      break;
+      return elements;
     case 37:
       int i = 0;
       jj_consume_token(37);
@@ -1268,8 +1234,9 @@ final public List simpleCrs(int type) throws ParseException {
       case 37:
       case 42:
       case 43:
-            if (i < 0 || i >= m.getDimension())
-                {if (true) throw parseError("Composite module index out of range: " + i);}
+            if (i < 0 || i >= m.getDimension()) {
+                throw parseError("Composite module index out of range: " + i);
+            }
         elements = compositeElement(m.getComponentModule(i++));
         label_14:
         while (true) {
@@ -1282,8 +1249,9 @@ final public List simpleCrs(int type) throws ParseException {
             break label_14;
           }
           jj_consume_token(29);
-                if (i < 0 || i >= m.getDimension())
-                    {if (true) throw parseError("Composite module index out of range: " + i);}
+                if (i < 0 || i >= m.getDimension()) {
+                    throw parseError("Composite module index out of range: " + i);
+                }
           newElements = compositeElement(m.getComponentModule(i++));
                 elements.addAll(newElements);
         }
@@ -1293,17 +1261,16 @@ final public List simpleCrs(int type) throws ParseException {
         
       }
       jj_consume_token(38);
-        if (i != m.getDimension())
-                {if (true) throw parseError("Expected " + m.getDimension() +
-                                 " elements in composite element");}
-        {if (true) return elements;}
-      break;
+        if (i != m.getDimension()) {
+            throw parseError("Expected " + m.getDimension() +
+                    " elements in composite element");
+        }
+        return elements;
     default:
       jj_la1[32] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public LinkedList basicElement(Module m) throws ParseException {
@@ -1315,11 +1282,15 @@ final public List simpleCrs(int type) throws ParseException {
             int n = q.getNumerator();
             int d = q.getDenominator();
             if (m instanceof ZRing) {
-                if (d != 1) {if (true) throw parseError("");}
+                if (d != 1) {
+                    throw parseError("");
+                }
                 elements.add(new ArithmeticElement<>(new ArithmeticInteger(n)));
             }
             else if (m instanceof ZnRing) {
-                if (d != 1) {if (true) throw parseError("");}
+                if (d != 1) {
+                    throw parseError("");
+                }
                 elements.add(new ArithmeticElement<>(new Modulus(n, ((ZnRing)m).getModulus())));
             }
             else if (m instanceof QRing)
@@ -1341,14 +1312,14 @@ final public List simpleCrs(int type) throws ParseException {
 
                     // error
                 else {
-                    if (true) throw parseError("");
+                    throw parseError("");
                 }
             }
         }
         catch(Exception e) {
-            {if (true) throw parseError("Expected element from " + m.toString());}
+            throw parseError("Expected element from " + m.toString());
         }
-        {if (true) return elements;}
+        return elements;
     } else if (jj_2_9(2)) {
                    double r;
       r = rLiteral();
@@ -1367,25 +1338,28 @@ final public List simpleCrs(int type) throws ParseException {
                 elements.add(new ArithmeticStringElement<Real>(String.valueOf(r)));
 
             // error
-            else {if (true) throw parseError("");}
+            else {
+                throw parseError("");
+            }
         }
         catch(Exception e) {
-            {if (true) throw parseError("Expected element from " + m.toString());}
+            throw parseError("Expected element from " + m.toString());
         }
-        {if (true) return elements;}
+        return elements;
     } else if (jj_2_10(2)) {
                    Complex c;
       c = cLiteral();
         try {
                 if (m instanceof CRing)
                         elements.add(new ArithmeticElement<>(c));
-                else
-                        {if (true) throw parseError("");}
+                else {
+                    throw parseError("");
+                }
         }
         catch (Exception e) {
-                {if (true) throw parseError("Expected element from " + m.toString());}
+            throw parseError("Expected element from " + m.toString());
         }
-        {if (true) return elements;}
+        return elements;
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STRING_LITERAL:
@@ -1402,20 +1376,20 @@ final public List simpleCrs(int type) throws ParseException {
                 elements.add(new ArithmeticStringElement<Real>(s));
 
             // error
-            else {if (true) throw parseError("Expected StringElement, got " + s);}
+            else {
+                throw parseError("Expected StringElement, got " + s);
+            }
         } catch(Exception e) {
             e.printStackTrace();
-            {if (true) throw parseError("Expected element from " + m.toString());}
+            throw parseError("Expected element from " + m.toString());
         }
-        {if (true) return elements;}
-        break;
+          return elements;
       default:
         jj_la1[33] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
-    throw new Error("Missing return statement in function");
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1426,25 +1400,21 @@ final public List simpleCrs(int type) throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
       n = jj_consume_token(IDENTIFIER);
-        {if (true) return n.image;}
-      break;
+        return n.image;
     case QIDENTIFIER:
       n = jj_consume_token(QIDENTIFIER);
-        {if (true) return stripQuotes(n.image);}
-      break;
+        return stripQuotes(n.image);
     default:
       jj_la1[34] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public int nLiteral() throws ParseException {
     Token t;
     t = jj_consume_token(INTEGER_LITERAL);
-        {if (true) return Integer.parseInt(t.image);}
-    throw new Error("Missing return statement in function");
+      return Integer.parseInt(t.image);
   }
 
   final public int zLiteral() throws ParseException {
@@ -1461,19 +1431,16 @@ final public List simpleCrs(int type) throws ParseException {
         
       }
       n = nLiteral();
-        {if (true) return n;}
-      break;
+      return n;
     case 43:
       jj_consume_token(43);
       n = nLiteral();
-        {if (true) return -n;}
-      break;
+      return -n;
     default:
       jj_la1[36] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public Rational qLiteral() throws ParseException {
@@ -1489,8 +1456,7 @@ final public List simpleCrs(int type) throws ParseException {
       jj_la1[37] = jj_gen;
       
     }
-        {if (true) return new Rational(n, d);}
-    throw new Error("Missing return statement in function");
+      return new Rational(n, d);
   }
 
   final public double rLiteral() throws ParseException {
@@ -1507,19 +1473,16 @@ final public List simpleCrs(int type) throws ParseException {
         
       }
       t = jj_consume_token(FLOATING_POINT_LITERAL);
-        {if (true) return Double.parseDouble(t.image);}
-      break;
+        return Double.parseDouble(t.image);
     case 43:
       jj_consume_token(43);
       t = jj_consume_token(FLOATING_POINT_LITERAL);
-        {if (true) return -Double.parseDouble(t.image);}
-      break;
+       return -Double.parseDouble(t.image);
     default:
       jj_la1[39] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
   }
 
   final public Complex cLiteral() throws ParseException {
@@ -1537,15 +1500,13 @@ final public List simpleCrs(int type) throws ParseException {
       
     }
     i = rLiteral();
-                {if (true) return new Complex(r, i);}
-    throw new Error("Missing return statement in function");
+      return new Complex(r, i);
   }
 
   final public String sLiteral() throws ParseException {
-    Token t;
-    t = jj_consume_token(STRING_LITERAL);
-        {if (true) return stripQuotes(t.image);}
-    throw new Error("Missing return statement in function");
+      Token t;
+      t = jj_consume_token(STRING_LITERAL);
+      return stripQuotes(t.image);
   }
 
   final private boolean jj_2_1(int xla) {

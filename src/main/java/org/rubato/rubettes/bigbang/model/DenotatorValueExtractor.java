@@ -15,6 +15,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.rubato.rubettes.util.DenotatorPath;
@@ -61,8 +62,8 @@ public class DenotatorValueExtractor {
 	
 	//recursive method!!
 	private void extractObjects(Denotator currentDenotator, BigBangObject parentObject, BigBangObject currentObject, int satelliteLevel, int siblingNumber, int colimitIndex, DenotatorPath currentPath) throws RubatoException {
-		int denotatorType = currentDenotator.getType();
-		if (denotatorType == Denotator.POWER || denotatorType == Denotator.LIST) {
+		FormDenotatorTypeEnum denotatorType = currentDenotator.getType();
+		if (denotatorType == FormDenotatorTypeEnum.POWER || denotatorType == FormDenotatorTypeEnum.LIST) {
 			FactorDenotator currentPower = (FactorDenotator)currentDenotator;
 			//System.out.println(currentDenotator + " " + satelliteLevel);
 			for (int i = 0; i < currentPower.getFactorCount(); i++) {
@@ -78,13 +79,13 @@ public class DenotatorValueExtractor {
 				currentObject = this.getBigBangObject(parentObject, satelliteLevel, siblingNumber, colimitIndex, currentPath);
 			}
 			if (currentObject != null) {
-				if (denotatorType == Denotator.LIMIT) {
+				if (denotatorType == FormDenotatorTypeEnum.LIMIT) {
 					LimitDenotator currentLimit = (LimitDenotator)currentDenotator;
 					for (int i = 0; i < currentLimit.getFactorCount(); i++) {
 						Denotator currentChild = currentLimit.getFactor(i);
 						this.extractObjects(currentChild, parentObject, currentObject, satelliteLevel, siblingNumber, colimitIndex, currentPath.getChildPath(i));
 					}
-				} else if (denotatorType == Denotator.COLIMIT) {
+				} else if (denotatorType == FormDenotatorTypeEnum.COLIMIT) {
 					ColimitDenotator currentColimit = (ColimitDenotator)currentDenotator;
 					Denotator onlyChild = currentColimit.getFactor();
 					int childIndex = currentColimit.getIndex();
@@ -102,7 +103,7 @@ public class DenotatorValueExtractor {
 							this.extractObjects(onlyChild, parentObject, currentObject, satelliteLevel, siblingNumber, childIndex, childPath);
 						}
 					}
-				} else if (denotatorType == Denotator.SIMPLE) {
+				} else if (denotatorType == FormDenotatorTypeEnum.SIMPLE) {
 					this.addSimpleValues(parentObject, currentObject, (SimpleDenotator)currentDenotator);
 				}
 			}

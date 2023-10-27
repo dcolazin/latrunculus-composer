@@ -69,7 +69,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
             checkDenotator(d, baseForm, address);
             map.appendFactor(d);
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIST), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIST), map));
     }
 
 
@@ -100,7 +100,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         else {
             address = ZRing.nullModule;
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIST), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIST), map));
     }
     
 
@@ -115,8 +115,8 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @return type as an integer
      */
     @Override
-    public int getType() {
-        return LIST;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.LIST;
     }
     
     
@@ -681,7 +681,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+Form.typeToString(getForm().getType()));
+        out.print("; Type: "+ getForm().getType());
         out.println("; Address: "+getAddress());
 
         if (recursionCheck(recursionCheckStack)) {
@@ -709,7 +709,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
                                              ListForm form, List<Denotator> denoList) {
         ListMorphismMap map = new ListMorphismMap(denoList);
         FormDiagram diagram = form.getFormDiagram();
-        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, LIST), map);
+        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIST), map);
         ListDenotator res = new ListDenotator(name, form, coordinate, coordinate);
         assert(res._is_valid());
         return res;

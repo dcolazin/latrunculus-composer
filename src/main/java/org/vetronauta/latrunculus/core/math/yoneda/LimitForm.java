@@ -55,7 +55,7 @@ public final class LimitForm extends Form {
      * Builds a limit identity form using a list of forms.
      */
     public LimitForm(NameDenotator name, List<Form> forms) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), LIMIT));
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.LIMIT));
     }
 
 
@@ -63,7 +63,7 @@ public final class LimitForm extends Form {
      * Builds a limit identity form using a list of forms.
      */
     public LimitForm(NameDenotator name, List<Form> forms, List<String> labels) {
-        super(name, new ProperIdentityMorphism(new FormDiagram(forms), LIMIT));
+        super(name, new ProperIdentityMorphism(new FormDiagram(forms), FormDenotatorTypeEnum.LIMIT));
         setLabels(labels);
     }
 
@@ -72,12 +72,12 @@ public final class LimitForm extends Form {
      * Builds a limit identity form using a diagram.
      */
     public LimitForm(NameDenotator name, Diagram diagram) {
-        super(name, new ProperIdentityMorphism(diagram, LIMIT));
+        super(name, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.LIMIT));
     }
 
     
-    public int getType() {
-        return LIMIT;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.LIMIT;
     }
 
 
@@ -105,7 +105,7 @@ public final class LimitForm extends Form {
 
 
     public boolean fullEquals(LimitForm f) {
-        return fullEquals(f, new IdentityHashMap<Object,Object>());
+        return fullEquals(f, new IdentityHashMap<>());
     }
 
 

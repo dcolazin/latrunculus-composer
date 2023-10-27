@@ -7,6 +7,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 public class DenotatorValueFinder {
@@ -34,13 +35,13 @@ public class DenotatorValueFinder {
 	private void findValues(DenotatorPath currentPath, boolean searchThroughPowersets, int currentSearchDepth) {
 		if (currentSearchDepth < this.MAX_SEARCH_DEPTH) {
 			Form currentForm = currentPath.getEndForm();
-			if (currentForm.getType() == Form.SIMPLE) {
+			if (currentForm.getType() == FormDenotatorTypeEnum.SIMPLE) {
 				this.addValueNames(currentForm.getNameString(), ((SimpleForm)currentForm).getModule(), currentPath, "");
-			} else if (currentForm.getType() == Form.LIMIT || currentForm.getType() == Form.COLIMIT) {
+			} else if (currentForm.getType() == FormDenotatorTypeEnum.LIMIT || currentForm.getType() == FormDenotatorTypeEnum.COLIMIT) {
 				for (int i = 0; i < currentForm.getForms().size(); i++) {
 					this.findValues(currentPath.getChildPath(i), searchThroughPowersets, currentSearchDepth+1);
 				}
-			} else if (searchThroughPowersets && (currentForm.getType() == Form.POWER || currentForm.getType() == Form.LIST)) {
+			} else if (searchThroughPowersets && (currentForm.getType() == FormDenotatorTypeEnum.POWER || currentForm.getType() == FormDenotatorTypeEnum.LIST)) {
 				this.findValues(currentPath.getChildPath(0), searchThroughPowersets, currentSearchDepth+1);
 			}
 		}

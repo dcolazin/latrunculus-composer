@@ -56,7 +56,7 @@ public final class Address {
      * @return null if no common module could be found
      */
     public static Module getCommonModule(List<Module> modules) {
-        LinkedList<Ring> rings = new LinkedList<Ring>();
+        LinkedList<Ring> rings = new LinkedList<>();
         int dim = 0;
         for (Module module : modules) {
             rings.add(module.getRing());

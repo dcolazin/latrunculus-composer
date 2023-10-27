@@ -37,6 +37,7 @@ import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -119,7 +120,7 @@ public class SplitRubette
             properties = new JPanel();            
             properties.setLayout(new BorderLayout());
             
-            formSelector = new JSelectForm(Repository.systemRepository(), new int[] { Form.LIMIT });
+            formSelector = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.LIMIT);
             formSelector.addActionListener(this);
             properties.add(formSelector, BorderLayout.NORTH);
 

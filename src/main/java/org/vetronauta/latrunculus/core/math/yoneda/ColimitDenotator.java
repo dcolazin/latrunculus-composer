@@ -67,7 +67,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         checkDenotator(deno, diagram.getForm(index), address);
 
         IndexMorphismMap map = new IndexMorphismMap(index, deno);
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, COLIMIT), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.COLIMIT), map));
     }
     
 
@@ -91,7 +91,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         checkDenotator(deno, diagram.getForm(index), address);
 
         IndexMorphismMap map = new IndexMorphismMap(index, deno);
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, COLIMIT), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.COLIMIT), map));
     }
        
     
@@ -101,8 +101,8 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @return type as an integer
      */
     @Override
-    public int getType() {
-        return COLIMIT;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.COLIMIT;
     }
     
     
@@ -616,7 +616,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+Form.typeToString(getForm().getType()));
+        out.print("; Type: "+ getForm().getType());
         out.println("; Address: "+getAddress());
 
         indent += 4;
@@ -624,9 +624,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         if (recursionCheck(recursionCheckStack)) {
             indent(out, indent);
             out.println("...");
-            return;            
-        }
-        else {
+        } else {
             IndexMorphismMap map = (IndexMorphismMap)getCoordinate().getMap();
             recursionCheckStack.addFirst(this);
             map.getFactor().display(out, recursionCheckStack, indent);
@@ -646,7 +644,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
                                                 ColimitForm form, int index, Denotator d) {
         IndexMorphismMap map = new IndexMorphismMap(index, d);
         FormDiagram diagram = (FormDiagram)form.getIdentifier().getCodomainDiagram();
-        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, COLIMIT), map);
+        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.COLIMIT), map);
         ColimitDenotator res = new ColimitDenotator(name, form, index, coordinate, coordinate);
         assert(res._is_valid());
         return res;

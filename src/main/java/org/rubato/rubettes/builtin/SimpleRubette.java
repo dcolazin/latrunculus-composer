@@ -35,6 +35,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
@@ -139,7 +140,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
             JPanel topPanel = new JPanel();
             topPanel.setLayout(new GridLayout(2, 1));
             
-            selector = new JSelectForm(Repository.systemRepository(), Form.SIMPLE);
+            selector = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.SIMPLE);
             selector.addActionListener(this);
             selector.setForm(form);
             topPanel.add(selector);

@@ -34,15 +34,15 @@ import java.util.LinkedList;
 public final class FormReference extends Form {
 
     public FormReference(String name) {
-        this(name, 0);
+        this(name, FormDenotatorTypeEnum.SIMPLE);
     }
     
-    public FormReference(String name, int type) {
+    public FormReference(String name, FormDenotatorTypeEnum type) {
         super(NameDenotator.make(name), null);
         this.type = type;
     }
 
-    public int getType() {
+    public FormDenotatorTypeEnum getType() {
         return type;
     }
 
@@ -90,5 +90,5 @@ public final class FormReference extends Form {
         return "["+getNameString()+":.reference]";
     }
     
-    private int type;
+    private FormDenotatorTypeEnum type;
 }

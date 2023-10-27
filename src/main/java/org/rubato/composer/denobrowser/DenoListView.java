@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionListener;
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 
 
@@ -162,7 +163,7 @@ public class DenoListView
 	private void setLabels(Denotator d) {
 		formLabel.setText(d.getForm().getNameString());
 		String typeName = d.getForm().getTypeString();
-		if (d.getForm().getType() == Form.SIMPLE) {
+		if (d.getForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
 			typeName += ": "+((SimpleForm)d.getForm()).getModule();
 		}
 		typeLabel.setText(typeName);
@@ -171,7 +172,7 @@ public class DenoListView
 	private void popupMenu(int x, int y, Denotator d) {
 		JPopupMenu popup = new JPopupMenu();
 		JMenuItem menuItem;
-		if (d.getForm().getType() == Form.SIMPLE) {
+		if (d.getForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
 			menuItem = new JMenuItem(Messages.getString("DenoListView.edit"));
 			menuItem.addActionListener(this);
 			menuItem.setActionCommand("edit");
@@ -201,8 +202,8 @@ public class DenoListView
 		JMenuItem menuItem;
 		Form form = parent.getForm();
 		switch (form.getType()) {
-			case Form.POWER:
-			case Form.LIST: {
+			case POWER:
+			case LIST: {
 				Form subForm = form.getForm(0);
 				menuItem = new JMenuItem(Messages.getString("DenoListView.addnew")+subForm.getNameString());
 				menuItem.addActionListener(this);

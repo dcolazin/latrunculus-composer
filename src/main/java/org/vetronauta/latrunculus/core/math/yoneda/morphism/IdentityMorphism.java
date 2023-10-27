@@ -24,6 +24,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 
 /**
@@ -51,7 +52,7 @@ public abstract class IdentityMorphism extends YonedaMorphism {
     /**
      * Returns the type of this identity morphism.
      */
-    public abstract int getType();
+    public abstract FormDenotatorTypeEnum getType();
     
     public Diagram getDomainDiagram() { 
         return getDiagram();
@@ -69,11 +70,11 @@ public abstract class IdentityMorphism extends YonedaMorphism {
         return getModule();
     }
     
-    public int getDomainType() {
+    public FormDenotatorTypeEnum getDomainType() {
         return getType(); 
     }
     
-    public int getCodomainType() {
+    public FormDenotatorTypeEnum getCodomainType() {
         return getType();
     }
 
@@ -98,7 +99,7 @@ public abstract class IdentityMorphism extends YonedaMorphism {
     }
     
     public boolean isRepresentable() {
-        return getType() == SIMPLE;
+        return getType() == FormDenotatorTypeEnum.SIMPLE;
     }
     
     public abstract int hashCode();

@@ -30,6 +30,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 
@@ -68,12 +69,12 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
     /**
      * Returns the domain denotator type of this morphism.
      */
-    public abstract int getDomainType();
+    public abstract FormDenotatorTypeEnum getDomainType();
 
     /**
      * Returns the codomain denotator type of this morphism.
      */
-    public abstract int getCodomainType();
+    public abstract FormDenotatorTypeEnum getCodomainType();
     
     /**
      * Returns the domain identity morphism (object) of this morphism.
@@ -138,7 +139,7 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
      * Returns true iff this morphism is representable.
      */
     public boolean isRepresentable() {
-        return (getDomainType() == SIMPLE) && (getCodomainType() == SIMPLE);
+        return (getDomainType() == FormDenotatorTypeEnum.SIMPLE) && (getCodomainType() == FormDenotatorTypeEnum.SIMPLE);
     }
     
     /**

@@ -19,20 +19,36 @@
 
 package org.rubato.composer.dialogs;
 
-import static org.rubato.composer.Utilities.installEscapeKey;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import static org.rubato.composer.Utilities.installEscapeKey;
 
 public final class JSelectFormDialog extends JDialog {
 
@@ -46,10 +62,10 @@ public final class JSelectFormDialog extends JDialog {
     
     
     public static Form showDialog(Component comp, RubatoDictionary dict,
-                                  Form baseForm, ArrayList<Integer> types) {
+                                  Form baseForm, ArrayList<FormDenotatorTypeEnum> types) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectFormDialog dialog = new JSelectFormDialog(frame, comp, types);
-        LinkedList<Form> newList = new LinkedList<Form>();
+        LinkedList<Form> newList = new LinkedList<>();
         for (Form f : dict.getForms()) {
             if (types.contains(f.getType())) {
                 if (f instanceof PowerForm 
@@ -68,10 +84,10 @@ public final class JSelectFormDialog extends JDialog {
     }
 
     
-    public static Form showDialog(Component comp, RubatoDictionary dict, ArrayList<Integer> types) {
+    public static Form showDialog(Component comp, RubatoDictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectFormDialog dialog = new JSelectFormDialog(frame, comp, types);
-        LinkedList<Form> newList = new LinkedList<Form>();
+        LinkedList<Form> newList = new LinkedList<>();
         for (Form f : dict.getForms()) {
             if (types.contains(f.getType())) {
                 newList.add(f);
@@ -96,13 +112,13 @@ public final class JSelectFormDialog extends JDialog {
     }
     
     
-    private JSelectFormDialog(Frame frame, Component comp, ArrayList<Integer> types) {
+    private JSelectFormDialog(Frame frame, Component comp, ArrayList<FormDenotatorTypeEnum> types) {
         super(frame, Messages.getString("JSelectFormDialog.selectform"), true); 
         createContents();
-        String s = Messages.getString("JSelectFormDialog.type")+": "+Form.typeToString(types.get(0));   
+        String s = Messages.getString("JSelectFormDialog.type")+": "+types.get(0);
         
         for (int i = 1; i < types.size(); i++) {
-            s += ", "+Form.typeToString(types.get(i)); 
+            s += ", "+types.get(i);
         }
         infoLabel.setText(s);
         setLocationRelativeTo(comp);
@@ -126,12 +142,10 @@ public final class JSelectFormDialog extends JDialog {
                 super.mouseClicked(e);
             }
         });
-        formList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    FormInfo info = (FormInfo)formList.getSelectedValue();
-                    setValue(info.form);
-                }
+        formList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                FormInfo info = (FormInfo)formList.getSelectedValue();
+                setValue(info.form);
             }
         });
         JScrollPane scrollPane = new JScrollPane(formList);
@@ -176,7 +190,7 @@ public final class JSelectFormDialog extends JDialog {
     }
     
     
-    protected void setValue(Form f) {
+    private void setValue(Form f) {
         value = f;
     }
     
@@ -186,19 +200,19 @@ public final class JSelectFormDialog extends JDialog {
     }
     
     
-    protected void cancel() {
+    private void cancel() {
         setValue(null);
         setVisible(false);
     }
     
     
-    protected void ok() {
+    private void ok() {
         setVisible(false);        
     }
     
     
     private JLabel    infoLabel;
-    protected JList   formList;
+    private JList   formList;
     private JButton   cancelButton;
     private JButton   okButton;
     private Form      value;

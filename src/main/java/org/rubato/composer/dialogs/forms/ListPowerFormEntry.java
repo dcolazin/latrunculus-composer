@@ -29,12 +29,13 @@ import org.rubato.base.RubatoDictionary;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 public class ListPowerFormEntry
         extends AbstractFormEntry
         implements ActionListener {
 
-    public ListPowerFormEntry(RubatoDictionary dict, int type) {
+    public ListPowerFormEntry(RubatoDictionary dict, FormDenotatorTypeEnum type) {
         setLayout(new BorderLayout());
         this.type = type;
         selectForm = new JSelectForm(dict);
@@ -47,10 +48,10 @@ public class ListPowerFormEntry
     public Form getForm(String name) {
         Form baseForm = selectForm.getForm();
         if (baseForm != null && name.length() > 0) {
-            if (type == Form.POWER) {
+            if (type == FormDenotatorTypeEnum.POWER) {
                 return FormFactory.makePowerForm(name, baseForm);
             }
-            else if (type == Form.LIST)  {
+            else if (type == FormDenotatorTypeEnum.LIST)  {
                 return FormFactory.makeListForm(name, baseForm);
             }
         }
@@ -74,5 +75,5 @@ public class ListPowerFormEntry
     
     
     private JSelectForm selectForm;
-    private int type;
+    private FormDenotatorTypeEnum type;
 }

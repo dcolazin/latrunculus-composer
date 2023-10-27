@@ -69,7 +69,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
             checkDenotator(d, baseForm, address);
             map.appendFactor(d);
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, POWER), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.POWER), map));
         _normalize();
     }
 
@@ -101,7 +101,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
         else {
             address = ZRing.nullModule;
         }
-        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, POWER), map));
+        setCoordinates(new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.POWER), map));
         _normalize();
     }
 
@@ -112,8 +112,8 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
      * @return type as an integer
      */
     @Override
-    public int getType() {
-        return POWER;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.POWER;
     }
     
     
@@ -690,7 +690,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+Form.typeToString(getForm().getType()));
+        out.print("; Type: "+ getForm().getType());
         out.println("; Address: "+getAddress());
 
         indent += 4;
@@ -739,7 +739,7 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
                                               PowerForm form, List<Denotator> denoList) {
         AutoListMorphismMap map = new AutoListMorphismMap(denoList);
         FormDiagram diagram = form.getFormDiagram();
-        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, POWER), map);
+        CompoundMorphism coordinate = new CompoundMorphism(address, new ProperIdentityMorphism(diagram, FormDenotatorTypeEnum.POWER), map);
         PowerDenotator res = new PowerDenotator(name, form, coordinate, coordinate);
         assert(res._is_valid());
         return res;

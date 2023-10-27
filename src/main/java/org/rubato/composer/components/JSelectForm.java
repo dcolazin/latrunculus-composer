@@ -34,6 +34,7 @@ import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.forms.TempDictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 
 public class JSelectForm extends JPanel implements ActionListener {
@@ -44,8 +45,8 @@ public class JSelectForm extends JPanel implements ActionListener {
     }
 
     
-    public JSelectForm(RubatoDictionary dict, int ... types) {
-        this.types = new ArrayList<Integer>();
+    public JSelectForm(RubatoDictionary dict, FormDenotatorTypeEnum... types) {
+        this.types = new ArrayList<>();
         for (int i = 0; i < types.length; i++) {
             this.types.add(types[i]);
         }
@@ -54,7 +55,7 @@ public class JSelectForm extends JPanel implements ActionListener {
     }
     
 
-    public JSelectForm(RubatoDictionary dict, ArrayList<Integer> types) {
+    public JSelectForm(RubatoDictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
         this.types = types;
         this.dict = dict;
         createLayout();
@@ -198,7 +199,7 @@ public class JSelectForm extends JPanel implements ActionListener {
     
     private Form               form     = null;
     private Form               baseForm = null;
-    private ArrayList<Integer> types    = null;
+    private ArrayList<FormDenotatorTypeEnum> types    = null;
     
     private RubatoDictionary dict = null;
     

@@ -88,23 +88,23 @@ public abstract class Reformer {
         Reformer reformer = reformers.get(formPair);
         if (reformer == null) {
             switch (from.getType()) {
-            case Form.SIMPLE: {
+            case SIMPLE: {
                 reformer = makeSimpleReformer((SimpleForm)from, to);
                 break;
             }
-            case Form.LIMIT: {
+            case LIMIT: {
                 reformer = makeLimitReformer((LimitForm)from, to);
                 break;
             }
-            case Form.COLIMIT: {
+            case COLIMIT: {
                 reformer = makeColimitReformer((ColimitForm)from, to);
                 break;
             }
-            case Form.POWER: {
+            case POWER: {
                 reformer = makePowerReformer((PowerForm)from, to);
                 break;
             }
-            case Form.LIST: {
+            case LIST: {
                 reformer = makeListReformer((ListForm)from, to);
                 break;
             }

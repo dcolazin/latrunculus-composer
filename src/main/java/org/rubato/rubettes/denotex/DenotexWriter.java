@@ -26,6 +26,7 @@ import java.io.PrintStream;
 
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
@@ -66,12 +67,12 @@ public abstract class DenotexWriter {
 
         switch(denotator.getForm().getType())
             {
-            case Yoneda.LIMIT:
+            case LIMIT:
                 out.println(offset+"[");
                 for (int i = 0; i<((LimitDenotator)denotator).getFactorCount()-1; i++)
                     {
                     write(out, ((LimitDenotator)denotator).getFactor(i), offset+"  ");
-                    if (((LimitDenotator)denotator).getFactor(i).getForm().getType() == Yoneda.SIMPLE)
+                    if (((LimitDenotator)denotator).getFactor(i).getForm().getType() == FormDenotatorTypeEnum.SIMPLE)
                         out.println(", ");
                     else
                         out.println(offset+"  ,");
@@ -80,12 +81,12 @@ public abstract class DenotexWriter {
                 out.println();
                 out.println(offset+"]");
             break;
-            case Yoneda.POWER:
+            case POWER:
                 out.println(offset+"{");
                 for (int i = 0; i< ((PowerDenotator)denotator).getFactorCount()-1; i++)
                     {
                     write(out, ((PowerDenotator)denotator).getFactor(i), offset+"  ");
-                    if (((PowerDenotator)denotator).getFactor(i).getForm().getType() == Yoneda.SIMPLE)
+                    if (((PowerDenotator)denotator).getFactor(i).getForm().getType() == FormDenotatorTypeEnum.SIMPLE)
                         out.println(", ");
                     else
                         out.println(offset+"  ,");
@@ -94,12 +95,12 @@ public abstract class DenotexWriter {
                 out.println();
                 out.println(offset+"}");
             break;
-            case Yoneda.COLIMIT:
+            case COLIMIT:
                 out.println(offset+"<"+((ColimitDenotator)denotator).getIndex()+",");
                 write(out, ((ColimitDenotator)denotator).getFactor(), offset+"  ");
                 out.println(offset+">");
             break;
-            case Yoneda.SIMPLE:
+            case SIMPLE:
                 ModuleMorphismMap tmpMap = ((ModuleMorphismMap)(denotator.getFrameCoordinate().getMap()));
                 //PV.methodPrint("REALVALUE: "+((RElement)tmpMap.getElement()).getValue());
                 tmpString = tmpMap.getElement().toString();

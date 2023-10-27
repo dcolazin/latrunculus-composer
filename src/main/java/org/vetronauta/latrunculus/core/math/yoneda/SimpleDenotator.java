@@ -160,8 +160,8 @@ public final class SimpleDenotator extends Denotator {
      * Returns the type of the denotator.
      */
     @Override
-    public int getType() {
-        return SIMPLE;
+    public FormDenotatorTypeEnum getType() {
+        return FormDenotatorTypeEnum.SIMPLE;
     }
     
     
@@ -758,7 +758,7 @@ public final class SimpleDenotator extends Denotator {
         indent(out, indent);
         out.print("Name: \""+getNameString()+"\"");
         out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+Form.typeToString(getForm().getType()));
+        out.print("; Type: "+ getForm().getType());
         out.println("; Address: "+getAddress());
 
         indent += 4;
@@ -766,9 +766,7 @@ public final class SimpleDenotator extends Denotator {
         if (recursionCheck(recursionCheckStack)) {
             indent(out, indent);
             out.println("...");
-            return;            
-        }
-        else {
+        } else {
             indent(out, indent);
             ModuleMorphismMap moduleMorphismMap = getModuleMorphismMap();
             if (moduleMorphismMap.isConstant()) {

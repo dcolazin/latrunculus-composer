@@ -21,6 +21,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleDenotator;
 
@@ -136,7 +137,7 @@ public class ObjectGenerator {
 				ModuleElement topElement = ((SimpleDenotator)denotator.get(valuePath.getDenotatorSubpath().toIntArray())).getElement();
 				//have to do this like this for the possibility of ProductElements
 				return this.extractValue(topElement, valuePath.getElementSubpath().toIntArray());
-			} else if (valuePath.getEndForm().getType() == Form.SIMPLE) {
+			} else if (valuePath.getEndForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
 				SimpleDenotator simple = (SimpleDenotator)denotator.get(valuePath.toIntArray());
 				if (simple != null) {
 					return ((ArithmeticElement<Real>)simple.getElement().cast(RRing.ring)).getValue().doubleValue();
@@ -190,7 +191,8 @@ public class ObjectGenerator {
 				Form currentForm = currentDenotator.getForm();
 				if (currentForm.equals(form)) {
 					return currentSubPath;
-				} else if (currentForm.getType() != Form.SIMPLE && (currentForm.getType() != Form.POWER || currentForm.getType() != Form.LIST)) {
+				} else if (currentForm.getType() != FormDenotatorTypeEnum.SIMPLE && (currentForm.getType() != FormDenotatorTypeEnum.POWER ||
+						currentForm.getType() != FormDenotatorTypeEnum.LIST)) {
 					for (int i = 0; i < ((FactorDenotator)currentDenotator).getFactorCount(); i++) {
 						subPathsQueue.add(currentSubPath.getChildPath(i));
 					}
@@ -210,7 +212,8 @@ public class ObjectGenerator {
 			DenotatorPath currentPath = subPathQueue.poll();
 			if (currentForm.equals(form)) {
 				return currentPath;
-			} else if (currentForm.getType() != Form.SIMPLE && currentForm.getType() != Form.POWER && currentForm.getType() != Form.LIST) {
+			} else if (currentForm.getType() != FormDenotatorTypeEnum.SIMPLE && currentForm.getType() != FormDenotatorTypeEnum.POWER
+					&& currentForm.getType() != FormDenotatorTypeEnum.LIST) {
 				for (int i = 0; i < currentForm.getFormCount(); i++) {
 					subFormQueue.add(currentForm.getForm(i));
 					subPathQueue.add(currentPath.getChildPath(i));
@@ -291,10 +294,10 @@ public class ObjectGenerator {
 				Denotator currentSubObject = object.get(currentSubPath.toIntArray());
 				if (currentSubObject != null) {
 					Form currentForm = currentSubObject.getForm();
-					if (currentForm.getType() == Form.SIMPLE) {
+					if (currentForm.getType() == FormDenotatorTypeEnum.SIMPLE) {
 						simples.put(currentSubPath, (SimpleDenotator)currentSubObject);
 						//do not search farther if form is either power or list!!
-					} else if (currentForm.getType() == Form.LIMIT || currentForm.getType() == Form.COLIMIT) {
+					} else if (currentForm.getType() == FormDenotatorTypeEnum.LIMIT || currentForm.getType() == FormDenotatorTypeEnum.COLIMIT) {
 						for (int i = 0; i < currentSubObject.getForm().getFormCount(); i++) {
 							subPathsQueue.add(currentSubPath.getChildPath(i));
 						}

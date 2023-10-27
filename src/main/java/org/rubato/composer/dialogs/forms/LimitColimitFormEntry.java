@@ -30,13 +30,14 @@ import org.rubato.base.RubatoDictionary;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 
 public class LimitColimitFormEntry
         extends AbstractFormEntry
         implements ActionListener {
 
-    public LimitColimitFormEntry(RubatoDictionary dict, int type) {
+    public LimitColimitFormEntry(RubatoDictionary dict, FormDenotatorTypeEnum type) {
         this.type = type;
         setLayout(new BorderLayout());
         formDiagram = new JFormDiagram(dict);
@@ -48,7 +49,7 @@ public class LimitColimitFormEntry
     public Form getForm(String name) {
         List<Form> forms = formDiagram.getForms();
         if (forms != null && name.length() > 0) {
-            if (type == Form.LIMIT) {
+            if (type == FormDenotatorTypeEnum.LIMIT) {
                 LimitForm form = FormFactory.makeLimitForm(name, forms);
                 List<String> labels = formDiagram.getLabels();
                 if (labels != null) {
@@ -56,7 +57,7 @@ public class LimitColimitFormEntry
                 }
                 return form;
             }
-            else if (type == Form.COLIMIT) {
+            else if (type == FormDenotatorTypeEnum.COLIMIT) {
                 ColimitForm form = FormFactory.makeColimitForm(name, forms);
                 List<String> labels = formDiagram.getLabels();
                 if (labels != null) {
@@ -85,5 +86,5 @@ public class LimitColimitFormEntry
     
     
     private JFormDiagram formDiagram;
-    private int type;
+    private FormDenotatorTypeEnum type;
 }

@@ -34,6 +34,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
@@ -410,13 +411,13 @@ public final class DenoFactory {
     public static Denotator makeDenotator(NameDenotator name, Form form, List<Denotator> denoList) {
         try {
             switch (form.getType()) {
-            case Form.LIST: {
+            case LIST: {
                 return new ListDenotator(name, (ListForm)form, denoList);
             }
-            case Form.POWER: {
+            case POWER: {
                 return new PowerDenotator(name, (PowerForm)form, denoList);
             }
-            case Form.LIMIT: {
+            case LIMIT: {
                 return new LimitDenotator(name, (LimitForm)form, denoList);
             }
             default: {
@@ -548,8 +549,8 @@ public final class DenoFactory {
             throws RubatoException {
         Form form = d.getForm();
         switch (form.getType()) {
-            case Form.POWER :
-            case Form.LIST : {
+            case POWER :
+            case LIST : {
                 FormDiagram dia = (FormDiagram)d.getForm().getIdentifier().getCodomainDiagram();
                 ListMorphismMap map = (ListMorphismMap)d.getCoordinate().getMap();
                 for (Denotator deno : denotators) {
@@ -559,15 +560,14 @@ public final class DenoFactory {
                     }
                     map.appendFactor(deno);
                 }
-                if (form.getType() == Form.POWER) {
+                if (form.getType() == FormDenotatorTypeEnum.POWER) {
                     map.sort();
                     map.removeDuplicates();
                 }
                 break;
             }
             default :
-                throw new RubatoException("DenoFactory.extendCoordinate: Cannot extend denotator of type "
-                                          +Form.typeToString(form.getType()));
+                throw new RubatoException("DenoFactory.extendCoordinate: Cannot extend denotator of type " + form.getType());
         }
     }
     

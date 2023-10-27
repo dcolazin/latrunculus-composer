@@ -42,6 +42,7 @@ import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
@@ -284,7 +285,7 @@ public class Repository
         FormItem item = forms.get(name);
         if (item == null) {
             // form not yet in repository
-            if (form.getType() != Form.SIMPLE) {
+            if (form.getType() != FormDenotatorTypeEnum.SIMPLE) {
                 FormDiagram diagram = (FormDiagram)form.getIdentifier().getCodomainDiagram();
                 if (!diagram.registerForms(this, builtin)) {
                     // registration failed
@@ -1091,7 +1092,7 @@ public class Repository
         registerBuiltin(scoreForm);
         
         // Karim's registration of the MacroScore forms
-        FormReference formRef = new FormReference("MacroScore", Form.POWER);
+        FormReference formRef = new FormReference("MacroScore", FormDenotatorTypeEnum.POWER);
 	
 		LimitForm nodeForm = FormFactory.makeLimitForm("Knot", noteForm, formRef);		
 		registerBuiltin(nodeForm);

@@ -59,14 +59,14 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     /**
      * Returns the type of the form.
      */
-    public abstract int getType();
+    public abstract FormDenotatorTypeEnum getType();
 
 
     /**
      * Returns the type of the form as a string.
      */
     public String getTypeString() {
-        return typeToString(getType());
+        return getType().toString();
     }
     
 
@@ -144,7 +144,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
             return getName().compareTo(other.getName());
         }
         else {
-            return getType()-other.getType();
+            return getType().ordinal()-other.getType().ordinal();
         }
     }
     
@@ -228,25 +228,6 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
         
         return list;
     }
-
-
-    /**
-     * Returns the space type as a String.
-     */
-    public static final String typeToString(int type) {
-        return types[type];
-    }
-                                    
-    
-    /**
-     * Returns the space type as an integer.
-     */
-    public static final int stringToType(String s) {
-        for (int i = 0; ; i++) {
-            if (s.equalsIgnoreCase(types[i])) return i;
-        }
-    }
-    
 
     /**
      * Returns a string representation of this form.
@@ -334,7 +315,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     
     int _shallowHash() {
         int hash= getNameString().hashCode();
-        hash = 37*hash+(getType()+1);
+        hash = 37*hash+(getType().ordinal()+1);
         return hash;
     }
     
@@ -370,7 +351,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     private void computeHashcode() {
         hasHashcode = true;
         hashcode = getNameString().hashCode();
-        hashcode = 37*hashcode + (getType()+1);
+        hashcode = 37*hashcode + (getType().ordinal()+1);
         if (identifier != null) {
             hashcode = 37*hashcode + identifier.hashCode();
         }
@@ -383,7 +364,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * @return true iff all references have been resolved.
      */
     public boolean resolveReferences(RubatoDictionary dict) {
-        IdentityHashMap<?,?> history = new IdentityHashMap<Object,Object>();
+        IdentityHashMap<?,?> history = new IdentityHashMap<>();
         return resolveReferences(dict, history);
     }
     
@@ -416,12 +397,5 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
     private   int     	    hashcode    = 0;
     protected boolean 	    registered  = false;
 
-    //TODO enum...
-    private static final String[] types = { "simple" ,
-                                            "limit",
-                                            "colimit",
-                                            "power",
-                                            "list" };
-    
     private static final int DEFAULT_MAX_DEPTH = 10;
 }

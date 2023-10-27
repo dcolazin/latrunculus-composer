@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -44,12 +45,12 @@ import java.util.LinkedList;
 public final class ProperIdentityMorphism extends IdentityMorphism {
 
     private final Diagram diagram;
-    private final int type;
+    private final FormDenotatorTypeEnum type;
 
     /**
      * Creates an identity morphism with the specified diagram of the given type.
      */
-    public ProperIdentityMorphism(Diagram diagram, int type) {
+    public ProperIdentityMorphism(Diagram diagram, FormDenotatorTypeEnum type) {
         this.diagram = diagram;
         this.type = type;
     }
@@ -65,7 +66,7 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     }
 
     
-    public int getType() {
+    public FormDenotatorTypeEnum getType() {
         return type;
     }
 
@@ -80,12 +81,12 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     }
 
     
-    public int getDomainType() {
+    public FormDenotatorTypeEnum getDomainType() {
         return getType();
     }
 
     
-    public int getCodomainType() {
+    public FormDenotatorTypeEnum getCodomainType() {
         return getType();
     }
 
@@ -127,7 +128,7 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
                 return c;
             }
             else {
-                return type-m.getType();
+                return type.ordinal()-m.getType().ordinal();
             }
         }
         else {
@@ -185,7 +186,7 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     
     
     public String toString() {
-        return "ProperIdentityMorphism["+diagram+","+Form.typeToString(type)+"]";
+        return "ProperIdentityMorphism["+diagram+","+ type +"]";
     }
 
     public String getElementTypeName() {
@@ -195,7 +196,7 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     
     public int hashCode() {
         int hash = 7;
-        hash = 37*hash + (type+1);
+        hash = 37*hash + (type.ordinal()+1);
         hash = 37*hash + diagram.hashCode();
         return hash;
     }
