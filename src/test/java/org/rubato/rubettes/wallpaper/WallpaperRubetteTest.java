@@ -244,8 +244,8 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertEquals(((ArithmeticElement<Real>) factor.getElement(new int[]{0, 0})).getValue(), onsetValue);
-		assertEquals(((ArithmeticElement<Rational>) factor.getElement(new int[]{1, 0})).getValue(), new Rational(pitchValue));
+		assertEquals(new Real(onsetValue), ((ArithmeticElement<Real>) factor.getElement(new int[]{0, 0})).getValue());
+		assertEquals(new Rational(pitchValue), ((ArithmeticElement<Rational>) factor.getElement(new int[]{1, 0})).getValue());
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
