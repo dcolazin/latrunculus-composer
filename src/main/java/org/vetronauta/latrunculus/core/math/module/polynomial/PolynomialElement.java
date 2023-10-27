@@ -21,12 +21,9 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -480,67 +477,8 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     }
 
     @Override
-    public String stringRep(boolean ... parens) {
-        if (isZero()) {
-            return "0";
-        }
-        if (isOne()) {
-            return "1";
-        }
-        boolean paren = getRing().getCoefficientRing() instanceof PolynomialRing ||
-                getRing().getCoefficientRing() instanceof CRing;
-        StringBuilder buf = new StringBuilder(30);
-        String ind = ring.getIndeterminate();
-        if (paren) {
-            buf.append("(");
-        }
-        buf.append(coefficients.get(coefficients.size()-1).stringRep(true));
-        if (paren) {
-            buf.append(")");
-        }
-        if (coefficients.size()-1 > 1) {
-            buf.append("*");
-            buf.append(ind);
-            buf.append("^");
-            buf.append(coefficients.size()-1);
-        }
-        else if (coefficients.size()-1 == 1) {
-            buf.append("*");
-            buf.append(ind);
-        }
-        for (int i = coefficients.size()-2; i >= 0; i--) {
-            if (!coefficients.get(i).isZero()) {
-                buf.append("+");
-                if (paren) {
-                    buf.append("(");
-                }
-                buf.append(coefficients.get(i).stringRep(true));
-                if (paren) {
-                    buf.append(")");
-                }
-                if (i > 1) {
-                    buf.append("*");
-                    buf.append(ind);
-                    buf.append("^");
-                    buf.append(i);
-                }
-                else if (i == 1) {
-                    buf.append("*");
-                    buf.append(ind);
-                }
-            }
-        }
-        if (parens.length > 0) {
-            return TextUtils.parenthesize(buf.toString());
-        }
-        else {
-            return buf.toString();
-        }
-    }
-
-    @Override
     public String toString() {
-        return "Polynomial["+stringRep()+"]";
+        return "Polynomial["+coefficients+"]";
     }
     
     @Override

@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.server.parse.ModuleElementRepresenter;
 
 
 /**
@@ -182,7 +183,7 @@ public class JModuleElementList
             element = e;
         }
         public String toString() {
-            return element.stringRep();
+            return ModuleElementRepresenter.stringRepresentation(element);
         }
         ModuleElement element;
     }

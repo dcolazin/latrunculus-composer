@@ -131,12 +131,4 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
      */
     Module<E,R> getModule();
 
-    /**
-     * Returns a string representation of this module element.
-     * The representation is meant to be parseable.
-     * If the argument parens is present then the representation
-     * is parenthesized if necessary.
-     */
-    String stringRep(boolean... parens);
-
 }

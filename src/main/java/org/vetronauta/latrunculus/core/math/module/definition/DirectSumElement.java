@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 
@@ -312,28 +311,6 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         }
         else {
             return getModule().compareTo(object.getModule());
-        }
-    }
-
-    @Override
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null["+getRing()+"]";
-        }
-        else {
-            StringBuilder res = new StringBuilder("("+components[0]+")");
-            for (int i = 1; i < getLength(); i++) {
-                res.append(',');
-                res.append('(');
-                res.append(components[i]);
-                res.append(')');
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();
-            }
         }
     }
 

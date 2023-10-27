@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.Folding;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 
@@ -310,26 +309,6 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
             return super.compareTo(object);
         }
     }
-
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder res = new StringBuilder(value[0].stringRep());
-            for (int i = 1; i < getLength(); i++) {
-                res.append(',');
-                res.append(value[i].stringRep());
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();                
-            }
-        }
-    }
-
     
     public String toString() {
         StringBuilder buf = new StringBuilder(30);

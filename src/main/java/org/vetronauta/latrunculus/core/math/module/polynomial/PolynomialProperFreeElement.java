@@ -19,10 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -313,27 +311,6 @@ public final class PolynomialProperFreeElement<B extends RingElement<B>> extends
             return super.compareTo(object);
         }
     }
-
-    public String stringRep(boolean ... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder buf = new StringBuilder(30);
-            buf.append(getValue(0).stringRep());
-            for (int i = 1; i < getLength(); i++) {
-                buf.append(",");
-                buf.append(getValue(i).stringRep());
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(buf.toString());
-            }
-            else {
-                return buf.toString();
-            }
-        }
-    }
-
     
     public String toString() {
         StringBuilder buf = new StringBuilder(30);

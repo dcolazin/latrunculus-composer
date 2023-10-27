@@ -178,20 +178,6 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
     }
 
     @Override
-    public String stringRep(boolean... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        StringBuilder res = new StringBuilder(30);
-        res.append(value.get(0).stringRep());
-        for (int i = 1; i < getLength(); i++) {
-            res.append(',');
-            res.append(value.get(i).stringRep());
-        }
-        return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
-    }
-
-    @Override
     public ArithmeticStringMultiElement<N> scaled(ArithmeticStringElement<N> element) {
         RingString<N> val = element.getValue();
         List<RingString<N>> res = new ArrayList<>(getLength());

@@ -464,35 +464,6 @@ public class RingString<T extends ArithmeticNumber<T>> implements DeepCopyable<R
         }
         buf.append("]");
         return buf.toString();
-    }    
-    
-    public String stringRep() {
-    	String word;
-    	Object factor;
-    	StringBuilder buf = new StringBuilder();
-    	Set<String> keyset = dict.keySet();
-    	if (keyset.isEmpty()) return "Null";
-        Iterator<String> keys = keyset.iterator();
-        if (keys.hasNext()) {
-            word = keys.next();
-            factor = dict.get(word);
-            buf.append(factor);
-            buf.append("*");
-            buf.append("\"");
-            buf.append(TextUtils.escape(word));
-            buf.append("\"");
-            while (keys.hasNext()) {
-                word = keys.next();
-                factor = dict.get(word);
-                buf.append("+");
-                buf.append(factor);
-                buf.append("*");
-                buf.append("\"");
-                buf.append(TextUtils.escape(word));
-                buf.append("\"");
-            }
-        }
-        return buf.toString();
     }
 
     public static double stringToDouble(String s) {

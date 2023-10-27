@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
 import lombok.NonNull;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.module.FoldingModule;
@@ -121,15 +120,6 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
     @Override
     public double[] fold(ModuleElement<?, ?>[] elements) {
         return FoldingModule.fold(this.getRing(), elements);
-    }
-
-    @Override
-    public String stringRep(boolean... parens) {
-        String representation = value.toString();
-        if (parens.length > 0 && !Character.isDigit(representation.charAt(0))) {
-            return TextUtils.parenthesize(representation);
-        }
-        return representation;
     }
 
     @Override

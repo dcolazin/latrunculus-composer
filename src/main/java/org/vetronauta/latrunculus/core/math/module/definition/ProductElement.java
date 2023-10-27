@@ -35,36 +35,12 @@ import java.util.List;
  */
 public class ProductElement extends RingElement<ProductElement> {
 
-    //TODO ProductElement<R>
-
-    /**
-     * Creates a new product element <i>e1</i>x<i>e1</i>.
-     */
-    public static ProductElement make(RingElement e1, RingElement e2) {
-        return new ProductElement(new RingElement[] { e1, e2 });
-    }
-
-    
-    /**
-     * Creates a new product element <i>e1</i>x<i>e1</i>x<i>e3</i>.
-     */
-    public static ProductElement make(RingElement e1, RingElement e2, RingElement e3) {
-        return new ProductElement(new RingElement[] { e1, e2, e3 });
-    }
-
-    
-    /**
-     * Creates a new product element from the array <code>factors</code>.
-     */
-    public static ProductElement make(RingElement[] factors) {
-        if (factors.length < 2) {
+    public static ProductElement make(RingElement<?>... elements) {
+        if (elements.length < 2) {
             throw new IllegalArgumentException("A ProductRing must have at least 2 factors.");
         }
-        else {
-            return new ProductElement(factors);
-        }
+        return new ProductElement(elements);
     }
-        
     
     /**
      * Creates a new product element from the collection <code>factors</code>.
@@ -78,24 +54,14 @@ public class ProductElement extends RingElement<ProductElement> {
         return make(f);
     }
         
-    
+    @Override
     public boolean isOne() {
-        for (int i = 0; i < factors.length; i++) {
-            if (!factors[i].isOne()) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(factors).allMatch(RingElement::isOne);
     }
     
-    
+    @Override
     public boolean isZero() {
-        for (int i = 0; i < factors.length; i++) {
-            if (!factors[i].isZero()) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(factors).allMatch(RingElement::isZero);
     }
 
     /**
@@ -106,7 +72,7 @@ public class ProductElement extends RingElement<ProductElement> {
         if (!getModule().equals(element.getModule())) {
             throw new DomainException(this.getModule(), element.getModule());
         }
-        RingElement newFactors[] = new RingElement[getFactorCount()];
+        RingElement[] newFactors = new RingElement[getFactorCount()];
         for (int i = 0; i < newFactors.length; i++) {
             RingElement currentValue = getValue(i);
             newFactors[i] = (RingElement) currentValue.getModule().cast(currentValue.sum(element.getValue(i)));
@@ -444,21 +410,6 @@ public class ProductElement extends RingElement<ProductElement> {
         }
         return ProductElement.make(newFactors);
     }
-    
-    public String stringRep(boolean ... parens) {
-        StringBuilder buf = new StringBuilder(30);
-        buf.append("(");
-        if (factors.length > 0) {
-            buf.append(factors[0].stringRep());
-        }
-        for (int i = 1; i < factors.length; i++) {
-            buf.append(",");
-            buf.append(factors[i].stringRep());
-        }
-        buf.append(")");
-        return buf.toString();
-    }
-    
     
     public String toString() {
         StringBuilder buf = new StringBuilder(30);

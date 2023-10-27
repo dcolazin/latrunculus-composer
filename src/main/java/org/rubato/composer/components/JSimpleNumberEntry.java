@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
+import org.vetronauta.latrunculus.server.parse.ModuleElementRepresenter;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -108,7 +109,7 @@ public class JSimpleNumberEntry
     
     public void setValue(ModuleElement element) {
         for (int i = 0; i < inputFields.length; i++) {
-            String s = element.getComponent(i).stringRep();
+            String s = ModuleElementRepresenter.stringRepresentation(element.getComponent(i));
             inputFields[i].setText(s);
         }
     }

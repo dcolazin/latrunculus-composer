@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.FoldingModule;
@@ -249,20 +248,6 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
             module = new ArithmeticMultiModule<>(ring, getLength());
         }
         return module;
-    }
-
-    @Override
-    public String stringRep(boolean... parens) {
-        if (getLength() == 0) {
-            return "Null";
-        }
-        StringBuilder res = new StringBuilder(30);
-        res.append(getValue().get(0));
-        for (int i = 1; i < getLength(); i++) {
-            res.append(',');
-            res.append(getValue().get(i));
-        }
-        return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
     }
 
     @Override

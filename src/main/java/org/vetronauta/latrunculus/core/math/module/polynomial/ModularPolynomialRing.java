@@ -226,7 +226,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         buf.append("ModularPolynomialRing(");
         buf.append(getBaseRing());
         buf.append(")[");
-        buf.append(modulus.stringRep());
+        buf.append(modulus);
         buf.append("]");
         return buf.toString();
     }
@@ -251,7 +251,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
             s.append(",").append(iter.next());
         }
         s.append("]/(");
-        s.append(getModulus().stringRep());
+        s.append(getModulus());
         s.append(")");
         return s.toString();
     }

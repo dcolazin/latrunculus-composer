@@ -160,12 +160,6 @@ public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingEleme
     public B getUnrestrictedElement() {
         return moduleElement;
     }
-    
-    public String stringRep(boolean ... parens) {
-        // TODO: not yet implemented
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
 
     public boolean equals(Object object) {
         if (object instanceof RestrictedElement) {

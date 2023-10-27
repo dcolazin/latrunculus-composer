@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
+import org.vetronauta.latrunculus.server.parse.ModuleElementRepresenter;
 
 
 /**
@@ -131,7 +132,7 @@ public class ModuleListView
 		for (int i = 0; i < len; i++) {
 			ModuleElement el = elements[i];
 			if (el instanceof RingElement) {
-				values[i] = ((RingElement)el).stringRep();
+				values[i] = ModuleElementRepresenter.stringRepresentation(el);
 			}
 			else {
 				values[i] = el.toString();
@@ -143,7 +144,7 @@ public class ModuleListView
 	private ModuleElement editValue(ModuleElement el) {
         ModuleElement resEl = null;
 		if (el instanceof RingElement) {
-			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), (el).stringRep());
+			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), ModuleElementRepresenter.stringRepresentation(el));
 			if (res != null) {
 				resEl = ModuleElementParser.parseElement(el.getModule(), res);
 			}

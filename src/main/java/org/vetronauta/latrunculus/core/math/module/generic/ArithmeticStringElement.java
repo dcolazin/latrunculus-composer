@@ -169,10 +169,6 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         return map;
     }
 
-    public String stringRep(boolean... parens) {
-        return getValue().stringRep();
-    }
-
     public String getString() {
         return getValue().getString();
     }
