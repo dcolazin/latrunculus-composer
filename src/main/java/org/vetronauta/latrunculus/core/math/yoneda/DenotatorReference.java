@@ -53,8 +53,8 @@ public final class DenotatorReference extends Denotator {
     
     
     @Override
-    public Denotator namedCopy(NameDenotator name) {
-        return new DenotatorReference(name);
+    public Denotator namedCopy(NameDenotator nameDenotator) {
+        return new DenotatorReference(nameDenotator);
     }
 
     
@@ -101,12 +101,12 @@ public final class DenotatorReference extends Denotator {
     }
     
     @Override
-    protected Denotator replace(int[] path, int curpos, Denotator d) throws RubatoException {
+    protected Denotator replace(int[] path, int currentPosition, Denotator d) throws RubatoException {
         throw new Error("Fatal error: DenotatorReference.replace should never be called");
     }
     
     @Override
-    protected Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
             throws RubatoException {
         throw new Error("Fatal error: DenotatorReference.map should never be called");
     }

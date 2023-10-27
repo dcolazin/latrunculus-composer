@@ -172,7 +172,7 @@ public final class SimpleDenotator extends Denotator {
 
     
     @Override
-    public Denotator namedCopy(NameDenotator name) {
+    public Denotator namedCopy(NameDenotator nameDenotator) {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
@@ -182,7 +182,7 @@ public final class SimpleDenotator extends Denotator {
             coord = getCoordinate().deepCopy();
             frameCoord = getCoordinate().deepCopy();
         }
-        return new SimpleDenotator(name, getSimpleForm(), coord, frameCoord);
+        return new SimpleDenotator(nameDenotator, getSimpleForm(), coord, frameCoord);
     }
     
     
@@ -318,9 +318,9 @@ public final class SimpleDenotator extends Denotator {
 
     
     @Override
-    protected Denotator replace(int[] path, int curpos, Denotator d)
+    protected Denotator replace(int[] path, int currentPosition, Denotator d)
             throws RubatoException {
-        if (curpos == path.length) {
+        if (currentPosition == path.length) {
             if (d.hasForm(getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
@@ -340,17 +340,17 @@ public final class SimpleDenotator extends Denotator {
         else {
             throw new RubatoException("SimpleDenotator.replace: Incompatible path, "+
                                       "expected length == %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
     }
 
     @Override
-    protected Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
             throws RubatoException {
-        if (path.length != curpos) {
+        if (path.length != currentPosition) {
             throw new RubatoException("SimpleDenotator.map: Incompatible path, "+
                                       "expected length %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
         else {
             return map(morphism);

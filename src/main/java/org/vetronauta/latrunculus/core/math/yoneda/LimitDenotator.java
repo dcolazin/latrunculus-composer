@@ -133,7 +133,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
     
     
     @Override
-    public Denotator namedCopy(NameDenotator name) {
+    public Denotator namedCopy(NameDenotator nameDenotator) {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
@@ -143,7 +143,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
             coord = getCoordinate().deepCopy();
             frameCoord = getCoordinate().deepCopy();
         }
-        return new LimitDenotator(name, getLimitForm(), coord, frameCoord);
+        return new LimitDenotator(nameDenotator, getLimitForm(), coord, frameCoord);
     }
 
     
@@ -260,9 +260,9 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
 
     
     @Override
-    protected Denotator replace(int[] path, int curpos, Denotator d)
+    protected Denotator replace(int[] path, int currentPosition, Denotator d)
             throws RubatoException {
-        if (curpos == path.length) {
+        if (currentPosition == path.length) {
             if (d.hasForm(getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
@@ -279,19 +279,19 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
-        else if (curpos > path.length) {
+        else if (currentPosition > path.length) {
             throw new RubatoException("LimitDenotator.replace: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
         else {
-            int i = path[curpos];
+            int i = path[currentPosition];
             if (i >= 0 && i < getFactorCount()) {
                 ArrayList<Denotator> denoList = new ArrayList<Denotator>(getFactorCount());
                 for (Denotator factor : getFactors()) {
                     denoList.add(factor);
                 }
-                denoList.set(i, getFactor(i).replace(path, curpos+1, d));
+                denoList.set(i, getFactor(i).replace(path, currentPosition +1, d));
                 return _make_unsafe(null, getAddress(), getLimitForm(), denoList);
             }
             else {
@@ -303,19 +303,19 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
     
     
     @Override
-    protected Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
             throws RubatoException {
-        if (curpos >= path.length) {
+        if (currentPosition >= path.length) {
             throw new RubatoException("LimitDenotator.map: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
         boolean changed = false;
         int i = 0;
         LinkedList<Denotator> newFactors = new LinkedList<Denotator>();        
         for (Denotator factor : getFactors()) {
-            if (path[curpos] == i) {
-                Denotator newFactor = factor.map(path, curpos+1, morphism);
+            if (path[currentPosition] == i) {
+                Denotator newFactor = factor.map(path, currentPosition +1, morphism);
                 if (newFactor != factor) {
                     changed = true;
                 }

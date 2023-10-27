@@ -34,7 +34,7 @@ package org.vetronauta.latrunculus.core.math.yoneda;
  */
 public interface Connectable {
     
-    public Object getConnector();
+    Object getConnector();
     
     void setConnector(Object connector);
 }

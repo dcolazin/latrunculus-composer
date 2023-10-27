@@ -118,7 +118,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     
     @Override
-    public Denotator namedCopy(NameDenotator name) {
+    public Denotator namedCopy(NameDenotator nameDenotator) {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
@@ -128,7 +128,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
             coord = getCoordinate().deepCopy();
             frameCoord = getCoordinate().deepCopy();
         }
-        return new ListDenotator(name, getListForm(), coord, frameCoord);
+        return new ListDenotator(nameDenotator, getListForm(), coord, frameCoord);
     }
 
     
@@ -246,9 +246,9 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     
     @Override
-    protected Denotator replace(int[] path, int curpos, Denotator d)
+    protected Denotator replace(int[] path, int currentPosition, Denotator d)
             throws RubatoException {
-        if (curpos == path.length) {
+        if (currentPosition == path.length) {
             if (d.hasForm(getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
@@ -265,12 +265,12 @@ public class ListDenotator extends Denotator implements FactorDenotator {
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
-        else if (curpos > path.length) {
+        else if (currentPosition > path.length) {
             throw new RubatoException("LimitDenotator.replace: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
-        else if (curpos == path.length-1 && path[curpos] == 0) {
+        else if (currentPosition == path.length-1 && path[currentPosition] == 0) {
             if (d.hasForm(getListForm().getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
@@ -290,7 +290,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         else {
             LinkedList<Denotator> denoList = new LinkedList<Denotator>();
             for (Denotator deno : getFactors()) {
-                denoList.add(deno.replace(path, curpos+1, d));
+                denoList.add(deno.replace(path, currentPosition +1, d));
             }
             return _make_unsafe(null, getAddress(), getListForm(), denoList);
         }
@@ -298,18 +298,18 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     
     @Override
-    protected Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
             throws RubatoException {
-        if (curpos >= path.length) {
+        if (currentPosition >= path.length) {
             throw new RubatoException("ListDenotator.map: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
-        if (path[curpos] == 0) {
+        if (path[currentPosition] == 0) {
             boolean changed = false;
             LinkedList<Denotator> newFactors = new LinkedList<Denotator>();        
             for (Denotator factor : getFactors()) {
-                Denotator newFactor = factor.map(path, curpos+1, morphism);
+                Denotator newFactor = factor.map(path, currentPosition +1, morphism);
                 if (newFactor != factor) {
                     changed = true;
                 }

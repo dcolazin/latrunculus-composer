@@ -104,7 +104,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     
     @Override
-    public Denotator namedCopy(NameDenotator name) {
+    public Denotator namedCopy(NameDenotator nameDenotator) {
         YonedaMorphism coord;
         YonedaMorphism frameCoord;
         if (getCoordinate() == getFrameCoordinate()) {
@@ -114,7 +114,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
             coord = getCoordinate().deepCopy();
             frameCoord = getCoordinate().deepCopy();
         }
-        return new ColimitDenotator(name, getColimitForm(), getIndex(),
+        return new ColimitDenotator(nameDenotator, getColimitForm(), getIndex(),
                                     coord, frameCoord);
     }
 
@@ -233,9 +233,9 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     
     @Override
-    protected Denotator replace(int[] path, int curpos, Denotator d)
+    protected Denotator replace(int[] path, int currentPosition, Denotator d)
             throws RubatoException {
-        if (curpos == path.length) {
+        if (currentPosition == path.length) {
         	//this.getForm().getForms().contains(d.getForm())
             if (d.hasForm(getForm())) {
                 Denotator res = d;
@@ -253,16 +253,16 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
-        else if (curpos > path.length) {
+        else if (currentPosition > path.length) {
             throw new RubatoException("ColimitDenotator.replace: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
         else {
-            int i = path[curpos];
+            int i = path[currentPosition];
             //florian replaced getFactorCount with getFormCount
             if (i >= 0 && i < this.getColimitForm().getFormCount()) {
-                Denotator res = getFactor(i).replace(path, curpos+1, d);
+                Denotator res = getFactor(i).replace(path, currentPosition +1, d);
                 return _make_unsafe(null, getAddress(), getColimitForm(), i, res);
             }
             else {
@@ -274,16 +274,16 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
 
     
     @Override
-    protected Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
             throws RubatoException {
-        if (curpos >= path.length) {
+        if (currentPosition >= path.length) {
             throw new RubatoException("ColimitDenotator.map: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+                    currentPosition, path.length);
         }
-        if (path[curpos] == getIndex()) {
+        if (path[currentPosition] == getIndex()) {
             Denotator factor = getFactor();
-            Denotator newFactor = factor.map(path, curpos+1, morphism);
+            Denotator newFactor = factor.map(path, currentPosition +1, morphism);
             if (newFactor != factor) {
                 return DenoFactory.makeDenotator(getForm(), getIndex(), newFactor);
             }

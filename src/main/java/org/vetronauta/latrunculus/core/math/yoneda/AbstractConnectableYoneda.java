@@ -29,7 +29,9 @@ package org.vetronauta.latrunculus.core.math.yoneda;
  * @author Stefan Göller
  */
 public abstract class AbstractConnectableYoneda implements Connectable, Yoneda {
- 
+
+    private transient Object connector;
+
     public final Object getConnector() {
         return connector;
     }
@@ -38,5 +40,4 @@ public abstract class AbstractConnectableYoneda implements Connectable, Yoneda {
         connector = c;
     }
 
-    private transient Object connector;
 }

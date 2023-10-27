@@ -21,6 +21,9 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.rubato.base.RubatoDictionary;
 import org.rubato.base.RubatoException;
 import org.rubato.util.TextUtils;
@@ -32,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -42,116 +44,55 @@ import java.util.LinkedList;
  * @author Stefan Müller
  * @author Stefan Göller
  */
+@Getter
+@Setter
 public abstract class Denotator extends AbstractConnectableYoneda implements Comparable<Denotator>, Iterable<Denotator>, MathDefinition {
 
-    
+    private final Form form;
+
+    /**
+     * Name of the denotator as a denotator.
+     * A null name indicates an anonymous denotator.
+     */
+    private NameDenotator name;
+    private YonedaMorphism coordinate;
+    private YonedaMorphism frameCoordinate;
+
     /**
      * Makes a shallow copy this denotator and gives
      * it the specified <code>name</code>.
      */
-    public abstract Denotator namedCopy(NameDenotator nameDeno);
-    
-    /**
-     * Returns the name of the denotator as a denotator.
-     * A null name indicates an anonymous denotator.
-     */
-    public NameDenotator getName() {
-        return name;
-    }
-    
-    
+    public abstract Denotator namedCopy(NameDenotator nameDenotator);
+
     /**
      * Returns the name of the denotator converted to a string.
      * An empty string indicates an anonymous denotator.
      */
     public String getNameString() {
-        return name == null ? "" : name.getNameString();
+        return name == null ? StringUtils.EMPTY : name.getNameString();
     }
-
-
-    /**
-     * Sets the name of the denotator as a NameDenotator.
-     * To make an anonymous denotator, pass a null name.
-     */
-    public final void setName(NameDenotator name) {
-        this.name = name;
-    }
-
 
     /**
      * Sets the name of the denotator as a string.
      * To make an anonymous denotator, pass an empty string.
      */
     public final void setNameString(String nameString) {
-        if (nameString.length() == 0) {
-            name = null;
-        }
-        else {
-            name = NameDenotator.make(nameString);
-        }
+        name = StringUtils.isEmpty(nameString) ? NameDenotator.make(nameString) : null;
     }
-
-        
-    /**
-     * Returns the form of the denotator.
-     */
-    public Form getForm() {
-        return form;
-    }
-    
     
     /**
      * Returns the type of the denotator.
      * @return type as an integer
      */
     public abstract int getType();
-    
-    
-    /**
-     * Returns the coordinate of the denotator.
-     */
-    public final YonedaMorphism getCoordinate() {
-        return coordinate;
-    } 
-    
-    
-    /**
-     * Sets the coordinate of the denotator.
-     */
-    protected final void setCoordinate(YonedaMorphism morphism) {
-        coordinate = morphism;
-    } 
-
-    
-    /**
-     * Returns the frame coordinate of the denotator.
-     */
-    public YonedaMorphism getFrameCoordinate() {
-        return frameCoordinate;
-    }
-    
-
-    /**
-     * Sets the frame coordinate of the denotator.
-     */
-    protected final void setFrameCoordinate(YonedaMorphism morphism) {
-        frameCoordinate = morphism;
-    }
-    
 
     /**
      * Sets both coordinates of the denotator.
      */
     protected final void setCoordinates(YonedaMorphism morphism) {
-        coordinate = frameCoordinate = morphism;
+        coordinate = morphism;
+        frameCoordinate = morphism;
     }
-
-    
-    /**
-     * Returns an iterator over the coordinates of this denotator.
-     */
-    public abstract Iterator<Denotator> iterator();
-    
     
     /**
      * If not null-addressed returns a new denotator evaluated at address element.
@@ -161,8 +102,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @return evaluated denotator
      * @throws MappingException if evaluation fails
      */
-    public abstract Denotator at(ModuleElement element)
-        throws MappingException;
+    public abstract Denotator at(ModuleElement element) throws MappingException;
     
     
     /**
@@ -265,12 +205,13 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * at the given path in this denotator with <code>d</code>.
      * 
      * @param path the path at the end of which the denotator is replaced
-     * @param curpos the current position in the path 
+     * @param currentPosition the current position in the path
      * @param d the denotator to put at the path 
      * @throws RubatoException if the specified denotator
      *         is of the wrong form or address
      */
-    protected abstract Denotator replace(int[] path, int curpos, Denotator d)
+    protected abstract Denotator replace(int[] path, int currentPosition
+            , Denotator d)
         throws RubatoException;
     
     
@@ -289,13 +230,13 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
     /**
      * Maps this denotator using the given <code>morphism</code>
      * along the specified <code>path</code> given that the
-     * current position is <code>curpos</code>.
+     * current position is <code>currentPosition</code>.
      * 
-     * @param curpos the current position in the path
+     * @param currentPosition the current position in the path
      * @return null if element could not be retrieved along the path
      * @throws RubatoException
      */
-    protected abstract Denotator map(int[] path, int curpos, ModuleMorphism morphism)
+    protected abstract Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
         throws RubatoException;
 
     
@@ -606,9 +547,4 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
         
     }
 
-    
-    private NameDenotator name;
-    private Form          form;
-    private YonedaMorphism coordinate;
-    private YonedaMorphism frameCoordinate;
 }
