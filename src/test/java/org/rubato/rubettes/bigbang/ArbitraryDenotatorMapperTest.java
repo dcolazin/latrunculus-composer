@@ -1,14 +1,19 @@
 package org.rubato.rubettes.bigbang;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
@@ -25,7 +30,10 @@ class ArbitraryDenotatorMapperTest {
 	void setUp() throws Exception {
 		this.objects = new TestObjects();
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		this.translation = RFreeAffineMorphism.make(identity, new double[]{-1,-2});
+		List<ArithmeticElement<Real>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new Real(-1)));
+		list.add(new ArithmeticElement<>(new Real(-2)));
+		this.translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
 	}
 
 	@Test

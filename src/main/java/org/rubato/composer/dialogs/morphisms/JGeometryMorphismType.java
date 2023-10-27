@@ -23,12 +23,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 public class JGeometryMorphismType extends JMorphismType implements ActionListener {
 
@@ -86,8 +91,10 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
             matrix = geo.getMatrix().product(matrix);
         }
         RMatrix A = matrix.getSubMatrix(0, 1, 0, 1);
-        double[] b = new double[] { matrix.get(0, 2), matrix.get(1, 2) };
-        container.setMorphism(RFreeAffineMorphism.make(A, b));
+        List<ArithmeticElement<Real>> list = new ArrayList<>(2);
+        list.add(matrix.get(0, 2));
+        list.add(matrix.get(1, 2));
+        container.setMorphism(ArithmeticAffineFreeMorphism.make(RRing.ring, A, new ArithmeticMultiElement<>(RRing.ring, list)));
         geometryView.setMatrix(matrix);
     }
     

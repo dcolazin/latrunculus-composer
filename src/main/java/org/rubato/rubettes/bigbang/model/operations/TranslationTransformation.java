@@ -3,6 +3,7 @@ package org.rubato.rubettes.bigbang.model.operations;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -11,7 +12,7 @@ import org.w3c.dom.Element;
 
 public class TranslationTransformation extends AbstractTransformation {
 	
-	private double[] modifiedShift;
+	private List<Real> modifiedShift;
 	
 	//used for cloning
 	protected TranslationTransformation(BigBangModel model, TranslationTransformation other) {
@@ -31,8 +32,10 @@ public class TranslationTransformation extends AbstractTransformation {
 	
 	@Override
 	protected void updateOperation() {
-		this.modifiedShift = new double[]{this.modificationRatio*(this.endingPoint[0]-this.center[0]),
-				this.modificationRatio*(this.endingPoint[1]-this.center[1])};
+		List<Real> list = new ArrayList<>(2);
+		list.add(new Real(this.modificationRatio*(this.endingPoint[0]-this.center[0])));
+		list.add(new Real(this.modificationRatio*(this.endingPoint[1]-this.center[1])));
+		this.modifiedShift = list;
 		this.updateMatrix();
 	}
 	
@@ -44,7 +47,7 @@ public class TranslationTransformation extends AbstractTransformation {
 	public List<AbstractOperation> getSplitOperations(double ratio) {
 		this.modify(1);
 		List<AbstractOperation> translations = new ArrayList<AbstractOperation>();
-		double[] partialShift = new double[]{this.modifiedShift[0]*ratio, this.modifiedShift[1]*ratio};
+		double[] partialShift = new double[]{this.modifiedShift.get(0).doubleValue()*ratio, this.modifiedShift.get(1).doubleValue()*ratio};
 		double[] pointInBetween = new double[]{this.getStartingPoint()[0]+partialShift[0], this.getStartingPoint()[1]+partialShift[1]};
 		TranslationTransformation firstTranslation = (TranslationTransformation)this.clone();
 		firstTranslation.modify(pointInBetween);
@@ -58,7 +61,7 @@ public class TranslationTransformation extends AbstractTransformation {
 	
 	@Override
 	protected String getSpecificPresentationName() {
-		return "Translation " + super.round(this.modifiedShift[0]) + ", " + super.round(this.modifiedShift[1]);
+		return "Translation " + super.round(this.modifiedShift.get(0).doubleValue()) + ", " + super.round(this.modifiedShift.get(0).doubleValue());
 	}
 	
 	public double[] getStartingPoint() {
@@ -66,7 +69,7 @@ public class TranslationTransformation extends AbstractTransformation {
 	}
 	
 	public double[] getEndingPoint() {
-		return new double[]{this.getStartingPoint()[0]+this.modifiedShift[0],this.getStartingPoint()[1]+this.modifiedShift[1]};
+		return new double[]{this.getStartingPoint()[0]+this.modifiedShift.get(0).doubleValue(),this.getStartingPoint()[1]+this.modifiedShift.get(0).doubleValue()};
 	}
 
 }

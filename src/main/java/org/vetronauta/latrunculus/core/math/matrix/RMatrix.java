@@ -20,14 +20,20 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Matrixes over real numbers.
  */
-public class RMatrix extends Matrix<Real> {
+public class RMatrix extends ArithmeticMatrix<Real> {
 
     /**
      * Creates a real <code>rows</code> x <code>cols</code> matrix
@@ -37,8 +43,54 @@ public class RMatrix extends Matrix<Real> {
         super(rows, cols);
         coefficients = new double[rows][cols];
     }
-    
-    
+
+    @Override
+    public ArithmeticMatrix<Real> product(ArithmeticMatrix<Real> matrix) {
+        if (!(matrix instanceof RMatrix)) {
+            throw new UnsupportedOperationException("still have to do it");
+        }
+        return product((RMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Real> sum(ArithmeticMatrix<Real> matrix) {
+        if (!(matrix instanceof RMatrix)) {
+            throw new UnsupportedOperationException("still have to do it");
+        }
+        return sum((RMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Real> difference(ArithmeticMatrix<Real> matrix) {
+        if (!(matrix instanceof RMatrix)) {
+            throw new UnsupportedOperationException("still have to do it");
+        }
+        return difference((RMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Real> scaled(ArithmeticElement<Real> element) {
+        return scaled(element.getValue().doubleValue());
+    }
+
+    @Override
+    public ArithmeticMultiElement<Real> product(ArithmeticMultiElement<Real> vector) {
+        double[] prod = product(vector.getValue().stream()
+                .map(ArithmeticElement::getValue)
+                .mapToDouble(Real::doubleValue)
+                .toArray());
+        return new ArithmeticMultiElement<>(RRing.ring, Arrays.stream(prod)
+                .mapToObj(Real::new)
+                .map(ArithmeticElement::new)
+                .collect(Collectors.toList()));
+    }
+
+    @Override
+    public ArithmeticElement<Real> get(int i, int j) {
+        return new ArithmeticElement<>(new Real(coefficients[i][j]));
+    }
+
+
     /**
      * Creates a real <code>rows</code> x <code>cols</code> matrix
      * with all coefficients set to <code>value</code>.
@@ -132,11 +184,28 @@ public class RMatrix extends Matrix<Real> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public double get(int row, int col) {
+    public double getDouble(int row, int col) {
         return coefficients[row][col];
     }
-    
-    
+
+    @Override
+    public ArithmeticMultiElement<Real> getColumn(int j) {
+        List<ArithmeticElement<Real>> list = new ArrayList<>(rows);
+        for (int i = 0; i < rows; i++) {
+            list.add(new ArithmeticElement<>(new Real(coefficients[i][j])));
+        }
+        return new ArithmeticMultiElement<>(RRing.ring, list);
+    }
+
+    @Override
+    public ArithmeticMultiElement<Real> getRow(int i) {
+        return new ArithmeticMultiElement<>(RRing.ring, Arrays.stream(coefficients[i])
+                .mapToObj(Real::new)
+                .map(ArithmeticElement::new)
+                .collect(Collectors.toList()));
+    }
+
+
     /**
      * Sets index <code>row</code>,<code>col</code> to <code>value</code>.
      */

@@ -130,7 +130,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Complex(m.get(r, c));
+                coefficients[r][c] = new Complex(m.getDouble(r, c));
             }
         }
     }

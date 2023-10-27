@@ -16,6 +16,7 @@ public abstract class ArithmeticMatrix<N extends ArithmeticNumber<N>> extends Ma
     public abstract ArithmeticMatrix<N> sum(ArithmeticMatrix<N> matrix);
     public abstract ArithmeticMatrix<N> difference(ArithmeticMatrix<N> matrix);
     public abstract ArithmeticMatrix<N> scaled(ArithmeticElement<N> element);
+    public abstract ArithmeticMatrix<N> inverse();
 
     public abstract ArithmeticMultiElement<N> product(ArithmeticMultiElement<N> vector);
     public abstract ArithmeticElement<N> get(int i, int j);

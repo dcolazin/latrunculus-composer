@@ -36,6 +36,11 @@ public class GenericMatrix<A extends ArithmeticNumber<A>> extends ArithmeticMatr
     }
 
     @Override
+    public ArithmeticMatrix<A> inverse() {
+        return null; //TODO
+    }
+
+    @Override
     public ArithmeticMultiElement<A> product(ArithmeticMultiElement<A> vector) {
         return null; //TODO
     }

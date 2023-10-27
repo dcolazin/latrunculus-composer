@@ -36,9 +36,10 @@ import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -98,7 +99,11 @@ class WallpaperRubetteTest {
 		this.rubette.setInputForm(this.scoreForm);
 		this.morphisms = new ArrayList<>();
 		this.morphisms.add(new ArithmeticAffineRingMorphism<>(RRing.ring, new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(1))));
-		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{1,1},{1,1}}), new double[]{1,2}));
+		List<ArithmeticElement<Real>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new Real(1)));
+		list.add(new ArithmeticElement<>(new Real(2)));
+		ModuleMorphism m = ArithmeticAffineFreeMorphism.make(RRing.ring, new RMatrix(new double[][]{{1,1},{1,1}}), new ArithmeticMultiElement<>(RRing.ring, list));
+		this.morphisms.add(m);
 	}
 	
 	@Test

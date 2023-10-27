@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
@@ -17,6 +18,8 @@ import org.rubato.rubettes.bigbang.model.denotators.BigBangTransformation;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
 import org.rubato.rubettes.util.DenotatorPath;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -46,13 +49,13 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		this.modificationRatio = other.modificationRatio;
 	}
 	
-	public AbstractTransformation(BigBangModel model, TransformationProperties properties) {
+	protected AbstractTransformation(BigBangModel model, TransformationProperties properties) {
 		super(model);
 		this.init();
 		this.setProperties(properties);
 	}
 	
-	public AbstractTransformation(BigBangModel model, XMLReader reader, Element element) {
+	protected AbstractTransformation(BigBangModel model, XMLReader reader, Element element) {
 		super(model, reader, element);
 		this.init();
 		this.fromXML(reader, element);
@@ -61,7 +64,7 @@ public abstract class AbstractTransformation extends AbstractOperation {
 	private void init() {
 		this.isAnimatable = true;
 		this.isSplittable = true;
-		this.objects = new TreeSet<BigBangObject>();
+		this.objects = new TreeSet<>();
 	}
 	
 	private void setProperties(TransformationProperties properties) {
@@ -88,19 +91,19 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		this.updateOperation();
 	}
 	
-	protected void initTransformation(RMatrix matrix, double[] shift) {
-		List<RMatrix> matrices = new ArrayList<RMatrix>();
+	protected void initTransformation(RMatrix matrix, List<Real> shift) {
+		List<RMatrix> matrices = new ArrayList<>();
 		matrices.add(matrix);
-		List<double[]> shifts = new ArrayList<double[]>();
+		List<List<Real>> shifts = new ArrayList<>();
 		shifts.add(shift);
 		this.initTransformation(matrices, shifts);
 	}
 	
-	protected void initTransformation(List<RMatrix> matrices, List<double[]> shifts) {
-		ModuleMorphism morphism = RFreeAffineMorphism.make(matrices.get(0), shifts.get(0));
+	protected void initTransformation(List<RMatrix> matrices, List<List<Real>> shifts) {
+		ModuleMorphism morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(0), ArithmeticMultiElement.make(RRing.ring, shifts.get(0)));
 		for (int i = 1; i < matrices.size(); i++) {
 			try {
-				morphism = RFreeAffineMorphism.make(matrices.get(i), shifts.get(i)).compose(morphism);
+				morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(i), ArithmeticMultiElement.make(RRing.ring, shifts.get(i))).compose(morphism);
 			} catch (CompositionException e) { e.printStackTrace(); }
 		}
 		this.transformation = morphism;

@@ -165,7 +165,7 @@ class JAffineGraph
         CMatrix res = new CMatrix(2, 2);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; i < 2; i++) {
-                res.set(i, j, new Complex(m.get(i, j)));
+                res.set(i, j, new Complex(m.getDouble(i, j)));
             }
         }
         return res;

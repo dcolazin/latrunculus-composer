@@ -160,8 +160,8 @@ public class LeapObjectAffineAdapter extends Listener {
 	
 	private void updateView(boolean startNewTransformation) {
 		RMatrix t = reflectAcrossX(this.transform);
-		double[] shift = {t.get(0, 2), t.get(1, 2)};
-		double[][] t2x2 = {{t.get(0, 0), t.get(0, 1)}, {t.get(1,0), t.get(1, 1)}};
+		double[] shift = {t.getDouble(0, 2), t.getDouble(1, 2)};
+		double[][] t2x2 = {{t.getDouble(0, 0), t.getDouble(0, 1)}, {t.getDouble(1,0), t.getDouble(1, 1)}};
 		RMatrix transform2x2 = new RMatrix(t2x2);
 		boolean copyAndTransform = false; //TODO:read ALT key!!!!
 //		System.out.println(transform2x2);

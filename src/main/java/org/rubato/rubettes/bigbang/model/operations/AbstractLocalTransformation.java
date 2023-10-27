@@ -1,8 +1,11 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -33,16 +36,16 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		this.initTransformation(this.getMatrix(), this.getShift());
 	}
 	
-	protected void initTransformation(RMatrix matrix, double[] shift) {
+	protected void initTransformation(RMatrix matrix, List<Real> shift) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		List<RMatrix> matrices = new ArrayList<RMatrix>();
+		List<RMatrix> matrices = new ArrayList<>();
 		matrices.add(identity);
 		matrices.add(matrix);
 		matrices.add(identity);
-		List<double[]> shifts = new ArrayList<double[]>();
-		shifts.add(this.shift1);
+		List<List<Real>> shifts = new ArrayList<>();
+		shifts.add(Arrays.stream(this.shift1).mapToObj(Real::new).collect(Collectors.toList()));
 		shifts.add(shift);
-		shifts.add(this.shift2);
+		shifts.add(Arrays.stream(this.shift2).mapToObj(Real::new).collect(Collectors.toList()));
 		this.initTransformation(matrices, shifts);
 	}
 	
@@ -68,8 +71,11 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		return new double[]{x,y};
 	}
 	
-	protected double[] getShift() {
-		return new double[2];
+	protected List<Real> getShift() {
+		List<Real> list = new ArrayList<>(2);
+		list.add(new Real(0));
+		list.add(new Real(0));
+		return list;
 	}
 	
 	public void toXML(XMLWriter writer) {

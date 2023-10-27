@@ -14,8 +14,10 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -240,13 +242,19 @@ public class TestObjects {
 	
 	public BigBangTransformation makeTranslation(int x, int y, TransformationPaths paths) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		ModuleMorphism translation = RFreeAffineMorphism.make(identity, new double[]{x, y});
+		List<ArithmeticElement<Real>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new Real(x)));
+		list.add(new ArithmeticElement<>(new Real(y)));
+		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}
 	
 	public BigBangTransformation makeScaling(int x, int y, TransformationPaths paths) {
 		RMatrix identity = new RMatrix(new double[][]{{x,0},{0,y}});
-		ModuleMorphism translation = RFreeAffineMorphism.make(identity, new double[]{0, 0});
+		List<ArithmeticElement<Real>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new Real(0)));
+		list.add(new ArithmeticElement<>(new Real(0)));
+		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}
 	

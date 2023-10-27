@@ -41,6 +41,8 @@ public interface FreeElement<E extends ModuleElement<E,R>, R extends RingElement
      */
     E productCW(E element) throws DomainException;
 
+    R getComponent(int i);
+
     /**
      * Multiply this module element componentwise with <code>element</code>.
      * This is a destructive operation.
