@@ -32,11 +32,13 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -150,7 +152,6 @@ class JAffineGraph
     
     public QMatrix getQMatrix() {
         return ((QConfiguration)config).getQMatrix();
-        
     }
     
     
@@ -442,6 +443,14 @@ class JAffineGraph
     public abstract class Configuration {
         double[] px = { 0.0, 1.0, 0.0 };
         double[] py = { 0.0, 0.0, 1.0 };
+
+        public GenericMatrix getMatrix() {
+            return null; //TODO make this class generic
+        }
+
+        public ArithmeticMultiElement getVector() {
+            return null; //TODO make this class generic
+        }
         
         public int getScreenX(int i) {
             return worldToScreenX(px[i]);
@@ -571,4 +580,12 @@ class JAffineGraph
     private static final double X_MAX =  3;
     private static final double Y_MIN = -1;
     private static final double Y_MAX =  3;
+
+    public GenericMatrix getMatrix() {
+        return config.getMatrix();
+    }
+
+    public ArithmeticMultiElement getVector() {
+        return config.getVector();
+    }
 }

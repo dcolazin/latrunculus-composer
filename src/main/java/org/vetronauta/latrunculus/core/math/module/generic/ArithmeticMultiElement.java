@@ -42,18 +42,32 @@ import java.util.stream.Collectors;
 public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
         extends ProperFreeElement<ArithmeticMultiElement<N>, ArithmeticElement<N>> {
 
-    //TODO have a N list instead of a ArithmeticElement<N> one
+    //TODO have a N list instead of a ArithmeticElement<N> one?
 
     private final List<ArithmeticElement<N>> value;
     private final ArithmeticRing<N> ring;
     private ArithmeticMultiModule<N> module;
 
     public ArithmeticMultiElement(ArithmeticRing<N> ring, List<ArithmeticElement<N>> value) {
-        if (value == null || value.size() == 1) {
+        if (value != null && value.size() == 1) {
             throw new IllegalArgumentException("MultiElement must have length > 1");
         }
-        this.value = value;
+        this.value = value != null ? value : new ArrayList<>();
         this.ring = ring;
+    }
+
+    public static <N extends ArithmeticNumber<N>> FreeElement<?, ArithmeticElement<N>> zero(ArithmeticRing<N> ring, int dimension) {
+        if (dimension < 1) {
+            return new ArithmeticMultiElement<>(ring, null);
+        }
+        if (dimension == 1) {
+            return ring.getZero();
+        }
+        List<ArithmeticElement<N>> list = new ArrayList<>(dimension);
+        for (int i = 0; i < dimension; i++) {
+            list.add(ring.getZero());
+        }
+        return new ArithmeticMultiElement<>(ring, list);
     }
 
     public static <N extends ArithmeticNumber<N>> FreeElement<?, ArithmeticElement<N>> make(ArithmeticRing<N> ring, N[] elements) {

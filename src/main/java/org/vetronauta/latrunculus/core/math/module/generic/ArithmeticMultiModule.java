@@ -3,14 +3,13 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.module.InjectionProjectionUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineInjection;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -157,13 +156,13 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
     }
 
     @Override
-    protected ModuleMorphism _getProjection(int index) {
-        return InjectionProjectionUtils.getProjection(ring, index, getDimension());
+    protected ArithmeticAffineProjection<N> _getProjection(int index) {
+        return new ArithmeticAffineProjection<>(getRing(), getUnitElement(index), ring.getZero());
     }
 
     @Override
-    protected ModuleMorphism _getInjection(int index) {
-        return InjectionProjectionUtils.getInjection(ring, index, getDimension());
+    protected ArithmeticAffineInjection<N> _getInjection(int index) {
+        return new ArithmeticAffineInjection<>(getRing(), getUnitElement(index), getZero());
     }
 
     @Override

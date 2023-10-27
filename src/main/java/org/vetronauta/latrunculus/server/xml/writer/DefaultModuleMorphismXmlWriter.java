@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -39,15 +38,14 @@ import org.vetronauta.latrunculus.core.math.module.morphism.PolynomialMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProductMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProjectionMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ReorderMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineInjection;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
@@ -76,27 +74,19 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
     @Override
     public void toXML(ModuleMorphism object, XMLWriter writer) {
         if (object instanceof ArithmeticAffineRingMorphism) {
-            write((ArithmeticAffineRingMorphism) object, writer);
+            write((ArithmeticAffineRingMorphism<?>) object, writer);
             return;
         }
-        if (object instanceof CFreeAffineMorphism) {
-            write((CFreeAffineMorphism) object, writer);
+        if (object instanceof ArithmeticAffineInjection) {
+            write((ArithmeticAffineInjection<?>) object, writer);
             return;
         }
-        if (object instanceof QFreeAffineMorphism) {
-            write((QFreeAffineMorphism) object, writer);
+        if (object instanceof ArithmeticAffineProjection) {
+            write((ArithmeticAffineProjection<?>) object, writer);
             return;
         }
-        if (object instanceof RFreeAffineMorphism) {
-            write((RFreeAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof ZnFreeAffineMorphism) {
-            write((ZnFreeAffineMorphism) object, writer);
-            return;
-        }
-        if (object instanceof ZFreeAffineMorphism) {
-            write((ZFreeAffineMorphism) object, writer);
+        if (object instanceof ArithmeticAffineMultiMorphism) {
+            write((ArithmeticAffineMultiMorphism<?>) object, writer);
             return;
         }
         if (object instanceof CanonicalMorphism) {
@@ -184,85 +174,30 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         }
     }
 
-    private void write(ArithmeticAffineRingMorphism morphism, XMLWriter writer) {
+    private void write(ArithmeticAffineRingMorphism<?> morphism, XMLWriter writer) {
         writer.emptyWithType(MODULE_MORPHISM, morphism.getElementTypeName(), A_ATTR, morphism.getA(), B_ATTR, morphism.getB());
     }
 
-    private void write(CFreeAffineMorphism morphism, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(), ROWS_ATTR, morphism.getMatrix().getRowCount(), COLUMNS_ATTR, morphism.getMatrix().getColumnCount());
-        String s = "";
-        for (int i = 0; i < morphism.getMatrix().getRowCount(); i++) {
-            for (int j = 0; j < morphism.getMatrix().getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += morphism.getMatrix().getNumber(i, j);
+    private void write(ArithmeticAffineProjection<?> morphism, XMLWriter writer) {
+        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(), ROWS_ATTR, morphism.getMatrix().getLength());
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < morphism.getMatrix().getLength(); i++) {
+            if (i != 0) {
+                s.append(",");
             }
+            s.append(morphism.getMatrix().getComponent(i));
         }
         writer.openInline(A_ATTR);
-        writer.text(s);
+        writer.text(s.toString());
         writer.closeInline();
-        s = morphism.getVector()[0].toString();
-        for (int i = 1; i < morphism.getVector().length; i++) {
-            s += ","+morphism.getVector()[i];
-        }
+        s = new StringBuilder(morphism.getVector().toString());
         writer.openInline(B_ATTR);
-        writer.text(s);
+        writer.text(s.toString());
         writer.closeInline();
         writer.closeBlock();
     }
 
-    private void write(RFreeAffineMorphism morphism, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(), ROWS_ATTR, morphism.getMatrix().getRowCount(), COLUMNS_ATTR, morphism.getMatrix().getColumnCount());
-        String s = "";
-        for (int i = 0; i < morphism.getMatrix().getRowCount(); i++) {
-            for (int j = 0; j < morphism.getMatrix().getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += morphism.getMatrix().get(i, j);
-            }
-        }
-        writer.openInline(A_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        s = Double.toString(morphism.getVector()[0]);
-        for (int i = 1; i < morphism.getVector().length; i++) {
-            s += ","+morphism.getVector()[i];
-        }
-        writer.openInline(B_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        writer.closeBlock();
-    }
-
-    private void write(QFreeAffineMorphism morphism, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(),
-                ROWS_ATTR, morphism.getMatrix().getRowCount(),
-                COLUMNS_ATTR, morphism.getMatrix().getColumnCount());
-        String s = "";
-        for (int i = 0; i < morphism.getMatrix().getRowCount(); i++) {
-            for (int j = 0; j < morphism.getMatrix().getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += morphism.getMatrix().get(i, j);
-            }
-        }
-        writer.openInline(A_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        s = morphism.getVector()[0].toString();
-        for (int i = 1; i < morphism.getVector().length; i++) {
-            s += ","+morphism.getVector()[i];
-        }
-        writer.openInline(B_ATTR);
-        writer.text(s);
-        writer.closeInline();
-        writer.closeBlock();
-    }
-
-    private void write(ZFreeAffineMorphism morphism, XMLWriter writer) {
+    private void write(ArithmeticAffineMultiMorphism<?> morphism, XMLWriter writer) {
         writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(), ROWS_ATTR, morphism.getMatrix().getRowCount(), COLUMNS_ATTR, morphism.getMatrix().getColumnCount());
         String s = "";
         for (int i = 0; i < morphism.getMatrix().getRowCount(); i++) {
@@ -276,9 +211,9 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.openInline(A_ATTR);
         writer.text(s);
         writer.closeInline();
-        s = Integer.toString(morphism.getVector()[0]);
-        for (int i = 1; i < morphism.getVector().length; i++) {
-            s += ","+morphism.getVector()[i];
+        s = morphism.getVector().getComponent(0).toString();
+        for (int i = 1; i < morphism.getVector().getValue().size(); i++) {
+            s += ","+morphism.getVector().getComponent(i);
         }
         writer.openInline(B_ATTR);
         writer.text(s);
@@ -286,26 +221,21 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.closeBlock();
     }
 
-    private void write(ZnFreeAffineMorphism morphism, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(),
-                ROWS_ATTR, morphism.getMatrix().getRowCount(),
-                COLUMNS_ATTR, morphism.getMatrix().getColumnCount(),
-                MODULUS_ATTR, morphism.getModulus());
+    private void write(ArithmeticAffineInjection<?> morphism, XMLWriter writer) {
+        writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName(), ROWS_ATTR, morphism.getMatrix().getLength(), COLUMNS_ATTR);
         String s = "";
-        for (int i = 0; i < morphism.getMatrix().getRowCount(); i++) {
-            for (int j = 0; j < morphism.getMatrix().getColumnCount(); j++) {
-                if (i != 0 || j != 0) {
-                    s += ",";
-                }
-                s += morphism.getMatrix().get(i, j);
+        for (int i = 0; i < morphism.getMatrix().getLength(); i++) {
+            if (i != 0) {
+                s += ",";
             }
+            s += morphism.getMatrix().getComponent(i);
         }
         writer.openInline(A_ATTR);
         writer.text(s);
         writer.closeInline();
-        s = Integer.toString(morphism.getVector()[0]);
-        for (int i = 1; i < morphism.getVector().length; i++) {
-            s += ","+morphism.getVector()[i];
+        s = morphism.getVector().getComponent(0).toString();
+        for (int i = 1; i < morphism.getVector().getLength(); i++) {
+            s += ","+morphism.getVector().getComponent(0);
         }
         writer.openInline(B_ATTR);
         writer.text(s);

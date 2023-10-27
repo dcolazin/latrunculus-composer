@@ -28,11 +28,18 @@ import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This morphism reorders the components of an element of
@@ -137,7 +144,6 @@ public abstract class ShuffleMorphism {
         }
         else if (ring instanceof CRing) {
             CMatrix m = new CMatrix(codomain.getDimension(), domain.getDimension());
-            Complex[] v = new Complex[codomain.getDimension()];
             for (int i = 0; i < m.getRowCount(); i++) {
                 for (int j = 0; j < m.getColumnCount(); j++) {
                     if (shuffle[j] == i) {
@@ -147,9 +153,8 @@ public abstract class ShuffleMorphism {
                         m.set(i, j, Complex.getZero());
                     }
                 }
-                v[i] = Complex.getZero();
             }
-            res = CFreeAffineMorphism.make(m, v);
+            res = ArithmeticAffineFreeMorphism.make(CRing.ring, m, (ArithmeticMultiElement<Complex>) ArithmeticMultiElement.zero((CRing) ring, codomain.getDimension()));
         }
         else if (ring instanceof ZnRing) {
             ZnMatrix m = new ZnMatrix(codomain.getDimension(), domain.getDimension(), ((ZnRing)ring).getModulus());

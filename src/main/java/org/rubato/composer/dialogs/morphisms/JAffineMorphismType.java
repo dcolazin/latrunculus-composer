@@ -21,41 +21,45 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.List;
 
 class JAffineMorphismType
         extends JMorphismType
@@ -161,63 +165,19 @@ class JAffineMorphismType
         Object source = e.getSource();
         if (source == graphButton) {            
             JAffineGraph graph = showGraphDialog();
-            if (graph != null) {
-                if (ring instanceof QRing) {
-                    QMatrix m = graph.getQMatrix();
-                    Rational[] v = graph.getQVector();
+            if (graph != null && (ring instanceof ArithmeticRing)) {
+                    ArithmeticRing<?> arithmeticRing = (ArithmeticRing<?>) ring;
+                    ArithmeticMatrix matrix = graph.getMatrix();
+                    ArithmeticMultiElement vector = graph.getVector();
                     for (int i = 0; i < 2; i++) {
                         for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, m.get(i, j).toString());
-                            
+                            setMatrixEntry(i, j, matrix.get(i, j).toString());
+
                         }
-                        setVectorEntry(i, v[i].toString());
+                        setVectorEntry(i, vector.getComponent(i).toString());
                     }
-                    container.setMorphism(QFreeAffineMorphism.make(m, v));
-                }
-                else if (ring instanceof ZRing) {
-                    ZMatrix m = graph.getZMatrix();
-                    int[] v = graph.getZVector();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, Integer.toString(m.get(i, j)));
-                        }
-                        setVectorEntry(i, Integer.toString(v[i]));
-                    }
-                    container.setMorphism(ZFreeAffineMorphism.make(m, v));
-                }
-                else if (ring instanceof RRing) {
-                    RMatrix m = graph.getRMatrix();
-                    double[] v = graph.getRVector();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, Double.toString(m.get(i, j)));
-                        }
-                        setVectorEntry(i, Double.toString(v[i]));
-                    }
-                    container.setMorphism(RFreeAffineMorphism.make(m, v));
-                }
-                else if (ring instanceof CRing) {
-                    CMatrix m = graph.getCMatrix();
-                    Complex[] v = graph.getCVector();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, m.getNumber(i, j).toString());
-                        }
-                        setVectorEntry(i, v[i].toString());
-                    }
-                    container.setMorphism(CFreeAffineMorphism.make(m, v));
-                }
-                else if (ring instanceof ZnRing) {
-                    ZnMatrix m = graph.getZnMatrix();
-                    int[] v = graph.getZnVector();
-                    for (int i = 0; i < 2; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            setMatrixEntry(i, j, Integer.toString(m.get(i, j)));
-                        }
-                        setVectorEntry(i, Integer.toString(v[i]));
-                    }
-                    container.setMorphism(ZnFreeAffineMorphism.make(m, v));
-                }
+                    container.setMorphism(ArithmeticAffineFreeMorphism.make(arithmeticRing, matrix, vector));
+
             }
         }
     }
@@ -255,90 +215,28 @@ class JAffineMorphismType
     
     
     private ModuleMorphism createMorphism() {
-        ModuleMorphism morphism;
-        if (ring instanceof ZRing) {
-            int[][] vA = new int[rows][cols];
-            int[] b = new int[rows];
+        if (ring instanceof ArithmeticRing) {
+            GenericMatrix matrix = new GenericMatrix(rows, cols);
+            List<ArithmeticElement> vector = new ArrayList<>(rows);
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<ArithmeticInteger> v = (ArithmeticElement<ArithmeticInteger>)getValue(i, j);
-                    vA[i][j] = v.getValue().intValue();
+                    ArithmeticElement v = (ArithmeticElement)getValue(i, j);
+                    matrix.set(i,j,v);
                 }
-                ArithmeticElement<ArithmeticInteger> v = (ArithmeticElement<ArithmeticInteger>)getValue(i);
-                b[i] = v.getValue().intValue();
+                vector.add((ArithmeticElement) getValue(i));
             }
-            ZMatrix A = new ZMatrix(vA);
-            morphism = ZFreeAffineMorphism.make(A, b);
+            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, matrix, new ArithmeticMultiElement((ArithmeticRing) ring, vector));
         }
-        else if (ring instanceof QRing) {
-            Rational[][] vA = new Rational[rows][cols];
-            Rational[] b = new Rational[rows];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<Rational> v = (ArithmeticElement<Rational>)getValue(i, j);
-                    vA[i][j] = v.getValue();
-                }
-                ArithmeticElement<Rational> v = (ArithmeticElement<Rational>)getValue(i);
-                b[i] = v.getValue();
+        GenericAffineMorphism m = new GenericAffineMorphism(ring, cols, rows);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                RingElement value = getValue(i, j);
+                m.setMatrix(i, j, value);
             }
-            QMatrix A = new QMatrix(vA);
-            morphism = QFreeAffineMorphism.make(A, b);
+            RingElement v = getValue(i);
+            m.setVector(i, v);
         }
-        else if (ring instanceof RRing) {
-            double[][] vA = new double[rows][cols];
-            double[] b = new double[rows];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<Real> v = (ArithmeticElement<Real>)getValue(i, j);
-                    vA[i][j] = v.getValue().doubleValue();
-                }
-                ArithmeticElement<Real> v = (ArithmeticElement<Real>)getValue(i);
-                b[i] = v.getValue().doubleValue();
-            }
-            RMatrix A = new RMatrix(vA);
-            morphism = RFreeAffineMorphism.make(A, b);
-        }
-        else if (ring instanceof CRing) {
-            Complex[][] vA = new Complex[rows][cols];
-            Complex[] b = new Complex[rows];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<Complex> v = (ArithmeticElement<Complex>)getValue(i, j);
-                    vA[i][j] = v.getValue();
-                }
-                ArithmeticElement<Complex> v = (ArithmeticElement<Complex>)getValue(i);
-                b[i] = v.getValue();
-            }
-            CMatrix A = new CMatrix(vA);
-            morphism = CFreeAffineMorphism.make(A, b);
-        }
-        else if (ring instanceof ZnRing) {
-            int[][] vA = new int[rows][cols];
-            int[] b = new int[rows];
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    ArithmeticElement<Modulus> v = (ArithmeticElement<Modulus>)getValue(i, j);
-                    vA[i][j] = v.getValue().getValue();
-                }
-                ArithmeticElement<Modulus> v = (ArithmeticElement<Modulus>)getValue(i);
-                b[i] = v.getValue().getValue();
-            }
-            ZnMatrix A = new ZnMatrix(vA, ((ZnRing)ring).getModulus());
-            morphism = ZnFreeAffineMorphism.make(A, b);
-        }
-        else {
-            GenericAffineMorphism m = new GenericAffineMorphism(ring, cols, rows);
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {                    
-                    RingElement value = getValue(i, j);
-                    m.setMatrix(i, j, value);
-                }
-                RingElement v = getValue(i);
-                m.setVector(i, v);
-            }
-            morphism = m;
-        }
-        return morphism;
+        return m;
     }
     
 
@@ -422,61 +320,18 @@ class JAffineMorphismType
             vectorEntries[0].setText(String.valueOf(m.getB()));
             return;
         }
-        if (morphism instanceof ZnFreeAffineMorphism) {
-            ZnFreeAffineMorphism m = (ZnFreeAffineMorphism)morphism;
-            ZnMatrix matrix = m.getMatrix();
-            int[] vector = m.getVector();
+        if (morphism instanceof ArithmeticAffineMultiMorphism) {
+            ArithmeticAffineMultiMorphism m = (ArithmeticAffineMultiMorphism)morphism;
+            ArithmeticMatrix matrix = m.getMatrix();
+            ArithmeticMultiElement vector = m.getVector();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(Integer.toString(matrix.get(i, j)));
+                    matrixEntries[i][j].setText(String.valueOf(matrix.get(i, j)));
                 }
-                vectorEntries[i].setText(Integer.toString(vector[i]));
+                vectorEntries[i].setText(String.valueOf(vector.getComponent(i)));
             }
         }
-        else if (morphism instanceof ZFreeAffineMorphism) {
-            ZFreeAffineMorphism m = (ZFreeAffineMorphism)morphism;
-            ZMatrix matrix = m.getMatrix();
-            int[] vector = m.getVector();
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(Integer.toString(matrix.get(i, j)));
-                }
-                vectorEntries[i].setText(Integer.toString(vector[i]));
-            }
-        }
-        else if (morphism instanceof QFreeAffineMorphism) {
-            QFreeAffineMorphism m = (QFreeAffineMorphism)morphism;
-            QMatrix matrix = m.getMatrix();
-            Rational[] vector = m.getVector();
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(matrix.get(i, j).toString());
-                }
-                vectorEntries[i].setText(vector[i].toString());
-            }
-        }
-        else if (morphism instanceof RFreeAffineMorphism) {
-            RFreeAffineMorphism m = (RFreeAffineMorphism)morphism;
-            RMatrix matrix = m.getMatrix();
-            double[] vector = m.getVector();
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(Double.toString(matrix.get(i, j)));
-                }
-                vectorEntries[i].setText(Double.toString(vector[i]));
-            }
-        }
-        else if (morphism instanceof CFreeAffineMorphism) {
-            CFreeAffineMorphism m = (CFreeAffineMorphism)morphism;
-            CMatrix matrix = m.getMatrix();
-            Complex[] vector = m.getVector();
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    matrixEntries[i][j].setText(matrix.getNumber(i, j).toString());
-                }
-                vectorEntries[i].setText(vector[i].toString());
-            }
-        }
+        //TODO injection/projection cases
     }
 
     

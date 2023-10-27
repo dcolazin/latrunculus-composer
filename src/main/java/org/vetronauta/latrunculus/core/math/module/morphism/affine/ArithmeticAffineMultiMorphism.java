@@ -37,6 +37,10 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         return vector;
     }
 
+    public ArithmeticMatrix<N> getMatrix() {
+        return matrix; //TODO deepcopy
+    }
+
     @Override
     public boolean isIdentity() {
         return isLinear() && matrix.isUnit();

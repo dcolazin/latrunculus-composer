@@ -34,6 +34,10 @@ public class ArithmeticAffineProjection<N extends ArithmeticNumber<N>> extends
         return vector.deepCopy();
     }
 
+    public ArithmeticMultiElement<N> getMatrix() {
+        return matrix.deepCopy();
+    }
+
     @Override
     public boolean isConstant() {
         return matrix.isZero();

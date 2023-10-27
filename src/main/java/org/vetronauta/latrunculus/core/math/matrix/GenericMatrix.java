@@ -1,15 +1,62 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 import java.util.Arrays;
 
-public class GenericMatrix<A> extends Matrix<A> {
+public class GenericMatrix<A extends ArithmeticNumber<A>> extends ArithmeticMatrix<A> {
 
     private Object[][] internalMatrix;
 
-    protected GenericMatrix(int rows, int columns) {
+    public GenericMatrix(int rows, int columns) {
         super(rows, columns);
+    }
+
+    @Override
+    public ArithmeticMatrix<A> product(ArithmeticMatrix<A> matrix) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMatrix<A> sum(ArithmeticMatrix<A> matrix) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMatrix<A> difference(ArithmeticMatrix<A> matrix) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMatrix<A> scaled(ArithmeticElement<A> element) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMultiElement<A> product(ArithmeticMultiElement<A> vector) {
+        return null; //TODO
+    }
+
+    public void set(int i, int j, ArithmeticElement<A> element) {
+        internalMatrix[i][j] = element;
+    }
+
+    @Override
+    public ArithmeticElement<A> get(int i, int j) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMultiElement<A> getColumn(int j) {
+        return null; //TODO
+    }
+
+    @Override
+    public ArithmeticMultiElement<A> getRow(int i) {
+        return null; //TODO
     }
 
     @Override

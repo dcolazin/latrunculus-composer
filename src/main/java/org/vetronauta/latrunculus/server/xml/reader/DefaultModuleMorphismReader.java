@@ -21,11 +21,10 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
@@ -37,8 +36,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.CFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -65,6 +64,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZFreeAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ZnFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -103,20 +103,8 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         if (ArithmeticAffineRingMorphism.class.isAssignableFrom(clazz)) {
             return readArithmeticAffineRingMorphism(element, clazz, reader);
         }
-        if (CFreeAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readCFreeAffineMorphism(element, clazz, reader);
-        }
-        if (QFreeAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readQFreeAffineMorphism(element, clazz, reader);
-        }
-        if (RFreeAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readRFreeAffineMorphism(element, clazz, reader);
-        }
-        if (ZnFreeAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readZnFreeAffineMorphism(element, clazz, reader);
-        }
-        if (ZFreeAffineMorphism.class.isAssignableFrom(clazz)) {
-            return readZFreeAffineMorphism(element, clazz, reader);
+        if (ArithmeticAffineFreeMorphism.class.isAssignableFrom(clazz)) {
+            return readArithmeticAffineFreeMorphism(element, clazz, reader);
         }
         if (CanonicalMorphism.class.isAssignableFrom(clazz)) {
             return readCanonicalMorphism(element, clazz, reader);
@@ -218,7 +206,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         return null; //TODO
     }
 
-    private ModuleMorphism readCFreeAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleMorphism readArithmeticAffineFreeMorphism(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
 
         if (!element.hasAttribute(ROWS_ATTR)) {
@@ -228,8 +216,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         int rows;
         try {
             rows = Integer.parseInt(element.getAttribute(ROWS_ATTR));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be an integer.", ROWS_ATTR, getElementTypeName(clazz));
             return null;
         }
@@ -238,8 +225,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), COLUMNS_ATTR);
             return null;
         }
-        int columns;
-        try {
+        int columns;try {
             columns = Integer.parseInt(element.getAttribute(COLUMNS_ATTR));
         }
         catch (NumberFormatException e) {
@@ -259,12 +245,12 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        CMatrix A0 = new CMatrix(rows, columns);
+        GenericMatrix A0 = new GenericMatrix<>(rows, columns);
         try {
             int n = 0;
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    A0.set(i, j, ArithmeticParsingUtils.parseComplex(numbers[n]));
+                    A0.set(i, j, new ArithmeticElement(ArithmeticParsingUtils.parse(numbers[n])));
                     n++;
                 }
             }
@@ -285,10 +271,10 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        Complex b0[]= new Complex[rows];
+        List<ArithmeticElement<?>> b0= new ArrayList<>(rows);
         try {
             for (int i = 1; i <= rows; i++) {
-                b0[i] = ArithmeticParsingUtils.parseComplex(numbers[i]);
+                b0.add(new ArithmeticElement(ArithmeticParsingUtils.parse(numbers[i])));
             }
         }
         catch (NumberFormatException e) {
@@ -296,7 +282,8 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        return CFreeAffineMorphism.make(A0, b0);
+        ArithmeticRing<?> ring = getRing(element);
+        return ArithmeticAffineFreeMorphism.make(ring, A0, new ArithmeticMultiElement(ring, b0));
     }
 
     private ModuleMorphism readQFreeAffineMorphism(Element element, Class<?> clazz, XMLReader reader) {
