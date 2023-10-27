@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.CompoundMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitDenotator;

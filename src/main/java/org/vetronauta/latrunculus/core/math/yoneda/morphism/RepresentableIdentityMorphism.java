@@ -19,12 +19,17 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDiagram;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -37,59 +42,58 @@ import java.util.LinkedList;
  * @author Stefan Müller
  * @author Stefan Göller
  */
-public final class RepresentableIdentityMorphism extends IdentityMorphism {
+public final class RepresentableIdentityMorphism<A extends ModuleElement<A,R>, R extends RingElement<R>> extends IdentityMorphism {
+
+    private final Module<A,R> module;
+    private final ModuleElement<A,R> lowValue;
+    private final ModuleElement<A,R> highValue;
 
     /**
      * Creates an identity morphism representing the given module.
      */
-    public RepresentableIdentityMorphism(Module module) {
+    public RepresentableIdentityMorphism(Module<A,R> module) {
         this.module = module;
         this.lowValue = null;
         this.highValue = null;
     }
-
 
     /**
      * Creates an identity morphism representing the given module.
      * This variant specifies lower and upper bounds for the values
      * contained in the module.
      */
-    public RepresentableIdentityMorphism(Module module, ModuleElement lowValue, ModuleElement highValue) {
+    public RepresentableIdentityMorphism(Module<A,R> module, ModuleElement<A,R> lowValue, ModuleElement<A,R> highValue) {
         this.module = module;
         this.lowValue = lowValue;
         this.highValue = highValue;
     }
-
 
     public Diagram getDiagram() {
         return FormDiagram.emptyFormDiagram;
     }
 
 
-    public Module getModule() {
+    public Module<A,R> getModule() {
         return module;
     }
     
 
-    public ModuleElement getLowValue() {
+    public ModuleElement<A,R> getLowValue() {
         return lowValue;
     }
 
     
-    public ModuleElement getHighValue() {
+    public ModuleElement<A,R> getHighValue() {
         return highValue;
     }
-
 
     public boolean hasBounds() {
         return (lowValue != null) && (highValue != null);
     }
 
-
     public int getType() {
         return SIMPLE;
     }
-
 
     public boolean isRepresentable() {
         return true;
@@ -111,11 +115,11 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
 
     @Override
-    public RepresentableIdentityMorphism deepCopy() {
-        return new RepresentableIdentityMorphism(module, lowValue, highValue); 
+    public RepresentableIdentityMorphism<A,R> deepCopy() {
+        return new RepresentableIdentityMorphism<A,R>(module, lowValue, highValue);
     }
 
-
+    @Override
     public int compareTo(YonedaMorphism object) {
         if (this == object) {
             return 0;
@@ -208,7 +212,7 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
     }
 
 
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
         return true;
     }
     
@@ -222,8 +226,4 @@ public final class RepresentableIdentityMorphism extends IdentityMorphism {
         }
     }
 
-    
-    private Module        module;
-    private ModuleElement lowValue;
-    private ModuleElement highValue;
 }

@@ -29,8 +29,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.ProperIdentityMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.RepresentableIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.RepresentableIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 

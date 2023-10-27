@@ -23,6 +23,7 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -305,7 +306,7 @@ public final class FormDiagram extends Diagram {
     } 
     
     
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
         for (int i = 0; i < getFormCount(); i++) {
             Form form = getForm(i);
             if (form instanceof FormReference) {

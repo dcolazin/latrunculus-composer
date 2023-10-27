@@ -19,12 +19,15 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -39,6 +42,9 @@ import java.util.LinkedList;
  * @author Stefan Göller
  */
 public final class ProperIdentityMorphism extends IdentityMorphism {
+
+    private final Diagram diagram;
+    private final int type;
 
     /**
      * Creates an identity morphism with the specified diagram of the given type.
@@ -71,16 +77,6 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     
     public Diagram getCodomainDiagram() {
         return getDiagram();
-    }
-
-    
-    public Module getDomainModule() {
-        return getModule();
-    }
-
-    
-    public Module getCodomainModule() {
-        return getModule();
     }
 
     
@@ -183,7 +179,7 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     }
     
     
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
         return diagram.resolveReferences(dict, history);
     }
     
@@ -208,8 +204,5 @@ public final class ProperIdentityMorphism extends IdentityMorphism {
     protected int getMorphOrder() {
         return 0xFAFA;
     }
-    
 
-    private Diagram diagram;
-    private int     type;
 }

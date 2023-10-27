@@ -22,6 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -297,7 +298,7 @@ public class MathDiagram extends Diagram {
     }
     
     
-    boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
+    public boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history) {
         return true;
     }
     

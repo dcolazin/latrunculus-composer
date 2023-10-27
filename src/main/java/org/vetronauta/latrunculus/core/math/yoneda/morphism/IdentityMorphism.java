@@ -19,9 +19,12 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 
 /**
  * Abstract base class for identity morphisms.
@@ -82,8 +85,8 @@ public abstract class IdentityMorphism extends YonedaMorphism {
         return this;
     }
 
-    public MorphismMap getMap() { 
-        return EmptyMorphismMap.emptyMorphismMap; 
+    public MorphismMap getMap() {
+        return EmptyMorphismMap.emptyMorphismMap;
     }
     
     public void setMap(MorphismMap map) {

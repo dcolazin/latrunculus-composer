@@ -19,13 +19,18 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.yoneda;
+package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.EmptyMorphismMap;
+import org.vetronauta.latrunculus.core.math.yoneda.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;

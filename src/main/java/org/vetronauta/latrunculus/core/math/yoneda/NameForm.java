@@ -23,6 +23,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 /**
  * Special list form for names of forms and denotators.
@@ -69,7 +71,7 @@ public final class NameForm extends ListForm {
      */
     public YonedaMorphism getIdentifier() {
         if (identifier == null) {
-            identifier = new ProperIdentityMorphism(new FormDiagram(stringForm), LIST);        
+            identifier = new ProperIdentityMorphism(new FormDiagram(stringForm), LIST);
         }
         return identifier;
     }

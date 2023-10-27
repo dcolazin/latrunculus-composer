@@ -26,6 +26,7 @@ import java.util.LinkedList;
 
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 /**
  * Abstract base class for diagrams.
@@ -106,7 +107,7 @@ public abstract class Diagram implements Yoneda, MathDefinition {
      * 
      * @return true iff all references have been resolved
      */
-    abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);    
+    public abstract boolean resolveReferences(RubatoDictionary dict, IdentityHashMap<?,?> history);
     
     public abstract int compareTo(Yoneda object);
     

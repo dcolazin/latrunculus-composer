@@ -22,10 +22,10 @@ package org.vetronauta.latrunculus.server.xml.reader;
 import org.vetronauta.latrunculus.core.exception.LatrunculusUnsupportedException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.yoneda.CompoundMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.ProperIdentityMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.RepresentableIdentityMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.YonedaMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.RepresentableIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 

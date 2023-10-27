@@ -25,6 +25,7 @@ import org.rubato.base.Repository;
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;

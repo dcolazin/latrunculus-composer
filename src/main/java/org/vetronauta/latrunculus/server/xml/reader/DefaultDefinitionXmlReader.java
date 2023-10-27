@@ -30,7 +30,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.MorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.YonedaMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 

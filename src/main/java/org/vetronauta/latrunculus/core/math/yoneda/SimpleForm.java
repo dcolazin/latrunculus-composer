@@ -21,10 +21,11 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.RepresentableIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
 import java.util.IdentityHashMap;

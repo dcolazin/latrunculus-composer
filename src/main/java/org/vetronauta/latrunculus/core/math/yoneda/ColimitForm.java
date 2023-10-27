@@ -24,6 +24,8 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 import org.rubato.base.Internal;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.io.PrintStream;
 import java.util.HashMap;

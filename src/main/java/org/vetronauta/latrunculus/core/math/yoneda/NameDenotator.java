@@ -21,6 +21,9 @@ package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.util.HashMap;
 import java.util.List;
