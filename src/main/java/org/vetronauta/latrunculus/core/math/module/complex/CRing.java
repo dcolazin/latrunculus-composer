@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.complex;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -97,17 +95,6 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     
     public String toVisualString() {
         return "C";
-    }
-    
-    
-    public ArithmeticElement<Complex> parseString(String string) {
-    	try {
-    		Complex value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
-        	return new ArithmeticElement<>(value);
-    	}
-    	catch (NumberFormatException e) {
-    		return null;
-    	}
     }
 
     public String getElementTypeName() {

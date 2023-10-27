@@ -22,7 +22,7 @@ package org.rubato.math;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.exception.InverseException;
 

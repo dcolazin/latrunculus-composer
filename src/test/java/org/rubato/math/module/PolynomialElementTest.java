@@ -12,6 +12,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -39,27 +40,27 @@ class PolynomialElementTest {
         realPolRing = PolynomialRing.make(RRing.ring, "Y");
         ratPolRing  = PolynomialRing.make(QRing.ring, "Z");
         
-        i0 = intPolRing.parseString("0");
-        i1 = intPolRing.parseString("1");
-        r0 = realPolRing.parseString("0");
-        r1 = realPolRing.parseString("1");
-        q0 = ratPolRing.parseString("0");
-        q1 = ratPolRing.parseString("1");
+        i0 = ModuleElementParser.parseElement(intPolRing, "0");
+        i1 = ModuleElementParser.parseElement(intPolRing, "1");
+        r0 = ModuleElementParser.parseElement(realPolRing, "0");
+        r1 = ModuleElementParser.parseElement(realPolRing, "1");
+        q0 = ModuleElementParser.parseElement(ratPolRing, "0");
+        q1 = ModuleElementParser.parseElement(ratPolRing, "1");
         
-        ia = intPolRing.parseString("8*X^5+2*X^3+20");
-        ib = intPolRing.parseString("3*X^3+-8*X^2+-2");
-        ic = intPolRing.parseString("24*X^8+-64*X^7+-32*X^5+6*X^6+56*X^3+-160*X^2+-40");
-        id = intPolRing.parseString("10");
+        ia = ModuleElementParser.parseElement(intPolRing, "8*X^5+2*X^3+20");
+        ib = ModuleElementParser.parseElement(intPolRing, "3*X^3+-8*X^2+-2");
+        ic = ModuleElementParser.parseElement(intPolRing, "24*X^8+-64*X^7+-32*X^5+6*X^6+56*X^3+-160*X^2+-40");
+        id = ModuleElementParser.parseElement(intPolRing, "10");
 
-        ra = realPolRing.parseString("8*Y^5+2*Y^3+20");
-        rb = realPolRing.parseString("3*Y^3+-8*Y^2+-2");
-        rc = realPolRing.parseString("24*Y^8+-64*Y^7+-32*Y^5+6*Y^6+56*Y^3+-160*Y^2+-40");
-        rd = realPolRing.parseString("2.3");
+        ra = ModuleElementParser.parseElement(realPolRing, "8*Y^5+2*Y^3+20");
+        rb = ModuleElementParser.parseElement(realPolRing, "3*Y^3+-8*Y^2+-2");
+        rc = ModuleElementParser.parseElement(realPolRing, "24*Y^8+-64*Y^7+-32*Y^5+6*Y^6+56*Y^3+-160*Y^2+-40");
+        rd = ModuleElementParser.parseElement(realPolRing, "2.3");
 
-        qa = ratPolRing.parseString("8*Z^5+2*Z^3+20");
-        qb = ratPolRing.parseString("3*Z^3+-8*Z^2+-2");
-        qc = ratPolRing.parseString("24*Z^8+-64*Z^7+-32*Z^5+6*Z^6+56*Z^3+-160*Z^2+-40");
-        qd = ratPolRing.parseString("3/2");
+        qa = ModuleElementParser.parseElement(ratPolRing, "8*Z^5+2*Z^3+20");
+        qb = ModuleElementParser.parseElement(ratPolRing, "3*Z^3+-8*Z^2+-2");
+        qc = ModuleElementParser.parseElement(ratPolRing, "24*Z^8+-64*Z^7+-32*Z^5+6*Z^6+56*Z^3+-160*Z^2+-40");
+        qd = ModuleElementParser.parseElement(ratPolRing, "3/2");
     }
 
     @Test

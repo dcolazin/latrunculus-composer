@@ -19,9 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.rubato.util.TextUtils;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -226,53 +223,6 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
             return false;
         }
     }
-
-    
-    public DirectSumElement parseString(String string) {
-        ArrayList<String> m = parse(TextUtils.unparenthesize(string));
-        if (m.size() != getDimension()) {
-            return null;
-        }
-        
-        ModuleElement[] comps = new ModuleElement[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            ModuleElement element = getComponentModule(i).parseString(m.get(i));
-            if (element == null) {
-                return null;
-            }
-            comps[i] = element;
-        }
-        return DirectSumElement.make(comps); 
-    }
-    
-    
-    private ArrayList<String> parse(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<String>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == ',' && level == 0) {
-                m.add(s.substring(lastpos, pos));                
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos));
-        return m;
-    }
-    
     
     public String toString() {
         StringBuilder buf = new StringBuilder(50);
@@ -292,7 +242,6 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
         return buf.toString();
     }
 
-    
     public String toVisualString() {
         StringBuilder buf = new StringBuilder(30);
         buf.append("DirectSumModule[");

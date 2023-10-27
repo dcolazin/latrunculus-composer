@@ -19,9 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -280,55 +277,6 @@ public final class ProductRing extends Ring<ProductElement> {
         return buf.toString();
     }
     
-    
-    public ProductElement parseString(String string) {
-        String s = string.trim();
-        String re = "\\(.*\\)";
-        if (s.matches(re)) {
-            ArrayList<String> m = parse(s.substring(1, s.length()-1));
-            if (m.size() != getFactorCount()) {
-                return null;
-            }            
-            RingElement factors0[] = new RingElement[getFactorCount()];
-            for (int i = 0; i < m.size(); i++) {
-                factors0[i] = getFactor(i).parseString(m.get(i).trim());
-                if (factors0[i] == null) {
-                    return null;
-                }
-            }
-            return ProductElement.make(factors0);
-        }
-        return null;
-    }
-
-    
-    private ArrayList<String> parse(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<String>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == ',' && level == 0) {
-                m.add(s.substring(lastpos, pos));                
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos));
-        return m;
-    }
-    
     public String getElementTypeName() {
         return "ProductRing";
     }
@@ -344,7 +292,7 @@ public final class ProductRing extends Ring<ProductElement> {
     }
 
     
-    protected ProductRing(Ring[] factors) {
+    private ProductRing(Ring[] factors) {
         this.factors = factors;
     }
     

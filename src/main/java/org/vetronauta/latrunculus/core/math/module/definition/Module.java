@@ -98,12 +98,6 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
     E createElement(List<ModuleElement<?,?>> elements);
 
     /**
-     * Creates an element in this module from a string representation.
-     * @return null if the string is in the wrong format
-     */
-    E parseString(String string); //TODO this should be in a factory, not in an instance
-
-    /**
      * Returns a human readable string representation of this module.
      * The representation is not meant to be parseable.
      * The string should be a short representation, possibly using

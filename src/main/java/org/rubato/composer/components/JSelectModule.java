@@ -38,6 +38,7 @@ import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -297,7 +298,7 @@ public class JSelectModule
             String pmod = pmodField.getText().trim();
             if (pmod.length() > 0) {
                 PolynomialRing ring = PolynomialRing.make((Ring)module, getIndeterminate());
-                PolynomialElement modulus = ring.parseString(pmod);
+                PolynomialElement modulus = (PolynomialElement) ModuleElementParser.parseElement(ring, pmod);
                 if (modulus != null) {
                     module = ModularPolynomialProperFreeModule.make(modulus, getDimension());
                 }

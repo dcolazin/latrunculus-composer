@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.real;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -104,17 +103,6 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
 
     public String toVisualString() {
         return "R";
-    }
-    
-    
-    public ArithmeticElement<Real> parseString(String string) {
-    	try {
-    		double value = Double.parseDouble(TextUtils.unparenthesize(string));
-        	return new ArithmeticElement<>(new Real(value));
-    	}
-    	catch (NumberFormatException e) {
-    		return null;
-    	}
     }
     
     public String getElementTypeName() {

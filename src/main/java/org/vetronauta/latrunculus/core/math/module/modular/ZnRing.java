@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.modular;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -131,17 +130,6 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing,
     
     public String toVisualString() {
         return "Z_"+getModulus();
-    }
-
-    
-    public ArithmeticElement<Modulus> parseString(String s) {
-    	try {
-    		int value = Integer.parseInt(TextUtils.unparenthesize(s));
-        	return new ArithmeticElement<>(new Modulus(value, modulus));
-    	}
-    	catch (NumberFormatException e) {
-    		return null;
-    	}
     }
     
     public String getElementTypeName() {

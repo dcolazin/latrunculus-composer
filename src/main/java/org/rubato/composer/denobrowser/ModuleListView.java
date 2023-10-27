@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 
 /**
@@ -82,7 +83,7 @@ public class ModuleListView
     }
     
 	public void valueChanged(ListSelectionEvent e) {
-		if (list.getSelectedIndex() >= 0 && e.getValueIsAdjusting() == false) {
+		if (list.getSelectedIndex() >= 0 && !e.getValueIsAdjusting()) {
 			setLabels(parent.getElement().getComponent(list.getSelectedIndex()).getModule().toString());
 		}
 	}
@@ -142,9 +143,9 @@ public class ModuleListView
 	private ModuleElement editValue(ModuleElement el) {
         ModuleElement resEl = null;
 		if (el instanceof RingElement) {
-			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), ((RingElement)el).stringRep()); 
+			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), (el).stringRep());
 			if (res != null) {
-				resEl = ((Ring)el.getModule()).parseString(res);				
+				resEl = ModuleElementParser.parseElement(el.getModule(), res);
 			}
 		}
         return resEl;

@@ -1,7 +1,5 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -129,24 +127,6 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
             values.add(castElement);
         }
 
-        return new ArithmeticMultiElement<>(ring, values);
-    }
-
-    @Override
-    public ArithmeticMultiElement<N> parseString(String string) {
-        string = TextUtils.unparenthesize(string);
-        String[] components = string.split(",");
-        if (components.length != getDimension()) {
-            return null;
-        }
-        List<ArithmeticElement<N>> values = new ArrayList<>(components.length);
-        for (int i = 0; i < components.length; i++) {
-            try {
-                values.add(new ArithmeticElement<>(ArithmeticParsingUtils.parse(ring, components[i])));
-            } catch (NumberFormatException e) {
-                return null;
-            }
-        }
         return new ArithmeticMultiElement<>(ring, values);
     }
 

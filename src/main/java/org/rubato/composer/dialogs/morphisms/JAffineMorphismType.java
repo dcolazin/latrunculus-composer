@@ -20,7 +20,7 @@
 package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
@@ -38,6 +38,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAff
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -188,7 +189,7 @@ class JAffineMorphismType
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 String s = matrixEntries[i][j].getText();
-                if (ring.parseString(s) == null) {
+                if (ModuleElementParser.parseElement(ring, s) == null) {
                     ok = false;
                     matrixEntries[i][j].setBackground(Utilities.ERROR_BG_COLOR);
                 }
@@ -197,7 +198,7 @@ class JAffineMorphismType
                 }
             }
             String s = vectorEntries[i].getText();
-            if (ring.parseString(s) == null) {
+            if (ModuleElementParser.parseElement(ring, s) == null) {
                 ok = false;
                 vectorEntries[i].setBackground(Utilities.ERROR_BG_COLOR);
             }
@@ -251,12 +252,12 @@ class JAffineMorphismType
 
     
     private RingElement getValue(int i, int j) {
-        return ring.parseString(getStringValue(i, j));                
+        return (RingElement) ModuleElementParser.parseElement(ring, getStringValue(i, j));
     }
 
     
     private RingElement getValue(int i) {
-        return ring.parseString(getStringValue(i));                
+        return (RingElement) ModuleElementParser.parseElement(ring, getStringValue(i));
     }
 
     

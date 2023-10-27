@@ -1,4 +1,4 @@
-package org.vetronauta.latrunculus.core.math.arith;
+package org.vetronauta.latrunculus.server.parse;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -26,8 +26,6 @@ import java.util.LinkedList;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArithmeticParsingUtils {
-
-    //TODO this stuff should go in the server package, not in the math one
 
     public static <N extends ArithmeticNumber<N>> N parse(ArithmeticRing<N> ring, String s) {
         return (N) parse(detectParsingClass(ring), s);

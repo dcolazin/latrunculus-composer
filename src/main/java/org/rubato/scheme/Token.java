@@ -21,7 +21,7 @@ package org.rubato.scheme;
 
 import java.util.HashSet;
 
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 

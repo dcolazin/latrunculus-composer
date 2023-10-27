@@ -19,11 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -204,53 +202,6 @@ public final class ProductProperFreeModule extends ProperFreeModule<ProductPrope
             return false;
         }
     }
-
-    
-    public ProductProperFreeElement parseString(String string) {
-        ArrayList<String> m = parse(TextUtils.unparenthesize(string));
-        if (m.size() != getDimension()) {
-            return null;
-        }
-        
-        ProductElement[] components = new ProductElement[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            ModuleElement element = getRing().parseString(m.get(i));
-            if (element == null) {
-                return null;
-            }
-            components[i] = (ProductElement)element;
-        }
-        return (ProductProperFreeElement) ProductProperFreeElement.make(getRing(), components);
-    }
-    
-    
-    private ArrayList<String> parse(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<String>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == ',' && level == 0) {
-                m.add(s.substring(lastpos, pos));                
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos));
-        return m;
-    }
-        
     
     public String toString() {
         return "ProductFreeModule["+getDimension()+"]["+getRing()+"]";

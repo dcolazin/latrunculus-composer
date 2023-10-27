@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.generic;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -141,31 +139,6 @@ public class ArithmeticStringMultiModule<N extends ArithmeticNumber<N>> extends 
             values.add(((ArithmeticStringElement<N>)object).getValue());
         }
         return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, values);
-    }
-
-    @Override
-    public ArithmeticStringMultiElement<N> parseString(String string) {
-        string = TextUtils.unparenthesize(string);
-        if (string.equals("Null")) {
-            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, new ArrayList<>());
-        }
-        if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
-            string = string.substring(1, string.length()-1);
-            String[] strings = TextUtils.split(string, ',');
-            if (strings.length != getDimension()) {
-                return null;
-            }
-            else {
-                List<RingString<N>> rstrings = new ArrayList<>(getDimension());
-                for (int i = 0; i < strings.length; i++) {
-                    rstrings.add(ArithmeticParsingUtils.parseString(ring, strings[i]));
-                }
-                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(ring, rstrings);
-            }
-        }
-        else {
-            return null;
-        }
     }
 
     @Override

@@ -19,25 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.Wrapper;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The ring of polynomials with coefficients in a specified ring.
@@ -243,162 +235,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
             s.append(",").append(iter.next());
         }
         return s+"]";
-    }
-    
-    @Override
-    public PolynomialElement<R> parseString(String string) {
-        string = string.trim();
-        if (string.equals("0")) {
-            return getZero();
-        }
-        if (string.equals("1")) {
-            return getOne();
-        }
-        
-        ArrayList<String> m = parse(TextUtils.unparenthesize(string));
-        int[] exp = new int[1];
-        Wrapper<R> factor = new Wrapper<>();
-        Vector<R> terms = new Vector<>(30);
-        terms.setSize(1);
-        int maxexp = 0;
-        try {
-            for (String s : m) {
-                if (splitTerm(s, exp, factor)) {
-                    if (maxexp < exp[0]) {
-                        maxexp = exp[0];
-                        terms.setSize(exp[0] + 1);
-                    }
-                    if (terms.get(exp[0]) != null) {
-                        (terms.get(exp[0])).add(factor.get());
-                    } else {
-                        terms.set(exp[0], factor.get());
-                    }
-                } else {
-                    return null;
-                }
-            }
-        }
-        catch (DomainException e) {
-            return null;
-        }
-        
-        List<R> ringElements = new ArrayList<>(terms.size());
-        for (R element : terms) {
-            if (element == null) {
-                element = getCoefficientRing().getZero();
-            }
-            ringElements.add(element);
-        }
-        
-        return new PolynomialElement<>(this, ringElements);
-    }
-
-    private static ArrayList<String> parse(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == '+' && level == 0) {
-                m.add(s.substring(lastpos, pos));                
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos).trim());
-        return m;
-    }
-
-    private boolean splitTerm(String s, int[] exp, Wrapper<R> factor) {
-        String[] timesSplit = splitTimes(s);
-
-        String[] indSplit = splitInd(timesSplit[1]);
-        if (indSplit == null) {
-            return false;
-        }
-
-        // get coefficient
-        factor.set(getCoefficientRing().parseString(timesSplit[0]));
-        if (factor.get() == null) {
-            return false;
-        }
-        
-        // check indeterminate
-        if (!getIndeterminate().equals(indSplit[0])) {
-            return false;
-        }
-        
-        // get exponent
-        try {
-            exp[0] = Integer.parseInt(indSplit[1]);
-        }
-        catch (NumberFormatException e) {
-            return false;
-        }
-        return exp[0] >= 0;
-    }
-
-    private String[] splitTimes(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        boolean seenTimes = false;
-        String m[] = new String[2];        
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == '*' && level == 0) {
-                m[0] = s.substring(lastpos, pos);         
-                seenTimes = true;
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        if (seenTimes) {
-            m[1] = s.substring(lastpos,pos).trim();
-        }
-        else if (s.startsWith(getIndeterminate())) {
-            m[0] = "1";
-            m[1] = s;
-        }
-        else {
-            m[0] = s.trim();
-            m[1] = getIndeterminate()+"^0";
-        }
-        return m;
-    }
-
-    private static String[] splitInd(String s) {
-        String[] strings = s.split("\\^");
-        if (strings.length == 2) {
-            return strings;
-        }
-        else if (strings.length == 1) {
-            return new String[] { strings[0], "1" };
-        }
-        else {
-            return null;
-        }
     }
 
     public String getElementTypeName() {

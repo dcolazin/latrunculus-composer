@@ -171,12 +171,6 @@ public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElemen
         }
     }
 
-
-    public RestrictedElement parseString(String string) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    
     public boolean equals(Object object) {
         if (object instanceof RestrictedModule) {
             RestrictedModule rmodule = (RestrictedModule)object;

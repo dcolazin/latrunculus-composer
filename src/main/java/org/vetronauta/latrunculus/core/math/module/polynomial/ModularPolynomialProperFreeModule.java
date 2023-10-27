@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.polynomial;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -29,7 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -192,52 +190,6 @@ public final class ModularPolynomialProperFreeModule<B extends RingElement<B>>
         }
         return false;
     }
-
-    
-    public ModularPolynomialProperFreeElement parseString(String string) {
-        ArrayList<String> strings = parse(TextUtils.unparenthesize(string));
-        if (strings.size() < getDimension()) {
-            return null;
-        }
-        ModularPolynomialElement[] values = new ModularPolynomialElement[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            String s = strings.get(i);
-            values[i] = ring.parseString(s);
-            if (values[i] == null) {
-                return null;
-            }            
-        }
-        return (ModularPolynomialProperFreeElement)ModularPolynomialProperFreeElement.make(ring, values);
-    }
-    
-    
-    private static ArrayList<String> parse(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<String>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == ',' && level == 0) {
-                m.add(s.substring(lastpos, pos));                
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos).trim());
-        return m;
-    }
-
     
     public String toString() {
         return "ModularPolynomialFreeModule["+getRing()+","+getDimension()+"]";

@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.generic;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -72,15 +70,6 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
     @Override
     public FreeModule<?, ArithmeticStringElement<N>> getFreeModule(int dimension) {
         return ArithmeticStringMultiModule.make(this, dimension);
-    }
-
-    @Override
-    public ArithmeticStringElement<N> parseString(String s) {
-        try {
-            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(this, TextUtils.unparenthesize(s)));
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     @Override

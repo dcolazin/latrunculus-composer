@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.integer;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -114,32 +113,18 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
         return "Z";
     }
     
-    
-    public ArithmeticElement<ArithmeticInteger> parseString(String s) {
-    	try {
-    		int value = Integer.parseInt(TextUtils.unparenthesize(s));
-        	return new ArithmeticElement<>(new ArithmeticInteger(value));
-    	}
-    	catch (NumberFormatException e) {
-    		return null;
-    	}
-    }
-    
     public String getElementTypeName() {
         return "ZRing";
     }
-
 
     public int hashCode() {
         return basicHash;
     }
 
-    
     public int getNumberRingOrder() {
         return 100;
     }
 
-    
     private static final int basicHash = "ZRing".hashCode();
 
 }

@@ -38,6 +38,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialR
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
+import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -103,7 +104,7 @@ public class JSimpleNumberEntry
         Ring ring = module.getRing();
         for (int i = 0; i < inputFields.length; i++) {
             String s = inputFields[i].getText();
-            ModuleElement element = ring.parseString(s);            
+            ModuleElement element = ModuleElementParser.parseElement(ring, s);
             if (element == null) {
                 error = true;
                 inputFields[i].setBackground(prefs.getEntryErrorColor());

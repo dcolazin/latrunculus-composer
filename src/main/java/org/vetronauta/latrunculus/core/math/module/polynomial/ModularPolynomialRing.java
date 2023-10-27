@@ -256,22 +256,6 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return s.toString();
     }
     
-    
-    public ModularPolynomialElement parseString(String string) {
-        PolynomialElement p = modulusRing.parseString(string);
-        if (p != null) {
-            try {
-                return new ModularPolynomialElement(this, p);
-            }
-            catch (IllegalArgumentException e) {
-                return null;
-            }
-        }
-        else {
-            return null;
-        }
-    }
-    
     public String getElementTypeName() {
         return "ModularPolynomialRing";
     }

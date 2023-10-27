@@ -1,6 +1,6 @@
 package org.rubato.rubettes.select2d;
 
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 

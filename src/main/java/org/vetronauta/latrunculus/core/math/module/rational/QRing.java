@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.rational;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -107,17 +105,6 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
     
     public String toVisualString() {
         return "Q";
-    }
-
-    
-    public ArithmeticElement<Rational> parseString(String string) {
-    	try {
-    		Rational value = ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
-        	return new ArithmeticElement<>(value);
-    	}
-    	catch (NumberFormatException e) {
-    		return null;
-    	}
     }
     
     public String getElementTypeName() {
