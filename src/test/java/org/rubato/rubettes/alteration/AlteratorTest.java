@@ -5,16 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.Denotator;
@@ -38,12 +35,28 @@ class AlteratorTest {
 	@BeforeEach
 	void setUp() {
 		this.morphisms = new ArrayList<>();
-		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{3,5,7}}), new double[]{0}));
-		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{1,2,3}}), new double[]{0}));
-		QMatrix matrix1 = new QMatrix(new Rational[][]{{new Rational(3),new Rational(5),new Rational(7)}});
-		QMatrix matrix2 = new QMatrix(new Rational[][]{{new Rational(1),new Rational(2),new Rational(3)}});
-		this.morphisms.add(QFreeAffineMorphism.make(matrix1, new Rational[]{new Rational(0)}));
-		this.morphisms.add(QFreeAffineMorphism.make(matrix2, new Rational[]{new Rational(0)}));
+		List<Real> realList1 = new ArrayList<>();
+		realList1.add(new Real(3));
+		realList1.add(new Real(5));
+		realList1.add(new Real(7));
+		List<Real> realList2 = new ArrayList<>();
+		realList2.add(new Real(1));
+		realList2.add(new Real(2));
+		realList2.add(new Real(3));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList1)), RRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList2)), RRing.ring.getZero()));
+
+		List<Rational> rationalList1 = new ArrayList<>();
+		rationalList1.add(new Rational(3));
+		rationalList1.add(new Rational(5));
+		rationalList1.add(new Rational(7));
+		List<Rational> rationalList2 = new ArrayList<>();
+		rationalList2.add(new Rational(1));
+		rationalList2.add(new Rational(2));
+		rationalList2.add(new Rational(3));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList1)), QRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList2)), QRing.ring.getZero()));
+
 		this.noteGenerator = new MacroNoteGenerator();
 		this.alterator = new Alterator();
 	}

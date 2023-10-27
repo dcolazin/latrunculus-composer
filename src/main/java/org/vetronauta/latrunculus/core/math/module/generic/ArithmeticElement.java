@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 @Getter
 public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElement<ArithmeticElement<N>> {
 
+    //TODO ditch ArithmeticNumber and just use ArithmeticElement?
 
     @NonNull
     private N value;

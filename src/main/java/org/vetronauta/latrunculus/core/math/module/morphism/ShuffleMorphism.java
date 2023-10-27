@@ -19,27 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
-import org.vetronauta.latrunculus.core.math.module.complex.CRing;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This morphism reorders the components of an element of
@@ -93,100 +78,30 @@ public abstract class ShuffleMorphism {
     
     
     private static ModuleMorphism createShuffleMorphism(Ring ring, FreeModule domain, FreeModule codomain, int[] shuffle) {
-        ModuleMorphism res = null;
-        if (ring instanceof ZRing) {
-            ZMatrix m = new ZMatrix(codomain.getDimension(), domain.getDimension());
-            int[] v = new int[codomain.getDimension()];
+        if (ring instanceof ArithmeticRing) {
+            GenericMatrix m = new GenericMatrix(codomain.getDimension(), domain.getDimension());
             for (int i = 0; i < m.getRowCount(); i++) {
                 for (int j = 0; j < m.getColumnCount(); j++) {
                     if (shuffle[j] == i) {
-                        m.set(i, j, 1);
-                    }
-                    else {
-                        m.set(i, j, 0);
-                    }
-                }
-                v[i] = 0;
-            }
-            res = ZFreeAffineMorphism.make(m, v);
-        }
-        else if (ring instanceof QRing) {
-            QMatrix m = new QMatrix(codomain.getDimension(), domain.getDimension());
-            Rational[] v = new Rational[codomain.getDimension()];
-            for (int i = 0; i < m.getRowCount(); i++) {
-                for (int j = 0; j < m.getColumnCount(); j++) {
-                    if (shuffle[j] == i) {
-                        m.set(i, j, Rational.getOne());
-                    }
-                    else {
-                        m.set(i, j, Rational.getZero());
-                    }
-                }
-                v[i] = Rational.getZero();
-            }
-            res = QFreeAffineMorphism.make(m, v);
-        }
-        else if (ring instanceof RRing) {
-            RMatrix m = new RMatrix(codomain.getDimension(), domain.getDimension());
-            double[] v = new double[codomain.getDimension()];
-            for (int i = 0; i < m.getRowCount(); i++) {
-                for (int j = 0; j < m.getColumnCount(); j++) {
-                    if (shuffle[j] == i) {
-                        m.set(i, j, 1);
-                    }
-                    else {
-                        m.set(i, j, 0);
-                    }
-                }
-                v[i] = 0;
-            }
-            res = RFreeAffineMorphism.make(m, v);
-        }
-        else if (ring instanceof CRing) {
-            CMatrix m = new CMatrix(codomain.getDimension(), domain.getDimension());
-            for (int i = 0; i < m.getRowCount(); i++) {
-                for (int j = 0; j < m.getColumnCount(); j++) {
-                    if (shuffle[j] == i) {
-                        m.set(i, j, Complex.getOne());
-                    }
-                    else {
-                        m.set(i, j, Complex.getZero());
+                        m.set(i, j, ((ArithmeticRing<?>) ring).getOne());
+                    } else {
+                        m.set(i, j, ((ArithmeticRing<?>) ring).getZero());
                     }
                 }
             }
-            res = ArithmeticAffineFreeMorphism.make(CRing.ring, m, (ArithmeticMultiElement<Complex>) ArithmeticMultiElement.zero((CRing) ring, codomain.getDimension()));
+            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, m, (ArithmeticMultiElement) ArithmeticMultiElement.zero((ArithmeticRing) ring, codomain.getDimension()));
         }
-        else if (ring instanceof ZnRing) {
-            ZnMatrix m = new ZnMatrix(codomain.getDimension(), domain.getDimension(), ((ZnRing)ring).getModulus());
-            int[] v = new int[codomain.getDimension()];
-            for (int i = 0; i < m.getRowCount(); i++) {
-                for (int j = 0; j < m.getColumnCount(); j++) {
-                    if (shuffle[j] == i) {
-                        m.set(i, j, 1);
-                    }
-                    else {
-                        m.set(i, j, 0);
-                    }
-                }
-                v[i] = 0;
-            }
-            res = ZnFreeAffineMorphism.make(m, v);
-        }
-        else {
-            int dim = domain.getDimension();
-            int codim = codomain.getDimension();
-            GenericAffineMorphism morphism = new GenericAffineMorphism(ring, dim, codim);
-            for (int i = 0; i < codim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    if (shuffle[j] == i) {
-                        morphism.setMatrix(i, j, ring.getOne());
-                    }
+        int dim = domain.getDimension();
+        int codim = codomain.getDimension();
+        GenericAffineMorphism morphism = new GenericAffineMorphism(ring, dim, codim);
+        for (int i = 0; i < codim; i++) {
+            for (int j = 0; j < dim; j++) {
+                if (shuffle[j] == i) {
+                    morphism.setMatrix(i, j, ring.getOne());
                 }
             }
-            res = morphism;
         }
-        
-        return res;
+        return morphism;
     }
     
     

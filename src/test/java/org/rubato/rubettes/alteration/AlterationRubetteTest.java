@@ -19,29 +19,35 @@
 
 package org.rubato.rubettes.alteration;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.QFreeAffineMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.RFreeAffineMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
+import org.vetronauta.latrunculus.core.math.module.rational.QRing;
+import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.SimpleForm;
-import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -73,12 +79,29 @@ class AlterationRubetteTest {
 		dimensions.applyChanges();
 		
 		this.morphisms = new ArrayList<>();
-		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{3,5,7}}), new double[]{0}));
-		this.morphisms.add(RFreeAffineMorphism.make(new RMatrix(new double[][]{{1,2,3}}), new double[]{0}));
-		QMatrix matrix1 = new QMatrix(new Rational[][]{{new Rational(3),new Rational(5),new Rational(7)}});
-		QMatrix matrix2 = new QMatrix(new Rational[][]{{new Rational(1),new Rational(2),new Rational(3)}});
-		this.morphisms.add(QFreeAffineMorphism.make(matrix1, new Rational[]{new Rational(0)}));
-		this.morphisms.add(QFreeAffineMorphism.make(matrix2, new Rational[]{new Rational(0)}));
+
+		List<Real> realList1 = new ArrayList<>();
+		realList1.add(new Real(3));
+		realList1.add(new Real(5));
+		realList1.add(new Real(7));
+		List<Real> realList2 = new ArrayList<>();
+		realList2.add(new Real(1));
+		realList2.add(new Real(2));
+		realList2.add(new Real(3));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList1)), RRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList2)), RRing.ring.getZero()));
+
+		List<Rational> rationalList1 = new ArrayList<>();
+		rationalList1.add(new Rational(3));
+		rationalList1.add(new Rational(5));
+		rationalList1.add(new Rational(7));
+		List<Rational> rationalList2 = new ArrayList<>();
+		rationalList2.add(new Rational(1));
+		rationalList2.add(new Rational(2));
+		rationalList2.add(new Rational(3));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList1)), QRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList2)), QRing.ring.getZero()));
+
 	}
 	
 	@Test
@@ -90,28 +113,28 @@ class AlterationRubetteTest {
 	@Test
 	void testJAlterationDimensionsTable() {
 		JAlterationDimensionsTable dimensions = this.rubette.getDimensionsTable();
-		assertTrue(dimensions.dimensionCount() == 3);
-		assertTrue(dimensions.getRowCount() == 3);
+		assertEquals(3, dimensions.dimensionCount());
+		assertEquals(3, dimensions.getRowCount());
 		//add a form 
 		dimensions.addDimension(this.loudnessForm, 0.5);
-		assertTrue(dimensions.dimensionCount() == 3);
-		assertTrue(dimensions.getRowCount() == 4);
+		assertEquals(3, dimensions.dimensionCount());
+		assertEquals(4, dimensions.getRowCount());
 		//revert changes
 		dimensions.revertChanges();
-		assertTrue(dimensions.dimensionCount() == 3);
-		assertTrue(dimensions.getRowCount() == 3);
+		assertEquals(3, dimensions.dimensionCount());
+		assertEquals(3, dimensions.getRowCount());
 		//apply changes
 		dimensions.addDimension(this.loudnessForm, 0.5);
 		assertTrue(dimensions.applyChanges());
-		assertTrue(dimensions.dimensionCount() == 4);
-		assertTrue(dimensions.getRowCount() == 4);
+		assertEquals(4, dimensions.dimensionCount());
+		assertEquals(4, dimensions.getRowCount());
 		//add the same form a second time
 		dimensions.addDimension(this.loudnessForm, 0.3);
-		assertTrue(!dimensions.applyChanges());
-		assertTrue(dimensions.dimensionCount() == 4);
+		assertFalse(dimensions.applyChanges());
+		assertEquals(4, dimensions.dimensionCount());
 		assertTrue(dimensions.getForm(1).equals(this.noteGenerator.getPitchForm()));
-		assertTrue(dimensions.getStartPercentage(2) == 0.2);
-		assertTrue(dimensions.getEndPercentage(2) == 0.2);
+		assertEquals(0.2, dimensions.getStartPercentage(2));
+		assertEquals(0.2, dimensions.getEndPercentage(2));
 	}
 
 	@Test
