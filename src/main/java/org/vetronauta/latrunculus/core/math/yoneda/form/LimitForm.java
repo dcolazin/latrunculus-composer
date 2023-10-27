@@ -23,16 +23,15 @@ package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.Diagram;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -307,29 +306,6 @@ public final class LimitForm extends Form {
         buf.append(")]");
         return buf.toString();
     }
-    
-    
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: limit");
-
-        indent += 4;
-    
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        }
-        else {
-	        recursionCheckStack.addFirst(this);
-	        FormDiagram d = (FormDiagram)getIdentifier().getCodomainDiagram();
-	        for (int i = 0; i < d.getFormCount(); i++) {
-	            d.getForm(i).display(out, recursionCheckStack, indent);
-	        }
-	        recursionCheckStack.removeFirst();
-        }
-    }    
-
     
     protected double getDimension(int maxDepth, int depth) {
         double dimension = 0.0;

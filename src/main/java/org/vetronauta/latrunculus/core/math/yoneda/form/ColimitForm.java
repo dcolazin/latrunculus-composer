@@ -32,9 +32,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -303,29 +301,6 @@ public final class ColimitForm extends Form {
         buf.append(")]");
         return buf.toString();
     }
-    
-    
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: colimit");
-
-        indent += 4;
-    
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        }
-        else {
-            recursionCheckStack.addFirst(this);
-            FormDiagram d = (FormDiagram)getIdentifier().getCodomainDiagram();
-            for (int i = 0; i < d.getFormCount(); i++) {
-                d.getForm(i).display(out, recursionCheckStack, indent);
-            }
-            recursionCheckStack.removeFirst();
-        }
-    }    
-
     
     protected double getDimension(int maxDepth, int depth) {
         if (depth > maxDepth) {

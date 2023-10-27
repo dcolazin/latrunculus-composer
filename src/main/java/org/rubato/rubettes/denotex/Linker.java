@@ -45,7 +45,7 @@ public final class Linker {
         if (form.getType() != FormDenotatorTypeEnum.SIMPLE) {
             for (int i = 0; i < list.size(); i++) {
                 NameEntry name = (NameEntry)list.get(i);
-                Form ff = symtab.forms().get(name);
+                Form ff = symtab.getForms().get(name);
                 if (ff == null) {
                     ff = rep.getForm(name);
                     if (ff == null)
@@ -67,7 +67,7 @@ public final class Linker {
                 Denotator d = map.getFactor();
                 NameEntry name = (NameEntry)d.getConnector();
                 if (name != null) {
-                    Denotator dd = t.ndenos().get(name);
+                    Denotator dd = t.getNamedDenotators().get(name);
                     if (dd == null) {
                         dd = rep.getDenotator(name);
                         if (dd == null)                                                
@@ -85,7 +85,7 @@ public final class Linker {
                     Denotator d = map.getFactor(i);
                     NameEntry name = (NameEntry)d.getConnector();
                     if (name != null) {
-                        Denotator dd = t.ndenos().get(name);
+                        Denotator dd = t.getNamedDenotators().get(name);
                         if (dd == null) {
                             dd = rep.getDenotator(name);
                             if (dd == null)
@@ -100,11 +100,11 @@ public final class Linker {
     }
     
     public static void link(Symboltable symtab, Repository rep) {
-        for (Iterator<Entry<NameEntry,Form>> i = symtab.forms().entrySet().iterator(); i.hasNext(); ) {
+        for (Iterator<Entry<NameEntry,Form>> i = symtab.getForms().entrySet().iterator(); i.hasNext(); ) {
             Entry<NameEntry,Form> e = i.next();
             link(e.getValue(), symtab, rep);
         }
-        for (Iterator<Entry<NameEntry,Denotator>> i = symtab.ndenos().entrySet().iterator(); i.hasNext(); ) {
+        for (Iterator<Entry<NameEntry,Denotator>> i = symtab.getNamedDenotators().entrySet().iterator(); i.hasNext(); ) {
             Entry<NameEntry,Denotator> e = i.next();
             link(e.getValue(), symtab, rep);
         }

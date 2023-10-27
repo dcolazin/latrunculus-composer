@@ -20,18 +20,28 @@
 
 package org.rubato.rubettes.denotex;
 
-import java.util.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
 
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+@Getter
 public final class Symboltable {
-    public Symboltable(Map<NameEntry,Form> forms,
-                       Map<NameEntry,Denotator> namedDenotators,
-                       List<Denotator> anonymousDenotators,
-                       Map<String,Module> modules) {
+
+    private final Map<NameEntry,Form> forms;
+    private final Map<NameEntry,Denotator> namedDenotators;
+    private final List<Denotator> anonymousDenotators;
+    private final Map<String,Module> modules;
+
+    public Symboltable(Map<NameEntry,Form> forms, Map<NameEntry,Denotator> namedDenotators, List<Denotator> anonymousDenotators,
+               Map<String,Module> modules) {
         this.forms = forms;
         this.namedDenotators = namedDenotators;
         this.anonymousDenotators = anonymousDenotators;
@@ -39,19 +49,10 @@ public final class Symboltable {
     }
 
     public Symboltable() {
-        forms = new Hashtable<NameEntry,Form>();
-        namedDenotators = new Hashtable<NameEntry,Denotator>();
-        anonymousDenotators = new LinkedList<Denotator>();
-        modules = new Hashtable<String,Module>();
+        this.forms = new Hashtable<>();
+        this.namedDenotators = new Hashtable<>();
+        this.anonymousDenotators = new LinkedList<>();
+        this.modules = new Hashtable<>();
     }
 
-    public Map<NameEntry,Form> forms() { return forms; }
-    public Map<NameEntry,Denotator> ndenos() { return namedDenotators; }
-    public List<Denotator> adenos() { return anonymousDenotators; }
-    public Map<String,Module> modules() { return modules; }
-
-    private Map<NameEntry,Form>      forms;
-    private Map<NameEntry,Denotator> namedDenotators;
-    private List<Denotator>          anonymousDenotators;
-    private Map<String,Module>       modules;
 }

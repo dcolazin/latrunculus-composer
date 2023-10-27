@@ -25,15 +25,13 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.RepresentableIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,8 +63,7 @@ public final class SimpleForm extends Form {
     /**
      * simple identity form constructor with a range (for folding).
      */
-    public SimpleForm(NameDenotator name, Module m,
-                      ModuleElement lo, ModuleElement hi) {
+    public SimpleForm(NameDenotator name, Module m, ModuleElement lo, ModuleElement hi) {
         super(name, new RepresentableIdentityMorphism(m, lo, hi));
     }
         
@@ -186,16 +183,6 @@ public final class SimpleForm extends Form {
         buf.append(")]");
         return buf.toString();
     }
-    
-    
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: simple");
-        indent(out, indent+4);
-        out.println("Module: "+getModule());
-    }    
-
     
     protected double getDimension(int maxDepth, int depth) {
         return 1.0;

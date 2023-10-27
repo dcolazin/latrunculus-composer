@@ -83,9 +83,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
  * 
  * @author Gérard Milmeister
  */
-public class Repository
-        extends Observable
-        implements RubatoDictionary {
+public class Repository extends Observable implements RubatoDictionary {
 
     /**
      * Registers a form with repository.
@@ -96,8 +94,7 @@ public class Repository
         Form f = register(form, false);
         if (f == null) {
             rollback();
-        }
-        else {
+        } else {
             setChanged();
             notifyObservers();
             reset();

@@ -31,7 +31,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -46,6 +45,24 @@ import java.util.Map;
  * @author Stefan Göller
  */
 public abstract class Form extends AbstractConnectableYoneda implements Comparable<Form>, MathDefinition {
+
+    private static final int DEFAULT_MAX_DEPTH = 10;
+
+    protected NameDenotator name;
+    protected YonedaMorphism identifier;
+
+    private boolean hasHashcode = false;
+    private int hashcode = 0;
+    protected boolean registered = false;
+
+    /**
+     * Generic form constructor.
+     */
+    protected Form(NameDenotator name, YonedaMorphism identifier) {
+        this.name = name;
+        this.identifier = identifier;
+    }
+
 
     /**
      * Returns the name of the form as a denotator.
@@ -227,7 +244,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * Returns a list of the coordinate forms.
      */
     public List<Form> getForms() {
-        LinkedList<Form> list = new LinkedList<Form>();
+        LinkedList<Form> list = new LinkedList<>();
         for (int i = 0; i < getFormCount(); i++) {
             list.add(getForm(i));
         }
@@ -242,41 +259,6 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      */
     public abstract String toString();
 
-    
-    /**
-     * Print form to stdout.
-     */
-    public void display() {
-        display(System.out);        
-    }
-
-
-    /**
-     * Print form to a stream.
-     * 
-     * @param out the stream to print to
-     */
-    public void display(PrintStream out) {
-        display(out, new LinkedList<>(), 0);
-    }
-
-
-    protected abstract void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent);
-    
-
-    /**
-     * Returns true if this form is in the recursion stack.
-     */
-    protected final boolean recursionCheck(LinkedList<Form> recursionCheckStack) {
-        for (Form f : recursionCheckStack) {
-	        if (f == this) {
-	            return true;
-	        }
-	    }
-	    return false;
-    }
-    
-    
     /**
      * Returns a list of the forms that this form depends on.
      * A form always depends on itself.
@@ -296,19 +278,6 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
 
     
     /**
-     * Print out a number of white spaces to a stream.
-     * 
-     * @param out the stream to print to
-     * @param n the number of spaces to print
-     */
-    protected final void indent(PrintStream out, int n) {
-        for (int i = 0; i < n; i++) {
-            out.print(" ");
-        }
-    }
-
-    
-    /**
      * Returns a hash code for this form.
      */
     public int hashCode() {
@@ -317,14 +286,7 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
         }
         return hashcode;
     }
-    
-    
-    int _shallowHash() {
-        int hash= getNameString().hashCode();
-        hash = 37*hash+(getType().ordinal()+1);
-        return hash;
-    }
-    
+
 
     /**
      * Registers this form with the specified repository.
@@ -383,23 +345,5 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
             return identifier.resolveReferences(dict, history);
         }
     }
-    
-    
-    /**
-     * Generic form constructor.
-     */
-    protected Form(NameDenotator name, YonedaMorphism identifier) {
-        this.name = name;
-        this.identifier = identifier;
-    }
 
-
-    protected NameDenotator name;
-    protected YonedaMorphism identifier;
-    
-    private   boolean       hasHashcode = false;
-    private   int     	    hashcode    = 0;
-    protected boolean 	    registered  = false;
-
-    private static final int DEFAULT_MAX_DEPTH = 10;
 }

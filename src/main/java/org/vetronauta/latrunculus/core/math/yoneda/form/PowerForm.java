@@ -31,7 +31,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -146,7 +145,7 @@ public final class PowerForm extends Form {
     public Denotator createDefaultDenotator() {
         Denotator res = null;
         try {
-            res = new PowerDenotator(null, this, new LinkedList<Denotator>());
+            res = new PowerDenotator(null, this, new LinkedList<>());
         } 
         catch (RubatoException e) {
             e.printStackTrace();
@@ -161,7 +160,7 @@ public final class PowerForm extends Form {
     public Denotator createDefaultDenotator(Module address) {
         Denotator res = null;
         try {
-            res = new PowerDenotator(null, address, this, new LinkedList<Denotator>());
+            res = new PowerDenotator(null, address, this, new LinkedList<>());
         } 
         catch (RubatoException e) {
             e.printStackTrace();
@@ -173,26 +172,6 @@ public final class PowerForm extends Form {
     public String toString() {
         return "["+getNameString()+":.power("+getForm().getNameString()+")]";
     }
-    
-    
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: power");
-
-        indent += 4;
-    
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        }
-        else {
-	        recursionCheckStack.addFirst(this);
-	        getForm(0).display(out, recursionCheckStack, indent);
-	        recursionCheckStack.removeFirst();
-        }
-    }
-
 
     protected double getDimension(int maxDepth, int depth) {
         if (depth > maxDepth) return 1.0;

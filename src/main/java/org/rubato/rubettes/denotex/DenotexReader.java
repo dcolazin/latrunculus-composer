@@ -20,18 +20,16 @@
 
 package org.rubato.rubettes.denotex;
 
+import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.server.display.FormDisplay;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
 
 public class DenotexReader {
 
@@ -39,13 +37,9 @@ public class DenotexReader {
         this(in, Repository.systemRepository());
     }
 
-
     public DenotexReader(InputStream in, Repository r) {
         rep = r;
-        symtab = new Symboltable(new HashMap<NameEntry,Form>(),
-                                 new HashMap<NameEntry,Denotator>(),
-                                 new LinkedList<Denotator>(),
-                                 new HashMap<String,Module>());
+        symtab = new Symboltable();
         parser = new DenotexParser(in, symtab, rep);
     }
 
@@ -57,10 +51,7 @@ public class DenotexReader {
     
     public DenotexReader(Reader rdr, Repository r) {
         rep = r;
-        symtab = new Symboltable(new HashMap<NameEntry,Form>(),
-                                 new HashMap<NameEntry,Denotator>(),
-                                 new LinkedList<Denotator>(),
-                                 new HashMap<String,Module>());
+        symtab = new Symboltable();
         parser = new DenotexParser(rdr, symtab, rep);
     }
     
@@ -84,8 +75,8 @@ public class DenotexReader {
         try {
             parser.parseForm();
             Linker.link(symtab);
-            if (!symtab.forms().values().isEmpty()) {
-                return symtab.forms().values().iterator().next();
+            if (!symtab.getForms().values().isEmpty()) {
+                return symtab.getForms().values().iterator().next();
             }
         }
         catch (ParseException e) {
@@ -107,11 +98,11 @@ public class DenotexReader {
         try {
             parser.parseDenotator();
             Linker.link(symtab);
-            if (!symtab.ndenos().values().isEmpty()) {
-                return symtab.ndenos().values().iterator().next();
+            if (!symtab.getNamedDenotators().values().isEmpty()) {
+                return symtab.getNamedDenotators().values().iterator().next();
             }
-            else if (!symtab.adenos().isEmpty()) {
-                return symtab.adenos().iterator().next();                
+            else if (!symtab.getAnonymousDenotators().isEmpty()) {
+                return symtab.getAnonymousDenotators().iterator().next();
             }
         }
         catch (ParseException e) {
@@ -131,19 +122,23 @@ public class DenotexReader {
     
     public List<Form> getForms() {
         read();
-        if (error) return null;
-        LinkedList<Form> formList = new LinkedList<Form>();
-        formList.addAll(symtab.forms().values());
+        if (error) {
+            return null;
+        }
+        LinkedList<Form> formList = new LinkedList<>();
+        formList.addAll(symtab.getForms().values());
         return formList;
     }    
 
 
     public List<Denotator> getDenotators() {
         read();
-        if (error) return null;
-        LinkedList<Denotator> denoList = new LinkedList<Denotator>();
-        denoList.addAll(symtab.ndenos().values());
-        denoList.addAll(symtab.adenos());
+        if (error) {
+            return null;
+        }
+        LinkedList<Denotator> denoList = new LinkedList<>();
+        denoList.addAll(symtab.getNamedDenotators().values());
+        denoList.addAll(symtab.getAnonymousDenotators());
         return denoList;
     }    
 
@@ -164,12 +159,12 @@ public class DenotexReader {
     private boolean read = false;
     private boolean error = false;
     private String errorMsg;
-    
-    static public void main(String[] args) {
+
+    public static void main(String[] args) {
         String formstr = "A1:.limit[Integer,Integer]";
         Form f = readForm(formstr);
         Repository.systemRepository().register(f);
-        f.display();
+        FormDisplay.display(f);
         String denostr = "D1:@A1[0,0]";
         Denotator d = readDenotator(denostr);
         if (d == null)

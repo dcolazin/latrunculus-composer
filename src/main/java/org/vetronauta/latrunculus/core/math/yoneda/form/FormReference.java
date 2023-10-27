@@ -22,11 +22,9 @@ package org.vetronauta.latrunculus.core.math.yoneda.form;
 import org.rubato.base.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 
-import java.io.PrintStream;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -72,14 +70,6 @@ public final class FormReference extends Form {
 
     public Form getForm(int i) {
         throw new UnsupportedOperationException();
-    }
-
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: "+getTypeString());
-        indent(out, indent+4);
-        out.println("Reference");
     }
 
     public List<Form> getDependencies(List<Form> list) {

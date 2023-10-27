@@ -46,6 +46,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.rubato.scheme.Env;
 import org.rubato.scheme.SExpr;
 import org.rubato.scheme.Symbol;
+import org.vetronauta.latrunculus.server.display.FormDisplay;
 
 /** 
  * @author Gérard Milmeister
@@ -318,7 +319,7 @@ public class ObjectBrowser
         }
         public String toDisplay() {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
-            form.display(new PrintStream(bs));
+            FormDisplay.display(form, new PrintStream(bs));
             return bs.toString();
         }
         public void edit() {}

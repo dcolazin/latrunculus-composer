@@ -31,7 +31,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -170,25 +169,6 @@ public class ListForm extends Form {
     public String toString() {
         return "["+getNameString()+":.list("+getForm().getNameString()+")]";
     }
-    
-    
-    protected void display(PrintStream out, LinkedList<Form> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.println("; Type: list");
-
-        indent += 4;
-    
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        }
-        else {
-            recursionCheckStack.addFirst(this);
-            getForm().display(out, recursionCheckStack, indent);
-            recursionCheckStack.removeFirst();                
-        }
-    }    
 
     
     protected double getDimension(int maxDepth, int depth) {

@@ -189,7 +189,7 @@ public final class DenotexParser implements DenotexParserConstants {
 
 
     private Form defineForm(NameEntry name, FormDenotatorTypeEnum type, List crs) throws ParseException {
-        if (t.forms().get(name) != null)
+        if (t.getForms().get(name) != null)
             throw parseError("Form '" + name + "' already defined.");
 
         Form form = null;
@@ -240,7 +240,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 throw parseError("Illegal space type");
         }
         form.setConnector(crs);
-        t.forms().put(name, form);
+        t.getForms().put(name, form);
         return form;
     }
 
@@ -250,7 +250,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 if (rep != null)
                         f = rep.getForm(name);
                 if (f == null)
-                        f = t.forms().get(name);
+                        f = t.getForms().get(name);
                 return f;
         }
 
@@ -260,7 +260,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 if (rep != null)
                         d = rep.getDenotator(name);
                 if (d == null)
-                        d = t.ndenos().get(name);
+                        d = t.getNamedDenotators().get(name);
                 return d;
         }
 
@@ -275,12 +275,12 @@ public final class DenotexParser implements DenotexParserConstants {
             if (name != null) {
                 // WRONG:
                 // deno = new Denotator(Naming.getNameDenotator(name), address, form, cds);
-                t.ndenos().put(name, deno);
+                t.getNamedDenotators().put(name, deno);
             }
             else {
                 // WRONG:
                 // deno = new Denotator(null, address, form, cds);
-                t.adenos().add(deno);
+                t.getAnonymousDenotators().add(deno);
             }
             return deno;
         }
@@ -1107,10 +1107,10 @@ public final class DenotexParser implements DenotexParserConstants {
     n = moduleName();
     jj_consume_token(31);
     m = module();
-        if (t.modules().get(n) != null) {
+        if (t.getModules().get(n) != null) {
             throw parseError("Module '" + n + "' already defined.");
         }
-        t.modules().put(n, m);
+        t.getModules().put(n, m);
   }
 
   final public String moduleName() throws ParseException {
@@ -1192,7 +1192,7 @@ public final class DenotexParser implements DenotexParserConstants {
             if (sub != -1 || sup != -1) {
                 throw parseError("Sub- or superscript not allowed for module name.");
             }
-            Module m = t.modules().get(n);
+            Module m = t.getModules().get(n);
             if (m == null) {
                 throw parseError("Module '" + n + "' not defined.");
             }
