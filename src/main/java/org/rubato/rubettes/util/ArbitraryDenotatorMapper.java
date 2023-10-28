@@ -11,6 +11,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
@@ -100,30 +101,31 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			//TODO: mapping relatively easy for now since we're already doing powersets element by element..
 			
 			DenotatorPath currentPath = this.transformationPaths.getDomainPath(j, denotator);
-			
-			if (currentPath != null) {
-				ModuleMorphism currentMorphism = null;
-				if (currentPath.isElementPath()) {
-					currentMorphism = this.makeInitialProjection(denotator, currentPath);
-				} else {
-					SimpleDenotator currentSimple = this.getSimpleDenotator(denotator, currentPath.toIntArray());
-					if (currentSimple != null) {
-						currentMorphism = currentSimple.getModuleMorphism();
-					}
+			if (currentPath == null) {
+				continue;
+			}
+
+			ModuleMorphism currentMorphism = null;
+			if (currentPath.isElementPath()) {
+				currentMorphism = this.makeInitialProjection(denotator, currentPath);
+			} else {
+				SimpleDenotator currentSimple = this.getSimpleDenotator(denotator, currentPath.toIntArray());
+				if (currentSimple != null) {
+					currentMorphism = currentSimple.getModuleMorphism();
 				}
-				
-				if (currentMorphism != null) {
-					//give the current morphism a new codomain 
-					Module newCodomain = this.domain.getComponentModule(j);
-					currentMorphism = this.getCastedMorphism(currentMorphism, newCodomain);
-					//inject into domain of main morphism
-					currentMorphism = this.injectionMorphisms.get(j).compose(currentMorphism);
-					//sum all morphisms
-					if (injectionSum == null) {
-						injectionSum = currentMorphism;
-					} else {
-						injectionSum = injectionSum.sum(currentMorphism);
-					}
+			}
+
+			if (currentMorphism != null) {
+				//give the current morphism a new codomain
+				Module newCodomain = this.domain.getComponentModule(j);
+				currentMorphism = this.getCastedMorphism(currentMorphism, newCodomain);
+				//inject into domain of main morphism
+				currentMorphism = this.injectionMorphisms.get(j).compose(currentMorphism);
+				//sum all morphisms
+				if (injectionSum == null) {
+					injectionSum = currentMorphism;
+				} else {
+					injectionSum = injectionSum.sum(currentMorphism);
 				}
 			}
 		}
@@ -137,10 +139,10 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		DenotatorPath elementPath = path.getElementSubpath();
 		for (int currentIndex : elementPath.toIntArray()) {
 			if (currentElement instanceof ProductElement) {
-				currentMorphism = this.makeProjection(currentMorphism, ((ProductElement)currentElement).getFactorCount(), currentIndex);
+				currentMorphism = this.makeProjection(currentMorphism, currentIndex);
 				currentElement = ((ProductElement)currentElement).getFactor(currentIndex);
 			} else {
-				currentMorphism = this.makeProjection(currentMorphism, currentElement.getModule().getDimension(), currentIndex);
+				currentMorphism = this.makeProjection(currentMorphism, currentIndex);
 				currentElement = currentElement.getComponent(currentIndex);
 			}
 		}
@@ -153,7 +155,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			
 			//make projection if necessary
 			if (this.codomainDim > 1) {
-				projectedM = this.makeProjection(m, this.codomainDim, i);
+				projectedM = this.makeProjection(m, i);
 			}
 			
 			//replace original coordinate by mapped coordinate 
@@ -304,7 +306,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 	 * composes the input morphism with a projection on the component at 'index'.
 	 * example: m:R^2->R^2, i:1, then return m:R^2->R with m(x,y) = m(y)
 	 */
-	private ModuleMorphism makeProjection(ModuleMorphism morphism, int codomainDim, int index) throws CompositionException {
+	private ModuleMorphism makeProjection(ModuleMorphism morphism, int index) throws CompositionException {
 		if (morphism.getCodomain() instanceof ProductRing) {
 			ModuleMorphism projection = ProjectionMorphism.make((ProductRing)morphism.getCodomain(), index);
 			return projection.compose(morphism);
@@ -313,6 +315,9 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			ArithmeticMultiModule<?> multiModule = (ArithmeticMultiModule<?>) morphism.getCodomain();
 			ModuleMorphism projection = new ArithmeticAffineProjection(multiModule.getRing(), multiModule.getUnitElement(index), multiModule.getRing().getZero());
 			return projection.compose(morphism);
+		}
+		if (morphism.getCodomain() instanceof ArithmeticRing) {
+			return morphism;
 		}
 		return null;
 	}

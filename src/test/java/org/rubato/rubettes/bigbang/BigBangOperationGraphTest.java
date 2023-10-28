@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
+import org.rubato.rubettes.bigbang.model.operations.ScalingTransformation;
+import org.rubato.rubettes.bigbang.model.operations.TranslationTransformation;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -28,6 +30,7 @@ import org.rubato.rubettes.util.DenotatorPath;
 import edu.uci.ics.jung.graph.util.Pair;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -118,7 +121,7 @@ class BigBangOperationGraphTest {
 		
 		Set<BigBangObject> satelliteObjects = this.getBBObjectsFromModel(0, 3);
 		BigBangObject anchorObject = this.getBBObjectsFromModel(3, 4).iterator().next();
-		this.model.buildSatellites(new TreeSet<BigBangObject>(satelliteObjects), anchorObject, 0);
+		this.model.buildSatellites(new TreeSet<>(satelliteObjects), anchorObject, 0);
 		assertEquals(1, ((PowerDenotator)this.model.getComposition()).getFactorCount());
 		
 		this.model.modifyOperation(2, 0.5);
@@ -199,7 +202,7 @@ class BigBangOperationGraphTest {
 		//get objects and build satellites
 		BigBangObject anchor = this.getBBObjectsFromModel(0, 1).iterator().next();
 		Set<BigBangObject> satellites = this.getBBObjectsFromModel(1, 3);
-		this.model.buildSatellites(new TreeSet<BigBangObject>(satellites), anchor, 0);
+		this.model.buildSatellites(new TreeSet<>(satellites), anchor, 0);
 		
 		//translate both satellites by 1 pitch
 		TransformationProperties properties = new TransformationProperties(satellites, null, Arrays.asList(this.nodePaths), false, true);
@@ -244,7 +247,7 @@ class BigBangOperationGraphTest {
 		assertEquals(6, this.model.getTransformationGraph().getVertexCount());
 		assertEquals(5, this.model.getTransformationGraph().getEdgeCount());
 		AbstractOperation lastEdit = this.model.getTransformationGraph().getLastAddedOperation(); 
-		assertEquals(new Pair<CompositionState>(this.getCompStateAt(3), this.getCompStateAt(5)), this.model.getTransformationGraph().getEndpoints(lastEdit));
+		assertEquals(new Pair<>(this.getCompStateAt(3), this.getCompStateAt(5)), this.model.getTransformationGraph().getEndpoints(lastEdit));
 	}
 
 	@Test
@@ -272,15 +275,13 @@ class BigBangOperationGraphTest {
 		assertEquals(5, this.model.getTransformationGraph().getEdgeCount());
 		AbstractOperation lastEdit = this.model.getTransformationGraph().getLastAddedOperation(); 
 		//System.out.println(this.model.getTransformationGraph());
-		assertEquals(new Pair<CompositionState>(this.getCompStateAt(3), this.getCompStateAt(4)), this.model.getTransformationGraph().getEndpoints(lastEdit));
+		assertEquals(new Pair<>(this.getCompStateAt(3), this.getCompStateAt(4)), this.model.getTransformationGraph().getEndpoints(lastEdit));
 	}
 
 	@Test
+	@Disabled("there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable\n")
 	void testInsertEdge() {
 		//add one note and perform two translations
-		/*
-		//TODO reabilitate
-		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
 		this.model.setOrAddComposition(this.objects.generator.createEmptyScore());
 		int[][] paths = new int[][]{{0,0},{0,1}};
 		double[][] values = new double[][]{{0,60}};
@@ -301,15 +302,12 @@ class BigBangOperationGraphTest {
 		this.model.translateObjects(properties);
 		assertEquals(6, this.model.getTransformationGraph().getVertexCount());
 		assertEquals(5, this.model.getTransformationGraph().getEdgeCount());
-		 */
 	}
 
 	@Test
+	@Disabled("there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable\n")
 	void testSplitEdge() {
 		//add one note and perform a translation and a scaling
-		/*
-		//TODO reabilitate
-		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
 		this.model.setOrAddComposition(this.objects.generator.createEmptyScore());
 		int[][] paths = new int[][]{{0,0},{0,1}};
 		double[][] values = new double[][]{{0,60}};
@@ -356,7 +354,6 @@ class BigBangOperationGraphTest {
 		ScalingTransformation secondScalingPart = (ScalingTransformation)this.model.getTransformationGraph().getOutEdges(this.getCompStateAt(5)).iterator().next();
 		assertEquals(0.0, secondScalingPart.getCenter()[1]);
 		assertEquals(1.5, ((double)Math.round(1000*secondScalingPart.getScaleFactors()[1]))/1000);
-	*/
 	}
 
 	@Test
@@ -448,15 +445,15 @@ class BigBangOperationGraphTest {
 		assertTrue(this.model.getTransformationGraph().getLastAddedOperation() instanceof AddObjectsOperation);
 		assertEquals(4, ((PowerDenotator)this.model.getComposition()).getFactorCount());
 		
-		List<BigBangObject> objects = new ArrayList<BigBangObject>(this.getBBObjectsFromModel(0, 4));
-		this.model.buildSatellites(new TreeSet<BigBangObject>(objects.subList(3, 4)), objects.get(0), 0);
-		this.model.buildSatellites(new TreeSet<BigBangObject>(objects.subList(2, 3)), objects.get(1), 0);
+		List<BigBangObject> objects = new ArrayList<>(this.getBBObjectsFromModel(0, 4));
+		this.model.buildSatellites(new TreeSet<>(objects.subList(3, 4)), objects.get(0), 0);
+		this.model.buildSatellites(new TreeSet<>(objects.subList(2, 3)), objects.get(1), 0);
 		assertEquals(2, ((PowerDenotator)this.model.getComposition()).getFactorCount());
-		assertTrue(objects.get(3).getParent() == objects.get(0));
-		assertTrue(objects.get(2).getParent() == objects.get(1));
+		assertSame(objects.get(3).getParent(), objects.get(0));
+		assertSame(objects.get(2).getParent(), objects.get(1));
 		
 		//make transformation that switches paths of anchor objects
-		TransformationProperties properties = new TransformationProperties(new TreeSet<BigBangObject>(objects.subList(0, 1)), null, Arrays.asList(this.nodePaths), false, true);
+		TransformationProperties properties = new TransformationProperties(new TreeSet<>(objects.subList(0, 1)), null, Arrays.asList(this.nodePaths), false, true);
 		properties.setCenter(new double[]{0,0});
 		properties.setEndPoint(new double[]{4,1});
 		this.model.translateObjects(properties);
@@ -467,8 +464,8 @@ class BigBangOperationGraphTest {
 		assertSame(objects.get(3).getParent(), objects.get(0));
 		assertSame(objects.get(2).getParent(), objects.get(1));
 		//should not have the same paths anymore since parent paths changed
-		assertTrue(!objects.get(2).getTopDenotatorPathAt(translation).equals(objects.get(2).getTopDenotatorPathAt(null)));
-		assertTrue(!objects.get(3).getTopDenotatorPathAt(translation).equals(objects.get(3).getTopDenotatorPathAt(null)));
+		assertNotEquals(objects.get(2).getTopDenotatorPathAt(translation), objects.get(2).getTopDenotatorPathAt(null));
+		assertNotEquals(objects.get(3).getTopDenotatorPathAt(translation), objects.get(3).getTopDenotatorPathAt(null));
 	}
 
 	@Test
@@ -481,15 +478,15 @@ class BigBangOperationGraphTest {
 		assertTrue(this.model.getTransformationGraph().getLastAddedOperation() instanceof AddObjectsOperation);
 		assertEquals(4, ((PowerDenotator)this.model.getComposition()).getFactorCount());
 		
-		List<BigBangObject> objects = new ArrayList<BigBangObject>(this.getBBObjectsFromModel(0, 4));
-		this.model.buildSatellites(new TreeSet<BigBangObject>(objects.subList(3, 4)), objects.get(0), 0);
-		this.model.buildSatellites(new TreeSet<BigBangObject>(objects.subList(2, 3)), objects.get(1), 0);
+		List<BigBangObject> objects = new ArrayList<>(this.getBBObjectsFromModel(0, 4));
+		this.model.buildSatellites(new TreeSet<>(objects.subList(3, 4)), objects.get(0), 0);
+		this.model.buildSatellites(new TreeSet<>(objects.subList(2, 3)), objects.get(1), 0);
 		assertEquals(2, ((PowerDenotator)this.model.getComposition()).getFactorCount());
-		assertTrue(objects.get(3).getParent() == objects.get(0));
-		assertTrue(objects.get(2).getParent() == objects.get(1));
+		assertSame(objects.get(3).getParent(), objects.get(0));
+		assertSame(objects.get(2).getParent(), objects.get(1));
 		
 		//make transformation that copies and transforms first anchor
-		TransformationProperties properties = new TransformationProperties(new TreeSet<BigBangObject>(objects.subList(0, 1)), null, Arrays.asList(this.nodePaths), true, true);
+		TransformationProperties properties = new TransformationProperties(new TreeSet<>(objects.subList(0, 1)), null, Arrays.asList(this.nodePaths), true, true);
 		properties.setCenter(new double[]{0,0});
 		properties.setEndPoint(new double[]{1,1});
 		this.model.translateObjects(properties);
@@ -542,7 +539,7 @@ class BigBangOperationGraphTest {
 		assertEquals(1, this.model.getObjects().getAllObjects().size());
 		assertEquals(11, ((SimpleDenotator)this.model.getComposition()).getInteger());
 		//replaced object should be the same as the one added first!!
-		assertTrue(addedObject == this.model.getObjects().getObjectsAt(null).iterator().next());
+		assertSame(addedObject, this.model.getObjects().getObjectsAt(null).iterator().next());
 		
 		//add again, should be replaced by same object
 		values = new double[][]{{12}};
@@ -551,7 +548,7 @@ class BigBangOperationGraphTest {
 		assertEquals(1, this.model.getObjects().getAllObjects().size());
 		assertEquals(12, ((SimpleDenotator)this.model.getComposition()).getInteger());
 		//replaced object should be the same as the one added first!!
-		assertTrue(addedObject == this.model.getObjects().getObjectsAt(null).iterator().next());
+		assertSame(addedObject, this.model.getObjects().getObjectsAt(null).iterator().next());
 		
 		//transform and see if replaced
 		Set<BigBangObject> objects = this.getBBObjectsFromModel(0,1);
@@ -563,19 +560,19 @@ class BigBangOperationGraphTest {
 		assertEquals(1, this.model.getObjects().getAllObjects().size());
 		assertEquals(24, ((SimpleDenotator)this.model.getComposition()).getInteger());
 		//replaced object should be the same as the one added first!!
-		assertTrue(addedObject == this.model.getObjects().getObjectsAt(null).iterator().next());
+		assertSame(addedObject, this.model.getObjects().getObjectsAt(null).iterator().next());
 	}
 	
 	private ArrayList<Map<DenotatorPath,Double>> createNodePathAndValuesMapList(Form form, int[][] paths, double[][] values) {
-		ArrayList<Map<DenotatorPath,Double>> list = new ArrayList<Map<DenotatorPath,Double>>();
-		for (int i = 0; i < values.length; i++) {
-			list.add(this.createNodePathAndValuesMap(form, paths, values[i]));
+		ArrayList<Map<DenotatorPath,Double>> list = new ArrayList<>();
+		for (double[] value : values) {
+			list.add(this.createNodePathAndValuesMap(form, paths, value));
 		}
 		return list;
 	}
 	
 	private ArrayList<DenotatorPath> createPathsList(DenotatorPath path, int amount) {
-		ArrayList<DenotatorPath> list = new ArrayList<DenotatorPath>();
+		ArrayList<DenotatorPath> list = new ArrayList<>();
 		for (int i = 0; i < amount; i++) {
 			list.add(path);
 		}
@@ -583,7 +580,7 @@ class BigBangOperationGraphTest {
 	}
 	
 	private Map<DenotatorPath,Double> createNodePathAndValuesMap(Form form, int[][] paths, double[] values) {
-		Map<DenotatorPath,Double> valuesMap = new TreeMap<DenotatorPath,Double>();
+		Map<DenotatorPath,Double> valuesMap = new TreeMap<>();
 		for (int i = 0; i < paths.length; i++) {
 			valuesMap.put(new DenotatorPath(form, paths[i]), values[i]);
 		}
@@ -592,8 +589,8 @@ class BigBangOperationGraphTest {
 	}
 	
 	private TreeSet<BigBangObject> getBBObjectsFromModel(int fromIndex, int toIndex) {
-		List<BigBangObject> objectList = new ArrayList<BigBangObject>(this.model.getObjects().getAllObjects());
-		return new TreeSet<BigBangObject>(objectList.subList(fromIndex, toIndex));
+		List<BigBangObject> objectList = new ArrayList<>(this.model.getObjects().getAllObjects());
+		return new TreeSet<>(objectList.subList(fromIndex, toIndex));
 	}
 	
 	private CompositionState getCompStateAt(int index) {
