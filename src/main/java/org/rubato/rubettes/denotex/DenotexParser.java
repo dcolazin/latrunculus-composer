@@ -1301,13 +1301,13 @@ public final class DenotexParser implements DenotexParserConstants {
             else {
                 String s = String.valueOf((double) n / (double) d);
                 if (m instanceof ZStringRing)
-                    elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
+                    elements.add(new ArithmeticStringElement<>(ZRing.ring, s));
                 else if (m instanceof ZnStringRing)
-                    elements.add(new ArithmeticStringElement<Modulus>(s));
+                    elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), s));
                 else if (m instanceof QStringRing)
-                    elements.add(new ArithmeticStringElement<Rational>(s));
+                    elements.add(new ArithmeticStringElement<>(QRing.ring, s));
                 else if (m instanceof RStringRing)
-                    elements.add(new ArithmeticStringElement<Real>(s));
+                    elements.add(new ArithmeticStringElement<>(RRing.ring, s));
 
                     // error
                 else {
@@ -1328,13 +1328,13 @@ public final class DenotexParser implements DenotexParserConstants {
 
             // we also allow to convert numbers into strings without quotes
             else if (m instanceof ZStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticInteger>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<>(ZRing.ring, String.valueOf(r)));
             else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<Modulus>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), String.valueOf(r)));
             else if (m instanceof QStringRing)
-                elements.add(new ArithmeticStringElement<Rational>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<>(QRing.ring, String.valueOf(r)));
             else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<Real>(String.valueOf(r)));
+                elements.add(new ArithmeticStringElement<>(RRing.ring, String.valueOf(r)));
 
             // error
             else {
@@ -1366,13 +1366,13 @@ public final class DenotexParser implements DenotexParserConstants {
         s = sLiteral();
         try {
             if (m instanceof ZStringRing)
-                elements.add(new ArithmeticStringElement<ArithmeticInteger>(s));
+                elements.add(new ArithmeticStringElement<>(ZRing.ring, s));
             else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<Modulus>(s));
+                elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), s));
             else if (m instanceof QStringRing)
-                elements.add(new ArithmeticStringElement<Rational>(s));
+                elements.add(new ArithmeticStringElement<>(QRing.ring, s));
             else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<Real>(s));
+                elements.add(new ArithmeticStringElement<>(RRing.ring, s));
 
             // error
             else {

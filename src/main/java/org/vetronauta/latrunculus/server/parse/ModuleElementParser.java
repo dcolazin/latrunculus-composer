@@ -170,7 +170,7 @@ public final class ModuleElementParser {
 
     private static <N extends ArithmeticNumber<N>> ArithmeticStringElement<N> parse(ArithmeticStringRing<N> module, String string) {
         try {
-            return new ArithmeticStringElement<>(ArithmeticParsingUtils.parseString(module, TextUtils.unparenthesize(string)));
+            return new ArithmeticStringElement<>(module, ArithmeticParsingUtils.parseString(module, TextUtils.unparenthesize(string)));
         } catch (Exception e) {
             return null;
         }

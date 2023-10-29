@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -299,7 +300,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 j++;
             }
             RingString<?> zstring = new RingString<>(wordArray, factorArray);
-            return new ArithmeticStringElement(zstring);
+            return new ArithmeticStringElement(ZStringRing.ring, zstring);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
@@ -347,7 +348,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
     }
 
     private <N extends ArithmeticNumber<N>> ModuleElement makeArithmeticStringMultiElement(ArithmeticStringElement<N> ringElement, List<? extends RingString<?>> coefficients) {
-        return ArithmeticStringMultiElement.make(StringRingRepository.getRing(ringElement), (List<RingString<N>>) coefficients);
+        return ArithmeticStringMultiElement.make(ringElement.getRing(), (List<RingString<N>>) coefficients);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
@@ -276,7 +277,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(NameDenotator name, Form form, String s) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticStringElement<ArithmeticInteger>(s));
+            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticStringElement<>(ZRing.ring, s));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -292,7 +293,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, String s) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticStringElement<ArithmeticInteger>(s));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticStringElement<>(ZRing.ring, s));
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -306,7 +307,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(Form form, String s) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticStringElement<ArithmeticInteger>(s));
+            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticStringElement<>(ZRing.ring, s));
         }
         catch (ClassCastException | DomainException e) {
             return null;

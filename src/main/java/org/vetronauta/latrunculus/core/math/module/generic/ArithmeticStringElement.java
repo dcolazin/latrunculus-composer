@@ -47,24 +47,33 @@ import java.util.Set;
 public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends StringElement<ArithmeticStringElement<N>> {
 
     private final RingString<N> value;
+    private final ArithmeticStringRing<N> ring;
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
      */
-    public ArithmeticStringElement(RingString<N> value) {
+    public ArithmeticStringElement(ArithmeticStringRing<N> ring, RingString<N> value) {
         this.value = value;
+        this.ring = ring;
     }
 
-    protected ArithmeticStringElement(EntryList<String,N> entryList) {
-        this(new RingString<>(entryList.getKeys(), entryList.getValues()));
+    /**
+     * Constructs an RStringElement from an RString <code>value</code>.
+     */
+    public ArithmeticStringElement(ArithmeticRing<N> factorRing, RingString<N> value) {
+        this(StringRingRepository.getRing(factorRing), value);
+    }
+
+    protected ArithmeticStringElement(ArithmeticRing<N> factorRing, EntryList<String,N> entryList) {
+        this(factorRing, new RingString<>(entryList.getKeys(), entryList.getValues()));
     }
 
     /**
      * Constructs an RStringElement from a simple string <code>value</code>.
      * The result is an RStringElement of the form 1.0*value.
      */
-    public ArithmeticStringElement(String value) {
-        this.value = new RingString<>(value);
+    public ArithmeticStringElement(ArithmeticRing<N> factorRing, String value) {
+        this(factorRing, new RingString<>(value));
     }
 
     public boolean isOne() {
@@ -76,7 +85,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
     }
 
     public ArithmeticStringElement<N> sum(ArithmeticStringElement<N> element) {
-        return new ArithmeticStringElement<>(getValue().sum(element.getValue()));
+        return new ArithmeticStringElement<>(ring, getValue().sum(element.getValue()));
     }
 
     public void add(ArithmeticStringElement<N> element) {
@@ -84,7 +93,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
     }
 
     public ArithmeticStringElement<N> difference(ArithmeticStringElement<N> element) {
-        return new ArithmeticStringElement<>(getValue().difference(element.getValue()));
+        return new ArithmeticStringElement<>(ring, getValue().difference(element.getValue()));
     }
 
     public void subtract(ArithmeticStringElement<N> element) {
@@ -92,7 +101,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
     }
 
     public ArithmeticStringElement<N> negated() {
-        return new ArithmeticStringElement<>(getValue().negated());
+        return new ArithmeticStringElement<>(ring, getValue().negated());
     }
 
     public void negate() {
@@ -108,7 +117,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
     }
 
     public ArithmeticStringElement<N> product(ArithmeticStringElement<N> element) {
-        return new ArithmeticStringElement<>(getValue().product(element.getValue()));
+        return new ArithmeticStringElement<>(ring, getValue().product(element.getValue()));
     }
 
     public void multiply(ArithmeticStringElement<N> element) {
@@ -149,10 +158,6 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
     public boolean divides(RingElement element) {
         // TODO: implement division where possible
         return false;
-    }
-
-    public ArithmeticStringRing<N> getRing() {
-        return StringRingRepository.getRing(this);
     }
 
     public RingString<N> getRingString() {
@@ -202,7 +207,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
 
     @Override
     public ArithmeticStringElement<N> deepCopy() {
-        return new ArithmeticStringElement<>(getValue().deepCopy());
+        return new ArithmeticStringElement<>(ring, getValue().deepCopy());
     }
 
     @Override
@@ -211,7 +216,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
             return this;
         }
         else if (n == 0) {
-            return ArithmeticStringMultiElement.make(StringRingRepository.getRing(this), new ArrayList<>());
+            return ArithmeticStringMultiElement.make(ring, new ArrayList<>());
         }
         else {
             List<RingString<N>> values = new ArrayList<>(n);
@@ -219,7 +224,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
             for (int i = 1; i < n; i++) {
                 values.add(new RingString<>());
             }
-            return ArithmeticStringMultiElement.make(StringRingRepository.getRing(this), values);
+            return ArithmeticStringMultiElement.make(ring, values);
         }
     }
 

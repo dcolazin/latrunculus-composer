@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeE
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
@@ -162,7 +163,7 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }
         for (int i = 0; i < element.getValue().size(); i++) {
-            write(new ArithmeticStringElement<>(element.getValue().get(i)), writer);
+            write(new ArithmeticStringElement(element.getModule().getRing(), element.getValue().get(i)), writer);
         }
         writer.closeBlock();
     }

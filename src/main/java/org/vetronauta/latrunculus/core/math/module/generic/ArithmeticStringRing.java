@@ -40,7 +40,7 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
 
     @Override
     public ArithmeticStringElement<N> getZero() {
-        return new ArithmeticStringElement<N>(RingString.getZero());
+        return new ArithmeticStringElement<>(this, RingString.getZero());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
 
     @Override
     public ArithmeticStringElement<N> getOne() {
-        return new ArithmeticStringElement<N>(RingString.getOne());
+        return new ArithmeticStringElement<>(this, RingString.getOne());
     }
 
     @Override
@@ -96,10 +96,10 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
     public ArithmeticStringElement<N> cast(ModuleElement element) {
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
-            return new ArithmeticStringElement<N>(new RingString<>(rs));
+            return new ArithmeticStringElement<>(this, new RingString<>(rs));
         }
         ArithmeticElement<N> e = factorRing.cast(element);
-        return e != null ? new ArithmeticStringElement<N>(new RingString<>(e.getValue())) : null;
+        return e != null ? new ArithmeticStringElement<>(this, new RingString<>(e.getValue())) : null;
     }
 
     @Override

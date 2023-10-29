@@ -54,7 +54,7 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
             return new ArithmeticStringMultiElement<>(ring, new ArrayList<>());
         }
         else if (v.size() == 1) {
-            return new ArithmeticStringElement<>(v.get(0));
+            return new ArithmeticStringElement<>(ring, v.get(0));
         }
         return new ArithmeticStringMultiElement<>(ring, v);
 
@@ -203,14 +203,14 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
     @Override
     public ArithmeticStringElement<N> getComponent(int i) {
         assert(i < getLength());
-        return new ArithmeticStringElement<>(value.get(i));
+        return new ArithmeticStringElement<>(ring, value.get(i));
     }
 
 
     @Override
     public ArithmeticStringElement<N> getRingElement(int i) {
         assert(i < getLength());
-        return new ArithmeticStringElement<>(value.get(i));
+        return new ArithmeticStringElement<>(ring, value.get(i));
     }
 
     public List<RingString<N>> getValue() {
