@@ -27,8 +27,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
@@ -98,7 +98,7 @@ public final class FormFactory {
      * @param name the name of the new form
      */
     public static SimpleForm makeZStringModuleForm(String name) {
-        return new SimpleForm(NameDenotator.make(name), ZStringRing.ring);
+        return new SimpleForm(NameDenotator.make(name), StringRingRepository.getRing(ZRing.ring));
     }
 
 

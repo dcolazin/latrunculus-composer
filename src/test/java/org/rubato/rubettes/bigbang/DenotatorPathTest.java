@@ -15,8 +15,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
@@ -182,7 +182,7 @@ class DenotatorPathTest {
 		SimpleForm onset = FormFactory.makeQModuleForm("Onset");
 		Module eulerPitchSpace = ArithmeticMultiModule.make(ZRing.ring, 3);
 		SimpleForm eulerPitch = FormFactory.makeModuleForm("EulerPitch", eulerPitchSpace);
-		Module loudnessSpace = ArithmeticStringMultiModule.make(ZStringRing.ring, 1);
+		Module loudnessSpace = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), 1);
 		SimpleForm loudness = FormFactory.makeModuleForm("Loudness", loudnessSpace);
 		SimpleForm duration = FormFactory.makeQModuleForm("Duration");
 		LimitForm eulerNote = FormFactory.makeLimitForm("EulerNote", onset, eulerPitch, loudness, duration);

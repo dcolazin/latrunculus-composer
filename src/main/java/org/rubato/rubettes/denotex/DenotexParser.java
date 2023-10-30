@@ -2,33 +2,31 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 import java.io.IOException;
@@ -296,18 +294,20 @@ public final class DenotexParser implements DenotexParserConstants {
         // RA: ZASCII ist maintained here for backward compability
         if (s.equals("ZString") || s.equals("ZASCII")) {
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            if (sub == -1)   return ZStringRing.ring;
-            else            return ZnStringRing.make(sub);
+            if (sub == -1)   {
+                return StringRingRepository.getRing(ZRing.ring);
+            }
+            return StringRingRepository.getModulusRing(sub);
         }
         else if (s.equals("QString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            return QStringRing.ring;
+            return StringRingRepository.getRing(QRing.ring);
         }
         else if (s.equals("RString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            return RStringRing.ring;
+            return StringRingRepository.getRing(RRing.ring);
         }
         else if (s.equals("Z")) {
             if (sup == -1) {
@@ -1300,17 +1300,9 @@ public final class DenotexParser implements DenotexParserConstants {
             // we also allow to convert numbers into strings without quotes
             else {
                 String s = String.valueOf((double) n / (double) d);
-                if (m instanceof ZStringRing)
-                    elements.add(new ArithmeticStringElement<>(ZRing.ring, s));
-                else if (m instanceof ZnStringRing)
-                    elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), s));
-                else if (m instanceof QStringRing)
-                    elements.add(new ArithmeticStringElement<>(QRing.ring, s));
-                else if (m instanceof RStringRing)
-                    elements.add(new ArithmeticStringElement<>(RRing.ring, s));
-
-                    // error
-                else {
+                if (m instanceof ArithmeticStringRing) {
+                    elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), s));
+                } else {
                     throw parseError("");
                 }
             }
@@ -1323,21 +1315,11 @@ public final class DenotexParser implements DenotexParserConstants {
                    double r;
       r = rLiteral();
         try {
-            if (m instanceof RRing)
+            if (m instanceof RRing) {
                 elements.add(new ArithmeticElement<>(new Real(r)));
-
-            // we also allow to convert numbers into strings without quotes
-            else if (m instanceof ZStringRing)
-                elements.add(new ArithmeticStringElement<>(ZRing.ring, String.valueOf(r)));
-            else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), String.valueOf(r)));
-            else if (m instanceof QStringRing)
-                elements.add(new ArithmeticStringElement<>(QRing.ring, String.valueOf(r)));
-            else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<>(RRing.ring, String.valueOf(r)));
-
-            // error
-            else {
+            } else if (m instanceof ArithmeticStringRing) { // we also allow to convert numbers into strings without quotes
+                elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), String.valueOf(r)));
+            } else {
                 throw parseError("");
             }
         }
@@ -1365,17 +1347,9 @@ public final class DenotexParser implements DenotexParserConstants {
       String s;
         s = sLiteral();
         try {
-            if (m instanceof ZStringRing)
-                elements.add(new ArithmeticStringElement<>(ZRing.ring, s));
-            else if (m instanceof ZnStringRing)
-                elements.add(new ArithmeticStringElement<>(ArithmeticRingRepository.getModulusRing(((ZnStringRing) m).getModulus()), s));
-            else if (m instanceof QStringRing)
-                elements.add(new ArithmeticStringElement<>(QRing.ring, s));
-            else if (m instanceof RStringRing)
-                elements.add(new ArithmeticStringElement<>(RRing.ring, s));
-
-            // error
-            else {
+            if (m instanceof ArithmeticStringRing) {
+                elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), s));
+            } else {
                 throw parseError("Expected StringElement, got " + s);
             }
         } catch(Exception e) {

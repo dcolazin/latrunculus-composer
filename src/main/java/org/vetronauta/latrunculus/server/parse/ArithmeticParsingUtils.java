@@ -3,24 +3,20 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.complex.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import java.util.LinkedList;
 
@@ -129,17 +125,18 @@ public class ArithmeticParsingUtils {
     }
 
     public static <N extends ArithmeticNumber<N>> RingString<N> parseString(ArithmeticStringRing<N> ring, String s) {
-        if (ring instanceof RStringRing) {
+        ArithmeticRing<N> factorRing = ring.getFactorRing();
+        if (factorRing instanceof RRing) {
             return (RingString<N>) parseRString(s);
         }
-        if (ring instanceof QStringRing) {
+        if (factorRing instanceof QRing) {
             return (RingString<N>) parseQString(s);
         }
-        if (ring instanceof ZStringRing) {
+        if (factorRing instanceof ZRing) {
             return (RingString<N>) parseZString(s);
         }
-        if (ring instanceof ZnStringRing) {
-            return (RingString<N>) parseZnString(s, ((ZnStringRing) ring).getModulus());
+        if (factorRing instanceof ZnRing) {
+            return (RingString<N>) parseZnString(s, ((ZnRing) factorRing).getModulus());
         }
         throw new NumberFormatException(String.format("parsing string ring %s is not supported", ring));
     }

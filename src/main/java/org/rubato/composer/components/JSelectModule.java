@@ -27,17 +27,14 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import javax.swing.BoxLayout;
@@ -261,19 +258,19 @@ public class JSelectModule
             break;
         }
         case ZSTRING: {
-            module = ArithmeticStringMultiModule.make(ZStringRing.ring, dim);
+            module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), dim);
             break;
         }
         case ZNSTRING: {
-            module = ArithmeticStringMultiModule.make(ZnStringRing.make(getModulus()), dim);
+            module = ArithmeticStringMultiModule.make(StringRingRepository.getModulusRing(getModulus()), dim);
             break;
         }
         case QSTRING: {
-            module = ArithmeticStringMultiModule.make(QStringRing.ring, dim);
+            module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(QRing.ring), dim);
             break;
         }
         case RSTRING: {
-            module = ArithmeticStringMultiModule.make(RStringRing.ring, dim);
+            module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(RRing.ring), dim);
             break;
         }
         case PRODUCT: {

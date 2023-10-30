@@ -19,7 +19,8 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
+import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -299,7 +300,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 j++;
             }
             RingString<?> zstring = new RingString<>(wordArray, factorArray);
-            return new ArithmeticStringElement(ZStringRing.ring, zstring);
+            return new ArithmeticStringElement(StringRingRepository.getRing(ZRing.ring), zstring);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);

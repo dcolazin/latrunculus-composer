@@ -22,16 +22,10 @@ package org.vetronauta.latrunculus.core.math.module.repository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
-import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,26 +38,18 @@ public class StringRingRepository {
 
     //TODO make this a proper object to inject when needed
 
-    private static final Map<Integer, ZnStringRing> modRingMap = new HashMap<>();
+    private static final Map<Integer, ArithmeticStringRing<Modulus>> modRingMap = new HashMap<>();
+    private static final Map<ArithmeticRing, ArithmeticStringRing> stringRingMap = new HashMap<>();
 
-    public static ZnStringRing getModulusRing(int modulus) {
-        return modRingMap.computeIfAbsent(modulus, ZnStringRing::make);
+    public static ArithmeticStringRing<Modulus> getModulusRing(int modulus) {
+        return modRingMap.computeIfAbsent(modulus, x -> new ArithmeticStringRing<>(ArithmeticRingRepository.getModulusRing(modulus)));
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticStringRing<N> getRing(ArithmeticRing<N> factorRing) {
-        if (factorRing instanceof ZRing) {
-            return (ArithmeticStringRing<N>) ZStringRing.ring;
-        }
-        if (factorRing instanceof QRing) {
-            return (ArithmeticStringRing<N>) QStringRing.ring;
-        }
-        if (factorRing instanceof RRing) {
-            return (ArithmeticStringRing<N>) RStringRing.ring;
-        }
         if (factorRing instanceof ZnRing) {
             return (ArithmeticStringRing<N>) getModulusRing((((ZnRing) factorRing).getModulus()));
         }
-        throw new UnsupportedOperationException(String.format("cannot retrieve string ring for %s", factorRing));
+        return stringRingMap.computeIfAbsent(factorRing, ArithmeticStringRing::new);
     }
 
 }

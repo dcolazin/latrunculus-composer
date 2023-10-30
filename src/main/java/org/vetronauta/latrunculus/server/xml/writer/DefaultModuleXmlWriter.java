@@ -30,18 +30,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
@@ -87,20 +84,8 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((ArithmeticStringMultiModule) object, writer);
             return;
         }
-        if (object instanceof ZStringRing) {
-            write((ZStringRing) object, writer);
-            return;
-        }
-        if (object instanceof ZnStringRing) {
-            write((ZnStringRing) object, writer);
-            return;
-        }
-        if (object instanceof QStringRing) {
-            write((QStringRing) object, writer);
-            return;
-        }
-        if (object instanceof RStringRing) {
-            write((RStringRing) object, writer);
+        if (object instanceof ArithmeticStringRing) {
+            write((ArithmeticStringRing) object, writer);
             return;
         }
         if (object instanceof DirectSumModule) {
@@ -172,19 +157,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         }
     }
 
-    private void write(ZStringRing module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName());
-    }
-
-    private void write(ZnStringRing module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName(), MODULUS_ATTR, module.getModulus());
-    }
-
-    private void write(QStringRing module, XMLWriter writer) {
-        writer.emptyWithType(MODULE, module.getElementTypeName());
-    }
-
-    private void write(RStringRing module, XMLWriter writer) {
+    private void write(ArithmeticStringRing module, XMLWriter writer) {
         writer.emptyWithType(MODULE, module.getElementTypeName());
     }
 

@@ -32,10 +32,9 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
-import org.vetronauta.latrunculus.core.math.module.integer.ZStringRing;
 import org.vetronauta.latrunculus.core.math.module.modular.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.modular.ZnStringRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -69,9 +68,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.rational.QRing;
-import org.vetronauta.latrunculus.core.math.module.rational.QStringRing;
 import org.vetronauta.latrunculus.core.math.module.real.RRing;
-import org.vetronauta.latrunculus.core.math.module.real.RStringRing;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
@@ -153,11 +150,7 @@ public class Dispatcher {
         addModule(QRing.class);
         addModule(CRing.class);
         
-        addModule(ZStringRing.class);
-        addModule(ZnStringRing.class);
-        addModule(RStringRing.class);
-        addModule(QStringRing.class);
-        
+        addModule(ArithmeticStringRing.class);
         addModule(ArithmeticMultiModule.class);
         addModule(ArithmeticStringMultiModule.class);
 
