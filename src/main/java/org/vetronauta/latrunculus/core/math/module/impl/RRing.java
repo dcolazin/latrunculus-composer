@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.real;
+package org.vetronauta.latrunculus.core.math.module.impl;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;

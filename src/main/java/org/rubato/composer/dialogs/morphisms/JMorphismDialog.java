@@ -33,10 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.modular.Modular;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConjugationMorphism;
@@ -524,7 +521,7 @@ public class JMorphismDialog
             }
             else if (selectedType.equals(MODULO_TYPE)) {
                 int dim = domain.getDimension();
-                int mod = ((Modular)codomain).getModulus(); //TODO this might not work after the ArithmeticMultiModule refactoring
+                int mod = ((ZnRing) codomain.getRing()).getModulus();
                 setMorphism(ModuloMorphism.make(dim, mod));
                 setResult(morphism.toString());
             }

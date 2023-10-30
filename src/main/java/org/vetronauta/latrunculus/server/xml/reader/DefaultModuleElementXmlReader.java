@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
-import org.vetronauta.latrunculus.core.math.module.integer.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
@@ -45,7 +45,6 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElemen
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.modular.Modular;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
@@ -79,13 +78,13 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
     @Override
     public ModuleElement fromXML(Element element, Class<? extends ModuleElement> clazz, XMLReader reader) {
         if (ArithmeticElement.class.isAssignableFrom(clazz)) {
-            if (Modular.class.isAssignableFrom(clazz)) { //TODO this check does not works
+            if (element.hasAttribute(MODULUS_ATTR)) {
                 return readModularArithmeticElement(element, clazz, reader);
             }
             return readArithmeticElement(element, clazz, reader);
         }
         if (ArithmeticMultiElement.class.isAssignableFrom(clazz)) {
-            if (Modular.class.isAssignableFrom(clazz)) { //TODO this check does not works
+            if (element.hasAttribute(MODULUS_ATTR)) {
                 return readZnProperFreeElement(element, clazz, reader);
             }
             return readArithmeticMultiElement(element, clazz, reader);

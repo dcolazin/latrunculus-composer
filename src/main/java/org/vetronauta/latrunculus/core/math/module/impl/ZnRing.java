@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.modular;
+package org.vetronauta.latrunculus.core.math.module.impl;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing, Modular {
+public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing {
 
     private ZnRing(int modulus) {
         super(new Modulus(0, modulus), new Modulus(1, modulus));

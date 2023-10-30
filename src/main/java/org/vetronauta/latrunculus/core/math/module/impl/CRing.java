@@ -17,9 +17,10 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.module.rational;
+package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -32,36 +33,76 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import java.util.List;
 
 /**
- * The field of rationals.
- *
+ * The field of complex numbers.
  * @author Gérard Milmeister
  */
-public final class QRing extends ArithmeticRing<Rational> implements NumberRing {
-
-    private QRing() {
-        super(new Rational(0), new Rational(1));
-    }
+public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     /**
-     * The unique instance of the ring of rationals.
+     * The unique instance of the ring of complex numbers.
      */
-    public static final QRing ring = new QRing();
-    public static final ArithmeticMultiModule<Rational> nullModule = new ArithmeticMultiModule<>(ring, 0);
+    public static final CRing ring = new CRing();
+    public static final ArithmeticMultiModule<Complex> nullModule = new ArithmeticMultiModule<>(ring, 0);
 
-    public ArithmeticMultiModule<Rational> getNullModule() {
+    @Override
+    public ArithmeticMultiModule<Complex> getNullModule() {
         return nullModule;
     }
 
-    public boolean hasElement(ModuleElement element) {
-        return element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Rational;
+    @Override
+    public boolean hasElement(ModuleElement<?,?> element) {
+        return (element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Complex);
+    }
+    
+    @Override
+    public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
+        return ArithmeticMultiModule.make(CRing.ring, dimension);
     }
 
-    public FreeModule<?,ArithmeticElement<Rational>> getFreeModule(int dimension) {
-        return ArithmeticMultiModule.make(QRing.ring, dimension);
-    }
-
+    @Override
     public boolean equals(Object object) {
-        return this == object;
+        return (this == object);
+    }
+
+    @Override
+    public ArithmeticElement<Complex> createElement(List<? extends ModuleElement<?, ?>> elements) {
+        if (!elements.isEmpty()) {
+            return this.cast(elements.get(0));
+        }
+        return null;
+    }
+    
+    @Override
+    public ArithmeticElement<Complex> cast(ModuleElement<?,?> element) {
+        if (element instanceof ArithmeticElement) {
+            return cast(((ArithmeticElement<?>) element).getValue());
+        }
+        if (element instanceof DirectSumElement) {
+            return this.cast(element.flatComponentList().get(0));
+        }
+        return null;
+    }
+
+    public ArithmeticElement<Complex> cast(ArithmeticNumber<?> element) {
+        return new ArithmeticElement<>(new Complex(element.doubleValue()));
+    }
+
+    
+    public String toString() {
+        return "CRing";
+    }
+
+    
+    public String toVisualString() {
+        return "C";
+    }
+
+    public String getElementTypeName() {
+        return "CRing";
+    }
+
+    public int hashCode() {
+        return basicHash;
     }
 
     @Override
@@ -75,52 +116,14 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
         return super.compareTo(object);
     }
     
-    public ArithmeticElement<Rational> createElement(List<? extends ModuleElement<?, ?>> elements) {
-        if (!elements.isEmpty()) {
-            return this.cast(elements.get(0));
-        }
-        else {
-            return null;
-        }
-    }
-
-    public ArithmeticElement<Rational> cast(ModuleElement<?,?> element) {
-        if (element instanceof ArithmeticElement) {
-            return cast((ArithmeticElement<?>) element);
-        }
-        if (element instanceof DirectSumElement) {
-            return this.cast(element.flatComponentList().get(0));
-        }
-        return null;
-    }
-
-    public ArithmeticElement<Rational> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new Rational(element.getValue().doubleValue()));
-    }
-    
-    public String toString() {
-        return "QRing";
-    }
-    
-    
-    public String toVisualString() {
-        return "Q";
-    }
-    
-    public String getElementTypeName() {
-        return "QRing";
-    }
-
-    public int hashCode() {
-        return basicHash;
-    }
-    
-    
     public int getNumberRingOrder() {
-        return 200;
+        return 400;
     }
 
 
-    private static final int basicHash = "QRing".hashCode();
+    private static final int basicHash = "CRing".hashCode();
 
+    private CRing() {
+        super(new Complex(0), new Complex(1));
+    }
 }
