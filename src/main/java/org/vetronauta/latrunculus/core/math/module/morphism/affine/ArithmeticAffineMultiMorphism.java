@@ -1,8 +1,8 @@
 package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
+import org.vetronauta.latrunculus.core.exception.CompositionException;
+import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;

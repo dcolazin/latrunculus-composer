@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism.endo;
 
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
+import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**

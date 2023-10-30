@@ -1,7 +1,7 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import org.vetronauta.latrunculus.core.DeepCopyable;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
 
 /**
  * Ring elements available to be used in a <code>RingString</code> class.

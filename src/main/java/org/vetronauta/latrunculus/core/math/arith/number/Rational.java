@@ -19,9 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.arith.number;
 
-import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.exception.InverseException;
 
 /**
  * Rational number arithmetic.

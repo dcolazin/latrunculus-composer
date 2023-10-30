@@ -17,9 +17,8 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.exception;
+package org.vetronauta.latrunculus.core.exception;
 
-import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 

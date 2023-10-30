@@ -17,9 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.exception;
-
-import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
+package org.vetronauta.latrunculus.core.exception;
 
 /**
  * Exception thrown by various functions involving modular arithmetic.

@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 import lombok.Getter;
 import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.module.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;

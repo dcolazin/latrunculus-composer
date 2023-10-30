@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.generic;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;

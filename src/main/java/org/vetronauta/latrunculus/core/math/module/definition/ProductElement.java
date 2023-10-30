@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.arith.Folding;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.InverseException;
 
 import java.util.Arrays;
 import java.util.List;

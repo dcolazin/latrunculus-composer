@@ -20,8 +20,8 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
 
 import java.util.Collections;
 import java.util.Iterator;

@@ -19,10 +19,10 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism.endo;
 
-import org.vetronauta.latrunculus.core.math.exception.EndomorphismCreationException;
+import org.vetronauta.latrunculus.core.exception.EndomorphismCreationException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.exception.MappingException;
+import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**

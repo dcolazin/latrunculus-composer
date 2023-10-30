@@ -2,8 +2,8 @@ package org.rubato.rubettes.util;
 
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
-import org.vetronauta.latrunculus.core.math.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.CompositionException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;

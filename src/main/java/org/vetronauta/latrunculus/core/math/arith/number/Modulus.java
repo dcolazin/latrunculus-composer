@@ -21,9 +21,9 @@ package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.exception.ModulusException;
-import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
+import org.vetronauta.latrunculus.core.exception.InverseException;
+import org.vetronauta.latrunculus.core.exception.ModulusException;
+import org.vetronauta.latrunculus.core.exception.ZeroDivisorException;
 
 import java.util.Arrays;
 import java.util.List;

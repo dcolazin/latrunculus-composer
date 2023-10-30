@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;

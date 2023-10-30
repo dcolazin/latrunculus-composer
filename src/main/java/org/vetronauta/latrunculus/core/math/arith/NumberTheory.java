@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.arith;
 
-import org.vetronauta.latrunculus.core.math.exception.ZeroDivisorException;
+import org.vetronauta.latrunculus.core.exception.ZeroDivisorException;
 
 /**
  * Various number theoretic functions.

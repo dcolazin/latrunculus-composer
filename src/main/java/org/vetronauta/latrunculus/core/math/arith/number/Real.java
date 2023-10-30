@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.AllArgsConstructor;
-import org.vetronauta.latrunculus.core.math.exception.InverseException;
+import org.vetronauta.latrunculus.core.exception.InverseException;
 
 import java.util.Arrays;
 import java.util.List;

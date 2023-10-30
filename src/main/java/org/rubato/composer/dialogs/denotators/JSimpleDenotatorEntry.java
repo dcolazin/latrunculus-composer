@@ -30,7 +30,7 @@ import javax.swing.*;
 
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSimpleEntry;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

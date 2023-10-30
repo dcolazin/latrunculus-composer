@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.math.arith.Folding;
-import org.vetronauta.latrunculus.core.math.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 
 /**
  * Elements in the free module over a product ring.

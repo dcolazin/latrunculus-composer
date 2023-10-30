@@ -17,18 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.math.exception;
+package org.vetronauta.latrunculus.core.exception;
 
-import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 
 /**
  * @author vetronauta
  */
-public class EndomorphismCreationException extends LatrunculusRuntimeException {
+public class ModulusException extends LatrunculusRuntimeException {
 
-    public EndomorphismCreationException(Module<?,?> domain, Module<?,?> codomain) {
-        super(String.format("domain %s and codomain %s are different", domain, codomain));
+    private static final String ERROR_MESSAGE = "Trying to perform operation between %s and %s";
+
+    public ModulusException(Modulus a, Modulus b) {
+        super(String.format(ERROR_MESSAGE, a, b));
     }
 
 }
