@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
 
 import java.io.Serializable;
 

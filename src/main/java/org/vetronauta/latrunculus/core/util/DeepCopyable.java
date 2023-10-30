@@ -1,4 +1,4 @@
-package org.vetronauta.latrunculus.core;
+package org.vetronauta.latrunculus.core.util;
 
 import java.util.List;
 import java.util.stream.Collectors;

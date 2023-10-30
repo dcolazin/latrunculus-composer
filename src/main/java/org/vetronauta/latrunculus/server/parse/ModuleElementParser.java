@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.Wrapper;
+import org.vetronauta.latrunculus.core.util.Wrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;

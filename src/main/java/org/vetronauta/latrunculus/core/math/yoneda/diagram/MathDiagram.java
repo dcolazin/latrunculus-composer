@@ -22,15 +22,12 @@
 package org.vetronauta.latrunculus.core.math.yoneda.diagram;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.core.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;

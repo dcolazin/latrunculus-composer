@@ -1,6 +1,6 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
-import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 
 /**

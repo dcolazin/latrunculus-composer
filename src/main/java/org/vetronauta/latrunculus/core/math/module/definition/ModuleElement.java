@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 

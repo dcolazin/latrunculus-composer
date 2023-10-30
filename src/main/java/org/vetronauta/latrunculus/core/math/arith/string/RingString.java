@@ -21,8 +21,8 @@ package org.vetronauta.latrunculus.core.math.arith.string;
 
 import org.apache.commons.lang3.StringUtils;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.DeepCopyable;
-import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
+import org.vetronauta.latrunculus.core.util.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 
 import java.io.Serializable;

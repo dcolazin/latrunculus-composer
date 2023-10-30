@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core;
+package org.vetronauta.latrunculus.core.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

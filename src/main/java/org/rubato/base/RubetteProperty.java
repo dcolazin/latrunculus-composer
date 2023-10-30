@@ -21,7 +21,7 @@ package org.rubato.base;
 
 import javax.swing.JComponent;
 
-import org.vetronauta.latrunculus.core.DeepCopyable;
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

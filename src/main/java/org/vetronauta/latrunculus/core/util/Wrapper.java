@@ -1,4 +1,4 @@
-package org.vetronauta.latrunculus.core;
+package org.vetronauta.latrunculus.core.util;
 
 public class Wrapper<E> {
 

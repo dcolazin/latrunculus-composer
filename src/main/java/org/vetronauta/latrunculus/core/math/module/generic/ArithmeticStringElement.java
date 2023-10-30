@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
-import org.vetronauta.latrunculus.core.EntryList;
+import org.vetronauta.latrunculus.core.util.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
