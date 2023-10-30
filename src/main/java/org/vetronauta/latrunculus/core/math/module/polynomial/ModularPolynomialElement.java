@@ -309,11 +309,6 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     public String toString() {
         return "ModularPolynomial["+polynomial+","+ring.getModulus()+"]";
     }
-    
-    
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
 
     public String getElementTypeName() {
         return "ModularPolynomialElement";

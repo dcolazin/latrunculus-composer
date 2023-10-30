@@ -121,12 +121,6 @@ public interface ModuleElement<E extends ModuleElement<E,R>, R extends RingEleme
     void negate();
 
     /**
-     * Fold <code>elements</code> assuming they are of this same type.
-     */
-    //TODO proper signature; moreover, should be this notion be in Module/Ring and not in ModuleElement?
-    double[] fold(ModuleElement<?,?>[] elements);
-
-    /**
      * Returns the module that this module element is an element of.
      */
     Module<E,R> getModule();

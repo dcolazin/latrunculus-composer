@@ -332,11 +332,6 @@ public final class ModularPolynomialProperFreeElement<B extends RingElement<B>> 
         buf.append("]");
         return buf.toString();
     }
-    
-
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
 
     public String getElementTypeName() {
         return "ModularPolynomialFreeElement";

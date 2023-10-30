@@ -23,7 +23,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
-import org.vetronauta.latrunculus.core.math.folding.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -115,11 +114,6 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
     @Override
     public void negate() {
         value = value.neg();
-    }
-
-    @Override
-    public double[] fold(ModuleElement<?, ?>[] elements) {
-        return FoldingModule.fold(this.getRing(), elements);
     }
 
     @Override

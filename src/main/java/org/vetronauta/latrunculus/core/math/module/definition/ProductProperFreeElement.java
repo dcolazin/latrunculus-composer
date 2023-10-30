@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.folding.Folding;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 
 /**
@@ -324,15 +323,6 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
         }
         buf.append("]");
         return buf.toString();
-    }
-
-    
-    public double[] fold(ModuleElement[] elements) {
-        double[][] res = new double[elements.length][];
-        for (int i = 0; i < elements.length; i++) {
-            res[i] = elements[i].fold(new ModuleElement[] { elements[i] });
-        }
-        return Folding.fold(res);
     }
 
     public String getElementTypeName() {

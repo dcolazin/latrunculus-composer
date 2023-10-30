@@ -480,11 +480,6 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     public String toString() {
         return "Polynomial["+coefficients+"]";
     }
-    
-    @Override
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
 
     public String getElementTypeName() {
         return "PolynomialElement";

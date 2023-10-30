@@ -278,10 +278,6 @@ public class ArithmeticStringMultiElement<N extends ArithmeticNumber<N>>
         return buf.toString();
     }
 
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
     @Override
     public int compareTo(ModuleElement object) {
         if (!(object instanceof ArithmeticStringMultiElement) || ! getModule().equals(object.getModule())) {

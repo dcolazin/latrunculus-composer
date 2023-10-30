@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.folding.Folding;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 
 import java.util.LinkedList;
@@ -331,30 +330,6 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         }
         buf.append("]");
         return buf.toString();
-    }
-
-    @Override
-    public double[] fold(ModuleElement[] elements) {
-        int eltnr = elements.length;
-        int eltlen = getLength();
-        double[][] res = new double[eltnr][eltlen];
-        for (int i = 0; i < eltlen; i++) {
-            double[] x;
-            x = foldOne(elements, i);
-            for (int j = 0; j < eltnr; i++) {
-                res[j][i] = x[j];
-            }
-        }
-        return Folding.fold(res);
-    }
-
-    
-    public double[] foldOne(ModuleElement[] elements, int index) {
-        ModuleElement[] x = new ModuleElement[elements.length];
-        for (int i = 0; i < x.length; i++) {
-            x[i] = elements[i].getComponent(index);
-        }
-        return x[0].fold(x);
     }
 
     public List<ModuleElement<?,R>> flatComponentList() {

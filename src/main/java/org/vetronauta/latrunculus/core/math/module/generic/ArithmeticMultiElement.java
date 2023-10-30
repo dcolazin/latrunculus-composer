@@ -23,7 +23,6 @@ import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.folding.FoldingModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
@@ -235,11 +234,6 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     public ArithmeticElement<N> scalarProduct(ArithmeticMultiElement<N> other) {
         return this.productCW(other).getValue().stream().reduce(ArithmeticElement::sum).orElse(null);
-    }
-
-    @Override
-    public double[] fold(ModuleElement<?, ?>[] elements) {
-        return FoldingModule.multiFold(ring, elements, getLength());
     }
 
     @Override

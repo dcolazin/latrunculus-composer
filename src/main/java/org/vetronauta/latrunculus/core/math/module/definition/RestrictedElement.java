@@ -147,11 +147,6 @@ public class RestrictedElement<B extends ModuleElement<B,R>, R extends RingEleme
     }
 
     
-    public double[] fold(ModuleElement[] elements) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    
     public Module getModule() {
         return module;
     }
