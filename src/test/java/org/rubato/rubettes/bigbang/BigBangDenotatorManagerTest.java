@@ -1,7 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,8 +23,9 @@ import org.rubato.rubettes.util.DenotatorPath;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class BigBangDenotatorManagerTest {
+class BigBangDenotatorManagerTest {
 	
 	private BigBangDenotatorManager denotatorManager;
 	private TestObjects objects;
@@ -58,8 +59,10 @@ public class BigBangDenotatorManagerTest {
 	}
 
 	@Test
+	@Disabled("todo")
 	void testSetComposition() {
 		//TODO test if newPaths work
+		fail();
 	}
 
 	@Test
@@ -76,24 +79,24 @@ public class BigBangDenotatorManagerTest {
 		assertEquals(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), pathResults.getNewPaths().iterator().next());
 		this.assertEqualNodes(this.objects.node1Absolute, this.denotatorManager.getComposition().get(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}).toIntArray()));
 		PowerDenotator composition = (PowerDenotator)this.denotatorManager.getComposition();
-		assertTrue(composition.getFactorCount() == 3);
+		assertEquals(3, composition.getFactorCount());
 	}
 
 	@Test
 	void testAddNotes() {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
-		List<DenotatorPath> anchorPaths = new ArrayList<DenotatorPath>();
+		List<DenotatorPath> anchorPaths = new ArrayList<>();
 		anchorPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{}));
 		anchorPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,0}));
 		anchorPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,0}));
-		List<Denotator> notes = new ArrayList<Denotator>();
+		List<Denotator> notes = new ArrayList<>();
 		notes.add(this.objects.node1Absolute);
 		notes.add(this.objects.node2Absolute);
 		notes.add(this.objects.node0);
 		//add more objects to the multilevel macroscore and verify their new paths
 		this.denotatorManager.addObjects(notes, anchorPaths, new int[]{0,0,0});
 		OperationPathResults pathResults = this.denotatorManager.getPathResults();
-		Set<DenotatorPath> expectedNewPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,1}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}));
@@ -111,19 +114,19 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testRemoveNotes() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition()).getFactorCount() == 3);
-		List<DenotatorPath> paths = new ArrayList<DenotatorPath>();
+		assertEquals(3, ((PowerDenotator) this.denotatorManager.getComposition()).getFactorCount());
+		List<DenotatorPath> paths = new ArrayList<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		//remove and check composition and values
 		Denotator removedNote = this.denotatorManager.removeObjects2(paths).get(0);
 		OperationPathResults pathResults = this.denotatorManager.getPathResults();
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition()).getFactorCount() == 2);
+		assertEquals(2, ((PowerDenotator) this.denotatorManager.getComposition()).getFactorCount());
 		this.assertEqualNodes(removedNote, this.objects.node1Absolute);
 		//check paths results
-		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<>();
 		expectedRemovedPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedRemovedPaths, pathResults.getRemovedPaths());
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 	}
@@ -131,19 +134,19 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testRemoveSatelliteNote() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1,0,1})).getFactorCount() == 1);
-		List<DenotatorPath> paths = new ArrayList<DenotatorPath>();
+		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
+		List<DenotatorPath> paths = new ArrayList<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}));
 		//remove and check composition and values
 		Denotator removedNode = this.denotatorManager.removeObjects2(paths).get(0);
 		OperationPathResults pathResults = this.denotatorManager.getPathResults();
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1,0,1})).getFactorCount() == 0);
+		assertEquals(0, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
 		this.assertEqualNodes(this.objects.node2Absolute, removedNode);
 		//check paths results
-		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<>();
 		expectedRemovedPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}));
 		assertEquals(expectedRemovedPaths, pathResults.getRemovedPaths());
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 	}
 
@@ -155,7 +158,7 @@ public class BigBangDenotatorManagerTest {
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
 		Denotator expectedResult = this.objects.generator.createFlatSoundScore(new double[][]{{-1,58,120,1,0,0},{1,63,116,1,0,0},{1,58,121,1,1,0}});
 		assertEquals(expectedResult, this.denotatorManager.getComposition());
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -172,12 +175,12 @@ public class BigBangDenotatorManagerTest {
 		Denotator expectedResult = this.objects.generator.createFlatSoundScore(new double[][]{{0,60,120,1,0,0},{0,60,121,1,0,0}});
 		assertEquals(expectedResult, this.denotatorManager.getComposition());
 		
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 		
-		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<>();
 		expectedRemovedPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		assertEquals(expectedRemovedPaths, pathResults.getRemovedPaths());
 	}
@@ -189,12 +192,12 @@ public class BigBangDenotatorManagerTest {
 		translation.setCopyAndMap(true);
 		Set<DenotatorPath> notePaths = this.objects.makeNotePaths(new int[][]{{0},{2}});
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{3}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{4}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		Set<DenotatorPath> expectedNewPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		assertEquals(expectedNewPaths, pathResults.getNewPaths());
@@ -221,11 +224,11 @@ public class BigBangDenotatorManagerTest {
 	void testMapRealTriples() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.realTriples);
 		BigBangTransformation translation = this.objects.makeTranslation(-2,-3, this.realTriplesPaths);
-		Set<DenotatorPath> triplesPath = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> triplesPath = new TreeSet<>();
 		triplesPath.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{1}));
 		triplesPath.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{2}));
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(triplesPath, null, translation);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{1}), new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{0}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{0}), new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -237,7 +240,7 @@ public class BigBangDenotatorManagerTest {
 	void testMapRealTriple() {
 		this.denotatorManager.setOrAddComposition(this.objects.realTriples.getFactor(1));
 		BigBangTransformation translation = this.objects.makeTranslation(-2,-3, this.realTriplesPaths);
-		Set<DenotatorPath> emptyPath = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> emptyPath = new TreeSet<>();
 		emptyPath.add(new DenotatorPath(this.objects.REAL_TRIPLE_FORM, new int[]{}));
 		//System.out.println("\n\n");
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(emptyPath, null, translation);
@@ -254,7 +257,7 @@ public class BigBangDenotatorManagerTest {
 		BigBangTransformation translation = this.objects.makeTranslation(3,5, this.nodePaths);
 		Set<DenotatorPath> notePaths = this.objects.makeNotePaths(new int[][]{{0},{2}});
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -267,7 +270,7 @@ public class BigBangDenotatorManagerTest {
 		BigBangTransformation translation = this.objects.makeTranslation(-2, -1, this.nodePaths);
 		Set<DenotatorPath> nodePaths = this.objects.makeNotePaths(new int[][]{{1},{0,1,0}});
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(nodePaths, null, translation);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -277,7 +280,7 @@ public class BigBangDenotatorManagerTest {
 		
 		nodePaths = this.objects.makeNotePaths(new int[][]{{0},{1,1,0}});
 		pathResults = this.denotatorManager.addTransformation(nodePaths, null, translation);
-		expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		expectedChangedPaths = new TreeMap<>();
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 		expectedNode = this.objects.createMultilevelNode(new double[][]{{-3,1,-4,0,0,0},{1,-3,5,0,1,0}});
 		this.objects.assertEqualNonPowerDenotators(expectedNode, this.denotatorManager.getComposition().get(new int[]{1,1,0}));
@@ -286,22 +289,22 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testMapSoundScoreModulators() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		//build modulator structure
 		this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), 1);
 		OperationPathResults pathResults = this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,0,5,0}), 0);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,0,5,0,5,0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<>();
 		assertEquals(expectedEmptyPaths, pathResults.getNewPaths());
 		assertEquals(expectedEmptyPaths, pathResults.getRemovedPaths());
 		
 		BigBangTransformation translation = this.objects.makeTranslation(-2, -1, this.notePaths);
 		Set<DenotatorPath> nodePaths = this.objects.makeNotePaths(new int[][]{{0,0,5,0,5,0}});
 		pathResults = this.denotatorManager.addTransformation(nodePaths, null, translation);
-		expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		expectedChangedPaths = new TreeMap<>();
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 		LimitDenotator expectedNote = this.objects.generator.createNoteDenotator(new double[]{-1,-4,5,0,1,0});
 		this.objects.assertEqualNonPowerDenotators(expectedNote, this.denotatorManager.getComposition().get(new int[]{0,0,5,0,5,0}));
@@ -310,40 +313,40 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testBuildSatellites() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		//build first satellite and check if it's there
 		this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), 0);
 		this.objects.assertEqualNonPowerDenotators(this.objects.node1Relative, this.denotatorManager.getComposition().get(new int[]{0,1,0}));
 		//build second satellite and check if it's there
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1,0,1})).getFactorCount() == 0);
+		assertEquals(0, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
 		OperationPathResults pathResults = this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0}), 0);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1,0,1})).getFactorCount() == 1);
+		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
 		this.objects.assertEqualNonPowerDenotators(this.objects.node2Relative, this.denotatorManager.getComposition().get(new int[]{0,1,0,1,0}));
 	}
 
 	@Test
 	void testBuildSoundScoreModulators() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		//build first modulator and check if it's there
 		this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), 1);
 		this.objects.assertEqualNonPowerDenotators(this.objects.note1Relative, this.denotatorManager.getComposition().get(new int[]{0,0,5,0}));
 		//build second modulator and check if it's there
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,0,5,0,5})).getFactorCount() == 0);
+		assertEquals(0, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 0, 5, 0, 5})).getFactorCount());
 		OperationPathResults pathResults = this.denotatorManager.buildSatelliteObjects(paths, new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,0,5,0}), 0);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,0,5,0,5,0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<>();
 		assertEquals(expectedEmptyPaths, pathResults.getNewPaths());
 		assertEquals(expectedEmptyPaths, pathResults.getRemovedPaths());
-		
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,0,5,0,5})).getFactorCount() == 1);
+
+		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 0, 5, 0, 5})).getFactorCount());
 		Denotator addedModulator = this.denotatorManager.getComposition().get(new int[]{0,0,5,0,5,0});
 		assertEquals(this.objects.generator.getSoundNoteForm(), addedModulator.getForm());
 		this.objects.assertEqualNonPowerDenotators(this.objects.note2Relative, this.denotatorManager.getComposition().get(new int[]{0,0,5,0,5,0}));
@@ -352,16 +355,16 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testFlatten() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1})).getFactorCount() == 1);
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1,0,1})).getFactorCount() == 1);
-		TreeSet<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1})).getFactorCount());
+		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
+		TreeSet<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}));
 		OperationPathResults pathResults = this.denotatorManager.flattenObjects(paths);
-		assertTrue(((PowerDenotator)this.denotatorManager.getComposition().get(new int[]{0,1})).getFactorCount() == 2);
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		assertEquals(2, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1})).getFactorCount());
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<>();
 		assertEquals(expectedEmptyPaths, pathResults.getNewPaths());
 		assertEquals(expectedEmptyPaths, pathResults.getRemovedPaths());
 	}
@@ -369,7 +372,7 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testFlatten2() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
-		TreeSet<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		TreeSet<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0}));
 		//flatten the first path and check denotators
 		OperationPathResults pathResults = this.denotatorManager.flattenObjects(paths);
@@ -377,10 +380,10 @@ public class BigBangDenotatorManagerTest {
 		LimitDenotator expectedNode = this.objects.createMultilevelNode(new double[][]{{1,63,116,1,0,0},{1,-3,5,0,1,0}});
 		this.objects.assertEqualNonPowerDenotators(expectedNode, this.denotatorManager.getComposition().get(new int[]{1}));
 		//check pathResults
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
-		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<>();
 		assertEquals(expectedEmptyPaths, pathResults.getNewPaths());
 		assertEquals(expectedEmptyPaths, pathResults.getRemovedPaths());
 	}
@@ -388,16 +391,16 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testShapeNotes() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		
-		TreeMap<Double,Double> shapingLocations = new TreeMap<Double,Double>();
+		TreeMap<Double,Double> shapingLocations = new TreeMap<>();
 		shapingLocations.put(-0.3, 69.0);
 		shapingLocations.put(0.5, 71.0);
 		shapingLocations.put(4.0, 99.0);
-		this.denotatorManager.shapeObjects(paths, shapingLocations, Arrays.asList(this.nodePaths), false);
+		this.denotatorManager.shapeObjects(paths, shapingLocations, Collections.singletonList(this.nodePaths), false);
 		
 		LimitDenotator expectedNote = this.objects.generator.createNodeDenotator(new double[]{0,69,120,1,0,0});
 		this.objects.assertEqualNonPowerDenotators(expectedNote, this.denotatorManager.getComposition().get(new int[]{0}));
@@ -410,18 +413,18 @@ public class BigBangDenotatorManagerTest {
 	@Test
 	void testShapeRationalTriples() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.rationalTriples);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.RATIONAL_TRIPLES_FORM, new int[]{0}));
 		paths.add(new DenotatorPath(this.objects.RATIONAL_TRIPLES_FORM, new int[]{1}));
 		paths.add(new DenotatorPath(this.objects.RATIONAL_TRIPLES_FORM, new int[]{2}));
 		paths.add(new DenotatorPath(this.objects.RATIONAL_TRIPLES_FORM, new int[]{3}));
 		
-		TreeMap<Double,Double> shapingLocations = new TreeMap<Double,Double>();
+		TreeMap<Double,Double> shapingLocations = new TreeMap<>();
 		shapingLocations.put(0.7, 1.0);
 		shapingLocations.put(2.3, 11.0);
 		shapingLocations.put(4.1, 99.0);
 		shapingLocations.put(5.0, 0.0);
-		this.denotatorManager.shapeObjects(paths, shapingLocations, Arrays.asList(this.rationalTriplesPaths), false);
+		this.denotatorManager.shapeObjects(paths, shapingLocations, Collections.singletonList(this.rationalTriplesPaths), false);
 		
 		Denotator expectedTriple = this.objects.createRationalTriple(new double[]{1,2,11});
 		this.objects.assertEqualNonPowerDenotators(expectedTriple, this.denotatorManager.getComposition().get(new int[]{0}));
@@ -432,23 +435,20 @@ public class BigBangDenotatorManagerTest {
 		expectedTriple = this.objects.createRationalTriple(new double[]{4,3,1});
 		this.objects.assertEqualNonPowerDenotators(expectedTriple, this.denotatorManager.getComposition().get(new int[]{3}));
 	}
-	
-	//ProductElement element1 = ProductElement.make(new RElement(1), new RElement(2), new RElement(3));
-	//ProductElement element2 = ProductElement.make(new RElement(4), new RElement(3), new RElement(1));
-	//ProductElement element3 = ProductElement.make(new RElement(2), new RElement(1), new RElement(5));
+
 	@Test
 	void testShapeRealTriples() throws RubatoException {
 		this.denotatorManager.setOrAddComposition(this.objects.realTriples);
-		Set<DenotatorPath> paths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{0}));
 		paths.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{1}));
 		paths.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{2}));
 		
-		TreeMap<Double,Double> shapingLocations = new TreeMap<Double,Double>();
+		TreeMap<Double,Double> shapingLocations = new TreeMap<>();
 		shapingLocations.put(1.2, 1.0);
 		shapingLocations.put(3.0, 11.0);
 		shapingLocations.put(2.1, 99.0);
-		this.denotatorManager.shapeObjects(paths, shapingLocations, Arrays.asList(this.realTriplesPaths), false);
+		this.denotatorManager.shapeObjects(paths, shapingLocations, Collections.singletonList(this.realTriplesPaths), false);
 		
 		Denotator expectedTriple = this.objects.createRealTriple(new double[]{1,2,1});
 		this.objects.assertEqualNonPowerDenotators(expectedTriple, this.denotatorManager.getComposition().get(new int[]{0}));
@@ -467,11 +467,11 @@ public class BigBangDenotatorManagerTest {
 		this.denotatorManager.addWallpaperDimension(notePaths, 0, 1);
 		BigBangTransformation translation = this.objects.makeTranslation(-1,-1, this.nodePaths);
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		Set<DenotatorPath> expectedNewPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		assertEquals(expectedNewPaths, pathResults.getNewPaths());
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{3}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{4}));
@@ -488,7 +488,7 @@ public class BigBangDenotatorManagerTest {
 		BigBangTransformation translation = this.objects.makeTranslation(-1,-1, this.nodePaths);
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
 		//should include new satellites as new paths too!
-		Set<DenotatorPath> expectedNewPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0}));
@@ -497,7 +497,7 @@ public class BigBangDenotatorManagerTest {
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1,1,0,1,0}));
 		assertEquals(expectedNewPaths, pathResults.getNewPaths());
 		//should include only anchor as changed path
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 		//should now include three anchors on top level
@@ -509,7 +509,7 @@ public class BigBangDenotatorManagerTest {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> comp0 = this.objects.makeNotePaths(new int[][]{{0},{1}});
 		Set<DenotatorPath> comp1 = this.objects.makeNotePaths(new int[][]{{2}});
-		List<DenotatorPath> alterationCoordinates = new ArrayList<DenotatorPath>();
+		List<DenotatorPath> alterationCoordinates = new ArrayList<>();
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,0}));
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,1}));
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,4}));
@@ -523,7 +523,7 @@ public class BigBangDenotatorManagerTest {
 		expectedNode = this.objects.generator.createNodeDenotator(new double[]{2,60,121,1,1,0});
 		this.objects.assertEqualNonPowerDenotators(expectedNode, this.denotatorManager.getComposition().get(new int[]{2}));
 		
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -534,7 +534,7 @@ public class BigBangDenotatorManagerTest {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> comp0 = this.objects.makeNotePaths(new int[][]{{0},{1}});
 		Set<DenotatorPath> comp1 = this.objects.makeNotePaths(new int[][]{{2}});
-		List<DenotatorPath> alterationCoordinates = new ArrayList<DenotatorPath>();
+		List<DenotatorPath> alterationCoordinates = new ArrayList<>();
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,0}));
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,1}));
 		alterationCoordinates.add(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,2}));
@@ -546,12 +546,12 @@ public class BigBangDenotatorManagerTest {
 		LimitDenotator expectedNode = this.objects.generator.createNodeDenotator(new double[]{2,60,121,1,1,0});
 		this.objects.assertEqualNonPowerDenotators(expectedNode, this.denotatorManager.getComposition().get(new int[]{0}));
 		
-		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedRemovedPaths = new TreeSet<>();
 		expectedRemovedPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedRemovedPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		assertEquals(expectedRemovedPaths, pathResults.getRemovedPaths());
 		
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
 	}
@@ -564,11 +564,11 @@ public class BigBangDenotatorManagerTest {
 		this.denotatorManager.addWallpaperDimension(notePaths, 0, 1);
 		BigBangTransformation translation = this.objects.makeTranslation(1,1, this.nodePaths);
 		OperationPathResults pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		Set<DenotatorPath> expectedNewPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{4}));
 		assertEquals(expectedNewPaths, pathResults.getNewPaths());
-		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		Map<DenotatorPath,DenotatorPath> expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{3}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -576,9 +576,9 @@ public class BigBangDenotatorManagerTest {
 		//add second transformation to dimension
 		translation = this.objects.makeTranslation(-2,-2, this.nodePaths);
 		pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> expectedEmptyPaths = new TreeSet<>();
 		assertEquals(expectedEmptyPaths, pathResults.getNewPaths());
-		expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{2}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{3}));
@@ -596,13 +596,13 @@ public class BigBangDenotatorManagerTest {
 		this.denotatorManager.addWallpaperDimension(notePaths, 2, 4);
 		translation = this.objects.makeTranslation(1,1, this.nodePaths);
 		pathResults = this.denotatorManager.addTransformation(notePaths, null, translation);
-		expectedNewPaths = new TreeSet<DenotatorPath>();
+		expectedNewPaths = new TreeSet<>();
 		expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{4}));
 		for (int i = 6; i <= 8; i++) {
 			expectedNewPaths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{i}));
 		}
 		assertEquals(expectedNewPaths, pathResults.getNewPaths());
-		expectedChangedPaths = new TreeMap<DenotatorPath,DenotatorPath>();
+		expectedChangedPaths = new TreeMap<>();
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{4}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{5}));
 		expectedChangedPaths.put(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{6}), new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{7}));
 		assertEquals(expectedChangedPaths, pathResults.getChangedPaths());
@@ -610,13 +610,12 @@ public class BigBangDenotatorManagerTest {
 		//TODO end wallpaper
 	}
 	
-	@SuppressWarnings("unchecked")
 	private List<Map<DenotatorPath,Double>> generateNodeValueMapList(double[] noteValues) {
-		Map<DenotatorPath,Double> valueMap = new TreeMap<DenotatorPath,Double>();
+		Map<DenotatorPath,Double> valueMap = new TreeMap<>();
 		for (int i = 0; i < noteValues.length; i++) {
 			valueMap.put(new DenotatorPath(this.objects.SOUND_NODE_FORM, new int[]{0,i}), noteValues[i]);
 		}
-		return Arrays.asList(valueMap);
+		return Collections.singletonList(valueMap);
 	}
 	
 	private void assertEqualNodes(Denotator note1, Denotator note2) throws RubatoException {
