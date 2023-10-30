@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.math.arith;
+package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

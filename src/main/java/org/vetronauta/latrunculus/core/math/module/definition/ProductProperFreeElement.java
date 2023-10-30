@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
-import org.vetronauta.latrunculus.core.math.arith.Folding;
+import org.vetronauta.latrunculus.core.math.folding.Folding;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 
 /**
