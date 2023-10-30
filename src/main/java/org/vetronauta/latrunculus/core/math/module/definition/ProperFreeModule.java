@@ -38,16 +38,14 @@ public abstract class ProperFreeModule<E extends FreeElement<E,R>, R extends Rin
     }
     
     public final ModuleMorphism getProjection(int index) {
-        if (index < 0) { index = 0; }
-        if (index > getDimension()-1) { index = getDimension()-1; }
-        return _getProjection(index);
+        int actualIndex = Math.max(0, Math.min(getDimension() - 1, index));
+        return _getProjection(actualIndex);
     }    
     
     
     public final ModuleMorphism getInjection(int index) {
-        if (index < 0) { index = 0; }
-        if (index > getDimension()-1) { index = getDimension()-1; }
-        return _getInjection(index);
+        int actualIndex = Math.max(0, Math.min(getDimension() - 1, index));
+        return _getInjection(actualIndex);
     }    
     
     

@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.List;
@@ -75,12 +74,6 @@ public class RestrictedModule<B extends ModuleElement<B,R>, R extends RingElemen
     public RestrictedElement<B, R> getZero() {
         return RestrictedElement.getZero(this);
     }
-
-    
-    public ModuleMorphism getIdentityMorphism() {
-        return new IdentityMorphism<>(module);
-    }
-
     
     public int getDimension() {
         return module.getDimension();

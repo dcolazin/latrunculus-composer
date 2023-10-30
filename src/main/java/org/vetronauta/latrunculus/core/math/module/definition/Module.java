@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
@@ -41,7 +42,7 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
     /**
      * Returns the identity morphism in this module.
      */
-    default ModuleMorphism getIdentityMorphism() { //TODO should return IdentityMorphism<E,R> ?
+    default IdentityMorphism<E,R> getIdentityMorphism() {
         return ModuleMorphism.getIdentityMorphism(this);
     }
 
