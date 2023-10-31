@@ -564,7 +564,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             reader.setError("Wrong number of elements.");
             return null;
         }
-        GenericAffineMorphism res = new GenericAffineMorphism(ring0, dim0, codim0);
+        GenericAffineMorphism res = GenericAffineMorphism.make(ring0, dim0, codim0);
         Iterator<RingElement> iter = ringElements.iterator();
         for (int i = 0; i < codim0; i++) {
             for (int j = 0; j < dim0; j++) {

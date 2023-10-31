@@ -93,7 +93,7 @@ public abstract class ShuffleMorphism {
         }
         int dim = domain.getDimension();
         int codim = codomain.getDimension();
-        GenericAffineMorphism morphism = new GenericAffineMorphism(ring, dim, codim);
+        GenericAffineMorphism morphism = GenericAffineMorphism.make(ring, dim, codim);
         for (int i = 0; i < codim; i++) {
             for (int j = 0; j < dim; j++) {
                 if (shuffle[j] == i) {

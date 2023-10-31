@@ -228,7 +228,7 @@ class JAffineMorphismType
             }
             return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, matrix, new ArithmeticMultiElement((ArithmeticRing) ring, vector));
         }
-        GenericAffineMorphism m = new GenericAffineMorphism(ring, cols, rows);
+        GenericAffineMorphism m = GenericAffineMorphism.make(ring, cols, rows);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 RingElement value = getValue(i, j);

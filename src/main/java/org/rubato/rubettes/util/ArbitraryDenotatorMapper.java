@@ -296,7 +296,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			ProductRing product = (ProductRing)ring;
 			return EmbeddingMorphism.makeProductRingEmbedding(product.getFactor(index), product, index);
 		}
-		GenericAffineMorphism injection = new GenericAffineMorphism(ring, 1, codomainDim);
+		GenericAffineMorphism injection = GenericAffineMorphism.make(ring, 1, codomainDim);
 		RA one = ring.getOne();
 		injection.setMatrix(index, 0, one);
 		return injection;

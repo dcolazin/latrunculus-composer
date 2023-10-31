@@ -210,14 +210,14 @@ public final class PolynomialProperFreeModule<B extends RingElement<B>> extends 
     
     
     protected ModuleMorphism _getProjection(int index) {
-        GenericAffineMorphism m = new GenericAffineMorphism(getRing(), getDimension(), 1);
+        GenericAffineMorphism m = GenericAffineMorphism.make(getRing(), getDimension(), 1);
         m.setMatrix(0, index, getRing().getOne());
         return m;
     }
     
     
     protected ModuleMorphism _getInjection(int index) {
-        GenericAffineMorphism m = new GenericAffineMorphism(getRing(), 1, getDimension());
+        GenericAffineMorphism m = GenericAffineMorphism.make(getRing(), 1, getDimension());
         m.setMatrix(index, 0, getRing().getOne());
         return m;
     }

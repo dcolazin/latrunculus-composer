@@ -299,17 +299,17 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.closeBlock();
     }
 
-    private void write(GenericAffineMorphism morphism, XMLWriter writer) {
+    private void write(GenericAffineMorphism<?,?,?> morphism, XMLWriter writer) {
         writer.openBlockWithType(MODULE_MORPHISM, morphism.getElementTypeName());
         definitionWriter.toXML(morphism.getDomain(), writer);
         definitionWriter.toXML(morphism.getCodomain(), writer);
-        for (int i = 0; i < morphism.getCodim(); i++) {
-            for (int j = 0; j < morphism.getDim(); j++) {
-                definitionWriter.toXML(morphism.getMatrix()[i][j], writer);
+        for (int i = 0; i < morphism.getCodomainDimension(); i++) {
+            for (int j = 0; j < morphism.getDomainDimension(); j++) {
+                definitionWriter.toXML(morphism.getMatrix().get(i,j), writer);
             }
         }
-        for (int i = 0; i < morphism.getCodim(); i++) {
-            definitionWriter.toXML(morphism.getVector()[i], writer);
+        for (int i = 0; i < morphism.getCodomainDimension(); i++) {
+            definitionWriter.toXML(morphism.getVector().get(i), writer);
         }
         writer.closeBlock();
     }

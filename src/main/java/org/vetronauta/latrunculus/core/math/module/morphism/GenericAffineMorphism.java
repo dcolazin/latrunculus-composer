@@ -22,12 +22,15 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.matrix.RingMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.TempRingMatrix;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,32 +41,48 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public final class GenericAffineMorphism extends ModuleMorphism {
+public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends FreeElement<B, RA>, RA extends RingElement<RA>>
+        extends ModuleMorphism<A,B,RA,RA> {
 
-    /**
-     * Creates an affine morphism from a free <code>ring</code>-module
-     * of dimension <code>dim</code> to a free <code>ring</code>-module
-     * of dimension <code>codim</code>. The morphism is the null
-     * morphism by default.
-     */
-    public GenericAffineMorphism(Ring ring, int dim, int codim) {
-        this(ring.getFreeModule(dim), ring.getFreeModule(codim));
+    private final Ring<RA> ring;
+    private final int domainDimension;
+    private final int codomainDimension;
+    private final RingMatrix<RA> matrix;
+    private final List<RA> vector;
+
+    public static <T extends RingElement<T>> GenericAffineMorphism<?,?,T> make(Ring<T> ring, int dim, int codim) {
+        return new GenericAffineMorphism<>(ring.getFreeModule(dim), ring.getFreeModule(codim));
     }
 
-    public int getCodim() {
-        return codim;
+    private GenericAffineMorphism(FreeModule<A,RA> domain, FreeModule<B,RA> codomain) {
+        super(domain, codomain);
+        ring = domain.getRing();
+        domainDimension = domain.getDimension();
+        codomainDimension = codomain.getDimension();
+        matrix = new TempRingMatrix<>(codomainDimension, domainDimension);
+        vector = new ArrayList<>(codomainDimension);
+        for (int i = 0; i < codomainDimension; i++) {
+            for (int j = 0; j < domainDimension; j++) {
+                matrix.setToZero(i,j); //TODO init
+            }
+            vector.add(ring.getOne());
+        }
     }
 
-    public int getDim() {
-        return dim;
+    public int getCodomainDimension() {
+        return codomainDimension;
     }
 
-    public RingElement[][] getMatrix() {
-        return A;
+    public int getDomainDimension() {
+        return domainDimension;
     }
 
-    public RingElement[] getVector() {
-        return b;
+    public RingMatrix<RA> getMatrix() {
+        return matrix;
+    }
+
+    public List<RA> getVector() {
+        return vector;
     }
     
 
@@ -71,9 +90,9 @@ public final class GenericAffineMorphism extends ModuleMorphism {
      * Sets the <code>i</code>,</code>j</code>-element of the
      * matrix to the specified <code>element</code>.
      */
-    public void setMatrix(int i, int j, RingElement element) {
+    public void setMatrix(int i, int j, RA element) {
         if (ring.hasElement(element)) {
-            A[i][j] = element;
+            matrix.set(i, j, element);
         }
     }
     
@@ -82,207 +101,194 @@ public final class GenericAffineMorphism extends ModuleMorphism {
      * Sets the </code>i</code>-th element of the translation
      * vector to </code>element</code>.
      */
-    public void setVector(int i, RingElement element) {
+    public void setVector(int i, RA element) {
         if (ring.hasElement(element)) {
-            b[i] = element;
+            vector.set(i, element);
         }
     }
-    
 
-    public ModuleElement map(ModuleElement x)
-            throws MappingException {
-        if (getDomain().hasElement(x)) {
-            try {
-                RingElement[] v = new RingElement[dim];
-                List<ModuleElement> res = new LinkedList<ModuleElement>();
-                for (int i = 0; i < v.length; i++) {
-                    v[i] = (RingElement)x.getComponent(i);                
-                }
-                for (int i = 0; i < codim; i++) {
-                    ModuleElement r = ring.getZero();
-                    for (int j = 0; j < dim; j++) {
-                        r.add(A[i][j].product(v[j]));
-                    }
-                    r.add(b[i]);
-                    res.add(r);
-                }
-                return getCodomain().createElement(res);
-            }
-            catch (DomainException e) {
-                throw new AssertionError("This should never happen!");
-            }
-        }
-        else {
+    @Override
+    public FreeModule<A,RA> getDomain() {
+        return (FreeModule<A, RA>) super.getDomain();
+    }
+
+    @Override
+    public FreeModule<B,RA> getCodomain() {
+        return (FreeModule<B, RA>) super.getCodomain();
+    }
+    
+    @Override
+    public B map(A x) throws MappingException {
+        if (!getDomain().hasElement(x)) {
             throw new MappingException("GenericAffineMorphism.map: ", x, this);
         }
+        try {
+            List<RA> v = new ArrayList<>(domainDimension);
+            List<RA> res = new ArrayList<>(codomainDimension);
+            for (int i = 0; i < domainDimension; i++) {
+                v.add(x.getComponent(i));
+            }
+            for (int i = 0; i < codomainDimension; i++) { //TODO this is the usual matrix multiplication that should be in the matrix class
+                RA r = ring.getZero();
+                for (int j = 0; j < domainDimension; j++) {
+                    r.add(matrix.get(i,j).product(v.get(j)));
+                }
+                r.add(vector.get(i));
+                res.add(r);
+            }
+            return getCodomain().createElement(res);
+        } catch (DomainException e) {
+            throw new AssertionError("This should never happen!"); //TODO false?
+        }
     }
 
-    
+    @Override
     public boolean isModuleHomomorphism() {
         return true;
     }
     
-
+    @Override
     public boolean isRingHomomorphism() {
-        if (dim == 1 && codim == 1) {
-            return b[0].isZero() && (A[0][0].isOne() || A[0][0].isZero());
+        if (domainDimension == 1 && codomainDimension == 1) {
+            return vector.get(0).isZero() && (matrix.get(0,0).isOne() || matrix.get(0,0).isZero());
         }
-        else {
-            return false;
-        }
+        return false;
     }
     
-    
+    @Override
     public boolean isLinear() {
-        for (int i = 0; i < b.length; i++) {
-            if (!b[i].isZero()) {
+        for (RA ringElement : vector) {
+            if (!ringElement.isZero()) {
                 return false;
             }
         }
         return true;
     }
 
-    
+    @Override
     public boolean isIdentity() {
-        if (dim != codim) {
+        if (domainDimension != codomainDimension) {
             return false;
         }
-        else if (isLinear()) {
-            for (int i = 0; i < codim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    if (i == j) {
-                        if (!A[i][j].isOne()) {
-                            return false;
-                        }
-                    }
-                    else {
-                        if (!A[i][j].isZero()) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        else {
+        if (!isLinear()) {
             return false;
         }
-    }
-
-    
-    public boolean isConstant() {
-        for (int i = 0; i < codim; i++) {
-            for (int j = 0; j < dim; j++) {
-                if (!A[i][j].isZero()) {
-                    return false;
+        for (int i = 0; i < codomainDimension; i++) {
+            for (int j = 0; j < domainDimension; j++) {
+                if (i == j) {
+                    if (!matrix.get(i,i).isOne()) {
+                        return false;
+                    }
+                } else {
+                    if (!matrix.get(i,j).isZero()) {
+                        return false;
+                    }
                 }
             }
         }
         return true;
     }
 
+    @Override
+    public boolean isConstant() {
+        for (int i = 0; i < codomainDimension; i++) {
+            for (int j = 0; j < domainDimension; j++) {
+                if (!matrix.get(i,j).isZero()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
     @Override
-    public ModuleMorphism compose(ModuleMorphism morphism)
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,B,RC,RA> compose(ModuleMorphism<C,A,RC,RA> morphism)
             throws CompositionException {
-        if (morphism instanceof GenericAffineMorphism) {
-            GenericAffineMorphism m = (GenericAffineMorphism)morphism;
-            if (getDomain().equals(m.getCodomain())) {
-                GenericAffineMorphism res = new GenericAffineMorphism(m.getDomain(), getCodomain());
-                try {
-                    int k = res.getCodomain().getDimension();
-                    int l = res.getDomain().getDimension();
-                    int o = getDomain().getDimension();
-                    for (int i = 0; i < k; i++) {
-                        for (int j = 0; j < l; j++) {
-                            for (int n = 0; n < o; n++) {
-                                res.A[i][j].add(A[i][n].sum(m.A[n][j]));
-                            }
-                        }
-                    }
-                    k = getCodomain().getDimension();
-                    l = m.getCodomain().getDimension();
-                    for (int i = 0; i < k; i++) {
-                        for (int j = 0; j < l; j++) {
-                            res.b[i].add(A[i][j].product(m.b[j]));
-                        }
-                        res.b[i].add(b[i]);
-                    }
-                }
-                catch (DomainException e) {
-                    throw new AssertionError("This should never happen!");
-                }
-                return res;
-            }
-            else {
-                throw new CompositionException("GenericAffineMorphism.compose: ", this, m);
-            }
-        }
-        else {
+        if (!(morphism instanceof GenericAffineMorphism)) {
             return super.compose(morphism);
         }
-    }
-    
-    
-    public ModuleMorphism sum(ModuleMorphism morphism) 
-            throws CompositionException {
-        if (morphism instanceof GenericAffineMorphism) {
-            GenericAffineMorphism m = (GenericAffineMorphism)morphism;
-            if (getDomain().equals(m.getDomain()) && getCodomain().equals(m.getCodomain())) {
-                GenericAffineMorphism res = new GenericAffineMorphism(getDomain(), getCodomain());
-                try {
-                    for (int i = 0; i < codim; i++) {
-                        for (int j = 0; j < dim; j++) {
-                            res.A[i][j] = (RingElement) A[i][j].sum(m.A[i][j]);
-                        }
-                        res.b[i] = (RingElement) b[i].sum(m.b[i]);
+        if (!getDomain().equals(morphism.getCodomain())) {
+            throw new CompositionException("GenericAffineMorphism.compose: ", this, morphism);
+        }
+        GenericAffineMorphism<?,A,RA> m = (GenericAffineMorphism<?,A,RA>) morphism;
+        GenericAffineMorphism<?,A,RA> res = new GenericAffineMorphism(m.getDomain(), getCodomain());
+        try {
+            int k = res.getCodomain().getDimension();
+            int l = res.getDomain().getDimension();
+            int o = getDomain().getDimension();
+            for (int i = 0; i < k; i++) {
+                for (int j = 0; j < l; j++) {
+                    for (int n = 0; n < o; n++) {
+                        res.matrix.get(i,j).sum(matrix.get(i,n).sum(m.matrix.get(n,j)));
                     }
                 }
-                catch (DomainException e) {
-                    throw new AssertionError("This should never happen!");
-                }
-                return res;
             }
-            else {
+            k = getCodomain().getDimension();
+            l = m.getCodomain().getDimension();
+            for (int i = 0; i < k; i++) {
+                for (int j = 0; j < l; j++) {
+                    res.vector.get(i).add(matrix.get(i,j).product(m.vector.get(j)));
+                }
+                res.vector.get(i).sum(vector.get(i));
+            }
+        } catch (DomainException e) {
+            throw new AssertionError("This should never happen!");
+        }
+        return (ModuleMorphism<C, B, RC, RA>) res;
+    }
+    
+    @Override
+    public ModuleMorphism<A,B,RA,RA> sum(ModuleMorphism<A,B,RA,RA> morphism) throws CompositionException {
+        if (morphism instanceof GenericAffineMorphism) {
+            GenericAffineMorphism<A,B,RA> m = (GenericAffineMorphism<A,B,RA>) morphism;
+            if (!getDomain().equals(m.getDomain()) || !getCodomain().equals(m.getCodomain())) {
                 throw new CompositionException("GenericAffineMorphism.sum: ", this, m);
             }
+            GenericAffineMorphism<A,B,RA> res = new GenericAffineMorphism<>(getDomain(), getCodomain());
+            try {
+                for (int i = 0; i < codomainDimension; i++) {
+                    for (int j = 0; j < domainDimension; j++) {
+                        res.matrix.get(i,j).add(m.matrix.get(i,j));
+                    }
+                    res.vector.get(i).add(m.vector.get(i));
+                }
+            } catch (DomainException e) {
+                throw new AssertionError("This should never happen!");
+            }
+            return res;
         }
         else {
             return super.sum(morphism);
         }
     }
-    
-    
-    public ModuleMorphism difference(ModuleMorphism morphism)
-            throws CompositionException {
+
+    @Override
+    public ModuleMorphism<A,B,RA,RA> difference(ModuleMorphism<A,B,RA,RA> morphism) throws CompositionException {
         if (morphism instanceof GenericAffineMorphism) {
-            GenericAffineMorphism m = (GenericAffineMorphism)morphism;
-            if (getDomain().equals(m.getDomain()) && getCodomain().equals(m.getCodomain())) {
-                GenericAffineMorphism res = new GenericAffineMorphism(getDomain(), getCodomain());
-                try {
-                    for (int i = 0; i < codim; i++) {
-                        for (int j = 0; j < dim; j++) {
-                            res.A[i][j] = (RingElement) A[i][j].difference(m.A[i][j]);
-                        }
-                        res.b[i] = (RingElement) b[i].difference(m.b[i]);
+            GenericAffineMorphism<A,B,RA> m = (GenericAffineMorphism<A,B,RA>) morphism;
+            if (!getDomain().equals(m.getDomain()) || !getCodomain().equals(m.getCodomain())) {
+                throw new CompositionException("GenericAffineMorphism.sum: ", this, m);
+            }
+            GenericAffineMorphism<A,B,RA> res = new GenericAffineMorphism<>(getDomain(), getCodomain());
+            try {
+                for (int i = 0; i < codomainDimension; i++) {
+                    for (int j = 0; j < domainDimension; j++) {
+                        res.matrix.get(i,j).subtract(m.matrix.get(i,j));
                     }
+                    res.vector.get(i).subtract(m.vector.get(i));
                 }
-                catch (DomainException e) {
-                    throw new AssertionError("This should never happen!");
-                }
-                return res;
+            } catch (DomainException e) {
+                throw new AssertionError("This should never happen!");
             }
-            else {
-                throw new CompositionException("GenericAffineMorphism.difference: ", this, m);
-            }
+            return res;
         }
         else {
-            return super.sum(morphism);
+            return super.difference(morphism);
         }
     }    
     
     
-    public ModuleMorphism getRingMorphism() {
+    public IdentityMorphism<RA, RA> getRingMorphism() {
         return ring.getIdentityMorphism();
     }
 
@@ -291,22 +297,12 @@ public final class GenericAffineMorphism extends ModuleMorphism {
         if (this == object) {
             return true;
         }
-        else if (object instanceof GenericAffineMorphism) {
-            GenericAffineMorphism m = (GenericAffineMorphism)object;
+        if (object instanceof GenericAffineMorphism) {
+            GenericAffineMorphism<?,?,?> m = (GenericAffineMorphism<?,?,?>) object;
             if (getDomain() != m.getDomain() && getCodomain() != m.getCodomain()) {
                 return false;
             }
-            for (int i = 0; i < codim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    if (!A[i][j].equals(m.A[i][j])) {
-                        return false;
-                    }
-                }
-                if (!b[i].equals(m.b[i])) {
-                    return false;
-                }
-            }
-            return true;
+            return matrix.equals(m.getMatrix());
         }
         else {
             return false;
@@ -321,27 +317,5 @@ public final class GenericAffineMorphism extends ModuleMorphism {
     public String getElementTypeName() {
         return "GenericAffineMorphism";
     }
-    
 
-    private GenericAffineMorphism(Module domain, Module codomain) {
-        super(domain, codomain);
-        ring = domain.getRing();
-        dim = domain.getDimension();
-        codim = codomain.getDimension();
-        A = new RingElement[codim][dim];
-        b = new RingElement[codim];
-        for (int i = 0; i < codim; i++) {
-            for (int j = 0 ; j < dim; j++) {
-                A[i][j] = (RingElement) ring.getZero();
-            }
-            b[i] = (RingElement) ring.getZero();
-        }
-    }
-
-    
-    private Ring ring;
-    private int  dim;
-    private int  codim;
-    private RingElement[][] A;
-    private RingElement[]   b;
 }
