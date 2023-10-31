@@ -20,15 +20,23 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 
 /**
  * Matrixes over modular integers.
  */
-public final class ZnMatrix extends Matrix<Modulus> {
+public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     
     /**
      * Creates an integer mod <code>modulus</code>
@@ -77,7 +85,7 @@ public final class ZnMatrix extends Matrix<Modulus> {
         this(m.getRowCount(), m.getColumnCount(), modulus);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = NumberTheory.mod(m.get(r, c), modulus);
+                coefficients[r][c] = NumberTheory.mod(m.getValue(r, c), modulus);
             }
         }
     }
@@ -91,7 +99,7 @@ public final class ZnMatrix extends Matrix<Modulus> {
         this(m.getRowCount(), m.getColumnCount(), modulus);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = NumberTheory.mod(m.get(r, c), modulus);
+                coefficients[r][c] = NumberTheory.mod(m.getValue(r, c), modulus);
             }
         }
     }
@@ -149,7 +157,7 @@ public final class ZnMatrix extends Matrix<Modulus> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public int get(int row, int col) {
+    public int getValue(int row, int col) {
         return coefficients[row][col];
     }
     
@@ -264,7 +272,36 @@ public final class ZnMatrix extends Matrix<Modulus> {
         return m;
     }
 
-    
+
+    @Override
+    public ArithmeticMatrix<Modulus> product(Matrix<ArithmeticElement<Modulus>> matrix) {
+        if (!(matrix instanceof ZnMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return product((ZnMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Modulus> sum(Matrix<ArithmeticElement<Modulus>> matrix) {
+        if (!(matrix instanceof ZnMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return sum((ZnMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Modulus> difference(Matrix<ArithmeticElement<Modulus>> matrix) {
+        if (!(matrix instanceof ZnMatrix)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        return difference((ZnMatrix) matrix);
+    }
+
+    @Override
+    public ArithmeticMatrix<Modulus> scaled(ArithmeticElement<Modulus> element) {
+        return scaled(element.getValue().intValue());
+    }
+
     public ZnMatrix inverse() {
         if (!isSquare()) {
             throw new ArithmeticException("Matrix is not square.");
@@ -333,7 +370,44 @@ public final class ZnMatrix extends Matrix<Modulus> {
         return rm;
     }
 
-    
+    @Override
+    public ArithmeticMultiElement<Modulus> product(FreeElement<?, ArithmeticElement<Modulus>> vector) {
+        if (!(vector instanceof ArithmeticMultiElement)) {
+            throw new UnsupportedOperationException("currently not supported");
+        }
+        int[] result = product(((ArithmeticMultiElement<Modulus>) vector).getValue().stream()
+                .map(ArithmeticElement::getValue)
+                .mapToInt(ArithmeticNumber::intValue)
+                .toArray());
+        return new ArithmeticMultiElement<>(((ArithmeticMultiElement<Modulus>) vector).getRing(), Arrays.stream(result)
+                .mapToObj(x -> new Modulus(x, getModulus())).map(ArithmeticElement::new).collect(Collectors.toList()));
+    }
+
+    @Override
+    public ArithmeticElement<Modulus> get(int i, int j) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<Modulus> getColumn(int j) {
+        List<ArithmeticElement<Modulus>> list = new ArrayList<>(rows);
+        for (int i = 0; i < rows; i++) {
+            list.add(new ArithmeticElement<>(new Modulus(coefficients[i][j], modulus)));
+        }
+        return new ArithmeticMultiElement<>(ArithmeticRingRepository.getModulusRing(modulus), list);
+    }
+
+    @Override
+    public ArithmeticMultiElement<Modulus> getRow(int i) {
+        return null;
+    }
+
+    @Override
+    public void set(int row, int col, ArithmeticElement<Modulus> element) {
+
+    }
+
+
     public ZnMatrix adjoint() {
         if (!isSquare()) {
             throw new IllegalStateException("Matrix is not square.");

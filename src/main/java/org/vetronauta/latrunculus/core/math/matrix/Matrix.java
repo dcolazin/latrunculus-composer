@@ -19,6 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+
 /**
  * Abstract base class for matrixes.
  * Contains only some common methods that are independent of the
@@ -26,7 +29,32 @@ package org.vetronauta.latrunculus.core.math.matrix;
  * 
  * @author Gérard Milmeister
  */
-public abstract class Matrix<A> implements Comparable<Matrix<?>> {
+public abstract class Matrix<R extends RingElement<R>> implements Comparable<Matrix<?>> {
+
+    //TODO make this a ModuleElement...
+
+    protected int rows;
+    protected int columns;
+
+    protected Matrix(int rows, int columns) {
+        assert(rows >= 0);
+        assert(columns >= 0);
+        this.rows = rows;
+        this.columns = columns;
+    }
+
+    public abstract Matrix<R> product(Matrix<R> matrix);
+    public abstract Matrix<R> sum(Matrix<R> matrix);
+    public abstract Matrix<R> difference(Matrix<R> matrix);
+    public abstract Matrix<R> scaled(R element);
+    public abstract Matrix<R> inverse();
+
+    public abstract FreeElement<?,R> product(FreeElement<?,R> vector);
+    public abstract R get(int i, int j);
+    public abstract FreeElement<?,R> getColumn(int j);
+    public abstract FreeElement<?,R> getRow(int i);
+
+    public abstract void set(int row, int col, R element);
 
     /**
      * Returns the number of rows of this matrix.
@@ -130,8 +158,7 @@ public abstract class Matrix<A> implements Comparable<Matrix<?>> {
         }
         return true;
     }
-    
-    
+
     /**
      * Returns true iff column <code>c</code> is zero.
      */
@@ -143,49 +170,28 @@ public abstract class Matrix<A> implements Comparable<Matrix<?>> {
         }
         return true;
     }
-    
-    
+
     /**
      * Returns true iff this matrix and <code>m</code> have the same size.
      */
-    public final boolean sameSize(Matrix m) {
+    public final boolean sameSize(Matrix<?> m) {
         return rows == m.rows && columns == m.columns;
     }
-    
-    
-    /**
-     * Returns true iff <code>m1</code> and <code>m2</code> have the same size.
-     */        
-    public final static boolean sameSize(Matrix m1, Matrix m2) {
-        return m1.sameSize(m2);
-    }
-    
-    
+
     /**
      * Returns true iff the product of this matrix and <code>m</code> is possible.
      */
-    public final boolean productPossible(Matrix m) {
+    public final boolean productPossible(Matrix<R> m) {
         return columns == m.rows;
     }
-    
-    
-    /**
-     * Returns true iff the product of <code>m1</code> and <code>m2</code> is possible.
-     */
-    public final static boolean productPossible(Matrix m1, Matrix m2) {
-        return m1.productPossible(m2);
-    }
-    
     
     /**
      * Returns a string representation of this matrix.
      */
     public abstract String toString();
-    
-    
+
     public abstract boolean equals(Object object);
-    
-    
+
     /**
      * Compares this matrix to <code>object</code>.
      * If <code>object</code> is a matrix, but not of the same
@@ -194,15 +200,5 @@ public abstract class Matrix<A> implements Comparable<Matrix<?>> {
     public int compareTo(Matrix object) {
         return toString().compareTo(toString());
     }
-    
-    
-    protected Matrix(int rows, int columns) {
-        assert(rows >= 0);
-        assert(columns >= 0);
-        this.rows = rows;
-        this.columns = columns;
-    }
-    
-    protected int rows;
-    protected int columns;
+
 }

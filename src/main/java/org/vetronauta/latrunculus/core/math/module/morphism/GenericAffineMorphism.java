@@ -22,8 +22,8 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.matrix.RingMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.TempRingMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -47,7 +47,7 @@ public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends
     private final Ring<RA> ring;
     private final int domainDimension;
     private final int codomainDimension;
-    private final RingMatrix<RA> matrix;
+    private final Matrix<RA> matrix;
     private final List<RA> vector;
 
     public static <T extends RingElement<T>> GenericAffineMorphism<?,?,T> make(Ring<T> ring, int dim, int codim) {
@@ -59,7 +59,7 @@ public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends
         ring = domain.getRing();
         domainDimension = domain.getDimension();
         codomainDimension = codomain.getDimension();
-        matrix = new TempRingMatrix<>(codomainDimension, domainDimension);
+        matrix = new ArrayMatrix<>(domain.getRing(), codomainDimension, domainDimension);
         vector = new ArrayList<>(codomainDimension);
         for (int i = 0; i < codomainDimension; i++) {
             for (int j = 0; j < domainDimension; j++) {
@@ -77,7 +77,7 @@ public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends
         return domainDimension;
     }
 
-    public RingMatrix<RA> getMatrix() {
+    public Matrix<RA> getMatrix() {
         return matrix;
     }
 

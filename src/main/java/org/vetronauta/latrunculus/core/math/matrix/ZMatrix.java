@@ -20,13 +20,16 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 import java.util.Arrays;
 
 /**
  * Matrixes over integers.
  */
-public final class ZMatrix extends Matrix<ArithmeticInteger> {
+public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
     
     /**
      * Creates an integer <code>rows</code> x <code>cols</code> matrix
@@ -36,8 +39,58 @@ public final class ZMatrix extends Matrix<ArithmeticInteger> {
         super(rows, cols);
         coefficients = new int[rows][cols];
     }
-    
-    
+
+    @Override
+    public ArithmeticMatrix<ArithmeticInteger> product(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<ArithmeticInteger> sum(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<ArithmeticInteger> difference(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<ArithmeticInteger> scaled(ArithmeticElement<ArithmeticInteger> element) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<ArithmeticInteger> inverse() {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<ArithmeticInteger> product(FreeElement<?, ArithmeticElement<ArithmeticInteger>> vector) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticElement<ArithmeticInteger> get(int i, int j) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<ArithmeticInteger> getColumn(int j) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<ArithmeticInteger> getRow(int i) {
+        return null;
+    }
+
+    @Override
+    public void set(int row, int col, ArithmeticElement<ArithmeticInteger> element) {
+
+    }
+
+
     /**
      * Creates an integer <code>rows</code> x <code>cols</code> matrix
      * with all coefficients set to <code>value</code>.
@@ -70,7 +123,7 @@ public final class ZMatrix extends Matrix<ArithmeticInteger> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = m.get(r, c);
+                coefficients[r][c] = m.getValue(r, c);
             }
         }
     }
@@ -119,11 +172,11 @@ public final class ZMatrix extends Matrix<ArithmeticInteger> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public int get(int row, int col) {
+    public int getValue(int row, int col) {
         return coefficients[row][col];
     }
-    
-    
+
+
     /**
      * Sets index <code>row</code>,<code>col</code> to <code>value</code>.
      */

@@ -2,6 +2,7 @@ package org.vetronauta.latrunculus.core.math.matrix;
 
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
@@ -16,17 +17,17 @@ public class GenericMatrix<A extends ArithmeticNumber<A>> extends ArithmeticMatr
     }
 
     @Override
-    public ArithmeticMatrix<A> product(ArithmeticMatrix<A> matrix) {
+    public ArithmeticMatrix<A> product(Matrix<ArithmeticElement<A>> matrix) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticMatrix<A> sum(ArithmeticMatrix<A> matrix) {
+    public ArithmeticMatrix<A> sum(Matrix<ArithmeticElement<A>> matrix) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticMatrix<A> difference(ArithmeticMatrix<A> matrix) {
+    public ArithmeticMatrix<A> difference(Matrix<ArithmeticElement<A>> matrix) {
         return null; //TODO
     }
 
@@ -41,7 +42,7 @@ public class GenericMatrix<A extends ArithmeticNumber<A>> extends ArithmeticMatr
     }
 
     @Override
-    public ArithmeticMultiElement<A> product(ArithmeticMultiElement<A> vector) {
+    public ArithmeticMultiElement<A> product(FreeElement<?,ArithmeticElement<A>> vector) {
         return null; //TODO
     }
 

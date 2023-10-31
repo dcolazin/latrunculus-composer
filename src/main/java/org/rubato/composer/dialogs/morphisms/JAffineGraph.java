@@ -31,8 +31,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
@@ -133,7 +133,7 @@ class JAffineGraph
         ZnMatrix res = new ZnMatrix(2, 2, ((ZnRing)ring).getModulus());
         for (int i = 0; i < 2; i++) {
             for (int j = 0; i < 2; i++) {
-                res.set(i, j, m.get(i, j));
+                res.set(i, j, m.getValue(i, j));
             }
         }
         return res;
@@ -444,7 +444,7 @@ class JAffineGraph
         double[] px = { 0.0, 1.0, 0.0 };
         double[] py = { 0.0, 0.0, 1.0 };
 
-        public GenericMatrix getMatrix() {
+        public ArithmeticMatrix getMatrix() {
             return null; //TODO make this class generic
         }
 
@@ -581,7 +581,7 @@ class JAffineGraph
     private static final double Y_MIN = -1;
     private static final double Y_MAX =  3;
 
-    public GenericMatrix getMatrix() {
+    public ArithmeticMatrix getMatrix() {
         return config.getMatrix();
     }
 

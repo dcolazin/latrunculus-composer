@@ -19,7 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -45,7 +47,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> product(ArithmeticMatrix<Real> matrix) {
+    public ArithmeticMatrix<Real> product(Matrix<ArithmeticElement<Real>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -53,7 +55,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> sum(ArithmeticMatrix<Real> matrix) {
+    public ArithmeticMatrix<Real> sum(Matrix<ArithmeticElement<Real>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -61,7 +63,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> difference(ArithmeticMatrix<Real> matrix) {
+    public ArithmeticMatrix<Real> difference(Matrix<ArithmeticElement<Real>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -74,10 +76,13 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMultiElement<Real> product(ArithmeticMultiElement<Real> vector) {
-        double[] prod = product(vector.getValue().stream()
+    public ArithmeticMultiElement<Real> product(FreeElement<?,ArithmeticElement<Real>> vector) {
+        if (!(vector instanceof ArithmeticMultiElement)) {
+            throw new UnsupportedOperationException("still have to do it");
+        }
+        double[] prod = product(((ArithmeticMultiElement<Real>) vector).getValue().stream()
                 .map(ArithmeticElement::getValue)
-                .mapToDouble(Real::doubleValue)
+                .mapToDouble(ArithmeticNumber::doubleValue)
                 .toArray());
         return new ArithmeticMultiElement<>(RRing.ring, Arrays.stream(prod)
                 .mapToObj(Real::new)
@@ -123,7 +128,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = m.get(r, c);
+                coefficients[r][c] = m.getValue(r, c);
             }
         }
     }
@@ -136,7 +141,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = m.get(r, c);
+                coefficients[r][c] = m.getValue(r, c);
             }
         }
     }
@@ -213,7 +218,10 @@ public class RMatrix extends ArithmeticMatrix<Real> {
         coefficients[row][col] = value;
     }
 
-    
+    public void set(int row, int col, ArithmeticElement<Real> value) {
+        coefficients[row][col] = value.getValue().doubleValue();
+    }
+
     public void setRowCount(int rows) {
         if (this.rows == rows) {
             return;

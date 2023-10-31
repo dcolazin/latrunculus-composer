@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -44,7 +45,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
     }
 
     @Override
-    public ArithmeticMatrix<Complex> product(ArithmeticMatrix<Complex> matrix) {
+    public ArithmeticMatrix<Complex> product(Matrix<ArithmeticElement<Complex>> matrix) {
         if (!(matrix instanceof CMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -52,7 +53,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
     }
 
     @Override
-    public ArithmeticMatrix<Complex> sum(ArithmeticMatrix<Complex> matrix) {
+    public ArithmeticMatrix<Complex> sum(Matrix<ArithmeticElement<Complex>> matrix) {
         if (!(matrix instanceof CMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -60,7 +61,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
     }
 
     @Override
-    public ArithmeticMatrix<Complex> difference(ArithmeticMatrix<Complex> matrix) {
+    public ArithmeticMatrix<Complex> difference(Matrix<ArithmeticElement<Complex>> matrix) {
         if (!(matrix instanceof CMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -73,9 +74,12 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
     }
 
     @Override
-    public ArithmeticMultiElement<Complex> product(ArithmeticMultiElement<Complex> vector) {
-        Complex[] cvector = product(vector.getValue().stream().map(ArithmeticElement::getValue).toArray());
-        return new ArithmeticMultiElement<>(vector.getRing(), Arrays.stream(cvector).map(ArithmeticElement::new).collect(Collectors.toList()));
+    public ArithmeticMultiElement<Complex> product(FreeElement<?,ArithmeticElement<Complex>> vector) {
+        if (vector instanceof ArithmeticMultiElement) {
+            Complex[] cvector = product(((ArithmeticMultiElement<Complex>) vector).getValue().stream().map(ArithmeticElement::getValue).toArray());
+            return new ArithmeticMultiElement<>(CRing.ring, Arrays.stream(cvector).map(ArithmeticElement::new).collect(Collectors.toList()));
+        }
+        throw new UnsupportedOperationException("currently not supported");
     }
 
     @Override
@@ -143,7 +147,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Complex(m.get(r, c).doubleValue());
+                coefficients[r][c] = new Complex(m.getValue(r, c).doubleValue());
             }
         }
     }
@@ -156,7 +160,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Complex(m.get(r, c));
+                coefficients[r][c] = new Complex(m.getValue(r, c));
             }
         }
     }
@@ -169,7 +173,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Complex(m.get(r, c));
+                coefficients[r][c] = new Complex(m.getValue(r, c));
             }
         }
     }
@@ -226,6 +230,10 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
      */
     public void set(int row, int col, Complex value) {
         coefficients[row][col] = value;
+    }
+
+    public void set(int row, int col, ArithmeticElement<Complex> value) {
+        coefficients[row][col] = value.getValue();
     }
     
     

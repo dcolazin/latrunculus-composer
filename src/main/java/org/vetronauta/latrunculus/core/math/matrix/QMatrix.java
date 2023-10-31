@@ -22,11 +22,14 @@ package org.vetronauta.latrunculus.core.math.matrix;
 import java.util.Arrays;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
  * Matrixes over rational numbers.
  */
-public class QMatrix extends Matrix<Rational> {
+public class QMatrix extends ArithmeticMatrix<Rational> {
     
     /**
      * Creates a rational <code>rows</code> x <code>cols</code> matrix
@@ -36,8 +39,28 @@ public class QMatrix extends Matrix<Rational> {
         super(rows, cols);
         coefficients = makeArray(rows, columns);
     }
-    
-    
+
+    @Override
+    public ArithmeticMatrix<Rational> product(Matrix<ArithmeticElement<Rational>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<Rational> sum(Matrix<ArithmeticElement<Rational>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<Rational> difference(Matrix<ArithmeticElement<Rational>> matrix) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMatrix<Rational> scaled(ArithmeticElement<Rational> element) {
+        return null;
+    }
+
+
     /**
      * Creates a rational <code>rows</code> x <code>cols</code> matrix
      * with all coefficients set to <code>value</code>.
@@ -70,7 +93,7 @@ public class QMatrix extends Matrix<Rational> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Rational(m.get(r,c));
+                coefficients[r][c] = new Rational(m.getValue(r,c));
             }
         }
     }
@@ -83,7 +106,7 @@ public class QMatrix extends Matrix<Rational> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Rational(m.get(r,c));
+                coefficients[r][c] = new Rational(m.getValue(r,c));
             }
         }
     }
@@ -130,11 +153,11 @@ public class QMatrix extends Matrix<Rational> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public Rational get(int row, int col) {
+    public Rational getValue(int row, int col) {
         return coefficients[row][col];
     }
-    
-    
+
+
     /**
      * Sets index <code>row</code>,<code>col</code> to <code>value</code>.
      */
@@ -332,7 +355,32 @@ public class QMatrix extends Matrix<Rational> {
         return rm;
     }
 
-    
+    @Override
+    public ArithmeticMultiElement<Rational> product(FreeElement<?, ArithmeticElement<Rational>> vector) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticElement<Rational> get(int i, int j) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<Rational> getColumn(int j) {
+        return null;
+    }
+
+    @Override
+    public ArithmeticMultiElement<Rational> getRow(int i) {
+        return null;
+    }
+
+    @Override
+    public void set(int row, int col, ArithmeticElement<Rational> element) {
+
+    }
+
+
     /**
      * Returns the adjoint of this matrix.
      */
