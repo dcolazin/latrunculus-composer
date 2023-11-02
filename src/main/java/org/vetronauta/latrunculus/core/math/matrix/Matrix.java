@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
@@ -35,12 +36,14 @@ public abstract class Matrix<R extends RingElement<R>> implements Comparable<Mat
 
     protected int rows;
     protected int columns;
+    protected final Ring<R> ring;
 
-    protected Matrix(int rows, int columns) {
+    protected Matrix(Ring<R> ring, int rows, int columns) {
         assert(rows >= 0);
         assert(columns >= 0);
         this.rows = rows;
         this.columns = columns;
+        this.ring = ring;
     }
 
     public abstract Matrix<R> product(Matrix<R> matrix);
@@ -55,6 +58,11 @@ public abstract class Matrix<R extends RingElement<R>> implements Comparable<Mat
     public abstract FreeElement<?,R> getRow(int i);
 
     public abstract void set(int row, int col, R element);
+
+
+    public Ring<R> getRing() {
+        return ring;
+    }
 
     /**
      * Returns the number of rows of this matrix.

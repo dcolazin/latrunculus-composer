@@ -19,11 +19,12 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -236,7 +237,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        GenericMatrix A0 = new GenericMatrix<>(rows, columns);
+        Matrix A0 = new ArrayMatrix(getRing(element), rows, columns);
         try {
             int n = 0;
             for (int i = 0; i < rows; i++) {

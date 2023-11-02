@@ -20,9 +20,10 @@
 package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
+import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -217,7 +218,7 @@ class JAffineMorphismType
     
     private ModuleMorphism createMorphism() {
         if (ring instanceof ArithmeticRing) {
-            GenericMatrix matrix = new GenericMatrix(rows, cols);
+            ArrayMatrix matrix = new ArrayMatrix(ring, rows, cols);
             List<ArithmeticElement> vector = new ArrayList<>(rows);
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
@@ -323,7 +324,7 @@ class JAffineMorphismType
         }
         if (morphism instanceof ArithmeticAffineMultiMorphism) {
             ArithmeticAffineMultiMorphism m = (ArithmeticAffineMultiMorphism)morphism;
-            ArithmeticMatrix matrix = m.getMatrix();
+            Matrix matrix = m.getMatrix();
             ArithmeticMultiElement vector = m.getVector();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {

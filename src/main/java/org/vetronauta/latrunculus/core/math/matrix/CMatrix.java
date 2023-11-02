@@ -3,6 +3,7 @@
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of version 2 of the GNU General Public
+ * modify it under the terms of version 2 of the GNU General Public
  * License as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
@@ -40,7 +41,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
      * with all coefficients set to 0.
      */
     public CMatrix(int rows, int cols) {
-        super(rows, cols);
+        super(CRing.ring, rows, cols);
         coefficients = makeArray(rows, columns);
     }
 
@@ -195,7 +196,7 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
      * Creates a complex matrix from the two-dimensional array <code>c</code>.
      */
     public CMatrix(Complex[][] c) {
-        super(c.length, c[0].length);
+        super(CRing.ring, c.length, c[0].length);
         for (int i = 1; i < rows; i++) {
             if (c[i].length != columns) {
                 throw new IllegalArgumentException("Rows are not all of the same length");

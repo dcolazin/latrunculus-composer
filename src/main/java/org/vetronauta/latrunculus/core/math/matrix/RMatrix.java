@@ -42,7 +42,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
      * with all coefficients set to 0.
      */
     public RMatrix(int rows, int cols) {
-        super(rows, cols);
+        super(RRing.ring, rows, cols);
         coefficients = new double[rows][cols];
     }
 

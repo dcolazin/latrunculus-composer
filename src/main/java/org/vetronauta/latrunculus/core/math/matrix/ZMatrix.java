@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 
 import java.util.Arrays;
 
@@ -36,7 +37,7 @@ public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
      * with all coefficients set to 0.
      */
     public ZMatrix(int rows, int cols) {
-        super(rows, cols);
+        super(ZRing.ring, rows, cols);
         coefficients = new int[rows][cols];
     }
 
@@ -147,7 +148,7 @@ public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
      * array <code>c</code> of integers.
      */
     public ZMatrix(int[][] c) {
-        super(c.length, c[0].length);
+        super(ZRing.ring, c.length, c[0].length);
         for (int i = 1; i < rows; i++) {
             if (c[i].length != columns) {
                 throw new IllegalArgumentException("Rows are not all of the same length.");

@@ -2,6 +2,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -16,7 +17,7 @@ public abstract class ArithmeticAffineFreeMorphism<A extends FreeElement<A, Arit
     extends ArithmeticFreeMorphism<A,B,N> {
 
     public static <X extends ArithmeticNumber<X>> ModuleMorphism<?,?,ArithmeticElement<X>,ArithmeticElement<X>>
-    make(ArithmeticRing<X> ring, ArithmeticMatrix<X> matrix, FreeElement<?,ArithmeticElement<X>> vector) {
+    make(ArithmeticRing<X> ring, Matrix<ArithmeticElement<X>> matrix, FreeElement<?,ArithmeticElement<X>> vector) {
         if (matrix.getRowCount() != vector.getLength()) {
             throw new IllegalArgumentException("Rows of A don't match length of b.");
         }
@@ -24,10 +25,10 @@ public abstract class ArithmeticAffineFreeMorphism<A extends FreeElement<A, Arit
             return new ArithmeticAffineRingMorphism<>(ring, matrix.get(0, 0), vector.getComponent(0));
         }
         if (matrix.getColumnCount() == 1) {
-            return new ArithmeticAffineInjection<>(ring, matrix.getColumn(0), (ArithmeticMultiElement<X>) vector);
+            return new ArithmeticAffineInjection<>(ring, (ArithmeticMultiElement<X>) matrix.getColumn(0), (ArithmeticMultiElement<X>) vector);
         }
         if (matrix.getRowCount() == 1) {
-            return new ArithmeticAffineProjection<>(ring, matrix.getRow(0), vector.getComponent(0));
+            return new ArithmeticAffineProjection<>(ring, (ArithmeticMultiElement<X>) matrix.getRow(0), vector.getComponent(0));
         }
         return new ArithmeticAffineMultiMorphism<>(ring, matrix, (ArithmeticMultiElement<X>) vector);
     }

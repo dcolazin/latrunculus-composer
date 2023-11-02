@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 
 /**
  * Matrixes over rational numbers.
@@ -36,7 +37,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
      * with all coefficients set to 0.
      */
     public QMatrix(int rows, int cols) {
-        super(rows, cols);
+        super(QRing.ring, rows, cols);
         coefficients = makeArray(rows, columns);
     }
 
@@ -128,7 +129,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
      * Creates a rational matrix from the two-dimensional array <code>c</code>.
      */
     public QMatrix(Rational[][] c) {
-        super(c.length, c[0].length);
+        super(QRing.ring, c.length, c[0].length);
         for (int i = 1; i < rows; i++) {
             if (c[i].length != columns) {
                 throw new IllegalArgumentException("Rows are not all of the same length.");

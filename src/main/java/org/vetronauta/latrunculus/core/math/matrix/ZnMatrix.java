@@ -44,7 +44,7 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
      * with all coefficients set to 0.
      */
     public ZnMatrix(int rows, int cols, int modulus) {
-        super(rows, cols);
+        super(ArithmeticRingRepository.getModulusRing(modulus), rows, cols);
         this.modulus = modulus;
         coefficients = new int[rows][cols];
     }

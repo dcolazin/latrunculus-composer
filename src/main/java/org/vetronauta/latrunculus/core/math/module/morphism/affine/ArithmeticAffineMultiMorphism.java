@@ -4,6 +4,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -15,10 +16,10 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extends
         ArithmeticAffineFreeMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<N>,N> {
 
-    private final ArithmeticMatrix<N> matrix;
+    private final Matrix<ArithmeticElement<N>> matrix;
     private final ArithmeticMultiElement<N> vector;
 
-    public ArithmeticAffineMultiMorphism(ArithmeticRing<N> ring, ArithmeticMatrix<N> matrix, ArithmeticMultiElement<N> vector) {
+    public ArithmeticAffineMultiMorphism(ArithmeticRing<N> ring, Matrix<ArithmeticElement<N>> matrix, ArithmeticMultiElement<N> vector) {
         super(new ArithmeticMultiModule<>(ring, matrix.getColumnCount()), new ArithmeticMultiModule<>(ring, matrix.getRowCount()));
         this.matrix = matrix;
         this.vector = vector;
@@ -29,7 +30,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         if (!getDomain().hasElement(x)) {
             throw new MappingException("ArithmeticAffineMultiMorphism.map: ", x, this);
         }
-        return matrix.product(x).sum(vector);
+        return ((ArithmeticMultiElement<N>) matrix.product(x)).sum(vector);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         return vector;
     }
 
-    public ArithmeticMatrix<N> getMatrix() {
+    public Matrix<ArithmeticElement<N>> getMatrix() {
         return matrix; //TODO deepcopy
     }
 
@@ -59,11 +60,11 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
         }
         if (morphism instanceof ArithmeticAffineMultiMorphism) {
             ArithmeticAffineMultiMorphism<N> other = (ArithmeticAffineMultiMorphism) morphism;
-            return (ModuleMorphism) new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), matrix.product(other.vector).sum(vector));
+            return (ModuleMorphism) new ArithmeticAffineMultiMorphism<>(getBaseRing(), matrix.product(other.matrix), ((ArithmeticMultiElement<N>) matrix.product(other.vector)).sum(vector));
         }
         if (morphism instanceof ArithmeticAffineInjection) {
             ArithmeticAffineInjection<N> other = (ArithmeticAffineInjection) morphism;
-            return (ModuleMorphism) new ArithmeticAffineInjection<>(getBaseRing(), matrix.product(other.getMatrix()), matrix.product(other.getVector()).sum(vector));
+            return (ModuleMorphism) new ArithmeticAffineInjection<>(getBaseRing(), (ArithmeticMultiElement<N>) matrix.product(other.getMatrix()), ((ArithmeticMultiElement<N>) matrix.product(other.getVector())).sum(vector));
         }
         return super.compose(morphism);
     }

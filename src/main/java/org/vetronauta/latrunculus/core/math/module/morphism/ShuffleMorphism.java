@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.matrix.GenericMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -79,7 +79,7 @@ public abstract class ShuffleMorphism {
     
     private static ModuleMorphism createShuffleMorphism(Ring ring, FreeModule domain, FreeModule codomain, int[] shuffle) {
         if (ring instanceof ArithmeticRing) {
-            GenericMatrix m = new GenericMatrix(codomain.getDimension(), domain.getDimension());
+            ArrayMatrix m = new ArrayMatrix(ring, codomain.getDimension(), domain.getDimension());
             for (int i = 0; i < m.getRowCount(); i++) {
                 for (int j = 0; j < m.getColumnCount(); j++) {
                     if (shuffle[j] == i) {
@@ -89,7 +89,7 @@ public abstract class ShuffleMorphism {
                     }
                 }
             }
-            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, m, (ArithmeticMultiElement) ArithmeticMultiElement.zero((ArithmeticRing) ring, codomain.getDimension()));
+            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, m, ArithmeticMultiElement.zero((ArithmeticRing) ring, codomain.getDimension()));
         }
         int dim = domain.getDimension();
         int codim = codomain.getDimension();
