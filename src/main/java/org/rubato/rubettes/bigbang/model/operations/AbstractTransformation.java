@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
@@ -100,10 +103,10 @@ public abstract class AbstractTransformation extends AbstractOperation {
 	}
 	
 	protected void initTransformation(List<RMatrix> matrices, List<List<Real>> shifts) {
-		ModuleMorphism morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(0), ArithmeticMultiElement.make(RRing.ring, shifts.get(0)));
+		ModuleMorphism morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(0), new Vector<>(RRing.ring, shifts.get(0).stream().map(ArithmeticElement::new).collect(Collectors.toList())));
 		for (int i = 1; i < matrices.size(); i++) {
 			try {
-				morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(i), ArithmeticMultiElement.make(RRing.ring, shifts.get(i))).compose(morphism);
+				morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(i), new Vector<>(RRing.ring, shifts.get(i).stream().map(ArithmeticElement::new).collect(Collectors.toList()))).compose(morphism);
 			} catch (CompositionException e) { e.printStackTrace(); }
 		}
 		this.transformation = morphism;

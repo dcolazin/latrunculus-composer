@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -67,8 +69,8 @@ public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
     }
 
     @Override
-    public ArithmeticMultiElement<ArithmeticInteger> product(FreeElement<?, ArithmeticElement<ArithmeticInteger>> vector) {
-        return null;
+    public Vector<ArithmeticElement<ArithmeticInteger>> product(Vector<ArithmeticElement<ArithmeticInteger>> vector) {
+        return null; //TODO
     }
 
     @Override
@@ -77,13 +79,13 @@ public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
     }
 
     @Override
-    public ArithmeticMultiElement<ArithmeticInteger> getColumn(int j) {
-        return null;
+    public Vector<ArithmeticElement<ArithmeticInteger>> getColumn(int j) {
+        return null; //TODO
     }
 
     @Override
-    public ArithmeticMultiElement<ArithmeticInteger> getRow(int i) {
-        return null;
+    public Vector<ArithmeticElement<ArithmeticInteger>> getRow(int i) {
+        return null; //TODO
     }
 
     @Override

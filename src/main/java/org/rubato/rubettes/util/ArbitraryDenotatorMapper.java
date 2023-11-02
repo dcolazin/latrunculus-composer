@@ -4,6 +4,7 @@ import org.rubato.base.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
@@ -313,7 +314,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		}
 		if (morphism.getCodomain() instanceof ArithmeticMultiModule) {
 			ArithmeticMultiModule<?> multiModule = (ArithmeticMultiModule<?>) morphism.getCodomain();
-			ModuleMorphism projection = new ArithmeticAffineProjection(multiModule.getRing(), multiModule.getUnitElement(index), multiModule.getRing().getZero());
+			ModuleMorphism projection = new ArithmeticAffineProjection(multiModule.getRing(), new Vector(multiModule.getRing(), multiModule.getUnitElement(index).getValue()), multiModule.getRing().getZero());
 			return projection.compose(morphism);
 		}
 		if (morphism.getCodomain() instanceof ArithmeticRing) {

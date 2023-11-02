@@ -3,6 +3,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
@@ -10,19 +11,22 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
-        ArithmeticAffineFreeMorphism<ArithmeticElement<N>,ArithmeticMultiElement<N>,N> {
+        ArithmeticAffineFreeMorphism<ArithmeticElement<N>,Vector<ArithmeticElement<N>>,N> {
 
-    private final ArithmeticMultiElement<N> matrix;
-    private final ArithmeticMultiElement<N> vector;
+    //TODO generalize to any ring
 
-    public ArithmeticAffineInjection(ArithmeticRing<N> ring, ArithmeticMultiElement<N> matrix, ArithmeticMultiElement<N> vector) {
-        super(ring, new ArithmeticMultiModule<>(ring, matrix.getLength()));
+    private final Vector<ArithmeticElement<N>> matrix;
+    private final Vector<ArithmeticElement<N>> vector;
+
+    public ArithmeticAffineInjection(ArithmeticRing<N> ring, Vector<ArithmeticElement<N>> matrix, Vector<ArithmeticElement<N>> vector) {
+        //super(ring, new ArithmeticMultiModule<>(ring, matrix.getLength()));
+        super(ring, null); //TODO after MultiModule refactoring
         this.matrix = matrix;
         this.vector = vector;
     }
 
     @Override
-    public ArithmeticMultiElement<N> map(ArithmeticElement<N> x) throws MappingException {
+    public Vector<ArithmeticElement<N>> map(ArithmeticElement<N> x) throws MappingException {
         if (!getDomain().hasElement(x)) {
             throw new MappingException("ArithmeticAffineInjection.map: ", x, this);
         }
@@ -30,11 +34,11 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
     }
 
     @Override
-    public ArithmeticMultiElement<N> getVector() {
+    public Vector<ArithmeticElement<N>> getVector() {
         return vector.deepCopy();
     }
 
-    public ArithmeticMultiElement<N> getMatrix() {
+    public Vector<ArithmeticElement<N>> getMatrix() {
         return matrix.deepCopy();
     } //TODO common logic
 

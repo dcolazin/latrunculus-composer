@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
@@ -275,7 +276,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         }
 
         ArithmeticRing<?> ring = getRing(element);
-        return ArithmeticAffineFreeMorphism.make(ring, A0, new ArithmeticMultiElement(ring, b0));
+        return ArithmeticAffineFreeMorphism.make(ring, A0, new Vector(ring, b0));
     }
 
     private ModuleMorphism readCanonicalMorphism(Element element, Class<?> clazz, XMLReader reader) {

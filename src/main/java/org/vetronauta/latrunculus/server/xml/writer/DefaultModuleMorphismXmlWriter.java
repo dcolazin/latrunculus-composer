@@ -212,7 +212,7 @@ public class DefaultModuleMorphismXmlWriter implements LatrunculusXmlWriter<Modu
         writer.text(s);
         writer.closeInline();
         s = morphism.getVector().getComponent(0).toString();
-        for (int i = 1; i < morphism.getVector().getValue().size(); i++) {
+        for (int i = 1; i < morphism.getVector().length(); i++) {
             s += ","+morphism.getVector().getComponent(i);
         }
         writer.openInline(B_ATTR);

@@ -19,11 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 
 import java.text.DecimalFormat;
@@ -73,21 +71,6 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     @Override
     public ArithmeticMatrix<Real> scaled(ArithmeticElement<Real> element) {
         return scaled(element.getValue().doubleValue());
-    }
-
-    @Override
-    public ArithmeticMultiElement<Real> product(FreeElement<?,ArithmeticElement<Real>> vector) {
-        if (!(vector instanceof ArithmeticMultiElement)) {
-            throw new UnsupportedOperationException("still have to do it");
-        }
-        double[] prod = product(((ArithmeticMultiElement<Real>) vector).getValue().stream()
-                .map(ArithmeticElement::getValue)
-                .mapToDouble(ArithmeticNumber::doubleValue)
-                .toArray());
-        return new ArithmeticMultiElement<>(RRing.ring, Arrays.stream(prod)
-                .mapToObj(Real::new)
-                .map(ArithmeticElement::new)
-                .collect(Collectors.toList()));
     }
 
     @Override
@@ -194,17 +177,17 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMultiElement<Real> getColumn(int j) {
+    public Vector<ArithmeticElement<Real>> getColumn(int j) {
         List<ArithmeticElement<Real>> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             list.add(new ArithmeticElement<>(new Real(coefficients[i][j])));
         }
-        return new ArithmeticMultiElement<>(RRing.ring, list);
+        return new Vector<>(RRing.ring, list);
     }
 
     @Override
-    public ArithmeticMultiElement<Real> getRow(int i) {
-        return new ArithmeticMultiElement<>(RRing.ring, Arrays.stream(coefficients[i])
+    public Vector<ArithmeticElement<Real>> getRow(int i) {
+        return new Vector<>(RRing.ring, Arrays.stream(coefficients[i])
                 .mapToObj(Real::new)
                 .map(ArithmeticElement::new)
                 .collect(Collectors.toList()));
@@ -403,7 +386,12 @@ public class RMatrix extends ArithmeticMatrix<Real> {
         return rm;
     }
 
-    
+    @Override
+    public Vector<ArithmeticElement<Real>> product(Vector<ArithmeticElement<Real>> vector) {
+        return null; //TODO
+    }
+
+
     /**
      * Returns the adjoint of this matrix.
      */

@@ -30,6 +30,8 @@ import java.util.LinkedList;
  */
 public abstract class ProperFreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> implements FreeElement<E,R> {
 
+    //TODO we don't really need this class?
+
     public int compareTo(ModuleElement object) {
         return getModule().compareTo(object.getModule());
     }

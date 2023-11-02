@@ -20,16 +20,15 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 
 /**
  * Matrixes over complex numbers.
@@ -75,31 +74,22 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
     }
 
     @Override
-    public ArithmeticMultiElement<Complex> product(FreeElement<?,ArithmeticElement<Complex>> vector) {
-        if (vector instanceof ArithmeticMultiElement) {
-            Complex[] cvector = product(((ArithmeticMultiElement<Complex>) vector).getValue().stream().map(ArithmeticElement::getValue).toArray());
-            return new ArithmeticMultiElement<>(CRing.ring, Arrays.stream(cvector).map(ArithmeticElement::new).collect(Collectors.toList()));
-        }
-        throw new UnsupportedOperationException("currently not supported");
-    }
-
-    @Override
     public ArithmeticElement<Complex> get(int i, int j) {
         return new ArithmeticElement<>(getNumber(i,j));
     }
 
     @Override
-    public ArithmeticMultiElement<Complex> getColumn(int j) {
+    public Vector<ArithmeticElement<Complex>> getColumn(int j) {
         List<ArithmeticElement<Complex>> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             list.add(new ArithmeticElement<>(coefficients[i][j]));
         }
-        return new ArithmeticMultiElement<>(CRing.ring, list);
+        return new Vector<>(CRing.ring, list);
     }
 
     @Override
-    public ArithmeticMultiElement<Complex> getRow(int i) {
-        return new ArithmeticMultiElement<>(CRing.ring, Arrays.stream(coefficients[i]).map(ArithmeticElement::new).collect(Collectors.toList()));
+    public Vector<ArithmeticElement<Complex>> getRow(int i) {
+        return new Vector<>(CRing.ring, Arrays.stream(coefficients[i]).map(ArithmeticElement::new).collect(Collectors.toList()));
     }
 
 
@@ -427,7 +417,12 @@ public class CMatrix extends ArithmeticMatrix<Complex> {
         return rm;
     }
 
-    
+    @Override
+    public Vector<ArithmeticElement<Complex>> product(Vector<ArithmeticElement<Complex>> vector) {
+        return null; //TODO but not really, as this class will be soon deleted
+    }
+
+
     /**
      * Returns the adjoint of this matrix.
      */

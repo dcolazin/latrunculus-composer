@@ -19,11 +19,9 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,11 +104,11 @@ public class ArrayMatrix<R extends RingElement<R>> extends Matrix<R> {
     }
 
     @Override
-    public FreeElement<?, R> product(FreeElement<?, R> vector) {
+    public Vector<R> product(Vector<R> vector) {
         if (columns != vector.getLength()) {
             throw new ArithmeticException("Unmatched matrix dimensions.");
         }
-        List<RingElement<R>> res = new ArrayList<>(rows);
+        List<R> res = new ArrayList<>(rows);
         for (int r = 0; r < rows; r++) {
             R sum = ring.getZero();
             for (int c = 0; c < columns; c++) {
@@ -118,8 +116,7 @@ public class ArrayMatrix<R extends RingElement<R>> extends Matrix<R> {
             }
             res.add(sum);
         }
-        //TODO this will work properly after the ArithmeticNumber refactoring
-        return ArithmeticMultiElement.make((ArithmeticRing) ring, (List) res);
+        return new Vector<>(ring, res);
     }
 
     @Override
@@ -128,23 +125,21 @@ public class ArrayMatrix<R extends RingElement<R>> extends Matrix<R> {
     }
 
     @Override
-    public FreeElement<?, R> getColumn(int j) {
+    public Vector<R> getColumn(int j) {
         List<R> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             list.add((R) internalMatrix[i][j]);
         }
-        //TODO this will work properly after the ArithmeticNumber refactoring
-        return ArithmeticMultiElement.make((ArithmeticRing) ring, (List) list);
+        return new Vector<>(ring, list);
     }
 
     @Override
-    public FreeElement<?, R> getRow(int i) {
+    public Vector<R> getRow(int i) {
         List<R> list = new ArrayList<>(columns);
         for (int j = 0; j < columns; j++) {
             list.add((R) internalMatrix[i][j]);
         }
-        //TODO this will work properly after the ArithmeticNumber refactoring
-        return ArithmeticMultiElement.make((ArithmeticRing) ring, (List) list);
+        return new Vector<>(ring, list);
     }
 
     @Override

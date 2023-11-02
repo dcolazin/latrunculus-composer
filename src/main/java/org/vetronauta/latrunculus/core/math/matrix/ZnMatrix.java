@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -371,16 +373,8 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public ArithmeticMultiElement<Modulus> product(FreeElement<?, ArithmeticElement<Modulus>> vector) {
-        if (!(vector instanceof ArithmeticMultiElement)) {
-            throw new UnsupportedOperationException("currently not supported");
-        }
-        int[] result = product(((ArithmeticMultiElement<Modulus>) vector).getValue().stream()
-                .map(ArithmeticElement::getValue)
-                .mapToInt(ArithmeticNumber::intValue)
-                .toArray());
-        return new ArithmeticMultiElement<>(((ArithmeticMultiElement<Modulus>) vector).getRing(), Arrays.stream(result)
-                .mapToObj(x -> new Modulus(x, getModulus())).map(ArithmeticElement::new).collect(Collectors.toList()));
+    public Vector<ArithmeticElement<Modulus>> product(Vector<ArithmeticElement<Modulus>> vector) {
+        return null; //TODO
     }
 
     @Override
@@ -389,17 +383,17 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public ArithmeticMultiElement<Modulus> getColumn(int j) {
+    public Vector<ArithmeticElement<Modulus>> getColumn(int j) {
         List<ArithmeticElement<Modulus>> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             list.add(new ArithmeticElement<>(new Modulus(coefficients[i][j], modulus)));
         }
-        return new ArithmeticMultiElement<>(ArithmeticRingRepository.getModulusRing(modulus), list);
+        return new Vector<>(ArithmeticRingRepository.getModulusRing(modulus), list);
     }
 
     @Override
-    public ArithmeticMultiElement<Modulus> getRow(int i) {
-        return null;
+    public Vector<ArithmeticElement<Modulus>> getRow(int i) {
+        return null; //TODO
     }
 
     @Override

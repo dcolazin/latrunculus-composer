@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -130,8 +131,8 @@ public class BigBangMapper extends BigBangManipulator {
 		list2.add(new ArithmeticElement<>(new Real(anchorLocation[1])));
 		ModuleMorphism relativeMorphism = this.morphism;
 		try {
-			relativeMorphism = relativeMorphism.compose(ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list1)));
-			relativeMorphism = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list2)).compose(relativeMorphism);
+			relativeMorphism = relativeMorphism.compose(ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list1)));
+			relativeMorphism = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list2)).compose(relativeMorphism);
 		} catch (CompositionException e) { e.printStackTrace(); } //TODO log vs printstacktrace
 		return relativeMorphism;
 	}

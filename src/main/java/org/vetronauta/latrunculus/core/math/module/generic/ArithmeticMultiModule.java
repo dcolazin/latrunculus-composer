@@ -1,6 +1,7 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -137,12 +138,12 @@ public class ArithmeticMultiModule<N extends ArithmeticNumber<N>> extends Proper
 
     @Override
     protected ArithmeticAffineProjection<N> _getProjection(int index) {
-        return new ArithmeticAffineProjection<>(getRing(), getUnitElement(index), ring.getZero());
+        return new ArithmeticAffineProjection<>(getRing(), new Vector<>(ring, getUnitElement(index).getValue()), ring.getZero());
     }
 
     @Override
     protected ArithmeticAffineInjection<N> _getInjection(int index) {
-        return new ArithmeticAffineInjection<>(getRing(), getUnitElement(index), getZero());
+        return new ArithmeticAffineInjection<>(ring, new Vector<>(ring, getUnitElement(index).getValue()), new Vector<>(ring, getZero().getValue()));
     }
 
     @Override

@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -52,10 +53,10 @@ public abstract class Matrix<R extends RingElement<R>> implements Comparable<Mat
     public abstract Matrix<R> scaled(R element);
     public abstract Matrix<R> inverse();
 
-    public abstract FreeElement<?,R> product(FreeElement<?,R> vector);
+    public abstract Vector<R> product(Vector<R> vector);
     public abstract R get(int i, int j);
-    public abstract FreeElement<?,R> getColumn(int j);
-    public abstract FreeElement<?,R> getRow(int i);
+    public abstract Vector<R> getColumn(int j);
+    public abstract Vector<R> getRow(int i);
 
     public abstract void set(int row, int col, R element);
 

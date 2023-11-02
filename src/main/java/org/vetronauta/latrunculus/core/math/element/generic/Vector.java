@@ -180,6 +180,21 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
         return new Vector<>(ring, res);
     }
 
+    public R scalarProduct(Vector<R> other) {
+        if (getLength() != other.getLength()) {
+            throw new DomainException(this.getModule(), other.getModule());
+        }
+        R sp = ring.getZero();
+        for (int i = 0; i < getLength(); i++) {
+            sp.add(value.get(i).product(other.value.get(i)));
+        }
+        return sp;
+    }
+
+    public int length() {
+        return value.size();
+    }
+
     @Override
     public Vector<R> deepCopy() {
         return new Vector<>(ring, value.stream().map(RingElement::deepCopy).collect(Collectors.toList()));

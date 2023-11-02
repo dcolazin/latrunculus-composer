@@ -21,7 +21,9 @@ package org.vetronauta.latrunculus.core.math.matrix;
 
 import java.util.Arrays;
 
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -357,8 +359,8 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
 
     @Override
-    public ArithmeticMultiElement<Rational> product(FreeElement<?, ArithmeticElement<Rational>> vector) {
-        return null;
+    public Vector<ArithmeticElement<Rational>> product(Vector<ArithmeticElement<Rational>> vector) {
+        return null; //TODO but not really
     }
 
     @Override
@@ -367,13 +369,13 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
 
     @Override
-    public ArithmeticMultiElement<Rational> getColumn(int j) {
-        return null;
+    public Vector<ArithmeticElement<Rational>> getColumn(int j) {
+        return null; //TODO but not really
     }
 
     @Override
-    public ArithmeticMultiElement<Rational> getRow(int i) {
-        return null;
+    public Vector<ArithmeticElement<Rational>> getRow(int i) {
+        return null; //TODO but not really
     }
 
     @Override
