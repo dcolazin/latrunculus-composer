@@ -21,6 +21,7 @@ package org.rubato.util;
 
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -77,15 +78,15 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         }
     }
 
-    private static class ZnConverter extends DoubleConverter<ArithmeticElement<ModulusWrapper>> {
+    private static class ZnConverter extends DoubleConverter<Modulus> {
         public ZnConverter(int modulus) {
             this.modulus = modulus;
         }
-        public double toDouble(ArithmeticElement<ModulusWrapper> x) {
-            return x.getValue().doubleValue();
+        public double toDouble(Modulus x) {
+            return x.doubleValue();
         }
-        public ArithmeticElement<ModulusWrapper> fromDouble(double x) {
-            return new ArithmeticElement<>(new ModulusWrapper((int)Math.round(x), modulus));
+        public Modulus fromDouble(double x) {
+            return new Modulus((int)Math.round(x), modulus);
         }
         private int modulus;
     }

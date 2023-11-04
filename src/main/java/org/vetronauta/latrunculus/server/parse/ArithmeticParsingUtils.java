@@ -173,9 +173,12 @@ public class ArithmeticParsingUtils {
         }
 
          */
+        /*
         if (factorRing instanceof ZnRing) {
             return (RingString<N>) parseZnString(s, ((ZnRing) factorRing).getModulus());
         }
+
+         */
         throw new NumberFormatException(String.format("parsing string ring %s is not supported", ring));
     }
 
@@ -257,6 +260,7 @@ public class ArithmeticParsingUtils {
 
      */
 
+    /*
     public static RingString<ModulusWrapper> parseZnString(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -278,5 +282,7 @@ public class ArithmeticParsingUtils {
 
         return new RingString<>(words, factors);
     }
+
+     */
 
 }

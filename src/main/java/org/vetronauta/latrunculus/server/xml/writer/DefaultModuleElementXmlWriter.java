@@ -118,11 +118,15 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
 
     private void write(ArithmeticElement<?> element, XMLWriter writer) {
         ArithmeticNumber<?> number = element.getValue();
+        //TODO redo
+        /*
         if (number instanceof ModulusWrapper) {
             writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number, MODULUS_ATTR, ((ModulusWrapper) number).getModulus());
         } else {
             writer.emptyWithType(MODULE_ELEMENT, element.getElementTypeName(), VALUE_ATTR, number);
         }
+
+         */
     }
 
     private void write(Vector<?> element, XMLWriter writer) {
@@ -143,6 +147,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
     }
 
     private void write(ArithmeticStringElement<?> element, XMLWriter writer) {
+        //TODO redo
+        /*
         if (element.getRing().getFactorRing().getZero().getValue() instanceof ModulusWrapper) {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ModulusWrapper) element.getRing().getFactorRing().getZero().getValue()).getModulus());
         } else {
@@ -154,9 +160,13 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             writer.closeInline();
         }
         writer.closeBlock();
+
+         */
     }
 
     private void write(ArithmeticStringMultiElement<?> element, XMLWriter writer) {
+        //TODO redo
+        /*
         if (element.getModule().getRing().getFactorRing().getZero().getValue() instanceof ModulusWrapper) {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ModulusWrapper) element.getModule().getRing().getFactorRing().getZero().getValue()).getModulus());
         } else {
@@ -166,6 +176,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             write(new ArithmeticStringElement(element.getModule().getRing(), element.getValue().get(i)), writer);
         }
         writer.closeBlock();
+
+         */
     }
 
     private void write(DirectSumElement element, XMLWriter writer) {

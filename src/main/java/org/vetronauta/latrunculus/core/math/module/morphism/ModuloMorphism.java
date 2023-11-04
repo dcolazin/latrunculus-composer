@@ -20,16 +20,16 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 
 import java.util.stream.Collectors;
 
@@ -77,16 +77,16 @@ public class ModuloMorphism extends ModuleMorphism {
     public ModuleElement map(ModuleElement x) throws MappingException {
         if (dimension == 1) {
             if (x instanceof ZInteger) {
-                return new ArithmeticElement<>(new ModulusWrapper(((ZInteger) x).intValue(), modulus));
+                return new Modulus(((ZInteger) x).intValue(), modulus);
             }
         }
         else if (x instanceof Vector && ((Vector<?>) x).getRing() instanceof ZRing) {
             Vector<?> e = (Vector<?>) x;
             if (e.getLength() == dimension) {
-                return new Vector(
-                        ArithmeticRingRepository.getModulusRing(modulus),
+                return new Vector<>(
+                        RingRepository.getModulusRing(modulus),
                         e.getValue().stream()
-                                .map(i -> new ArithmeticElement(new ModulusWrapper(((ArithmeticElement)i).getValue().intValue(), modulus)))
+                                .map(i -> new Modulus(((Arithmetic)i).intValue(), modulus))
                                 .collect(Collectors.toList()));
             }
         }
@@ -141,7 +141,7 @@ public class ModuloMorphism extends ModuleMorphism {
 
     
     public ModuleElement atZero() {
-        return new VectorModule<>(ArithmeticRingRepository.getModulusRing(getModulus()), getDimension()).getZero();
+        return new VectorModule<>(RingRepository.getModulusRing(getModulus()), getDimension()).getZero();
     }
 
     
@@ -177,7 +177,7 @@ public class ModuloMorphism extends ModuleMorphism {
     
     
     private ModuloMorphism(int dim, int modulus) {
-        super(new VectorModule<>(ZRing.ring, dim), new VectorModule<>(ArithmeticRingRepository.getModulusRing(modulus), dim));
+        super(new VectorModule<>(ZRing.ring, dim), new VectorModule<>(RingRepository.getModulusRing(modulus), dim));
         this.modulus = modulus;
         this.dimension = dim;
     }

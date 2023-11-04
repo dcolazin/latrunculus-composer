@@ -19,13 +19,17 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
+import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
@@ -37,10 +41,9 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<ModulusWrapper> implements NumberRing {
+public final class ZnRing extends Ring<Modulus> implements NumberRing {
 
     private ZnRing(int modulus) {
-        super(new ModulusWrapper(0, modulus), new ModulusWrapper(1, modulus));
         this.modulus = modulus;
     }
 
@@ -53,21 +56,32 @@ public final class ZnRing extends ArithmeticRing<ModulusWrapper> implements Numb
     }
 
     @Override
-    public VectorModule<ArithmeticElement<ModulusWrapper>> getNullModule() {
+    public Modulus getZero() {
+        return new Modulus(0, modulus);
+    }
+
+    @Override
+    public VectorModule<Modulus> getNullModule() {
         return new VectorModule<>(this, 0);
     }
 
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        if (!(element instanceof ArithmeticElement)) {
-            return false;
-        }
-        ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-        return number instanceof ModulusWrapper && (((ModulusWrapper) number).getModulus() == modulus);
+        return element instanceof Modulus && modulus == ((Modulus) element).getModulus();
     }
 
     @Override
-    public FreeModule<?, ArithmeticElement<ModulusWrapper>> getFreeModule(int dimension) {
+    public Modulus getOne() {
+        return new Modulus(1, modulus);
+    }
+
+    @Override
+    public boolean isField() {
+        return NumberTheory.isPrime(modulus);
+    }
+
+    @Override
+    public FreeModule<?, Modulus> getFreeModule(int dimension) {
         return new VectorModule<>(this, dimension);
     }
 
@@ -96,7 +110,7 @@ public final class ZnRing extends ArithmeticRing<ModulusWrapper> implements Numb
 
 
     @Override
-    public ArithmeticElement<ModulusWrapper> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public Modulus createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -106,18 +120,14 @@ public final class ZnRing extends ArithmeticRing<ModulusWrapper> implements Numb
     }
 
     @Override
-    public ArithmeticElement<ModulusWrapper> cast(ModuleElement<?,?> element) {
-        if (element instanceof ArithmeticElement) {
-            return cast((ArithmeticElement<?>) element);
+    public Modulus cast(ModuleElement<?,?> element) {
+        if (element instanceof Arithmetic) {
+            return new Modulus(((Arithmetic) element).intValue(), modulus);
         }
         if (element instanceof DirectSumElement) {
             return this.cast(element.flatComponentList().get(0));
         }
         return null;
-    }
-
-    public ArithmeticElement<ModulusWrapper> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new ModulusWrapper(element.getValue().intValue(), modulus));
     }
 
     public int getModulus() {

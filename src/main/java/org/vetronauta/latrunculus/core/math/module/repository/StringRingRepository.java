@@ -38,17 +38,23 @@ public class StringRingRepository {
 
     //TODO make this a proper object to inject when needed
 
-    private static final Map<Integer, ArithmeticStringRing<ModulusWrapper>> modRingMap = new HashMap<>();
+    //TODO redo everything after StringRing refactoring
+
+    //private static final Map<Integer, ArithmeticStringRing<ModulusWrapper>> modRingMap = new HashMap<>();
     private static final Map<ArithmeticRing, ArithmeticStringRing> stringRingMap = new HashMap<>();
 
-    public static ArithmeticStringRing<ModulusWrapper> getModulusRing(int modulus) {
-        return modRingMap.computeIfAbsent(modulus, x -> new ArithmeticStringRing<>(ArithmeticRingRepository.getModulusRing(modulus)));
+    public static ArithmeticStringRing<?> getModulusRing(int modulus) {
+        return null;
+        //return modRingMap.computeIfAbsent(modulus, x -> new ArithmeticStringRing<>(RingRepository.getModulusRing(modulus)));
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticStringRing<N> getRing(ArithmeticRing<N> factorRing) {
+        /*
         if (factorRing instanceof ZnRing) {
             return (ArithmeticStringRing<N>) getModulusRing((((ZnRing) factorRing).getModulus()));
         }
+
+         */
         return stringRingMap.computeIfAbsent(factorRing, ArithmeticStringRing::new);
     }
 

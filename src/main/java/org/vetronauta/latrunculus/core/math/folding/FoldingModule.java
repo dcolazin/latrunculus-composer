@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -108,8 +109,8 @@ public class FoldingModule {
     public static double[] foldModulus(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<ModulusWrapper> e = (ArithmeticElement<ModulusWrapper>)elements[i];
-            res[i] = e.getValue().intValue();
+            Modulus e = (Modulus)elements[i];
+            res[i] = e.intValue();
         }
         return res;
     }
@@ -195,7 +196,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((Vector<ArithmeticElement<ModulusWrapper>>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<Modulus>)elements[i]).getValue().get(j).intValue();
             }
         }
         return Folding.fold(res);

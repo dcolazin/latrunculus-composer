@@ -41,11 +41,7 @@ public class FreeUtils {
 
     //TODO temp method...
     public static boolean isUsualFree(Module<?,?> module) {
-        if (!isArithmetic(module)) {
-            return false;
-        }
-        ArithmeticNumber<?> number = retrieveNumber(module);
-        return number instanceof ModulusWrapper;
+        return isArithmetic(module);
     }
 
     //TODO temp method...

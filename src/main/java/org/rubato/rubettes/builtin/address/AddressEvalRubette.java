@@ -40,12 +40,10 @@ import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -62,7 +60,7 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
@@ -875,20 +873,19 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZnRing) {
-            VectorModule<ArithmeticElement<ModulusWrapper>> m = (VectorModule<ArithmeticElement<ModulusWrapper>>) module;
+            VectorModule<Modulus> m = (VectorModule<Modulus>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, m.getRing(), elementList.getElements());
                 elementList.clear();
                 if (select != null) {
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        int modulus = m.getRing().getOne().getValue().getModulus(); //TODO ugly way to get the modulus
+                        int modulus = m.getRing().getOne().getModulus(); //TODO ugly way to get the modulus
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) };
-                        List<ArithmeticElement<ModulusWrapper>> pList = Arrays.stream(p)
-                                .mapToObj(elementP -> new ModulusWrapper(elementP, modulus))
-                                .map(ArithmeticElement::new)
+                        List<Modulus> pList = Arrays.stream(p)
+                                .mapToObj(elementP -> new Modulus(elementP, modulus))
                                 .collect(Collectors.toList());
-                        elementList.addElement(new Vector<>(ArithmeticRingRepository.getModulusRing(modulus), pList));
+                        elementList.addElement(new Vector<>(RingRepository.getModulusRing(modulus), pList));
                     }
                 }
             }

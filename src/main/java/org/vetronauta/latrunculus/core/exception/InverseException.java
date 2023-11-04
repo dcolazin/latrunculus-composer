@@ -33,6 +33,10 @@ public final class InverseException extends LatrunculusRuntimeException {
         super(String.format("%s has no inverse", number), th);
     }
 
+    public InverseException(RingElement<?> number, Throwable th) {
+        super(String.format("%s has no inverse", number), th);
+    }
+
     public InverseException(ArithmeticNumber<?> number) {
         super(String.format("%s has no inverse", number));
     }

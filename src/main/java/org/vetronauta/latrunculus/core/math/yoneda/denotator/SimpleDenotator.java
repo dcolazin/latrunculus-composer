@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -481,7 +482,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the modular integer contained in a ZnElement denotator.
      */
     public int getModInteger() {
-        return ((ArithmeticElement<ModulusWrapper>)getElement()).getValue().intValue();
+        return ((Modulus)getElement()).intValue();
     }    
     
     

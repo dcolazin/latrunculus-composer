@@ -461,7 +461,7 @@ public class JMorphismDialog
                         }
                         if (domainRing.equals(ZRing.ring) &&
                                 codomain instanceof FreeModule &&
-                                codomainNumber instanceof ModulusWrapper && (domain.getDimension() == codomain.getDimension())) {
+                                codomainRing instanceof ZnRing && (domain.getDimension() == codomain.getDimension())) {
                             items.add(MODULO_TYPE); //TODO will not work before ArithmeticNumber refactoring
                         }
                     }

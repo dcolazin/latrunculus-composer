@@ -116,19 +116,6 @@ public final class ZMatrix extends Matrix<ZInteger> {
     
     
     /**
-     * Creates an integer copy of the modular integer matrix <code>m</code>.
-     */
-    public ZMatrix(ZnMatrix m) {
-        this(m.getRowCount(), m.getColumnCount());
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = m.getValue(r, c);
-            }
-        }
-    }
-    
-    
-    /**
      * Creates a <i>n</i>x1 integer matrix from the vector <code>v</code>,
      * where <i>n</i> is the length of <code>v</code>.
      */

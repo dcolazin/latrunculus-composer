@@ -2,11 +2,9 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -21,7 +19,7 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
@@ -322,7 +320,7 @@ public final class DenotexParser implements DenotexParserConstants {
             }
             else {
                 if (sub == -1)   return new VectorModule<>(ZRing.ring, sup);
-                else            return new VectorModule<>(ArithmeticRingRepository.getModulusRing(sub), sup);
+                else            return new VectorModule<>(RingRepository.getModulusRing(sub), sup);
             }
         }
         else if (s.equals("Q")) {
@@ -1295,7 +1293,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 if (d != 1) {
                     throw parseError("");
                 }
-                elements.add(new ArithmeticElement<>(new ModulusWrapper(n, ((ZnRing)m).getModulus())));
+                elements.add(new Modulus(n, ((ZnRing)m).getModulus()));
             }
             else if (m instanceof QRing)
                 elements.add(q);

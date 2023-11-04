@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @Getter
-public final class ModulusWrapper implements ArithmeticNumber<ModulusWrapper> {
+public final class ModulusWrapper {
 
     private final int value;
     private final int modulus;
@@ -44,47 +44,38 @@ public final class ModulusWrapper implements ArithmeticNumber<ModulusWrapper> {
         this.modulus = modulus;
     }
 
-    @Override
     public int compareTo(ModulusWrapper arithmeticModulusWrapper) {
         return this.intValue() - arithmeticModulusWrapper.intValue();
     }
 
-    @Override
     public int intValue() {
         return value;
     }
 
-    @Override
     public long longValue() {
         return intValue();
     }
 
-    @Override
     public float floatValue() {
         return intValue();
     }
 
-    @Override
     public double doubleValue() {
         return intValue();
     }
 
-    @Override
     public ModulusWrapper deepCopy() {
         return this;
     }
 
-    @Override
     public boolean isZero() {
         return intValue() == 0;
     }
 
-    @Override
     public boolean isOne() {
         return intValue() == 1;
     }
 
-    @Override
     public boolean isInvertible() {
         try {
             NumberTheory.inverseMod(value, modulus); //TODO is there a faster way?
@@ -94,54 +85,33 @@ public final class ModulusWrapper implements ArithmeticNumber<ModulusWrapper> {
         }
     }
 
-    @Override
     public boolean isFieldElement() {
         return NumberTheory.isPrime(modulus);
     }
 
-    @Override
-    public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof ModulusWrapper) && NumberTheory.gcd(value, modulus) == 1;
-    }
-
-    @Override
     public ModulusWrapper sum(ModulusWrapper other) {
         assertModulusIsSame(other);
         return new ModulusWrapper(value + other.value, modulus);
     }
 
-    @Override
     public ModulusWrapper difference(ModulusWrapper other) {
         assertModulusIsSame(other);
         return new ModulusWrapper(value - other.value, modulus);
     }
 
-    @Override
     public ModulusWrapper product(ModulusWrapper other) {
         assertModulusIsSame(other);
         return new ModulusWrapper(value * other.value, modulus);
     }
 
-    @Override
     public ModulusWrapper neg() {
         return new ModulusWrapper(-value, modulus);
     }
 
-    @Override
-    public ModulusWrapper inverse() {
-        try {
-            return new ModulusWrapper(NumberTheory.inverseMod(value, modulus), modulus);
-        } catch (ZeroDivisorException e) {
-            throw new InverseException(this, e);
-        }
-    }
-
-    @Override
     public String toString() {
         return String.format("%d%%%d", value, modulus);
     }
 
-    @Override
     public boolean equals(Object other) {
         if (!(other instanceof ModulusWrapper)) {
             return false;
@@ -150,7 +120,6 @@ public final class ModulusWrapper implements ArithmeticNumber<ModulusWrapper> {
         return otherModulusWrapper.value == value && otherModulusWrapper.modulus == modulus;
     }
 
-    @Override
     public int hashCode() {
         return value;
     }

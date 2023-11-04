@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
@@ -242,7 +242,7 @@ public class JSelectModule
             break;
         }
         case ZNRING: {
-            module = new VectorModule<>(ArithmeticRingRepository.getModulusRing(getModulus()), dim);
+            module = new VectorModule<>(RingRepository.getModulusRing(getModulus()), dim);
             break;
         }
         case QRING: {
@@ -261,8 +261,8 @@ public class JSelectModule
             //module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), dim);
             break;
         }
-        case ZNSTRING: {
-            module = ArithmeticStringMultiModule.make(StringRingRepository.getModulusRing(getModulus()), dim);
+        case ZNSTRING: { //TODO after StringRing refactoring
+            //module = ArithmeticStringMultiModule.make(StringRingRepository.getModulusRing(getModulus()), dim);
             break;
         }
         case QSTRING: { //TODO after StringRing refactoring

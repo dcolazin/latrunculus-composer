@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -219,10 +220,10 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<ModulusWrapper> parseZn(ZnRing ring, String s) {
+    private static Modulus parseZn(ZnRing ring, String s) {
         try {
             int value = Integer.parseInt(TextUtils.unparenthesize(s));
-            return new ArithmeticElement<>(new ModulusWrapper(value, ring.getModulus()));
+            return new Modulus(value, ring.getModulus());
         }
         catch (NumberFormatException e) {
             return null;

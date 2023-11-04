@@ -17,24 +17,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.exception;
+package org.vetronauta.latrunculus.core.math.module.repository;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author vetronauta
  */
-public class ModulusException extends LatrunculusRuntimeException {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class RingRepository {
 
-    private static final String ERROR_MESSAGE = "Trying to perform operation between %s and %s";
+    //TODO make this a proper object to inject when needed
 
-    public ModulusException(ModulusWrapper a, ModulusWrapper b) {
-        super(String.format(ERROR_MESSAGE, a, b));
-    }
+    private static final Map<Integer, ZnRing> modRingMap = new HashMap<>();
 
-    public ModulusException(Modulus a, Modulus b) {
-        super(String.format(ERROR_MESSAGE, a, b));
+    public static ZnRing getModulusRing(int modulus) {
+        return modRingMap.computeIfAbsent(modulus, ZnRing::make);
     }
 
 }

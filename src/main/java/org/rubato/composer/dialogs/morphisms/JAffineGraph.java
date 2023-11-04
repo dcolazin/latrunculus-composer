@@ -20,9 +20,9 @@
 package org.rubato.composer.dialogs.morphisms;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -31,10 +31,8 @@ import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -142,12 +140,13 @@ class JAffineGraph
     }
 
     
-    public ZnMatrix getZnMatrix() {
+    public Matrix<Modulus> getZnMatrix() {
         ZMatrix m = ((ZConfiguration)config).getZMatrix();
-        ZnMatrix res = new ZnMatrix(2, 2, ((ZnRing)ring).getModulus());
+        Matrix<Modulus> res = new ArrayMatrix<>(ring, 2, 2);
+        int modulus = ((ZnRing) ring).getModulus();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; i < 2; i++) {
-                res.set(i, j, m.getValue(i, j));
+                res.set(i, j, new Modulus(m.getValue(i, j), modulus));
             }
         }
         return res;

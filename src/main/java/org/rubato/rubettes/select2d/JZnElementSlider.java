@@ -1,6 +1,7 @@
 package org.rubato.rubettes.select2d;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 public class JZnElementSlider extends JElementSlider {
@@ -28,8 +29,8 @@ public class JZnElementSlider extends JElementSlider {
     }
     
     
-    protected ArithmeticElement<ModulusWrapper> getElement() {
-        return new ArithmeticElement<>(new ModulusWrapper(getInteger(), modulus));
+    protected Modulus getElement() {
+        return new Modulus(getInteger(), modulus);
     }
 
 
