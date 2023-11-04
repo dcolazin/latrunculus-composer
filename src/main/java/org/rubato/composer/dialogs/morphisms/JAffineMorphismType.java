@@ -21,7 +21,6 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -35,9 +34,9 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineMultiMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineRingMorphism;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
@@ -169,7 +168,7 @@ class JAffineMorphismType
             JAffineGraph graph = showGraphDialog();
             if (graph != null && (ring instanceof ArithmeticRing)) {
                     ArithmeticRing<?> arithmeticRing = (ArithmeticRing<?>) ring;
-                    ArithmeticMatrix matrix = graph.getMatrix();
+                    Matrix matrix = graph.getMatrix();
                     Vector vector = graph.getVector();
                     for (int i = 0; i < 2; i++) {
                         for (int j = 0; j < 2; j++) {
@@ -178,7 +177,7 @@ class JAffineMorphismType
                         }
                         setVectorEntry(i, vector.getComponent(i).toString());
                     }
-                    container.setMorphism(ArithmeticAffineFreeMorphism.make(arithmeticRing, matrix, vector));
+                    container.setMorphism(AffineFreeMorphism.make(arithmeticRing, matrix, vector));
 
             }
         }
@@ -227,7 +226,7 @@ class JAffineMorphismType
                 }
                 vector.add((ArithmeticElement) getValue(i));
             }
-            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, matrix, new Vector<>(ring, vector));
+            return AffineFreeMorphism.make(ring, matrix, new Vector<>(ring, vector));
         }
         GenericAffineMorphism m = GenericAffineMorphism.make(ring, cols, rows);
         for (int i = 0; i < rows; i++) {
@@ -316,14 +315,14 @@ class JAffineMorphismType
     
     
     public void editMorphism(ModuleMorphism morphism) {
-        if (morphism instanceof ArithmeticAffineRingMorphism) {
-            ArithmeticAffineRingMorphism<?> m = (ArithmeticAffineRingMorphism<?>) morphism;
+        if (morphism instanceof AffineRingMorphism) {
+            AffineRingMorphism<?> m = (AffineRingMorphism<?>) morphism;
             matrixEntries[0][0].setText(String.valueOf(m.getA()));
             vectorEntries[0].setText(String.valueOf(m.getB()));
             return;
         }
-        if (morphism instanceof ArithmeticAffineMultiMorphism) {
-            ArithmeticAffineMultiMorphism m = (ArithmeticAffineMultiMorphism)morphism;
+        if (morphism instanceof AffineMultiMorphism) {
+            AffineMultiMorphism m = (AffineMultiMorphism)morphism;
             Matrix matrix = m.getMatrix();
             Vector vector = m.getVector();
             for (int i = 0; i < rows; i++) {

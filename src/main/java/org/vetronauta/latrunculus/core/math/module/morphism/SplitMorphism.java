@@ -32,11 +32,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineMultiMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineRingMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.EndomorphismWrapper;
 
@@ -212,7 +210,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
     }
 
     private static boolean isAffine(ModuleMorphism<?,?,?,?> morphism) {
-        return morphism instanceof ArithmeticAffineFreeMorphism || morphism instanceof ArithmeticAffineRingMorphism;
+        return morphism instanceof AffineFreeMorphism || morphism instanceof AffineRingMorphism;
     }
 
     private static Endomorphism makeAffineFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
@@ -226,8 +224,8 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
         for (ModuleMorphism m : morphisms) {
             //TODO injection/projection case
             if (m instanceof AffineMultiMorphism) {
-                Matrix A1 = ((ArithmeticAffineMultiMorphism)m).getMatrix();
-                Vector b1 = ((ArithmeticAffineMultiMorphism)m).getVector();
+                Matrix A1 = ((AffineMultiMorphism)m).getMatrix();
+                Vector b1 = ((AffineMultiMorphism)m).getVector();
                 int d = b1.getLength();
                 for (int j = 0; j < d; j++) {
                     for (int k = 0; k < d; k++) {

@@ -1,15 +1,12 @@
 package org.rubato.rubettes.bigbang.model.denotators;
 
 import org.rubato.rubettes.util.DenotatorPath;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineMultiMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 
 import java.util.List;
 

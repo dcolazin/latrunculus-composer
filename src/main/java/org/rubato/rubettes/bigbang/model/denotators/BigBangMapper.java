@@ -5,15 +5,12 @@ import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.util.ArrayList;

@@ -15,6 +15,7 @@ import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -28,15 +29,15 @@ import java.util.LinkedList;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArithmeticParsingUtils {
 
-    public static <N extends ArithmeticNumber<N>> N parse(ArithmeticRing<N> ring, String s) {
-        return (N) parse(detectParsingClass(ring), s);
+    public static <R extends RingElement<R>> R parse(Ring<R> ring, String s) {
+        return (R) parse(detectParsingClass(ring), s);
     }
 
-    public static ArithmeticNumber<?> parse(String s) {
+    public static RingElement<?> parse(String s) {
         return parse(detectParsingClass(s), s);
     }
 
-    private static ArithmeticNumber<?> parse(Class<?> parsingClass, String s) {
+    private static RingElement<?> parse(Class<?> parsingClass, String s) {
         if (parsingClass == null) {
             throw new NumberFormatException(String.format("cannot detect parsing class for %s", s));
         }

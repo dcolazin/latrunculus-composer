@@ -132,16 +132,16 @@ public final class ModuleElementParser {
         throw new UnsupportedOperationException(String.format("cannot parse in %s", module));
     }
 
-    private static <N extends ArithmeticNumber<N>> Vector<ArithmeticElement<N>> parse(VectorModule<ArithmeticElement<N>> module, String string) {
+    private static <R extends RingElement<R>> Vector<R> parse(VectorModule<R> module, String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != module.getDimension()) {
             return null;
         }
-        List<ArithmeticElement<N>> values = new ArrayList<>(components.length);
+        List<R> values = new ArrayList<>(components.length);
         for (String component : components) {
             try {
-                values.add(new ArithmeticElement<>(ArithmeticParsingUtils.parse((ArithmeticRing) module.getRing(), component)));
+                values.add(ArithmeticParsingUtils.parse(module.getRing(), component));
             } catch (NumberFormatException e) {
                 return null;
             }

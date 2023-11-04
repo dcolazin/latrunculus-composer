@@ -21,8 +21,6 @@ package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
@@ -33,6 +31,10 @@ import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringEleme
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -57,8 +59,8 @@ import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
@@ -67,8 +69,6 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.impl.QRing;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
@@ -178,8 +178,8 @@ public class Dispatcher {
         addModuleElement(RestrictedElement.class);
         
         // module morphisms
-        addModuleMorphism(ArithmeticAffineRingMorphism.class);
-        addModuleMorphism(ArithmeticAffineFreeMorphism.class);
+        addModuleMorphism(AffineRingMorphism.class);
+        addModuleMorphism(AffineFreeMorphism.class);
 
         addModuleMorphism(CanonicalMorphism.class);
         addModuleMorphism(CastMorphism.class);

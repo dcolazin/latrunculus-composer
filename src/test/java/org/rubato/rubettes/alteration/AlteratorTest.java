@@ -6,18 +6,14 @@ import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineProjection;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.util.ArrayList;

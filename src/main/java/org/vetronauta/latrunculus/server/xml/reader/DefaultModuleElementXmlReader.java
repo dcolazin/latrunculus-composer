@@ -119,13 +119,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return null;
     }
 
-    private ArithmeticElement<?> readArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
+    private RingElement<?> readArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
-                ArithmeticNumber<?> val = ArithmeticParsingUtils.parse(element.getAttribute(VALUE_ATTR));
-                reader.setError("Unknown parsed class %%1", val.getClass());
-                return null;
+                return ArithmeticParsingUtils.parse(element.getAttribute(VALUE_ATTR));
             }
             catch (NumberFormatException e) {
                 reader.setError("Attribute %%1 of type %%2 must be a parsable number.", VALUE_ATTR, getElementTypeName(clazz));
@@ -192,7 +190,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
     private static <N extends ArithmeticNumber<N>> Vector<ArithmeticElement<N>> parseWithRing(ArithmeticRing<N> ring, String[] values) {
         List<ArithmeticElement<N>> elements = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
-            elements.add(new ArithmeticElement(ArithmeticParsingUtils.parse(ring, values[i])));
+            elements.add(ArithmeticParsingUtils.parse(ring, values[i]));
         }
         return new Vector<>(ring, elements);
     }

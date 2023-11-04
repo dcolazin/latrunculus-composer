@@ -26,7 +26,6 @@ import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
-import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
@@ -457,7 +456,7 @@ class JAffineGraph
         double[] px = { 0.0, 1.0, 0.0 };
         double[] py = { 0.0, 0.0, 1.0 };
 
-        public ArithmeticMatrix getMatrix() {
+        public Matrix getMatrix() {
             return null; //TODO make this class generic
         }
 
@@ -594,7 +593,7 @@ class JAffineGraph
     private static final double Y_MIN = -1;
     private static final double Y_MAX =  3;
 
-    public ArithmeticMatrix getMatrix() {
+    public Matrix getMatrix() {
         return config.getMatrix();
     }
 

@@ -24,7 +24,7 @@ import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 
 /**
  * This morphism reorders the components of an element of
@@ -89,7 +89,7 @@ public abstract class ShuffleMorphism {
                     }
                 }
             }
-            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, m, Vector.zero(ring, codomain.getDimension()));
+            return AffineFreeMorphism.make(ring, m, Vector.zero(ring, codomain.getDimension()));
         }
         int dim = domain.getDimension();
         int codim = codomain.getDimension();

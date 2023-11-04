@@ -8,15 +8,12 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -26,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public abstract class AbstractTransformation extends AbstractOperation {
 	

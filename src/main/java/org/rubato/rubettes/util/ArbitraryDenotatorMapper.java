@@ -4,14 +4,12 @@ import org.rubato.base.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
@@ -21,7 +19,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphis
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ProjectionMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.SumMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -315,7 +313,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		}
 		if (morphism.getCodomain() instanceof VectorModule) {
 			VectorModule<?> multiModule = (VectorModule<?>) morphism.getCodomain();
-			ModuleMorphism projection = new ArithmeticAffineProjection((ArithmeticRing) multiModule.getRing(), multiModule.getUnitElement(index), (ArithmeticElement) multiModule.getRing().getZero());
+			ModuleMorphism projection = new AffineProjection(multiModule.getRing(), multiModule.getUnitElement(index), multiModule.getRing().getZero());
 			return projection.compose(morphism);
 		}
 		if (morphism.getCodomain() instanceof ArithmeticRing) {
