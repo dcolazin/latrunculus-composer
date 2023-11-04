@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -31,7 +32,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeE
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
@@ -40,11 +40,14 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import java.util.List;
+import java.util.Map;
 
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FACTOR_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULUS_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUES_ATTR;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.WORD;
 
 /**
  * @author vetronauta
@@ -70,8 +73,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             write((Vector<?>) object, writer);
             return;
         }
-        if (object instanceof ArithmeticStringElement) {
-            write((ArithmeticStringElement<?>) object, writer);
+        if (object instanceof StringMap) {
+            write((StringMap<?>) object, writer);
             return;
         }
         if (object instanceof DirectSumElement) {
@@ -137,22 +140,18 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
     }
 
-    private void write(ArithmeticStringElement<?> element, XMLWriter writer) {
-        //TODO redo
-        /*
-        if (element.getRing().getFactorRing().getZero().getValue() instanceof ModulusWrapper) {
-            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ModulusWrapper) element.getRing().getFactorRing().getZero().getValue()).getModulus());
+    private void write(StringMap<?> element, XMLWriter writer) {
+        if (element.getRing().getFactorRing() instanceof ZnRing) {
+            writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName(), MODULUS_ATTR, ((ZnRing) element.getRing().getFactorRing()).getModulus());
         } else {
             writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         }
-        for (String word : element.getValue().getStrings()) {
-            writer.openInline(WORD, FACTOR_ATTR, element.getValue().getFactorForString(word));
-            writer.text(word);
+        for (Map.Entry<String,?> entry : element.getTerms().entrySet()) {
+            writer.openInline(WORD, FACTOR_ATTR, entry.getValue());
+            writer.text(entry.getKey());
             writer.closeInline();
         }
         writer.closeBlock();
-
-         */
     }
 
     private void write(DirectSumElement element, XMLWriter writer) {

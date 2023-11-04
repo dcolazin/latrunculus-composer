@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.util.EntryList;
 
 import java.util.HashMap;
@@ -192,7 +193,7 @@ public class StringMap<R extends RingElement<R>> extends RingElement<StringMap<R
     }
 
     @Override
-    public Ring<StringMap<R>> getRing() {
+    public StringRing<R> getRing() {
         return null; //TODO after StringRing refactoring
     }
 
@@ -262,6 +263,10 @@ public class StringMap<R extends RingElement<R>> extends RingElement<StringMap<R
             R newFactor = operator.apply(entry.getValue());
             dict.put(entry.getKey(), newFactor);
         }
+    }
+
+    public String getElementTypeName() {
+        return String.format("StringMap<%s>", getRing().toVisualString());
     }
 
 }
