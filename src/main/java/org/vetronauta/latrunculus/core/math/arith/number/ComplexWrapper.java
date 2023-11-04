@@ -24,24 +24,17 @@ package org.vetronauta.latrunculus.core.math.arith.number;
  * 
  * @author Gérard Milmeister
  */
-public final class Complex implements ArithmeticNumber<Complex> {
+public final class ComplexWrapper {
+
+    //TODO remove this class after Scheme refactoring
 
     private final double real;
     private final double imag;
 
     /**
-     * Creates the complex number 0+i0.
-     */
-    public Complex() {
-        real = 0.0;
-        imag = 0.0;
-    }
-        
-
-    /**
      * Creates the complex number real+i*imag. 
      */
-    public Complex(double real, double imag) {
+    public ComplexWrapper(double real, double imag) {
         this.real = real;
         this.imag = imag;
     }
@@ -50,73 +43,26 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Creates the complex number real+i0.
      */
-    public Complex(double real) {
+    public ComplexWrapper(double real) {
         this.real = real;
         this.imag = 0.0;
     }
-    
-    
-    /**
-     * Creates the complex number real+i0.
-     */
-    public Complex(int real) {
-        this.real = real;
-        this.imag = 0.0;
-    }
-    
     
     /**
      * Creates a new complex number from <code>c</code>.
      */
-    public Complex(Complex c) {
+    public ComplexWrapper(ComplexWrapper c) {
         real = c.real;
         imag = c.imag;
     }
-    
-
-    /**
-     * Creates a new complex number from its string representation.
-     * @param s must be of the form "x+i*y" where x and y are
-     *          string representations of doubles,
-     *          or of one of the forms "i*x" or "i"
-     */
-    public Complex(String s) {
-        try {
-            int pos = s.indexOf("+i*");
-            if (pos >= 0) {
-                real = Double.parseDouble(s.substring(0, pos));
-                imag = Double.parseDouble(s.substring(pos+3));
-                return;
-            }
-            pos = s.indexOf("i*");
-            if (pos == 0) {
-                imag = Double.parseDouble(s.substring(pos+2));
-                real = 0.0;
-                return;
-            }
-            pos = s.indexOf("i");
-            if (pos == 0 && s.length() == 1) {
-                imag = 1.0;
-                real = 0.0;
-                return;
-            }
-
-            real = Double.parseDouble(s);
-            imag = 0.0;
-        }
-        catch (Exception e) {
-            throw new NumberFormatException(e.getMessage());
-        }
-    }
-
     
     /**
      * Creates a complex number with the polar representation r*e^(i*phi).
      * @param r   the absolute value of the complex number
      * @param phi the argument of the complex number
      */
-    public static Complex fromPolar(double r, double phi) {
-        return new Complex(r*Math.cos(phi), r*Math.sin(phi));
+    public static ComplexWrapper fromPolar(double r, double phi) {
+        return new ComplexWrapper(r*Math.cos(phi), r*Math.sin(phi));
     }
 
     
@@ -155,115 +101,102 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the complex number 1+i0.
      */
-    public static Complex getOne() {
-        return new Complex(1.0);
+    public static ComplexWrapper getOne() {
+        return new ComplexWrapper(1.0);
     }
 
     
     /**
      * Returns the complex number 0+i0.
      */
-    public static Complex getZero() {
-        return new Complex(0.0);
+    public static ComplexWrapper getZero() {
+        return new ComplexWrapper(0.0);
     }
 
 
     /**
      * Returns the sum of this number and <code>c</code>.
      */
-    @Override
-    public Complex sum(Complex c) {
-        return new Complex(real+c.real, imag+c.imag);
+    public ComplexWrapper sum(ComplexWrapper c) {
+        return new ComplexWrapper(real+c.real, imag+c.imag);
     }
 
 
     /**
      * Returns the sum of this number and <code>x</code>.
      */
-    public Complex sum(double x) {
-        return new Complex(real+x, imag);
+    public ComplexWrapper sum(double x) {
+        return new ComplexWrapper(real+x, imag);
     }
 
     /**
      * Returns the difference of this number and <code>c</code>.
      */
-    @Override
-    public Complex difference(Complex c) {
-        return new Complex(real-c.real, imag-c.imag);
+    public ComplexWrapper difference(ComplexWrapper c) {
+        return new ComplexWrapper(real-c.real, imag-c.imag);
     }
 
     
     /**
      * Returns the difference of this number and <code>x</code>.
      */
-    public Complex difference(double x) {
-        return new Complex(real-x, imag);
+    public ComplexWrapper difference(double x) {
+        return new ComplexWrapper(real-x, imag);
     }
 
     /**
      * Returns the product of this number and <code>c</code>.
      */
-    @Override
-    public Complex product(Complex c) {
-        return new Complex(real*c.real-imag*c.imag, real*c.imag+imag*c.real);
+    public ComplexWrapper product(ComplexWrapper c) {
+        return new ComplexWrapper(real*c.real-imag*c.imag, real*c.imag+imag*c.real);
     }
 
     
     /**
      * Returns the product of this number and the real number <code>x</code>.
      */
-    public Complex product(double x) {
-        return new Complex(x*real, x*imag);
+    public ComplexWrapper product(double x) {
+        return new ComplexWrapper(x*real, x*imag);
     }
 
     /**
      * Returns the quotient of this number by <code>c</code>.
      */
-    public Complex quotient(Complex c) {
+    public ComplexWrapper quotient(ComplexWrapper c) {
         double d = c.real*c.real+c.imag*c.imag;
         double newr = (real*c.real+imag*c.imag)/d;
         double newi = (imag*c.real-real*c.imag)/d;        
-        return new Complex(newr, newi);
+        return new ComplexWrapper(newr, newi);
     }
 
     
     /**
      * Returns the quotient of this number by <code>x</code>.
      */
-    public Complex quotient(double x) {
+    public ComplexWrapper quotient(double x) {
         double newr = real/x;
         double newi = imag/x;        
-        return new Complex(newr, newi);
+        return new ComplexWrapper(newr, newi);
     }
 
     /**
      * Returns the inverse of this number.
      */
-    public Complex inverse() {
+    public ComplexWrapper inverse() {
         double d = real*real+imag*imag;
-        return new Complex(real/d, -imag/d);
+        return new ComplexWrapper(real/d, -imag/d);
     }
 
     /**
      * Returns the negative of this number.
      */
-    @Override
-    public Complex neg() {
-        return new Complex(-real, -imag);
-    }
-
-    
-    /**
-     * Returns the conjugate of this number.
-     */
-    public Complex conjugated() {
-        return new Complex(real, -imag);
+    public ComplexWrapper neg() {
+        return new ComplexWrapper(-real, -imag);
     }
 
     /**
      * Returns true iff this number is 0+i0.
      */
-    @Override
     public boolean isZero() {
         return real == 0.0 && imag == 0.0;
     }
@@ -276,19 +209,17 @@ public final class Complex implements ArithmeticNumber<Complex> {
         return real == 1.0 && imag == 0.0;
     }
 
-    @Override
     public boolean isInvertible() {
         return !isZero();
     }
 
-    @Override
     public boolean isFieldElement() {
         return true;
     }
 
-    @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof Complex) && !this.isZero();
+        return false;
+        //return (y instanceof ComplexWrapper) && !this.isZero();
     }
 
 
@@ -335,7 +266,7 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the square root of this number.
      */
-    public Complex sqrt() {
+    public ComplexWrapper sqrt() {
         double m = Math.sqrt(abs());
         double a = arg()/2;
         return fromPolar(m, a);
@@ -345,17 +276,17 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the natural logarithm of this number.
      */
-    public Complex log() {
+    public ComplexWrapper log() {
         double a = Math.log(abs());
         double b = arg();
-        return new Complex(a, b);
+        return new ComplexWrapper(a, b);
     }
     
     
     /**
      * Returns the exponential of this number.
      */
-    public Complex exp() {
+    public ComplexWrapper exp() {
         double r = Math.exp(getReal());
         double i = getImag();
         return fromPolar(r, i);
@@ -365,11 +296,11 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns this number raised to the power <code>c</code>.
      */
-    public Complex expt(Complex c) {
+    public ComplexWrapper expt(ComplexWrapper c) {
         double a1 = abs();
         double b1 = arg();
-        Complex c1 = c.product(Math.log(a1)).exp();
-        Complex c2 = new Complex(0, b1).product(c).exp();
+        ComplexWrapper c1 = c.product(Math.log(a1)).exp();
+        ComplexWrapper c2 = new ComplexWrapper(0, b1).product(c).exp();
         return c1.product(c2);
     }
     
@@ -377,17 +308,17 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the sine of this number.
      */
-    public Complex sin() {       
-        Complex a = new Complex(0, 1);
+    public ComplexWrapper sin() {
+        ComplexWrapper a = new ComplexWrapper(0, 1);
         a = a.product(this);
         a = a.exp();
 
-        Complex b = new Complex(0, -1);
+        ComplexWrapper b = new ComplexWrapper(0, -1);
         b = b.product(this);
         b = b.exp();
 
         a = a.difference(b);
-        a = a.quotient(new Complex(0, 2));
+        a = a.quotient(new ComplexWrapper(0, 2));
         
         return a;
     }
@@ -396,17 +327,17 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the cosine of this number.
      */
-    public Complex cos() {       
-        Complex a = new Complex(0, 1);
+    public ComplexWrapper cos() {
+        ComplexWrapper a = new ComplexWrapper(0, 1);
         a = a.product(this);
         a = a.exp();
 
-        Complex b = new Complex(0, -1);
+        ComplexWrapper b = new ComplexWrapper(0, -1);
         b = b.product(this);
         b = b.exp();
 
         a = a.sum(b);
-        a = a.quotient(new Complex(2, 0));
+        a = a.quotient(new ComplexWrapper(2, 0));
         
         return a;
     }
@@ -415,17 +346,17 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the tangent of this number.
      */
-    public Complex tan() {       
-        Complex a = new Complex(0, 2);
+    public ComplexWrapper tan() {
+        ComplexWrapper a = new ComplexWrapper(0, 2);
         a = a.product(this);
         a = a.exp();        
 
-        Complex b = new Complex(a);
+        ComplexWrapper b = new ComplexWrapper(a);
         
         a = a.difference(1);
         b = b.sum(1);
         
-        b = b.product(new Complex(0, 1));
+        b = b.product(new ComplexWrapper(0, 1));
         a = a.quotient(b);
         
         return a;
@@ -435,14 +366,14 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the arcsine of this number.
      */
-    public Complex asin() {
-        Complex a = this.product(this);
+    public ComplexWrapper asin() {
+        ComplexWrapper a = this.product(this);
         a = a.neg();
         a = a.sum(1);
         a = a.sqrt();
-        a = a.sum(this.product(new Complex(0, 1)));
+        a = a.sum(this.product(new ComplexWrapper(0, 1)));
         a = a.log();
-        a = a.product(new Complex(0,1));
+        a = a.product(new ComplexWrapper(0,1));
         a = a.neg();
         return a;
     }
@@ -451,14 +382,14 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the arccosine of this number.
      */
-    public Complex acos() {
-        Complex a = this.product(this);
+    public ComplexWrapper acos() {
+        ComplexWrapper a = this.product(this);
         a = a.neg();
         a = a.sum(1);
         a = a.sqrt();
-        a = a.sum(this.product(new Complex(0, 1)));
+        a = a.sum(this.product(new ComplexWrapper(0, 1)));
         a = a.log();
-        a = a.product(new Complex(0,1));
+        a = a.product(new ComplexWrapper(0,1));
         a = a.sum(Math.PI/2);
         return a;
     }
@@ -467,18 +398,18 @@ public final class Complex implements ArithmeticNumber<Complex> {
     /**
      * Returns the arctangent of this number and <code>c</code>.
      */
-    public Complex atan(Complex c) {
+    public ComplexWrapper atan(ComplexWrapper c) {
         // TODO: not yet implemented
         return null;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Complex)) {
+        if (!(other instanceof ComplexWrapper)) {
             return false;
         }
-        Complex otherComplex = (Complex) other;
-        return real == otherComplex.real && imag == otherComplex.imag;
+        ComplexWrapper otherComplexWrapper = (ComplexWrapper) other;
+        return real == otherComplexWrapper.real && imag == otherComplexWrapper.imag;
     }
 
     /**
@@ -503,16 +434,14 @@ public final class Complex implements ArithmeticNumber<Complex> {
      * Since complex numbers are not linearly ordered, the comparison
      * is lexicographic.
      */
-    @Override
-    public int compareTo(Complex c) {
+    public int compareTo(ComplexWrapper c) {
         if (real != c.real) {
             return Double.compare(real, c.real);
         }
         return Double.compare(imag, c.imag);
     }
 
-    @Override
-    public Complex deepCopy() {
-        return new Complex(real, imag);
+    public ComplexWrapper deepCopy() {
+        return new ComplexWrapper(real, imag);
     }
 }

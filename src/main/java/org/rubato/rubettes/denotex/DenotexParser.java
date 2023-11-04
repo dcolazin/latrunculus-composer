@@ -3,10 +3,10 @@ package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -1312,8 +1312,7 @@ public final class DenotexParser implements DenotexParserConstants {
         }
         return elements;
     } else if (jj_2_9(2)) {
-                   double r;
-      r = rLiteral();
+                   double r = rLiteral();
         try {
             if (m instanceof RRing) {
                 elements.add(new ArithmeticElement<>(new Real(r)));
@@ -1328,11 +1327,10 @@ public final class DenotexParser implements DenotexParserConstants {
         }
         return elements;
     } else if (jj_2_10(2)) {
-                   Complex c;
-      c = cLiteral();
+                   Complex c = cLiteral();
         try {
                 if (m instanceof CRing)
-                        elements.add(new ArithmeticElement<>(c));
+                        elements.add(c);
                 else {
                     throw parseError("");
                 }

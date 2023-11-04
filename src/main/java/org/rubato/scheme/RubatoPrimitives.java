@@ -25,8 +25,9 @@ import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -755,6 +756,9 @@ abstract class RubatoPrimitives {
     }
     
     protected static SExpr moduleElementToSExpr(ModuleElement element) {
+        if (element instanceof Complex) {
+            return new SComplex(new ComplexWrapper(((Complex) element).getReal(), ((Complex) element).getImag()));
+        }
         if (element instanceof ArithmeticElement) {
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
             if (number instanceof ArithmeticInteger || number instanceof Modulus) {
@@ -765,9 +769,6 @@ abstract class RubatoPrimitives {
             }
             if (number instanceof Real) {
                 return SReal.make(number.doubleValue());
-            }
-            if (number instanceof Complex) {
-                return new SComplex((Complex) number);
             }
         } else if (element instanceof FreeElement) {
             FreeElement freeElement = (FreeElement)element;
@@ -801,7 +802,7 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(new Real(((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
-            return new ArithmeticElement<>(((SComplex)sexpr).getComplex());
+            return new Complex(((SComplex)sexpr).getComplex());
         }
         else if (sexpr.isBoolean()) {
             return new ArithmeticElement<>(new ArithmeticInteger(sexpr == SBoolean.TRUE ? 1 : 0));

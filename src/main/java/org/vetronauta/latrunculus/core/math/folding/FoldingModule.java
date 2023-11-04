@@ -21,21 +21,20 @@ package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class FoldingModule {
 
     //TODO make this a proper object to inject when needed
 
-    public static double[] fold(ArithmeticRing<?> ring, ModuleElement<?, ?>[] elements) {
+    public static double[] fold(Ring<?> ring, ModuleElement<?, ?>[] elements) {
         if (ring instanceof ZRing) {
             return foldInteger(elements);
         }
@@ -96,9 +95,9 @@ public class FoldingModule {
     public static double[] foldComplex(ModuleElement[] elements) {
         double[][] res = new double[elements.length][2];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<Complex> c = (ArithmeticElement<Complex>)elements[i];
-            res[i][0] = c.getValue().getReal();
-            res[i][1] = c.getValue().getImag();
+            Complex c = (Complex) elements[i];
+            res[i][0] = c.getReal();
+            res[i][1] = c.getImag();
         }
         return Folding.fold(res);
     }
@@ -176,10 +175,10 @@ public class FoldingModule {
     public static double[] multiFoldComplex(ModuleElement<?,?>[] elements, int length) {
         double[][] res = new double[elements.length][length*2];
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Complex>> c = ((Vector<ArithmeticElement<Complex>>)elements[i]).getValue();
+            List<Complex> c = ((Vector<Complex>)elements[i]).getValue();
             for (int j = 0; j < length; j++) {
-                res[i][2*j] = c.get(j).getValue().getReal();
-                res[i][2*j+1] = c.get(j).getValue().getImag();
+                res[i][2*j] = c.get(j).getReal();
+                res[i][2*j+1] = c.get(j).getImag();
             }
         }
         return Folding.fold(res);

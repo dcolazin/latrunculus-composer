@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 
 /**
  * The class of real values.
@@ -165,7 +165,7 @@ public final class SReal extends SNumber {
             return SReal.make(Math.acos(r));
         }
         else {
-            return new SComplex(new Complex(r, 0).acos());
+            return new SComplex(new ComplexWrapper(r, 0).acos());
         }
     }
 
@@ -174,13 +174,13 @@ public final class SReal extends SNumber {
             return SReal.make(Math.asin(r));
         }
         else {
-            return new SComplex(new Complex(r, 0).asin());
+            return new SComplex(new ComplexWrapper(r, 0).asin());
         }
     }
 
     public SNumber atan(SNumber n) {
         if (n.isComplex()) {
-            return new SComplex(new Complex(r)).atan(n);
+            return new SComplex(new ComplexWrapper(r)).atan(n);
         }
         else {
             double x = n.toReal().r;
@@ -238,7 +238,7 @@ public final class SReal extends SNumber {
 
     public SNumber expt(SNumber n) {
         if (n.isComplex()) {
-            return new SComplex(new Complex(r)).expt(n);
+            return new SComplex(new ComplexWrapper(r)).expt(n);
         }
         else {
             double x = n.toReal().r;

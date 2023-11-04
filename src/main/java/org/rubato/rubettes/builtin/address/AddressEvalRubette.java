@@ -41,11 +41,11 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -802,7 +802,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         if (module instanceof CRing) {
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
-                Complex c = ((ArithmeticElement<Complex>)m).getValue();
+                Complex c = (Complex) m;
                 List<ArithmeticElement<Real>> list = new ArrayList<>(2);
                 list.add(new ArithmeticElement<>(new Real(c.getReal())));
                 list.add(new ArithmeticElement<>(new Real(c.getImag())));
@@ -814,7 +814,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 RConfiguration config = (RConfiguration)select.getConfiguration();
                 for (int i = 0; i < config.getSize(); i++) {
                     double[] p = new double[] { config.px.get(i), config.py.get(i) };
-                    elementList.addElement(new ArithmeticElement<>(new Complex(p[0], p[1])));
+                    elementList.addElement(new Complex(p[0], p[1]));
                 }
             }
             return;

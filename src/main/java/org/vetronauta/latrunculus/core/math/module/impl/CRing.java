@@ -19,15 +19,15 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
@@ -36,26 +36,42 @@ import java.util.List;
  * The field of complex numbers.
  * @author Gérard Milmeister
  */
-public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
+@NoArgsConstructor
+public final class CRing extends Ring<Complex> implements NumberRing {
 
     /**
      * The unique instance of the ring of complex numbers.
      */
     public static final CRing ring = new CRing();
-    public static final VectorModule<ArithmeticElement<Complex>> nullModule = new VectorModule<>(ring, 0);
+    public static final VectorModule<Complex> nullModule = new VectorModule<>(ring, 0);
 
     @Override
-    public VectorModule<ArithmeticElement<Complex>> getNullModule() {
+    public Complex getZero() {
+        return new Complex();
+    }
+
+    @Override
+    public VectorModule<Complex> getNullModule() {
         return nullModule;
     }
 
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        return (element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Complex);
+        return element instanceof Complex;
     }
-    
+
     @Override
-    public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
+    public Complex getOne() {
+        return new Complex(1);
+    }
+
+    @Override
+    public boolean isField() {
+        return true;
+    }
+
+    @Override
+    public FreeModule<?, Complex> getFreeModule(int dimension) {
         return new VectorModule<>(CRing.ring, dimension);
     }
 
@@ -65,7 +81,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
 
     @Override
-    public ArithmeticElement<Complex> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public Complex createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -73,9 +89,9 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     }
     
     @Override
-    public ArithmeticElement<Complex> cast(ModuleElement<?,?> element) {
-        if (element instanceof ArithmeticElement) {
-            return cast(((ArithmeticElement<?>) element).getValue());
+    public Complex cast(ModuleElement<?,?> element) {
+        if (element instanceof Arithmetic) {
+            return cast((Arithmetic) element);
         }
         if (element instanceof DirectSumElement) {
             return this.cast(element.flatComponentList().get(0));
@@ -83,8 +99,8 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
         return null;
     }
 
-    public ArithmeticElement<Complex> cast(ArithmeticNumber<?> element) {
-        return new ArithmeticElement<>(new Complex(element.doubleValue()));
+    public Complex cast(Arithmetic element) {
+        return new Complex(element.doubleValue());
     }
 
     
@@ -123,7 +139,8 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
 
     private static final int basicHash = "CRing".hashCode();
 
-    private CRing() {
-        super(new Complex(0), new Complex(1));
+    @Override
+    public boolean isVectorSpace() {
+        return true;
     }
 }

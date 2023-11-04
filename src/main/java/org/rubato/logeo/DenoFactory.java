@@ -23,9 +23,9 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
@@ -261,7 +261,7 @@ public final class DenoFactory {
      */
     public static SimpleDenotator makeDenotator(String name, Form form, Complex c) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(c));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, c);
         }
         catch (ClassCastException | DomainException e) {
             return null;

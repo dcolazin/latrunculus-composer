@@ -25,12 +25,13 @@ import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -176,10 +177,10 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<Complex> parseC(String string) {
+    private static Complex parseC(String string) {
         try {
-            Complex value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
-            return new ArithmeticElement<>(value);
+            ComplexWrapper value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
+            return new Complex(value);
         }
         catch (NumberFormatException e) {
             return null;

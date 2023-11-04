@@ -19,8 +19,11 @@
 
 package org.vetronauta.latrunculus.core.math.element.impl;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -28,7 +31,8 @@ import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 /**
  * @author vetronauta
  */
-public class CElement extends RingElement<CElement> {
+@Getter
+public class Complex extends RingElement<Complex> implements Arithmetic {
 
     //TODO rename after deleting arith.number.Complex
 
@@ -38,7 +42,7 @@ public class CElement extends RingElement<CElement> {
     /**
      * Creates the complex number 0+i0.
      */
-    public CElement() {
+    public Complex() {
         real = 0.0;
         imag = 0.0;
     }
@@ -46,7 +50,7 @@ public class CElement extends RingElement<CElement> {
     /**
      * Creates the complex number real+i*imag.
      */
-    public CElement(double real, double imag) {
+    public Complex(double real, double imag) {
         this.real = real;
         this.imag = imag;
     }
@@ -54,9 +58,14 @@ public class CElement extends RingElement<CElement> {
     /**
      * Creates the complex number real+i0.
      */
-    public CElement(double real) {
+    public Complex(double real) {
         this.real = real;
         this.imag = 0.0;
+    }
+
+    public Complex(ComplexWrapper complexWrapper) {
+        this.real = complexWrapper.getReal();
+        this.imag = complexWrapper.getImag();
     }
 
     @Override
@@ -65,40 +74,40 @@ public class CElement extends RingElement<CElement> {
     }
 
     @Override
-    public CElement scaled(CElement element) throws DomainException {
+    public Complex scaled(Complex element) throws DomainException {
         return product(element);
     }
 
     @Override
-    public void scale(CElement element) throws DomainException {
+    public void scale(Complex element) throws DomainException {
         multiply(element);
     }
 
     @Override
-    public CElement sum(CElement element) throws DomainException {
-        return new CElement(real + element.real, imag + element.imag);
+    public Complex sum(Complex element) throws DomainException {
+        return new Complex(real + element.real, imag + element.imag);
     }
 
     @Override
-    public void add(CElement element) throws DomainException {
+    public void add(Complex element) throws DomainException {
         real += element.real;
         imag += element.imag;
     }
 
     @Override
-    public CElement difference(CElement element) throws DomainException {
-        return new CElement(real - element.real, imag - element.imag);
+    public Complex difference(Complex element) throws DomainException {
+        return new Complex(real - element.real, imag - element.imag);
     }
 
     @Override
-    public void subtract(CElement element) throws DomainException {
+    public void subtract(Complex element) throws DomainException {
         real -= element.real;
         imag -= element.imag;
     }
 
     @Override
-    public CElement negated() {
-        return new CElement(-real, -imag);
+    public Complex negated() {
+        return new Complex(-real, -imag);
     }
 
     @Override
@@ -113,13 +122,13 @@ public class CElement extends RingElement<CElement> {
     }
 
     @Override
-    public CElement product(CElement element) throws DomainException {
-        return new CElement(real * element.real - imag * element.imag, real * element.imag + imag * element.real);
+    public Complex product(Complex element) throws DomainException {
+        return new Complex(real * element.real - imag * element.imag, real * element.imag + imag * element.real);
 
     }
 
     @Override
-    public void multiply(CElement element) throws DomainException {
+    public void multiply(Complex element) throws DomainException {
         real = real * element.real - imag * element.imag;
         imag = real * element.imag + imag * element.real;
     }
@@ -130,9 +139,9 @@ public class CElement extends RingElement<CElement> {
     }
 
     @Override
-    public CElement inverse() {
+    public Complex inverse() {
         double norm = real * real + imag * imag;
-        return new CElement(real/norm, -imag/norm);
+        return new Complex(real/norm, -imag/norm);
     }
 
     @Override
@@ -143,15 +152,15 @@ public class CElement extends RingElement<CElement> {
     }
 
     @Override
-    public CElement quotient(CElement element) throws DomainException, DivisionException {
+    public Complex quotient(Complex element) throws DomainException, DivisionException {
         double otherNorm = element.norm();
         double newr = (real * element.real + imag * element.imag)/otherNorm;
         double newi = (imag * element.real - real * element.imag)/otherNorm;
-        return new CElement(newr, newi);
+        return new Complex(newr, newi);
     }
 
     @Override
-    public void divide(CElement element) throws DomainException, DivisionException {
+    public void divide(Complex element) throws DomainException, DivisionException {
         double otherNorm = element.norm();
         real = (real * element.real + imag * element.imag)/otherNorm;
         imag = (imag * element.real - real * element.imag)/otherNorm;
@@ -159,21 +168,40 @@ public class CElement extends RingElement<CElement> {
 
     @Override
     public boolean divides(RingElement<?> element) {
-        return element instanceof CElement && !this.isZero();
+        return element instanceof Complex && !this.isZero();
     }
 
     @Override
-    public Ring<CElement> getRing() {
+    public Ring<Complex> getRing() {
         return CRing.ring;
     }
 
     @Override
-    public CElement deepCopy() {
-        return new CElement(real, imag);
+    public Complex deepCopy() {
+        return new Complex(real, imag);
     }
 
     private double norm() {
         return real * real + imag * imag;
+    }
+
+    @Override
+    public double abs() {
+        return Math.sqrt(norm());
+    }
+
+    @Override
+    public int intValue() {
+        return (int) Math.round(real);
+    }
+
+    @Override
+    public double doubleValue() {
+        return real;
+    }
+
+    public Complex conjugated() {
+        return new Complex(real, -imag);
     }
 
 }

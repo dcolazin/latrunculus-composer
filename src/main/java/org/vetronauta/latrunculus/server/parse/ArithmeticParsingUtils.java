@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -36,7 +38,9 @@ public class ArithmeticParsingUtils {
             throw new NumberFormatException(String.format("cannot detect parsing class for %s", s));
         }
         if (parsingClass.equals(Complex.class)) {
-            return parseComplex(s);
+            //TODO after complete refactoring of ArithmeticNumber
+            throw new UnsupportedOperationException("...");
+            //return parseComplex(s);
         }
         if (parsingClass.equals(ArithmeticInteger.class)) {
             return parseArithmeticInteger(s);
@@ -54,7 +58,7 @@ public class ArithmeticParsingUtils {
         return null; //TODO
     }
 
-    private static Class<?> detectParsingClass(ArithmeticRing<?> ring) {
+    private static Class<?> detectParsingClass(Ring<?> ring) {
         if (ring instanceof ZRing) {
             return ArithmeticInteger.class;
         }
@@ -68,7 +72,7 @@ public class ArithmeticParsingUtils {
             return Real.class;
         }
         if (ring instanceof CRing) {
-            return Complex.class;
+            return ComplexWrapper.class;
         }
         return null;
     }
@@ -76,7 +80,7 @@ public class ArithmeticParsingUtils {
     /**
      * Returns the complex number with the string representation <code>s</code>
      */
-    public static Complex parseComplex(String s) {
+    public static ComplexWrapper parseComplex(String s) {
         if (s.length() == 0) {
             throw new NumberFormatException("Empty string makes no complex");
         }
@@ -88,17 +92,17 @@ public class ArithmeticParsingUtils {
             if (pos >= 0) {
                 double real = Double.parseDouble(s.substring(0, pos));
                 double imag = Double.parseDouble(s.substring(pos+3));
-                return new Complex(real, imag);
+                return new ComplexWrapper(real, imag);
             }
             pos = s.indexOf("i*");
             if (pos == 0) {
-                return new Complex(0, Double.parseDouble(s.substring(pos+2)));
+                return new ComplexWrapper(0, Double.parseDouble(s.substring(pos+2)));
             }
             pos = s.indexOf("i");
             if (pos == 0 && s.length() == 1) {
-                return new Complex(0, 1);
+                return new ComplexWrapper(0, 1);
             }
-            return new Complex(Double.parseDouble(s));
+            return new ComplexWrapper(Double.parseDouble(s));
         }
         catch (Exception e) {
             throw new NumberFormatException(e.getMessage());

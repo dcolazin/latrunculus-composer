@@ -25,7 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.repository.StringRingReposito
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -127,9 +127,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
                 ArithmeticNumber<?> val = ArithmeticParsingUtils.parse(element.getAttribute(VALUE_ATTR));
-                if (val instanceof Complex) {
-                    return new ArithmeticElement<>((Complex) val);
-                }
                 if (val instanceof ArithmeticInteger) {
                     return new ArithmeticElement<>((ArithmeticInteger) val);
                 }

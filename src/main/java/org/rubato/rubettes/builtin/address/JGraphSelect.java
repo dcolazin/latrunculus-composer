@@ -22,9 +22,9 @@ package org.rubato.rubettes.builtin.address;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -86,8 +86,8 @@ class JGraphSelect
         else if (ring instanceof CRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Complex>> p = ((Vector<ArithmeticElement<Complex>>)m).getValue();
-                config.addPoint(p.get(0).getValue().abs(), p.get(1).getValue().abs());
+                List<Complex> p = ((Vector<Complex>) m).getValue();
+                config.addPoint(p.get(0).abs(), p.get(1).abs());
             }
         }
         else {

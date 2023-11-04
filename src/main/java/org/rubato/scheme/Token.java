@@ -22,7 +22,7 @@ package org.rubato.scheme;
 import java.util.HashSet;
 
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 
 
@@ -55,7 +55,7 @@ public final class Token {
     public int       i;
     public double    d;
     public Rational  r;
-    public Complex   c;
+    public ComplexWrapper c;
     public boolean   b;
     public char      chr;
     
@@ -103,9 +103,9 @@ public final class Token {
     }
     
     
-    public static Complex toComplex(String s) {
+    public static ComplexWrapper toComplex(String s) {
         try {
-            Complex c = ArithmeticParsingUtils.parseComplex(s);
+            ComplexWrapper c = ArithmeticParsingUtils.parseComplex(s);
             return c;
         }
         catch (NumberFormatException e) {
@@ -136,7 +136,7 @@ public final class Token {
             token.r = r;
             return token;
         }
-        Complex c = toComplex(s);
+        ComplexWrapper c = toComplex(s);
         if (c != null) {
             token.type = TokenType.COMPLEX;
             token.c = c;

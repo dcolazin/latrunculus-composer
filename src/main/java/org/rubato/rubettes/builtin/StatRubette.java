@@ -30,9 +30,9 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -266,7 +266,7 @@ public class StatRubette extends AbstractRubette {
             e.scale(new ArithmeticElement<>(new Rational(1, s)));
         }
         else if (r.equals(CRing.ring)) {
-            e.scale(new ArithmeticElement<>(new Complex(1/(double)s)));
+            e.scale(new Complex(1/(double)s));
         }
         else {
             throw new RubatoException("Cannot take averages over ring "+r);

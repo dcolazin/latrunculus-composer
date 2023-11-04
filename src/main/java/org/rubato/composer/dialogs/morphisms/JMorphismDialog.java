@@ -25,7 +25,6 @@ import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -33,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -447,8 +447,8 @@ public class JMorphismDialog
                 }
                 if (isArithmetic(domain)) {
                     ArithmeticNumber<?> domainNumber = retrieveNumber(domain);
-                    if (domainNumber instanceof Complex && domain.equals(codomain)) {
-                        items.add(CONJUGATION_TYPE);
+                    if (domainRing.equals(CRing.ring) && domain.equals(codomain)) {
+                        items.add(CONJUGATION_TYPE); //TODO will not work before ArithmeticNumber refactoring
                     }
                     if (isArithmetic(codomain)) {
                         ArithmeticNumber<?> codomainNumber = retrieveNumber(codomain);

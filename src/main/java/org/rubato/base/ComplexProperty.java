@@ -29,8 +29,8 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -56,7 +56,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
     
     public void setValue(Object value) {
         if (value instanceof Complex) {
-            setComplex((Complex)value);
+            setComplex((Complex) value);
         }
     }
     
@@ -96,7 +96,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            tmpValue = ArithmeticParsingUtils.parseComplex(s);
+            tmpValue = new Complex(ArithmeticParsingUtils.parseComplex(s));
         }
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());

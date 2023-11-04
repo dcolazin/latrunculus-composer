@@ -21,13 +21,12 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
@@ -40,28 +39,25 @@ import java.util.stream.Collectors;
  * 
  * @author Gérard Milmeister
  */
-public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement<Complex>>> extends Endomorphism<A,ArithmeticElement<Complex>> {
+public final class ConjugationMorphism<A extends FreeElement<A, Complex>> extends Endomorphism<A, Complex> {
 
     public static ConjugationMorphism<?> make(int dimension) {
-        FreeModule<?,ArithmeticElement<Complex>> domain = new VectorModule<>(CRing.ring, dimension);
+        FreeModule<?, Complex> domain = new VectorModule<>(CRing.ring, dimension);
         return new ConjugationMorphism<>(domain);
     }
 
-    private ConjugationMorphism(FreeModule<A,ArithmeticElement<Complex>> domain) {
+    private ConjugationMorphism(FreeModule<A, Complex> domain) {
         super(domain);
     }
 
     //TODO make in abstract and map the two cases separately
     public A map(A x) throws MappingException {
-        if (x instanceof ArithmeticElement) {
-            Complex number = ((ArithmeticElement<Complex>) x).getValue();
-            return (A) new ArithmeticElement<>(number.conjugated());
+        if (x instanceof Complex) {
+            return (A) ((Complex) x).conjugated();
         } else if (x instanceof Vector) {
-                Vector<ArithmeticElement<Complex>> element = (Vector<ArithmeticElement<Complex>>) x;
-                List<ArithmeticElement<Complex>> res = element.getValue().stream()
-                        .map(ArithmeticElement::getValue)
+                Vector<Complex> element = (Vector<Complex>) x;
+                List<Complex> res = element.getValue().stream()
                         .map(Complex::conjugated)
-                        .map(ArithmeticElement::new)
                         .collect(Collectors.toList());
                 return (A) new Vector<>(CRing.ring, res);
 
@@ -75,13 +71,13 @@ public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement
     }
     
     @Override
-    public IdentityMorphism<ArithmeticElement<Complex>, ArithmeticElement<Complex>> getRingMorphism() {
+    public IdentityMorphism<Complex, Complex> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 
     @Override
-    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,A,RC,ArithmeticElement<Complex>>
-    compose(ModuleMorphism<C,A,RC,ArithmeticElement<Complex>> morphism) throws CompositionException {
+    public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphism<C,A,RC, Complex>
+    compose(ModuleMorphism<C,A,RC, Complex> morphism) throws CompositionException {
         if (morphism instanceof ConjugationMorphism) {
             if (morphism.getDomain().getDimension() == getDomain().getDimension()) {
                 return (ModuleMorphism) getIdentityMorphism(getDomain());
@@ -97,7 +93,7 @@ public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement
     }
     
     @Override
-    public Endomorphism<A,ArithmeticElement<Complex>> power(int n) throws CompositionException {
+    public Endomorphism<A, Complex> power(int n) throws CompositionException {
         return n % 2 == 0 ? getIdentityMorphism(getDomain()) : this;
     }
     

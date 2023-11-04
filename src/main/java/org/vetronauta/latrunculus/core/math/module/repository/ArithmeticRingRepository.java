@@ -25,9 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -62,9 +60,6 @@ public class ArithmeticRingRepository {
         }
         if (number instanceof Real) {
             return (ArithmeticRing<N>) RRing.ring;
-        }
-        if (number instanceof Complex) {
-            return (ArithmeticRing<N>) CRing.ring;
         }
         if (number instanceof Modulus) {
             return (ArithmeticRing<N>) getModulusRing(((Modulus) number).getModulus());

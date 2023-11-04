@@ -22,12 +22,13 @@ package org.rubato.composer.dialogs.morphisms;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
-import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
@@ -54,6 +55,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
+import java.util.List;
 
 class JAffineGraph
         extends JPanel
@@ -170,9 +173,9 @@ class JAffineGraph
     }
 
     
-    public CMatrix getCMatrix() {
+    public Matrix<Complex> getCMatrix() {
         RMatrix m = ((RConfiguration)config).getRMatrix();
-        CMatrix res = new CMatrix(2, 2);
+        Matrix<Complex> res = new ArrayMatrix<>(CRing.ring, 2, 2);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; i < 2; i++) {
                 res.set(i, j, new Complex(m.getDouble(i, j)));
@@ -182,13 +185,13 @@ class JAffineGraph
     }
     
     
-    public Complex[] getCVector() {
+    public Vector<Complex> getCVector() {
         double[] v = ((RConfiguration)config).getRVector();
-        Complex[] res = new Complex[2];
+        List<Complex> res = new ArrayList<>(2);
         for (int i = 0; i < 2; i++) {
-            res[i] = new Complex(v[i]);
+            res.add(new Complex(v[i]));
         }
-        return res;
+        return new Vector<>(CRing.ring, res);
     }
 
     

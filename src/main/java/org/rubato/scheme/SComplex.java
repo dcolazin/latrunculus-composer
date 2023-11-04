@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 
 /**
  * The class of complex number values.
@@ -32,7 +32,7 @@ public final class SComplex extends SNumber {
      * Creates a Scheme value from the complex number <code>c</code>.
      * If <code>c</code> is a real, an SReal instance is created.
      */
-    public static SNumber make(Complex c) {
+    public static SNumber make(ComplexWrapper c) {
         if (c.isReal()) {
             return SReal.make(c.getReal());
         }
@@ -44,7 +44,7 @@ public final class SComplex extends SNumber {
     /**
      * Creates a Scheme complex number value from <code>c</code>.
      */
-    public SComplex(Complex c) {
+    public SComplex(ComplexWrapper c) {
         this.c = c;
     }    
 
@@ -73,15 +73,15 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber add(SInteger n) {
-        return new SComplex(c.sum(new Complex(n.getInt())));
+        return new SComplex(c.sum(new ComplexWrapper(n.getInt())));
     }
 
     public SNumber add(SRational n) {
-        return new SComplex(c.sum(new Complex(n.getRational().doubleValue())));
+        return new SComplex(c.sum(new ComplexWrapper(n.getRational().doubleValue())));
     }
 
     public SNumber add(SReal n) {
-        return new SComplex(c.sum(new Complex(n.getDouble())));
+        return new SComplex(c.sum(new ComplexWrapper(n.getDouble())));
     }
 
     public SNumber add(SComplex n) {
@@ -93,15 +93,15 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber subtractFrom(SInteger n) {
-        return new SComplex(c.difference(new Complex(n.getInt())));
+        return new SComplex(c.difference(new ComplexWrapper(n.getInt())));
     }
 
     public SNumber subtractFrom(SRational n) {
-        return new SComplex(c.difference(new Complex(n.getRational().doubleValue())));
+        return new SComplex(c.difference(new ComplexWrapper(n.getRational().doubleValue())));
     }
 
     public SNumber subtractFrom(SReal n) {
-        return SComplex.make(c.difference(new Complex(n.getDouble())));
+        return SComplex.make(c.difference(new ComplexWrapper(n.getDouble())));
     }
 
     public SNumber subtractFrom(SComplex n) {
@@ -169,12 +169,12 @@ public final class SComplex extends SNumber {
             return new SComplex(c.atan(((SComplex)n).c));
         }
         else {
-            return new SComplex(c.atan(new Complex(n.toReal().getDouble())));
+            return new SComplex(c.atan(new ComplexWrapper(n.toReal().getDouble())));
         }
     }
 
     public SNumber ceiling() {
-        return SComplex.make(new Complex(Math.ceil(c.getReal()), Math.ceil(c.getImag())));        
+        return SComplex.make(new ComplexWrapper(Math.ceil(c.getReal()), Math.ceil(c.getImag())));
     }
 
     public SNumber cos() {
@@ -186,7 +186,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber floor() {
-        return SComplex.make(new Complex(Math.floor(c.getReal()), Math.floor(c.getImag())));        
+        return SComplex.make(new ComplexWrapper(Math.floor(c.getReal()), Math.floor(c.getImag())));
     }
 
     public SNumber log() {
@@ -194,7 +194,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber round() {
-        return SComplex.make(new Complex(Math.round(c.getReal()), Math.round(c.getImag())));        
+        return SComplex.make(new ComplexWrapper(Math.round(c.getReal()), Math.round(c.getImag())));
     }
 
     public SNumber sin() {
@@ -206,7 +206,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber truncate() {
-        return SComplex.make(new Complex(SReal.truncate(c.getReal()), SReal.truncate(c.getImag())));        
+        return SComplex.make(new ComplexWrapper(SReal.truncate(c.getReal()), SReal.truncate(c.getImag())));
     }
 
     public SNumber angle() {
@@ -220,7 +220,7 @@ public final class SComplex extends SNumber {
             }
             else {
                 int e = ((SInteger)n).getInt();
-                Complex res = new Complex(1);
+                ComplexWrapper res = new ComplexWrapper(1);
                 while (e > 0) {
                     res = res.product(c);
                     e--;
@@ -232,7 +232,7 @@ public final class SComplex extends SNumber {
             return new SComplex(c.expt(((SComplex)n).c));
         }
         else {
-            return new SComplex(c.expt(new Complex(n.toReal().getDouble())));
+            return new SComplex(c.expt(new ComplexWrapper(n.toReal().getDouble())));
         }
     }
 
@@ -279,9 +279,9 @@ public final class SComplex extends SNumber {
     /**
      * Returns the complex number in this Scheme value.
      */
-    public Complex getComplex() {
+    public ComplexWrapper getComplex() {
         return c;
     }
     
-    private Complex c;
+    private ComplexWrapper c;
 }

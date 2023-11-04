@@ -23,7 +23,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
@@ -38,6 +38,8 @@ import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FreeUtils {
 
+    //TODO complete refactoring of those methods
+
     //TODO temp method...
     public static boolean isUsualFree(Module<?,?> module) {
         if (!isArithmetic(module)) {
@@ -47,8 +49,7 @@ public class FreeUtils {
         return number instanceof ArithmeticInteger ||
                 number instanceof Modulus ||
                 number instanceof Rational ||
-                number instanceof Real ||
-                number instanceof Complex;
+                number instanceof Real;
     }
 
     //TODO temp method...
