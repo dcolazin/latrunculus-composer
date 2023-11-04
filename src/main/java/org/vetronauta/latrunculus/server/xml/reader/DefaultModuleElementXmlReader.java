@@ -19,14 +19,12 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
-import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -40,8 +38,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
@@ -49,6 +45,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
@@ -88,9 +85,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
         if (StringMap.class.isAssignableFrom(clazz)) {
             return readStringMap(element, clazz, reader);
-        }
-        if (ArithmeticStringMultiElement.class.isAssignableFrom(clazz)) {
-            return readArithmeticStringMultiElement(element, clazz, reader);
         }
         if (DirectSumElement.class.isAssignableFrom(clazz)) {
             return readDirectSumElement(element, clazz, reader);
@@ -297,49 +291,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
             return null;
         }
-    }
-
-    private ModuleElement readArithmeticStringMultiElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement == null) {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
-        List<ArithmeticStringElement> elements = new LinkedList<>();
-        ModuleElement moduleElement = reader.parseModuleElement(childElement);
-        if (moduleElement == null) {
-            return null;
-        }
-        if (!(moduleElement instanceof ArithmeticStringElement)) {
-            reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ArithmeticStringElement");
-            return null;
-        }
-        ArithmeticStringElement<?> ringElement = (ArithmeticStringElement<?>) moduleElement;
-        elements.add(ringElement);
-        Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-        while (next != null) {
-            moduleElement = reader.parseModuleElement(next);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ArithmeticStringElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ArithmeticStringElement");
-                return null;
-            }
-            ringElement = (ArithmeticStringElement) moduleElement;
-            elements.add(ringElement);
-            next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-        }
-        List<RingString<?>> coefficients = new ArrayList<>(elements.size());
-        for (ArithmeticStringElement ringElements : elements) {
-            coefficients.add(ringElements.getValue());
-        }
-        return makeArithmeticStringMultiElement(ringElement, coefficients);
-    }
-
-    private <N extends ArithmeticNumber<N>> ModuleElement makeArithmeticStringMultiElement(ArithmeticStringElement<N> ringElement, List<? extends RingString<?>> coefficients) {
-        return ArithmeticStringMultiElement.make(ringElement.getRing(), (List<RingString<N>>) coefficients);
     }
 
     private ModuleElement readDirectSumElement(Element element, Class<?> clazz, XMLReader reader) {

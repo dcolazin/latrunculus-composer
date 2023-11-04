@@ -28,8 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -152,7 +151,7 @@ public class Dispatcher {
         
         addModule(ArithmeticStringRing.class);
         addModule(VectorModule.class);
-        addModule(ArithmeticStringMultiModule.class);
+        addModule(StringVectorModule.class);
 
         addModule(PolynomialRing.class);
         addModule(PolynomialProperFreeModule.class);
@@ -168,7 +167,6 @@ public class Dispatcher {
         addModuleElement(ArithmeticElement.class);
         addModuleElement(Vector.class);
         addModuleElement(StringMap.class);
-        addModuleElement(ArithmeticStringMultiElement.class);
 
         addModuleElement(PolynomialElement.class);
         addModuleElement(PolynomialProperFreeElement.class);

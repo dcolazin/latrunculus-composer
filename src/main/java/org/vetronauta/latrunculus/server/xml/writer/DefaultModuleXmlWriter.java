@@ -21,9 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
@@ -31,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -82,8 +80,8 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((RRing) object, writer);
             return;
         }
-        if (object instanceof ArithmeticStringMultiModule) {
-            write((ArithmeticStringMultiModule) object, writer);
+        if (object instanceof StringVectorModule) {
+            write((StringVectorModule) object, writer);
             return;
         }
         if (object instanceof ArithmeticStringRing) {
@@ -151,7 +149,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         writer.emptyWithType(MODULE, module.getElementTypeName());
     }
 
-    private void write(ArithmeticStringMultiModule module, XMLWriter writer) {
+    private void write(StringVectorModule module, XMLWriter writer) {
         //TODO redo
         /*
         if (module.getRing().getFactorRing().getClass().isAssignableFrom(ZnRing.class)) {

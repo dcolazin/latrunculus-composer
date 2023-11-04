@@ -23,9 +23,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -44,9 +42,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -79,8 +76,8 @@ public final class ModuleElementParser {
         if (module instanceof VectorModule) {
             return (E) parse((VectorModule) module, s);
         }
-        if (module instanceof ArithmeticStringMultiModule) {
-            return (E) parse((ArithmeticStringMultiModule) module, s);
+        if (module instanceof StringVectorModule) {
+            return (E) parse((StringVectorModule) module, s);
         }
         if (module instanceof ArithmeticStringRing) {
             return (E) parse((ArithmeticStringRing) module, s);
@@ -144,10 +141,10 @@ public final class ModuleElementParser {
         return new Vector<>(module.getRing(), values);
     }
 
-    private static <N extends ArithmeticNumber<N>> ArithmeticStringMultiElement<N> parse(ArithmeticStringMultiModule<N> module, String string) {
+    private static <R extends RingElement<R>> Vector<StringMap<R>> parse(StringVectorModule<R> module, String string) {
         string = TextUtils.unparenthesize(string);
         if (string.equals("Null")) {
-            return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(module.getRing(), new ArrayList<>());
+            return new Vector<>(module.getRing(), new ArrayList<>());
         }
         if (string.charAt(0) == '(' && string.charAt(string.length()-1) == ')') {
             string = string.substring(1, string.length()-1);
@@ -156,11 +153,11 @@ public final class ModuleElementParser {
                 return null;
             }
             else {
-                List<RingString<N>> rstrings = new ArrayList<>(module.getDimension());
+                List<StringMap<R>> rstrings = new ArrayList<>(module.getDimension());
                 for (int i = 0; i < strings.length; i++) {
                     rstrings.add(ArithmeticParsingUtils.parseString(module.getRing(), strings[i]));
                 }
-                return (ArithmeticStringMultiElement) ArithmeticStringMultiElement.make(module.getRing(), rstrings);
+                return new Vector<>(module.getRing(), rstrings);
             }
         }
         else {

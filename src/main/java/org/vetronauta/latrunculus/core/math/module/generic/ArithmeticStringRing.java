@@ -24,7 +24,6 @@ import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 
 /**
@@ -45,7 +44,7 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
 
     @Override
     public Module<?, ArithmeticStringElement<N>> getNullModule() {
-        return ArithmeticStringMultiModule.make(this, 0);
+        return StringVectorModule.make(this, 0);
     }
 
     @Override
@@ -69,7 +68,7 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
 
     @Override
     public FreeModule<?, ArithmeticStringElement<N>> getFreeModule(int dimension) {
-        return ArithmeticStringMultiModule.make(this, dimension);
+        return StringVectorModule.make(this, dimension);
     }
 
     @Override

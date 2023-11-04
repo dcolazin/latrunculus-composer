@@ -214,20 +214,7 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Ring
 
     @Override
     public FreeElement<?, ArithmeticStringElement<N>> resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ArithmeticStringMultiElement.make(ring, new ArrayList<>());
-        }
-        else {
-            List<RingString<N>> values = new ArrayList<>(n);
-            values.add(new RingString<>(getValue()));
-            for (int i = 1; i < n; i++) {
-                values.add(new RingString<>());
-            }
-            return ArithmeticStringMultiElement.make(ring, values);
-        }
+        return null; //TODO soon to be deprecated
     }
 
     public String getElementTypeName() {

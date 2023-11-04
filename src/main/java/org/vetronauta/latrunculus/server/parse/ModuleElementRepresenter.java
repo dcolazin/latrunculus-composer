@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -31,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
@@ -61,9 +59,6 @@ public final class ModuleElementRepresenter {
         }
         if (element instanceof StringMap) {
             return (stringRepresentation(((StringMap<?>) element).getTerms()));
-        }
-        if (element instanceof ArithmeticStringMultiElement) {
-            return toString((ArithmeticStringMultiElement<?>) element, parenthesis);
         }
         if (element instanceof DirectSumElement) {
             return toString((DirectSumElement<?>) element, parenthesis);
@@ -110,19 +105,6 @@ public final class ModuleElementRepresenter {
         for (int i = 1; i < element.getLength(); i++) {
             res.append(',');
             res.append(element.getValue().get(i));
-        }
-        return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
-    }
-
-    private static String toString(ArithmeticStringMultiElement<?> element, boolean... parens) {
-        if (element.getLength() == 0) {
-            return "Null";
-        }
-        StringBuilder res = new StringBuilder(30);
-        res.append(stringRepresentation(element.getValue().get(0)));
-        for (int i = 1; i < element.getLength(); i++) {
-            res.append(',');
-            res.append(stringRepresentation(element.getValue().get(i)));
         }
         return parens.length > 0 ? TextUtils.parenthesize(res.toString()) : res.toString();
     }
