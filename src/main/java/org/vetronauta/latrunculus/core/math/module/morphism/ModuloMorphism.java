@@ -19,16 +19,16 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 
 import java.util.stream.Collectors;
 
@@ -82,12 +82,14 @@ public class ModuloMorphism extends ModuleMorphism {
                 }
             }
         }
-        else if (x instanceof ArithmeticMultiElement && ((ArithmeticMultiElement<?>) x).getRing() instanceof ZRing) {
-            ArithmeticMultiElement<?> e = (ArithmeticMultiElement<?>) x;
+        else if (x instanceof Vector && ((Vector<?>) x).getRing() instanceof ZRing) {
+            Vector<?> e = (Vector<?>) x;
             if (e.getLength() == dimension) {
-                return ArithmeticMultiElement.make(
+                return new Vector(
                         ArithmeticRingRepository.getModulusRing(modulus),
-                        e.getValue().stream().map(i -> new Modulus(i.getValue().intValue(), modulus)).collect(Collectors.toList()));
+                        e.getValue().stream()
+                                .map(i -> new ArithmeticElement(new Modulus(((ArithmeticElement)i).getValue().intValue(), modulus)))
+                                .collect(Collectors.toList()));
             }
         }
         throw new MappingException("ModuloMorphism.map: ", x, this);

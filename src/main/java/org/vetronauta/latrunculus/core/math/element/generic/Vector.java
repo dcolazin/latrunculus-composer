@@ -40,6 +40,10 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
         return value;
     }
 
+    public Ring<R> getRing() {
+        return ring;
+    }
+
     @Override
     public R getRingElement(int i) {
         if (i >= value.size()) {
@@ -207,5 +211,10 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
     public Vector<R> deepCopy() {
         return new Vector<>(ring, value.stream().map(RingElement::deepCopy).collect(Collectors.toList()));
     }
+
+    public String getElementTypeName() {
+        return String.format("Vector<%s>", ring.toVisualString());
+    }
+
 
 }

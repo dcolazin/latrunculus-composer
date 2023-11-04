@@ -23,16 +23,16 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -55,8 +55,8 @@ public final class ModuleElementRepresenter {
         if (element instanceof ArithmeticElement) {
             return toString((ArithmeticElement<?>) element, parenthesis);
         }
-        if (element instanceof ArithmeticMultiElement) {
-            return toString((ArithmeticMultiElement<?>) element, parenthesis);
+        if (element instanceof Vector) {
+            return toString((Vector<?>) element, parenthesis);
         }
         if (element instanceof ArithmeticStringElement) {
             return (stringRepresentation(((ArithmeticStringElement<?>) element).getValue()));
@@ -100,7 +100,7 @@ public final class ModuleElementRepresenter {
         return representation;
     }
 
-    private static String toString(ArithmeticMultiElement<?> element, boolean... parens) {
+    private static String toString(Vector<?> element, boolean... parens) {
         if (element.getLength() == 0) {
             return "Null";
         }

@@ -24,11 +24,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -64,7 +64,7 @@ class JGraphSelect
         if (ring instanceof ZRing || ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<ArithmeticInteger>> p = ((ArithmeticMultiElement<ArithmeticInteger>)m).getValue();
+                List<ArithmeticElement<ArithmeticInteger>> p = ((Vector<ArithmeticElement<ArithmeticInteger>>)m).getValue();
                 config.addPoint(p.get(0).getValue().intValue(), p.get(1).getValue().intValue());
             }
         }
@@ -72,21 +72,21 @@ class JGraphSelect
             QConfiguration qconfig = new QConfiguration();
             config = qconfig;
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Rational>> p = ((ArithmeticMultiElement<Rational>)m).getValue();
+                List<ArithmeticElement<Rational>> p = ((Vector<ArithmeticElement<Rational>>)m).getValue();
                 qconfig.addPoint(p.get(0).getValue(), p.get(1).getValue());
             }
         }
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Real>> p = ((ArithmeticMultiElement<Real>)m).getValue();
+                List<ArithmeticElement<Real>> p = ((Vector<ArithmeticElement<Real>>)m).getValue();
                 config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
             }
         }
         else if (ring instanceof CRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Complex>> p = ((ArithmeticMultiElement<Complex>)m).getValue();
+                List<ArithmeticElement<Complex>> p = ((Vector<ArithmeticElement<Complex>>)m).getValue();
                 config.addPoint(p.get(0).getValue().abs(), p.get(1).getValue().abs());
             }
         }

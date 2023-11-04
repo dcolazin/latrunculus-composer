@@ -8,20 +8,20 @@ import org.rubato.logeo.FormFactory;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 import java.util.ArrayList;
@@ -191,11 +191,11 @@ class DenotatorPathTest {
 		PowerForm eulerScore = FormFactory.makePowerForm("EulerScore", eulerNoteOrRest);
 		
 		SimpleDenotator onset1 = DenoFactory.makeDenotator(onset, new Rational(0));
-		List<ArithmeticInteger> pitchList = new ArrayList<>();
-		pitchList.add(new ArithmeticInteger(1));
-		pitchList.add(new ArithmeticInteger(0));
-		pitchList.add(new ArithmeticInteger(-1));
-		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch1Element = ArithmeticMultiElement.make(ZRing.ring, pitchList);
+		List<ArithmeticElement<ArithmeticInteger>> pitchList = new ArrayList<>();
+		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(1)));
+		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(0)));
+		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(-1)));
+		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch1Element = new Vector<>(ZRing.ring, pitchList);
 		SimpleDenotator pitch1 = DenoFactory.makeDenotator(eulerPitch, pitch1Element);
 		SimpleDenotator loudness1 = DenoFactory.makeDenotator(loudness, "sfz");
 		SimpleDenotator duration1 = DenoFactory.makeDenotator(duration, new Rational(1, 4));
@@ -207,11 +207,11 @@ class DenotatorPathTest {
 		Denotator shortRest = DenoFactory.makeDenotator(eulerNoteOrRest, 1, rest1);
 		
 		SimpleDenotator onset2 = DenoFactory.makeDenotator(onset, new Rational(1, 2));
-		List<ArithmeticInteger> pitch2List = new ArrayList<>();
-		pitch2List.add(new ArithmeticInteger(-1));
-		pitch2List.add(new ArithmeticInteger(1));
-		pitch2List.add(new ArithmeticInteger(11));
-		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch2Element = ArithmeticMultiElement.make(ZRing.ring, pitch2List);
+		List<ArithmeticElement<ArithmeticInteger>> pitch2List = new ArrayList<>();
+		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(-1)));
+		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(1)));
+		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(11)));
+		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch2Element = new Vector<>(ZRing.ring, pitch2List);
 		SimpleDenotator pitch2 = DenoFactory.makeDenotator(eulerPitch, pitch2Element);
 		SimpleDenotator loudness2 = DenoFactory.makeDenotator(loudness, "ppp");
 		SimpleDenotator duration2 = DenoFactory.makeDenotator(duration, new Rational(3, 2));

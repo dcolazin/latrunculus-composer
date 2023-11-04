@@ -38,37 +38,37 @@ import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
@@ -803,7 +803,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
                 Complex c = ((ArithmeticElement<Complex>)m).getValue();
-                elements0.add(ArithmeticMultiElement.make(RRing.ring, new Real[] { new Real(c.getReal()), new Real(c.getImag()) }));
+                List<ArithmeticElement<Real>> list = new ArrayList<>(2);
+                list.add(new ArithmeticElement<>(new Real(c.getReal())));
+                list.add(new ArithmeticElement<>(new Real(c.getImag())));
+                elements0.add(new Vector<>(RRing.ring, list));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
             if (select != null) {
@@ -828,8 +831,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     RConfiguration config = (RConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        Real[] p = new Real[] { new Real(config.px.get(i)), new Real(config.py.get(i)) };
-                        elementList.addElement(ArithmeticMultiElement.make(RRing.ring, p));
+                        List<ArithmeticElement<Real>> list = new ArrayList<>(2);
+                        list.add(new ArithmeticElement<>(new Real(config.px.get(i))));
+                        list.add(new ArithmeticElement<>(new Real(config.py.get(i))));
+                        elementList.addElement(new Vector<>(RRing.ring, list));
                     }
                 }
             }
@@ -842,8 +847,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     QConfiguration config = (QConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        Rational[] p = new Rational[] { config.qpx.get(i), config.qpy.get(i) };
-                        elementList.addElement(ArithmeticMultiElement.make(QRing.ring, Arrays.stream(p).collect(Collectors.toList())));
+                        List<ArithmeticElement<Rational>> list = new ArrayList<>(2);
+                        list.add(new ArithmeticElement<>(config.qpx.get(i)));
+                        list.add(new ArithmeticElement<>(config.qpy.get(i)));
+                        elementList.addElement(new Vector<>(QRing.ring, list));
                     }
                 }
             }
@@ -856,10 +863,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     elementList.clear();
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticInteger> pList = new ArrayList<>();
-                        pList.add(new ArithmeticInteger(config.ipx.get(i)));
-                        pList.add(new ArithmeticInteger(config.ipy.get(i)));
-                        elementList.addElement(ArithmeticMultiElement.make(ZRing.ring, pList));
+                        List<ArithmeticElement<ArithmeticInteger>> pList = new ArrayList<>();
+                        pList.add(new ArithmeticElement<>(new ArithmeticInteger(config.ipx.get(i))));
+                        pList.add(new ArithmeticElement<>(new ArithmeticInteger(config.ipy.get(i))));
+                        elementList.addElement(new Vector<>(ZRing.ring, pList));
                     }
                 }
             }
@@ -874,8 +881,11 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     for (int i = 0; i < config.getSize(); i++) {
                         int modulus = m.getRing().getOne().getValue().getModulus(); //TODO ugly way to get the modulus
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) };
-                        List<Modulus> pList = Arrays.stream(p).mapToObj(elementP -> new Modulus(elementP, modulus)).collect(Collectors.toList());
-                        elementList.addElement(ArithmeticMultiElement.make(ArithmeticRingRepository.getModulusRing(modulus), pList));
+                        List<ArithmeticElement<Modulus>> pList = Arrays.stream(p)
+                                .mapToObj(elementP -> new Modulus(elementP, modulus))
+                                .map(ArithmeticElement::new)
+                                .collect(Collectors.toList());
+                        elementList.addElement(new Vector<>(ArithmeticRingRepository.getModulusRing(modulus), pList));
                     }
                 }
             }

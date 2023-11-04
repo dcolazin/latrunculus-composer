@@ -2,17 +2,13 @@ package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.generic.ArithmeticFreeMorphism;
-
-import java.util.List;
 
 public abstract class ArithmeticAffineFreeMorphism<A extends FreeElement<A, ArithmeticElement<N>>, B extends FreeElement<B, ArithmeticElement<N>>, N extends ArithmeticNumber<N>>
     extends ArithmeticFreeMorphism<A,B,N> {

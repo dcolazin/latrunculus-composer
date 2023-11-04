@@ -23,14 +23,15 @@ import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -70,8 +71,8 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
             write((ArithmeticElement<?>) object, writer);
             return;
         }
-        if (object instanceof ArithmeticMultiElement) {
-            write((ArithmeticMultiElement<?>) object, writer);
+        if (object instanceof Vector) {
+            write((Vector<?>) object, writer);
             return;
         }
         if (object instanceof ArithmeticStringMultiElement) {
@@ -124,9 +125,9 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
     }
 
-    private void write(ArithmeticMultiElement<?> element, XMLWriter writer) {
+    private void write(Vector<?> element, XMLWriter writer) {
         StringBuilder s = new StringBuilder();
-        List<? extends ArithmeticElement<?>> value = element.getValue();
+        List<? extends RingElement<?>> value = element.getValue();
         if (!value.isEmpty()) {
             s.append(value.get(0));
             for (int i = 1; i < value.size(); i++) {

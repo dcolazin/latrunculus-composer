@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
+import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.util.ArrayList;
@@ -82,22 +82,10 @@ class AlteratorTest {
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		//TODO consider a unitElement static method
-		List<ArithmeticElement<Real>> e1 = new ArrayList<>(3);
-		e1.add(RRing.ring.getOne());
-		e1.add(RRing.ring.getZero());
-		e1.add(RRing.ring.getZero());
-		List<ArithmeticElement<Real>> e2 = new ArrayList<>(3);
-		e2.add(RRing.ring.getZero());
-		e2.add(RRing.ring.getOne());
-		e2.add(RRing.ring.getZero());
-		List<ArithmeticElement<Real>> e3 = new ArrayList<>(3);
-		e3.add(RRing.ring.getZero());
-		e3.add(RRing.ring.getZero());
-		e3.add(RRing.ring.getOne());
-		assertEquals(m050.map(new Vector<>(RRing.ring, e1)), new ArithmeticElement<>(new Real(2)));
-		assertEquals(m050.map(new Vector<>(RRing.ring, e2)), new ArithmeticElement<>(new Real(3.5)));
-		assertEquals(m050.map(new Vector<>(RRing.ring, e3)), new ArithmeticElement<>(new Real(5)));
+		VectorModule<ArithmeticElement<Real>> r3 = new VectorModule<>(RRing.ring, 3);
+		assertEquals(m050.map(r3.getUnitElement(0)), new ArithmeticElement<>(new Real(2)));
+		assertEquals(m050.map(r3.getUnitElement(1)), new ArithmeticElement<>(new Real(3.5)));
+		assertEquals(m050.map(r3.getUnitElement(2)), new ArithmeticElement<>(new Real(5)));
 		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);
@@ -107,11 +95,10 @@ class AlteratorTest {
 		m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		Rational zero = new Rational(0);
-		Rational one = new Rational(1);
-		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{one, zero, zero})), new ArithmeticElement<>(new Rational(2)));
-		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{zero, one, zero})), new ArithmeticElement<>(new Rational(3.5)));
-		assertEquals(m050.map(ArithmeticMultiElement.make(QRing.ring, new Rational[]{zero, zero, one})), new ArithmeticElement<>(new Rational(5)));
+		VectorModule<ArithmeticElement<Rational>> q3 = new VectorModule<>(QRing.ring, 3);
+		assertEquals(m050.map(q3.getUnitElement(0)), new ArithmeticElement<>(new Rational(2)));
+		assertEquals(m050.map(q3.getUnitElement(0)), new ArithmeticElement<>(new Rational(3.5)));
+		assertEquals(m050.map(q3.getUnitElement(0)), new ArithmeticElement<>(new Rational(5)));
 		assertEquals(m100, m1);
 	}
 	

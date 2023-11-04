@@ -19,18 +19,21 @@
 
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.arith.number.Complex;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The function that takes a complex number (or vector) to its conjugate.
@@ -53,13 +56,14 @@ public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement
         if (x instanceof ArithmeticElement) {
             Complex number = ((ArithmeticElement<Complex>) x).getValue();
             return (A) new ArithmeticElement<>(number.conjugated());
-        } else if (x instanceof ArithmeticMultiElement) {
-                ArithmeticMultiElement<Complex> element = (ArithmeticMultiElement<Complex>) x;
-                Complex[] res = new Complex[element.getValue().size()];
-                for (int i = 0; i < element.getValue().size(); i++) {
-                    res[i] = element.getValue().get(i).getValue().conjugated();
-                }
-                return (A) ArithmeticMultiElement.make(CRing.ring, res);
+        } else if (x instanceof Vector) {
+                Vector<ArithmeticElement<Complex>> element = (Vector<ArithmeticElement<Complex>>) x;
+                List<ArithmeticElement<Complex>> res = element.getValue().stream()
+                        .map(ArithmeticElement::getValue)
+                        .map(Complex::conjugated)
+                        .map(ArithmeticElement::new)
+                        .collect(Collectors.toList());
+                return (A) new Vector<>(CRing.ring, res);
 
         }
         throw new MappingException("ConjugationMorphism.map: ", x, this);

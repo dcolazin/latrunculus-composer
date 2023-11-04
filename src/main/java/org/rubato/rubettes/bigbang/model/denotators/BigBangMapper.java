@@ -1,24 +1,23 @@
 package org.rubato.rubettes.bigbang.model.denotators;
 
+import org.rubato.base.RubatoException;
+import org.rubato.rubettes.bigbang.model.OperationPathResults;
+import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
+import org.rubato.rubettes.util.DenotatorPath;
+import org.vetronauta.latrunculus.core.exception.CompositionException;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.rubato.rubettes.bigbang.model.OperationPathResults;
-import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
-import org.rubato.rubettes.util.DenotatorPath;
 
 public class BigBangMapper extends BigBangManipulator {
 	

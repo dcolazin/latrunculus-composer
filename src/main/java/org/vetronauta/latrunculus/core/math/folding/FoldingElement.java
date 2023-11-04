@@ -23,13 +23,13 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 /**
@@ -42,8 +42,8 @@ public class FoldingElement {
         if (element instanceof ArithmeticElement) {
             return FoldingModule.fold(((ArithmeticElement<?>) element).getRing(), others);
         }
-        if (element instanceof ArithmeticMultiElement) {
-            return FoldingModule.multiFold(((ArithmeticMultiElement<?>) element).getRing(), others, element.getLength());
+        if (element instanceof Vector) {
+            return FoldingModule.multiFold(((Vector<?>) element).getRing(), others, element.getLength());
         }
         if (element instanceof StringElement) {
             return foldString(others);

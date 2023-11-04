@@ -19,15 +19,12 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import java.util.Arrays;
-
-import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+
+import java.util.Arrays;
 
 /**
  * Matrixes over rational numbers.

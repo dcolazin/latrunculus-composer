@@ -26,10 +26,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -111,7 +112,7 @@ public class FoldingModule {
         return res;
     }
 
-    public static double[] multiFold(ArithmeticRing<?> ring, ModuleElement<?, ?>[] elements, int length) {
+    public static double[] multiFold(Ring<?> ring, ModuleElement<?, ?>[] elements, int length) {
         if (ring instanceof ZRing) {
             return multiFoldInteger(elements);
         }
@@ -138,7 +139,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ArithmeticMultiElement<ArithmeticInteger>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<ArithmeticElement<ArithmeticInteger>>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);
@@ -149,7 +150,7 @@ public class FoldingModule {
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Rational>> r = ((ArithmeticMultiElement<Rational>)elements[i]).getValue();
+            List<ArithmeticElement<Rational>> r = ((Vector<ArithmeticElement<Rational>>)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
@@ -164,7 +165,7 @@ public class FoldingModule {
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[elements.length];
-            List<ArithmeticElement<Real>> r = ((ArithmeticMultiElement<Real>)elements[i]).getValue();
+            List<ArithmeticElement<Real>> r = ((Vector<ArithmeticElement<Real>>)elements[i]).getValue();
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
             }
@@ -175,7 +176,7 @@ public class FoldingModule {
     public static double[] multiFoldComplex(ModuleElement<?,?>[] elements, int length) {
         double[][] res = new double[elements.length][length*2];
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Complex>> c = ((ArithmeticMultiElement<Complex>)elements[i]).getValue();
+            List<ArithmeticElement<Complex>> c = ((Vector<ArithmeticElement<Complex>>)elements[i]).getValue();
             for (int j = 0; j < length; j++) {
                 res[i][2*j] = c.get(j).getValue().getReal();
                 res[i][2*j+1] = c.get(j).getValue().getImag();
@@ -192,7 +193,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((ArithmeticMultiElement<Modulus>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<ArithmeticElement<Modulus>>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);

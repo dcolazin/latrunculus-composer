@@ -23,6 +23,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -68,7 +69,7 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
         for (int i = 1; i < n; i++) {
             res.add(zero);
         }
-        return new ArithmeticMultiElement<>(getRing(), res);
+        return new Vector<>(getRing(), res);
     }
 
     @Override
