@@ -7,11 +7,11 @@ import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -315,24 +315,24 @@ public final class DenotexParser implements DenotexParserConstants {
                 else            return ZnRing.make(sub);
             }
             else {
-                if (sub == -1)   return ArithmeticMultiModule.make(ZRing.ring, sup);
-                else            return ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(sub), sup);
+                if (sub == -1)   return new VectorModule<>(ZRing.ring, sup);
+                else            return new VectorModule<>(ArithmeticRingRepository.getModulusRing(sub), sup);
             }
         }
         else if (s.equals("Q")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return QRing.ring;
-            else                return ArithmeticMultiModule.make(QRing.ring, sup);
+            else                return new VectorModule<>(QRing.ring, sup);
         }
         else if (s.equals("R")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return RRing.ring;
-            else                return ArithmeticMultiModule.make(RRing.ring, sup);
+            else                return new VectorModule<>(RRing.ring, sup);
         }
         else if (s.equals("C")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup == -1)       return CRing.ring;
-            else                return ArithmeticMultiModule.make(CRing.ring, sup);
+            else                return new VectorModule<>(CRing.ring, sup);
         }
         else if (s.equals("Null")) {
             return ZRing.nullModule;

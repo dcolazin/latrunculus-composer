@@ -26,29 +26,28 @@ import org.rubato.scheme.Evaluator;
 import org.rubato.scheme.Parser;
 import org.rubato.scheme.SExpr;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.impl.QRing;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
 import org.vetronauta.latrunculus.core.math.yoneda.form.NameForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
@@ -62,7 +61,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -179,12 +177,7 @@ public class Repository extends Observable implements RubatoDictionary {
         if (xmlReader.hasError()) {
             return false;
         }
-
-        if (register(xmlReader.getForms(), xmlReader.getDenotators())) {
-            return true;
-        }
-
-        return false;
+        return register(xmlReader.getForms(), xmlReader.getDenotators());
     }
     
     
@@ -341,7 +334,7 @@ public class Repository extends Observable implements RubatoDictionary {
 
     
     public synchronized List<Form> getForms() {
-        LinkedList<Form> res = new LinkedList<Form>();
+        LinkedList<Form> res = new LinkedList<>();
         for (FormItem item : forms.values()) {
             res.add(item.getForm());
         }
@@ -385,7 +378,7 @@ public class Repository extends Observable implements RubatoDictionary {
      * Returns a limit form with the given factors.
      * The new form is given the name "_Limit(factor0Name,factor1Name,...)".
      */
-    public LimitForm autogenLimitForm(ArrayList<Form> factors) {
+    public LimitForm autogenLimitForm(List<Form> factors) {
         LimitForm limitForm = autogenLimitForms.get(factors);
         if (limitForm == null) {
             StringBuilder buf = new StringBuilder();
@@ -408,7 +401,7 @@ public class Repository extends Observable implements RubatoDictionary {
      * Returns a colimit form with the given factors.
      * The new form is given the name "_Colimit(factor0Name,factor1Name,...)".
      */
-    public ColimitForm autogenColimitForm(ArrayList<Form> factors) {
+    public ColimitForm autogenColimitForm(List<Form> factors) {
         ColimitForm colimitForm = autogenColimitForms.get(factors);
         if (colimitForm == null) {
             StringBuilder buf = new StringBuilder();
@@ -566,21 +559,21 @@ public class Repository extends Observable implements RubatoDictionary {
     public void clear() {
         reset();
         
-        forms      = new HashMap<NameEntry,FormItem>(256);
-        denotators = new HashMap<NameEntry,DenotatorItem>(1024);
-        modules    = new HashMap<String,ModuleItem>(256);
+        forms      = new HashMap<>(256);
+        denotators = new HashMap<>(1024);
+        modules    = new HashMap<>(256);
         
-        moduleElements  = new HashMap<String,ModuleElementItem>(1024);
-        moduleMorphisms = new HashMap<String,ModuleMorphismItem>(1024);
+        moduleElements  = new HashMap<>(1024);
+        moduleMorphisms = new HashMap<>(1024);
         
-        builtinForms      = new IdentityHashMap<Form,Form>(256);
-        builtinDenotators = new IdentityHashMap<Denotator,Denotator>(256);
+        builtinForms      = new IdentityHashMap<>(256);
+        builtinDenotators = new IdentityHashMap<>(256);
         
-        autogenPowerForms   = new HashMap<Form,PowerForm>(256);
-        autogenListForms    = new HashMap<Form,ListForm>(256);
-        autogenLimitForms   = new HashMap<ArrayList<Form>,LimitForm>(256);
-        autogenColimitForms = new HashMap<ArrayList<Form>,ColimitForm>(256);
-        autogenSimpleForms  = new HashMap<Module,SimpleForm>(256);
+        autogenPowerForms   = new HashMap<>(256);
+        autogenListForms    = new HashMap<>(256);
+        autogenLimitForms   = new HashMap<>(256);
+        autogenColimitForms = new HashMap<>(256);
+        autogenSimpleForms  = new HashMap<>(256);
         
         env = Env.makeGlobalEnvironment();
         code = "";
@@ -680,7 +673,7 @@ public class Repository extends Observable implements RubatoDictionary {
     
     
     public List<String> getModuleElementNames() {
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         list.addAll(moduleElements.keySet());
         return list;
     }
@@ -700,14 +693,14 @@ public class Repository extends Observable implements RubatoDictionary {
     
     
     public List<String> getModuleMorphismNames() {
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         list.addAll(moduleMorphisms.keySet());
         return list;
     }
     
     
     public List<String> getModuleMorphismNames(Module domain, Module codomain) {
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         for (Entry<String,ModuleMorphismItem> entry : moduleMorphisms.entrySet()) {
             ModuleMorphism m = entry.getValue().getModuleMorphism();
             if (domain == null || domain.equals(m.getDomain())) {
@@ -779,7 +772,7 @@ public class Repository extends Observable implements RubatoDictionary {
         out.print("┍"); repeat(out, "━", width-2); out.println("┑");
         out.print("│Forms"); repeat(out, " ", width-7); out.println("│");
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<FormItem> formSet = new TreeSet<FormItem>(forms.values());
+        TreeSet<FormItem> formSet = new TreeSet<>(forms.values());
         for (FormItem item : formSet) {
             Form f = item.getForm();
             String s = f.getName().getNameEntry()+": "+f; 
@@ -788,7 +781,7 @@ public class Repository extends Observable implements RubatoDictionary {
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
         out.print("│Denotators"); repeat(out, " ", width-12); out.println("│");
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<DenotatorItem> denoSet = new TreeSet<DenotatorItem>(denotators.values());
+        TreeSet<DenotatorItem> denoSet = new TreeSet<>(denotators.values());
         for (DenotatorItem item : denoSet) {
             Denotator d = item.getDenotator();
             String s = d.getName().getNameEntry()+": "+d.getForm().getName().getNameEntry();
@@ -797,7 +790,7 @@ public class Repository extends Observable implements RubatoDictionary {
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
         out.print("│Modules"); repeat(out, " ", width-9); out.println("│");
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleItem> moduleSet = new TreeSet<ModuleItem>(modules.values());
+        TreeSet<ModuleItem> moduleSet = new TreeSet<>(modules.values());
         for (ModuleItem item : moduleSet) {
             String s = item.getName()+": "+item.getModule();
             out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
@@ -805,7 +798,7 @@ public class Repository extends Observable implements RubatoDictionary {
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
         out.print("│Module Elements"); repeat(out, " ", width-17); out.println("│");
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleElementItem> moduleElementSet = new TreeSet<ModuleElementItem>(moduleElements.values());
+        TreeSet<ModuleElementItem> moduleElementSet = new TreeSet<>(moduleElements.values());
         for (ModuleElementItem item : moduleElementSet) {
             String s = item.getName()+": "+item.getModuleElement();
             out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
@@ -813,7 +806,7 @@ public class Repository extends Observable implements RubatoDictionary {
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
         out.print("│Module Morphisms"); repeat(out, " ", width-18); out.println("│");
         out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleMorphismItem> moduleMorphismSet = new TreeSet<ModuleMorphismItem>(moduleMorphisms.values());
+        TreeSet<ModuleMorphismItem> moduleMorphismSet = new TreeSet<>(moduleMorphisms.values());
         for (ModuleMorphismItem item : moduleMorphismSet) {
             String s = item.getName()+": "+item.getModuleMorphism();
             out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
@@ -997,27 +990,27 @@ public class Repository extends Observable implements RubatoDictionary {
         registerNameForm(NameForm.getNameForm());
         
         // 2D and 3D vectors
-        FreeModule<?, ArithmeticElement<Real>> m2d = ArithmeticMultiModule.make(RRing.ring, 2);
+        VectorModule<ArithmeticElement<Real>> m2d = new VectorModule<>(RRing.ring, 2);
         registerBuiltin(FormFactory.makeModuleForm("Vector2D", m2d));
-        FreeModule<?, ArithmeticElement<Real>> m3d = ArithmeticMultiModule.make(RRing.ring, 3);
+        VectorModule<ArithmeticElement<Real>> m3d = new VectorModule<>(RRing.ring, 3);
         registerBuiltin(FormFactory.makeModuleForm("Vector3D", m3d));
-        FreeModule<?, ArithmeticElement<Real>> m4d = ArithmeticMultiModule.make(RRing.ring, 4);
+        VectorModule<ArithmeticElement<Real>> m4d = new VectorModule<>(RRing.ring, 4);
         registerBuiltin(FormFactory.makeModuleForm("Vector4D", m4d));
-        FreeModule<?, ArithmeticElement<Real>> m5d = ArithmeticMultiModule.make(RRing.ring, 5);
+        VectorModule<ArithmeticElement<Real>> m5d = new VectorModule<>(RRing.ring, 5);
         registerBuiltin(FormFactory.makeModuleForm("Vector5D", m5d));
-        FreeModule<?, ArithmeticElement<Real>> m6d = ArithmeticMultiModule.make(RRing.ring, 6);
+        VectorModule<ArithmeticElement<Real>> m6d = new VectorModule<>(RRing.ring, 6);
         registerBuiltin(FormFactory.makeModuleForm("Vector6D", m6d));
-        FreeModule<?, ArithmeticElement<Real>> m7d = ArithmeticMultiModule.make(RRing.ring, 7);
+        VectorModule<ArithmeticElement<Real>> m7d = new VectorModule<>(RRing.ring, 7);
         registerBuiltin(FormFactory.makeModuleForm("Vector7D", m7d));
-        FreeModule<?, ArithmeticElement<Real>> m8d = ArithmeticMultiModule.make(RRing.ring, 8);
+        VectorModule<ArithmeticElement<Real>> m8d = new VectorModule<>(RRing.ring, 8);
         registerBuiltin(FormFactory.makeModuleForm("Vector8D", m8d));
-        FreeModule<?, ArithmeticElement<Real>> m9d = ArithmeticMultiModule.make(RRing.ring, 9);
+        VectorModule<ArithmeticElement<Real>> m9d = new VectorModule<>(RRing.ring, 9);
         registerBuiltin(FormFactory.makeModuleForm("Vector9D", m9d));
-        FreeModule<?, ArithmeticElement<Real>> m10d = ArithmeticMultiModule.make(RRing.ring, 10);
+        VectorModule<ArithmeticElement<Real>> m10d = new VectorModule<>(RRing.ring, 10);
         registerBuiltin(FormFactory.makeModuleForm("Vector10D", m10d));
-        FreeModule<?, ArithmeticElement<Real>> m11d = ArithmeticMultiModule.make(RRing.ring, 11);
+        VectorModule<ArithmeticElement<Real>> m11d = new VectorModule<>(RRing.ring, 11);
         registerBuiltin(FormFactory.makeModuleForm("Vector11D", m11d));
-        FreeModule<?, ArithmeticElement<Real>> m12d = ArithmeticMultiModule.make(RRing.ring, 12);
+        VectorModule<ArithmeticElement<Real>> m12d = new VectorModule<>(RRing.ring, 12);
         registerBuiltin(FormFactory.makeModuleForm("Vector12D", m12d));
         
         // Polynomials
@@ -1069,8 +1062,8 @@ public class Repository extends Observable implements RubatoDictionary {
         SimpleForm voiceForm = FormFactory.makeZModuleForm("Voice");
         registerBuiltin(voiceForm);
         
-        List<Form> noteFormList = new LinkedList<Form>();
-        List<String> noteFormLabelList = new LinkedList<String>();
+        List<Form> noteFormList = new LinkedList<>();
+        List<String> noteFormLabelList = new LinkedList<>();
         noteFormList.add(onsetForm);
         noteFormLabelList.add("onset");
         noteFormList.add(pitchForm);
@@ -1107,15 +1100,15 @@ public class Repository extends Observable implements RubatoDictionary {
         registerBuiltinModule("Integers modulo 2", ZnRing.make(2));
         registerBuiltinModule("Integers modulo 12", ZnRing.make(12));
         
-        registerBuiltinModule("Pairs of integers", ArithmeticMultiModule.make(ZRing.ring, 2));
-        registerBuiltinModule("Pairs of rationals", ArithmeticMultiModule.make(QRing.ring, 2));
-        registerBuiltinModule("Pairs of reals", ArithmeticMultiModule.make(RRing.ring, 2));
-        registerBuiltinModule("Pairs of complexes", ArithmeticMultiModule.make(CRing.ring, 2));
+        registerBuiltinModule("Pairs of integers", new VectorModule<>(ZRing.ring, 2));
+        registerBuiltinModule("Pairs of rationals", new VectorModule<>(QRing.ring, 2));
+        registerBuiltinModule("Pairs of reals", new VectorModule<>(RRing.ring, 2));
+        registerBuiltinModule("Pairs of complexes", new VectorModule<>(CRing.ring, 2));
 
-        registerBuiltinModule("Triples of integers", ArithmeticMultiModule.make(ZRing.ring, 3));
-        registerBuiltinModule("Triples of rationals", ArithmeticMultiModule.make(QRing.ring, 3));
-        registerBuiltinModule("Triples of reals", ArithmeticMultiModule.make(RRing.ring, 3));
-        registerBuiltinModule("Triples of complexes", ArithmeticMultiModule.make(CRing.ring, 3));
+        registerBuiltinModule("Triples of integers", new VectorModule<>(ZRing.ring, 3));
+        registerBuiltinModule("Triples of rationals", new VectorModule<>(QRing.ring, 3));
+        registerBuiltinModule("Triples of reals", new VectorModule<>(RRing.ring, 3));
+        registerBuiltinModule("Triples of complexes", new VectorModule<>(CRing.ring, 3));
         
         // Scheme environment and code
         env = Env.makeGlobalEnvironment();
@@ -1154,13 +1147,13 @@ public class Repository extends Observable implements RubatoDictionary {
     // caching tables for autogenerated forms
     private HashMap<Form,PowerForm>              autogenPowerForms;
     private HashMap<Form,ListForm>               autogenListForms;
-    private HashMap<ArrayList<Form>,LimitForm>   autogenLimitForms;
-    private HashMap<ArrayList<Form>,ColimitForm> autogenColimitForms;
+    private HashMap<List<Form>,LimitForm>   autogenLimitForms;
+    private HashMap<List<Form>,ColimitForm> autogenColimitForms;
     private HashMap<Module,SimpleForm>           autogenSimpleForms;
     
     // Containers for temporary forms and denotators
-    private LinkedList<Form> tmpForms = new LinkedList<Form>();
-    private LinkedList<Denotator> tmpDenos = new LinkedList<Denotator>();
+    private LinkedList<Form> tmpForms = new LinkedList<>();
+    private LinkedList<Denotator> tmpDenos = new LinkedList<>();
     
     // Scheme environment and code
     private Env env;

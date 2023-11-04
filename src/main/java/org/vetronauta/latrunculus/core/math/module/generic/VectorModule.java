@@ -175,4 +175,29 @@ public class VectorModule<R extends RingElement<R>> implements FreeModule<Vector
         }
         return toString().compareTo(module.toString());
     }
+
+    public String getElementTypeName() {
+        return String.format("VectorModule<%s>", ring.toVisualString());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("VectorModule<%s>[%s]", ring.toVisualString(), dimension);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (dimension == 1 && object instanceof Ring) {
+            return ring.equals(object);
+        }
+        return object instanceof VectorModule &&
+                dimension == ((VectorModule<?>) object).dimension &&
+                ring.equals(((VectorModule<?>) object).ring);
+    }
+
+    @Override
+    public int hashCode() {
+        return ring.hashCode() * dimension;
+    }
+
 }

@@ -24,6 +24,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 
@@ -44,7 +45,6 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
 
     private final List<ArithmeticElement<N>> value;
     private final ArithmeticRing<N> ring;
-    private ArithmeticMultiModule<N> module;
 
     public ArithmeticMultiElement(ArithmeticRing<N> ring, List<ArithmeticElement<N>> value) {
         if (value != null && value.size() == 1) {
@@ -237,11 +237,8 @@ public class ArithmeticMultiElement<N extends ArithmeticNumber<N>>
     }
 
     @Override
-    public ArithmeticMultiModule<N> getModule() {
-        if (module == null) {
-            module = new ArithmeticMultiModule<>(ring, getLength());
-        }
-        return module;
+    public Module getModule() {
+        return null; //TODO this class is soon to be deprecated
     }
 
     @Override

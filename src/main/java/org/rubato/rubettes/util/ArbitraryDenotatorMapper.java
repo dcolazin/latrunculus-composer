@@ -11,8 +11,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.EmbeddingMorphism;
@@ -312,9 +313,9 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			ModuleMorphism projection = ProjectionMorphism.make((ProductRing)morphism.getCodomain(), index);
 			return projection.compose(morphism);
 		}
-		if (morphism.getCodomain() instanceof ArithmeticMultiModule) {
-			ArithmeticMultiModule<?> multiModule = (ArithmeticMultiModule<?>) morphism.getCodomain();
-			ModuleMorphism projection = new ArithmeticAffineProjection(multiModule.getRing(), new Vector(multiModule.getRing(), multiModule.getUnitElement(index).getValue()), multiModule.getRing().getZero());
+		if (morphism.getCodomain() instanceof VectorModule) {
+			VectorModule<?> multiModule = (VectorModule<?>) morphism.getCodomain();
+			ModuleMorphism projection = new ArithmeticAffineProjection((ArithmeticRing) multiModule.getRing(), multiModule.getUnitElement(index), (ArithmeticElement) multiModule.getRing().getZero());
 			return projection.compose(morphism);
 		}
 		if (morphism.getCodomain() instanceof ArithmeticRing) {

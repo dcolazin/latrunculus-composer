@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -28,7 +29,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
@@ -151,7 +151,7 @@ public class Dispatcher {
         addModule(CRing.class);
         
         addModule(ArithmeticStringRing.class);
-        addModule(ArithmeticMultiModule.class);
+        addModule(VectorModule.class);
         addModule(ArithmeticStringMultiModule.class);
 
         addModule(PolynomialRing.class);

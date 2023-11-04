@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -34,9 +34,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
@@ -264,10 +263,10 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
 
         // Free modules over number rings
-        if (domain instanceof ArithmeticMultiModule &&
-                codomain instanceof ArithmeticMultiModule &&
+        if (domain instanceof VectorModule &&
+                codomain instanceof VectorModule &&
                 areArithmeticCompatible(domain.getRing(), codomain.getRing())) {
-            return (EmbeddingMorphism<X, Y, RX, RY>) new ArithmeticMultiEmbedding<>((ArithmeticMultiModule)domain, (ArithmeticMultiModule)codomain);
+            return (EmbeddingMorphism<X, Y, RX, RY>) new VectorEmbedding<>((VectorModule)domain, (VectorModule)codomain);
         }
         // Other free modules
         Ring<RX> domainRing = domain.getRing();
@@ -414,21 +413,20 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
     }
 
-    private static class ArithmeticMultiEmbedding<N extends ArithmeticNumber<N>, M extends ArithmeticNumber<M>>
-        extends EmbeddingMorphism<ArithmeticMultiElement<N>,ArithmeticMultiElement<M>,ArithmeticElement<N>,ArithmeticElement<M>> {
+    private static class VectorEmbedding<RX extends RingElement<RX>, RY extends RingElement<RY>>
+        extends EmbeddingMorphism<Vector<RX>,Vector<RY>,RX,RY> {
 
-        protected ArithmeticMultiEmbedding(ArithmeticMultiModule<N> domain, ArithmeticMultiModule<M> codomain) {
+        protected VectorEmbedding(VectorModule<RX> domain, VectorModule<RY> codomain) {
             super(domain, codomain);
         }
 
         @Override
-        public ArithmeticMultiElement<M> mapValue(ArithmeticMultiElement<N> element) {
-            ArithmeticRing<M> ring = (ArithmeticRing<M>) getCodomain().getRing();
-            List<M> list = element.getValue().stream()
+        public Vector<RY> mapValue(Vector<RX> element) {
+            Ring<RY> ring = getCodomain().getRing();
+            List<RY> list = element.getValue().stream()
                     .map(ring::cast)
-                    .map(ArithmeticElement::getValue)
                     .collect(Collectors.toList());
-            return (ArithmeticMultiElement<M>) ArithmeticMultiElement.make(ring, list);
+            return new Vector<>(ring, list);
         }
     }
 

@@ -29,8 +29,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 /**
  * @author vetronauta
@@ -61,13 +61,13 @@ public class FreeUtils {
     }
 
     public static boolean isArithmetic(Module<?,?> module) {
-        return module instanceof ArithmeticRing || module instanceof ArithmeticMultiModule;
+        return module instanceof ArithmeticRing || module instanceof VectorModule;
     }
 
     public static ArithmeticNumber<?> retrieveNumber(Module<?,?> module) {
         if (module instanceof ArithmeticRing) {
             return ((ArithmeticRing<?>) module).getZero().getValue();
         }
-        return ((ArithmeticMultiModule<?>) module).getRing().getZero().getValue();
+        return ((ArithmeticRing<?>) module.getRing()).getZero().getValue();
     }
 }

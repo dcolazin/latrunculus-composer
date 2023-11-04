@@ -1,17 +1,15 @@
 package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extends
@@ -23,8 +21,7 @@ public class ArithmeticAffineMultiMorphism<N extends ArithmeticNumber<N>> extend
     private final Vector<ArithmeticElement<N>> vector;
 
     public ArithmeticAffineMultiMorphism(ArithmeticRing<N> ring, Matrix<ArithmeticElement<N>> matrix, Vector<ArithmeticElement<N>> vector) {
-        //super(new ArithmeticMultiModule<>(ring, matrix.getColumnCount()), new ArithmeticMultiModule<>(ring, matrix.getRowCount()));
-        super(null, null); //TODO after MultiModule refactoring
+        super(new VectorModule<>(ring, matrix.getColumnCount()), new VectorModule<>(ring, matrix.getRowCount()));
         this.matrix = matrix;
         this.vector = vector;
     }

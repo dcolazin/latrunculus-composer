@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 
@@ -141,7 +141,7 @@ public class ModuloMorphism extends ModuleMorphism {
 
     
     public ModuleElement atZero() {
-        return ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(getModulus()), getDimension()).getZero();
+        return new VectorModule<>(ArithmeticRingRepository.getModulusRing(getModulus()), getDimension()).getZero();
     }
 
     
@@ -177,7 +177,7 @@ public class ModuloMorphism extends ModuleMorphism {
     
     
     private ModuloMorphism(int dim, int modulus) {
-        super(ArithmeticMultiModule.make(ZRing.ring, dim), ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(modulus), dim));
+        super(new VectorModule<>(ZRing.ring, dim), new VectorModule<>(ArithmeticRingRepository.getModulusRing(modulus), dim));
         this.modulus = modulus;
         this.dimension = dim;
     }

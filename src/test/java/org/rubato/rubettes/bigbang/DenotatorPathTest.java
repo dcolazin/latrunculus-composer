@@ -12,8 +12,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
@@ -180,7 +180,7 @@ class DenotatorPathTest {
 	@Test
 	void testOtherStuffForThesisTest() throws RubatoException {
 		SimpleForm onset = FormFactory.makeQModuleForm("Onset");
-		Module eulerPitchSpace = ArithmeticMultiModule.make(ZRing.ring, 3);
+		Module eulerPitchSpace = new VectorModule<>(ZRing.ring, 3);
 		SimpleForm eulerPitch = FormFactory.makeModuleForm("EulerPitch", eulerPitchSpace);
 		Module loudnessSpace = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), 1);
 		SimpleForm loudness = FormFactory.makeModuleForm("Loudness", loudnessSpace);

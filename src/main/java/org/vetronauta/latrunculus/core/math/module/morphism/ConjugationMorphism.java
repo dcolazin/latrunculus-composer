@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -29,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 
 /**
@@ -40,7 +40,7 @@ import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
 public final class ConjugationMorphism<A extends FreeElement<A,ArithmeticElement<Complex>>> extends Endomorphism<A,ArithmeticElement<Complex>> {
 
     public static ConjugationMorphism<?> make(int dimension) {
-        FreeModule<?,ArithmeticElement<Complex>> domain = ArithmeticMultiModule.make(CRing.ring, dimension);
+        FreeModule<?,ArithmeticElement<Complex>> domain = new VectorModule<>(CRing.ring, dimension);
         return new ConjugationMorphism<>(domain);
     }
 

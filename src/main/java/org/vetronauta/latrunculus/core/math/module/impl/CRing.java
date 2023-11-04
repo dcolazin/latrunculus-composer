@@ -27,8 +27,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
 
@@ -42,10 +42,10 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
      * The unique instance of the ring of complex numbers.
      */
     public static final CRing ring = new CRing();
-    public static final ArithmeticMultiModule<Complex> nullModule = new ArithmeticMultiModule<>(ring, 0);
+    public static final VectorModule<ArithmeticElement<Complex>> nullModule = new VectorModule<>(ring, 0);
 
     @Override
-    public ArithmeticMultiModule<Complex> getNullModule() {
+    public VectorModule<ArithmeticElement<Complex>> getNullModule() {
         return nullModule;
     }
 
@@ -56,7 +56,7 @@ public final class CRing extends ArithmeticRing<Complex> implements NumberRing {
     
     @Override
     public FreeModule<?, ArithmeticElement<Complex>> getFreeModule(int dimension) {
-        return ArithmeticMultiModule.make(CRing.ring, dimension);
+        return new VectorModule<>(CRing.ring, dimension);
     }
 
     @Override

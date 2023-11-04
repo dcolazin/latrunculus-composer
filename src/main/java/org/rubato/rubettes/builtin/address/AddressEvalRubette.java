@@ -45,6 +45,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -52,7 +53,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -816,12 +816,12 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
             return;
         }
-        if (!(module instanceof ArithmeticMultiModule)) {
+        if (!(module instanceof VectorModule)) {
             return;
         }
         Ring<?> moduleRing = module.getRing();
         if (moduleRing instanceof RRing) {
-            ArithmeticMultiModule<Real> m = (ArithmeticMultiModule<Real>)module;
+            VectorModule<ArithmeticElement<Real>> m = (VectorModule<ArithmeticElement<Real>>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elementList.getElements());
                 if (select != null) {
@@ -835,7 +835,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof QRing) {
-            ArithmeticMultiModule<Rational> m = (ArithmeticMultiModule<Rational>)module;
+            VectorModule<ArithmeticElement<Rational>> m = (VectorModule<ArithmeticElement<Rational>>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, QRing.ring, elementList.getElements());
                 if (select != null) {
@@ -849,7 +849,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZRing) {
-            ArithmeticMultiModule<ArithmeticInteger> m = (ArithmeticMultiModule<ArithmeticInteger>) module;
+            VectorModule<ArithmeticElement<ArithmeticInteger>> m = (VectorModule<ArithmeticElement<ArithmeticInteger>>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, ZRing.ring, elementList.getElements());
                 if (select != null) {
@@ -865,7 +865,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZnRing) {
-            ArithmeticMultiModule<Modulus> m = (ArithmeticMultiModule<Modulus>) module;
+            VectorModule<ArithmeticElement<Modulus>> m = (VectorModule<ArithmeticElement<Modulus>>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, m.getRing(), elementList.getElements());
                 elementList.clear();

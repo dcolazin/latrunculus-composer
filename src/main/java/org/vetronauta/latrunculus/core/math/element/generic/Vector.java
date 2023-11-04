@@ -6,6 +6,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
 
     private final List<R> value;
     private final Ring<R> ring;
-    private FreeModule<?, R> module;
+    private VectorModule<R> module;
 
     public Vector(Ring<R> ring, List<R> value) {
         this.value = value != null ? value : new ArrayList<>();
@@ -33,6 +34,10 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
             list.add(ring.getZero());
         }
         return new Vector<>(ring, list);
+    }
+
+    public List<R> getValue() {
+        return value;
     }
 
     @Override
@@ -158,7 +163,10 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
 
     @Override
     public Module<Vector<R>, R> getModule() {
-        return null; //TODO after the ArithmeticMultiModule refactoring
+        if (module == null) {
+            module = new VectorModule<>(ring, value.size());
+        }
+        return module;
     }
 
     @Override

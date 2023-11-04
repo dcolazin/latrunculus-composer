@@ -20,11 +20,11 @@
 package org.rubato.composer.components;
 
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
@@ -238,23 +238,23 @@ public class JSelectModule
         int dim = polSwitch.isSelected()?1:getDimension();
         switch (ringSelect.getSelectedIndex()) {
         case ZRING: {
-            module = ArithmeticMultiModule.make(ZRing.ring, dim);
+            module = new VectorModule<>(ZRing.ring, dim);
             break;
         }
         case ZNRING: {
-            module = ArithmeticMultiModule.make(ArithmeticRingRepository.getModulusRing(getModulus()), dim);
+            module = new VectorModule<>(ArithmeticRingRepository.getModulusRing(getModulus()), dim);
             break;
         }
         case QRING: {
-            module = ArithmeticMultiModule.make(QRing.ring, dim);
+            module = new VectorModule<>(QRing.ring, dim);
             break;
         }
         case RRING: {
-            module = ArithmeticMultiModule.make(RRing.ring, dim);
+            module = new VectorModule<>(RRing.ring, dim);
             break;
         }
         case CRING: {
-            module = ArithmeticMultiModule.make(CRing.ring, dim);
+            module = new VectorModule<>(CRing.ring, dim);
             break;
         }
         case ZSTRING: {

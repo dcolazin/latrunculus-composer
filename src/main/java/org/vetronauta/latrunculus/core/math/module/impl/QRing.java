@@ -26,8 +26,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
 
@@ -46,9 +46,9 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
      * The unique instance of the ring of rationals.
      */
     public static final QRing ring = new QRing();
-    public static final ArithmeticMultiModule<Rational> nullModule = new ArithmeticMultiModule<>(ring, 0);
+    public static final VectorModule<ArithmeticElement<Rational>> nullModule = new VectorModule<>(ring, 0);
 
-    public ArithmeticMultiModule<Rational> getNullModule() {
+    public VectorModule<ArithmeticElement<Rational>> getNullModule() {
         return nullModule;
     }
 
@@ -57,7 +57,7 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
     }
 
     public FreeModule<?,ArithmeticElement<Rational>> getFreeModule(int dimension) {
-        return ArithmeticMultiModule.make(QRing.ring, dimension);
+        return new VectorModule<>(QRing.ring, dimension);
     }
 
     public boolean equals(Object object) {

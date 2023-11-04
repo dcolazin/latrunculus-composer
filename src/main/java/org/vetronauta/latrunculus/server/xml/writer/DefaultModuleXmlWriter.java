@@ -22,13 +22,14 @@ package org.vetronauta.latrunculus.server.xml.writer;
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -56,8 +57,8 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
 
     @Override
     public void toXML(Module object, XMLWriter writer) {
-        if (object instanceof ArithmeticMultiModule) {
-            write((ArithmeticMultiModule<?>) object, writer);
+        if (object instanceof VectorModule) {
+            write((VectorModule<?>) object, writer);
             return;
         }
         if (object instanceof CRing) {
@@ -121,9 +122,9 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         }
     }
 
-    private void write(ArithmeticMultiModule<?> module, XMLWriter writer) {
+    private void write(VectorModule<?> module, XMLWriter writer) {
         if (module.getRing().getClass().isAssignableFrom(ZnRing.class)) {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((Modulus)module.getRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ArithmeticElement<Modulus>)module.getRing().getOne()).getValue().getModulus()); //TODO ugly way to get the modulus
         } else {
             writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
         }

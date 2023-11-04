@@ -1,13 +1,12 @@
 package org.vetronauta.latrunculus.core.math.module.morphism.affine;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
@@ -19,8 +18,7 @@ public class ArithmeticAffineInjection<N extends ArithmeticNumber<N>> extends
     private final Vector<ArithmeticElement<N>> vector;
 
     public ArithmeticAffineInjection(ArithmeticRing<N> ring, Vector<ArithmeticElement<N>> matrix, Vector<ArithmeticElement<N>> vector) {
-        //super(ring, new ArithmeticMultiModule<>(ring, matrix.getLength()));
-        super(ring, null); //TODO after MultiModule refactoring
+        super(ring, new VectorModule<>(ring, vector.getLength()));
         this.matrix = matrix;
         this.vector = vector;
     }

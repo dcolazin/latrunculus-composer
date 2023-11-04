@@ -21,6 +21,8 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -30,7 +32,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeM
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -68,8 +69,8 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
     
     @Override
     public Module fromXML(Element element, Class<? extends Module> clazz, XMLReader reader) {
-        if (ArithmeticMultiModule.class.isAssignableFrom(clazz)) {
-                return readArithmeticMultiModule(element, clazz, reader);
+        if (VectorModule.class.isAssignableFrom(clazz)) {
+                return readVectorModule(element, clazz, reader);
            }
         if (CRing.class.isAssignableFrom(clazz)) {
                 return readCRing(element, clazz, reader);
@@ -119,7 +120,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         return null;
     }
 
-    private ArithmeticMultiModule<?> readArithmeticMultiModule(Element element, Class<?> clazz, XMLReader reader) {
+    private VectorModule<?> readVectorModule(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz))); //TODO proper check
         if (!element.hasAttribute(DIMENSION_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), DIMENSION_ATTR);
@@ -149,7 +150,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             return null;
         }
 
-        return new ArithmeticMultiModule(retrieveRing(element.getAttribute(TYPE_ATTR), mod), dimension);
+        return new VectorModule<>(retrieveRing(element.getAttribute(TYPE_ATTR), mod), dimension);
     }
 
     private static ArithmeticRing<?> retrieveRing(String moduleName, int mod) {

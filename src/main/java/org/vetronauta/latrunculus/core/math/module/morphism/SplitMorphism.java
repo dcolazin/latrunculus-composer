@@ -31,10 +31,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineMultiMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
@@ -76,7 +74,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
         if (areAllConstants(morphisms)) {
             return buildSplitConstants(module, morphisms);
         }
-        if (module instanceof ArithmeticMultiModule && areAllConsistentAffine(morphisms)) {
+        if (module instanceof VectorModule && areAllConsistentAffine(morphisms)) {
             return makeAffineFreeMorphism(module.getDimension(), morphisms);
         }
         return new SplitMorphism<>(module, morphisms);

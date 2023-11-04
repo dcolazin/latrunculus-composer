@@ -94,7 +94,7 @@ public class ArithmeticRing<N extends ArithmeticNumber<N>> extends Ring<Arithmet
         return null; //TODO
     }
 
-    public ArithmeticMultiModule<N> nullModule() {
+    public VectorModule<ArithmeticElement<N>> nullModule() {
         return null; //TODO
     }
 }

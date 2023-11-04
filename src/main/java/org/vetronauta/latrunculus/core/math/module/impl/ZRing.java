@@ -26,8 +26,8 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
 
@@ -42,14 +42,14 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
      * The unique instance of the ring of integers.
      */
     public static final ZRing ring = new ZRing();
-    public static final ArithmeticMultiModule<ArithmeticInteger> nullModule = new ArithmeticMultiModule<>(ring, 0);
+    public static final VectorModule<ArithmeticElement<ArithmeticInteger>> nullModule = new VectorModule<>(ring, 0);
 
     private ZRing() {
         super(new ArithmeticInteger(0), new ArithmeticInteger(1));
     }
 
     @Override
-    public ArithmeticMultiModule<ArithmeticInteger> getNullModule() {
+    public VectorModule<ArithmeticElement<ArithmeticInteger>> getNullModule() {
         return nullModule;
     }
     
@@ -60,7 +60,7 @@ public final class ZRing extends ArithmeticRing<ArithmeticInteger> implements Nu
 
     
     public FreeModule<?, ArithmeticElement<ArithmeticInteger>> getFreeModule(int dimension) {
-        return ArithmeticMultiModule.make(ring, dimension);
+        return new VectorModule<>(ring, dimension);
     }
 
     @Override

@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.util.Wrapper;
+import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
@@ -30,8 +30,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
-import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -43,12 +42,15 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
@@ -59,12 +61,10 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.impl.QRing;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.util.Wrapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author vetronauta
@@ -76,8 +76,8 @@ public final class ModuleElementParser {
     //TODO common logic
 
     public static <E extends ModuleElement<E,R>, R extends RingElement<R>> E parseElement(Module<E,R> module, String s) {
-        if (module instanceof ArithmeticMultiModule) {
-            return (E) parse((ArithmeticMultiModule) module, s);
+        if (module instanceof VectorModule) {
+            return (E) parse((VectorModule) module, s);
         }
         if (module instanceof ArithmeticStringMultiModule) {
             return (E) parse((ArithmeticStringMultiModule) module, s);
@@ -127,7 +127,7 @@ public final class ModuleElementParser {
         throw new UnsupportedOperationException(String.format("cannot parse in %s", module));
     }
 
-    private static <N extends ArithmeticNumber<N>> ArithmeticMultiElement<N> parse(ArithmeticMultiModule<N> module, String string) {
+    private static <N extends ArithmeticNumber<N>> Vector<ArithmeticElement<N>> parse(VectorModule<ArithmeticElement<N>> module, String string) {
         string = TextUtils.unparenthesize(string);
         String[] components = string.split(",");
         if (components.length != module.getDimension()) {
@@ -136,12 +136,12 @@ public final class ModuleElementParser {
         List<ArithmeticElement<N>> values = new ArrayList<>(components.length);
         for (String component : components) {
             try {
-                values.add(new ArithmeticElement<>(ArithmeticParsingUtils.parse(module.getRing(), component)));
+                values.add(new ArithmeticElement<>(ArithmeticParsingUtils.parse((ArithmeticRing) module.getRing(), component)));
             } catch (NumberFormatException e) {
                 return null;
             }
         }
-        return new ArithmeticMultiElement<>(module.getRing(), values);
+        return new Vector<>(module.getRing(), values);
     }
 
     private static <N extends ArithmeticNumber<N>> ArithmeticStringMultiElement<N> parse(ArithmeticStringMultiModule<N> module, String string) {
@@ -383,7 +383,7 @@ public final class ModuleElementParser {
         ArrayList<String> m = internalParsePoly(TextUtils.unparenthesize(string));
         int[] exp = new int[1];
         Wrapper<R> factor = new Wrapper<>();
-        Vector<R> terms = new Vector<>(30);
+        java.util.Vector<R> terms = new java.util.Vector<>(30); //TODO do not use java.util.Vector
         terms.setSize(1);
         int maxexp = 0;
         try {

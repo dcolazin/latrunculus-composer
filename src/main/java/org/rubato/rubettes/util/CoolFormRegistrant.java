@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.FormFactory;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -236,7 +236,7 @@ public class CoolFormRegistrant {
 	}
 	
 	private SimpleForm registerRModuleForm(String name, int dimension) {
-		return (SimpleForm)this.register(FormFactory.makeModuleForm(name, ArithmeticMultiModule.make(RRing.ring, dimension)));
+		return (SimpleForm)this.register(FormFactory.makeModuleForm(name, new VectorModule<>(RRing.ring, dimension)));
 	}
 	
 	private SimpleForm registerZModuleForm(String name) {

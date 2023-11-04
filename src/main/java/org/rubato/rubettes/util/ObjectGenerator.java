@@ -1,29 +1,29 @@
 package org.rubato.rubettes.util;
 
+import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeMap;
-
-import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiModule;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
 /**
  * @author flo
@@ -401,9 +401,9 @@ public class ObjectGenerator {
 			}
 			return productElement.getModule().cast(ProductElement.make(factors));
 		} else if (currentDimension > 1) {
-			List<ArithmeticElement<Real>> values = new ArithmeticMultiModule(RRing.ring, currentDimension).cast(currentElement).getValue();
+			List<ArithmeticElement<Real>> values = new VectorModule<>(RRing.ring, currentDimension).cast(currentElement).getValue();
 			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new Real(value)));
-			return currentElement.getModule().cast(new ArithmeticMultiElement(RRing.ring, values));
+			return currentElement.getModule().cast(new Vector<>(RRing.ring, values));
 		} else {
 			return currentElement.getModule().cast(new ArithmeticElement<>(new Real(value)));
 		}
