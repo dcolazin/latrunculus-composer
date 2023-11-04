@@ -31,99 +31,70 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class RealWrapper implements ArithmeticNumber<RealWrapper> {
+public final class RealWrapper {
 
     private final double value;
 
-    @Override
     public int compareTo(RealWrapper arithmeticDouble) {
         return Double.compare(value, arithmeticDouble.doubleValue());
     }
 
-    @Override
     public int intValue() {
         return (int) value;
     }
 
-    @Override
     public long longValue() {
         return (long) value;
     }
 
-    @Override
     public float floatValue() {
         return (float) value;
     }
 
-    @Override
     public double doubleValue() {
         return value;
     }
 
-    @Override
     public RealWrapper deepCopy() {
         return this;
     }
 
-    @Override
     public boolean isZero() {
         return value == 0.0;
     }
 
-    @Override
     public boolean isOne() {
         return value == 1.0;
     }
 
-    @Override
     public boolean isInvertible() {
         return value != 0.0;
     }
 
-    @Override
     public boolean isFieldElement() {
         return true;
     }
 
-    @Override
-    public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof RealWrapper) && !this.isZero();
-    }
-
-    @Override
     public RealWrapper sum(RealWrapper other) {
         return new RealWrapper(value + other.value);
     }
 
-    @Override
     public RealWrapper difference(RealWrapper other) {
         return new RealWrapper(value - other.value);
     }
 
-    @Override
     public RealWrapper product(RealWrapper other) {
         return new RealWrapper(value * other.value);
     }
 
-    @Override
     public RealWrapper neg() {
         return new RealWrapper(-value);
     }
 
-    @Override
-    public RealWrapper inverse() {
-        if (value == 0) {
-            throw  new InverseException(this);
-        }
-        return new RealWrapper(1/value);
-    }
-
-    @Override
     public String toString() {
         return String.valueOf(value);
     }
 
-    @Override
     public boolean equals(Object other) {
         if (!(other instanceof RealWrapper)) {
             return false;
@@ -131,7 +102,6 @@ public final class RealWrapper implements ArithmeticNumber<RealWrapper> {
         return ((RealWrapper) other).value == value;
     }
 
-    @Override
     public int hashCode() {
         return (int) value;
     }

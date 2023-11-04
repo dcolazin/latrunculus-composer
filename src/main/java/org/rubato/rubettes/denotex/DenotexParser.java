@@ -7,6 +7,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -303,7 +304,8 @@ public final class DenotexParser implements DenotexParserConstants {
         else if (s.equals("QString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            return StringRingRepository.getRing(QRing.ring);
+            //return StringRingRepository.getRing(QRing.ring);
+            return null; //TODO after StringRing refactoring
         }
         else if (s.equals("RString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
@@ -1277,8 +1279,7 @@ public final class DenotexParser implements DenotexParserConstants {
   final public LinkedList basicElement(Module m) throws ParseException {
         LinkedList elements = new LinkedList();
     if (jj_2_8(2)) {
-                   RationalWrapper q;
-      q = qLiteral();
+                   Rational q = qLiteral();
         try {
             int n = q.getNumerator();
             int d = q.getDenominator();
@@ -1295,7 +1296,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 elements.add(new ArithmeticElement<>(new ModulusWrapper(n, ((ZnRing)m).getModulus())));
             }
             else if (m instanceof QRing)
-                elements.add(new ArithmeticElement<>(new RationalWrapper(q)));
+                elements.add(q);
             else if (m instanceof RRing)
                 elements.add(new Real(((double)n / (double)d)));
 
@@ -1416,7 +1417,7 @@ public final class DenotexParser implements DenotexParserConstants {
     }
   }
 
-  final public RationalWrapper qLiteral() throws ParseException {
+  final public Rational qLiteral() throws ParseException {
     int n;
     int d = 1;
     n = zLiteral();
@@ -1429,7 +1430,7 @@ public final class DenotexParser implements DenotexParserConstants {
       jj_la1[37] = jj_gen;
       
     }
-      return new RationalWrapper(n, d);
+      return new Rational(n, d);
   }
 
   final public double rLiteral() throws ParseException {

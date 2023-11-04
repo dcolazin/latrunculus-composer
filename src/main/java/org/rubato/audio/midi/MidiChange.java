@@ -22,6 +22,7 @@ package org.rubato.audio.midi;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
@@ -38,7 +39,7 @@ public class MidiChange implements Comparable<MidiChange> {
     
     public MidiChange(FactorDenotator note, int resolution) {
         double   o = ((SimpleDenotator)note.getFactor(0)).getReal();
-        RationalWrapper p = ((SimpleDenotator)note.getFactor(1)).getRational();
+        Rational p = ((SimpleDenotator)note.getFactor(1)).getRational();
         int      l = ((SimpleDenotator)note.getFactor(2)).getInteger();
         double   d = ((SimpleDenotator)note.getFactor(3)).getReal();
         int      v = ((SimpleDenotator)note.getFactor(4)).getInteger();

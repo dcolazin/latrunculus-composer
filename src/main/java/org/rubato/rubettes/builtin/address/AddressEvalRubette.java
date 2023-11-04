@@ -46,6 +46,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -841,16 +842,16 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof QRing) {
-            VectorModule<ArithmeticElement<RationalWrapper>> m = (VectorModule<ArithmeticElement<RationalWrapper>>)module;
+            VectorModule<Rational> m = (VectorModule<Rational>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, QRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     QConfiguration config = (QConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<RationalWrapper>> list = new ArrayList<>(2);
-                        list.add(new ArithmeticElement<>(config.qpx.get(i)));
-                        list.add(new ArithmeticElement<>(config.qpy.get(i)));
+                        List<Rational> list = new ArrayList<>(2);
+                        list.add(config.qpx.get(i));
+                        list.add(config.qpy.get(i));
                         elementList.addElement(new Vector<>(QRing.ring, list));
                     }
                 }

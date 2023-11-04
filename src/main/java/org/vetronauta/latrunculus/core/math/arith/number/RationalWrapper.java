@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.core.exception.InverseException;
  * 
  * @author Gérard Milmeister
  */
-public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> {
+public final class RationalWrapper {
 
     //TODO quantization should be changed at factory level, not at class level
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
@@ -140,7 +140,6 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
     /**
      * Returns true iff this number is 0/1.
      */
-    @Override
     public boolean isZero() {
         return num == 0;
     }
@@ -153,22 +152,14 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
         return num == 1 && denom == 1;
     }
 
-    @Override
     public boolean isInvertible() {
         return !isZero();
     }
 
-    @Override
     public boolean isFieldElement() {
         return true;
     }
 
-    @Override
-    public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof RationalWrapper) && !this.isZero();
-    }
-
-    @Override
     public int compareTo(RationalWrapper r) {
         int a, b;
         a = num * r.getDenominator();
@@ -180,7 +171,6 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
     /**
      * Returns the sum of this number and <code>r</code>.
      */
-    @Override
     public RationalWrapper sum(RationalWrapper r) {
         return new RationalWrapper(num * r.denom + denom * r.num, denom * r.denom);
     }
@@ -196,7 +186,6 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
     /**
      * Returns the difference of this number and <code>r</code>.
      */
-    @Override
     public RationalWrapper difference(RationalWrapper r) {
         return new RationalWrapper(num * r.denom - denom * r.num, denom * r.denom);
     }
@@ -266,7 +255,7 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
      */
     public RationalWrapper inverse() {
         if (num == 0) {
-            throw new InverseException(this);
+            throw new UnsupportedOperationException("" + this);
         }
         if (num < 0) {
             return new RationalWrapper(-denom,-num); //TODO avoid check gcd
@@ -278,7 +267,6 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
     /**
      * Returns -this number.
      */
-    @Override
     public RationalWrapper neg() {
         return new RationalWrapper(-num, denom);
     }
@@ -334,7 +322,7 @@ public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> 
 
     
     public int intValue() {
-        return (int)Math.round(doubleValue());
+        return (int) Math.round(doubleValue());
     }
     
     public boolean isIntegral() {

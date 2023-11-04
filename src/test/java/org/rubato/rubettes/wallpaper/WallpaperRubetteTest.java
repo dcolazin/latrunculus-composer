@@ -35,6 +35,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -121,7 +122,7 @@ class WallpaperRubetteTest {
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
 		assertEquals(2, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
-		assertEquals(((ArithmeticElement<RationalWrapper>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new RationalWrapper(3));
+		assertEquals(((Rational) this.denotator.getElement(new int[]{0, 1, 0})), new Rational(3));
 	}
 
 	@Test
@@ -250,12 +251,12 @@ class WallpaperRubetteTest {
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
 		assertEquals(new RealWrapper(onsetValue), ((Real) factor.getElement(new int[]{0, 0})).getValue());
-		assertEquals(new RationalWrapper(pitchValue), ((ArithmeticElement<RationalWrapper>) factor.getElement(new int[]{1, 0})).getValue());
+		assertEquals(new Rational(pitchValue), (factor.getElement(new int[]{1, 0})));
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
 		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
-		assertEquals(((ArithmeticElement<RationalWrapper>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new RationalWrapper(0));
+		assertEquals((this.denotator.getElement(new int[]{0, 1, 0})), new Rational(0));
 		assertEquals(0, ((ArithmeticElement<IntegerWrapper>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
 		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 3, 0})).getValue());
 	}

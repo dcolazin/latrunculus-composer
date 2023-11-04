@@ -129,9 +129,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 if (val instanceof IntegerWrapper) {
                     return new ArithmeticElement<>((IntegerWrapper) val);
                 }
-                if (val instanceof RationalWrapper) {
-                    return new ArithmeticElement<>((RationalWrapper) val);
-                }
                 reader.setError("Unknown parsed class %%1", val.getClass());
                 return null;
             }

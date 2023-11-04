@@ -11,6 +11,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
@@ -46,10 +47,14 @@ public class ArithmeticParsingUtils {
             return parseArithmeticInteger(s);
         }
         if (parsingClass.equals(RationalWrapper.class)) {
-            return parseRational(s);
+            //TODO after complete refactoring of ArithmeticNumber
+            throw new UnsupportedOperationException("...");
+            //return parseRational(s);
         }
         if (parsingClass.equals(RealWrapper.class)) {
-            return parseArithmeticDouble(s);
+            //TODO after complete refactoring of ArithmeticNumber
+            throw new UnsupportedOperationException("...");
+            //return parseArithmeticDouble(s);
         }
         throw new NumberFormatException(String.format("parsing class %s is not supported", parsingClass));
     }
@@ -116,14 +121,14 @@ public class ArithmeticParsingUtils {
     /**
      * Returns the rational correspoding to its string representation <code>s</code>.
      */
-    public static RationalWrapper parseRational(String s) {
+    public static Rational parseRational(String s) {
         String unparenthesized = TextUtils.unparenthesize(s);
         int divpos = unparenthesized.indexOf("/");
         if (divpos > -1) {
             try {
                 int n = Integer.parseInt(unparenthesized.substring(0, divpos));
                 int d = Integer.parseInt(unparenthesized.substring(divpos + 1));
-                return new RationalWrapper(n,d);
+                return new Rational(n,d);
             }
             catch (Exception e) {
                 throw new NumberFormatException();
@@ -131,7 +136,7 @@ public class ArithmeticParsingUtils {
         }
         else {
             try {
-                return new RationalWrapper(Integer.parseInt(s));
+                return new Rational(Integer.parseInt(s));
             }
             catch (Exception e) {
                 throw new NumberFormatException();
@@ -154,10 +159,11 @@ public class ArithmeticParsingUtils {
         if (factorRing instanceof RRing) {
             return (RingString<N>) parseRString(s);
         }
-         */
         if (factorRing instanceof QRing) {
             return (RingString<N>) parseQString(s);
         }
+
+         */
         if (factorRing instanceof ZRing) {
             return (RingString<N>) parseZString(s);
         }
@@ -167,6 +173,8 @@ public class ArithmeticParsingUtils {
         throw new NumberFormatException(String.format("parsing string ring %s is not supported", ring));
     }
 
+    //TODO fix after RingString refactoring
+    /*
     public static RingString<RealWrapper> parseRString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -189,6 +197,10 @@ public class ArithmeticParsingUtils {
         return new RingString<>(words, factors);
     }
 
+     */
+
+    //TODO fix after RingString refactoring
+/*
     public static RingString<RationalWrapper> parseQString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -202,7 +214,8 @@ public class ArithmeticParsingUtils {
             if (term.length < 2) {
                 throw new NumberFormatException();
             }
-            RationalWrapper f = ArithmeticParsingUtils.parseRational(term[0]);
+            //RationalWrapper f = ArithmeticParsingUtils.parseRational(term[0]);
+            RationalWrapper f = null; //TODO after StringElement refactoring
             String w = TextUtils.unquote(term[1]);
             factors.add(f);
             words.add(w);
@@ -210,6 +223,8 @@ public class ArithmeticParsingUtils {
 
         return new RingString<>(words, factors);
     }
+
+ */
 
     public static RingString<IntegerWrapper> parseZString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');

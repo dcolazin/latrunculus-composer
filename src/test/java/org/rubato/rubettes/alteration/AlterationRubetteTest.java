@@ -25,6 +25,7 @@ import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -93,16 +94,16 @@ class AlterationRubetteTest {
 		this.morphisms.add(new AffineProjection<>(RRing.ring, new Vector<>(RRing.ring, realList1), RRing.ring.getZero()));
 		this.morphisms.add(new AffineProjection<>(RRing.ring, new Vector<>(RRing.ring, realList2), RRing.ring.getZero()));
 
-		List<RationalWrapper> rationalWrapperList1 = new ArrayList<>();
-		rationalWrapperList1.add(new RationalWrapper(3));
-		rationalWrapperList1.add(new RationalWrapper(5));
-		rationalWrapperList1.add(new RationalWrapper(7));
-		List<RationalWrapper> rationalWrapperList2 = new ArrayList<>();
-		rationalWrapperList2.add(new RationalWrapper(1));
-		rationalWrapperList2.add(new RationalWrapper(2));
-		rationalWrapperList2.add(new RationalWrapper(3));
-		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new Vector<>(QRing.ring, ArithmeticElement.listOf(rationalWrapperList1)), QRing.ring.getZero()));
-		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new Vector<>(QRing.ring, ArithmeticElement.listOf(rationalWrapperList2)), QRing.ring.getZero()));
+		List<Rational> rationalList1 = new ArrayList<>();
+		rationalList1.add(new Rational(3));
+		rationalList1.add(new Rational(5));
+		rationalList1.add(new Rational(7));
+		List<Rational> rationalList2 = new ArrayList<>();
+		rationalList2.add(new Rational(1));
+		rationalList2.add(new Rational(2));
+		rationalList2.add(new Rational(3));
+		this.morphisms.add(new AffineProjection<>(QRing.ring, new Vector<>(QRing.ring, rationalList1), QRing.ring.getZero()));
+		this.morphisms.add(new AffineProjection<>(QRing.ring, new Vector<>(QRing.ring, rationalList2), QRing.ring.getZero()));
 
 	}
 	

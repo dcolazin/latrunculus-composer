@@ -9,6 +9,7 @@ import org.rubato.rubettes.util.ObjectGenerator;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -42,7 +43,7 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 		try {
 			for (Denotator currentNote : score.getFactors()) {
 				double currentOnset = ((Real)currentNote.getElement(new int[]{0,0})).getValue();
-				double currentPitch = ((ArithmeticElement<RationalWrapper>)currentNote.getElement(new int[]{1,0})).getValue().doubleValue();
+				double currentPitch = ((Rational)currentNote.getElement(new int[]{1,0})).doubleValue();
 				double currentLoudness = ((ArithmeticElement<IntegerWrapper>)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
 				double currentDuration = ((Real)currentNote.getElement(new int[]{3,0})).getValue();
 				

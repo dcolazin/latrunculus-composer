@@ -6,6 +6,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -25,15 +26,15 @@ class PolynomialElementTest {
 
     private PolynomialRing<ArithmeticElement<IntegerWrapper>> intPolRing;
     private PolynomialRing<Real> realPolRing;
-    private PolynomialRing<ArithmeticElement<RationalWrapper>> ratPolRing;
+    private PolynomialRing<Rational> ratPolRing;
     
     private PolynomialElement<ArithmeticElement<IntegerWrapper>> i0, i1;
     private PolynomialElement<Real> r0, r1;
-    private PolynomialElement<ArithmeticElement<RationalWrapper>> q0, q1;
+    private PolynomialElement<Rational> q0, q1;
     
     private PolynomialElement<ArithmeticElement<IntegerWrapper>> ia, ib, ic, id;
     private PolynomialElement<Real> ra, rb, rc, rd;
-    private PolynomialElement<ArithmeticElement<RationalWrapper>> qa, qb, qc, qd;
+    private PolynomialElement<Rational> qa, qb, qc, qd;
 
     @BeforeEach
     void setUp() {
@@ -195,7 +196,7 @@ class PolynomialElementTest {
         assertEquals(i1.inverse(), i1);
         assertEquals(r1.inverse(), r1);
         assertEquals(q1.inverse(), q1);
-        assertEquals(qd.inverse(), new PolynomialElement<>(ratPolRing, new ArithmeticElement<>(new RationalWrapper(2, 3))));
+        assertEquals(qd.inverse(), new PolynomialElement<>(ratPolRing, new Rational(2, 3)));
     }
 
     @Test
@@ -205,9 +206,9 @@ class PolynomialElementTest {
         r1.invert();
         assertEquals(r1, new PolynomialElement<>(realPolRing, new Real(1)));
         q1.invert();
-        assertEquals(q1, new PolynomialElement<>(ratPolRing, new ArithmeticElement<>(new RationalWrapper(1))));
+        assertEquals(q1, new PolynomialElement<>(ratPolRing, new Rational(1)));
         qd.invert();
-        assertEquals(qd, new PolynomialElement<>(ratPolRing, new ArithmeticElement<>(new RationalWrapper(2, 3))));
+        assertEquals(qd, new PolynomialElement<>(ratPolRing, new Rational(2, 3)));
     }
 
     @Test
@@ -317,9 +318,9 @@ class PolynomialElementTest {
             assertEquals(r1.evaluate(new Real(-12)), new Real(1));
             assertEquals(rb.evaluate(new Real(-3.5)), new Real(-228.625));
 
-            assertEquals(q0.evaluate(new ArithmeticElement<>(new RationalWrapper(23))), new ArithmeticElement<>(new RationalWrapper(0)));
-            assertEquals(q1.evaluate(new ArithmeticElement<>(new RationalWrapper(-12))), new ArithmeticElement<>(new RationalWrapper(1)));
-            assertEquals(qb.evaluate(new ArithmeticElement<>(new RationalWrapper(1, 3))), new ArithmeticElement<>(new RationalWrapper(-25, 9)));
+            assertEquals(q0.evaluate(new Rational(23)), new Rational(0));
+            assertEquals(q1.evaluate(new Rational(-12)), new Rational(1));
+            assertEquals(qb.evaluate(new Rational(1, 3)), new Rational(-25, 9));
         }
         catch (DomainException e) {
             fail(e.getMessage());
@@ -388,8 +389,8 @@ class PolynomialElementTest {
         assertEquals(ra.getCoefficient(3), new Real((2)));
         assertEquals(rc.getCoefficient(4), new Real((0)));
 
-        assertEquals(qa.getCoefficient(3), new ArithmeticElement<>(new RationalWrapper(2)));
-        assertEquals(qc.getCoefficient(4), new ArithmeticElement<>(new RationalWrapper(0)));
+        assertEquals(qa.getCoefficient(3), new Rational(2));
+        assertEquals(qc.getCoefficient(4), new Rational(0));
     }
 
     @Test
@@ -408,12 +409,12 @@ class PolynomialElementTest {
         assertEquals(rc.getLeadingCoefficient(), new Real((24)));
         assertEquals(rd.getLeadingCoefficient(), new Real((2.3)));
 
-        assertEquals(q0.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(0)));
-        assertEquals(q1.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(1)));
-        assertEquals(qa.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(8)));
-        assertEquals(qb.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(3)));
-        assertEquals(qc.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(24)));
-        assertEquals(qd.getLeadingCoefficient(), new ArithmeticElement<>(new RationalWrapper(3, 2)));
+        assertEquals(q0.getLeadingCoefficient(), new Rational(0));
+        assertEquals(q1.getLeadingCoefficient(), new Rational(1));
+        assertEquals(qa.getLeadingCoefficient(), new Rational(8));
+        assertEquals(qb.getLeadingCoefficient(), new Rational(3));
+        assertEquals(qc.getLeadingCoefficient(), new Rational(24));
+        assertEquals(qd.getLeadingCoefficient(), new Rational(3, 2));
     }
 
     @Test

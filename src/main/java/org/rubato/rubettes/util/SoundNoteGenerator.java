@@ -6,6 +6,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -165,7 +166,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 	}
 	
 	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws RubatoException {
-		ArithmeticElement<RationalWrapper> modulatorPitch = new ArithmeticElement<>(new RationalWrapper(relativeFrequency));
+		Rational modulatorPitch = new Rational(relativeFrequency);
 		ArithmeticElement<IntegerWrapper> modulatorLoudness = new ArithmeticElement<>(new IntegerWrapper(relativeAmplitude));
 		List<Denotator> coordinates = new ArrayList<>();
 		coordinates.add(this.createSimpleDenotator(this.onsetForm, new Real((0))));

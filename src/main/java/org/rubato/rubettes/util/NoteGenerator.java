@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -198,7 +199,7 @@ public abstract class NoteGenerator {
 	public LimitDenotator createNoteDenotator(double onset, double pitch, int loudness, double duration, int voice) {
 		List<ModuleElement> elements = new ArrayList<>();
 		elements.add(new Real((onset)));
-		elements.add(new ArithmeticElement<>(new RationalWrapper(pitch)));
+		elements.add(new Rational(pitch));
 		elements.add(new ArithmeticElement<>(new IntegerWrapper(loudness)));
 		elements.add(new Real((duration)));
 		elements.add(new ArithmeticElement<>(new IntegerWrapper(voice)));

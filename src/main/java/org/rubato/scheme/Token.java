@@ -21,6 +21,7 @@ package org.rubato.scheme;
 
 import java.util.HashSet;
 
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
@@ -94,8 +95,8 @@ public final class Token {
     
     public static RationalWrapper toRational(String s) {
         try {
-            RationalWrapper q = ArithmeticParsingUtils.parseRational(s);
-            return q;
+            Rational q = ArithmeticParsingUtils.parseRational(s);
+            return new RationalWrapper(q.getNumerator(), q.getDenominator());
         }
         catch (NumberFormatException e) {
             return null;

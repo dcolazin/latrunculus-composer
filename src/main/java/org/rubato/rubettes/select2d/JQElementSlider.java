@@ -1,5 +1,8 @@
 package org.rubato.rubettes.select2d;
 
+import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -8,38 +11,46 @@ public class JQElementSlider extends JElementSlider {
 
     public JQElementSlider() {
         super();
-        min = new RationalWrapper(-10);
-        max = new RationalWrapper(10);
+        min = new Rational(-10);
+        max = new Rational(10);
         setMinField(min.toString());
         setMaxField(max.toString());
         setRange(0, MAX.intValue());
-        last = new RationalWrapper(0);
+        last = new Rational(0);
         setValue(toInteger(last));
     }
     
 
-    private RationalWrapper getRational() {
-        return (new RationalWrapper(getValue())).product(max.difference(min).quotient(MAX)).sum(min);
+    private Rational getRational() {
+        try {
+            return (new Rational(getValue())).product(max.difference(min).quotient(MAX)).sum(min);
+        } catch (DivisionException de) {
+            throw new LatrunculusRuntimeException(de);
+        }
     }
     
     
-    private int toInteger(RationalWrapper v) {
-        return (((v.difference(min)).product(MAX)).quotient(max.difference(min))).intValue();
+    private int toInteger(Rational v) {
+        try {
+            return (((v.difference(min)).product(MAX)).quotient(max.difference(min))).intValue();
+        } catch (DivisionException de) {
+            throw new LatrunculusRuntimeException(de);
+        }
     }
     
     
-    protected ArithmeticElement<RationalWrapper> getElement() {
-        return new ArithmeticElement<>(getRational());
+    protected Rational getElement() {
+        return getRational();
     }
 
 
     protected void maxFieldUpdate() {
-        RationalWrapper cur = getRational();
+        Rational cur = getRational();
         try {
             max = ArithmeticParsingUtils.parseRational(getMaxField());
         }
         catch (NumberFormatException e) {}
-        if (max.compareTo(min) <= 0) { max = min.sum(1); }
+        if (max.compareTo(min) <= 0) { max = min.sum(new Rational(1)); }
         setMaxField(max.toString());
         if (cur.compareTo(max) >= 0) {
             cur = max;
@@ -52,12 +63,12 @@ public class JQElementSlider extends JElementSlider {
 
 
     protected void minFieldUpdate() {
-        RationalWrapper cur = getRational();
+        Rational cur = getRational();
         try {
             min = ArithmeticParsingUtils.parseRational(getMinField());
         }
         catch (NumberFormatException e) {}
-        if (max.compareTo(min) <= 0) { min = max.difference(1); }
+        if (max.compareTo(min) <= 0) { min = max.difference(new Rational(1)); }
         setMinField(min.toString());
         if (cur.compareTo(max) >= 0) {
             cur = max;
@@ -70,7 +81,7 @@ public class JQElementSlider extends JElementSlider {
 
 
     protected void sliderUpdate() {
-        RationalWrapper cur = getRational();
+        Rational cur = getRational();
         if (!cur.equals(last)) {
             setCurrentField(cur.toString());
             fireActionPerformed();
@@ -79,9 +90,9 @@ public class JQElementSlider extends JElementSlider {
     }
     
     
-    private RationalWrapper min;
-    private RationalWrapper max;
-    private RationalWrapper last;
+    private Rational min;
+    private Rational max;
+    private Rational last;
     
-    private static final RationalWrapper MAX =  new RationalWrapper(256);
+    private static final Rational MAX =  new Rational(256);
 }

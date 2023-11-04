@@ -138,11 +138,6 @@ public class Real extends RingElement<Real> implements Arithmetic {
     }
 
     @Override
-    public double abs() {
-        return Math.abs(value);
-    }
-
-    @Override
     public int intValue() {
         return (int) value;
     }

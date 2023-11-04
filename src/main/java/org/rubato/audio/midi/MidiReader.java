@@ -30,6 +30,7 @@ import javax.sound.midi.*;
 
 import org.rubato.base.Repository;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
@@ -499,7 +500,7 @@ public class MidiReader {
      * Creates a Pitch denotator from a key event.
      */
     private Denotator makePitch(int key) {
-        return makeDenotator(pitchForm, new RationalWrapper(key));
+        return makeDenotator(pitchForm, new Rational(key));
     }
     
 

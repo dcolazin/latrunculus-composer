@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -494,8 +495,8 @@ public final class SimpleDenotator extends Denotator {
     /**
      * Returns the rational contained in a QElement denotator.
      */
-    public RationalWrapper getRational() {
-        return ((ArithmeticElement<RationalWrapper>)getElement()).getValue();
+    public Rational getRational() {
+        return ((Rational)getElement());
     }
     
     

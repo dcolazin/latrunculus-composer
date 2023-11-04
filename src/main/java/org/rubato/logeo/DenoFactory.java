@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -214,9 +215,9 @@ public final class DenoFactory {
      * @param r the rational number for the QElement
      * @return null if unsuccessful
      */
-    public static SimpleDenotator makeDenotator(NameDenotator name, Form form, RationalWrapper r) {
+    public static SimpleDenotator makeDenotator(NameDenotator name, Form form, Rational r) {
         try {
-            return new SimpleDenotator(name, (SimpleForm)form, new ArithmeticElement<>(r));
+            return new SimpleDenotator(name, (SimpleForm)form, r);
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -230,9 +231,9 @@ public final class DenoFactory {
      * @param r the rational number for the QElement
      * @return null if unsuccessful
      */
-    public static SimpleDenotator makeDenotator(String name, Form form, RationalWrapper r) {
+    public static SimpleDenotator makeDenotator(String name, Form form, Rational r) {
         try {
-            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, new ArithmeticElement<>(r));
+            return new SimpleDenotator(NameDenotator.make(name), (SimpleForm)form, r);
         }
         catch (ClassCastException | DomainException e) {
             return null;
@@ -244,9 +245,9 @@ public final class DenoFactory {
      * @param form the form of the new denotator
      * @param r the rational number for the QElement
      */
-    public static SimpleDenotator makeDenotator(Form form, RationalWrapper r) {
+    public static SimpleDenotator makeDenotator(Form form, Rational r) {
         try {
-            return new SimpleDenotator(null, (SimpleForm)form, new ArithmeticElement<>(r));
+            return new SimpleDenotator(null, (SimpleForm)form, r);
         }
         catch (ClassCastException | DomainException e) {
             return null;

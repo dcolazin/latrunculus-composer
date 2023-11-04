@@ -29,8 +29,8 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -39,12 +39,12 @@ public class RationalProperty
         extends RubetteProperty
         implements ActionListener, CaretListener {
 
-    public RationalProperty(String key, String name, RationalWrapper value, RationalWrapper min, RationalWrapper max) {
+    public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
         if (min.compareTo(max) > 0) {
-            RationalWrapper t = min;
+            Rational t = min;
             min = max;
             max = t;
         }
@@ -53,8 +53,8 @@ public class RationalProperty
     }
     
     
-    public RationalProperty(String key, String name, RationalWrapper value) {
-        this(key, name, value, new RationalWrapper(Integer.MIN_VALUE, 1), new RationalWrapper(Integer.MAX_VALUE, 1));
+    public RationalProperty(String key, String name, Rational value) {
+        this(key, name, value, new Rational(Integer.MIN_VALUE), new Rational(Integer.MAX_VALUE));
     }
     
     
@@ -73,18 +73,18 @@ public class RationalProperty
     
     
     public void setValue(Object value) {
-        if (value instanceof RationalWrapper) {
-            setRational((RationalWrapper)value);
+        if (value instanceof Rational) {
+            setRational((Rational)value);
         }
     }
     
     
-    public RationalWrapper getRational() {
+    public Rational getRational() {
         return value; 
     }
     
     
-    public void setRational(RationalWrapper value) {
+    public void setRational(Rational value) {
         if (value.compareTo(min) < 0) {
             value = min;
         }
@@ -120,7 +120,7 @@ public class RationalProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            RationalWrapper d = ArithmeticParsingUtils.parseRational(s);
+            Rational d = ArithmeticParsingUtils.parseRational(s);
             if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
                 tmpValue = d;
                 return;
@@ -170,10 +170,10 @@ public class RationalProperty
     }
 
     
-    private RationalWrapper value;
-    private RationalWrapper min;
-    private RationalWrapper max;
-    private RationalWrapper tmpValue;
+    private Rational value;
+    private Rational min;
+    private Rational max;
+    private Rational tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

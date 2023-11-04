@@ -19,18 +19,17 @@
 
 package org.rubato.util;
 
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 
 
 /**
@@ -108,12 +107,12 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         }
     };
 
-    private static final DoubleConverter<ArithmeticElement<RationalWrapper>> qconverter = new DoubleConverter<ArithmeticElement<RationalWrapper>>() {
-        public double toDouble(ArithmeticElement<RationalWrapper> x) {
-            return x.getValue().doubleValue();
+    private static final DoubleConverter<Rational> qconverter = new DoubleConverter<Rational>() {
+        public double toDouble(Rational x) {
+            return x.doubleValue();
         }
-        public ArithmeticElement<RationalWrapper> fromDouble(double x) {
-            return new ArithmeticElement<>(new RationalWrapper(x));
+        public Rational fromDouble(double x) {
+            return new Rational(x);
         }
     };
 }

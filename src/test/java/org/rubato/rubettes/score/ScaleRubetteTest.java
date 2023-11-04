@@ -32,6 +32,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -73,12 +74,12 @@ class ScaleRubetteTest {
 		double[] ionian = this.rubette.getScaleMap().get("ionian");
 		Iterator<Denotator> steps = scale.getFactors().iterator();
 		int[] path = new int[]{1,0};
-		double previousPitch = ((ArithmeticElement<RationalWrapper>)steps.next().getElement(path)).getValue().doubleValue();
+		double previousPitch = ((Rational)steps.next().getElement(path)).doubleValue();
 		double currentPitch;
 		//starts at 1, due to root note 59...
 		int currentStep = 1;
 		while (steps.hasNext()) {
-			currentPitch = ((ArithmeticElement<RationalWrapper>)steps.next().getElement(path)).getValue().doubleValue();
+			currentPitch = ((Rational)steps.next().getElement(path)).doubleValue();
 			assertEquals(currentPitch - previousPitch, ionian[currentStep % 7]);
 			previousPitch = currentPitch;
 			currentStep++;

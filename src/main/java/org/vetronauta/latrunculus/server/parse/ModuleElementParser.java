@@ -32,6 +32,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
@@ -198,10 +199,9 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<RationalWrapper> parseQ(String string) {
+    private static Rational parseQ(String string) {
         try {
-            RationalWrapper value = ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
-            return new ArithmeticElement<>(value);
+            return ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
         }
         catch (NumberFormatException e) {
             return null;

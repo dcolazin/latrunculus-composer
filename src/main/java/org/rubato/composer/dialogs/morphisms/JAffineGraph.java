@@ -21,19 +21,19 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
-import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ZnMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -163,12 +163,12 @@ class JAffineGraph
     }
 
     
-    public QMatrix getQMatrix() {
+    public Matrix<Rational> getQMatrix() {
         return ((QConfiguration)config).getQMatrix();
     }
     
     
-    public RationalWrapper[] getQVector() {
+    public Rational[] getQVector() {
         return ((QConfiguration)config).getQVector();
     }
 
@@ -475,8 +475,8 @@ class JAffineGraph
             px[i] = x;
             py[i] = y;
         }
-        public abstract ArithmeticNumber<?> getX(int i);
-        public abstract ArithmeticNumber<?> getY(int i);
+        public abstract RingElement getX(int i);
+        public abstract RingElement getY(int i);
     }
 
     public class RConfiguration extends Configuration {
@@ -492,11 +492,11 @@ class JAffineGraph
             double[] v = { px[0], py[0]};
             return v;
         }
-        public RealWrapper getX(int i) {
-            return new RealWrapper(px[i]);
+        public Real getX(int i) {
+            return new Real(px[i]);
         }
-        public RealWrapper getY(int i) {
-            return new RealWrapper(py[i]);
+        public Real getY(int i) {
+            return new Real(py[i]);
         }
     }
     
@@ -521,39 +521,39 @@ class JAffineGraph
             int[] v = { ipx[0], ipy[0]};
             return v;
         }
-        public IntegerWrapper getX(int i) {
-            return new IntegerWrapper(ipx[i]);
+        public ArithmeticElement<IntegerWrapper> getX(int i) {
+            return new ArithmeticElement<>(new IntegerWrapper(ipx[i]));
         }
-        public IntegerWrapper getY(int i) {
-            return new IntegerWrapper(ipy[i]);
+        public ArithmeticElement<IntegerWrapper> getY(int i) {
+            return new ArithmeticElement<>(new IntegerWrapper(ipy[i]));
         }
     }
     
     
     public class QConfiguration extends Configuration {
-        RationalWrapper[] qpx = { RationalWrapper.getZero(), RationalWrapper.getOne(), RationalWrapper.getZero() };
-        RationalWrapper[] qpy = { RationalWrapper.getZero(), RationalWrapper.getZero(), RationalWrapper.getOne() };
+        Rational[] qpx = { new Rational(0), new Rational(1), new Rational(0) };
+        Rational[] qpy = { new Rational(0), new Rational(0), new Rational(1) };
         public void setVertex(int i, double x, double y) {
-            qpx[i] = new RationalWrapper(x);
-            qpy[i] = new RationalWrapper(y);
+            qpx[i] = new Rational(x);
+            qpy[i] = new Rational(y);
             super.setVertex(i, qpx[i].doubleValue(), qpy[i].doubleValue());
         }
-        public QMatrix getQMatrix() {
-            RationalWrapper a = qpx[1].difference(qpx[0]);
-            RationalWrapper c = qpy[1].difference(qpy[0]);
-            RationalWrapper b = qpx[2].difference(qpx[0]);
-            RationalWrapper d = qpy[2].difference(qpy[0]);
-            RationalWrapper[][] v = {{a, b}, {c, d}};
-            return new QMatrix(v);
+        public Matrix<Rational> getQMatrix() {
+            Matrix<Rational> matrix = new ArrayMatrix<>(QRing.ring, 2, 2);
+            matrix.set(0, 0, qpx[1].difference(qpx[0]));
+            matrix.set(0, 1, qpx[2].difference(qpx[0]));
+            matrix.set(1, 0, qpy[1].difference(qpy[0]));
+            matrix.set(1, 1, qpy[2].difference(qpy[0]));
+            return matrix;
         }
-        public RationalWrapper[] getQVector() {
-            RationalWrapper[] v = { qpx[0], qpy[0]};
-            return v;
+
+        public Rational[] getQVector() {
+            return new Rational[]{qpx[0], qpy[0]};
         }
-        public RationalWrapper getX(int i) {
+        public Rational getX(int i) {
             return qpx[i];
         }
-        public RationalWrapper getY(int i) {
+        public Rational getY(int i) {
             return qpy[i];
         }
     }

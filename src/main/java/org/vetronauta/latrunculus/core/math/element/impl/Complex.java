@@ -173,7 +173,6 @@ public class Complex extends RingElement<Complex> implements Arithmetic {
         return real * real + imag * imag;
     }
 
-    @Override
     public double abs() {
         return Math.sqrt(norm());
     }

@@ -265,8 +265,8 @@ public class JSelectModule
             module = ArithmeticStringMultiModule.make(StringRingRepository.getModulusRing(getModulus()), dim);
             break;
         }
-        case QSTRING: {
-            module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(QRing.ring), dim);
+        case QSTRING: { //TODO after StringRing refactoring
+            //module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(QRing.ring), dim);
             break;
         }
         case RSTRING: { //TODO after StringRing refactoring

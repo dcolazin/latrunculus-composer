@@ -21,13 +21,13 @@ package org.rubato.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -760,16 +760,16 @@ abstract class RubatoPrimitives {
         if (element instanceof Complex) {
             return new SComplex(new ComplexWrapper(((Complex) element).getReal(), ((Complex) element).getImag()));
         }
+        if (element instanceof Real) {
+            return SReal.make(((Real) element).doubleValue());
+        }
+        if (element instanceof Rational) {
+            return SRational.make(new RationalWrapper(((Rational) element).getNumerator(), ((Rational) element).getDenominator()));
+        }
         if (element instanceof ArithmeticElement) {
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
             if (number instanceof IntegerWrapper || number instanceof ModulusWrapper) {
                 return new SInteger(number.intValue());
-            }
-            if (number instanceof RationalWrapper) {
-                return SRational.make((RationalWrapper) number);
-            }
-            if (number instanceof RealWrapper) {
-                return SReal.make(number.doubleValue());
             }
         } else if (element instanceof FreeElement) {
             FreeElement freeElement = (FreeElement)element;
@@ -797,7 +797,7 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(new IntegerWrapper(((SInteger)sexpr).getInt()));
         }
         else if (sexpr.isRational()) {
-            return new ArithmeticElement<>(((SRational)sexpr).getRational());
+            return new Rational(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
             return new Real((((SReal)sexpr).getDouble()));

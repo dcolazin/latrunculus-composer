@@ -24,8 +24,6 @@ package org.vetronauta.latrunculus.core.math.element.generic;
  */
 public interface Arithmetic {
 
-    double abs();
-
     int intValue();
 
     double doubleValue();

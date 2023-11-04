@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -78,8 +79,8 @@ public class FoldingModule {
     public static double[] foldRational(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<RationalWrapper> r = (ArithmeticElement<RationalWrapper>)elements[i];
-            res[i] = r.getValue().doubleValue();
+            Rational r = (Rational)elements[i];
+            res[i] = r.doubleValue();
         }
         return res;
     }
@@ -150,10 +151,10 @@ public class FoldingModule {
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<RationalWrapper>> r = ((Vector<ArithmeticElement<RationalWrapper>>)elements[i]).getValue();
+            List<Rational> r = ((Vector<Rational>)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; j < elements.length; j++) {
-                res[i][j] = r.get(j).getValue().doubleValue();
+                res[i][j] = r.get(j).doubleValue();
             }
         }
         return Folding.fold(res);

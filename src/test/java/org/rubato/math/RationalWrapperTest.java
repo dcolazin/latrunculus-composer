@@ -168,16 +168,6 @@ class RationalWrapperTest {
     }
 
     @Test
-    void testRationalParseRational() {
-        r = ArithmeticParsingUtils.parseRational("60/154");
-        assertEquals(new RationalWrapper(30, 77), r);
-        r = ArithmeticParsingUtils.parseRational("-60/154");
-        assertEquals(new RationalWrapper(-30, 77), r);
-        r = ArithmeticParsingUtils.parseRational("60/-154");
-        assertEquals(new RationalWrapper(-30, 77), r);
-    }
-
-    @Test
     void testRationalQuant() {
         double d1;
         d1 = 47.125;
