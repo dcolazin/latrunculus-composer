@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -88,8 +89,8 @@ class AlterationRubetteTest {
 		realList2.add(new Real(1));
 		realList2.add(new Real(2));
 		realList2.add(new Real(3));
-		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList1)), RRing.ring.getZero()));
-		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new ArithmeticMultiElement<>(RRing.ring, ArithmeticElement.listOf(realList2)), RRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new Vector<>(RRing.ring, ArithmeticElement.listOf(realList1)), RRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new Vector<>(RRing.ring, ArithmeticElement.listOf(realList2)), RRing.ring.getZero()));
 
 		List<Rational> rationalList1 = new ArrayList<>();
 		rationalList1.add(new Rational(3));
@@ -99,8 +100,8 @@ class AlterationRubetteTest {
 		rationalList2.add(new Rational(1));
 		rationalList2.add(new Rational(2));
 		rationalList2.add(new Rational(3));
-		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList1)), QRing.ring.getZero()));
-		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new ArithmeticMultiElement<>(QRing.ring, ArithmeticElement.listOf(rationalList2)), QRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new Vector<>(QRing.ring, ArithmeticElement.listOf(rationalList1)), QRing.ring.getZero()));
+		this.morphisms.add(new ArithmeticAffineProjection<>(QRing.ring, new Vector<>(QRing.ring, ArithmeticElement.listOf(rationalList2)), QRing.ring.getZero()));
 
 	}
 	

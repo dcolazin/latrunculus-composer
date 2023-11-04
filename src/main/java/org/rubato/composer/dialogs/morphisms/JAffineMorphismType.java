@@ -20,6 +20,7 @@
 package org.rubato.composer.dialogs.morphisms;
 
 import org.rubato.composer.Utilities;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
@@ -170,7 +171,7 @@ class JAffineMorphismType
             if (graph != null && (ring instanceof ArithmeticRing)) {
                     ArithmeticRing<?> arithmeticRing = (ArithmeticRing<?>) ring;
                     ArithmeticMatrix matrix = graph.getMatrix();
-                    ArithmeticMultiElement vector = graph.getVector();
+                    Vector vector = graph.getVector();
                     for (int i = 0; i < 2; i++) {
                         for (int j = 0; j < 2; j++) {
                             setMatrixEntry(i, j, matrix.get(i, j).toString());
@@ -227,7 +228,7 @@ class JAffineMorphismType
                 }
                 vector.add((ArithmeticElement) getValue(i));
             }
-            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, matrix, new ArithmeticMultiElement((ArithmeticRing) ring, vector));
+            return ArithmeticAffineFreeMorphism.make((ArithmeticRing) ring, matrix, new Vector<>(ring, vector));
         }
         GenericAffineMorphism m = GenericAffineMorphism.make(ring, cols, rows);
         for (int i = 0; i < rows; i++) {
@@ -325,7 +326,7 @@ class JAffineMorphismType
         if (morphism instanceof ArithmeticAffineMultiMorphism) {
             ArithmeticAffineMultiMorphism m = (ArithmeticAffineMultiMorphism)morphism;
             Matrix matrix = m.getMatrix();
-            ArithmeticMultiElement vector = m.getVector();
+            Vector vector = m.getVector();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     matrixEntries[i][j].setText(String.valueOf(matrix.get(i, j)));

@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -218,7 +219,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
     private static Endomorphism makeAffineFreeMorphism(int dim, List<ModuleMorphism> morphisms) {
         ArithmeticRing ring = (ArithmeticRing) morphisms.get(0).getDomain().getRing();
         ArrayMatrix A = new ArrayMatrix(ring, dim, dim);
-        List<ArithmeticElement> b = new ArrayList<>(dim);
+        List<RingElement> b = new ArrayList<>(dim);
         for (int i = 0; i < dim; i++) {
             b.add(null);
         }
@@ -227,7 +228,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
             //TODO injection/projection case
             if (m instanceof ArithmeticAffineMultiMorphism) {
                 Matrix A1 = ((ArithmeticAffineMultiMorphism)m).getMatrix();
-                ArithmeticMultiElement b1 = ((ArithmeticAffineMultiMorphism)m).getVector();
+                Vector b1 = ((ArithmeticAffineMultiMorphism)m).getVector();
                 int d = b1.getLength();
                 for (int j = 0; j < d; j++) {
                     for (int k = 0; k < d; k++) {
@@ -242,7 +243,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
                 b.set(i, ((ArithmeticAffineRingMorphism<ArithmeticInteger>)m).getB());
             }
         }
-        return new EndomorphismWrapper(ArithmeticAffineMultiMorphism.make(ring, A, new ArithmeticMultiElement(ring, b)));
+        return new EndomorphismWrapper(ArithmeticAffineMultiMorphism.make(ring, A, new Vector<>(ring, b)));
     }
 
     private SplitMorphism(FreeModule<A,RA> module, List<ModuleMorphism> morphisms) {

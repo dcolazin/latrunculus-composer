@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticMultiElement;
@@ -33,7 +34,7 @@ class ArbitraryDenotatorMapperTest {
 		List<ArithmeticElement<Real>> list = new ArrayList<>();
 		list.add(new ArithmeticElement<>(new Real(-1)));
 		list.add(new ArithmeticElement<>(new Real(-2)));
-		this.translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
+		this.translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 	}
 
 	@Test

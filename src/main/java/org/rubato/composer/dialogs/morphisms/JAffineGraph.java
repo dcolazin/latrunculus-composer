@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.Complex;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.CMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.QMatrix;
@@ -448,7 +449,7 @@ class JAffineGraph
             return null; //TODO make this class generic
         }
 
-        public ArithmeticMultiElement getVector() {
+        public Vector getVector() {
             return null; //TODO make this class generic
         }
         
@@ -585,7 +586,7 @@ class JAffineGraph
         return config.getMatrix();
     }
 
-    public ArithmeticMultiElement getVector() {
+    public Vector getVector() {
         return config.getVector();
     }
 }

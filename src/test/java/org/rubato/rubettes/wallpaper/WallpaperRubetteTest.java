@@ -34,6 +34,7 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
 import org.vetronauta.latrunculus.core.math.arith.number.Rational;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -103,7 +104,7 @@ class WallpaperRubetteTest {
 		List<ArithmeticElement<Real>> list = new ArrayList<>();
 		list.add(new ArithmeticElement<>(new Real(1)));
 		list.add(new ArithmeticElement<>(new Real(2)));
-		ModuleMorphism m = ArithmeticAffineFreeMorphism.make(RRing.ring, new RMatrix(new double[][]{{1,1},{1,1}}), new ArithmeticMultiElement<>(RRing.ring, list));
+		ModuleMorphism m = ArithmeticAffineFreeMorphism.make(RRing.ring, new RMatrix(new double[][]{{1,1},{1,1}}), new Vector<>(RRing.ring, list));
 		this.morphisms.add(m);
 	}
 	

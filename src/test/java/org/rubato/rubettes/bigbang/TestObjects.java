@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -245,7 +246,7 @@ public class TestObjects {
 		List<ArithmeticElement<Real>> list = new ArrayList<>();
 		list.add(new ArithmeticElement<>(new Real(x)));
 		list.add(new ArithmeticElement<>(new Real(y)));
-		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
+		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}
 	
@@ -254,7 +255,7 @@ public class TestObjects {
 		List<ArithmeticElement<Real>> list = new ArrayList<>();
 		list.add(new ArithmeticElement<>(new Real(0)));
 		list.add(new ArithmeticElement<>(new Real(0)));
-		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new ArithmeticMultiElement<>(RRing.ring, list));
+		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}
 	
