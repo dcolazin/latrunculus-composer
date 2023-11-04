@@ -27,9 +27,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -149,7 +149,7 @@ public class Dispatcher {
         addModule(QRing.class);
         addModule(CRing.class);
         
-        addModule(ArithmeticStringRing.class);
+        addModule(StringRing.class);
         addModule(VectorModule.class);
         addModule(StringVectorModule.class);
 

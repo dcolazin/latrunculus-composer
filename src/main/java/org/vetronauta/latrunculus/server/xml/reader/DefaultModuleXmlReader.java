@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
@@ -33,7 +34,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -89,8 +89,8 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         if (StringVectorModule.class.isAssignableFrom(clazz)) {
                 return readArithmeticStringMultiModule(element, clazz, reader);
            }
-        if (ArithmeticStringRing.class.isAssignableFrom(clazz)) {
-                return readArithmeticStringRing(element, clazz, reader);
+        if (StringRing.class.isAssignableFrom(clazz)) {
+                return readStringRing(element, clazz, reader);
            }
         if (DirectSumModule.class.isAssignableFrom(clazz)) {
                 return readDirectSumModule(element, clazz, reader);
@@ -229,19 +229,19 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
     }
 
     private <N extends ArithmeticNumber<N>> Module makeArithmeticMultiModule(ArithmeticRing<N> arithmeticRing, int dimension) {
-        return StringVectorModule.make(new ArithmeticStringRing<>(arithmeticRing), dimension);
+        return new StringVectorModule(new StringRing(arithmeticRing), dimension);
     }
 
-    private Module readArithmeticStringRing(Element element, Class<?> clazz, XMLReader reader) {
+    private Module readStringRing(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        return new ArithmeticStringRing(detectRing(element));
+        return new StringRing(detectRing(element));
     }
 
     private Module readDirectSumModule(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE);
         if (childElement != null) {
-            LinkedList<Module> elements = new LinkedList<Module>();
+            LinkedList<Module> elements = new LinkedList<>();
             Module module = reader.parseModule(childElement);
             if (module == null) {
                 return null;

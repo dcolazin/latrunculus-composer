@@ -118,4 +118,8 @@ public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
         return baseRing.hashCode();
     }
 
+    public String getElementTypeName() {
+        return this.toString();
+    }
+
 }

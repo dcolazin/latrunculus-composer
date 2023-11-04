@@ -42,7 +42,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -79,8 +78,8 @@ public final class ModuleElementParser {
         if (module instanceof StringVectorModule) {
             return (E) parse((StringVectorModule) module, s);
         }
-        if (module instanceof ArithmeticStringRing) {
-            return (E) parse((ArithmeticStringRing) module, s);
+        if (module instanceof StringRing) {
+            return (E) parse((StringRing) module, s);
         }
         if (module instanceof CRing) {
             return (E) parseC(s);

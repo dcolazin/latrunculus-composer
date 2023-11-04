@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import lombok.Getter;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.util.EntryList;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
@@ -45,21 +46,20 @@ import java.util.Set;
 public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends RingElement<ArithmeticStringElement<N>> {
 
     private final RingString<N> value;
-    private final ArithmeticStringRing<N> ring;
+    private Ring<?> ring;
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
      */
-    public ArithmeticStringElement(ArithmeticStringRing<N> ring, RingString<N> value) {
+    public ArithmeticStringElement(RingString<N> value) {
         this.value = value;
-        this.ring = ring;
     }
 
     /**
      * Constructs an RStringElement from an RString <code>value</code>.
      */
     public ArithmeticStringElement(ArithmeticRing<N> factorRing, RingString<N> value) {
-        this(StringRingRepository.getRing(factorRing), value);
+        this(value);
     }
 
     protected ArithmeticStringElement(ArithmeticRing<N> factorRing, EntryList<String,N> entryList) {

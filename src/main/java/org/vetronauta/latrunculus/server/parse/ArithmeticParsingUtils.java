@@ -3,13 +3,11 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -18,15 +16,12 @@ import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-
-import java.util.LinkedList;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArithmeticParsingUtils {

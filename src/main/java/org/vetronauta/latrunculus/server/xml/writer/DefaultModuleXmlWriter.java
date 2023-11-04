@@ -22,23 +22,22 @@ package org.vetronauta.latrunculus.server.xml.writer;
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
-import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.impl.QRing;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
@@ -80,12 +79,8 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((RRing) object, writer);
             return;
         }
-        if (object instanceof StringVectorModule) {
-            write((StringVectorModule) object, writer);
-            return;
-        }
-        if (object instanceof ArithmeticStringRing) {
-            write((ArithmeticStringRing) object, writer);
+        if (object instanceof StringRing) {
+            write((StringRing) object, writer);
             return;
         }
         if (object instanceof DirectSumModule) {
@@ -149,19 +144,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         writer.emptyWithType(MODULE, module.getElementTypeName());
     }
 
-    private void write(StringVectorModule module, XMLWriter writer) {
-        //TODO redo
-        /*
-        if (module.getRing().getFactorRing().getClass().isAssignableFrom(ZnRing.class)) {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ModulusWrapper)module.getRing().getFactorRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
-        } else {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
-        }
-
-         */
-    }
-
-    private void write(ArithmeticStringRing module, XMLWriter writer) {
+    private void write(StringRing module, XMLWriter writer) {
         writer.emptyWithType(MODULE, module.getElementTypeName());
     }
 

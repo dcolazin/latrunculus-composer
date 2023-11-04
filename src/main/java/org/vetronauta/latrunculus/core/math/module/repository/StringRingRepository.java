@@ -21,10 +21,10 @@ package org.vetronauta.latrunculus.core.math.module.repository;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 
 import java.util.HashMap;
@@ -38,24 +38,18 @@ public class StringRingRepository {
 
     //TODO make this a proper object to inject when needed
 
-    //TODO redo everything after StringRing refactoring
+    private static final Map<Integer, StringRing<Modulus>> modRingMap = new HashMap<>();
+    private static final Map<Ring, StringRing> stringRingMap = new HashMap<>();
 
-    //private static final Map<Integer, ArithmeticStringRing<ModulusWrapper>> modRingMap = new HashMap<>();
-    private static final Map<ArithmeticRing, ArithmeticStringRing> stringRingMap = new HashMap<>();
-
-    public static ArithmeticStringRing<?> getModulusRing(int modulus) {
-        return null;
-        //return modRingMap.computeIfAbsent(modulus, x -> new ArithmeticStringRing<>(RingRepository.getModulusRing(modulus)));
+    public static StringRing<Modulus> getModulusRing(int modulus) {
+        return modRingMap.computeIfAbsent(modulus, x -> new StringRing<>(RingRepository.getModulusRing(modulus)));
     }
 
-    public static <N extends ArithmeticNumber<N>> ArithmeticStringRing<N> getRing(ArithmeticRing<N> factorRing) {
-        /*
+    public static <R extends RingElement<R>> StringRing<R> getRing(Ring<R> factorRing) {
         if (factorRing instanceof ZnRing) {
-            return (ArithmeticStringRing<N>) getModulusRing((((ZnRing) factorRing).getModulus()));
+            return (StringRing<R>) getModulusRing((((ZnRing) factorRing).getModulus()));
         }
-
-         */
-        return stringRingMap.computeIfAbsent(factorRing, ArithmeticStringRing::new);
+        return stringRingMap.computeIfAbsent(factorRing, StringRing::new);
     }
 
 }
