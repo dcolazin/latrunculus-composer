@@ -23,6 +23,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -30,7 +31,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
@@ -40,6 +40,7 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFr
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -58,8 +59,8 @@ public final class ModuleElementRepresenter {
         if (element instanceof Vector) {
             return toString((Vector<?>) element, parenthesis);
         }
-        if (element instanceof ArithmeticStringElement) {
-            return (stringRepresentation(((ArithmeticStringElement<?>) element).getValue()));
+        if (element instanceof StringMap) {
+            return (stringRepresentation(((StringMap<?>) element).getTerms()));
         }
         if (element instanceof ArithmeticStringMultiElement) {
             return toString((ArithmeticStringMultiElement<?>) element, parenthesis);
@@ -282,16 +283,16 @@ public final class ModuleElementRepresenter {
         }
     }
 
-    public static String stringRepresentation(RingString ringString) {
+    public static String stringRepresentation(Map<String,?> map) {
         String word;
         Object factor;
         StringBuilder buf = new StringBuilder();
-        Set<String> keyset = ringString.getStrings();
+        Set<String> keyset = map.keySet();
         if (keyset.isEmpty()) return "Null";
         Iterator<String> keys = keyset.iterator();
         if (keys.hasNext()) {
             word = keys.next();
-            factor = ringString.getFactorForString(word);
+            factor = map.get(word);
             buf.append(factor);
             buf.append("*");
             buf.append("\"");
@@ -299,7 +300,7 @@ public final class ModuleElementRepresenter {
             buf.append("\"");
             while (keys.hasNext()) {
                 word = keys.next();
-                factor = ringString.getFactorForString(word);
+                factor = map.get(word);
                 buf.append("+");
                 buf.append(factor);
                 buf.append("*");

@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 import java.util.List;
@@ -29,18 +30,54 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
+public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
 
-    public abstract R getOne();
+    private final Ring<R> baseRing;
+
+    public StringRing(Ring<R> baseRing) {
+        this.baseRing = baseRing;
+    }
+
+    @Override
+    public StringMap<R> getOne() {
+        return new StringMap<>(baseRing.getOne());
+    }
+
+    @Override
+    public boolean isField() {
+        return false;
+    }
+
+    @Override
+    public FreeModule<?, StringMap<R>> getFreeModule(int dimension) {
+        return null; //TODO after refactoring
+    }
+
+    @Override
+    public StringMap<R> getZero() {
+        return new StringMap<>(baseRing);
+    }
+
+    @Override
+    public Module<?, StringMap<R>> getNullModule() {
+        return null; //TODO after refactoring
+    }
 
     @Override
     public StringRing<R> getComponentModule(int i) {
         return this;
     }
+
+    @Override
+    public StringMap<R> cast(ModuleElement<?, ?> element) {
+        return null; //TODO consider extracting the map into a class
+    }
+
+    public boolean hasElement(ModuleElement e) {
+        return e instanceof StringMap && this.equals(((StringMap<?>) e).getRing());
+    }
     
-    public abstract boolean hasElement(ModuleElement e);
-    
-    public R createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public StringMap<R> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -48,11 +85,18 @@ public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
             return null;
         }
     }
-    
+
+    @Override
+    public String toVisualString() {
+        return String.format("%s-String", baseRing.toVisualString());
+    }
+
     /**
      * Returns the ring of the factors.
      */
-    public abstract Ring<?> getFactorRing();
+    public Ring<R> getFactorRing() {
+        return baseRing;
+    }
     
     public int compareTo(Module object) {
         if (object instanceof StringRing) {
@@ -63,7 +107,15 @@ public abstract class StringRing<R extends StringElement<R>> extends Ring<R> {
             return super.compareTo(object);
         }
     }
-    
-    public abstract boolean equals(Object obj);
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof StringRing && baseRing.equals(((StringRing<?>) obj).baseRing);
+    }
+
+    @Override
+    public int hashCode() {
+        return baseRing.hashCode();
+    }
 
 }

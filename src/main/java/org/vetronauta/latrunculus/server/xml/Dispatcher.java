@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -27,7 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -167,7 +167,7 @@ public class Dispatcher {
         //TODO DirectSumElement, ProductElement, ProductProperFreeElement are not registered
         addModuleElement(ArithmeticElement.class);
         addModuleElement(Vector.class);
-        addModuleElement(ArithmeticStringElement.class);
+        addModuleElement(StringMap.class);
         addModuleElement(ArithmeticStringMultiElement.class);
 
         addModuleElement(PolynomialElement.class);

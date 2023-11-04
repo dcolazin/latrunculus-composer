@@ -19,12 +19,12 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -86,8 +86,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
             return readVector(element, clazz, reader);
         }
-        if (ArithmeticStringElement.class.isAssignableFrom(clazz)) {
-            return readArithmeticStringElement(element, clazz, reader);
+        if (StringMap.class.isAssignableFrom(clazz)) {
+            return readStringMap(element, clazz, reader);
         }
         if (ArithmeticStringMultiElement.class.isAssignableFrom(clazz)) {
             return readArithmeticStringMultiElement(element, clazz, reader);
@@ -232,7 +232,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         return new Vector<>(RingRepository.getModulusRing(mod), intValues);
     }
 
-    private ModuleElement readArithmeticStringElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ModuleElement readStringMap(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, WORD);
         if (childElement != null) {

@@ -2,23 +2,21 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
@@ -1303,8 +1301,8 @@ public final class DenotexParser implements DenotexParserConstants {
             // we also allow to convert numbers into strings without quotes
             else {
                 String s = String.valueOf((double) n / (double) d);
-                if (m instanceof ArithmeticStringRing) {
-                    elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), s));
+                if (m instanceof StringRing) {
+                    elements.add(new StringMap<>(((StringRing<?>) m).getFactorRing(), s));
                 } else {
                     throw parseError("");
                 }
@@ -1319,8 +1317,8 @@ public final class DenotexParser implements DenotexParserConstants {
         try {
             if (m instanceof RRing) {
                 elements.add(new Real((r)));
-            } else if (m instanceof ArithmeticStringRing) { // we also allow to convert numbers into strings without quotes
-                elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), String.valueOf(r)));
+            } else if (m instanceof StringRing) { // we also allow to convert numbers into strings without quotes
+                elements.add(new StringMap<>(((StringRing<?>) m).getFactorRing(), String.valueOf(r)));
             } else {
                 throw parseError("");
             }
@@ -1348,8 +1346,8 @@ public final class DenotexParser implements DenotexParserConstants {
       String s;
         s = sLiteral();
         try {
-            if (m instanceof ArithmeticStringRing) {
-                elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), s));
+            if (m instanceof StringRing) {
+                elements.add(new StringMap<>(((StringRing<?>) m).getFactorRing(), s));
             } else {
                 throw parseError("Expected StringElement, got " + s);
             }

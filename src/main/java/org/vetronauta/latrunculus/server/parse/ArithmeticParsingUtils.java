@@ -10,12 +10,14 @@ import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -157,8 +159,8 @@ public class ArithmeticParsingUtils {
         return null; //TODO
     }
 
-    public static <N extends ArithmeticNumber<N>> RingString<N> parseString(ArithmeticStringRing<N> ring, String s) {
-        ArithmeticRing<N> factorRing = ring.getFactorRing();
+    public static <R extends RingElement<R>> StringMap<R> parseString(StringRing<R> ring, String s) {
+        Ring<R> factorRing = ring.getFactorRing();
         //TODO fix after RingString refactoring
         /*
         if (factorRing instanceof RRing) {

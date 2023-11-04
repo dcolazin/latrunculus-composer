@@ -23,13 +23,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
@@ -46,9 +43,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeM
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringMultiModule;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
@@ -173,9 +168,9 @@ public final class ModuleElementParser {
         }
     }
 
-    private static <N extends ArithmeticNumber<N>> ArithmeticStringElement<N> parse(ArithmeticStringRing<N> module, String string) {
+    private static <R extends RingElement<R>> StringMap<R> parse(StringRing<R> module, String string) {
         try {
-            return new ArithmeticStringElement<>(module, ArithmeticParsingUtils.parseString(module, TextUtils.unparenthesize(string)));
+            return ArithmeticParsingUtils.parseString(module, TextUtils.unparenthesize(string));
         } catch (Exception e) {
             return null;
         }

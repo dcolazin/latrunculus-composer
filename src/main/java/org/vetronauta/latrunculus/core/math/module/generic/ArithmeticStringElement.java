@@ -42,7 +42,7 @@ import java.util.Set;
  * @author vetronauta
  */
 @Getter
-public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends StringElement<ArithmeticStringElement<N>> {
+public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends RingElement<ArithmeticStringElement<N>> {
 
     private final RingString<N> value;
     private final ArithmeticStringRing<N> ring;
@@ -114,6 +114,11 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         multiply(element);
     }
 
+    @Override
+    public boolean isInvertible() {
+        return false;
+    }
+
     public ArithmeticStringElement<N> product(ArithmeticStringElement<N> element) {
         return new ArithmeticStringElement<>(ring, getValue().product(element.getValue()));
     }
@@ -162,7 +167,6 @@ public class ArithmeticStringElement<N extends ArithmeticNumber<N>> extends Stri
         return getValue();
     }
 
-    @Override
     public Map<String, RingElement> getTerms() {
         HashMap<String,RingElement> map = new HashMap<>();
         Set<String> strings = getValue().getStrings();

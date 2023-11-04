@@ -94,12 +94,16 @@ public class ArithmeticStringRing<N extends ArithmeticNumber<N>> extends StringR
 
     @Override
     public ArithmeticStringElement<N> cast(ModuleElement element) {
+        return null; //TODO soon to be deprecated
+        /*
         if (element instanceof StringElement) {
             RingString rs = ((StringElement)element).getRingString();
             return new ArithmeticStringElement<>(this, new RingString<>(rs));
         }
         ArithmeticElement<N> e = factorRing.cast(element);
         return e != null ? new ArithmeticStringElement<>(this, new RingString<>(e.getValue())) : null;
+
+         */
     }
 
     @Override

@@ -29,35 +29,11 @@ import java.util.Map;
  * 
  * @author Gérard Milmeister
  */
-public abstract class StringElement<R extends RingElement<R>> extends RingElement<R> {
-
-    /**
-     * Convenience method for getting the string in a <code>StringElement</code>.
-     * Only useful if the <code>RingString</code> has only one term.
-     */
-    public String getString() {
-        return getRingString().getString();
-    }
-
-    
-    /**
-     * Returns the underlying <code>RingString</code>.
-     */
-    public abstract RingString getRingString();
-
-    
-    public boolean isInvertible() {
-        return isOne();
-    }
-    
+public abstract class StringElement<R extends RingElement<R>> extends RingElement<StringElement<R>> {
     
     /**
      * Returns the terms of the string as a map from strings to factors.
      */
     public abstract Map<String,RingElement> getTerms(); //TODO proper signature
-    
-    @Override
-    public int hashCode() {
-        return getRingString().hashCode();
-    }
+
 }

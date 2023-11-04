@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -30,7 +29,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringElement;
 
 /**
  * @author vetronauta
