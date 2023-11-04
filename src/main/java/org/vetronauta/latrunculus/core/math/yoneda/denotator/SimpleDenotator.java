@@ -33,6 +33,7 @@ import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -472,7 +473,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the integer contained in a ZElement denotator.
      */
     public int getInteger() {
-        return ((ArithmeticElement<IntegerWrapper>)getElement()).getValue().intValue();
+        return ((ZInteger)getElement()).intValue();
     }
 
 
@@ -511,8 +512,9 @@ public final class SimpleDenotator extends Denotator {
     /**
      * Returns the ZString contained in a ZStringElement denotator.
      */
-    public RingString<IntegerWrapper> getZString() {
-        return ((ArithmeticStringElement<IntegerWrapper>)getElement()).getValue();
+    public RingString<?> getZString() {
+        return null; //TODO after RingString refactoring
+        //return ((ArithmeticStringElement<IntegerWrapper>)getElement()).getValue();
     }
 
 

@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
@@ -75,11 +76,8 @@ public class ModuloMorphism extends ModuleMorphism {
     
     public ModuleElement map(ModuleElement x) throws MappingException {
         if (dimension == 1) {
-            if (x instanceof ArithmeticElement) {
-                ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
-                if (number instanceof IntegerWrapper) {
-                    return new ArithmeticElement<>(new ModulusWrapper(number.intValue(), modulus));
-                }
+            if (x instanceof ZInteger) {
+                return new ArithmeticElement<>(new ModulusWrapper(((ZInteger) x).intValue(), modulus));
             }
         }
         else if (x instanceof Vector && ((Vector<?>) x).getRing() instanceof ZRing) {

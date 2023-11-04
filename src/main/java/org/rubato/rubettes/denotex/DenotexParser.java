@@ -9,6 +9,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -297,7 +298,8 @@ public final class DenotexParser implements DenotexParserConstants {
         if (s.equals("ZString") || s.equals("ZASCII")) {
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
             if (sub == -1)   {
-                return StringRingRepository.getRing(ZRing.ring);
+                //return StringRingRepository.getRing(ZRing.ring);
+                return null; //TODO after StringRing refactoring
             }
             return StringRingRepository.getModulusRing(sub);
         }
@@ -1287,7 +1289,7 @@ public final class DenotexParser implements DenotexParserConstants {
                 if (d != 1) {
                     throw parseError("");
                 }
-                elements.add(new ArithmeticElement<>(new IntegerWrapper(n)));
+                elements.add(new ZInteger(n));
             }
             else if (m instanceof ZnRing) {
                 if (d != 1) {

@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -98,12 +99,12 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         }
     };
 
-    private static final DoubleConverter<ArithmeticElement<IntegerWrapper>> zconverter = new DoubleConverter<ArithmeticElement<IntegerWrapper>>() {
-        public double toDouble(ArithmeticElement<IntegerWrapper> x) {
-            return x.getValue().doubleValue();
+    private static final DoubleConverter<ZInteger> zconverter = new DoubleConverter<ZInteger>() {
+        public double toDouble(ZInteger x) {
+            return x.doubleValue();
         }
-        public ArithmeticElement<IntegerWrapper> fromDouble(double x) {
-            return new ArithmeticElement<>(new IntegerWrapper((int) Math.round(x)));
+        public ZInteger fromDouble(double x) {
+            return new ZInteger((int) Math.round(x));
         }
     };
 

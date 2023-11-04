@@ -8,6 +8,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -24,15 +25,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class PolynomialElementTest {
 
-    private PolynomialRing<ArithmeticElement<IntegerWrapper>> intPolRing;
+    private PolynomialRing<ZInteger> intPolRing;
     private PolynomialRing<Real> realPolRing;
     private PolynomialRing<Rational> ratPolRing;
     
-    private PolynomialElement<ArithmeticElement<IntegerWrapper>> i0, i1;
+    private PolynomialElement<ZInteger> i0, i1;
     private PolynomialElement<Real> r0, r1;
     private PolynomialElement<Rational> q0, q1;
     
-    private PolynomialElement<ArithmeticElement<IntegerWrapper>> ia, ib, ic, id;
+    private PolynomialElement<ZInteger> ia, ib, ic, id;
     private PolynomialElement<Real> ra, rb, rc, rd;
     private PolynomialElement<Rational> qa, qb, qc, qd;
 
@@ -202,7 +203,7 @@ class PolynomialElementTest {
     @Test
     void testInvert() {
         i1.invert();
-        assertEquals(i1, new PolynomialElement<>(intPolRing, new ArithmeticElement<>(new IntegerWrapper(1))));
+        assertEquals(i1, new PolynomialElement<>(intPolRing, new ZInteger(1)));
         r1.invert();
         assertEquals(r1, new PolynomialElement<>(realPolRing, new Real(1)));
         q1.invert();
@@ -310,9 +311,9 @@ class PolynomialElementTest {
     @Test
     void testEvaluate() {
         try {
-            assertEquals(i0.evaluate(new ArithmeticElement<>(new IntegerWrapper(23))), new ArithmeticElement<>(new IntegerWrapper(0)));
-            assertEquals(i1.evaluate(new ArithmeticElement<>(new IntegerWrapper(-12))), new ArithmeticElement<>(new IntegerWrapper(1)));
-            assertEquals(ib.evaluate(new ArithmeticElement<>(new IntegerWrapper(-3))), new ArithmeticElement<>(new IntegerWrapper(-155)));
+            assertEquals(i0.evaluate(new ZInteger(23)), new ZInteger(0));
+            assertEquals(i1.evaluate(new ZInteger(-12)), new ZInteger(1));
+            assertEquals(ib.evaluate(new ZInteger(-3)), new ZInteger(-155));
 
             assertEquals(r0.evaluate(new Real(23)), new Real(0));
             assertEquals(r1.evaluate(new Real(-12)), new Real(1));
@@ -383,8 +384,8 @@ class PolynomialElementTest {
 
     @Test
     void testGetCoefficient() {
-        assertEquals(ia.getCoefficient(3), new ArithmeticElement<>(new IntegerWrapper(2)));
-        assertEquals(ic.getCoefficient(4), new ArithmeticElement<>(new IntegerWrapper(0)));
+        assertEquals(ia.getCoefficient(3), new ZInteger(2));
+        assertEquals(ic.getCoefficient(4), new ZInteger(0));
         
         assertEquals(ra.getCoefficient(3), new Real((2)));
         assertEquals(rc.getCoefficient(4), new Real((0)));
@@ -395,12 +396,12 @@ class PolynomialElementTest {
 
     @Test
     void testGetLeadingCoefficient() {
-        assertEquals(i0.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(0)));
-        assertEquals(i1.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(1)));
-        assertEquals(ia.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(8)));
-        assertEquals(ib.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(3)));
-        assertEquals(ic.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(24)));
-        assertEquals(id.getLeadingCoefficient(), new ArithmeticElement<>(new IntegerWrapper(10)));
+        assertEquals(i0.getLeadingCoefficient(), new ZInteger(0));
+        assertEquals(i1.getLeadingCoefficient(), new ZInteger(1));
+        assertEquals(ia.getLeadingCoefficient(), new ZInteger(8));
+        assertEquals(ib.getLeadingCoefficient(), new ZInteger(3));
+        assertEquals(ic.getLeadingCoefficient(), new ZInteger(24));
+        assertEquals(id.getLeadingCoefficient(), new ZInteger(10));
 
         assertEquals(r0.getLeadingCoefficient(), new Real((0)));
         assertEquals(r1.getLeadingCoefficient(), new Real((1)));

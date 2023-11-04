@@ -34,6 +34,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -458,10 +459,10 @@ public class JMorphismDialog
                                 domain.getDimension() == 2 && codomain.getDimension() == 2) {
                             items.add(GEOMETRY_TYPE);  //TODO will not work before ArithmeticNumber refactoring
                         }
-                        if (domainNumber instanceof IntegerWrapper &&
+                        if (domainRing.equals(ZRing.ring) &&
                                 codomain instanceof FreeModule &&
                                 codomainNumber instanceof ModulusWrapper && (domain.getDimension() == codomain.getDimension())) {
-                            items.add(MODULO_TYPE);
+                            items.add(MODULO_TYPE); //TODO will not work before ArithmeticNumber refactoring
                         }
                     }
                 }

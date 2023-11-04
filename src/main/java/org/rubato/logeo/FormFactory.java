@@ -98,7 +98,8 @@ public final class FormFactory {
      * @param name the name of the new form
      */
     public static SimpleForm makeZStringModuleForm(String name) {
-        return new SimpleForm(NameDenotator.make(name), StringRingRepository.getRing(ZRing.ring));
+        return null; //TODO after StringRing refactoring
+        //return new SimpleForm(NameDenotator.make(name), StringRingRepository.getRing(ZRing.ring));
     }
 
 

@@ -48,6 +48,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -858,16 +859,16 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZRing) {
-            VectorModule<ArithmeticElement<IntegerWrapper>> m = (VectorModule<ArithmeticElement<IntegerWrapper>>) module;
+            VectorModule<ZInteger> m = (VectorModule<ZInteger>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, ZRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<IntegerWrapper>> pList = new ArrayList<>();
-                        pList.add(new ArithmeticElement<>(new IntegerWrapper(config.ipx.get(i))));
-                        pList.add(new ArithmeticElement<>(new IntegerWrapper(config.ipy.get(i))));
+                        List<ZInteger> pList = new ArrayList<>();
+                        pList.add(new ZInteger(config.ipx.get(i)));
+                        pList.add(new ZInteger(config.ipy.get(i)));
                         elementList.addElement(new Vector<>(ZRing.ring, pList));
                     }
                 }

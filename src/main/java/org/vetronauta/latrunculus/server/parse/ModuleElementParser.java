@@ -34,6 +34,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -208,10 +209,10 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<IntegerWrapper> parseZ(String s) {
+    private static ZInteger parseZ(String s) {
         try {
             int value = Integer.parseInt(TextUtils.unparenthesize(s));
-            return new ArithmeticElement<>(new IntegerWrapper(value));
+            return new ZInteger(value);
         }
         catch (NumberFormatException e) {
             return null;

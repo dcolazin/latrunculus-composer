@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -67,8 +68,8 @@ class JGraphSelect
         if (ring instanceof ZRing || ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<IntegerWrapper>> p = ((Vector<ArithmeticElement<IntegerWrapper>>)m).getValue();
-                config.addPoint(p.get(0).getValue().intValue(), p.get(1).getValue().intValue());
+                List<ZInteger> p = ((Vector<ZInteger>)m).getValue();
+                config.addPoint(p.get(0).intValue(), p.get(1).intValue());
             }
         }
         else if (ring instanceof QRing) {
@@ -411,11 +412,11 @@ class JGraphSelect
             ipy.remove(i);
             super.removePoint(i);
         }
-        public ArithmeticElement<IntegerWrapper> getX(int i) {
-            return new ArithmeticElement<>(new IntegerWrapper(ipx.get(i)));
+        public ZInteger getX(int i) {
+            return new ZInteger(ipx.get(i));
         }
-        public ArithmeticElement<IntegerWrapper> getY(int i) {
-            return new ArithmeticElement<>(new IntegerWrapper(ipy.get(i)));
+        public ZInteger getY(int i) {
+            return new ZInteger(ipy.get(i));
         }
     }
     

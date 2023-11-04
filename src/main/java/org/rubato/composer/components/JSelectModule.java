@@ -257,8 +257,8 @@ public class JSelectModule
             module = new VectorModule<>(CRing.ring, dim);
             break;
         }
-        case ZSTRING: {
-            module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), dim);
+        case ZSTRING: { //TODO after StringRing refactoring
+            //module = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), dim);
             break;
         }
         case ZNSTRING: {

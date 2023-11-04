@@ -19,14 +19,14 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
@@ -36,30 +36,40 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZRing extends ArithmeticRing<IntegerWrapper> implements NumberRing {
+public final class ZRing extends Ring<ZInteger> implements NumberRing {
 
     /**
      * The unique instance of the ring of integers.
      */
     public static final ZRing ring = new ZRing();
-    public static final VectorModule<ArithmeticElement<IntegerWrapper>> nullModule = new VectorModule<>(ring, 0);
+    public static final VectorModule<ZInteger> nullModule = new VectorModule<>(ring, 0);
 
-    private ZRing() {
-        super(new IntegerWrapper(0), new IntegerWrapper(1));
+    @Override
+    public ZInteger getZero() {
+        return new ZInteger(0);
     }
 
     @Override
-    public VectorModule<ArithmeticElement<IntegerWrapper>> getNullModule() {
+    public VectorModule<ZInteger> getNullModule() {
         return nullModule;
     }
     
     @Override
     public boolean hasElement(ModuleElement<?,?> element) {
-        return (element instanceof ArithmeticElement) && (((ArithmeticElement<?>)element).getValue() instanceof IntegerWrapper);
+        return element instanceof ZInteger;
     }
 
-    
-    public FreeModule<?, ArithmeticElement<IntegerWrapper>> getFreeModule(int dimension) {
+    @Override
+    public ZInteger getOne() {
+        return new ZInteger(1);
+    }
+
+    @Override
+    public boolean isField() {
+        return false;
+    }
+
+    public FreeModule<?, ZInteger> getFreeModule(int dimension) {
         return new VectorModule<>(ring, dimension);
     }
 
@@ -81,7 +91,7 @@ public final class ZRing extends ArithmeticRing<IntegerWrapper> implements Numbe
     }
 
     @Override
-    public ArithmeticElement<IntegerWrapper> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public ZInteger createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -89,19 +99,14 @@ public final class ZRing extends ArithmeticRing<IntegerWrapper> implements Numbe
     }
 
     @Override
-    public ArithmeticElement<IntegerWrapper> cast(ModuleElement<?,?> element) {
-        if (element instanceof ArithmeticElement) {
-            return cast((ArithmeticElement<?>) element);
+    public ZInteger cast(ModuleElement<?,?> element) {
+        if (element instanceof Arithmetic) {
+            return new ZInteger(((Arithmetic) element).intValue());
         }
         if (element instanceof DirectSumElement) {
             return this.cast(element.flatComponentList().get(0));
         }
         return null;
-    }
-
-    
-    public ArithmeticElement<IntegerWrapper> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new IntegerWrapper(element.getValue().intValue()));
     }
     
     public String toString() {

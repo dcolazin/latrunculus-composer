@@ -8,6 +8,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -97,7 +98,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 	private LimitDenotator convertToSoundNote(LimitDenotator note, boolean withModulators) {
 		List<Denotator> coordinates = note.getFactors();
 		try {
-			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ArithmeticElement(new IntegerWrapper(0))));
+			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ZInteger(0)));
 		} catch (DomainException e) { e.printStackTrace(); }
 		return this.createSpecificNoteDenotator(coordinates, withModulators);
 	}
@@ -167,14 +168,14 @@ public class SoundNoteGenerator extends NoteGenerator {
 	
 	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws RubatoException {
 		Rational modulatorPitch = new Rational(relativeFrequency);
-		ArithmeticElement<IntegerWrapper> modulatorLoudness = new ArithmeticElement<>(new IntegerWrapper(relativeAmplitude));
+		ZInteger modulatorLoudness = new ZInteger(relativeAmplitude);
 		List<Denotator> coordinates = new ArrayList<>();
 		coordinates.add(this.createSimpleDenotator(this.onsetForm, new Real((0))));
 		coordinates.add(this.createSimpleDenotator(this.pitchForm, modulatorPitch));
 		coordinates.add(this.createSimpleDenotator(this.loudnessForm, modulatorLoudness));
 		coordinates.add(this.createSimpleDenotator(this.durationForm, new Real((0))));
-		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ArithmeticElement<>(new IntegerWrapper(0))));
-		coordinates.add(this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new IntegerWrapper(0))));
+		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ZInteger(0)));
+		coordinates.add(this.createSimpleDenotator(this.layerForm, new ZInteger(0)));
 		coordinates.add(this.createEmptyModulators());
 		//this takes a lot of time compared to the other operations
 		return new LimitDenotator(this.emptyName, this.soundNoteForm, coordinates);

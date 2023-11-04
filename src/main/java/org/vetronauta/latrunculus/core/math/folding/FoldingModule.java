@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -70,8 +71,8 @@ public class FoldingModule {
     public static double[] foldInteger(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<IntegerWrapper> e = (ArithmeticElement<IntegerWrapper>) elements[i];
-            res[i] = e.getValue().intValue();
+            ZInteger e = (ZInteger) elements[i];
+            res[i] = e.intValue();
         }
         return res;
     }
@@ -140,7 +141,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((Vector<ArithmeticElement<IntegerWrapper>>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<ZInteger>)elements[i]).getValue().get(j).intValue();
             }
         }
         return Folding.fold(res);

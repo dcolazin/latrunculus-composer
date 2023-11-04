@@ -89,18 +89,13 @@ public final class CRing extends Ring<Complex> implements NumberRing {
     @Override
     public Complex cast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
-            return cast((Arithmetic) element);
+            return new Complex(((Arithmetic) element).doubleValue());
         }
         if (element instanceof DirectSumElement) {
             return this.cast(element.flatComponentList().get(0));
         }
         return null;
     }
-
-    public Complex cast(Arithmetic element) {
-        return new Complex(element.doubleValue());
-    }
-
     
     public String toString() {
         return "CRing";

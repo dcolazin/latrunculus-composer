@@ -10,6 +10,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -183,7 +184,8 @@ class DenotatorPathTest {
 		SimpleForm onset = FormFactory.makeQModuleForm("Onset");
 		Module eulerPitchSpace = new VectorModule<>(ZRing.ring, 3);
 		SimpleForm eulerPitch = FormFactory.makeModuleForm("EulerPitch", eulerPitchSpace);
-		Module loudnessSpace = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), 1);
+		//Module loudnessSpace = ArithmeticStringMultiModule.make(StringRingRepository.getRing(ZRing.ring), 1);
+		Module loudnessSpace = null; //TODO after StringRing refactoring
 		SimpleForm loudness = FormFactory.makeModuleForm("Loudness", loudnessSpace);
 		SimpleForm duration = FormFactory.makeQModuleForm("Duration");
 		LimitForm eulerNote = FormFactory.makeLimitForm("EulerNote", onset, eulerPitch, loudness, duration);
@@ -192,11 +194,11 @@ class DenotatorPathTest {
 		PowerForm eulerScore = FormFactory.makePowerForm("EulerScore", eulerNoteOrRest);
 		
 		SimpleDenotator onset1 = DenoFactory.makeDenotator(onset, new Rational(0));
-		List<ArithmeticElement<IntegerWrapper>> pitchList = new ArrayList<>();
-		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(1)));
-		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(0)));
-		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(-1)));
-		FreeElement<?, ArithmeticElement<IntegerWrapper>> pitch1Element = new Vector<>(ZRing.ring, pitchList);
+		List<ZInteger> pitchList = new ArrayList<>();
+		pitchList.add(new ZInteger(1));
+		pitchList.add(new ZInteger(0));
+		pitchList.add(new ZInteger(-1));
+		FreeElement<?, ZInteger> pitch1Element = new Vector<>(ZRing.ring, pitchList);
 		SimpleDenotator pitch1 = DenoFactory.makeDenotator(eulerPitch, pitch1Element);
 		SimpleDenotator loudness1 = DenoFactory.makeDenotator(loudness, "sfz");
 		SimpleDenotator duration1 = DenoFactory.makeDenotator(duration, new Rational(1, 4));
@@ -208,11 +210,11 @@ class DenotatorPathTest {
 		Denotator shortRest = DenoFactory.makeDenotator(eulerNoteOrRest, 1, rest1);
 		
 		SimpleDenotator onset2 = DenoFactory.makeDenotator(onset, new Rational(1, 2));
-		List<ArithmeticElement<IntegerWrapper>> pitch2List = new ArrayList<>();
-		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(-1)));
-		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(1)));
-		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(11)));
-		FreeElement<?, ArithmeticElement<IntegerWrapper>> pitch2Element = new Vector<>(ZRing.ring, pitch2List);
+		List<ZInteger> pitch2List = new ArrayList<>();
+		pitch2List.add(new ZInteger(-1));
+		pitch2List.add(new ZInteger(1));
+		pitch2List.add(new ZInteger(11));
+		FreeElement<?, ZInteger> pitch2Element = new Vector<>(ZRing.ring, pitch2List);
 		SimpleDenotator pitch2 = DenoFactory.makeDenotator(eulerPitch, pitch2Element);
 		SimpleDenotator loudness2 = DenoFactory.makeDenotator(loudness, "ppp");
 		SimpleDenotator duration2 = DenoFactory.makeDenotator(duration, new Rational(3, 2));

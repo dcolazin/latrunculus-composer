@@ -11,6 +11,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -44,7 +45,7 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 			for (Denotator currentNote : score.getFactors()) {
 				double currentOnset = ((Real)currentNote.getElement(new int[]{0,0})).getValue();
 				double currentPitch = ((Rational)currentNote.getElement(new int[]{1,0})).doubleValue();
-				double currentLoudness = ((ArithmeticElement<IntegerWrapper>)currentNote.getElement(new int[]{2,0})).getValue().doubleValue();
+				double currentLoudness = ((ZInteger)currentNote.getElement(new int[]{2,0})).doubleValue();
 				double currentDuration = ((Real)currentNote.getElement(new int[]{3,0})).getValue();
 				
 				maxOnset = Math.max(maxOnset, currentOnset);

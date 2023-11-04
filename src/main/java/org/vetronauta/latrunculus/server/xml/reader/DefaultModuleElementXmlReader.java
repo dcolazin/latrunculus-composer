@@ -126,9 +126,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
                 ArithmeticNumber<?> val = ArithmeticParsingUtils.parse(element.getAttribute(VALUE_ATTR));
-                if (val instanceof IntegerWrapper) {
-                    return new ArithmeticElement<>((IntegerWrapper) val);
-                }
                 reader.setError("Unknown parsed class %%1", val.getClass());
                 return null;
             }
@@ -291,8 +288,14 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 wordArray[j] = witer.next();
                 j++;
             }
+
+            throw new UnsupportedOperationException("...");
+            //TODO fix after RingString refactoring
+            /*
             RingString<?> zstring = new RingString<>(wordArray, factorArray);
             return new ArithmeticStringElement(StringRingRepository.getRing(ZRing.ring), zstring);
+
+             */
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);

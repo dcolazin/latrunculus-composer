@@ -20,8 +20,6 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.AllArgsConstructor;
-import org.vetronauta.latrunculus.core.exception.DivisionException;
-import org.vetronauta.latrunculus.core.exception.InverseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,108 +30,70 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class IntegerWrapper implements ArithmeticNumber<IntegerWrapper> {
+public final class IntegerWrapper {
 
     private final int value;
 
-    @Override
     public int compareTo(IntegerWrapper integerWrapper) {
         return value - integerWrapper.intValue();
     }
 
-    @Override
     public int intValue() {
         return value;
     }
 
-    @Override
     public long longValue() {
         return intValue();
     }
 
-    @Override
     public float floatValue() {
         return intValue();
     }
 
-    @Override
     public double doubleValue() {
         return intValue();
     }
 
-    @Override
     public IntegerWrapper deepCopy() {
         return this;
     }
 
-    @Override
     public boolean isZero() {
         return value == 0;
     }
 
-    @Override
     public boolean isOne() {
         return value == 1;
     }
 
-    @Override
     public boolean isInvertible() {
         return (value == 1 || value == -1);
     }
 
-    @Override
     public boolean isFieldElement() {
         return false;
     }
 
-    @Override
-    public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof IntegerWrapper) && !this.isZero() && (value % ((IntegerWrapper) y).value == 0);
-    }
-
-    @Override
     public IntegerWrapper sum(IntegerWrapper other) {
         return new IntegerWrapper(value + other.value);
     }
 
-    @Override
     public IntegerWrapper difference(IntegerWrapper other) {
         return new IntegerWrapper(value - other.value);
     }
 
-    @Override
     public IntegerWrapper product(IntegerWrapper other) {
         return new IntegerWrapper(value * other.value);
     }
 
-    @Override
     public IntegerWrapper neg() {
         return new IntegerWrapper(-value);
     }
 
-    @Override
-    public IntegerWrapper inverse() {
-        if (isInvertible()) {
-            return this;
-        }
-        throw new InverseException(this);
-    }
-
-    @Override
-    public IntegerWrapper quotient(IntegerWrapper other) throws DivisionException {
-        if (other.value != 0 && value % other.value == 0) {
-            return new IntegerWrapper(value/ other.value);
-        } else {
-            throw new DivisionException(this, other);
-        }
-    }
-
-    @Override
     public String toString() {
         return String.valueOf(value);
     }
 
-    @Override
     public boolean equals(Object other) {
         if (!(other instanceof IntegerWrapper)) {
             return false;
@@ -141,7 +101,6 @@ public final class IntegerWrapper implements ArithmeticNumber<IntegerWrapper> {
         return ((IntegerWrapper) other).value == value;
     }
 
-    @Override
     public int hashCode() {
         return value;
     }

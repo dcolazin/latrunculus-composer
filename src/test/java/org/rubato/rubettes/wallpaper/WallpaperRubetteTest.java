@@ -37,6 +37,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -127,15 +128,15 @@ class WallpaperRubetteTest {
 
 	@Test
 	void testMapDenotatorInteger() throws RubatoException {
-		this.morphisms.add(new ArithmeticAffineRingMorphism<>(ZRing.ring, new ArithmeticElement<>(new IntegerWrapper(2)), new ArithmeticElement<>(new IntegerWrapper(1))));
-		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ArithmeticElement<>(new IntegerWrapper(3)));
+		this.morphisms.add(new AffineRingMorphism<>(ZRing.ring, new ZInteger(2), new ZInteger(1)));
+		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ZInteger(3));
 		((LimitDenotator)this.denotator.getFactor(0)).setFactor(2, newLoudness);
 
-		assertEquals(3, ((ArithmeticElement<IntegerWrapper>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(3, ((ZInteger) this.denotator.getElement(new int[]{0, 2, 0})).intValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(2), 0, 1, this.createSimplePaths(2, 2));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(2));
-		assertEquals(7, ((ArithmeticElement<IntegerWrapper>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(7, ((ZInteger) this.denotator.getElement(new int[]{0, 2, 0})).intValue());
 	}
 
 	@Test
@@ -257,7 +258,7 @@ class WallpaperRubetteTest {
 	private void assertThisDenotatorAsDefault() throws RubatoException {
 		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		assertEquals((this.denotator.getElement(new int[]{0, 1, 0})), new Rational(0));
-		assertEquals(0, ((ArithmeticElement<IntegerWrapper>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
+		assertEquals(0, ((ZInteger) this.denotator.getElement(new int[]{0, 2, 0})).intValue());
 		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 3, 0})).getValue());
 	}
 

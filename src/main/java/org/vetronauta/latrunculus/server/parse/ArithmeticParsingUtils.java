@@ -12,6 +12,8 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
@@ -43,15 +45,17 @@ public class ArithmeticParsingUtils {
             throw new UnsupportedOperationException("...");
             //return parseComplex(s);
         }
-        if (parsingClass.equals(IntegerWrapper.class)) {
-            return parseArithmeticInteger(s);
+        if (parsingClass.equals(ZInteger.class)) {
+            //TODO after complete refactoring of ArithmeticNumber
+            throw new UnsupportedOperationException("...");
+            //return parseArithmeticInteger(s);
         }
-        if (parsingClass.equals(RationalWrapper.class)) {
+        if (parsingClass.equals(Rational.class)) {
             //TODO after complete refactoring of ArithmeticNumber
             throw new UnsupportedOperationException("...");
             //return parseRational(s);
         }
-        if (parsingClass.equals(RealWrapper.class)) {
+        if (parsingClass.equals(Real.class)) {
             //TODO after complete refactoring of ArithmeticNumber
             throw new UnsupportedOperationException("...");
             //return parseArithmeticDouble(s);
@@ -163,10 +167,12 @@ public class ArithmeticParsingUtils {
             return (RingString<N>) parseQString(s);
         }
 
-         */
+
         if (factorRing instanceof ZRing) {
             return (RingString<N>) parseZString(s);
         }
+
+         */
         if (factorRing instanceof ZnRing) {
             return (RingString<N>) parseZnString(s, ((ZnRing) factorRing).getModulus());
         }
@@ -226,6 +232,7 @@ public class ArithmeticParsingUtils {
 
  */
 
+    /*
     public static RingString<IntegerWrapper> parseZString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
@@ -247,6 +254,8 @@ public class ArithmeticParsingUtils {
 
         return new RingString<>(words, factors);
     }
+
+     */
 
     public static RingString<ModulusWrapper> parseZnString(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');

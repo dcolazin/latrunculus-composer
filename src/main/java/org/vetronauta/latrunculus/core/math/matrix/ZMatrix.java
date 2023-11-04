@@ -19,9 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 
 import java.util.Arrays;
@@ -29,7 +28,7 @@ import java.util.Arrays;
 /**
  * Matrixes over integers.
  */
-public final class ZMatrix extends ArithmeticMatrix<IntegerWrapper> {
+public final class ZMatrix extends Matrix<ZInteger> {
     
     /**
      * Creates an integer <code>rows</code> x <code>cols</code> matrix
@@ -41,52 +40,52 @@ public final class ZMatrix extends ArithmeticMatrix<IntegerWrapper> {
     }
 
     @Override
-    public ArithmeticMatrix<IntegerWrapper> product(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
-        return null;
-    }
-
-    @Override
-    public ArithmeticMatrix<IntegerWrapper> sum(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
-        return null;
-    }
-
-    @Override
-    public ArithmeticMatrix<IntegerWrapper> difference(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
-        return null;
-    }
-
-    @Override
-    public ArithmeticMatrix<IntegerWrapper> scaled(ArithmeticElement<IntegerWrapper> element) {
-        return null;
-    }
-
-    @Override
-    public ArithmeticMatrix<IntegerWrapper> inverse() {
-        return null;
-    }
-
-    @Override
-    public Vector<ArithmeticElement<IntegerWrapper>> product(Vector<ArithmeticElement<IntegerWrapper>> vector) {
+    public Matrix<ZInteger> product(Matrix<ZInteger> matrix) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticElement<IntegerWrapper> get(int i, int j) {
+    public Matrix<ZInteger> sum(Matrix<ZInteger> matrix) {
+        return null; //TODO
+    }
+
+    @Override
+    public Matrix<ZInteger> difference(Matrix<ZInteger> matrix) {
+        return null; //TODO
+    }
+
+    @Override
+    public Matrix<ZInteger> scaled(ZInteger element) {
+        return null; //TODO
+    }
+
+    @Override
+    public Matrix<ZInteger> inverse() {
+        return null; //TODO
+    }
+
+    @Override
+    public Vector<ZInteger> product(Vector<ZInteger> vector) {
+        return null; //TODO
+    }
+
+    @Override
+    public ZInteger get(int i, int j) {
         return null;
     }
 
     @Override
-    public Vector<ArithmeticElement<IntegerWrapper>> getColumn(int j) {
+    public Vector<ZInteger> getColumn(int j) {
         return null; //TODO
     }
 
     @Override
-    public Vector<ArithmeticElement<IntegerWrapper>> getRow(int i) {
+    public Vector<ZInteger> getRow(int i) {
         return null; //TODO
     }
 
     @Override
-    public void set(int row, int col, ArithmeticElement<IntegerWrapper> element) {
+    public void set(int row, int col, ZInteger element) {
 
     }
 
@@ -190,7 +189,7 @@ public final class ZMatrix extends ArithmeticMatrix<IntegerWrapper> {
             return;
         }
         int[][] coeffs = new int[rows][columns];
-        int min_rows = rows < this.rows ? rows : this.rows;
+        int min_rows = Math.min(rows, this.rows);
         for (int r = 0; r < min_rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, columns);
         }
@@ -204,7 +203,7 @@ public final class ZMatrix extends ArithmeticMatrix<IntegerWrapper> {
             return;
         }
         int[][] coeffs = new int[rows][cols];
-        int min_cols = cols < this.columns ? cols : this.columns;
+        int min_cols = Math.min(cols, this.columns);
         for (int r = 0; r < rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, min_cols);
         }

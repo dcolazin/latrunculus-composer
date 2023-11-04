@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.matrix.ArithmeticMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
@@ -521,11 +522,11 @@ class JAffineGraph
             int[] v = { ipx[0], ipy[0]};
             return v;
         }
-        public ArithmeticElement<IntegerWrapper> getX(int i) {
-            return new ArithmeticElement<>(new IntegerWrapper(ipx[i]));
+        public ZInteger getX(int i) {
+            return new ZInteger(ipx[i]);
         }
-        public ArithmeticElement<IntegerWrapper> getY(int i) {
-            return new ArithmeticElement<>(new IntegerWrapper(ipy[i]));
+        public ZInteger getY(int i) {
+            return new ZInteger(ipy[i]);
         }
     }
     

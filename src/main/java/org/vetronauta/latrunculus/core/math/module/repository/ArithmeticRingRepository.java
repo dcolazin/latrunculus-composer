@@ -52,9 +52,6 @@ public class ArithmeticRingRepository {
 
     public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getRing(ArithmeticElement<N> element) {
         ArithmeticNumber<N> number = element.getValue();
-        if (number instanceof IntegerWrapper) {
-            return (ArithmeticRing<N>) ZRing.ring;
-        }
         if (number instanceof ModulusWrapper) {
             return (ArithmeticRing<N>) getModulusRing(((ModulusWrapper) number).getModulus());
         }

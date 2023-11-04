@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -766,12 +767,10 @@ abstract class RubatoPrimitives {
         if (element instanceof Rational) {
             return SRational.make(new RationalWrapper(((Rational) element).getNumerator(), ((Rational) element).getDenominator()));
         }
-        if (element instanceof ArithmeticElement) {
-            ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-            if (number instanceof IntegerWrapper || number instanceof ModulusWrapper) {
-                return new SInteger(number.intValue());
-            }
-        } else if (element instanceof FreeElement) {
+        if (element instanceof ZInteger) {
+            return new SInteger(((ZInteger) element).intValue());
+        }
+        if (element instanceof FreeElement) {
             FreeElement freeElement = (FreeElement)element;
             int len = freeElement.getLength();
             if (len > 1) {
@@ -794,7 +793,7 @@ abstract class RubatoPrimitives {
     
     private static ModuleElement sexprToModuleElement(SExpr sexpr) {
         if (sexpr.isInteger()) {
-            return new ArithmeticElement<>(new IntegerWrapper(((SInteger)sexpr).getInt()));
+            return new ZInteger(((SInteger)sexpr).getInt());
         }
         else if (sexpr.isRational()) {
             return new Rational(((SRational)sexpr).getRational());
@@ -806,8 +805,10 @@ abstract class RubatoPrimitives {
             return new Complex(((SComplex)sexpr).getComplex());
         }
         else if (sexpr.isBoolean()) {
-            return new ArithmeticElement<>(new IntegerWrapper(sexpr == SBoolean.TRUE ? 1 : 0));
+            return new ZInteger(sexpr == SBoolean.TRUE ? 1 : 0);
         }
+        //TODO fix after ArithmeticStringElement
+        /*
         else if (sexpr.isChar()) {
             return new ArithmeticStringElement<>(ZRing.ring, Character.toString(((SChar)sexpr).getChar()));
         }
@@ -817,6 +818,8 @@ abstract class RubatoPrimitives {
         else if (sexpr.isSymbol()) {
             return new ArithmeticStringElement<>(ZRing.ring, (sexpr).toString());
         }
+
+         */
         else if (sexpr.isVector()) {
             SExpr[] v = ((SVector)sexpr).getArray();
             if (v.length == 0) {

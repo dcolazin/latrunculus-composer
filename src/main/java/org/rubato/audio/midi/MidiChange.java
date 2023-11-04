@@ -76,7 +76,8 @@ public class MidiChange implements Comparable<MidiChange> {
 
         public static MidiChange getPedalOn(FactorDenotator pedal, int resolution) {
         MidiChange newChange = new MidiChange();
-        RingString<IntegerWrapper> v = ((ArithmeticStringElement<IntegerWrapper>)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
+        RingString<?> v = null; //TODO after RingString refactoring
+        //RingString<IntegerWrapper> v = ((ArithmeticStringElement<IntegerWrapper>)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
         double  o = ((SimpleDenotator)pedal.getFactor(1)).getReal();
         double  d = ((SimpleDenotator)pedal.getFactor(2)).getReal();
 

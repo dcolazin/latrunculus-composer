@@ -45,8 +45,7 @@ public class FreeUtils {
             return false;
         }
         ArithmeticNumber<?> number = retrieveNumber(module);
-        return number instanceof IntegerWrapper ||
-                number instanceof ModulusWrapper;
+        return number instanceof ModulusWrapper;
     }
 
     //TODO temp method...

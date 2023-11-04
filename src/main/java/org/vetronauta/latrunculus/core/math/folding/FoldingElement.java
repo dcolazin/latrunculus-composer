@@ -90,7 +90,8 @@ public class FoldingElement {
     private static double[] foldString(ModuleElement[] others) {
         RingString[] relements = new RingString[others.length];
         for (int i = 0; i < others.length; i++) {
-            relements[i] = ((ArithmeticStringElement<IntegerWrapper>)others[i]).getRingString();
+            //TODO after ArithmeticStringElement refactoring
+            //relements[i] = ((ArithmeticStringElement<IntegerWrapper>)others[i]).getRingString();
         }
         return RingString.fold(relements);
     }
