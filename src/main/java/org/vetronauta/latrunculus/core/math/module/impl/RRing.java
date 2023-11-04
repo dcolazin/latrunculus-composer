@@ -102,16 +102,12 @@ public final class RRing extends Ring<Real> implements NumberRing {
     @Override
     public Real cast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
-            return cast(element);
+            return new Real(((Arithmetic) element).doubleValue());
         }
         if (element instanceof DirectSumElement) {
             return this.cast(element.flatComponentList().get(0));
         }
         return null;
-    }
-
-    public Real cast(Arithmetic element) {
-        return new Real(element.doubleValue());
     }
 
     @Override

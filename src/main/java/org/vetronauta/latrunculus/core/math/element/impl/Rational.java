@@ -230,4 +230,19 @@ public class Rational extends RingElement<Rational> implements Arithmetic {
         return new Rational(numerator, denominator);
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d/%d", numerator, denominator);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Rational && (numerator * ((Rational) other).denominator) == (denominator * ((Rational) other).numerator);
+    }
+
+    @Override
+    public int hashCode() {
+        return numerator * denominator;
+    }
+
 }
