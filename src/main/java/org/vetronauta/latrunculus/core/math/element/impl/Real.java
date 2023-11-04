@@ -20,9 +20,11 @@
 package org.vetronauta.latrunculus.core.math.element.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -30,8 +32,9 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 /**
  * @author vetronauta
  */
+@Getter
 @AllArgsConstructor
-public class Real extends RingElement<Real> {
+public class Real extends RingElement<Real> implements Arithmetic {
 
     private double value;
 
@@ -133,4 +136,35 @@ public class Real extends RingElement<Real> {
     public Real deepCopy() {
         return new Real(value);
     }
+
+    @Override
+    public double abs() {
+        return Math.abs(value);
+    }
+
+    @Override
+    public int intValue() {
+        return (int) value;
+    }
+
+    @Override
+    public double doubleValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Real && value == ((Real) other).value;
+    }
+
+    @Override
+    public int hashCode() {
+        return intValue();
+    }
+
 }

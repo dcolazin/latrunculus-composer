@@ -159,7 +159,7 @@ public class DenotatorValueExtractor {
 			}
 		} else {
 			String valueName = FormValueFinder.makeValueName(simpleName, currentElement.getModule(), indexString);
-			double value = RRing.ring.cast(currentElement).getValue().doubleValue();
+			double value = RRing.ring.cast(currentElement).getValue();
 			int nextIndex = object.getCurrentOccurrencesOfValueName(valueName);
 			if (parent != null) {
 				Double parentValue = parent.getNthValue(valueName, nextIndex);

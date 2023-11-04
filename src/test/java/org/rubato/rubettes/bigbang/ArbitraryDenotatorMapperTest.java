@@ -8,10 +8,12 @@ import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -30,10 +32,10 @@ class ArbitraryDenotatorMapperTest {
 	void setUp() throws Exception {
 		this.objects = new TestObjects();
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		List<ArithmeticElement<RealWrapper>> list = new ArrayList<>();
-		list.add(new ArithmeticElement<>(new RealWrapper(-1)));
-		list.add(new ArithmeticElement<>(new RealWrapper(-2)));
-		this.translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
+		List<Real> list = new ArrayList<>();
+		list.add(new Real(-1));
+		list.add(new Real(-2));
+		this.translation = AffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 	}
 
 	@Test

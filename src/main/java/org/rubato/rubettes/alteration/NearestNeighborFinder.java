@@ -85,7 +85,7 @@ public class NearestNeighborFinder {
 			//getElementPath verschnellern!!
 			int[] currentPath = this.elementPaths[i];
 			try {
-				key[i] = RRing.ring.cast(denotator.getElement(currentPath)).getValue().doubleValue();
+				key[i] = RRing.ring.cast(denotator.getElement(currentPath)).getValue();
 			} catch (RubatoException e) { e.printStackTrace(); }
 		}
 		return key;

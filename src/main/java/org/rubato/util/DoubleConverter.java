@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -89,12 +90,12 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         private int modulus;
     }
     
-    private static final DoubleConverter<ArithmeticElement<RealWrapper>> rconverter = new DoubleConverter<ArithmeticElement<RealWrapper>>() {
-        public double toDouble(ArithmeticElement<RealWrapper> x) {
-            return x.getValue().doubleValue();
+    private static final DoubleConverter<Real> rconverter = new DoubleConverter<Real>() {
+        public double toDouble(Real x) {
+            return x.getValue();
         }
-        public ArithmeticElement<RealWrapper> fromDouble(double x) {
-            return new ArithmeticElement<>(new RealWrapper(x));
+        public Real fromDouble(double x) {
+            return new Real((x));
         }
     };
 

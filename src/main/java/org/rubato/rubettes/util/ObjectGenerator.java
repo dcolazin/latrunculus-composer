@@ -4,6 +4,7 @@ import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -140,7 +141,7 @@ public class ObjectGenerator {
 			} else if (valuePath.getEndForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
 				SimpleDenotator simple = (SimpleDenotator)denotator.get(valuePath.toIntArray());
 				if (simple != null) {
-					return RRing.ring.cast(simple.getElement()).getValue().doubleValue();
+					return RRing.ring.cast(simple.getElement()).getValue();
 				}
 				return null;
 			}
@@ -158,7 +159,7 @@ public class ObjectGenerator {
 				element = element.getComponent(i);
 			}
 		}
-		return RRing.ring.cast(element).getValue().doubleValue();
+		return RRing.ring.cast(element).getValue();
 	}
 	
 	/**
@@ -365,7 +366,7 @@ public class ObjectGenerator {
 		try {
 			SimpleDenotator oldSimple = (SimpleDenotator)object.get(simplePath);
 			if (oldSimple != null) {
-				ModuleElement newElement = oldSimple.getElement().getModule().cast(new ArithmeticElement<>(new RealWrapper(value)));
+				ModuleElement newElement = oldSimple.getElement().getModule().cast(new Real((value)));
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
@@ -401,11 +402,11 @@ public class ObjectGenerator {
 			}
 			return productElement.getModule().cast(ProductElement.make(factors));
 		} else if (currentDimension > 1) {
-			List<ArithmeticElement<RealWrapper>> values = new VectorModule<>(RRing.ring, currentDimension).cast(currentElement).getValue();
-			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new RealWrapper(value)));
+			List<Real> values = new VectorModule<>(RRing.ring, currentDimension).cast(currentElement).getValue();
+			values.set(elementPath[elementPath.length-1], new Real((value)));
 			return currentElement.getModule().cast(new Vector<>(RRing.ring, values));
 		} else {
-			return currentElement.getModule().cast(new ArithmeticElement<>(new RealWrapper(value)));
+			return currentElement.getModule().cast(new Real((value)));
 		}
 	}
 

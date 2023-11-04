@@ -22,6 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism.endo;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
+import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
@@ -47,5 +48,11 @@ public abstract class RingEndomorphism<RA extends RingElement<RA>> extends Endom
     public RingEndomorphism<RA> difference(ModuleMorphism<RA,RA,RA,RA> other) throws CompositionException {
         return new RingEndomorphismWrapper<>(super.difference(other));
     }
+
+    @Override
+    public Endomorphism<RA, RA> getRingMorphism() {
+        return getIdentityMorphism(getDomain());
+    }
+
 
 }

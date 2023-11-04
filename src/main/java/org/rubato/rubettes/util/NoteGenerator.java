@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -196,10 +197,10 @@ public abstract class NoteGenerator {
 	 */
 	public LimitDenotator createNoteDenotator(double onset, double pitch, int loudness, double duration, int voice) {
 		List<ModuleElement> elements = new ArrayList<>();
-		elements.add(new ArithmeticElement<>(new RealWrapper(onset)));
+		elements.add(new Real((onset)));
 		elements.add(new ArithmeticElement<>(new RationalWrapper(pitch)));
 		elements.add(new ArithmeticElement<>(new IntegerWrapper(loudness)));
-		elements.add(new ArithmeticElement<>(new RealWrapper(duration)));
+		elements.add(new Real((duration)));
 		elements.add(new ArithmeticElement<>(new IntegerWrapper(voice)));
 		return this.createNoteDenotator(elements);
 	}
@@ -396,8 +397,8 @@ public abstract class NoteGenerator {
 	 * @throws RubatoException
 	 */
 	public void modifyNoteDenotator(LimitDenotator note, double onset, double duration) throws RubatoException {
-		Denotator onsetDenotator = this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new RealWrapper(onset)));
-		Denotator durationDenotator = this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new RealWrapper(duration)));
+		Denotator onsetDenotator = this.createSimpleDenotator(this.onsetForm, new Real((onset)));
+		Denotator durationDenotator = this.createSimpleDenotator(this.durationForm, new Real((duration)));
 		
 		note.setFactor(0, onsetDenotator);
 		note.setFactor(3, durationDenotator);
@@ -405,7 +406,7 @@ public abstract class NoteGenerator {
 	
 	public void modifyNoteDenotator(LimitDenotator note, int[] elementPath, double value) {
 		try {
-			ModuleElement newElement = note.getElement(elementPath).getModule().cast(new ArithmeticElement<>(new RealWrapper(value)));
+			ModuleElement newElement = note.getElement(elementPath).getModule().cast(new Real((value)));
 			SimpleForm form = (SimpleForm)note.getFactor(elementPath[0]).getForm();
 			Denotator newCoordinate = this.createSimpleDenotator(form, newElement);
 			note.setFactor(elementPath[0], newCoordinate);
@@ -416,7 +417,7 @@ public abstract class NoteGenerator {
 	
 	public Double getDoubleValue(Denotator note, int[] elementPath) {
 		try {
-			return RRing.ring.cast(note.getElement(elementPath)).getValue().doubleValue();
+			return RRing.ring.cast(note.getElement(elementPath)).getValue();
 		} catch (RubatoException e) {
 			e.printStackTrace();
 			return null;

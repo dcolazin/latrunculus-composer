@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -36,7 +35,6 @@ import java.util.List;
  * The field of complex numbers.
  * @author Gérard Milmeister
  */
-@NoArgsConstructor
 public final class CRing extends Ring<Complex> implements NumberRing {
 
     /**
@@ -139,8 +137,4 @@ public final class CRing extends Ring<Complex> implements NumberRing {
 
     private static final int basicHash = "CRing".hashCode();
 
-    @Override
-    public boolean isVectorSpace() {
-        return true;
-    }
 }

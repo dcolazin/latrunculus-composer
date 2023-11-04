@@ -7,10 +7,12 @@ import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
@@ -122,16 +124,16 @@ public class BigBangMapper extends BigBangManipulator {
 	
 	private ModuleMorphism generateRelativeMorphism(double[] anchorLocation) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		List<ArithmeticElement<RealWrapper>> list1 = new ArrayList<>(2);
-		list1.add(new ArithmeticElement<>(new RealWrapper(-anchorLocation[0])));
-		list1.add(new ArithmeticElement<>(new RealWrapper(-anchorLocation[1])));
-		List<ArithmeticElement<RealWrapper>> list2 = new ArrayList<>(2);
-		list2.add(new ArithmeticElement<>(new RealWrapper(anchorLocation[0])));
-		list2.add(new ArithmeticElement<>(new RealWrapper(anchorLocation[1])));
+		List<Real> list1 = new ArrayList<>(2);
+		list1.add(new Real(-anchorLocation[0]));
+		list1.add(new Real(-anchorLocation[1]));
+		List<Real> list2 = new ArrayList<>(2);
+		list2.add(new Real(anchorLocation[0]));
+		list2.add(new Real(anchorLocation[1]));
 		ModuleMorphism relativeMorphism = this.morphism;
 		try {
-			relativeMorphism = relativeMorphism.compose(ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list1)));
-			relativeMorphism = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list2)).compose(relativeMorphism);
+			relativeMorphism = relativeMorphism.compose(AffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list1)));
+			relativeMorphism = AffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list2)).compose(relativeMorphism);
 		} catch (CompositionException e) { e.printStackTrace(); } //TODO log vs printstacktrace
 		return relativeMorphism;
 	}

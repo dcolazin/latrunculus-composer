@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.folding.FoldingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -43,7 +44,7 @@ public final class FoldingMorphism extends ModuleMorphism {
         double[] f = FoldingElement.fold(elements[0], elements);
         values = new HashMap<>();
         for (int i = 0; i < f.length; i++) {
-            values.put(elements[i], new ArithmeticElement<>(new RealWrapper(f[i])));
+            values.put(elements[i], new Real((f[i])));
         }
     }
 
@@ -52,7 +53,7 @@ public final class FoldingMorphism extends ModuleMorphism {
     }
 
     
-    public ArithmeticElement<RealWrapper> map(ModuleElement element) {
+    public Real map(ModuleElement element) {
         return values.get(element);
     }
 
@@ -105,6 +106,6 @@ public final class FoldingMorphism extends ModuleMorphism {
     }
     
     
-    private final HashMap<ModuleElement,ArithmeticElement<RealWrapper>> values;
+    private final HashMap<ModuleElement,Real> values;
     private final ModuleElement[] elements;
 }

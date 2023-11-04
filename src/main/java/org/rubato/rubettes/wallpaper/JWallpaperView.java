@@ -160,8 +160,8 @@ public class JWallpaperView extends JGeometryView {
 								//four new corners for each x/y combination
 								for (int k = 0; k < originalElements.size(); k++) {
 									ModuleElement currentElement = originalElements.get(k);
-									double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
-									double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
+									double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue();
+									double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue();
 									this.addPoint(x, y);
 								}
 							}
@@ -171,7 +171,7 @@ public class JWallpaperView extends JGeometryView {
 							int xIndex = xIndices.get(i);
 							for (int k = 0; k < originalElements.size(); k++) {
 								ModuleElement currentElement = originalElements.get(k);
-								double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue().doubleValue();
+								double x = (RRing.ring.cast(currentElement.getComponent(xIndex))).getValue();
 								double y = originalYs.get(k).doubleValue();
 								this.addPoint(x, y);
 							}
@@ -182,7 +182,7 @@ public class JWallpaperView extends JGeometryView {
 							for (int k = 0; k < originalElements.size(); k++) {
 								ModuleElement currentElement = originalElements.get(k);
 								double x = originalXs.get(k).doubleValue();
-								double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue().doubleValue();
+								double y = (RRing.ring.cast(currentElement.getComponent(yIndex))).getValue();
 								this.addPoint(x, y);
 							}
 						}

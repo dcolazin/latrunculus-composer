@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.endo.RingEndomorphism;
 
 /**
@@ -32,10 +31,6 @@ public abstract class ArithmeticRingEndomorphism<N extends ArithmeticNumber<N>> 
 
     protected ArithmeticRingEndomorphism(Ring<ArithmeticElement<N>> domain) {
         super(domain);
-    }
-
-    public ModuleMorphism getRingMorphism() {
-        return getIdentityMorphism(getDomain());
     }
 
 }

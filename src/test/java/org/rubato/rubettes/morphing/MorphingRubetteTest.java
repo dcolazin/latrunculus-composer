@@ -25,6 +25,7 @@ import org.rubato.base.RubatoException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -127,7 +128,7 @@ class MorphingRubetteTest {
 	}
 	
 	private double getDuration(Denotator denotator) throws RubatoException {
-		return ((ArithmeticElement<RealWrapper>)denotator.getElement(new int[]{3,0})).getValue().doubleValue();
+		return ((Real)denotator.getElement(new int[]{3,0})).getValue();
 	}
 
 }

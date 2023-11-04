@@ -46,6 +46,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -803,9 +804,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
                 Complex c = (Complex) m;
-                List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(2);
-                list.add(new ArithmeticElement<>(new RealWrapper(c.getReal())));
-                list.add(new ArithmeticElement<>(new RealWrapper(c.getImag())));
+                List<Real> list = new ArrayList<>(2);
+                list.add(new Real((c.getReal())));
+                list.add(new Real((c.getImag())));
                 elements0.add(new Vector<>(RRing.ring, list));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
@@ -824,16 +825,16 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         Ring<?> moduleRing = module.getRing();
         if (moduleRing instanceof RRing) {
-            VectorModule<ArithmeticElement<RealWrapper>> m = (VectorModule<ArithmeticElement<RealWrapper>>)module;
+            VectorModule<Real> m = (VectorModule<Real>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     RConfiguration config = (RConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(2);
-                        list.add(new ArithmeticElement<>(new RealWrapper(config.px.get(i))));
-                        list.add(new ArithmeticElement<>(new RealWrapper(config.py.get(i))));
+                        List<Real> list = new ArrayList<>(2);
+                        list.add(new Real((config.px.get(i))));
+                        list.add(new Real((config.py.get(i))));
                         elementList.addElement(new Vector<>(RRing.ring, list));
                     }
                 }

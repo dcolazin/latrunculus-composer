@@ -35,12 +35,15 @@ import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -99,11 +102,11 @@ class WallpaperRubetteTest {
 		this.rubette = (WallpaperRubette)new WallpaperRubette().newInstance();
 		this.rubette.setInputForm(this.scoreForm);
 		this.morphisms = new ArrayList<>();
-		this.morphisms.add(new ArithmeticAffineRingMorphism<>(RRing.ring, new ArithmeticElement<>(new RealWrapper(2)), new ArithmeticElement<>(new RealWrapper(1))));
-		List<ArithmeticElement<RealWrapper>> list = new ArrayList<>();
-		list.add(new ArithmeticElement<>(new RealWrapper(1)));
-		list.add(new ArithmeticElement<>(new RealWrapper(2)));
-		ModuleMorphism m = ArithmeticAffineFreeMorphism.make(RRing.ring, new RMatrix(new double[][]{{1,1},{1,1}}), new Vector<>(RRing.ring, list));
+		this.morphisms.add(new AffineRingMorphism<>(RRing.ring, new Real((2)), new Real((1))));
+		List<Real> list = new ArrayList<>();
+		list.add(new Real((1)));
+		list.add(new Real((2)));
+		ModuleMorphism m = AffineFreeMorphism.make(RRing.ring, new RMatrix(new double[][]{{1,1},{1,1}}), new Vector<>(RRing.ring, list));
 		this.morphisms.add(m);
 	}
 	
@@ -113,11 +116,11 @@ class WallpaperRubetteTest {
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(0));
-		assertEquals(1, ((ArithmeticElement<RealWrapper>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(1, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		
 		this.rubette.addMorphism(this.morphisms.get(1), 0, 1, this.createSimplePaths(0, 1, 0, 1));
 		this.denotator = this.rubette.mapDenotator(this.denotator, this.morphisms.get(1));
-		assertEquals(2, ((ArithmeticElement<RealWrapper>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(2, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		assertEquals(((ArithmeticElement<RationalWrapper>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new RationalWrapper(3));
 	}
 
@@ -246,15 +249,15 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertEquals(new RealWrapper(onsetValue), ((ArithmeticElement<RealWrapper>) factor.getElement(new int[]{0, 0})).getValue());
+		assertEquals(new RealWrapper(onsetValue), ((Real) factor.getElement(new int[]{0, 0})).getValue());
 		assertEquals(new RationalWrapper(pitchValue), ((ArithmeticElement<RationalWrapper>) factor.getElement(new int[]{1, 0})).getValue());
 	}
 	
 	private void assertThisDenotatorAsDefault() throws RubatoException {
-		assertEquals(0, ((ArithmeticElement<RealWrapper>) this.denotator.getElement(new int[]{0, 0, 0})).getValue().doubleValue());
+		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		assertEquals(((ArithmeticElement<RationalWrapper>) this.denotator.getElement(new int[]{0, 1, 0})).getValue(), new RationalWrapper(0));
 		assertEquals(0, ((ArithmeticElement<IntegerWrapper>) this.denotator.getElement(new int[]{0, 2, 0})).getValue().intValue());
-		assertEquals(0, ((ArithmeticElement<RealWrapper>) this.denotator.getElement(new int[]{0, 3, 0})).getValue().doubleValue());
+		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 3, 0})).getValue());
 	}
 
 	@Test

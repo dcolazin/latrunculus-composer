@@ -17,41 +17,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.vetronauta.latrunculus.core.math.module.morphism.endo;
+package org.vetronauta.latrunculus.core.math.module.morphism.generic;
 
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
 /**
  * @author vetronauta
  */
-public class RingEndomorphismWrapper<RA extends RingElement<RA>> extends RingEndomorphism<RA> {
+public abstract class FreeMorphism<A extends FreeElement<A,R>, B extends FreeElement<B,R>, R extends RingElement<R>>
+        extends ModuleMorphism<A,B,R,R> {
 
-    private final ModuleMorphism<RA,RA,RA,RA> internalMorphism;
-
-    public RingEndomorphismWrapper(ModuleMorphism<RA,RA,RA,RA> morphism) {
-        super(morphism.getDomain().getRing());
-        this.internalMorphism = morphism;
+    protected FreeMorphism(Module<A, R> domain, Module<B, R> codomain) {
+        super(domain, codomain);
     }
 
     @Override
-    public RA map(RA x) throws MappingException {
-        return internalMorphism.map(x);
+    public ModuleMorphism<R,R,R,R> getRingMorphism() {
+        return getIdentityMorphism(getDomain().getRing());
     }
 
-    @Override
-    public Endomorphism<RA, RA> getRingMorphism() {
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return internalMorphism.equals(object);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("RingEndomorphism:%s", internalMorphism);
-    }
 }

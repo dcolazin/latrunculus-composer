@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 /**
  * Matrixes over real numbers.
  */
-public class RMatrix extends ArithmeticMatrix<RealWrapper> {
+public class RMatrix extends Matrix<Real> {
 
     /**
      * Creates a real <code>rows</code> x <code>cols</code> matrix
@@ -45,7 +46,7 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public ArithmeticMatrix<RealWrapper> product(Matrix<ArithmeticElement<RealWrapper>> matrix) {
+    public Matrix<Real> product(Matrix<Real> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -53,7 +54,7 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public ArithmeticMatrix<RealWrapper> sum(Matrix<ArithmeticElement<RealWrapper>> matrix) {
+    public Matrix<Real> sum(Matrix<Real> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -61,7 +62,7 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public ArithmeticMatrix<RealWrapper> difference(Matrix<ArithmeticElement<RealWrapper>> matrix) {
+    public Matrix<Real> difference(Matrix<Real> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -69,13 +70,13 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public ArithmeticMatrix<RealWrapper> scaled(ArithmeticElement<RealWrapper> element) {
-        return scaled(element.getValue().doubleValue());
+    public Matrix<Real> scaled(Real element) {
+        return scaled(element.getValue());
     }
 
     @Override
-    public ArithmeticElement<RealWrapper> get(int i, int j) {
-        return new ArithmeticElement<>(new RealWrapper(coefficients[i][j]));
+    public Real get(int i, int j) {
+        return new Real(coefficients[i][j]);
     }
 
 
@@ -177,20 +178,24 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public Vector<ArithmeticElement<RealWrapper>> getColumn(int j) {
-        List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(rows);
+    public Vector<Real> getColumn(int j) {
+        List<Real> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
-            list.add(new ArithmeticElement<>(new RealWrapper(coefficients[i][j])));
+            list.add(new Real(coefficients[i][j]));
         }
         return new Vector<>(RRing.ring, list);
     }
 
     @Override
-    public Vector<ArithmeticElement<RealWrapper>> getRow(int i) {
+    public Vector<Real> getRow(int i) {
         return new Vector<>(RRing.ring, Arrays.stream(coefficients[i])
-                .mapToObj(RealWrapper::new)
-                .map(ArithmeticElement::new)
+                .mapToObj(Real::new)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public void set(int row, int col, Real element) {
+        coefficients[row][col] = element.getValue();
     }
 
 
@@ -201,16 +206,12 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
         coefficients[row][col] = value;
     }
 
-    public void set(int row, int col, ArithmeticElement<RealWrapper> value) {
-        coefficients[row][col] = value.getValue().doubleValue();
-    }
-
     public void setRowCount(int rows) {
         if (this.rows == rows) {
             return;
         }
         double[][] coeffs = new double[rows][columns];
-        int min_rows = rows < this.rows ? rows : this.rows;
+        int min_rows = Math.min(rows, this.rows);
         for (int r = 0; r < min_rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, columns);
         }
@@ -224,7 +225,7 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
             return;
         }
         double[][] coeffs = new double[rows][cols];
-        int min_cols = cols < this.columns ? cols : this.columns;
+        int min_cols = Math.min(cols, this.columns);
         for (int r = 0; r < rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, min_cols);
         }
@@ -387,7 +388,7 @@ public class RMatrix extends ArithmeticMatrix<RealWrapper> {
     }
 
     @Override
-    public Vector<ArithmeticElement<RealWrapper>> product(Vector<ArithmeticElement<RealWrapper>> vector) {
+    public Vector<Real> product(Vector<Real> vector) {
         return null; //TODO
     }
 

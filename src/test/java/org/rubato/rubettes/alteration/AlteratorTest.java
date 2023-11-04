@@ -9,11 +9,13 @@ import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineProjection;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
@@ -36,16 +38,16 @@ class AlteratorTest {
 	@BeforeEach
 	void setUp() {
 		this.morphisms = new ArrayList<>();
-		List<RealWrapper> realWrapperList1 = new ArrayList<>();
-		realWrapperList1.add(new RealWrapper(3));
-		realWrapperList1.add(new RealWrapper(5));
-		realWrapperList1.add(new RealWrapper(7));
-		List<RealWrapper> realWrapperList2 = new ArrayList<>();
-		realWrapperList2.add(new RealWrapper(1));
-		realWrapperList2.add(new RealWrapper(2));
-		realWrapperList2.add(new RealWrapper(3));
-		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new Vector<>(RRing.ring, ArithmeticElement.listOf(realWrapperList1)), RRing.ring.getZero()));
-		this.morphisms.add(new ArithmeticAffineProjection<>(RRing.ring, new Vector<>(RRing.ring, ArithmeticElement.listOf(realWrapperList2)), RRing.ring.getZero()));
+		List<Real> realList1 = new ArrayList<>();
+		realList1.add(new Real(3));
+		realList1.add(new Real(5));
+		realList1.add(new Real(7));
+		List<Real> realList2 = new ArrayList<>();
+		realList2.add(new Real(1));
+		realList2.add(new Real(2));
+		realList2.add(new Real(3));
+		this.morphisms.add(new AffineProjection<>(RRing.ring, new Vector<>(RRing.ring, realList1), RRing.ring.getZero()));
+		this.morphisms.add(new AffineProjection<>(RRing.ring, new Vector<>(RRing.ring, realList2), RRing.ring.getZero()));
 
 		List<RationalWrapper> rationalWrapperList1 = new ArrayList<>();
 		rationalWrapperList1.add(new RationalWrapper(3));
@@ -82,10 +84,10 @@ class AlteratorTest {
 		ModuleMorphism m100 = this.alterator.makeAlteredMorphism(m0, m1, 1);
 		assertEquals(m000, m0);
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
-		VectorModule<ArithmeticElement<RealWrapper>> r3 = new VectorModule<>(RRing.ring, 3);
-		assertEquals(m050.map(r3.getUnitElement(0)), new ArithmeticElement<>(new RealWrapper(2)));
-		assertEquals(m050.map(r3.getUnitElement(1)), new ArithmeticElement<>(new RealWrapper(3.5)));
-		assertEquals(m050.map(r3.getUnitElement(2)), new ArithmeticElement<>(new RealWrapper(5)));
+		VectorModule<Real> r3 = new VectorModule<>(RRing.ring, 3);
+		assertEquals(m050.map(r3.getUnitElement(0)), new Real(2));
+		assertEquals(m050.map(r3.getUnitElement(1)), new Real(3.5));
+		assertEquals(m050.map(r3.getUnitElement(2)), new Real(5));
 		assertEquals(m100, m1);
 		
 		m0 = this.morphisms.get(2);

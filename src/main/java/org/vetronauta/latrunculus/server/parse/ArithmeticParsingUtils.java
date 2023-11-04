@@ -149,9 +149,12 @@ public class ArithmeticParsingUtils {
 
     public static <N extends ArithmeticNumber<N>> RingString<N> parseString(ArithmeticStringRing<N> ring, String s) {
         ArithmeticRing<N> factorRing = ring.getFactorRing();
+        //TODO fix after RingString refactoring
+        /*
         if (factorRing instanceof RRing) {
             return (RingString<N>) parseRString(s);
         }
+         */
         if (factorRing instanceof QRing) {
             return (RingString<N>) parseQString(s);
         }

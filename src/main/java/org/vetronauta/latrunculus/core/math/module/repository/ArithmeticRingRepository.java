@@ -58,9 +58,6 @@ public class ArithmeticRingRepository {
         if (number instanceof RationalWrapper) {
             return (ArithmeticRing<N>) QRing.ring;
         }
-        if (number instanceof RealWrapper) {
-            return (ArithmeticRing<N>) RRing.ring;
-        }
         if (number instanceof ModulusWrapper) {
             return (ArithmeticRing<N>) getModulusRing(((ModulusWrapper) number).getModulus());
         }

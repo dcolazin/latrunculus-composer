@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -799,7 +800,7 @@ abstract class RubatoPrimitives {
             return new ArithmeticElement<>(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
-            return new ArithmeticElement<>(new RealWrapper(((SReal)sexpr).getDouble()));
+            return new Real((((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
             return new Complex(((SComplex)sexpr).getComplex());

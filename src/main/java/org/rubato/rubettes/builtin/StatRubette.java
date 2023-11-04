@@ -33,6 +33,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -260,7 +261,7 @@ public class StatRubette extends AbstractRubette {
             throws RubatoException {
         Ring r = e.getModule().getRing();
         if (r.equals(RRing.ring)) {
-            e.scale(new ArithmeticElement<>(new RealWrapper(1/(double)s)));
+            e.scale(new Real((1/(double)s)));
         }
         else if (r.equals(QRing.ring)) {
             e.scale(new ArithmeticElement<>(new RationalWrapper(1, s)));

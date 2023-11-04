@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -79,8 +80,8 @@ class JGraphSelect
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<RealWrapper>> p = ((Vector<ArithmeticElement<RealWrapper>>)m).getValue();
-                config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
+                List<Real> p = ((Vector<Real>)m).getValue();
+                config.addPoint(p.get(0).getValue(), p.get(1).getValue());
             }
         }
         else if (ring instanceof CRing) {

@@ -62,7 +62,12 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
     public boolean isRing() {
         return true;
     }
-    
+
+    @Override
+    public boolean isVectorSpace() {
+        return isField();
+    }
+
     /**
      * Returns the corresponding free module of dimension <code>dim</code>.
      */

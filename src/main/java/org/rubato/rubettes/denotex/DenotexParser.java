@@ -7,6 +7,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -307,7 +308,8 @@ public final class DenotexParser implements DenotexParserConstants {
         else if (s.equals("RString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            return StringRingRepository.getRing(RRing.ring);
+            //return StringRingRepository.getRing(RRing.ring);
+            return null; //TODO after StringRing refactoring
         }
         else if (s.equals("Z")) {
             if (sup == -1) {
@@ -1295,7 +1297,7 @@ public final class DenotexParser implements DenotexParserConstants {
             else if (m instanceof QRing)
                 elements.add(new ArithmeticElement<>(new RationalWrapper(q)));
             else if (m instanceof RRing)
-                elements.add(new ArithmeticElement<>(new RealWrapper((double)n / (double)d)));
+                elements.add(new Real(((double)n / (double)d)));
 
             // we also allow to convert numbers into strings without quotes
             else {
@@ -1315,7 +1317,7 @@ public final class DenotexParser implements DenotexParserConstants {
                    double r = rLiteral();
         try {
             if (m instanceof RRing) {
-                elements.add(new ArithmeticElement<>(new RealWrapper(r)));
+                elements.add(new Real((r)));
             } else if (m instanceof ArithmeticStringRing) { // we also allow to convert numbers into strings without quotes
                 elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), String.valueOf(r)));
             } else {

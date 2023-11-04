@@ -8,6 +8,7 @@ import java.util.List;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -187,7 +188,7 @@ public class Alterator {
 		//set starting values
 		Denotator currentDenotator = denotators.next();
 		for (int i = 0; i < paths.length; i++) {
-			double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue().doubleValue();
+			double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue();
 			minima[i] = currentDouble;
 			maxima[i] = currentDouble;
 		}
@@ -195,7 +196,7 @@ public class Alterator {
 		while (denotators.hasNext()) {
 			currentDenotator = denotators.next();
 			for (int i = 0; i < paths.length; i++) {
-				double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue().doubleValue();
+				double currentDouble = RRing.ring.cast(currentDenotator.getElement(paths[i])).getValue();
 				if (currentDouble > maxima[i]) {
 					maxima[i] = currentDouble;
 				}
@@ -260,7 +261,7 @@ public class Alterator {
 	private double[] getCastDoubleValues(Denotator denotator, int[][] paths) throws RubatoException{
 		double[] values = new double[paths.length];
 		for (int i = 0; i < values.length; i++) {
-			values[i] = RRing.ring.cast(denotator.getElement(paths[i])).getValue().doubleValue();
+			values[i] = RRing.ring.cast(denotator.getElement(paths[i])).getValue();
 		}
 		return values;
 	}
@@ -320,8 +321,8 @@ public class Alterator {
 				Module module = m0.getCodomain();
 				m0 = this.getCastedMorphism(m0, RRing.ring);
 				m1 = this.getCastedMorphism(m1, RRing.ring);
-				ModuleMorphism scaled0 = m0.scaled(new ArithmeticElement<>(new RealWrapper(1-percentage)));
-				ModuleMorphism scaled1 = m1.scaled(new ArithmeticElement<>(new RealWrapper(percentage)));
+				ModuleMorphism scaled0 = m0.scaled(new Real((1-percentage)));
+				ModuleMorphism scaled1 = m1.scaled(new Real((percentage)));
 				ModuleMorphism result = scaled0.sum(scaled1);
 				result = this.getCastedMorphism(result, module);
 				return result;

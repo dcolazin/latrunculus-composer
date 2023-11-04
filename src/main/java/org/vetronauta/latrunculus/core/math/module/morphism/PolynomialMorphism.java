@@ -80,7 +80,7 @@ public class PolynomialMorphism<R extends RingElement<R>> extends RingEndomorphi
         return polynomial;
     }
 
-    public ModuleMorphism<R,R,R,R> getRingMorphism() {
+    public IdentityMorphism<R,R> getRingMorphism() {
         return getIdentityMorphism(getDomain().getRing());
     }
 

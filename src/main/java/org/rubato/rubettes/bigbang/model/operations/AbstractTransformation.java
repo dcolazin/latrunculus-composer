@@ -10,10 +10,12 @@ import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.ArithmeticAffineFreeMorphism;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
@@ -93,19 +95,19 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		this.updateOperation();
 	}
 	
-	protected void initTransformation(RMatrix matrix, List<RealWrapper> shift) {
+	protected void initTransformation(RMatrix matrix, List<Real> shift) {
 		List<RMatrix> matrices = new ArrayList<>();
 		matrices.add(matrix);
-		List<List<RealWrapper>> shifts = new ArrayList<>();
+		List<List<Real>> shifts = new ArrayList<>();
 		shifts.add(shift);
 		this.initTransformation(matrices, shifts);
 	}
 	
-	protected void initTransformation(List<RMatrix> matrices, List<List<RealWrapper>> shifts) {
-		ModuleMorphism morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(0), new Vector<>(RRing.ring, shifts.get(0).stream().map(ArithmeticElement::new).collect(Collectors.toList())));
+	protected void initTransformation(List<RMatrix> matrices, List<List<Real>> shifts) {
+		ModuleMorphism morphism = AffineFreeMorphism.make(RRing.ring, matrices.get(0), new Vector<>(RRing.ring, shifts.get(0)));
 		for (int i = 1; i < matrices.size(); i++) {
 			try {
-				morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(i), new Vector<>(RRing.ring, shifts.get(i).stream().map(ArithmeticElement::new).collect(Collectors.toList()))).compose(morphism);
+				morphism = AffineFreeMorphism.make(RRing.ring, matrices.get(i), new Vector<>(RRing.ring, shifts.get(i))).compose(morphism);
 			} catch (CompositionException e) { e.printStackTrace(); }
 		}
 		this.transformation = morphism;

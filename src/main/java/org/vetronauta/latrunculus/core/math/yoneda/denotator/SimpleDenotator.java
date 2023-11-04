@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -486,7 +487,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the double contained in an RElement denotator.
      */
     public double getReal() {
-        return ((ArithmeticElement<RealWrapper>)getElement()).getValue().doubleValue();
+        return ((Real)getElement()).getValue();
     }
     
     
