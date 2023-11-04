@@ -20,11 +20,14 @@
 package org.vetronauta.latrunculus.core.math.module.definition;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -36,6 +39,21 @@ import java.util.Iterator;
  */
 @Slf4j
 public abstract class RingElement<R extends RingElement<R>> implements FreeElement<R,R> {
+
+    @Override
+    public FreeElement<?, R> resize(int n) {
+        if (n == 1) {
+            return this;
+        }
+        List<R> res = new ArrayList<>(n);
+        if (n > 0) {
+            res.add(this.deepCopy());
+        }
+        for (int i = 1; i < n; i++) {
+            res.add(getRing().getZero());
+        }
+        return new Vector<>(getRing(), res);
+    }
     
     /**
      * Returns true if this ring element is one.

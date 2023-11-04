@@ -83,7 +83,26 @@ public class ArithmeticParsingUtils {
         else if (s.charAt(0) == '(' && s.charAt(s.length()-1) == ')') {
             s = s.substring(1, s.length()-1);
         }
-        return new Complex(s);
+        try {
+            int pos = s.indexOf("+i*");
+            if (pos >= 0) {
+                double real = Double.parseDouble(s.substring(0, pos));
+                double imag = Double.parseDouble(s.substring(pos+3));
+                return new Complex(real, imag);
+            }
+            pos = s.indexOf("i*");
+            if (pos == 0) {
+                return new Complex(0, Double.parseDouble(s.substring(pos+2)));
+            }
+            pos = s.indexOf("i");
+            if (pos == 0 && s.length() == 1) {
+                return new Complex(0, 1);
+            }
+            return new Complex(Double.parseDouble(s));
+        }
+        catch (Exception e) {
+            throw new NumberFormatException(e.getMessage());
+        }
     }
 
     public static ArithmeticInteger parseArithmeticInteger(String s) {
