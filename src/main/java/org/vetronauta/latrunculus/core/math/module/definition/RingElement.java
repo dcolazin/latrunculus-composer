@@ -84,6 +84,16 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
     public void multiplyCW(R element) throws DomainException {
         multiply(element);
     }
+
+    @Override
+    public R scaled(R element) throws DomainException {
+        return product(element);
+    }
+
+    @Override
+    public void scale(R element) throws DomainException {
+        multiply(element);
+    }
     
     
     /**

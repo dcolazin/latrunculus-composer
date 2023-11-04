@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.exception;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 /**
@@ -33,6 +34,10 @@ public final class InverseException extends LatrunculusRuntimeException {
     }
 
     public InverseException(ArithmeticNumber<?> number) {
+        super(String.format("%s has no inverse", number));
+    }
+
+    public InverseException(RingElement<?> number) {
         super(String.format("%s has no inverse", number));
     }
 

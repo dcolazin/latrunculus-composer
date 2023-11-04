@@ -34,8 +34,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 @Getter
 public class Complex extends RingElement<Complex> implements Arithmetic {
 
-    //TODO rename after deleting arith.number.Complex
-
     private double real;
     private double imag;
 
@@ -71,16 +69,6 @@ public class Complex extends RingElement<Complex> implements Arithmetic {
     @Override
     public boolean isZero() {
         return real == 0.0 && imag == 0.0;
-    }
-
-    @Override
-    public Complex scaled(Complex element) throws DomainException {
-        return product(element);
-    }
-
-    @Override
-    public void scale(Complex element) throws DomainException {
-        multiply(element);
     }
 
     @Override
