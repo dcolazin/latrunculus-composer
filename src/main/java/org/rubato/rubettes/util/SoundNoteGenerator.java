@@ -2,9 +2,9 @@ package org.rubato.rubettes.util;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -95,7 +95,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 	private LimitDenotator convertToSoundNote(LimitDenotator note, boolean withModulators) {
 		List<Denotator> coordinates = note.getFactors();
 		try {
-			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ArithmeticElement(new ArithmeticInteger(0))));
+			coordinates.add(new SimpleDenotator(this.emptyName, this.layerForm, new ArithmeticElement(new IntegerWrapper(0))));
 		} catch (DomainException e) { e.printStackTrace(); }
 		return this.createSpecificNoteDenotator(coordinates, withModulators);
 	}
@@ -164,15 +164,15 @@ public class SoundNoteGenerator extends NoteGenerator {
 	}
 	
 	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws RubatoException {
-		ArithmeticElement<Rational> modulatorPitch = new ArithmeticElement<>(new Rational(relativeFrequency));
-		ArithmeticElement<ArithmeticInteger> modulatorLoudness = new ArithmeticElement<>(new ArithmeticInteger(relativeAmplitude));
+		ArithmeticElement<RationalWrapper> modulatorPitch = new ArithmeticElement<>(new RationalWrapper(relativeFrequency));
+		ArithmeticElement<IntegerWrapper> modulatorLoudness = new ArithmeticElement<>(new IntegerWrapper(relativeAmplitude));
 		List<Denotator> coordinates = new ArrayList<>();
-		coordinates.add(this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new Real(0))));
+		coordinates.add(this.createSimpleDenotator(this.onsetForm, new ArithmeticElement<>(new RealWrapper(0))));
 		coordinates.add(this.createSimpleDenotator(this.pitchForm, modulatorPitch));
 		coordinates.add(this.createSimpleDenotator(this.loudnessForm, modulatorLoudness));
-		coordinates.add(this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new Real(0))));
-		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
-		coordinates.add(this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new ArithmeticInteger(0))));
+		coordinates.add(this.createSimpleDenotator(this.durationForm, new ArithmeticElement<>(new RealWrapper(0))));
+		coordinates.add(this.createSimpleDenotator(this.voiceForm, new ArithmeticElement<>(new IntegerWrapper(0))));
+		coordinates.add(this.createSimpleDenotator(this.layerForm, new ArithmeticElement<>(new IntegerWrapper(0))));
 		coordinates.add(this.createEmptyModulators());
 		//this takes a lot of time compared to the other operations
 		return new LimitDenotator(this.emptyName, this.soundNoteForm, coordinates);

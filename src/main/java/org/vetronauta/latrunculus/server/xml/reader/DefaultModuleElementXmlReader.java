@@ -23,11 +23,10 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -127,11 +126,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         if (element.hasAttribute(VALUE_ATTR)) {
             try {
                 ArithmeticNumber<?> val = ArithmeticParsingUtils.parse(element.getAttribute(VALUE_ATTR));
-                if (val instanceof ArithmeticInteger) {
-                    return new ArithmeticElement<>((ArithmeticInteger) val);
+                if (val instanceof IntegerWrapper) {
+                    return new ArithmeticElement<>((IntegerWrapper) val);
                 }
-                if (val instanceof Rational) {
-                    return new ArithmeticElement<>((Rational) val);
+                if (val instanceof RationalWrapper) {
+                    return new ArithmeticElement<>((RationalWrapper) val);
                 }
                 reader.setError("Unknown parsed class %%1", val.getClass());
                 return null;
@@ -147,7 +146,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
     
-    private ArithmeticElement<Modulus> readModularArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
+    private ArithmeticElement<ModulusWrapper> readModularArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         if (!element.hasAttribute(VALUE_ATTR)) {
             reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), VALUE_ATTR);
@@ -174,7 +173,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
 
         try {
             int val = Integer.parseInt(element.getAttribute(VALUE_ATTR));
-            return new ArithmeticElement<>(new Modulus(val, mod));
+            return new ArithmeticElement<>(new ModulusWrapper(val, mod));
         }
         catch (NumberFormatException e) {
             reader.setError("Attribute %%1 of type %%2 must be an integer.", VALUE_ATTR, getElementTypeName(clazz));
@@ -230,10 +229,10 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
 
         String[] values = element.getAttribute(VALUES_ATTR).split(",");
-        List<ArithmeticElement<Modulus>> intValues = new ArrayList<>(values.length);
+        List<ArithmeticElement<ModulusWrapper>> intValues = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
             try {
-                intValues.add(new ArithmeticElement<>(new Modulus(Integer.parseInt(values[i]), mod)));
+                intValues.add(new ArithmeticElement<>(new ModulusWrapper(Integer.parseInt(values[i]), mod)));
             } catch (NumberFormatException e) {
                 reader.setError("Values in type %%1 must be a comma-separated list of integers.", getElementTypeName(clazz));
                 return null;
@@ -285,13 +284,13 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, WORD);
             }
             //TODO actually read proper ArithmeticNumber
-            ArithmeticInteger[] factorArray = new ArithmeticInteger[factors.size()];
+            IntegerWrapper[] factorArray = new IntegerWrapper[factors.size()];
             String[] wordArray = new String[factors.size()];
             int j = 0;
             Iterator<Integer> fiter = factors.iterator();
             Iterator<String> witer = words.iterator();
             while (fiter.hasNext()) {
-                factorArray[j] = new ArithmeticInteger(fiter.next());
+                factorArray[j] = new IntegerWrapper(fiter.next());
                 wordArray[j] = witer.next();
                 j++;
             }

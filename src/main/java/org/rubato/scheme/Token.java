@@ -23,7 +23,7 @@ import java.util.HashSet;
 
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 
 
 /**
@@ -54,7 +54,7 @@ public final class Token {
     public String    string;
     public int       i;
     public double    d;
-    public Rational  r;
+    public RationalWrapper r;
     public ComplexWrapper c;
     public boolean   b;
     public char      chr;
@@ -92,9 +92,9 @@ public final class Token {
     }
     
     
-    public static Rational toRational(String s) {
+    public static RationalWrapper toRational(String s) {
         try {
-            Rational q = ArithmeticParsingUtils.parseRational(s);
+            RationalWrapper q = ArithmeticParsingUtils.parseRational(s);
             return q;
         }
         catch (NumberFormatException e) {
@@ -130,7 +130,7 @@ public final class Token {
             token.d = d.doubleValue();
             return token;
         }
-        Rational r = toRational(s);
+        RationalWrapper r = toRational(s);
         if (r != null) {
             token.type = TokenType.RATIONAL;
             token.r = r;

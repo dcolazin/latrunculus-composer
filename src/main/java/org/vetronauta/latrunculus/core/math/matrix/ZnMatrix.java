@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.repository.ArithmeticRingRepository;
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * Matrixes over modular integers.
  */
-public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
+public final class ZnMatrix extends ArithmeticMatrix<ModulusWrapper> {
     
     /**
      * Creates an integer mod <code>modulus</code>
@@ -271,7 +271,7 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
 
 
     @Override
-    public ArithmeticMatrix<Modulus> product(Matrix<ArithmeticElement<Modulus>> matrix) {
+    public ArithmeticMatrix<ModulusWrapper> product(Matrix<ArithmeticElement<ModulusWrapper>> matrix) {
         if (!(matrix instanceof ZnMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -279,7 +279,7 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public ArithmeticMatrix<Modulus> sum(Matrix<ArithmeticElement<Modulus>> matrix) {
+    public ArithmeticMatrix<ModulusWrapper> sum(Matrix<ArithmeticElement<ModulusWrapper>> matrix) {
         if (!(matrix instanceof ZnMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -287,7 +287,7 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public ArithmeticMatrix<Modulus> difference(Matrix<ArithmeticElement<Modulus>> matrix) {
+    public ArithmeticMatrix<ModulusWrapper> difference(Matrix<ArithmeticElement<ModulusWrapper>> matrix) {
         if (!(matrix instanceof ZnMatrix)) {
             throw new UnsupportedOperationException("currently not supported");
         }
@@ -295,7 +295,7 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public ArithmeticMatrix<Modulus> scaled(ArithmeticElement<Modulus> element) {
+    public ArithmeticMatrix<ModulusWrapper> scaled(ArithmeticElement<ModulusWrapper> element) {
         return scaled(element.getValue().intValue());
     }
 
@@ -368,31 +368,31 @@ public final class ZnMatrix extends ArithmeticMatrix<Modulus> {
     }
 
     @Override
-    public Vector<ArithmeticElement<Modulus>> product(Vector<ArithmeticElement<Modulus>> vector) {
+    public Vector<ArithmeticElement<ModulusWrapper>> product(Vector<ArithmeticElement<ModulusWrapper>> vector) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticElement<Modulus> get(int i, int j) {
+    public ArithmeticElement<ModulusWrapper> get(int i, int j) {
         return null;
     }
 
     @Override
-    public Vector<ArithmeticElement<Modulus>> getColumn(int j) {
-        List<ArithmeticElement<Modulus>> list = new ArrayList<>(rows);
+    public Vector<ArithmeticElement<ModulusWrapper>> getColumn(int j) {
+        List<ArithmeticElement<ModulusWrapper>> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
-            list.add(new ArithmeticElement<>(new Modulus(coefficients[i][j], modulus)));
+            list.add(new ArithmeticElement<>(new ModulusWrapper(coefficients[i][j], modulus)));
         }
         return new Vector<>(ArithmeticRingRepository.getModulusRing(modulus), list);
     }
 
     @Override
-    public Vector<ArithmeticElement<Modulus>> getRow(int i) {
+    public Vector<ArithmeticElement<ModulusWrapper>> getRow(int i) {
         return null; //TODO
     }
 
     @Override
-    public void set(int row, int col, ArithmeticElement<Modulus> element) {
+    public void set(int row, int col, ArithmeticElement<ModulusWrapper> element) {
 
     }
 

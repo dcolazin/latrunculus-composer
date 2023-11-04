@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
 public class Note implements Comparable<Note> {
     
-    Rational pitch;
+    RationalWrapper pitch;
     int      pitch_int;
     int      loudness;
     double   duration;

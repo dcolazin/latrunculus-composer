@@ -1,40 +1,40 @@
 package org.rubato.rubettes.select2d;
 
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 public class JQElementSlider extends JElementSlider {
 
     public JQElementSlider() {
         super();
-        min = new Rational(-10);
-        max = new Rational(10);
+        min = new RationalWrapper(-10);
+        max = new RationalWrapper(10);
         setMinField(min.toString());
         setMaxField(max.toString());
         setRange(0, MAX.intValue());
-        last = new Rational(0);
+        last = new RationalWrapper(0);
         setValue(toInteger(last));
     }
     
 
-    private Rational getRational() {
-        return (new Rational(getValue())).product(max.difference(min).quotient(MAX)).sum(min);
+    private RationalWrapper getRational() {
+        return (new RationalWrapper(getValue())).product(max.difference(min).quotient(MAX)).sum(min);
     }
     
     
-    private int toInteger(Rational v) {
+    private int toInteger(RationalWrapper v) {
         return (((v.difference(min)).product(MAX)).quotient(max.difference(min))).intValue();
     }
     
     
-    protected ArithmeticElement<Rational> getElement() {
+    protected ArithmeticElement<RationalWrapper> getElement() {
         return new ArithmeticElement<>(getRational());
     }
 
 
     protected void maxFieldUpdate() {
-        Rational cur = getRational();
+        RationalWrapper cur = getRational();
         try {
             max = ArithmeticParsingUtils.parseRational(getMaxField());
         }
@@ -52,7 +52,7 @@ public class JQElementSlider extends JElementSlider {
 
 
     protected void minFieldUpdate() {
-        Rational cur = getRational();
+        RationalWrapper cur = getRational();
         try {
             min = ArithmeticParsingUtils.parseRational(getMinField());
         }
@@ -70,7 +70,7 @@ public class JQElementSlider extends JElementSlider {
 
 
     protected void sliderUpdate() {
-        Rational cur = getRational();
+        RationalWrapper cur = getRational();
         if (!cur.equals(last)) {
             setCurrentField(cur.toString());
             fireActionPerformed();
@@ -79,9 +79,9 @@ public class JQElementSlider extends JElementSlider {
     }
     
     
-    private Rational min;
-    private Rational max;
-    private Rational last;
+    private RationalWrapper min;
+    private RationalWrapper max;
+    private RationalWrapper last;
     
-    private static final Rational MAX =  new Rational(256);
+    private static final RationalWrapper MAX =  new RationalWrapper(256);
 }

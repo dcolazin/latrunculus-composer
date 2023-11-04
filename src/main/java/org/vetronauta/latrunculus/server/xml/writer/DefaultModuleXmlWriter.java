@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -124,7 +124,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
 
     private void write(VectorModule<?> module, XMLWriter writer) {
         if (module.getRing().getClass().isAssignableFrom(ZnRing.class)) {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ArithmeticElement<Modulus>)module.getRing().getOne()).getValue().getModulus()); //TODO ugly way to get the modulus
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ArithmeticElement<ModulusWrapper>)module.getRing().getOne()).getValue().getModulus()); //TODO ugly way to get the modulus
         } else {
             writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
         }
@@ -152,7 +152,7 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
 
     private void write(ArithmeticStringMultiModule module, XMLWriter writer) {
         if (module.getRing().getFactorRing().getClass().isAssignableFrom(ZnRing.class)) {
-            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((Modulus)module.getRing().getFactorRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
+            writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension(), MODULUS_ATTR, ((ModulusWrapper)module.getRing().getFactorRing().getOne().getValue()).getModulus()); //TODO ugly way to get the modulus
         } else {
             writer.emptyWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
         }

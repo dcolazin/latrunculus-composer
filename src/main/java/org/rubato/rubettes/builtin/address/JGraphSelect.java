@@ -19,10 +19,10 @@
 
 package org.rubato.rubettes.builtin.address;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -64,7 +64,7 @@ class JGraphSelect
         if (ring instanceof ZRing || ring instanceof ZnRing) {
             config = new ZConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<ArithmeticInteger>> p = ((Vector<ArithmeticElement<ArithmeticInteger>>)m).getValue();
+                List<ArithmeticElement<IntegerWrapper>> p = ((Vector<ArithmeticElement<IntegerWrapper>>)m).getValue();
                 config.addPoint(p.get(0).getValue().intValue(), p.get(1).getValue().intValue());
             }
         }
@@ -72,14 +72,14 @@ class JGraphSelect
             QConfiguration qconfig = new QConfiguration();
             config = qconfig;
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Rational>> p = ((Vector<ArithmeticElement<Rational>>)m).getValue();
+                List<ArithmeticElement<RationalWrapper>> p = ((Vector<ArithmeticElement<RationalWrapper>>)m).getValue();
                 qconfig.addPoint(p.get(0).getValue(), p.get(1).getValue());
             }
         }
         else if (ring instanceof RRing) {
             config = new RConfiguration();
             for (ModuleElement m : elements) {
-                List<ArithmeticElement<Real>> p = ((Vector<ArithmeticElement<Real>>)m).getValue();
+                List<ArithmeticElement<RealWrapper>> p = ((Vector<ArithmeticElement<RealWrapper>>)m).getValue();
                 config.addPoint(p.get(0).getValue().doubleValue(), p.get(1).getValue().doubleValue());
             }
         }
@@ -376,11 +376,11 @@ class JGraphSelect
     }
 
     public class RConfiguration extends Configuration {
-        public Real getX(int i) {
-            return new Real(px.get(i));
+        public RealWrapper getX(int i) {
+            return new RealWrapper(px.get(i));
         }
-        public Real getY(int i) {
-            return new Real(py.get(i));
+        public RealWrapper getY(int i) {
+            return new RealWrapper(py.get(i));
         }
     }
     
@@ -408,34 +408,34 @@ class JGraphSelect
             ipy.remove(i);
             super.removePoint(i);
         }
-        public ArithmeticInteger getX(int i) {
-            return new ArithmeticInteger(ipx.get(i));
+        public IntegerWrapper getX(int i) {
+            return new IntegerWrapper(ipx.get(i));
         }
-        public ArithmeticInteger getY(int i) {
-            return new ArithmeticInteger(ipy.get(i));
+        public IntegerWrapper getY(int i) {
+            return new IntegerWrapper(ipy.get(i));
         }
     }
     
     
     public class QConfiguration extends Configuration {
-        ArrayList<Rational> qpx = new ArrayList<Rational>();
-        ArrayList<Rational> qpy = new ArrayList<Rational>();
+        ArrayList<RationalWrapper> qpx = new ArrayList<RationalWrapper>();
+        ArrayList<RationalWrapper> qpy = new ArrayList<RationalWrapper>();
         
         public void setPoint(int i, double x, double y) {
-            Rational qx = new Rational(x);
-            Rational qy = new Rational(y);
+            RationalWrapper qx = new RationalWrapper(x);
+            RationalWrapper qy = new RationalWrapper(y);
             qpx.set(i, qx);
             qpy.set(i, qy);
             super.setPoint(i, qx.doubleValue(), qy.doubleValue());
         }
         public void addPoint(double x, double y) {
-            Rational qx = new Rational(x);
-            Rational qy = new Rational(y);
+            RationalWrapper qx = new RationalWrapper(x);
+            RationalWrapper qy = new RationalWrapper(y);
             qpx.add(qx);
             qpy.add(qy);
             super.addPoint(qx.doubleValue(), qy.doubleValue());
         }
-        public void addPoint(Rational x, Rational y) {
+        public void addPoint(RationalWrapper x, RationalWrapper y) {
             qpx.add(x);
             qpy.add(y);
             super.addPoint(x.doubleValue(), y.doubleValue());
@@ -445,10 +445,10 @@ class JGraphSelect
             qpy.remove(i);
             super.removePoint(i);
         }
-        public Rational getX(int i) {
+        public RationalWrapper getX(int i) {
             return qpx.get(i);
         }
-        public Rational getY(int i) {
+        public RationalWrapper getY(int i) {
             return qpy.get(i);
         }
     }

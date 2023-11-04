@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -242,7 +242,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * Creates an embedding of a Z_n ring in another ring.
      * These are neither ring nor module homomorphisms.
      */
-    private static <RX extends RingElement<RX>> EmbeddingMorphism<ArithmeticElement<Modulus>,RX,ArithmeticElement<Modulus>,RX> makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
+    private static <RX extends RingElement<RX>> EmbeddingMorphism<ArithmeticElement<ModulusWrapper>,RX,ArithmeticElement<ModulusWrapper>,RX> makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
         if (codomain instanceof ArithmeticRing) {
             // Zn -> Z, Q, R, C
             return new ZnRingEmbeddingMorphism<>(domain, codomain);
@@ -396,7 +396,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
     }
 
     private static class ZnRingEmbeddingMorphism<RX extends RingElement<RX>>
-            extends RingEmbeddingMorphism<ArithmeticElement<Modulus>,RX> {
+            extends RingEmbeddingMorphism<ArithmeticElement<ModulusWrapper>,RX> {
 
         protected ZnRingEmbeddingMorphism(ZnRing domain, Ring<RX> codomain) {
             super(domain, codomain);

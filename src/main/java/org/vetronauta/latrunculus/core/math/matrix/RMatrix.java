@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 /**
  * Matrixes over real numbers.
  */
-public class RMatrix extends ArithmeticMatrix<Real> {
+public class RMatrix extends ArithmeticMatrix<RealWrapper> {
 
     /**
      * Creates a real <code>rows</code> x <code>cols</code> matrix
@@ -45,7 +45,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> product(Matrix<ArithmeticElement<Real>> matrix) {
+    public ArithmeticMatrix<RealWrapper> product(Matrix<ArithmeticElement<RealWrapper>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -53,7 +53,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> sum(Matrix<ArithmeticElement<Real>> matrix) {
+    public ArithmeticMatrix<RealWrapper> sum(Matrix<ArithmeticElement<RealWrapper>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -61,7 +61,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> difference(Matrix<ArithmeticElement<Real>> matrix) {
+    public ArithmeticMatrix<RealWrapper> difference(Matrix<ArithmeticElement<RealWrapper>> matrix) {
         if (!(matrix instanceof RMatrix)) {
             throw new UnsupportedOperationException("still have to do it");
         }
@@ -69,13 +69,13 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public ArithmeticMatrix<Real> scaled(ArithmeticElement<Real> element) {
+    public ArithmeticMatrix<RealWrapper> scaled(ArithmeticElement<RealWrapper> element) {
         return scaled(element.getValue().doubleValue());
     }
 
     @Override
-    public ArithmeticElement<Real> get(int i, int j) {
-        return new ArithmeticElement<>(new Real(coefficients[i][j]));
+    public ArithmeticElement<RealWrapper> get(int i, int j) {
+        return new ArithmeticElement<>(new RealWrapper(coefficients[i][j]));
     }
 
 
@@ -177,18 +177,18 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public Vector<ArithmeticElement<Real>> getColumn(int j) {
-        List<ArithmeticElement<Real>> list = new ArrayList<>(rows);
+    public Vector<ArithmeticElement<RealWrapper>> getColumn(int j) {
+        List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
-            list.add(new ArithmeticElement<>(new Real(coefficients[i][j])));
+            list.add(new ArithmeticElement<>(new RealWrapper(coefficients[i][j])));
         }
         return new Vector<>(RRing.ring, list);
     }
 
     @Override
-    public Vector<ArithmeticElement<Real>> getRow(int i) {
+    public Vector<ArithmeticElement<RealWrapper>> getRow(int i) {
         return new Vector<>(RRing.ring, Arrays.stream(coefficients[i])
-                .mapToObj(Real::new)
+                .mapToObj(RealWrapper::new)
                 .map(ArithmeticElement::new)
                 .collect(Collectors.toList()));
     }
@@ -201,7 +201,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
         coefficients[row][col] = value;
     }
 
-    public void set(int row, int col, ArithmeticElement<Real> value) {
+    public void set(int row, int col, ArithmeticElement<RealWrapper> value) {
         coefficients[row][col] = value.getValue().doubleValue();
     }
 
@@ -387,7 +387,7 @@ public class RMatrix extends ArithmeticMatrix<Real> {
     }
 
     @Override
-    public Vector<ArithmeticElement<Real>> product(Vector<ArithmeticElement<Real>> vector) {
+    public Vector<ArithmeticElement<RealWrapper>> product(Vector<ArithmeticElement<RealWrapper>> vector) {
         return null; //TODO
     }
 

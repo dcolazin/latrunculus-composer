@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 /**
  * Matrixes over integers.
  */
-public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
+public final class ZMatrix extends ArithmeticMatrix<IntegerWrapper> {
     
     /**
      * Creates an integer <code>rows</code> x <code>cols</code> matrix
@@ -41,52 +41,52 @@ public final class ZMatrix extends ArithmeticMatrix<ArithmeticInteger> {
     }
 
     @Override
-    public ArithmeticMatrix<ArithmeticInteger> product(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+    public ArithmeticMatrix<IntegerWrapper> product(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<ArithmeticInteger> sum(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+    public ArithmeticMatrix<IntegerWrapper> sum(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<ArithmeticInteger> difference(Matrix<ArithmeticElement<ArithmeticInteger>> matrix) {
+    public ArithmeticMatrix<IntegerWrapper> difference(Matrix<ArithmeticElement<IntegerWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<ArithmeticInteger> scaled(ArithmeticElement<ArithmeticInteger> element) {
+    public ArithmeticMatrix<IntegerWrapper> scaled(ArithmeticElement<IntegerWrapper> element) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<ArithmeticInteger> inverse() {
+    public ArithmeticMatrix<IntegerWrapper> inverse() {
         return null;
     }
 
     @Override
-    public Vector<ArithmeticElement<ArithmeticInteger>> product(Vector<ArithmeticElement<ArithmeticInteger>> vector) {
+    public Vector<ArithmeticElement<IntegerWrapper>> product(Vector<ArithmeticElement<IntegerWrapper>> vector) {
         return null; //TODO
     }
 
     @Override
-    public ArithmeticElement<ArithmeticInteger> get(int i, int j) {
+    public ArithmeticElement<IntegerWrapper> get(int i, int j) {
         return null;
     }
 
     @Override
-    public Vector<ArithmeticElement<ArithmeticInteger>> getColumn(int j) {
+    public Vector<ArithmeticElement<IntegerWrapper>> getColumn(int j) {
         return null; //TODO
     }
 
     @Override
-    public Vector<ArithmeticElement<ArithmeticInteger>> getRow(int i) {
+    public Vector<ArithmeticElement<IntegerWrapper>> getRow(int i) {
         return null; //TODO
     }
 
     @Override
-    public void set(int row, int col, ArithmeticElement<ArithmeticInteger> element) {
+    public void set(int row, int col, ArithmeticElement<IntegerWrapper> element) {
 
     }
 

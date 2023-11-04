@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.core.exception.InverseException;
  * 
  * @author Gérard Milmeister
  */
-public final class Rational implements ArithmeticNumber<Rational> {
+public final class RationalWrapper implements ArithmeticNumber<RationalWrapper> {
 
     //TODO quantization should be changed at factory level, not at class level
     private static final int INITIAL_DEFAULT_QUANT = 128*3*5;
@@ -39,7 +39,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
     /**
      * Creates a new rational number <code>n</code>/1.
      */
-    public Rational(int n) {
+    public RationalWrapper(int n) {
         num = n;
         denom = 1;
     }
@@ -50,7 +50,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * @param n is the numerator
      * @param d is the denominator
      */
-    public Rational(int n, int d) {
+    public RationalWrapper(int n, int d) {
         int g = NumberTheory.gcd(n, d);
         if (d > 0) {
             num = n/g;
@@ -66,7 +66,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * Creates a new rational from <code>r</code>.
      * Copy constructor.
      */
-    public Rational(Rational r) {
+    public RationalWrapper(RationalWrapper r) {
         num = r.num;
         denom = r.denom;
     }
@@ -76,7 +76,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * Creates a new rational from a double <code>d</code>.
      * Converts <code>d</code> with quantization <code>quant</code>.
      */
-    public Rational(double d, int quant) {
+    public RationalWrapper(double d, int quant) {
         this((int)Math.round(d*quant), quant);
     }
 
@@ -85,7 +85,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * Creates a new rational from a double <code>d</code>.
      * Converts <code>d</code> with default quantization.
      */
-    public Rational(double d) {
+    public RationalWrapper(double d) {
         this((int)Math.round(d*DEFAULT_QUANT), DEFAULT_QUANT);
     }
 
@@ -95,7 +95,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * A new rational <code>x</code>/<code>quant</code> is created
      * such that <code>x</code>/<code>quant</code> <= <code>r</code> < (<code>x</code>+1)/<code>quant</code>.
      */
-    public Rational(Rational r, int quant) {
+    public RationalWrapper(RationalWrapper r, int quant) {
         int qu = quant;
         if (qu < 0) qu = -qu;
         int numerator = r.getNumerator();
@@ -108,33 +108,33 @@ public final class Rational implements ArithmeticNumber<Rational> {
         long q = (numerator*qu)/denominator;
         long s = (numerator*qu)%denominator;
         if (s*2 > denominator) q++;
-        Rational newRational = new Rational(sign*(int)q, quant); //TODO hack...
-        num = newRational.num;
-        denom = newRational.denom;
+        RationalWrapper newRationalWrapper = new RationalWrapper(sign*(int)q, quant); //TODO hack...
+        num = newRationalWrapper.num;
+        denom = newRationalWrapper.denom;
     }
 
     /**
      * Returns the rational 0/1.
      */
-    public static Rational getZero() {
-        return new Rational(0);
+    public static RationalWrapper getZero() {
+        return new RationalWrapper(0);
     }
 
 
     /**
      * Returns the rational 1/1.
      */
-    public static Rational getOne() {
-        return new Rational(1);
+    public static RationalWrapper getOne() {
+        return new RationalWrapper(1);
     }
 
 
     public boolean equals(Object other) {
-        if (!(other instanceof Rational)) {
+        if (!(other instanceof RationalWrapper)) {
             return false;
         }
-        Rational otherRational = (Rational) other;
-        return otherRational.num == num && otherRational.denom == denom;
+        RationalWrapper otherRationalWrapper = (RationalWrapper) other;
+        return otherRationalWrapper.num == num && otherRationalWrapper.denom == denom;
     }
 
     /**
@@ -165,11 +165,11 @@ public final class Rational implements ArithmeticNumber<Rational> {
 
     @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof Rational) && !this.isZero();
+        return (y instanceof RationalWrapper) && !this.isZero();
     }
 
     @Override
-    public int compareTo(Rational r) {
+    public int compareTo(RationalWrapper r) {
         int a, b;
         a = num * r.getDenominator();
         b = r.getNumerator() * denom;
@@ -181,55 +181,55 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * Returns the sum of this number and <code>r</code>.
      */
     @Override
-    public Rational sum(Rational r) {
-        return new Rational(num * r.denom + denom * r.num, denom * r.denom);
+    public RationalWrapper sum(RationalWrapper r) {
+        return new RationalWrapper(num * r.denom + denom * r.num, denom * r.denom);
     }
 
 
     /**
      * Returns the sum of this number and the integer <code>n</code>.
      */
-    public Rational sum(int n) {
-        return new Rational(num + n * denom, denom);
+    public RationalWrapper sum(int n) {
+        return new RationalWrapper(num + n * denom, denom);
     }
 
     /**
      * Returns the difference of this number and <code>r</code>.
      */
     @Override
-    public Rational difference(Rational r) {
-        return new Rational(num * r.denom - denom * r.num, denom * r.denom);
+    public RationalWrapper difference(RationalWrapper r) {
+        return new RationalWrapper(num * r.denom - denom * r.num, denom * r.denom);
     }
 
 
     /**
      * Returns the difference of this number and the integer <code>n</code>.
      */
-    public Rational difference(int n) {
-        return new Rational(num - n * denom, denom);
+    public RationalWrapper difference(int n) {
+        return new RationalWrapper(num - n * denom, denom);
     }
 
     /**
      * Returns the product of this number and <code>r</code>.
      */
-    public Rational product(Rational r) {
+    public RationalWrapper product(RationalWrapper r) {
         int g = NumberTheory.gcd(r.denom, num) * NumberTheory.gcd(r.num, denom);
-        return new Rational(num * r.num / g, denom * r.denom / g); //TODO do not recheck gcd
+        return new RationalWrapper(num * r.num / g, denom * r.denom / g); //TODO do not recheck gcd
     }
 
 
     /**
      * Returns the product of this number and the integer <code>n</code>.
      */
-    public Rational product(int n) {
+    public RationalWrapper product(int n) {
         int g = NumberTheory.gcd(n, denom);
-        return new Rational(num * n / g, denom / g); //TODO do not recheck gcd
+        return new RationalWrapper(num * n / g, denom / g); //TODO do not recheck gcd
     }
 
     /**
      * Returns the quotient of this number and <code>r</code>.
      */
-    public Rational quotient(Rational r) {
+    public RationalWrapper quotient(RationalWrapper r) {
         int g = NumberTheory.gcd(r.denom, denom) * NumberTheory.gcd(r.num, num);
         int n = num * r.denom / g;
         int d = denom * r.num / g;
@@ -240,14 +240,14 @@ public final class Rational implements ArithmeticNumber<Rational> {
             n = -n;
             d = -d;
         }
-        return new Rational(n,d); //TODO avoid rechecking gcd
+        return new RationalWrapper(n,d); //TODO avoid rechecking gcd
     }
 
 
     /**
      * Returns the quotient of this number and the integer <code>n</code>.
      */
-    public Rational quotient(int n) {
+    public RationalWrapper quotient(int n) {
         int g = NumberTheory.gcd(n, num);
         int m = num / g;
         int d = denom * (n / g);
@@ -258,20 +258,20 @@ public final class Rational implements ArithmeticNumber<Rational> {
             m = -m;
             d = -d;
         }
-        return new Rational(m,d); //TODO avoid rechecking gcd
+        return new RationalWrapper(m,d); //TODO avoid rechecking gcd
     }
 
     /**
      * Returns the inverse of this rational.
      */
-    public Rational inverse() {
+    public RationalWrapper inverse() {
         if (num == 0) {
             throw new InverseException(this);
         }
         if (num < 0) {
-            return new Rational(-denom,-num); //TODO avoid check gcd
+            return new RationalWrapper(-denom,-num); //TODO avoid check gcd
         } else {
-            return new Rational(denom,num); //TODO avoid check gcd
+            return new RationalWrapper(denom,num); //TODO avoid check gcd
         }
     }
 
@@ -279,8 +279,8 @@ public final class Rational implements ArithmeticNumber<Rational> {
      * Returns -this number.
      */
     @Override
-    public Rational neg() {
-        return new Rational(-num, denom);
+    public RationalWrapper neg() {
+        return new RationalWrapper(-num, denom);
     }
 
     /**
@@ -303,9 +303,9 @@ public final class Rational implements ArithmeticNumber<Rational> {
     /**
      * Returns the absolute value of this rational.
      */
-    public Rational abs() {
+    public RationalWrapper abs() {
         if (num < 0) {
-            return new Rational(-num,denom); //TODO avoid check denominator
+            return new RationalWrapper(-num,denom); //TODO avoid check denominator
         } else {
             return this;
         }
@@ -353,7 +353,7 @@ public final class Rational implements ArithmeticNumber<Rational> {
         }
     }
 
-    public Rational deepCopy() {
+    public RationalWrapper deepCopy() {
         return this;
     }
 

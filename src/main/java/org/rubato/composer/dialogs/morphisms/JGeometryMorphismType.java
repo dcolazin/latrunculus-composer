@@ -19,7 +19,7 @@
 
 package org.rubato.composer.dialogs.morphisms;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -101,7 +101,7 @@ public class JGeometryMorphismType extends JMorphismType implements ActionListen
             matrix = geo.getMatrix().product(matrix);
         }
         RMatrix A = matrix.getSubMatrix(0, 1, 0, 1);
-        List<ArithmeticElement<Real>> list = new ArrayList<>(2);
+        List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(2);
         list.add(matrix.get(0, 2));
         list.add(matrix.get(1, 2));
         container.setMorphism(ArithmeticAffineFreeMorphism.make(RRing.ring, A, new Vector<>(RRing.ring, list)));

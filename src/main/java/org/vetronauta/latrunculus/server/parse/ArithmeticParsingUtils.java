@@ -3,12 +3,12 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -42,13 +42,13 @@ public class ArithmeticParsingUtils {
             throw new UnsupportedOperationException("...");
             //return parseComplex(s);
         }
-        if (parsingClass.equals(ArithmeticInteger.class)) {
+        if (parsingClass.equals(IntegerWrapper.class)) {
             return parseArithmeticInteger(s);
         }
-        if (parsingClass.equals(Rational.class)) {
+        if (parsingClass.equals(RationalWrapper.class)) {
             return parseRational(s);
         }
-        if (parsingClass.equals(Real.class)) {
+        if (parsingClass.equals(RealWrapper.class)) {
             return parseArithmeticDouble(s);
         }
         throw new NumberFormatException(String.format("parsing class %s is not supported", parsingClass));
@@ -60,16 +60,16 @@ public class ArithmeticParsingUtils {
 
     private static Class<?> detectParsingClass(Ring<?> ring) {
         if (ring instanceof ZRing) {
-            return ArithmeticInteger.class;
+            return IntegerWrapper.class;
         }
         if (ring instanceof ZnRing) {
-            return Modulus.class;
+            return ModulusWrapper.class;
         }
         if (ring instanceof QRing) {
-            return Rational.class;
+            return RationalWrapper.class;
         }
         if (ring instanceof RRing) {
-            return Real.class;
+            return RealWrapper.class;
         }
         if (ring instanceof CRing) {
             return ComplexWrapper.class;
@@ -109,21 +109,21 @@ public class ArithmeticParsingUtils {
         }
     }
 
-    public static ArithmeticInteger parseArithmeticInteger(String s) {
-        return new ArithmeticInteger(Integer.parseInt(s));
+    public static IntegerWrapper parseArithmeticInteger(String s) {
+        return new IntegerWrapper(Integer.parseInt(s));
     }
 
     /**
      * Returns the rational correspoding to its string representation <code>s</code>.
      */
-    public static Rational parseRational(String s) {
+    public static RationalWrapper parseRational(String s) {
         String unparenthesized = TextUtils.unparenthesize(s);
         int divpos = unparenthesized.indexOf("/");
         if (divpos > -1) {
             try {
                 int n = Integer.parseInt(unparenthesized.substring(0, divpos));
                 int d = Integer.parseInt(unparenthesized.substring(divpos + 1));
-                return new Rational(n,d);
+                return new RationalWrapper(n,d);
             }
             catch (Exception e) {
                 throw new NumberFormatException();
@@ -131,7 +131,7 @@ public class ArithmeticParsingUtils {
         }
         else {
             try {
-                return new Rational(Integer.parseInt(s));
+                return new RationalWrapper(Integer.parseInt(s));
             }
             catch (Exception e) {
                 throw new NumberFormatException();
@@ -139,8 +139,8 @@ public class ArithmeticParsingUtils {
         }
     }
 
-    public static Real parseArithmeticDouble(String s) {
-        return new Real(Double.parseDouble(s));
+    public static RealWrapper parseArithmeticDouble(String s) {
+        return new RealWrapper(Double.parseDouble(s));
     }
 
     public static ArithmeticRing<?> parseRing(String s) {
@@ -164,14 +164,14 @@ public class ArithmeticParsingUtils {
         throw new NumberFormatException(String.format("parsing string ring %s is not supported", ring));
     }
 
-    public static RingString<Real> parseRString(String string) {
+    public static RingString<RealWrapper> parseRString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<Real> factors = new LinkedList<>();
+        LinkedList<RealWrapper> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -179,27 +179,27 @@ public class ArithmeticParsingUtils {
             }
             double f = Double.parseDouble(term[0]);
             String w = TextUtils.unquote(term[1]);
-            factors.add(new Real(f));
+            factors.add(new RealWrapper(f));
             words.add(w);
         }
 
         return new RingString<>(words, factors);
     }
 
-    public static RingString<Rational> parseQString(String string) {
+    public static RingString<RationalWrapper> parseQString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<Rational> factors = new LinkedList<>();
+        LinkedList<RationalWrapper> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
                 throw new NumberFormatException();
             }
-            Rational f = ArithmeticParsingUtils.parseRational(term[0]);
+            RationalWrapper f = ArithmeticParsingUtils.parseRational(term[0]);
             String w = TextUtils.unquote(term[1]);
             factors.add(f);
             words.add(w);
@@ -208,14 +208,14 @@ public class ArithmeticParsingUtils {
         return new RingString<>(words, factors);
     }
 
-    public static RingString<ArithmeticInteger> parseZString(String string) {
+    public static RingString<IntegerWrapper> parseZString(String string) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<ArithmeticInteger> factors = new LinkedList<>();
+        LinkedList<IntegerWrapper> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -223,21 +223,21 @@ public class ArithmeticParsingUtils {
             }
             int f = Integer.parseInt(term[0]);
             String w = TextUtils.unquote(term[1]);
-            factors.add(new ArithmeticInteger(f));
+            factors.add(new IntegerWrapper(f));
             words.add(w);
         }
 
         return new RingString<>(words, factors);
     }
 
-    public static RingString<Modulus> parseZnString(String string, int modulus) {
+    public static RingString<ModulusWrapper> parseZnString(String string, int modulus) {
         String[] terms = TextUtils.split(string.trim(), '+');
         if (terms.length == 0) {
             return RingString.getOne();
         }
 
         LinkedList<String> words = new LinkedList<>();
-        LinkedList<Modulus> factors = new LinkedList<>();
+        LinkedList<ModulusWrapper> factors = new LinkedList<>();
         for (int i = 0; i < terms.length; i++) {
             String[] term = TextUtils.split(terms[i].trim(), '*');
             if (term.length < 2) {
@@ -245,7 +245,7 @@ public class ArithmeticParsingUtils {
             }
             int f = Integer.parseInt(term[0]);
             String w = TextUtils.unquote(term[1]);
-            factors.add(new Modulus(f, modulus));
+            factors.add(new ModulusWrapper(f, modulus));
             words.add(w);
         }
 

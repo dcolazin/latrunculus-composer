@@ -34,19 +34,19 @@ import java.util.stream.Collectors;
  * @author vetronauta
  */
 @Getter
-public final class Modulus implements ArithmeticNumber<Modulus> {
+public final class ModulusWrapper implements ArithmeticNumber<ModulusWrapper> {
 
     private final int value;
     private final int modulus;
 
-    public Modulus(int value, int modulus) {
+    public ModulusWrapper(int value, int modulus) {
         this.value = NumberTheory.mod(value, modulus);
         this.modulus = modulus;
     }
 
     @Override
-    public int compareTo(Modulus arithmeticModulus) {
-        return this.intValue() - arithmeticModulus.intValue();
+    public int compareTo(ModulusWrapper arithmeticModulusWrapper) {
+        return this.intValue() - arithmeticModulusWrapper.intValue();
     }
 
     @Override
@@ -70,7 +70,7 @@ public final class Modulus implements ArithmeticNumber<Modulus> {
     }
 
     @Override
-    public Modulus deepCopy() {
+    public ModulusWrapper deepCopy() {
         return this;
     }
 
@@ -101,36 +101,36 @@ public final class Modulus implements ArithmeticNumber<Modulus> {
 
     @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof Modulus) && NumberTheory.gcd(value, modulus) == 1;
+        return (y instanceof ModulusWrapper) && NumberTheory.gcd(value, modulus) == 1;
     }
 
     @Override
-    public Modulus sum(Modulus other) {
+    public ModulusWrapper sum(ModulusWrapper other) {
         assertModulusIsSame(other);
-        return new Modulus(value + other.value, modulus);
+        return new ModulusWrapper(value + other.value, modulus);
     }
 
     @Override
-    public Modulus difference(Modulus other) {
+    public ModulusWrapper difference(ModulusWrapper other) {
         assertModulusIsSame(other);
-        return new Modulus(value - other.value, modulus);
+        return new ModulusWrapper(value - other.value, modulus);
     }
 
     @Override
-    public Modulus product(Modulus other) {
+    public ModulusWrapper product(ModulusWrapper other) {
         assertModulusIsSame(other);
-        return new Modulus(value * other.value, modulus);
+        return new ModulusWrapper(value * other.value, modulus);
     }
 
     @Override
-    public Modulus neg() {
-        return new Modulus(-value, modulus);
+    public ModulusWrapper neg() {
+        return new ModulusWrapper(-value, modulus);
     }
 
     @Override
-    public Modulus inverse() {
+    public ModulusWrapper inverse() {
         try {
-            return new Modulus(NumberTheory.inverseMod(value, modulus), modulus);
+            return new ModulusWrapper(NumberTheory.inverseMod(value, modulus), modulus);
         } catch (ZeroDivisorException e) {
             throw new InverseException(this, e);
         }
@@ -143,11 +143,11 @@ public final class Modulus implements ArithmeticNumber<Modulus> {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Modulus)) {
+        if (!(other instanceof ModulusWrapper)) {
             return false;
         }
-        Modulus otherModulus = (Modulus) other;
-        return otherModulus.value == value && otherModulus.modulus == modulus;
+        ModulusWrapper otherModulusWrapper = (ModulusWrapper) other;
+        return otherModulusWrapper.value == value && otherModulusWrapper.modulus == modulus;
     }
 
     @Override
@@ -155,17 +155,17 @@ public final class Modulus implements ArithmeticNumber<Modulus> {
         return value;
     }
 
-    public static Modulus[] toArray(int[] array, int m) {
+    public static ModulusWrapper[] toArray(int[] array, int m) {
         return Arrays.stream(array)
-                .mapToObj(i -> new Modulus(i, m))
-                .toArray(Modulus[]::new);
+                .mapToObj(i -> new ModulusWrapper(i, m))
+                .toArray(ModulusWrapper[]::new);
     }
 
-    public static List<Modulus> toList(List<Integer> list, int m) {
-        return list.stream().map(i -> new Modulus(i, m)).collect(Collectors.toList());
+    public static List<ModulusWrapper> toList(List<Integer> list, int m) {
+        return list.stream().map(i -> new ModulusWrapper(i, m)).collect(Collectors.toList());
     }
 
-    private void assertModulusIsSame(Modulus other) {
+    private void assertModulusIsSame(ModulusWrapper other) {
         if (modulus != other.getModulus()) {
             throw new ModulusException(this, other);
         }

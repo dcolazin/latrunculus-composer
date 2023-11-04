@@ -23,7 +23,7 @@ import static org.rubato.scheme.SExpr.*;
 
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 
 
 /**
@@ -1316,7 +1316,7 @@ abstract class ArithPrimitives {
                     return a;
                 }
                 else if (a.isReal()) {
-                    return SRational.make(new Rational(((SReal)a).getDouble()));
+                    return SRational.make(new RationalWrapper(((SReal)a).getDouble()));
                 }
                 else if (a.isComplex()) {
                     eval.addError(getName()+": complex argument not supported");

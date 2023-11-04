@@ -3,7 +3,7 @@ package org.rubato.rubettes.bigbang.model.operations;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 
 public class TranslationTransformation extends AbstractTransformation {
 	
-	private List<Real> modifiedShift;
+	private List<RealWrapper> modifiedShift;
 	
 	//used for cloning
 	protected TranslationTransformation(BigBangModel model, TranslationTransformation other) {
@@ -32,9 +32,9 @@ public class TranslationTransformation extends AbstractTransformation {
 	
 	@Override
 	protected void updateOperation() {
-		List<Real> list = new ArrayList<>(2);
-		list.add(new Real(this.modificationRatio*(this.endingPoint[0]-this.center[0])));
-		list.add(new Real(this.modificationRatio*(this.endingPoint[1]-this.center[1])));
+		List<RealWrapper> list = new ArrayList<>(2);
+		list.add(new RealWrapper(this.modificationRatio*(this.endingPoint[0]-this.center[0])));
+		list.add(new RealWrapper(this.modificationRatio*(this.endingPoint[1]-this.center[1])));
 		this.modifiedShift = list;
 		this.updateMatrix();
 	}

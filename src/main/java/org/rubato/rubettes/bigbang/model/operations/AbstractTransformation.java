@@ -8,7 +8,7 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -93,15 +93,15 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		this.updateOperation();
 	}
 	
-	protected void initTransformation(RMatrix matrix, List<Real> shift) {
+	protected void initTransformation(RMatrix matrix, List<RealWrapper> shift) {
 		List<RMatrix> matrices = new ArrayList<>();
 		matrices.add(matrix);
-		List<List<Real>> shifts = new ArrayList<>();
+		List<List<RealWrapper>> shifts = new ArrayList<>();
 		shifts.add(shift);
 		this.initTransformation(matrices, shifts);
 	}
 	
-	protected void initTransformation(List<RMatrix> matrices, List<List<Real>> shifts) {
+	protected void initTransformation(List<RMatrix> matrices, List<List<RealWrapper>> shifts) {
 		ModuleMorphism morphism = ArithmeticAffineFreeMorphism.make(RRing.ring, matrices.get(0), new Vector<>(RRing.ring, shifts.get(0).stream().map(ArithmeticElement::new).collect(Collectors.toList())));
 		for (int i = 1; i < matrices.size(); i++) {
 			try {

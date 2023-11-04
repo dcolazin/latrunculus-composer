@@ -21,10 +21,10 @@ package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
@@ -68,7 +68,7 @@ public class FoldingModule {
     public static double[] foldInteger(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<ArithmeticInteger> e = (ArithmeticElement<ArithmeticInteger>) elements[i];
+            ArithmeticElement<IntegerWrapper> e = (ArithmeticElement<IntegerWrapper>) elements[i];
             res[i] = e.getValue().intValue();
         }
         return res;
@@ -77,7 +77,7 @@ public class FoldingModule {
     public static double[] foldRational(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<Rational> r = (ArithmeticElement<Rational>)elements[i];
+            ArithmeticElement<RationalWrapper> r = (ArithmeticElement<RationalWrapper>)elements[i];
             res[i] = r.getValue().doubleValue();
         }
         return res;
@@ -86,7 +86,7 @@ public class FoldingModule {
     public static double[] foldReal(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<Real> e = (ArithmeticElement<Real>)elements[i];
+            ArithmeticElement<RealWrapper> e = (ArithmeticElement<RealWrapper>)elements[i];
             res[i] = e.getValue().doubleValue();
         }
         return res;
@@ -105,7 +105,7 @@ public class FoldingModule {
     public static double[] foldModulus(ModuleElement[] elements) {
         double[] res = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
-            ArithmeticElement<Modulus> e = (ArithmeticElement<Modulus>)elements[i];
+            ArithmeticElement<ModulusWrapper> e = (ArithmeticElement<ModulusWrapper>)elements[i];
             res[i] = e.getValue().intValue();
         }
         return res;
@@ -138,7 +138,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((Vector<ArithmeticElement<ArithmeticInteger>>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<ArithmeticElement<IntegerWrapper>>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);
@@ -149,7 +149,7 @@ public class FoldingModule {
         // Create an array of double arrays corresponding
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
-            List<ArithmeticElement<Rational>> r = ((Vector<ArithmeticElement<Rational>>)elements[i]).getValue();
+            List<ArithmeticElement<RationalWrapper>> r = ((Vector<ArithmeticElement<RationalWrapper>>)elements[i]).getValue();
             res[i] = new double[elements.length];
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
@@ -164,7 +164,7 @@ public class FoldingModule {
         // to the array of RFreeElements
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[elements.length];
-            List<ArithmeticElement<Real>> r = ((Vector<ArithmeticElement<Real>>)elements[i]).getValue();
+            List<ArithmeticElement<RealWrapper>> r = ((Vector<ArithmeticElement<RealWrapper>>)elements[i]).getValue();
             for (int j = 0; j < elements.length; j++) {
                 res[i][j] = r.get(j).getValue().doubleValue();
             }
@@ -192,7 +192,7 @@ public class FoldingModule {
         for (int i = 0; i < elements.length; i++) {
             res[i] = new double[len];
             for (int j = 0; j < len; j++) {
-                res[i][j] = ((Vector<ArithmeticElement<Modulus>>)elements[i]).getValue().get(j).getValue().intValue();
+                res[i][j] = ((Vector<ArithmeticElement<ModulusWrapper>>)elements[i]).getValue().get(j).getValue().intValue();
             }
         }
         return Folding.fold(res);

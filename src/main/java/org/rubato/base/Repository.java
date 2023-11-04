@@ -25,7 +25,7 @@ import org.rubato.scheme.Env;
 import org.rubato.scheme.Evaluator;
 import org.rubato.scheme.Parser;
 import org.rubato.scheme.SExpr;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
@@ -990,27 +990,27 @@ public class Repository extends Observable implements RubatoDictionary {
         registerNameForm(NameForm.getNameForm());
         
         // 2D and 3D vectors
-        VectorModule<ArithmeticElement<Real>> m2d = new VectorModule<>(RRing.ring, 2);
+        VectorModule<ArithmeticElement<RealWrapper>> m2d = new VectorModule<>(RRing.ring, 2);
         registerBuiltin(FormFactory.makeModuleForm("Vector2D", m2d));
-        VectorModule<ArithmeticElement<Real>> m3d = new VectorModule<>(RRing.ring, 3);
+        VectorModule<ArithmeticElement<RealWrapper>> m3d = new VectorModule<>(RRing.ring, 3);
         registerBuiltin(FormFactory.makeModuleForm("Vector3D", m3d));
-        VectorModule<ArithmeticElement<Real>> m4d = new VectorModule<>(RRing.ring, 4);
+        VectorModule<ArithmeticElement<RealWrapper>> m4d = new VectorModule<>(RRing.ring, 4);
         registerBuiltin(FormFactory.makeModuleForm("Vector4D", m4d));
-        VectorModule<ArithmeticElement<Real>> m5d = new VectorModule<>(RRing.ring, 5);
+        VectorModule<ArithmeticElement<RealWrapper>> m5d = new VectorModule<>(RRing.ring, 5);
         registerBuiltin(FormFactory.makeModuleForm("Vector5D", m5d));
-        VectorModule<ArithmeticElement<Real>> m6d = new VectorModule<>(RRing.ring, 6);
+        VectorModule<ArithmeticElement<RealWrapper>> m6d = new VectorModule<>(RRing.ring, 6);
         registerBuiltin(FormFactory.makeModuleForm("Vector6D", m6d));
-        VectorModule<ArithmeticElement<Real>> m7d = new VectorModule<>(RRing.ring, 7);
+        VectorModule<ArithmeticElement<RealWrapper>> m7d = new VectorModule<>(RRing.ring, 7);
         registerBuiltin(FormFactory.makeModuleForm("Vector7D", m7d));
-        VectorModule<ArithmeticElement<Real>> m8d = new VectorModule<>(RRing.ring, 8);
+        VectorModule<ArithmeticElement<RealWrapper>> m8d = new VectorModule<>(RRing.ring, 8);
         registerBuiltin(FormFactory.makeModuleForm("Vector8D", m8d));
-        VectorModule<ArithmeticElement<Real>> m9d = new VectorModule<>(RRing.ring, 9);
+        VectorModule<ArithmeticElement<RealWrapper>> m9d = new VectorModule<>(RRing.ring, 9);
         registerBuiltin(FormFactory.makeModuleForm("Vector9D", m9d));
-        VectorModule<ArithmeticElement<Real>> m10d = new VectorModule<>(RRing.ring, 10);
+        VectorModule<ArithmeticElement<RealWrapper>> m10d = new VectorModule<>(RRing.ring, 10);
         registerBuiltin(FormFactory.makeModuleForm("Vector10D", m10d));
-        VectorModule<ArithmeticElement<Real>> m11d = new VectorModule<>(RRing.ring, 11);
+        VectorModule<ArithmeticElement<RealWrapper>> m11d = new VectorModule<>(RRing.ring, 11);
         registerBuiltin(FormFactory.makeModuleForm("Vector11D", m11d));
-        VectorModule<ArithmeticElement<Real>> m12d = new VectorModule<>(RRing.ring, 12);
+        VectorModule<ArithmeticElement<RealWrapper>> m12d = new VectorModule<>(RRing.ring, 12);
         registerBuiltin(FormFactory.makeModuleForm("Vector12D", m12d));
         
         // Polynomials

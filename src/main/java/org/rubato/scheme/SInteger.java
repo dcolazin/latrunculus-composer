@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 
 /**
  * The class of integer values.
@@ -122,7 +122,7 @@ public final class SInteger extends SNumber {
     
     public SNumber divideInto(SInteger n) {
         if (i != 0) {
-            return SRational.make(new Rational(n.i, i));
+            return SRational.make(new RationalWrapper(n.i, i));
         }
         else {
             throw new ArithmeticException("division by zero");
@@ -234,7 +234,7 @@ public final class SInteger extends SNumber {
                 return new SInteger(res); 
             }
             else {
-                return SRational.make(new Rational(1, i)).expt(n.neg());
+                return SRational.make(new RationalWrapper(1, i)).expt(n.neg());
             }
         }
         else {

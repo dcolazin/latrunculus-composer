@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
@@ -238,7 +238,7 @@ public class SplitMorphism <A extends FreeElement<A, RA>, RA extends RingElement
             }
             else if (m instanceof ArithmeticAffineRingMorphism) {
                 A.set(i, i, ((ArithmeticAffineRingMorphism)m).getA());
-                b.set(i, ((ArithmeticAffineRingMorphism<ArithmeticInteger>)m).getB());
+                b.set(i, ((ArithmeticAffineRingMorphism<IntegerWrapper>)m).getB());
             }
         }
         return new EndomorphismWrapper(ArithmeticAffineMultiMorphism.make(ring, A, new Vector<>(ring, b)));

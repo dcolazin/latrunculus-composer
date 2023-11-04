@@ -21,12 +21,11 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
@@ -46,10 +45,10 @@ public class FreeUtils {
             return false;
         }
         ArithmeticNumber<?> number = retrieveNumber(module);
-        return number instanceof ArithmeticInteger ||
-                number instanceof Modulus ||
-                number instanceof Rational ||
-                number instanceof Real;
+        return number instanceof IntegerWrapper ||
+                number instanceof ModulusWrapper ||
+                number instanceof RationalWrapper ||
+                number instanceof RealWrapper;
     }
 
     //TODO temp method...

@@ -29,8 +29,8 @@ import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.Select;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -260,10 +260,10 @@ public class StatRubette extends AbstractRubette {
             throws RubatoException {
         Ring r = e.getModule().getRing();
         if (r.equals(RRing.ring)) {
-            e.scale(new ArithmeticElement<>(new Real(1/(double)s)));
+            e.scale(new ArithmeticElement<>(new RealWrapper(1/(double)s)));
         }
         else if (r.equals(QRing.ring)) {
-            e.scale(new ArithmeticElement<>(new Rational(1, s)));
+            e.scale(new ArithmeticElement<>(new RationalWrapper(1, s)));
         }
         else if (r.equals(CRing.ring)) {
             e.scale(new Complex(1/(double)s));

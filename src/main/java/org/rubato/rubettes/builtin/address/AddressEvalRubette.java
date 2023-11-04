@@ -40,10 +40,10 @@ import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
@@ -803,9 +803,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
                 Complex c = (Complex) m;
-                List<ArithmeticElement<Real>> list = new ArrayList<>(2);
-                list.add(new ArithmeticElement<>(new Real(c.getReal())));
-                list.add(new ArithmeticElement<>(new Real(c.getImag())));
+                List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(2);
+                list.add(new ArithmeticElement<>(new RealWrapper(c.getReal())));
+                list.add(new ArithmeticElement<>(new RealWrapper(c.getImag())));
                 elements0.add(new Vector<>(RRing.ring, list));
             }
             JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elements0);
@@ -824,30 +824,30 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
         Ring<?> moduleRing = module.getRing();
         if (moduleRing instanceof RRing) {
-            VectorModule<ArithmeticElement<Real>> m = (VectorModule<ArithmeticElement<Real>>)module;
+            VectorModule<ArithmeticElement<RealWrapper>> m = (VectorModule<ArithmeticElement<RealWrapper>>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, RRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     RConfiguration config = (RConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<Real>> list = new ArrayList<>(2);
-                        list.add(new ArithmeticElement<>(new Real(config.px.get(i))));
-                        list.add(new ArithmeticElement<>(new Real(config.py.get(i))));
+                        List<ArithmeticElement<RealWrapper>> list = new ArrayList<>(2);
+                        list.add(new ArithmeticElement<>(new RealWrapper(config.px.get(i))));
+                        list.add(new ArithmeticElement<>(new RealWrapper(config.py.get(i))));
                         elementList.addElement(new Vector<>(RRing.ring, list));
                     }
                 }
             }
         }
         else if (moduleRing instanceof QRing) {
-            VectorModule<ArithmeticElement<Rational>> m = (VectorModule<ArithmeticElement<Rational>>)module;
+            VectorModule<ArithmeticElement<RationalWrapper>> m = (VectorModule<ArithmeticElement<RationalWrapper>>)module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, QRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     QConfiguration config = (QConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<Rational>> list = new ArrayList<>(2);
+                        List<ArithmeticElement<RationalWrapper>> list = new ArrayList<>(2);
                         list.add(new ArithmeticElement<>(config.qpx.get(i)));
                         list.add(new ArithmeticElement<>(config.qpy.get(i)));
                         elementList.addElement(new Vector<>(QRing.ring, list));
@@ -856,23 +856,23 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (moduleRing instanceof ZRing) {
-            VectorModule<ArithmeticElement<ArithmeticInteger>> m = (VectorModule<ArithmeticElement<ArithmeticInteger>>) module;
+            VectorModule<ArithmeticElement<IntegerWrapper>> m = (VectorModule<ArithmeticElement<IntegerWrapper>>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, ZRing.ring, elementList.getElements());
                 if (select != null) {
                     elementList.clear();
                     ZConfiguration config = (ZConfiguration)select.getConfiguration();
                     for (int i = 0; i < config.getSize(); i++) {
-                        List<ArithmeticElement<ArithmeticInteger>> pList = new ArrayList<>();
-                        pList.add(new ArithmeticElement<>(new ArithmeticInteger(config.ipx.get(i))));
-                        pList.add(new ArithmeticElement<>(new ArithmeticInteger(config.ipy.get(i))));
+                        List<ArithmeticElement<IntegerWrapper>> pList = new ArrayList<>();
+                        pList.add(new ArithmeticElement<>(new IntegerWrapper(config.ipx.get(i))));
+                        pList.add(new ArithmeticElement<>(new IntegerWrapper(config.ipy.get(i))));
                         elementList.addElement(new Vector<>(ZRing.ring, pList));
                     }
                 }
             }
         }
         else if (moduleRing instanceof ZnRing) {
-            VectorModule<ArithmeticElement<Modulus>> m = (VectorModule<ArithmeticElement<Modulus>>) module;
+            VectorModule<ArithmeticElement<ModulusWrapper>> m = (VectorModule<ArithmeticElement<ModulusWrapper>>) module;
             if (m.getDimension() == 2) {
                 JGraphSelect select = JGraphSelectDialog.showDialog(graphButton, m.getRing(), elementList.getElements());
                 elementList.clear();
@@ -881,8 +881,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     for (int i = 0; i < config.getSize(); i++) {
                         int modulus = m.getRing().getOne().getValue().getModulus(); //TODO ugly way to get the modulus
                         int[] p = new int[] { config.ipx.get(i), config.ipy.get(i) };
-                        List<ArithmeticElement<Modulus>> pList = Arrays.stream(p)
-                                .mapToObj(elementP -> new Modulus(elementP, modulus))
+                        List<ArithmeticElement<ModulusWrapper>> pList = Arrays.stream(p)
+                                .mapToObj(elementP -> new ModulusWrapper(elementP, modulus))
                                 .map(ArithmeticElement::new)
                                 .collect(Collectors.toList());
                         elementList.addElement(new Vector<>(ArithmeticRingRepository.getModulusRing(modulus), pList));

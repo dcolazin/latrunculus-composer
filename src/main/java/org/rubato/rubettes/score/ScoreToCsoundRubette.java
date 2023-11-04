@@ -35,7 +35,7 @@ import org.rubato.base.Repository;
 import org.rubato.base.Rubette;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.Utilities;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
@@ -375,7 +375,7 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     }
     
     
-    private double makeFrequency(Rational pitch) {        
+    private double makeFrequency(RationalWrapper pitch) {
         return a4freq*Math.pow(ff,pitch.doubleValue()-69);
     }
     

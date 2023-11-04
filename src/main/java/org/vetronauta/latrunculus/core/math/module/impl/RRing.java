@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -36,20 +36,20 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class RRing extends ArithmeticRing<Real> implements NumberRing {
+public final class RRing extends ArithmeticRing<RealWrapper> implements NumberRing {
 
     /**
      * The unique instance of the ring of reals.
      */
     public static final RRing ring = new RRing();
-    public static final VectorModule<ArithmeticElement<Real>> nullModule = new VectorModule<>(ring, 0);
+    public static final VectorModule<ArithmeticElement<RealWrapper>> nullModule = new VectorModule<>(ring, 0);
     
-    public VectorModule<ArithmeticElement<Real>> getNullModule() {
+    public VectorModule<ArithmeticElement<RealWrapper>> getNullModule() {
         return nullModule;
     }
     
     public boolean hasElement(ModuleElement element) {
-        return (element instanceof ArithmeticElement) && ((ArithmeticElement<?>) element).getValue() instanceof Real;
+        return (element instanceof ArithmeticElement) && ((ArithmeticElement<?>) element).getValue() instanceof RealWrapper;
     }
 
     public FreeModule getFreeModule(int dimension) {
@@ -73,7 +73,7 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
     }
 
 
-    public ArithmeticElement<Real> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<RealWrapper> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -83,7 +83,7 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
     }
 
 
-    public ArithmeticElement<Real> cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<RealWrapper> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
@@ -93,8 +93,8 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
         return null;
     }
 
-    public ArithmeticElement<Real> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new Real(element.getValue().doubleValue()));
+    public ArithmeticElement<RealWrapper> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new RealWrapper(element.getValue().doubleValue()));
     }
     public String toString() {
         return "RRing";
@@ -122,6 +122,6 @@ public final class RRing extends ArithmeticRing<Real> implements NumberRing {
     private static final int basicHash = "RRing".hashCode();
 
     private RRing() {
-        super(new Real(0), new Real(1));
+        super(new RealWrapper(0), new RealWrapper(1));
     }
 }

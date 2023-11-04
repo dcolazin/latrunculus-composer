@@ -19,10 +19,10 @@
 
 package org.rubato.util;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -76,43 +76,43 @@ public abstract class DoubleConverter<T extends ModuleElement<T,?>> {
         }
     }
 
-    private static class ZnConverter extends DoubleConverter<ArithmeticElement<Modulus>> {
+    private static class ZnConverter extends DoubleConverter<ArithmeticElement<ModulusWrapper>> {
         public ZnConverter(int modulus) {
             this.modulus = modulus;
         }
-        public double toDouble(ArithmeticElement<Modulus> x) {
+        public double toDouble(ArithmeticElement<ModulusWrapper> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<Modulus> fromDouble(double x) {
-            return new ArithmeticElement<>(new Modulus((int)Math.round(x), modulus));
+        public ArithmeticElement<ModulusWrapper> fromDouble(double x) {
+            return new ArithmeticElement<>(new ModulusWrapper((int)Math.round(x), modulus));
         }
         private int modulus;
     }
     
-    private static final DoubleConverter<ArithmeticElement<Real>> rconverter = new DoubleConverter<ArithmeticElement<Real>>() {
-        public double toDouble(ArithmeticElement<Real> x) {
+    private static final DoubleConverter<ArithmeticElement<RealWrapper>> rconverter = new DoubleConverter<ArithmeticElement<RealWrapper>>() {
+        public double toDouble(ArithmeticElement<RealWrapper> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<Real> fromDouble(double x) {
-            return new ArithmeticElement<>(new Real(x));
+        public ArithmeticElement<RealWrapper> fromDouble(double x) {
+            return new ArithmeticElement<>(new RealWrapper(x));
         }
     };
 
-    private static final DoubleConverter<ArithmeticElement<ArithmeticInteger>> zconverter = new DoubleConverter<ArithmeticElement<ArithmeticInteger>>() {
-        public double toDouble(ArithmeticElement<ArithmeticInteger> x) {
+    private static final DoubleConverter<ArithmeticElement<IntegerWrapper>> zconverter = new DoubleConverter<ArithmeticElement<IntegerWrapper>>() {
+        public double toDouble(ArithmeticElement<IntegerWrapper> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<ArithmeticInteger> fromDouble(double x) {
-            return new ArithmeticElement<>(new ArithmeticInteger((int) Math.round(x)));
+        public ArithmeticElement<IntegerWrapper> fromDouble(double x) {
+            return new ArithmeticElement<>(new IntegerWrapper((int) Math.round(x)));
         }
     };
 
-    private static final DoubleConverter<ArithmeticElement<Rational>> qconverter = new DoubleConverter<ArithmeticElement<Rational>>() {
-        public double toDouble(ArithmeticElement<Rational> x) {
+    private static final DoubleConverter<ArithmeticElement<RationalWrapper>> qconverter = new DoubleConverter<ArithmeticElement<RationalWrapper>>() {
+        public double toDouble(ArithmeticElement<RationalWrapper> x) {
             return x.getValue().doubleValue();
         }
-        public ArithmeticElement<Rational> fromDouble(double x) {
-            return new ArithmeticElement<>(new Rational(x));
+        public ArithmeticElement<RationalWrapper> fromDouble(double x) {
+            return new ArithmeticElement<>(new RationalWrapper(x));
         }
     };
 }

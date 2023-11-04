@@ -2,7 +2,7 @@ package org.rubato.rubettes.util;
 
 import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
@@ -365,7 +365,7 @@ public class ObjectGenerator {
 		try {
 			SimpleDenotator oldSimple = (SimpleDenotator)object.get(simplePath);
 			if (oldSimple != null) {
-				ModuleElement newElement = oldSimple.getElement().getModule().cast(new ArithmeticElement<>(new Real(value)));
+				ModuleElement newElement = oldSimple.getElement().getModule().cast(new ArithmeticElement<>(new RealWrapper(value)));
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
@@ -401,11 +401,11 @@ public class ObjectGenerator {
 			}
 			return productElement.getModule().cast(ProductElement.make(factors));
 		} else if (currentDimension > 1) {
-			List<ArithmeticElement<Real>> values = new VectorModule<>(RRing.ring, currentDimension).cast(currentElement).getValue();
-			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new Real(value)));
+			List<ArithmeticElement<RealWrapper>> values = new VectorModule<>(RRing.ring, currentDimension).cast(currentElement).getValue();
+			values.set(elementPath[elementPath.length-1], new ArithmeticElement<>(new RealWrapper(value)));
 			return currentElement.getModule().cast(new Vector<>(RRing.ring, values));
 		} else {
-			return currentElement.getModule().cast(new ArithmeticElement<>(new Real(value)));
+			return currentElement.getModule().cast(new ArithmeticElement<>(new RealWrapper(value)));
 		}
 	}
 

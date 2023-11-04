@@ -23,10 +23,10 @@ import org.rubato.base.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
@@ -452,13 +452,13 @@ public class JMorphismDialog
                     }
                     if (isArithmetic(codomain)) {
                         ArithmeticNumber<?> codomainNumber = retrieveNumber(codomain);
-                        if (domainNumber instanceof Real && codomainNumber instanceof Real &&
+                        if (domainNumber instanceof RealWrapper && codomainNumber instanceof RealWrapper &&
                                 domain.getDimension() == 2 && codomain.getDimension() == 2) {
                             items.add(GEOMETRY_TYPE);
                         }
-                        if (domainNumber instanceof ArithmeticInteger &&
+                        if (domainNumber instanceof IntegerWrapper &&
                                 codomain instanceof FreeModule &&
-                                codomainNumber instanceof Modulus && (domain.getDimension() == codomain.getDimension())) {
+                                codomainNumber instanceof ModulusWrapper && (domain.getDimension() == codomain.getDimension())) {
                             items.add(MODULO_TYPE);
                         }
                     }

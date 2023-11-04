@@ -21,12 +21,12 @@ package org.rubato.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -761,13 +761,13 @@ abstract class RubatoPrimitives {
         }
         if (element instanceof ArithmeticElement) {
             ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-            if (number instanceof ArithmeticInteger || number instanceof Modulus) {
+            if (number instanceof IntegerWrapper || number instanceof ModulusWrapper) {
                 return new SInteger(number.intValue());
             }
-            if (number instanceof Rational) {
-                return SRational.make((Rational) number);
+            if (number instanceof RationalWrapper) {
+                return SRational.make((RationalWrapper) number);
             }
-            if (number instanceof Real) {
+            if (number instanceof RealWrapper) {
                 return SReal.make(number.doubleValue());
             }
         } else if (element instanceof FreeElement) {
@@ -793,19 +793,19 @@ abstract class RubatoPrimitives {
     
     private static ModuleElement sexprToModuleElement(SExpr sexpr) {
         if (sexpr.isInteger()) {
-            return new ArithmeticElement<>(new ArithmeticInteger(((SInteger)sexpr).getInt()));
+            return new ArithmeticElement<>(new IntegerWrapper(((SInteger)sexpr).getInt()));
         }
         else if (sexpr.isRational()) {
             return new ArithmeticElement<>(((SRational)sexpr).getRational());
         }
         else if (sexpr.isReal()) {
-            return new ArithmeticElement<>(new Real(((SReal)sexpr).getDouble()));
+            return new ArithmeticElement<>(new RealWrapper(((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
             return new Complex(((SComplex)sexpr).getComplex());
         }
         else if (sexpr.isBoolean()) {
-            return new ArithmeticElement<>(new ArithmeticInteger(sexpr == SBoolean.TRUE ? 1 : 0));
+            return new ArithmeticElement<>(new IntegerWrapper(sexpr == SBoolean.TRUE ? 1 : 0));
         }
         else if (sexpr.isChar()) {
             return new ArithmeticStringElement<>(ZRing.ring, Character.toString(((SChar)sexpr).getChar()));

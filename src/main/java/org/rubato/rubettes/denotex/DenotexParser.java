@@ -2,10 +2,10 @@
 package org.rubato.rubettes.denotex;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -1275,7 +1275,7 @@ public final class DenotexParser implements DenotexParserConstants {
   final public LinkedList basicElement(Module m) throws ParseException {
         LinkedList elements = new LinkedList();
     if (jj_2_8(2)) {
-                   Rational q;
+                   RationalWrapper q;
       q = qLiteral();
         try {
             int n = q.getNumerator();
@@ -1284,18 +1284,18 @@ public final class DenotexParser implements DenotexParserConstants {
                 if (d != 1) {
                     throw parseError("");
                 }
-                elements.add(new ArithmeticElement<>(new ArithmeticInteger(n)));
+                elements.add(new ArithmeticElement<>(new IntegerWrapper(n)));
             }
             else if (m instanceof ZnRing) {
                 if (d != 1) {
                     throw parseError("");
                 }
-                elements.add(new ArithmeticElement<>(new Modulus(n, ((ZnRing)m).getModulus())));
+                elements.add(new ArithmeticElement<>(new ModulusWrapper(n, ((ZnRing)m).getModulus())));
             }
             else if (m instanceof QRing)
-                elements.add(new ArithmeticElement<>(new Rational(q)));
+                elements.add(new ArithmeticElement<>(new RationalWrapper(q)));
             else if (m instanceof RRing)
-                elements.add(new ArithmeticElement<>(new Real((double)n / (double)d)));
+                elements.add(new ArithmeticElement<>(new RealWrapper((double)n / (double)d)));
 
             // we also allow to convert numbers into strings without quotes
             else {
@@ -1315,7 +1315,7 @@ public final class DenotexParser implements DenotexParserConstants {
                    double r = rLiteral();
         try {
             if (m instanceof RRing) {
-                elements.add(new ArithmeticElement<>(new Real(r)));
+                elements.add(new ArithmeticElement<>(new RealWrapper(r)));
             } else if (m instanceof ArithmeticStringRing) { // we also allow to convert numbers into strings without quotes
                 elements.add(new ArithmeticStringElement<>(((ArithmeticStringRing<?>) m).getFactorRing(), String.valueOf(r)));
             } else {
@@ -1414,7 +1414,7 @@ public final class DenotexParser implements DenotexParserConstants {
     }
   }
 
-  final public Rational qLiteral() throws ParseException {
+  final public RationalWrapper qLiteral() throws ParseException {
     int n;
     int d = 1;
     n = zLiteral();
@@ -1427,7 +1427,7 @@ public final class DenotexParser implements DenotexParserConstants {
       jj_la1[37] = jj_gen;
       
     }
-      return new Rational(n, d);
+      return new RationalWrapper(n, d);
   }
 
   final public double rLiteral() throws ParseException {

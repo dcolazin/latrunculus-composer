@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
@@ -37,10 +37,10 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing {
+public final class ZnRing extends ArithmeticRing<ModulusWrapper> implements NumberRing {
 
     private ZnRing(int modulus) {
-        super(new Modulus(0, modulus), new Modulus(1, modulus));
+        super(new ModulusWrapper(0, modulus), new ModulusWrapper(1, modulus));
         this.modulus = modulus;
     }
 
@@ -53,7 +53,7 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing 
     }
 
     @Override
-    public VectorModule<ArithmeticElement<Modulus>> getNullModule() {
+    public VectorModule<ArithmeticElement<ModulusWrapper>> getNullModule() {
         return new VectorModule<>(this, 0);
     }
 
@@ -63,11 +63,11 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing 
             return false;
         }
         ArithmeticNumber<?> number = ((ArithmeticElement<?>) element).getValue();
-        return number instanceof Modulus && (((Modulus) number).getModulus() == modulus);
+        return number instanceof ModulusWrapper && (((ModulusWrapper) number).getModulus() == modulus);
     }
 
     @Override
-    public FreeModule<?, ArithmeticElement<Modulus>> getFreeModule(int dimension) {
+    public FreeModule<?, ArithmeticElement<ModulusWrapper>> getFreeModule(int dimension) {
         return new VectorModule<>(this, dimension);
     }
 
@@ -96,7 +96,7 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing 
 
 
     @Override
-    public ArithmeticElement<Modulus> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<ModulusWrapper> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -106,7 +106,7 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing 
     }
 
     @Override
-    public ArithmeticElement<Modulus> cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<ModulusWrapper> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
@@ -116,8 +116,8 @@ public final class ZnRing extends ArithmeticRing<Modulus> implements NumberRing 
         return null;
     }
 
-    public ArithmeticElement<Modulus> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new Modulus(element.getValue().intValue(), modulus));
+    public ArithmeticElement<ModulusWrapper> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new ModulusWrapper(element.getValue().intValue(), modulus));
     }
 
     public int getModulus() {

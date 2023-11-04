@@ -19,7 +19,7 @@
 
 package org.rubato.util;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public final class Base64 {
      * Encodes the integer array <code>a</code> as a base-64
      * string.
      */
-    public static String encodeIntArray(List<ArithmeticElement<ArithmeticInteger>> a) {
+    public static String encodeIntArray(List<ArithmeticElement<IntegerWrapper>> a) {
         int len = a.size()*4;
         StringBuilder buf = new StringBuilder((len*8)/6);
         char b[] = new char[len];

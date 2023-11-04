@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.impl;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -36,27 +36,27 @@ import java.util.List;
  *
  * @author Gérard Milmeister
  */
-public final class QRing extends ArithmeticRing<Rational> implements NumberRing {
+public final class QRing extends ArithmeticRing<RationalWrapper> implements NumberRing {
 
     private QRing() {
-        super(new Rational(0), new Rational(1));
+        super(new RationalWrapper(0), new RationalWrapper(1));
     }
 
     /**
      * The unique instance of the ring of rationals.
      */
     public static final QRing ring = new QRing();
-    public static final VectorModule<ArithmeticElement<Rational>> nullModule = new VectorModule<>(ring, 0);
+    public static final VectorModule<ArithmeticElement<RationalWrapper>> nullModule = new VectorModule<>(ring, 0);
 
-    public VectorModule<ArithmeticElement<Rational>> getNullModule() {
+    public VectorModule<ArithmeticElement<RationalWrapper>> getNullModule() {
         return nullModule;
     }
 
     public boolean hasElement(ModuleElement element) {
-        return element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof Rational;
+        return element instanceof ArithmeticElement && ((ArithmeticElement<?>) element).getValue() instanceof RationalWrapper;
     }
 
-    public FreeModule<?,ArithmeticElement<Rational>> getFreeModule(int dimension) {
+    public FreeModule<?,ArithmeticElement<RationalWrapper>> getFreeModule(int dimension) {
         return new VectorModule<>(QRing.ring, dimension);
     }
 
@@ -75,7 +75,7 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
         return super.compareTo(object);
     }
     
-    public ArithmeticElement<Rational> createElement(List<? extends ModuleElement<?, ?>> elements) {
+    public ArithmeticElement<RationalWrapper> createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
         }
@@ -84,7 +84,7 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
         }
     }
 
-    public ArithmeticElement<Rational> cast(ModuleElement<?,?> element) {
+    public ArithmeticElement<RationalWrapper> cast(ModuleElement<?,?> element) {
         if (element instanceof ArithmeticElement) {
             return cast((ArithmeticElement<?>) element);
         }
@@ -94,8 +94,8 @@ public final class QRing extends ArithmeticRing<Rational> implements NumberRing 
         return null;
     }
 
-    public ArithmeticElement<Rational> cast(ArithmeticElement<?> element) {
-        return new ArithmeticElement<>(new Rational(element.getValue().doubleValue()));
+    public ArithmeticElement<RationalWrapper> cast(ArithmeticElement<?> element) {
+        return new ArithmeticElement<>(new RationalWrapper(element.getValue().doubleValue()));
     }
     
     public String toString() {

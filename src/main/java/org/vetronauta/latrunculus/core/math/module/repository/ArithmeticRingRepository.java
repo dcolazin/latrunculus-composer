@@ -21,11 +21,11 @@ package org.vetronauta.latrunculus.core.math.module.repository;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -44,25 +44,25 @@ public class ArithmeticRingRepository {
 
     //TODO make this a proper object to inject when needed
 
-    private static final Map<Integer, ArithmeticRing<Modulus>> modRingMap = new HashMap<>();
+    private static final Map<Integer, ArithmeticRing<ModulusWrapper>> modRingMap = new HashMap<>();
 
-    public static ArithmeticRing<Modulus> getModulusRing(int modulus) {
+    public static ArithmeticRing<ModulusWrapper> getModulusRing(int modulus) {
         return modRingMap.computeIfAbsent(modulus, ZnRing::make);
     }
 
     public static <N extends ArithmeticNumber<N>> ArithmeticRing<N> getRing(ArithmeticElement<N> element) {
         ArithmeticNumber<N> number = element.getValue();
-        if (number instanceof ArithmeticInteger) {
+        if (number instanceof IntegerWrapper) {
             return (ArithmeticRing<N>) ZRing.ring;
         }
-        if (number instanceof Rational) {
+        if (number instanceof RationalWrapper) {
             return (ArithmeticRing<N>) QRing.ring;
         }
-        if (number instanceof Real) {
+        if (number instanceof RealWrapper) {
             return (ArithmeticRing<N>) RRing.ring;
         }
-        if (number instanceof Modulus) {
-            return (ArithmeticRing<N>) getModulusRing(((Modulus) number).getModulus());
+        if (number instanceof ModulusWrapper) {
+            return (ArithmeticRing<N>) getModulusRing(((ModulusWrapper) number).getModulus());
         }
         throw new UnsupportedOperationException(String.format("cannot retrieve ring for %s", number.getClass()));
     }

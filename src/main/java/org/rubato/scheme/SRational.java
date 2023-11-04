@@ -19,7 +19,7 @@
 
 package org.rubato.scheme;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 
 /**
  * The class of rational values.
@@ -31,7 +31,7 @@ public final class SRational extends SNumber {
     /**
      * Creates a Scheme value from the rational number <code>q</code>.
      */
-    public static SNumber make(Rational q) {
+    public static SNumber make(RationalWrapper q) {
         if (q.isIntegral()) {
             return new SInteger(q.getNumerator());
         }
@@ -207,7 +207,7 @@ public final class SRational extends SNumber {
             }
             else {
                 int e = ((SInteger)n).getInt();
-                Rational res = new Rational(1);
+                RationalWrapper res = new RationalWrapper(1);
                 while (e > 0) {
                     res = res.product(q);
                     e--;
@@ -263,15 +263,15 @@ public final class SRational extends SNumber {
     /**
      * Returns the rational number in this Scheme value.
      */
-    public Rational getRational() {
+    public RationalWrapper getRational() {
         return q;
     }
     
-    private Rational q;
+    private RationalWrapper q;
     
-    private SRational(Rational q) {
+    private SRational(RationalWrapper q) {
         this.q = q;
     }
     
-    private static final Rational zero = Rational.getZero();
+    private static final RationalWrapper zero = RationalWrapper.getZero();
 }

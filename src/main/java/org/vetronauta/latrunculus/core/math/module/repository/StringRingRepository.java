@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.math.module.repository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticStringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -38,10 +38,10 @@ public class StringRingRepository {
 
     //TODO make this a proper object to inject when needed
 
-    private static final Map<Integer, ArithmeticStringRing<Modulus>> modRingMap = new HashMap<>();
+    private static final Map<Integer, ArithmeticStringRing<ModulusWrapper>> modRingMap = new HashMap<>();
     private static final Map<ArithmeticRing, ArithmeticStringRing> stringRingMap = new HashMap<>();
 
-    public static ArithmeticStringRing<Modulus> getModulusRing(int modulus) {
+    public static ArithmeticStringRing<ModulusWrapper> getModulusRing(int modulus) {
         return modRingMap.computeIfAbsent(modulus, x -> new ArithmeticStringRing<>(ArithmeticRingRepository.getModulusRing(modulus)));
     }
 

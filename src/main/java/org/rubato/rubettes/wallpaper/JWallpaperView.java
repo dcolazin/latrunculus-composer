@@ -20,7 +20,7 @@
 package org.rubato.rubettes.wallpaper;
 
 import org.rubato.composer.dialogs.morphisms.JGeometryView;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -263,9 +263,9 @@ public class JWallpaperView extends JGeometryView {
 		for (int i = 0; i < domain.getDimension(); i++) {
 			ModuleElement currentComponent = zero.getComponent(i);
 			if (xIndices.contains(new Integer(i))) {
-				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new ArithmeticInteger(x))));
+				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new IntegerWrapper(x))));
 			} else if (yIndices.contains(new Integer(i))) {
-				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new ArithmeticInteger(y))));
+				elements.add(currentComponent.getModule().cast(new ArithmeticElement<>(new IntegerWrapper(y))));
 			} else {
 				elements.add(currentComponent);
 			}

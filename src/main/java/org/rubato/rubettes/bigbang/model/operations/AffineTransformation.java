@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class AffineTransformation extends AbstractLocalTransformation {
 	
-	private List<Real> shift;
+	private List<RealWrapper> shift;
 	private RMatrix transform;
 	
 	//used for cloning
@@ -21,7 +21,7 @@ public class AffineTransformation extends AbstractLocalTransformation {
 		this.setParameters(other.shift, other.transform);
 	}
 	
-	public AffineTransformation(BigBangModel model, TransformationProperties properties, List<Real> shift, RMatrix transform2x2) {
+	public AffineTransformation(BigBangModel model, TransformationProperties properties, List<RealWrapper> shift, RMatrix transform2x2) {
 		super(model, properties);
 		//System.out.println(properties.getCenter()[0] + " " + properties.getCenter()[1]);
 		this.setParameters(shift, transform2x2);
@@ -32,7 +32,7 @@ public class AffineTransformation extends AbstractLocalTransformation {
 		//TODO IMPLEMENT
 	}
 	
-	public void setParameters(List<Real> shift, RMatrix transform2x2) {
+	public void setParameters(List<RealWrapper> shift, RMatrix transform2x2) {
 		this.shift = shift;
 		this.transform = transform2x2;
 		this.updateOperation();
@@ -41,7 +41,7 @@ public class AffineTransformation extends AbstractLocalTransformation {
 	//creates a copy of this with the same center and scaleFactors adjusted by the given ratio
 	protected AffineTransformation createModifiedCopy(double ratio) {
 		AffineTransformation modifiedCopy = (AffineTransformation)this.clone();
-		List<Real> partialShift = this.shift.stream().map(s -> s.product(new Real(ratio))).collect(Collectors.toList());
+		List<RealWrapper> partialShift = this.shift.stream().map(s -> s.product(new RealWrapper(ratio))).collect(Collectors.toList());
 		double[][] scaleMat = {{ratio, 0},{0,ratio}};
 		RMatrix partialTransform = this.transform.product(new RMatrix(scaleMat));
 		modifiedCopy.setParameters(partialShift, partialTransform);
@@ -53,7 +53,7 @@ public class AffineTransformation extends AbstractLocalTransformation {
 		return transform;
 	}
 	
-	protected List<Real> getShift() {
+	protected List<RealWrapper> getShift() {
 		return this.shift;
 	}
 	

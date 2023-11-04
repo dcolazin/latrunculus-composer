@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -51,7 +51,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 			for (int i = 0; i < factors.size(); i++) {
 				LimitDenotator currentNode = (LimitDenotator)factors.get(i);
 				LimitDenotator currentNote = (LimitDenotator)currentNode.getFactor(0);
-				ArithmeticElement<ArithmeticInteger> voiceElement = (ArithmeticElement<ArithmeticInteger>)currentNote.getElement(voicePath).deepCopy();
+				ArithmeticElement<IntegerWrapper> voiceElement = (ArithmeticElement<IntegerWrapper>)currentNote.getElement(voicePath).deepCopy();
 				Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);
 				currentNote.setFactor(5, currentLayer);
 				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), voiceElement.getValue().intValue());

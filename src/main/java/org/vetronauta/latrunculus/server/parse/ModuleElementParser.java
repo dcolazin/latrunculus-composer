@@ -23,12 +23,12 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -187,19 +187,19 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<Real> parseR(String string) {
+    private static ArithmeticElement<RealWrapper> parseR(String string) {
         try {
             double value = Double.parseDouble(TextUtils.unparenthesize(string));
-            return new ArithmeticElement<>(new Real(value));
+            return new ArithmeticElement<>(new RealWrapper(value));
         }
         catch (NumberFormatException e) {
             return null;
         }
     }
 
-    private static ArithmeticElement<Rational> parseQ(String string) {
+    private static ArithmeticElement<RationalWrapper> parseQ(String string) {
         try {
-            Rational value = ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
+            RationalWrapper value = ArithmeticParsingUtils.parseRational(TextUtils.unparenthesize(string));
             return new ArithmeticElement<>(value);
         }
         catch (NumberFormatException e) {
@@ -207,20 +207,20 @@ public final class ModuleElementParser {
         }
     }
 
-    private static ArithmeticElement<ArithmeticInteger> parseZ(String s) {
+    private static ArithmeticElement<IntegerWrapper> parseZ(String s) {
         try {
             int value = Integer.parseInt(TextUtils.unparenthesize(s));
-            return new ArithmeticElement<>(new ArithmeticInteger(value));
+            return new ArithmeticElement<>(new IntegerWrapper(value));
         }
         catch (NumberFormatException e) {
             return null;
         }
     }
 
-    private static ArithmeticElement<Modulus> parseZn(ZnRing ring, String s) {
+    private static ArithmeticElement<ModulusWrapper> parseZn(ZnRing ring, String s) {
         try {
             int value = Integer.parseInt(TextUtils.unparenthesize(s));
-            return new ArithmeticElement<>(new Modulus(value, ring.getModulus()));
+            return new ArithmeticElement<>(new ModulusWrapper(value, ring.getModulus()));
         }
         catch (NumberFormatException e) {
             return null;

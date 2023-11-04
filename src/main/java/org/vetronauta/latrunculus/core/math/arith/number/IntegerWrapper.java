@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import lombok.AllArgsConstructor;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
 
 import java.util.Arrays;
@@ -27,95 +28,104 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Wrapper double class to be used in a <code>RString</code>.
+ * Wrapper int class to be used in a <code>ZString</code>.
  * @author vetronauta
  */
 @AllArgsConstructor
-public final class Real implements ArithmeticNumber<Real> {
+public final class IntegerWrapper implements ArithmeticNumber<IntegerWrapper> {
 
-    private final double value;
+    private final int value;
 
     @Override
-    public int compareTo(Real arithmeticDouble) {
-        return Double.compare(value, arithmeticDouble.doubleValue());
+    public int compareTo(IntegerWrapper integerWrapper) {
+        return value - integerWrapper.intValue();
     }
 
     @Override
     public int intValue() {
-        return (int) value;
-    }
-
-    @Override
-    public long longValue() {
-        return (long) value;
-    }
-
-    @Override
-    public float floatValue() {
-        return (float) value;
-    }
-
-    @Override
-    public double doubleValue() {
         return value;
     }
 
     @Override
-    public Real deepCopy() {
+    public long longValue() {
+        return intValue();
+    }
+
+    @Override
+    public float floatValue() {
+        return intValue();
+    }
+
+    @Override
+    public double doubleValue() {
+        return intValue();
+    }
+
+    @Override
+    public IntegerWrapper deepCopy() {
         return this;
     }
 
     @Override
     public boolean isZero() {
-        return value == 0.0;
+        return value == 0;
     }
 
     @Override
     public boolean isOne() {
-        return value == 1.0;
+        return value == 1;
     }
 
     @Override
     public boolean isInvertible() {
-        return value != 0.0;
+        return (value == 1 || value == -1);
     }
 
     @Override
     public boolean isFieldElement() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean divides(ArithmeticNumber<?> y) {
-        return (y instanceof Real) && !this.isZero();
+        return (y instanceof IntegerWrapper) && !this.isZero() && (value % ((IntegerWrapper) y).value == 0);
     }
 
     @Override
-    public Real sum(Real other) {
-        return new Real(value + other.value);
+    public IntegerWrapper sum(IntegerWrapper other) {
+        return new IntegerWrapper(value + other.value);
     }
 
     @Override
-    public Real difference(Real other) {
-        return new Real(value - other.value);
+    public IntegerWrapper difference(IntegerWrapper other) {
+        return new IntegerWrapper(value - other.value);
     }
 
     @Override
-    public Real product(Real other) {
-        return new Real(value * other.value);
+    public IntegerWrapper product(IntegerWrapper other) {
+        return new IntegerWrapper(value * other.value);
     }
 
     @Override
-    public Real neg() {
-        return new Real(-value);
+    public IntegerWrapper neg() {
+        return new IntegerWrapper(-value);
     }
 
     @Override
-    public Real inverse() {
-        if (value == 0) {
-            throw  new InverseException(this);
+    public IntegerWrapper inverse() {
+        if (isInvertible()) {
+            return this;
         }
-        return new Real(1/value);
+        throw new InverseException(this);
+    }
+
+    @Override
+    public IntegerWrapper quotient(IntegerWrapper other) throws DivisionException {
+        if (other.value != 0 && value % other.value == 0) {
+            return new IntegerWrapper(value/ other.value);
+        } else {
+            throw new DivisionException(this, other);
+        }
     }
 
     @Override
@@ -125,25 +135,25 @@ public final class Real implements ArithmeticNumber<Real> {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Real)) {
+        if (!(other instanceof IntegerWrapper)) {
             return false;
         }
-        return ((Real) other).value == value;
+        return ((IntegerWrapper) other).value == value;
     }
 
     @Override
     public int hashCode() {
-        return (int) value;
+        return value;
     }
 
-    public static Real[] toArray(double[] array) {
+    public static IntegerWrapper[] toArray(int[] array) {
         return Arrays.stream(array)
-            .mapToObj(Real::new)
-            .toArray(Real[]::new);
+                .mapToObj(IntegerWrapper::new)
+                .toArray(IntegerWrapper[]::new);
     }
 
-    public static List<Real> toList(List<Double> list) {
-        return list.stream().map(Real::new).collect(Collectors.toList());
+    public static List<IntegerWrapper> toList(List<Integer> list) {
+        return list.stream().map(IntegerWrapper::new).collect(Collectors.toList());
     }
 
 }

@@ -6,8 +6,8 @@ import org.rubato.base.RubatoException;
 import org.rubato.logeo.DenoFactory;
 import org.rubato.logeo.FormFactory;
 import org.rubato.rubettes.util.DenotatorPath;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -190,31 +190,31 @@ class DenotatorPathTest {
 		ColimitForm eulerNoteOrRest = FormFactory.makeColimitForm("EulerNoteOrRest", eulerNote, rest);
 		PowerForm eulerScore = FormFactory.makePowerForm("EulerScore", eulerNoteOrRest);
 		
-		SimpleDenotator onset1 = DenoFactory.makeDenotator(onset, new Rational(0));
-		List<ArithmeticElement<ArithmeticInteger>> pitchList = new ArrayList<>();
-		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(1)));
-		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(0)));
-		pitchList.add(new ArithmeticElement<>(new ArithmeticInteger(-1)));
-		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch1Element = new Vector<>(ZRing.ring, pitchList);
+		SimpleDenotator onset1 = DenoFactory.makeDenotator(onset, new RationalWrapper(0));
+		List<ArithmeticElement<IntegerWrapper>> pitchList = new ArrayList<>();
+		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(1)));
+		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(0)));
+		pitchList.add(new ArithmeticElement<>(new IntegerWrapper(-1)));
+		FreeElement<?, ArithmeticElement<IntegerWrapper>> pitch1Element = new Vector<>(ZRing.ring, pitchList);
 		SimpleDenotator pitch1 = DenoFactory.makeDenotator(eulerPitch, pitch1Element);
 		SimpleDenotator loudness1 = DenoFactory.makeDenotator(loudness, "sfz");
-		SimpleDenotator duration1 = DenoFactory.makeDenotator(duration, new Rational(1, 4));
+		SimpleDenotator duration1 = DenoFactory.makeDenotator(duration, new RationalWrapper(1, 4));
 		Denotator note1 = DenoFactory.makeDenotator(eulerNote, onset1, pitch1, loudness1, duration1);
 		Denotator noteOne = DenoFactory.makeDenotator(eulerNoteOrRest, 0, note1);
 		
-		SimpleDenotator onsetAtBeat2 = DenoFactory.makeDenotator(onset, new Rational(1, 4));
+		SimpleDenotator onsetAtBeat2 = DenoFactory.makeDenotator(onset, new RationalWrapper(1, 4));
 		Denotator rest1 = DenoFactory.makeDenotator(rest, onsetAtBeat2, duration1);
 		Denotator shortRest = DenoFactory.makeDenotator(eulerNoteOrRest, 1, rest1);
 		
-		SimpleDenotator onset2 = DenoFactory.makeDenotator(onset, new Rational(1, 2));
-		List<ArithmeticElement<ArithmeticInteger>> pitch2List = new ArrayList<>();
-		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(-1)));
-		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(1)));
-		pitch2List.add(new ArithmeticElement<>(new ArithmeticInteger(11)));
-		FreeElement<?, ArithmeticElement<ArithmeticInteger>> pitch2Element = new Vector<>(ZRing.ring, pitch2List);
+		SimpleDenotator onset2 = DenoFactory.makeDenotator(onset, new RationalWrapper(1, 2));
+		List<ArithmeticElement<IntegerWrapper>> pitch2List = new ArrayList<>();
+		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(-1)));
+		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(1)));
+		pitch2List.add(new ArithmeticElement<>(new IntegerWrapper(11)));
+		FreeElement<?, ArithmeticElement<IntegerWrapper>> pitch2Element = new Vector<>(ZRing.ring, pitch2List);
 		SimpleDenotator pitch2 = DenoFactory.makeDenotator(eulerPitch, pitch2Element);
 		SimpleDenotator loudness2 = DenoFactory.makeDenotator(loudness, "ppp");
-		SimpleDenotator duration2 = DenoFactory.makeDenotator(duration, new Rational(3, 2));
+		SimpleDenotator duration2 = DenoFactory.makeDenotator(duration, new RationalWrapper(3, 2));
 		Denotator note2 = DenoFactory.makeDenotator(eulerNote, onset2, pitch2, loudness2, duration2);
 		Denotator noteTwo = DenoFactory.makeDenotator(eulerNoteOrRest, 0, note2);
 		

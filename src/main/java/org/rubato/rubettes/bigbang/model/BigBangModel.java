@@ -14,7 +14,7 @@ import org.rubato.rubettes.bigbang.model.undo.RemoveOperationEdit;
 import org.rubato.rubettes.bigbang.model.undo.UndoManager;
 import org.rubato.rubettes.bigbang.model.undo.AbstractUndoableEdit;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -226,7 +226,7 @@ public class BigBangModel extends Model {
 		}
 	}
 	
-	public void affineTransformObjects(TransformationProperties properties, List<Real> shift, RMatrix transform) {
+	public void affineTransformObjects(TransformationProperties properties, List<RealWrapper> shift, RMatrix transform) {
 		if (properties.startNewTransformation()) {
 			this.addOperation(new AffineTransformation(this, properties, shift, transform));
 		} else if (this.updateTransformation(properties, ShearingTransformation.class)) {

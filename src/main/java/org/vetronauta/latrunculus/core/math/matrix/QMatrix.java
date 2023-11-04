@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.matrix;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 /**
  * Matrixes over rational numbers.
  */
-public class QMatrix extends ArithmeticMatrix<Rational> {
+public class QMatrix extends ArithmeticMatrix<RationalWrapper> {
     
     /**
      * Creates a rational <code>rows</code> x <code>cols</code> matrix
@@ -41,22 +41,22 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
 
     @Override
-    public ArithmeticMatrix<Rational> product(Matrix<ArithmeticElement<Rational>> matrix) {
+    public ArithmeticMatrix<RationalWrapper> product(Matrix<ArithmeticElement<RationalWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<Rational> sum(Matrix<ArithmeticElement<Rational>> matrix) {
+    public ArithmeticMatrix<RationalWrapper> sum(Matrix<ArithmeticElement<RationalWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<Rational> difference(Matrix<ArithmeticElement<Rational>> matrix) {
+    public ArithmeticMatrix<RationalWrapper> difference(Matrix<ArithmeticElement<RationalWrapper>> matrix) {
         return null;
     }
 
     @Override
-    public ArithmeticMatrix<Rational> scaled(ArithmeticElement<Rational> element) {
+    public ArithmeticMatrix<RationalWrapper> scaled(ArithmeticElement<RationalWrapper> element) {
         return null;
     }
 
@@ -65,7 +65,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
      * Creates a rational <code>rows</code> x <code>cols</code> matrix
      * with all coefficients set to <code>value</code>.
      */
-    public QMatrix(int rows, int cols, Rational value) {
+    public QMatrix(int rows, int cols, RationalWrapper value) {
         this(rows, cols);
         for (int r = 0; r < rows; r++) {
             Arrays.fill(coefficients[r], value);
@@ -80,7 +80,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Rational(m.coefficients[r][c]);
+                coefficients[r][c] = new RationalWrapper(m.coefficients[r][c]);
             }
         }
     }
@@ -93,7 +93,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Rational(m.getValue(r,c));
+                coefficients[r][c] = new RationalWrapper(m.getValue(r,c));
             }
         }
     }
@@ -106,7 +106,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         this(m.getRowCount(), m.getColumnCount());
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                coefficients[r][c] = new Rational(m.getValue(r,c));
+                coefficients[r][c] = new RationalWrapper(m.getValue(r,c));
             }
         }
     }
@@ -116,7 +116,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
      * Creates a <i>n</i>x1 rational matrix from the vector <code>v</code>,
      * where <i>n</i> is the length of <code>v</code>.
      */
-    public QMatrix(Rational[] v) {
+    public QMatrix(RationalWrapper[] v) {
         this(v.length, 1);
         for (int r = 0; r < v.length; r++) {
             coefficients[r][0] = v[r];
@@ -127,7 +127,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Creates a rational matrix from the two-dimensional array <code>c</code>.
      */
-    public QMatrix(Rational[][] c) {
+    public QMatrix(RationalWrapper[][] c) {
         super(QRing.ring, c.length, c[0].length);
         for (int i = 1; i < rows; i++) {
             if (c[i].length != columns) {
@@ -144,7 +144,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     public static QMatrix getUnitMatrix(int size) {
         QMatrix res = new QMatrix(size, size);
         for (int i = 0; i < size; i++) {
-            res.set(i, i, Rational.getOne());
+            res.set(i, i, RationalWrapper.getOne());
         }
         return res;
     }
@@ -153,7 +153,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns the value at index <code>row</code>,<code>col</code>.
      */
-    public Rational getValue(int row, int col) {
+    public RationalWrapper getValue(int row, int col) {
         return coefficients[row][col];
     }
 
@@ -161,18 +161,18 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Sets index <code>row</code>,<code>col</code> to <code>value</code>.
      */
-    public void set(int row, int col, Rational value) {
+    public void set(int row, int col, RationalWrapper value) {
         coefficients[row][col] = value;
     }
     
     
     public void setToZero(int row, int col) {
-        coefficients[row][col] = Rational.getZero();
+        coefficients[row][col] = RationalWrapper.getZero();
     }
 
     
     public void setToOne(int row, int col) {
-        coefficients[row][col] = Rational.getOne();
+        coefficients[row][col] = RationalWrapper.getOne();
     }
 
     
@@ -180,7 +180,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         if (this.rows == rows) {
             return;
         }
-        Rational[][] coeffs = makeArray(rows, columns);
+        RationalWrapper[][] coeffs = makeArray(rows, columns);
         int min_rows = Math.min(rows, this.rows);
         for (int r = 0; r < min_rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, columns);
@@ -194,7 +194,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         if (this.columns == cols) {
             return;
         }
-        Rational[][] coeffs = makeArray(rows, cols);
+        RationalWrapper[][] coeffs = makeArray(rows, cols);
         int min_cols = Math.min(cols, this.columns);
         for (int r = 0; r < rows; r++) {
             System.arraycopy(this.coefficients[r], 0, coeffs[r], 0, min_cols);
@@ -205,7 +205,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     
 
     public void setToZeroMatrix() {
-        setToElementaryMatrix(Rational.getZero());
+        setToElementaryMatrix(RationalWrapper.getZero());
     }
 
     
@@ -218,7 +218,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         }
         coefficients = makeArray(rows, rows);
         for (int rc = 0; rc < rows; rc++) {
-            coefficients[rc][rc] = Rational.getOne();
+            coefficients[rc][rc] = RationalWrapper.getOne();
         }
     }
     
@@ -226,7 +226,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Sets all values of this matrix to <code>value</code>.
      */
-    public void setToElementaryMatrix(Rational value) {
+    public void setToElementaryMatrix(RationalWrapper value) {
         for (int r = 0; r < rows; r++) {
             Arrays.fill(coefficients[r], value);
         }
@@ -292,18 +292,18 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
 
         int n = rows;
         int i, j, k, t;
-        Rational maxval;
+        RationalWrapper maxval;
         int maxpos;
         int[] p = new int[n];
         for (i = 0; i < n; i++) { 
             p[i] = i;
         }
         
-        Rational[][] m = makeArray(n, 2*n);
+        RationalWrapper[][] m = makeArray(n, 2*n);
         for (i = 0; i < n; i++) {
             System.arraycopy(coefficients[i], 0, m[i], 0, n);
-            for (j = n; j < 2*n; j++) m[i][j] = Rational.getZero();
-            m[i][n+i] = Rational.getOne();
+            for (j = n; j < 2*n; j++) m[i][j] = RationalWrapper.getZero();
+            m[i][n+i] = RationalWrapper.getOne();
         }
 
         for (i = 0; i < n; i++) {
@@ -323,7 +323,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
             }
             
             for (j = i+1; j < n; j++) {
-                Rational f = m[p[j]][i].quotient(m[p[i]][i]);
+                RationalWrapper f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (k = i; k < 2*n; k++) {
                     m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
@@ -335,7 +335,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         }
             
         for (i = n-1; i >= 0; i--) {
-            Rational f = m[p[i]][i];
+            RationalWrapper f = m[p[i]][i];
             for (k = i; k < 2*n; k++) {
                 m[p[i]][k] = m[p[i]][k].quotient(f);
             }
@@ -356,27 +356,27 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
 
     @Override
-    public Vector<ArithmeticElement<Rational>> product(Vector<ArithmeticElement<Rational>> vector) {
+    public Vector<ArithmeticElement<RationalWrapper>> product(Vector<ArithmeticElement<RationalWrapper>> vector) {
         return null; //TODO but not really
     }
 
     @Override
-    public ArithmeticElement<Rational> get(int i, int j) {
+    public ArithmeticElement<RationalWrapper> get(int i, int j) {
         return null;
     }
 
     @Override
-    public Vector<ArithmeticElement<Rational>> getColumn(int j) {
+    public Vector<ArithmeticElement<RationalWrapper>> getColumn(int j) {
         return null; //TODO but not really
     }
 
     @Override
-    public Vector<ArithmeticElement<Rational>> getRow(int i) {
+    public Vector<ArithmeticElement<RationalWrapper>> getRow(int i) {
         return null; //TODO but not really
     }
 
     @Override
-    public void set(int row, int col, ArithmeticElement<Rational> element) {
+    public void set(int row, int col, ArithmeticElement<RationalWrapper> element) {
 
     }
 
@@ -391,7 +391,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         
         QMatrix m = new QMatrix(rows, columns);
         if (rows == 1) {
-            m.coefficients[0][0] = Rational.getOne();
+            m.coefficients[0][0] = RationalWrapper.getOne();
             return m;
         }
         
@@ -432,7 +432,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns this matrix scaled by <code>scalar</code>.
      */
-    public QMatrix scaled(Rational scalar) {
+    public QMatrix scaled(RationalWrapper scalar) {
         QMatrix m = new QMatrix(rows, columns);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
@@ -502,7 +502,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         n.setToUnitMatrix();
         
         for (int i = 1, fac = 1; i <= exponent; i++, fac*=i) {
-            n = n.sum(m.power(i)).scaled(Rational.getOne().quotient(fac));
+            n = n.sum(m.power(i)).scaled(RationalWrapper.getOne().quotient(fac));
         }
         return n;
     }
@@ -530,7 +530,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
 
     
     public boolean isConstant() {
-        Rational coeff = coefficients[0][0];
+        RationalWrapper coeff = coefficients[0][0];
         
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
@@ -578,7 +578,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
 
     
     public boolean isRegular() {
-        return determinant().equals(Rational.getZero());
+        return determinant().equals(RationalWrapper.getZero());
     }
 
     
@@ -592,12 +592,12 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
     
 
-    public Rational dotProduct(QMatrix m) {
+    public RationalWrapper dotProduct(QMatrix m) {
         if (columns != 1 || m.columns != 1) {
             throw new ArithmeticException("Matrix is not a vector.");
         }
         
-        Rational dot = Rational.getZero();
+        RationalWrapper dot = RationalWrapper.getZero();
         for (int r = 0; r < rows; r++) {
             dot = dot.sum(coefficients[r][0].product(m.coefficients[r][0]));
         }
@@ -676,10 +676,10 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         int n = getColumnCount();
         while (i < m && j < n) {
             // Find pivot in column j, starting in row i:
-            Rational max_val = coefficients[i][j];
+            RationalWrapper max_val = coefficients[i][j];
             int max_ind = i;
             for (int k = i+1; k < m; k++) {
-                Rational val = coefficients[k][j];
+                RationalWrapper val = coefficients[k][j];
                 if (val.compareTo(max_val) == 1) {
                     max_val = val;
                     max_ind = k;
@@ -687,7 +687,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
             }
             if (!max_val.isZero()) {
                 // switch rows i and max_ind
-                Rational[] tmp = coefficients[i];
+                RationalWrapper[] tmp = coefficients[i];
                 coefficients[i] = coefficients[max_ind];
                 coefficients[max_ind] = tmp;
                 // divide row i by max_val
@@ -696,7 +696,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
                 }
                 for (int u = 0; u < m; u++) {
                     if (u != i) {
-                        Rational v = new Rational(coefficients[u][j]);
+                        RationalWrapper v = new RationalWrapper(coefficients[u][j]);
                         for (int k = 0; k < n; k++) {
                             coefficients[u][k] = coefficients[u][k].difference(v.product(coefficients[i][k]));
                         }
@@ -754,7 +754,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         QMatrix product = new QMatrix(rows, m.columns);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < m.columns; c++) {
-                Rational sum = Rational.getZero();
+                RationalWrapper sum = RationalWrapper.getZero();
                 for (int i = 0; i < columns; i++) {
                     sum = sum.sum(coefficients[r][i].product(m.coefficients[i][c]));
                 }
@@ -768,14 +768,14 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns the product of this matrix with <code>vector</code>.
      */
-    public Rational[] product(Rational[] vector) {
+    public RationalWrapper[] product(RationalWrapper[] vector) {
         if (columns != vector.length) {
 	       throw new ArithmeticException("Unmatched matrix dimensions.");
         }
-        Rational[] res = new Rational[rows];
-        Rational sum;
+        RationalWrapper[] res = new RationalWrapper[rows];
+        RationalWrapper sum;
         for (int r = 0; r < rows; r++) {
-	        sum = Rational.getZero();
+	        sum = RationalWrapper.getZero();
 	        for (int c = 0; c < columns; c++) {
 		        sum = sum.sum(coefficients[r][c].product(vector[c]));
             }
@@ -790,7 +790,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
      * 
      * @throws ArithmeticException if this matrix is not square
      */
-    public Rational determinant() {
+    public RationalWrapper determinant() {
         if (!isSquare()) {
             throw new ArithmeticException("Matrix is not square.");
         }
@@ -800,13 +800,13 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
         }
                 
         int i, j, t;
-        Rational maxval;
+        RationalWrapper maxval;
         int maxpos;
-        Rational factor = Rational.getOne();
+        RationalWrapper factor = RationalWrapper.getOne();
         int[] p = new int[rows];
         for (i = 0; i < rows; i++) p[i] = i;
         
-        Rational[][] m = makeArray(rows, columns);
+        RationalWrapper[][] m = makeArray(rows, columns);
         for (i = 0; i < rows; i++)
             System.arraycopy(coefficients[i], 0, m[i], 0, columns);
 
@@ -819,21 +819,21 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
                     maxpos = j;
                 }
             }
-            if (maxval.isZero()) return Rational.getZero();
+            if (maxval.isZero()) return RationalWrapper.getZero();
             if (maxpos != i) {
                 t = p[maxpos]; p[maxpos] = p[i]; p[i] = t;
-                factor = factor.product(new Rational(-1));
+                factor = factor.product(new RationalWrapper(-1));
             }
             
             for (j = i+1; j < rows; j++) {
-                Rational f = m[p[j]][i].quotient(m[p[i]][i]);
+                RationalWrapper f = m[p[j]][i].quotient(m[p[i]][i]);
                 for (int k = i; k < columns; k++) {
                     m[p[j]][k] = m[p[j]][k].difference(f.product(m[p[i]][k]));
                 }
             }
         }
         
-        Rational det = Rational.getOne();
+        RationalWrapper det = RationalWrapper.getOne();
         for (i = 0; i < rows; i++) {
             det = det.product(m[p[i]][i]);
         }
@@ -845,7 +845,7 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns the minor at <code>row<code>,<code>col</code>.
      */
-    public Rational minor(int row, int col) {
+    public RationalWrapper minor(int row, int col) {
         QMatrix m = getMinorMatrix(row, col);
         if ((row+col)%2 == 0) {
             return m.determinant();
@@ -859,11 +859,11 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns the Euclidean norm of this matrix.
      */
-    public Rational euclidean() {
-        Rational euclidean = Rational.getZero();
+    public RationalWrapper euclidean() {
+        RationalWrapper euclidean = RationalWrapper.getZero();
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                Rational s = coefficients[r][c];
+                RationalWrapper s = coefficients[r][c];
                 euclidean = euclidean.sum(s.product(s));
             }
         }        
@@ -874,8 +874,8 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     /**
      * Returns the 1-norm of this matrix.
      */
-    public Rational sum() {
-        Rational sum = Rational.getZero();
+    public RationalWrapper sum() {
+        RationalWrapper sum = RationalWrapper.getZero();
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
                 sum = sum.sum(coefficients[r][c]);
@@ -904,16 +904,16 @@ public class QMatrix extends ArithmeticMatrix<Rational> {
     }
     
     
-    private static Rational[][] makeArray(int rows, int columns) {
-        Rational[][] res = new Rational[rows][columns];
+    private static RationalWrapper[][] makeArray(int rows, int columns) {
+        RationalWrapper[][] res = new RationalWrapper[rows][columns];
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                res[r][c] = Rational.getZero();
+                res[r][c] = RationalWrapper.getZero();
             }
         }
         return res;
     }
 
-    private Rational[][] coefficients;
+    private RationalWrapper[][] coefficients;
 
 }

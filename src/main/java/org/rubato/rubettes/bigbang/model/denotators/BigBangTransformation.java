@@ -1,7 +1,7 @@
 package org.rubato.rubettes.bigbang.model.denotators;
 
 import org.rubato.rubettes.util.DenotatorPath;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -46,10 +46,10 @@ public class BigBangTransformation {
 	}
 	
 	public BigBangTransformation inverse() {
-		ArithmeticAffineMultiMorphism<Real> morphism = (ArithmeticAffineMultiMorphism<Real>)this.morphism;
-		Matrix<ArithmeticElement<Real>> inverseMatrix = morphism.getMatrix().inverse();
-		Vector<ArithmeticElement<Real>> inverseShift = inverseMatrix.product(morphism.getVector()).negated();
-		ArithmeticAffineMultiMorphism<Real> inverseMorphism = new ArithmeticAffineMultiMorphism<>(RRing.ring, inverseMatrix, inverseShift);
+		ArithmeticAffineMultiMorphism<RealWrapper> morphism = (ArithmeticAffineMultiMorphism<RealWrapper>)this.morphism;
+		Matrix<ArithmeticElement<RealWrapper>> inverseMatrix = morphism.getMatrix().inverse();
+		Vector<ArithmeticElement<RealWrapper>> inverseShift = inverseMatrix.product(morphism.getVector()).negated();
+		ArithmeticAffineMultiMorphism<RealWrapper> inverseMorphism = new ArithmeticAffineMultiMorphism<>(RRing.ring, inverseMatrix, inverseShift);
 		return new BigBangTransformation(inverseMorphism, this.transformationPaths, this.copyAndMap, this.anchorNodePath);
 	}
 	

@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.Modulus;
+import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -77,8 +77,8 @@ public class ModuloMorphism extends ModuleMorphism {
         if (dimension == 1) {
             if (x instanceof ArithmeticElement) {
                 ArithmeticNumber<?> number = ((ArithmeticElement<?>) x).getValue();
-                if (number instanceof ArithmeticInteger) {
-                    return new ArithmeticElement<>(new Modulus(number.intValue(), modulus));
+                if (number instanceof IntegerWrapper) {
+                    return new ArithmeticElement<>(new ModulusWrapper(number.intValue(), modulus));
                 }
             }
         }
@@ -88,7 +88,7 @@ public class ModuloMorphism extends ModuleMorphism {
                 return new Vector(
                         ArithmeticRingRepository.getModulusRing(modulus),
                         e.getValue().stream()
-                                .map(i -> new ArithmeticElement(new Modulus(((ArithmeticElement)i).getValue().intValue(), modulus)))
+                                .map(i -> new ArithmeticElement(new ModulusWrapper(((ArithmeticElement)i).getValue().intValue(), modulus)))
                                 .collect(Collectors.toList()));
             }
         }

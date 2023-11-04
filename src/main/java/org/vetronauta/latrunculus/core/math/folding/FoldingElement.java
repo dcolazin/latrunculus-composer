@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticInteger;
+import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
@@ -90,7 +90,7 @@ public class FoldingElement {
     private static double[] foldString(ModuleElement[] others) {
         RingString[] relements = new RingString[others.length];
         for (int i = 0; i < others.length; i++) {
-            relements[i] = ((ArithmeticStringElement<ArithmeticInteger>)others[i]).getRingString();
+            relements[i] = ((ArithmeticStringElement<IntegerWrapper>)others[i]).getRingString();
         }
         return RingString.fold(relements);
     }

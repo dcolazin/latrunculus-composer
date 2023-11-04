@@ -29,7 +29,7 @@ import java.util.Set;
 import org.rubato.base.RubatoException;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.composer.RunInfo;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -140,11 +140,11 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		double minOnset, maxOnset;
 		int[] onsetPath = {0,0};
 		Iterator<Denotator> notes = score.iterator();
-		double currentOnset = ((ArithmeticElement<Real>)notes.next().getElement(onsetPath)).getValue().doubleValue();
+		double currentOnset = ((ArithmeticElement<RealWrapper>)notes.next().getElement(onsetPath)).getValue().doubleValue();
 		minOnset = currentOnset;
 		maxOnset = currentOnset;
 		while (notes.hasNext()) {
-			currentOnset = ((ArithmeticElement<Real>)notes.next().getElement(onsetPath)).getValue().doubleValue();
+			currentOnset = ((ArithmeticElement<RealWrapper>)notes.next().getElement(onsetPath)).getValue().doubleValue();
 			minOnset = Math.min(currentOnset, minOnset);
 			maxOnset = Math.max(currentOnset, maxOnset);
 		}
@@ -162,8 +162,8 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		int[] durationPath = {3,0};
 		while (notes.hasNext()) {
 			LimitDenotator currentNote = (LimitDenotator) notes.next();
-			double currentOnset = ((ArithmeticElement<Real>)currentNote.getElement(onsetPath)).getValue().doubleValue();
-			double currentDuration = ((ArithmeticElement<Real>)currentNote.getElement(durationPath)).getValue().doubleValue();
+			double currentOnset = ((ArithmeticElement<RealWrapper>)currentNote.getElement(onsetPath)).getValue().doubleValue();
+			double currentDuration = ((ArithmeticElement<RealWrapper>)currentNote.getElement(durationPath)).getValue().doubleValue();
 			
 			//System.out.print(currentOnset+" "+currentDuration+", ");
 			//correct onset offset (move score to position 0)
@@ -265,7 +265,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		while (keys.hasNext()) {
 			Denotator currentDenotator = keys.next();
 			Denotator currentNeighbor = neighborMap.get(currentDenotator);
-			double currentOnset = ((ArithmeticElement<Real>)currentDenotator.getElement(positionPath)).getValue().doubleValue();
+			double currentOnset = ((ArithmeticElement<RealWrapper>)currentDenotator.getElement(positionPath)).getValue().doubleValue();
 			double position = currentOnset/this.newDuration;
 			double factor = position; //1-probablility that denotator is present
 			if (complementSet.contains(currentDenotator)) {
@@ -287,7 +287,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 			Denotator currentDenotator = keys.next();
 			if (!complementSet.contains(currentDenotator)) {
 				Denotator currentNeighbor = neighborMap.get(currentDenotator);
-				double currentOnset = ((ArithmeticElement<Real>)currentDenotator.getElement(positionPath)).getValue().doubleValue();
+				double currentOnset = ((ArithmeticElement<RealWrapper>)currentDenotator.getElement(positionPath)).getValue().doubleValue();
 				double position = currentOnset/this.newDuration;
 				double factor = 1-position; //1-probablility that denotator is present
 				//System.out.println(position + " " + factor);

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -36,16 +36,16 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		this.initTransformation(this.getMatrix(), this.getShift());
 	}
 	
-	protected void initTransformation(RMatrix matrix, List<Real> shift) {
+	protected void initTransformation(RMatrix matrix, List<RealWrapper> shift) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
 		List<RMatrix> matrices = new ArrayList<>();
 		matrices.add(identity);
 		matrices.add(matrix);
 		matrices.add(identity);
-		List<List<Real>> shifts = new ArrayList<>();
-		shifts.add(Arrays.stream(this.shift1).mapToObj(Real::new).collect(Collectors.toList()));
+		List<List<RealWrapper>> shifts = new ArrayList<>();
+		shifts.add(Arrays.stream(this.shift1).mapToObj(RealWrapper::new).collect(Collectors.toList()));
 		shifts.add(shift);
-		shifts.add(Arrays.stream(this.shift2).mapToObj(Real::new).collect(Collectors.toList()));
+		shifts.add(Arrays.stream(this.shift2).mapToObj(RealWrapper::new).collect(Collectors.toList()));
 		this.initTransformation(matrices, shifts);
 	}
 	
@@ -71,10 +71,10 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		return new double[]{x,y};
 	}
 	
-	protected List<Real> getShift() {
-		List<Real> list = new ArrayList<>(2);
-		list.add(new Real(0));
-		list.add(new Real(0));
+	protected List<RealWrapper> getShift() {
+		List<RealWrapper> list = new ArrayList<>(2);
+		list.add(new RealWrapper(0));
+		list.add(new RealWrapper(0));
 		return list;
 	}
 	

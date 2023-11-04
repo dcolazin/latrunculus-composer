@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -320,8 +320,8 @@ public class Alterator {
 				Module module = m0.getCodomain();
 				m0 = this.getCastedMorphism(m0, RRing.ring);
 				m1 = this.getCastedMorphism(m1, RRing.ring);
-				ModuleMorphism scaled0 = m0.scaled(new ArithmeticElement<>(new Real(1-percentage)));
-				ModuleMorphism scaled1 = m1.scaled(new ArithmeticElement<>(new Real(percentage)));
+				ModuleMorphism scaled0 = m0.scaled(new ArithmeticElement<>(new RealWrapper(1-percentage)));
+				ModuleMorphism scaled1 = m1.scaled(new ArithmeticElement<>(new RealWrapper(percentage)));
 				ModuleMorphism result = scaled0.sum(scaled1);
 				result = this.getCastedMorphism(result, module);
 				return result;

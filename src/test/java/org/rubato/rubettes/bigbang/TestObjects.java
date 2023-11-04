@@ -11,7 +11,7 @@ import org.rubato.rubettes.util.DenotatorValueFinder;
 import org.rubato.rubettes.util.ObjectGenerator;
 import org.rubato.rubettes.util.SoundNoteGenerator;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -136,9 +136,9 @@ public class TestObjects {
 	}
 	
 	private void createProductRingRealTriples() throws DomainException, RubatoException {
-		ProductElement element1 = ProductElement.make(new ArithmeticElement<>(new Real(1)), new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(3)));
-		ProductElement element2 = ProductElement.make(new ArithmeticElement<>(new Real(4)), new ArithmeticElement<>(new Real(3)), new ArithmeticElement<>(new Real(1)));
-		ProductElement element3 = ProductElement.make(new ArithmeticElement<>(new Real(2)), new ArithmeticElement<>(new Real(1)), new ArithmeticElement<>(new Real(5)));
+		ProductElement element1 = ProductElement.make(new ArithmeticElement<>(new RealWrapper(1)), new ArithmeticElement<>(new RealWrapper(2)), new ArithmeticElement<>(new RealWrapper(3)));
+		ProductElement element2 = ProductElement.make(new ArithmeticElement<>(new RealWrapper(4)), new ArithmeticElement<>(new RealWrapper(3)), new ArithmeticElement<>(new RealWrapper(1)));
+		ProductElement element3 = ProductElement.make(new ArithmeticElement<>(new RealWrapper(2)), new ArithmeticElement<>(new RealWrapper(1)), new ArithmeticElement<>(new RealWrapper(5)));
 		List<Denotator> triples = new ArrayList<Denotator>();
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element1));
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element2));
@@ -242,18 +242,18 @@ public class TestObjects {
 	
 	public BigBangTransformation makeTranslation(int x, int y, TransformationPaths paths) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		List<ArithmeticElement<Real>> list = new ArrayList<>();
-		list.add(new ArithmeticElement<>(new Real(x)));
-		list.add(new ArithmeticElement<>(new Real(y)));
+		List<ArithmeticElement<RealWrapper>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new RealWrapper(x)));
+		list.add(new ArithmeticElement<>(new RealWrapper(y)));
 		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}
 	
 	public BigBangTransformation makeScaling(int x, int y, TransformationPaths paths) {
 		RMatrix identity = new RMatrix(new double[][]{{x,0},{0,y}});
-		List<ArithmeticElement<Real>> list = new ArrayList<>();
-		list.add(new ArithmeticElement<>(new Real(0)));
-		list.add(new ArithmeticElement<>(new Real(0)));
+		List<ArithmeticElement<RealWrapper>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new RealWrapper(0)));
+		list.add(new ArithmeticElement<>(new RealWrapper(0)));
 		ModuleMorphism translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
 	}

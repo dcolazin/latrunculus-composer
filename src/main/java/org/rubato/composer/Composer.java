@@ -32,7 +32,7 @@ import javax.swing.WindowConstants;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.plugin.PluginManager;
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.arith.number.Rational;
+import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 
 
 public class Composer implements WindowStateListener {
@@ -120,7 +120,7 @@ public class Composer implements WindowStateListener {
         if (userPrefs.getMaximized()) {
             frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         }
-        Rational.setDefaultQuantization(userPrefs.getDefaultQuantization());
+        RationalWrapper.setDefaultQuantization(userPrefs.getDefaultQuantization());
 
         // create a rubette manager
         rubetteManager = RubetteManager.getManager();

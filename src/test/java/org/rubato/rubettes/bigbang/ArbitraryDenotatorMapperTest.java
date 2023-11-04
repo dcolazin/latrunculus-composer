@@ -6,7 +6,7 @@ import org.rubato.base.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
-import org.vetronauta.latrunculus.core.math.arith.number.Real;
+import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
@@ -30,9 +30,9 @@ class ArbitraryDenotatorMapperTest {
 	void setUp() throws Exception {
 		this.objects = new TestObjects();
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
-		List<ArithmeticElement<Real>> list = new ArrayList<>();
-		list.add(new ArithmeticElement<>(new Real(-1)));
-		list.add(new ArithmeticElement<>(new Real(-2)));
+		List<ArithmeticElement<RealWrapper>> list = new ArrayList<>();
+		list.add(new ArithmeticElement<>(new RealWrapper(-1)));
+		list.add(new ArithmeticElement<>(new RealWrapper(-2)));
 		this.translation = ArithmeticAffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
 	}
 
