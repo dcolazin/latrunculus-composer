@@ -96,8 +96,8 @@ class AlteratorTest {
 		//assertTrue(m050.equals(new RFreeAffineMorphism(new RMatrix(new double[][]{{2,3.5,5}}), new double[]{0})));
 		VectorModule<Rational> q3 = new VectorModule<>(QRing.ring, 3);
 		assertEquals(m050.map(q3.getUnitElement(0)), new Rational(2));
-		assertEquals(m050.map(q3.getUnitElement(0)), new Rational(3.5));
-		assertEquals(m050.map(q3.getUnitElement(0)), new Rational(5));
+		assertEquals(m050.map(q3.getUnitElement(1)), new Rational(3.5));
+		assertEquals(m050.map(q3.getUnitElement(2)), new Rational(5));
 		assertEquals(m100, m1);
 	}
 	

@@ -55,13 +55,11 @@ class MorphingRubetteTest {
 	}
 	
 	@Test
-	void testGetTimeInfo() {
-		try {
-			double[] timeInfo1 = this.rubette.getTimeInfo(score1);
-			double[] timeInfo2 = this.rubette.getTimeInfo(score2);
-			assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 5);
-			assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 3);
-		} catch (RubatoException e) { }
+	void testGetTimeInfo() throws RubatoException {
+		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
+		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
+		assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 5);
+		assertTrue(timeInfo2[0] == 0 && timeInfo2[1] == 3);
 	}
 
 	@Test

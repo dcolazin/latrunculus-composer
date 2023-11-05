@@ -61,14 +61,14 @@ public abstract class NoteGenerator {
 	
 	protected NameDenotator emptyName = NameDenotator.make("");
 	
-	private List<int[]> noteModulePaths;
+	private final List<int[]> noteModulePaths;
 	
 	private List<Denotator> currentMelody;
 	private double noteDistance;
 	private double currentOnset;
 	
-	public NoteGenerator() {
-		this.noteModulePaths = new ArrayList<int[]>();
+	protected NoteGenerator() {
+		this.noteModulePaths = new ArrayList<>();
 		this.noteModulePaths.add(new int[]{0,0});
 		this.noteModulePaths.add(new int[]{1,0});
 		this.noteModulePaths.add(new int[]{2,0});
@@ -91,10 +91,10 @@ public abstract class NoteGenerator {
 		PowerDenotator newSpecificScore = this.createEmptyScore();
 		try {
 			List<Denotator> factors = hierarchicalScore.getFactors();
-			for (int i = 0; i < factors.size(); i++) {
-				LimitDenotator currentNode = (LimitDenotator)factors.get(i);
+			for (Denotator factor : factors) {
+				LimitDenotator currentNode = (LimitDenotator) factor;
 				Denotator currentNote = this.createNoteDenotator(currentNode.getFactor(0));
-				PowerDenotator currentSubScore = this.convertToSpecificScore((PowerDenotator)currentNode.getFactor(1));
+				PowerDenotator currentSubScore = this.convertToSpecificScore((PowerDenotator) currentNode.getFactor(1));
 				newSpecificScore.appendFactor(this.createNodeDenotator(currentNote, currentSubScore));
 			}
 		} catch (RubatoException e) { e.printStackTrace(); }
@@ -105,9 +105,9 @@ public abstract class NoteGenerator {
 		PowerDenotator newMacroScore = this.createEmptyScore();
 		try {
 			List<Denotator> factors = macroScore.getFactors();
-			for (int i = 0; i < factors.size(); i++) {
-				LimitDenotator currentNode = (LimitDenotator)factors.get(i);
-				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), layerIndex);
+			for (Denotator factor : factors) {
+				LimitDenotator currentNode = (LimitDenotator) factor;
+				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator) currentNode.getFactor(1), layerIndex);
 				currentNode.setFactor(1, currentMacroScore);
 				newMacroScore.appendFactor(this.copyAndSetLayer(currentNode, layerIndex));
 			}
@@ -124,8 +124,8 @@ public abstract class NoteGenerator {
 	 */
 	public PowerDenotator createSimpleMelody(double noteDistance, Double[] pitches) {
 		this.startNewMelody(noteDistance);
-		for (int i = 0; i < pitches.length; i++) {
-			this.addNoteToMelody(pitches[i]);
+		for (Double pitch : pitches) {
+			this.addNoteToMelody(pitch);
 		}
 		return this.createScoreWithMelody();
 	}
@@ -139,8 +139,8 @@ public abstract class NoteGenerator {
 	 */
 	public PowerDenotator createSimpleMelody(double noteDistance, double... pitches) {
 		this.startNewMelody(noteDistance);
-		for (int i = 0; i < pitches.length; i++) {
-				this.addNoteToMelody(pitches[i]);
+		for (double pitch : pitches) {
+			this.addNoteToMelody(pitch);
 		}
 		return this.createScoreWithMelody();
 	}
@@ -151,7 +151,7 @@ public abstract class NoteGenerator {
 	 * @param noteDistance - the distance between subsequent notes
 	 */
 	public void startNewMelody(double noteDistance) {
-		this.currentMelody = new ArrayList<Denotator>();
+		this.currentMelody = new ArrayList<>();
 		this.noteDistance = noteDistance;
 		this.currentOnset = 0;
 	}
@@ -208,7 +208,7 @@ public abstract class NoteGenerator {
 	 */
 	private LimitDenotator createNoteDenotator(Denotator noteDenotator) {
 		try {
-			List<ModuleElement> elements = new ArrayList<ModuleElement>();
+			List<ModuleElement> elements = new ArrayList<>();
 			//take the elements from all coordinates from Onset to Voice
 			for (int i = 0; i < 6; i++) {
 				elements.add(noteDenotator.getElement(new int[]{i, 0}));
@@ -222,7 +222,7 @@ public abstract class NoteGenerator {
 	
 	private LimitDenotator createNoteDenotator(List<ModuleElement> elements) {
 		try {
-			List<Denotator> coordinates = new ArrayList<Denotator>();
+			List<Denotator> coordinates = new ArrayList<>();
 			coordinates.add(this.createSimpleDenotator(this.onsetForm, elements.get(0)));
 			coordinates.add(new SimpleDenotator(this.emptyName, this.pitchForm, elements.get(1)));
 			coordinates.add(new SimpleDenotator(this.emptyName, this.loudnessForm, elements.get(2)));
@@ -239,7 +239,7 @@ public abstract class NoteGenerator {
 	
 	private LimitDenotator createNoteDenotator(List<ModuleElement> elements, PowerDenotator modulators) {
 		try {
-			List<Denotator> coordinates = new ArrayList<Denotator>();
+			List<Denotator> coordinates = new ArrayList<>();
 			coordinates.add(this.createSimpleDenotator(this.onsetForm, elements.get(0)));
 			coordinates.add(new SimpleDenotator(this.emptyName, this.pitchForm, elements.get(1)));
 			coordinates.add(new SimpleDenotator(this.emptyName, this.loudnessForm, elements.get(2)));
@@ -277,7 +277,7 @@ public abstract class NoteGenerator {
 	}
 	
 	private LimitDenotator createRelativeNote(LimitDenotator note, LimitDenotator referenceNote) {
-		List<ModuleElement> newElements = new ArrayList<ModuleElement>();
+		List<ModuleElement> newElements = new ArrayList<>();
 		PowerDenotator modulators = null;
 		try {
 			for (int[] currentPath: this.noteModulePaths) {
@@ -304,7 +304,7 @@ public abstract class NoteGenerator {
 	}
 	
 	public LimitDenotator createAbsoluteNote(LimitDenotator note, LimitDenotator referenceNote) {
-		List<ModuleElement> newElements = new ArrayList<ModuleElement>();
+		List<ModuleElement> newElements = new ArrayList<>();
 		PowerDenotator modulators = null;
 		try {
 			for (int[] currentPath: this.noteModulePaths) {
@@ -329,7 +329,7 @@ public abstract class NoteGenerator {
 	
 	public LimitDenotator createNodeDenotator(Denotator note, Denotator macroScore) {
 		try {
-			List<Denotator> coordinates = new ArrayList<Denotator>();
+			List<Denotator> coordinates = new ArrayList<>();
 			coordinates.add(note);
 			coordinates.add(macroScore);
 			return this.createSpecificNodeDenotator(coordinates);

@@ -103,6 +103,9 @@ public class Real extends RingElement<Real> implements Arithmetic {
 
     @Override
     public void invert() {
+        if (value == 0) {
+            throw new InverseException(this);
+        }
         value = 1 / value;
     }
 

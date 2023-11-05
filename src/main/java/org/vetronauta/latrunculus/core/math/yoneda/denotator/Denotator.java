@@ -191,8 +191,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @return null if denotator could not be retrieved along the path
      * @throws RubatoException
      */
-    protected abstract Denotator get(int[] path, int curpos)
-        throws RubatoException;
+    protected abstract Denotator get(int[] path, int curpos) throws RubatoException;
 
     /**
      * Returns a denotator by replacing the denotator
@@ -457,7 +456,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @param out the stream to print to
      * @param n the number of spaces to print
      */
-    protected final static void indent(PrintStream out, int n) {
+    protected static void indent(PrintStream out, int n) {
         for (int i = 0; i < n; i++) {
             out.print(" ");
         }
@@ -524,16 +523,16 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
         this.name = name;
         this.form = form;
     }
-    
-    
-    protected final static RubatoAddressException addressMismatchException(Denotator d, Module address) {
+
+
+    protected static RubatoAddressException addressMismatchException(Denotator d, Module address) {
         String s = TextUtils.replaceStrings("Denotator has address %%1, but required address is %%2",
                                             d.getAddress(), address);
         return new RubatoAddressException(s, d.getAddress(), address);        
     }
 
-    
-    protected final static void checkDenotator(Denotator d, Form f) 
+
+    protected static void checkDenotator(Denotator d, Form f)
             throws RubatoFormException {
         if (!d.hasForm(f)) {
             throw new RubatoFormException(d.getForm(), f, "Denotator.checkDenotator");
@@ -541,7 +540,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
     }
 
 
-    protected final static void checkDenotator(Denotator d, Form f, Module address) 
+    protected static void checkDenotator(Denotator d, Form f, Module address)
             throws RubatoFormException, RubatoAddressException {
         if (!d.hasForm(f)) {
             throw new RubatoFormException(d.getForm(), f, "Denotator.checkDenotator");

@@ -229,26 +229,21 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
 
     
     @Override
-    protected Denotator get(int[] path, int curpos)
-            throws RubatoException {
+    protected Denotator get(int[] path, int curpos) throws RubatoException {
         if (curpos == path.length) {
             return this;
         }
-        else if (curpos > path.length) {
-            throw new RubatoException("PowerDenotator.get: Incompatible path, "+
-                                      "expected length >= %1, but got length %2",
-                                      curpos, path.length);
+        if (curpos > path.length) {
+            throw new RubatoException("PowerDenotator.get: Incompatible path, expected length >= %1, but got length %2", curpos, path.length);
         }
-        else if (getFactorCount() == 1 && path[curpos] == 0) {
+        if (getFactorCount() == 1 && path[curpos] == 0) {
             return getFactor(0).get(path, curpos+1);
         }
         //florian needs this code! (if you got factors you might as well do this)
-        else if (getFactorCount() > path[curpos]) {
+        if (getFactorCount() > path[curpos]) {
         	return getFactor(path[curpos]).get(path, curpos+1);
         }
-        else {
-            return null;
-        }
+        return null;
     }
     
     

@@ -116,7 +116,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 	}
 	
 	protected PowerDenotator generateScale() {
-		HashSet<Double> pitches = new HashSet<Double>();
+		HashSet<Double> pitches = new HashSet<>();
 		this.addHigherPitchesTo(pitches);
 		this.addLowerPitchesTo(pitches);
 		return this.noteGenerator.createSimpleMelody(0, pitches.toArray(new Double[]{}));
