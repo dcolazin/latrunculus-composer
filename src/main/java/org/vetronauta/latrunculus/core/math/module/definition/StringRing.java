@@ -26,8 +26,7 @@ import java.util.List;
 
 /**
  * The abstract base class for rings with RingString elements.
- * @see StringElement
- * 
+ *
  * @author Gérard Milmeister
  */
 public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {

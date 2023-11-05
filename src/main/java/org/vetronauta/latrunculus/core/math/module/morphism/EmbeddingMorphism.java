@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
@@ -32,9 +32,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
@@ -372,8 +370,8 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * @param codomain a string ring
      * @return an embedding or null if such an embedding cannot be constructed
      */
-    private static <RX extends RingElement<RX>, RY extends StringElement<RY>>
-    ModuleMorphism<RX,RY,RX,RY> makeStringEmbedding(final Ring<RX> domain, final StringRing<RY> codomain) {
+    private static <RX extends RingElement<RX>, RY extends RingElement<RY>>
+    ModuleMorphism<RX, StringMap<RY>,RX,StringMap<RY>> makeStringEmbedding(final Ring<RX> domain, final StringRing<RY> codomain) {
         if (domain instanceof StringRing) {
             return make(((StringRing<?>)domain).getFactorRing(), codomain.getFactorRing()) != null ?
                     new RingEmbeddingMorphism<>(domain, codomain) : null;
@@ -575,8 +573,8 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
     }
 
-    private static class StringRingEmbedding<RA extends RingElement<RA>,RB extends StringElement<RB>>
-        extends EmbeddingMorphism<RA,RB,RA,RB>{
+    private static class StringRingEmbedding<RA extends RingElement<RA>,RB extends RingElement<RB>>
+        extends EmbeddingMorphism<RA,StringMap<RB>,RA,StringMap<RB>>{
 
         private final ModuleMorphism<RA,?,RA,?> ringMorphism;
 
@@ -586,7 +584,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
         }
 
         @Override
-        public RB mapValue(RA element) {
+        public StringMap<RB> mapValue(RA element) {
             try {
                 RingElement coeff = (RingElement)ringMorphism.map(element);
                 return getCodomain().cast(coeff);

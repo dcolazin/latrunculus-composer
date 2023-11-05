@@ -21,14 +21,18 @@ package org.vetronauta.latrunculus.core.math.folding;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author vetronauta
@@ -43,7 +47,7 @@ public class FoldingElement {
         if (element instanceof Vector) {
             return FoldingModule.multiFold(((Vector<?>) element).getRing(), others, element.getLength());
         }
-        if (element instanceof StringElement) {
+        if (element instanceof StringMap) {
             return foldString(others);
         }
         if (element instanceof DirectSumElement) {
@@ -86,12 +90,11 @@ public class FoldingElement {
     }
 
     private static double[] foldString(ModuleElement[] others) {
-        RingString[] relements = new RingString[others.length];
+        List<Map<String,ZInteger>> relements = new ArrayList<>(others.length);
         for (int i = 0; i < others.length; i++) {
-            //TODO after ArithmeticStringElement refactoring
-            //relements[i] = ((ArithmeticStringElement<IntegerWrapper>)others[i]).getRingString();
+            relements.add(((StringMap<ZInteger>)others[i]).getTerms());
         }
-        return RingString.fold(relements);
+        return FoldingMap.fold(relements);
     }
 
 }

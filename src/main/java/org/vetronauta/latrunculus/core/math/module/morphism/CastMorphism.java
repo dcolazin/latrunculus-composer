@@ -21,11 +21,11 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.rubato.util.Pair;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
@@ -112,7 +112,7 @@ public abstract class CastMorphism<A extends ModuleElement<A, RA>, B extends Mod
         return false;
     }
 
-    private static <RX extends StringElement<RX>, RY extends RingElement<RY>> ModuleMorphism<RX,RY,RX,RY>
+    private static <RX extends RingElement<RX>, RY extends RingElement<RY>> ModuleMorphism<StringMap<RX>,RY,StringMap<RX>,RY>
     makeStringRingMorphism(final StringRing<RX> domain, final Ring<RY> codomain) {
         if (codomain instanceof StringRing) {
             return new RingCastMorphism<>(domain, codomain);
@@ -178,7 +178,8 @@ public abstract class CastMorphism<A extends ModuleElement<A, RA>, B extends Mod
 
     }
 
-    private static class StringCastMorphism<RX extends StringElement<RX>, RY extends RingElement<RY>, T extends RingElement<T>> extends CastMorphism<RX,RY,RX,RY> {
+    private static class StringCastMorphism<RX extends RingElement<RX>, RY extends RingElement<RY>, T extends RingElement<T>>
+            extends CastMorphism<StringMap<RX>,RY,StringMap<RX>,RY> {
 
         private final ModuleMorphism<T,RY,T,RY> internalMorphism;
 
@@ -191,9 +192,9 @@ public abstract class CastMorphism<A extends ModuleElement<A, RA>, B extends Mod
             return (StringRing<RX>) super.getDomain();
         }
 
-        public RY mapValue(RX element) {
+        public RY mapValue(StringMap<RX> element) {
             T s = (T) getDomain().getFactorRing().getZero();
-            Map<String, RingElement> terms = element.getTerms();
+            Map<String, RX> terms = element.getTerms();
             try {
                 for (RingElement x : terms.values()) {
                     s.add((T) x);
