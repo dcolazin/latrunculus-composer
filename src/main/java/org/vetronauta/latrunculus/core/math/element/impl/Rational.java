@@ -147,8 +147,8 @@ public class Rational extends RingElement<Rational> implements Arithmetic {
     @Override
     public void multiply(Rational element) throws DomainException {
         int g = NumberTheory.gcd(element.denominator, numerator) * NumberTheory.gcd(element.numerator, denominator);
-        numerator *= element.numerator / g;
-        denominator *= element.denominator / g;
+        numerator = numerator * element.numerator / g;
+        denominator = denominator * element.denominator / g;
     }
 
     @Override
