@@ -23,8 +23,8 @@ import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
 
 import org.vetronauta.latrunculus.core.math.arith.Trigonometry;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 
 
 /**
@@ -1317,7 +1317,7 @@ abstract class ArithPrimitives {
                     return a;
                 }
                 else if (a.isReal()) {
-                    return SRational.make(new RationalWrapper(((SReal)a).getDouble()));
+                    return SRational.make(new Rational(((SReal)a).getDouble()));
                 }
                 else if (a.isComplex()) {
                     eval.addError(getName()+": complex argument not supported");

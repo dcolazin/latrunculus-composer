@@ -24,7 +24,6 @@ import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -77,11 +76,6 @@ public class Rational extends RingElement<Rational> implements Arithmetic {
      */
     public Rational(double d, int quant) {
         this((int)Math.round(d*quant), quant);
-    }
-
-    public Rational(RationalWrapper rationalWrapper) {
-        numerator = rationalWrapper.getNumerator();
-        denominator = rationalWrapper.getDenominator();
     }
 
     /**

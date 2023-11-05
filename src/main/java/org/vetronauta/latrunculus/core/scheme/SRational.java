@@ -21,8 +21,8 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 
 /**
  * The class of rational values.
@@ -34,13 +34,11 @@ public final class SRational extends SNumber {
     /**
      * Creates a Scheme value from the rational number <code>q</code>.
      */
-    public static SNumber make(RationalWrapper q) {
-        if (q.isIntegral()) {
+    public static SNumber make(Rational q) {
+        if (q.getDenominator() == 1) {
             return new SInteger(q.getNumerator());
         }
-        else {
-            return new SRational(q);
-        }
+        return new SRational(q);
     }
     
     public boolean eq_p(SExpr sexpr) {
@@ -68,7 +66,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber add(SInteger n) {
-        return SRational.make(q.sum(n.getInt()));
+        return SRational.make(q.sum(new Rational(n.getInt())));
     }
 
     public SNumber add(SRational n) {
@@ -88,7 +86,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber subtractFrom(SInteger n) {
-        return SRational.make(q.difference(n.getInt()));
+        return SRational.make(q.difference(new Rational(n.getInt())));
     }
 
     public SNumber subtractFrom(SRational n) {
@@ -108,7 +106,7 @@ public final class SRational extends SNumber {
     }
     
     public SNumber multiply(SInteger n) {
-        return new SRational(q.product(n.getInt()));
+        return new SRational(q.product(new Rational(n.getInt())));
     }
 
     public SNumber multiply(SRational n) {
@@ -128,11 +126,15 @@ public final class SRational extends SNumber {
     }
     
     public SNumber divideInto(SInteger n) {
-        return SRational.make(q.inverse().product(n.getInt()));
+        return SRational.make(q.inverse().product(new Rational(n.getInt())));
     }
     
     public SNumber divideInto(SRational n) {
-        return SRational.make(n.q.quotient(q));
+        try {
+            return SRational.make(n.q.quotient(q));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
     
     public SNumber divideInto(SReal n) {
@@ -148,11 +150,12 @@ public final class SRational extends SNumber {
     }
     
     public SNumber neg() {
-        return new SRational(q.neg());
+        return new SRational(q.negated());
     }
 
     public SNumber abs() {
-        return new SRational(q.abs());
+        Rational abs = q.getNumerator() >= 0 ? q.deepCopy() : q.inverse();
+        return new SRational(abs);
     }
 
     public SNumber acos() {
@@ -214,7 +217,7 @@ public final class SRational extends SNumber {
             }
             else {
                 int e = ((SInteger)n).getInt();
-                RationalWrapper res = new RationalWrapper(1);
+                Rational res = new Rational(1);
                 while (e > 0) {
                     res = res.product(q);
                     e--;
@@ -270,15 +273,15 @@ public final class SRational extends SNumber {
     /**
      * Returns the rational number in this Scheme value.
      */
-    public RationalWrapper getRational() {
+    public Rational getRational() {
         return q;
     }
     
-    private RationalWrapper q;
+    private Rational q;
     
-    private SRational(RationalWrapper q) {
+    private SRational(Rational q) {
         this.q = q;
     }
     
-    private static final RationalWrapper zero = new RationalWrapper(0);
+    private static final Rational zero = new Rational(0);
 }

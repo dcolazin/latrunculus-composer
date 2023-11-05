@@ -21,8 +21,8 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 
 /**
  * The class of integer values.
@@ -67,7 +67,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber add(SRational n) {
-        return SRational.make(n.getRational().sum(i));
+        return SRational.make(n.getRational().sum(new Rational(i)));
     }
 
     public SNumber add(SReal n) {
@@ -88,7 +88,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber subtractFrom(SRational n) {
-        return SRational.make(n.getRational().difference(i));
+        return SRational.make(n.getRational().difference(new Rational(i)));
     }
 
     public SNumber subtractFrom(SReal n) {
@@ -108,7 +108,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber multiply(SRational n) {
-        return SRational.make(n.getRational().product(i));
+        return SRational.make(n.getRational().product(new Rational(i)));
     }
 
     public SNumber multiply(SReal n) {
@@ -125,7 +125,7 @@ public final class SInteger extends SNumber {
     
     public SNumber divideInto(SInteger n) {
         if (i != 0) {
-            return SRational.make(new RationalWrapper(n.i, i));
+            return SRational.make(new Rational(n.i, i));
         }
         else {
             throw new ArithmeticException("division by zero");
@@ -134,7 +134,11 @@ public final class SInteger extends SNumber {
     
     public SNumber divideInto(SRational n) {
         if (i != 0) {
-            return SRational.make(n.getRational().quotient(i));
+            try {
+                return SRational.make(n.getRational().quotient(new Rational(i)));
+            } catch (DivisionException e) {
+                throw new LatrunculusRuntimeException(e);
+            }
         }
         else {
             throw new ArithmeticException("division by zero");
@@ -241,7 +245,7 @@ public final class SInteger extends SNumber {
                 return new SInteger(res); 
             }
             else {
-                return SRational.make(new RationalWrapper(1, i)).expt(n.neg());
+                return SRational.make(new Rational(1, i)).expt(n.neg());
             }
         }
         else {

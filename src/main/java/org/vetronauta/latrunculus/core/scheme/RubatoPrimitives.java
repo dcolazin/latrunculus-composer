@@ -21,7 +21,6 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -760,7 +759,7 @@ abstract class RubatoPrimitives {
             return SReal.make(((Real) element).doubleValue());
         }
         if (element instanceof Rational) {
-            return SRational.make(new RationalWrapper(((Rational) element).getNumerator(), ((Rational) element).getDenominator()));
+            return SRational.make((Rational) element);
         }
         if (element instanceof ZInteger) {
             return new SInteger(((ZInteger) element).intValue());
@@ -791,7 +790,7 @@ abstract class RubatoPrimitives {
             return new ZInteger(((SInteger)sexpr).getInt());
         }
         else if (sexpr.isRational()) {
-            return new Rational(((SRational)sexpr).getRational());
+            return ((SRational)sexpr).getRational().deepCopy();
         }
         else if (sexpr.isReal()) {
             return new Real((((SReal)sexpr).getDouble()));
