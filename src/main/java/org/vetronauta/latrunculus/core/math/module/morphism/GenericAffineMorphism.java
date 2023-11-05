@@ -44,6 +44,8 @@ import java.util.List;
 public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends FreeElement<B, RA>, RA extends RingElement<RA>>
         extends ModuleMorphism<A,B,RA,RA> {
 
+    //TODO this is no longer needed
+
     private final Ring<RA> ring;
     private final int domainDimension;
     private final int codomainDimension;

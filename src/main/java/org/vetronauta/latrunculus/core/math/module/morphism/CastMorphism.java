@@ -24,10 +24,10 @@ import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +106,7 @@ public abstract class CastMorphism<A extends ModuleElement<A, RA>, B extends Mod
     }
 
     private static boolean areArithmeticCompatible(Ring<?> domain, Ring<?> codomain) {
-        if (domain instanceof ArithmeticRing && codomain instanceof ArithmeticRing) {
+        if (domain instanceof NumberRing && codomain instanceof NumberRing) {
             return domain.compareTo(codomain) > 0;
         }
         return false;

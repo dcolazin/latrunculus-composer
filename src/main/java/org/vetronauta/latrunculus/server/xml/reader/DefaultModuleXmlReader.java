@@ -20,10 +20,6 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
-import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -32,8 +28,13 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeM
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
@@ -43,8 +44,6 @@ import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialR
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.impl.QRing;
-import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
@@ -152,7 +151,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         return new VectorModule<>(retrieveRing(element.getAttribute(TYPE_ATTR), mod), dimension);
     }
 
-    private static ArithmeticRing<?> retrieveRing(String moduleName, int mod) {
+    private static Ring<?> retrieveRing(String moduleName, int mod) {
         return null; //TODO
     }
 
@@ -220,16 +219,16 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         }
 
         Integer modulus = element.hasAttribute(MODULUS_ATTR) ? XMLReader.getIntAttribute(element, MODULUS_ATTR, 2, Integer.MAX_VALUE, 2) : null;
-        ArithmeticRing<?> arithmeticRing = detectRing(element);
+        Ring<?> arithmeticRing = detectRing(element);
         return makeArithmeticMultiModule(arithmeticRing, dimension);
     }
 
-    private ArithmeticRing<?> detectRing(Element element) {
+    private Ring<?> detectRing(Element element) {
         return null; //TODO
     }
 
-    private <N extends ArithmeticNumber<N>> Module makeArithmeticMultiModule(ArithmeticRing<N> arithmeticRing, int dimension) {
-        return new StringVectorModule(new StringRing(arithmeticRing), dimension);
+    private <X extends RingElement<X>> Module makeArithmeticMultiModule(Ring<X> ring, int dimension) {
+        return new StringVectorModule(new StringRing(ring), dimension);
     }
 
     private Module readStringRing(Element element, Class<?> clazz, XMLReader reader) {

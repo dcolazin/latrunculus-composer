@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
 import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
@@ -37,7 +36,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
@@ -172,7 +170,7 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             return null;
         }
 
-        ArithmeticRing<?> ring = ArithmeticParsingUtils.parseRing(element.getAttribute(VALUE_ATTR));
+        Ring<?> ring = ArithmeticParsingUtils.parseRing(element.getAttribute(VALUE_ATTR));
         try {
             return parseWithRing(ring, element.getAttribute(VALUES_ATTR).split(","));
         } catch (NumberFormatException e) {
@@ -181,8 +179,8 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
     }
 
-    private static <N extends ArithmeticNumber<N>> Vector<ArithmeticElement<N>> parseWithRing(ArithmeticRing<N> ring, String[] values) {
-        List<ArithmeticElement<N>> elements = new ArrayList<>(values.length);
+    private static <X extends RingElement<X>> Vector<X> parseWithRing(Ring<X> ring, String[] values) {
+        List<X> elements = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
             elements.add(ArithmeticParsingUtils.parse(ring, values[i]));
         }

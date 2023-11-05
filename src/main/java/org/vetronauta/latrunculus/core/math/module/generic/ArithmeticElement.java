@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
 import java.util.ArrayList;
@@ -162,7 +163,7 @@ public class ArithmeticElement<N extends ArithmeticNumber<N>> extends RingElemen
     }
 
     @Override
-    public ArithmeticRing<N> getRing() {
+    public Ring<ArithmeticElement<N>> getRing() {
         return null; //TODO soon to be deprecated
     }
 

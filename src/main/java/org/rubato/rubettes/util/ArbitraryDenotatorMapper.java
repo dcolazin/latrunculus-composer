@@ -10,7 +10,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
@@ -316,7 +315,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 			ModuleMorphism projection = new AffineProjection(multiModule.getRing(), multiModule.getUnitElement(index), multiModule.getRing().getZero());
 			return projection.compose(morphism);
 		}
-		if (morphism.getCodomain() instanceof ArithmeticRing) {
+		if (morphism.getCodomain() instanceof Ring) {
 			return morphism;
 		}
 		return null;

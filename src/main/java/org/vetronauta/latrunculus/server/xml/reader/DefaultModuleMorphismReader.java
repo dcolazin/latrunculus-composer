@@ -30,7 +30,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CastMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.CompositionMorphism;
@@ -192,7 +191,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
         return new AffineRingMorphism(getRing(element), a0, b0);
     }
 
-    private ArithmeticRing<?> getRing(Element element) {
+    private Ring<?> getRing(Element element) {
         return null; //TODO
     }
 
@@ -272,7 +271,7 @@ public class DefaultModuleMorphismReader implements LatrunculusXmlReader<ModuleM
             return null;
         }
 
-        ArithmeticRing<?> ring = getRing(element);
+        Ring<?> ring = getRing(element);
         return AffineFreeMorphism.make(ring, A0, new Vector(ring, b0));
     }
 

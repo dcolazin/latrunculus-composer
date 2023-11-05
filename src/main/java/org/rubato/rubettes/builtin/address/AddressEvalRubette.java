@@ -791,7 +791,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 return false;
             }
             else {
-                return FreeUtils.isUsualFree(module);
+                return FreeUtils.isArithmetic(module);
             }            
         }
         else {

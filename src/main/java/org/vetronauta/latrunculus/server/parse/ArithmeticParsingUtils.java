@@ -16,7 +16,6 @@ import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -150,7 +149,7 @@ public class ArithmeticParsingUtils {
         return new RealWrapper(Double.parseDouble(s));
     }
 
-    public static ArithmeticRing<?> parseRing(String s) {
+    public static Ring<?> parseRing(String s) {
         return null; //TODO
     }
 

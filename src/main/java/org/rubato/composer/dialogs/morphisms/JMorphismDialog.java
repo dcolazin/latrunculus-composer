@@ -86,7 +86,6 @@ import static org.rubato.composer.Utilities.installEnterKey;
 import static org.rubato.composer.Utilities.installEscapeKey;
 import static org.rubato.composer.Utilities.makeTitledBorder;
 import static org.vetronauta.latrunculus.core.math.module.FreeUtils.isArithmetic;
-import static org.vetronauta.latrunculus.core.math.module.FreeUtils.retrieveNumber;
 
 /**
  * ModuleMorphism creator dialog.
@@ -448,21 +447,19 @@ public class JMorphismDialog
                     items.add(SPLIT_TYPE);
                 }
                 if (isArithmetic(domain)) {
-                    ArithmeticNumber<?> domainNumber = retrieveNumber(domain);
                     if (domainRing.equals(CRing.ring) && domain.equals(codomain)) {
-                        items.add(CONJUGATION_TYPE); //TODO will not work before ArithmeticNumber refactoring
+                        items.add(CONJUGATION_TYPE);
                     }
                     if (isArithmetic(codomain)) {
-                        ArithmeticNumber<?> codomainNumber = retrieveNumber(codomain);
                         Ring<?> codomainRing = codomain.getRing();
                         if (domainRing.equals(RRing.ring) && codomainRing.equals(RRing.ring) &&
                                 domain.getDimension() == 2 && codomain.getDimension() == 2) {
-                            items.add(GEOMETRY_TYPE);  //TODO will not work before ArithmeticNumber refactoring
+                            items.add(GEOMETRY_TYPE);
                         }
                         if (domainRing.equals(ZRing.ring) &&
                                 codomain instanceof FreeModule &&
                                 codomainRing instanceof ZnRing && (domain.getDimension() == codomain.getDimension())) {
-                            items.add(MODULO_TYPE); //TODO will not work before ArithmeticNumber refactoring
+                            items.add(MODULO_TYPE);
                         }
                     }
                 }

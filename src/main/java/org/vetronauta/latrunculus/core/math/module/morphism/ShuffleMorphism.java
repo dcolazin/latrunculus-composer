@@ -21,9 +21,10 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
+import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 
 /**
@@ -77,31 +78,18 @@ public abstract class ShuffleMorphism {
     }
     
     
-    private static ModuleMorphism createShuffleMorphism(Ring ring, FreeModule domain, FreeModule codomain, int[] shuffle) {
-        if (ring instanceof ArithmeticRing) {
-            ArrayMatrix m = new ArrayMatrix(ring, codomain.getDimension(), domain.getDimension());
-            for (int i = 0; i < m.getRowCount(); i++) {
-                for (int j = 0; j < m.getColumnCount(); j++) {
-                    if (shuffle[j] == i) {
-                        m.set(i, j, ((ArithmeticRing<?>) ring).getOne());
-                    } else {
-                        m.set(i, j, ((ArithmeticRing<?>) ring).getZero());
-                    }
-                }
-            }
-            return AffineFreeMorphism.make(ring, m, Vector.zero(ring, codomain.getDimension()));
-        }
-        int dim = domain.getDimension();
-        int codim = codomain.getDimension();
-        GenericAffineMorphism morphism = GenericAffineMorphism.make(ring, dim, codim);
-        for (int i = 0; i < codim; i++) {
-            for (int j = 0; j < dim; j++) {
+    private static <X extends RingElement<X>> ModuleMorphism createShuffleMorphism(Ring<X> ring, FreeModule domain, FreeModule codomain, int[] shuffle) {
+        Matrix<X> m = new ArrayMatrix<>(ring, codomain.getDimension(), domain.getDimension());
+        for (int i = 0; i < m.getRowCount(); i++) {
+            for (int j = 0; j < m.getColumnCount(); j++) {
                 if (shuffle[j] == i) {
-                    morphism.setMatrix(i, j, ring.getOne());
+                    m.set(i, j, (ring.getOne()));
+                } else {
+                    m.set(i, j, ring.getZero());
                 }
             }
         }
-        return morphism;
+        return AffineFreeMorphism.make(ring, m, Vector.zero(ring, codomain.getDimension()));
     }
     
     

@@ -28,12 +28,12 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
@@ -231,7 +231,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
     }
 
     private static boolean areArithmeticCompatible(Ring<?> domain, Ring<?> codomain) {
-        if (domain instanceof ArithmeticRing && codomain instanceof ArithmeticRing) {
+        if (domain instanceof NumberRing && codomain instanceof NumberRing) {
             return domain.compareTo(codomain) < 0;
         }
         return false;
@@ -242,7 +242,7 @@ public abstract class EmbeddingMorphism<A extends ModuleElement<A, RA>, B extend
      * These are neither ring nor module homomorphisms.
      */
     private static <RX extends RingElement<RX>> EmbeddingMorphism<Modulus,RX, Modulus,RX> makeZnRingEmbeeding(final ZnRing domain, final Ring codomain) {
-        if (codomain instanceof ArithmeticRing) {
+        if (codomain instanceof NumberRing) {
             // Zn -> Z, Q, R, C
             return new ZnRingEmbeddingMorphism<>(domain, codomain);
         }

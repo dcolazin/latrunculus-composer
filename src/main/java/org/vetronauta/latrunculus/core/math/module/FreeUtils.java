@@ -21,15 +21,14 @@ package org.vetronauta.latrunculus.core.math.module;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ArithmeticNumber;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
+import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.impl.CRing;
+import org.vetronauta.latrunculus.core.math.module.impl.QRing;
+import org.vetronauta.latrunculus.core.math.module.impl.RRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
+import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 
 /**
  * @author vetronauta
@@ -37,30 +36,23 @@ import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FreeUtils {
 
-    //TODO complete refactoring of those methods
-
     //TODO temp method...
-    public static boolean isUsualFree(Module<?,?> module) {
-        return isArithmetic(module);
-    }
-
-    //TODO temp method...
-    public static boolean isUsualStringFree(Module<?,?> module) {
-        if (!isArithmetic(module)) {
-            return false;
+    public static boolean isStringArithmetic(Module<?,?> module) {
+        if (module instanceof VectorModule) {
+            return isStringArithmetic(module.getRing());
         }
-        ArithmeticNumber<?> number = retrieveNumber(module);
-        return number instanceof RingString;
+        return module instanceof StringRing && isArithmetic(((StringRing<?>) module).getFactorRing());
     }
 
     public static boolean isArithmetic(Module<?,?> module) {
-        return module instanceof ArithmeticRing || module instanceof VectorModule;
+        if (module instanceof VectorModule) {
+            return isArithmetic(module.getRing());
+        }
+        return module instanceof ZRing ||
+                module instanceof QRing ||
+                module instanceof RRing ||
+                module instanceof CRing ||
+                module instanceof ZnRing;
     }
 
-    public static ArithmeticNumber<?> retrieveNumber(Module<?,?> module) {
-        if (module instanceof ArithmeticRing) {
-            return ((ArithmeticRing<?>) module).getZero().getValue();
-        }
-        return ((ArithmeticRing<?>) module.getRing()).getZero().getValue();
-    }
 }

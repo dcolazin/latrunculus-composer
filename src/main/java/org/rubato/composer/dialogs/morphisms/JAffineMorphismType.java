@@ -26,13 +26,11 @@ import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticRing;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.GenericAffineMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineMultiMorphism;
@@ -166,8 +164,7 @@ class JAffineMorphismType
         Object source = e.getSource();
         if (source == graphButton) {            
             JAffineGraph graph = showGraphDialog();
-            if (graph != null && (ring instanceof ArithmeticRing)) {
-                    ArithmeticRing<?> arithmeticRing = (ArithmeticRing<?>) ring;
+            if (graph != null) {
                     Matrix matrix = graph.getMatrix();
                     Vector vector = graph.getVector();
                     for (int i = 0; i < 2; i++) {
@@ -177,7 +174,7 @@ class JAffineMorphismType
                         }
                         setVectorEntry(i, vector.getComponent(i).toString());
                     }
-                    container.setMorphism(AffineFreeMorphism.make(arithmeticRing, matrix, vector));
+                    container.setMorphism(AffineFreeMorphism.make(ring, matrix, vector));
 
             }
         }
@@ -216,28 +213,16 @@ class JAffineMorphismType
     
     
     private ModuleMorphism createMorphism() {
-        if (ring instanceof ArithmeticRing) {
-            ArrayMatrix matrix = new ArrayMatrix(ring, rows, cols);
-            List<ArithmeticElement> vector = new ArrayList<>(rows);
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    ArithmeticElement v = (ArithmeticElement)getValue(i, j);
-                    matrix.set(i,j,v);
-                }
-                vector.add((ArithmeticElement) getValue(i));
-            }
-            return AffineFreeMorphism.make(ring, matrix, new Vector<>(ring, vector));
-        }
-        GenericAffineMorphism m = GenericAffineMorphism.make(ring, cols, rows);
+        ArrayMatrix matrix = new ArrayMatrix(ring, rows, cols);
+        List<ArithmeticElement> vector = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                RingElement value = getValue(i, j);
-                m.setMatrix(i, j, value);
+                ArithmeticElement v = (ArithmeticElement)getValue(i, j);
+                matrix.set(i,j,v);
             }
-            RingElement v = getValue(i);
-            m.setVector(i, v);
+            vector.add((ArithmeticElement) getValue(i));
         }
-        return m;
+        return AffineFreeMorphism.make(ring, matrix, new Vector<>(ring, vector));
     }
     
 
