@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -412,17 +413,15 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
         if (n == 1) {
             return this;
         }
-        else if (n == 0) {
-            return PolynomialProperFreeElement.make(getRing(), new PolynomialElement[0]);
+        if (n <= 0) {
+            return new Vector<>(getRing(), new ArrayList<>());
         }
-        else {
-            PolynomialElement[] values = new PolynomialElement[n];
-            values[0] = this;
-            for (int i = 1; i < n; i++) {
-                values[i] = getRing().getZero();
-            }
-            return PolynomialProperFreeElement.make(getRing(), values);
+        List<PolynomialElement<R>> values = new ArrayList<>(n);
+        values.add(this);
+        for (int i = 1; i < n; i++) {
+            values.add(getRing().getZero());
         }
+        return new Vector<>(getRing(), values);
     }
     
     @Override

@@ -37,8 +37,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -86,9 +84,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
         if (PolynomialElement.class.isAssignableFrom(clazz)) {
             return readPolynomialElement(element, clazz, reader);
-        }
-        if (PolynomialProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readPolynomialProperFreeElement(element, clazz, reader);
         }
         if (ModularPolynomialElement.class.isAssignableFrom(clazz)) {
             return readModularPolynomialElement(element, clazz, reader);
@@ -451,48 +446,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             }
             PolynomialElement result = new PolynomialElement(indeterminate, elements);
             return result;
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
-    }
-
-    private ModuleElement readPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<PolynomialElement> elements = new LinkedList<PolynomialElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof PolynomialElement)) {
-                reader.setError("Children of type %%1 must be of type %%2.", getElementTypeName(clazz), "PolynomialElement");
-                return null;
-            }
-            elements.add((PolynomialElement)moduleElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof PolynomialElement)) {
-                    reader.setError("Children of type %%1 must be of type %%2.", getElementTypeName(clazz), "PolynomialElement");
-                    return null;
-                }
-                elements.add((PolynomialElement)moduleElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            PolynomialElement[] values = new PolynomialElement[elements.size()];
-            Iterator<PolynomialElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                values[i++] = iter.next();
-            }
-            PolynomialRing rng = values[0].getRing();
-            return PolynomialProperFreeElement.make(rng, values);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);

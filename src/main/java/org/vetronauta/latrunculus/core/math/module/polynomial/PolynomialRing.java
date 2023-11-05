@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -100,8 +101,8 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public PolynomialProperFreeModule<R> getNullModule() {
-        return (PolynomialProperFreeModule<R>) PolynomialProperFreeModule.make(this, 0);
+    public VectorModule<PolynomialElement<R>> getNullModule() {
+        return new VectorModule<>(this, 0);
     }
     
     @Override
@@ -124,7 +125,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
 
     @Override
     public FreeModule<?, PolynomialElement<R>> getFreeModule(int dimension) {
-        return PolynomialProperFreeModule.make(this, dimension);
+        return new VectorModule<>(this, dimension);
     }
 
     @Override

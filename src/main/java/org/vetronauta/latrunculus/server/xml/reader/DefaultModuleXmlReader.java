@@ -39,7 +39,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
@@ -106,9 +105,6 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         if (PolynomialRing.class.isAssignableFrom(clazz)) {
                 return readPolynomialRing(element, clazz, reader);
            }
-        if (PolynomialProperFreeModule.class.isAssignableFrom(clazz)) {
-            return readPolynomialProperFreeModule(element, clazz, reader);
-        }
         return null;
     }
 
@@ -398,32 +394,6 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE);
-            return null;
-        }
-    }
-
-    private Module readPolynomialProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        if (!(element.hasAttribute("indeterminate"))) {
-            reader.setError("Type %%1 must have attribute %%2.", getElementTypeName(clazz), INDETERMINATE_ATTR);
-        }
-        String indeterminate = element.getAttribute(INDETERMINATE_ATTR);
-        int dimension = XMLReader.getIntAttribute(element, DIMENSION_ATTR, 0, Integer.MAX_VALUE, 0);
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement != null) {
-            Module module = reader.parseModule(childElement);
-            if (module == null) {
-                return null;
-            }
-            if (!(module instanceof Ring)) {
-                reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(clazz), "Ring");
-                return null;
-            }
-            Ring rng = (Ring)module;
-            return PolynomialProperFreeModule.make(rng, indeterminate, dimension);
-        }
-        else {
-            reader.setError("Type %%1 must have a child of type %%2.", getElementTypeName(clazz), "Ring");
             return null;
         }
     }

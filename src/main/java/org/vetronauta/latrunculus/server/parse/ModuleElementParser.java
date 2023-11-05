@@ -51,8 +51,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.core.util.Wrapper;
 
@@ -98,9 +96,6 @@ public final class ModuleElementParser {
         }
         if (module instanceof ModularPolynomialRing) {
             return (E) parse((ModularPolynomialRing) module, s);
-        }
-        if (module instanceof PolynomialProperFreeModule) {
-            return (E) parse((PolynomialProperFreeModule) module, s);
         }
         if (module instanceof PolynomialRing) {
             return (E) parse((PolynomialRing) module, s);
@@ -271,22 +266,6 @@ public final class ModuleElementParser {
         else {
             return null;
         }
-    }
-
-    private static PolynomialProperFreeElement parse(PolynomialProperFreeModule module, String string) {
-        ArrayList<String> strings = internalParsePolyProper(TextUtils.unparenthesize(string));
-        if (strings.size() < module.getDimension()) {
-            return null;
-        }
-        PolynomialElement[] values = new PolynomialElement[module.getDimension()];
-        for (int i = 0; i < module.getDimension(); i++) {
-            String s = strings.get(i);
-            values[i] = (PolynomialElement) parseElement(module.getRing(), s);
-            if (values[i] == null) {
-                return null;
-            }
-        }
-        return (PolynomialProperFreeElement)PolynomialProperFreeElement.make(module.getRing(), values);
     }
 
     private static ArrayList<String> internalParsePolyProper(String s) {

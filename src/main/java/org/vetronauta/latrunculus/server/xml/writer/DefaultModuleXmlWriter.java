@@ -35,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
@@ -104,10 +103,6 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         }
         if (object instanceof PolynomialRing) {
             write((PolynomialRing) object, writer);
-            return;
-        }
-        if (object instanceof PolynomialProperFreeModule) {
-            write((PolynomialProperFreeModule) object, writer);
         }
     }
 
@@ -175,12 +170,6 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
     private void write(ModularPolynomialRing module, XMLWriter writer) {
         writer.openBlockWithType(MODULE, module.getElementTypeName());
         definitionXmlWriter.toXML(module.getModulus(), writer);
-        writer.closeBlock();
-    }
-
-    private void write(PolynomialProperFreeModule module, XMLWriter writer) {
-        writer.openBlockWithType(MODULE, module.getElementTypeName(), INDETERMINATE_ATTR, module.getIndeterminate(), DIMENSION_ATTR, module.getDimension());
-        definitionXmlWriter.toXML(module.getCoefficientRing(), writer);
         writer.closeBlock();
     }
 

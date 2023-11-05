@@ -27,9 +27,9 @@ import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 /**
  * @author vetronauta
  */
-public class ModularPolynomialModuleFactory {
+public class PolynomialModuleFactory {
 
-    public static <X extends RingElement<X>> FreeModule<?,ModularPolynomialElement<X>> make(PolynomialElement<X> modulus, int dimension) {
+    public static <X extends RingElement<X>> FreeModule<?,ModularPolynomialElement<X>> makeModular(PolynomialElement<X> modulus, int dimension) {
         Ring<ModularPolynomialElement<X>> ring = ModularPolynomialRing.make(modulus);
         if (ring == null) {
             return null;
@@ -39,6 +39,14 @@ public class ModularPolynomialModuleFactory {
             return ring;
         }
         return new VectorModule<>(ring, dimension);
+    }
+
+    public static <X extends RingElement<X>> FreeModule<?, PolynomialElement<X>> make(Ring<X> coefficientRing, String indeterminate, int dimension) {
+        Ring<PolynomialElement<X>> polynomialRing = PolynomialRing.make(coefficientRing, indeterminate);
+        if (dimension == 1) {
+            return polynomialRing;
+        }
+        return new VectorModule<>(polynomialRing, Math.max(dimension, 0));
     }
 
 }
