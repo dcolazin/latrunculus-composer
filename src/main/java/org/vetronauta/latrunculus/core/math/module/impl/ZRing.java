@@ -69,10 +69,6 @@ public final class ZRing extends Ring<ZInteger> implements NumberRing {
         return false;
     }
 
-    public FreeModule<?, ZInteger> getFreeModule(int dimension) {
-        return new VectorModule<>(ring, dimension);
-    }
-
     @Override
     protected boolean nonSingletonEquals(Object object) {
         return false;

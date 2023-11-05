@@ -34,10 +34,6 @@ public class PolynomialModuleFactory {
         if (ring == null) {
             return null;
         }
-        dimension = Math.max(dimension, 0);
-        if (dimension == 1) {
-            return ring;
-        }
         return new VectorModule<>(ring, dimension);
     }
 

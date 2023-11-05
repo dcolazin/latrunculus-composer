@@ -124,11 +124,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public FreeModule<?, PolynomialElement<R>> getFreeModule(int dimension) {
-        return new VectorModule<>(this, dimension);
-    }
-
-    @Override
     protected boolean nonSingletonEquals(Object object) {
         return object instanceof PolynomialRing &&
                 getCoefficientRing().equals(((PolynomialRing<?>) object).getCoefficientRing()) &&

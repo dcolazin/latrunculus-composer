@@ -69,11 +69,6 @@ public final class RRing extends Ring<Real> implements NumberRing {
     }
 
     @Override
-    public VectorModule<Real> getFreeModule(int dimension) {
-        return new VectorModule<>(this, dimension);
-    }
-
-    @Override
     protected boolean nonSingletonEquals(Object object) {
         return false;
     }

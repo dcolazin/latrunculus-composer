@@ -67,10 +67,6 @@ public final class QRing extends Ring<Rational> implements NumberRing {
         return true;
     }
 
-    public FreeModule<?,Rational> getFreeModule(int dimension) {
-        return new VectorModule<>(QRing.ring, dimension);
-    }
-
     @Override
     protected boolean nonSingletonEquals(Object object) {
         return false;

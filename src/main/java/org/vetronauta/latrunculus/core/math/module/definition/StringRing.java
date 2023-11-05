@@ -48,11 +48,6 @@ public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
     }
 
     @Override
-    public FreeModule<?, StringMap<R>> getFreeModule(int dimension) {
-        return null; //TODO after refactoring
-    }
-
-    @Override
     public StringMap<R> getZero() {
         return new StringMap<>(baseRing);
     }

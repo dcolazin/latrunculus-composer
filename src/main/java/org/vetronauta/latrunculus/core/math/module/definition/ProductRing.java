@@ -172,11 +172,6 @@ public final class ProductRing extends Ring<ProductElement> {
         return equals(element.getModule());
     }
 
-    
-    public FreeModule<?, ProductElement> getFreeModule(int dimension) {
-        return new VectorModule<>(this, dimension);
-    }
-
     @Override
     protected boolean nonSingletonEquals(Object object) {
         return false; //TODO this is wrong

@@ -142,7 +142,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return false;
     }
 
-    
+    @Override
     public FreeModule<?,ModularPolynomialElement<B>> getFreeModule(int dimension) {
         return PolynomialModuleFactory.makeModular(getModulus(), dimension);
     }

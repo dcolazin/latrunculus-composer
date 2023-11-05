@@ -72,7 +72,9 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
     /**
      * Returns the corresponding free module of dimension <code>dim</code>.
      */
-    public abstract FreeModule<?,R> getFreeModule(int dimension);
+    public FreeModule<?,R> getFreeModule(int dimension) {
+        return new VectorModule<>(this, dimension);
+    }
 
     /**
      * Here, the dimension of a ring as a module is 1.

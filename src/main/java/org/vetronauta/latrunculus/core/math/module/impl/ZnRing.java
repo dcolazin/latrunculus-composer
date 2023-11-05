@@ -79,11 +79,6 @@ public final class ZnRing extends Ring<Modulus> implements NumberRing {
     }
 
     @Override
-    public FreeModule<?, Modulus> getFreeModule(int dimension) {
-        return new VectorModule<>(this, dimension);
-    }
-
-    @Override
     protected boolean nonSingletonEquals(Object object) {
         return object instanceof ZnRing && modulus == ((ZnRing) object).getModulus();
     }
@@ -98,7 +93,6 @@ public final class ZnRing extends Ring<Modulus> implements NumberRing {
         }
         return super.compareTo(object);
     }
-
 
     @Override
     public Modulus createElement(List<? extends ModuleElement<?, ?>> elements) {

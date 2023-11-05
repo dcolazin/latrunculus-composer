@@ -69,11 +69,6 @@ public final class CRing extends Ring<Complex> implements NumberRing {
     }
 
     @Override
-    public FreeModule<?, Complex> getFreeModule(int dimension) {
-        return new VectorModule<>(CRing.ring, dimension);
-    }
-
-    @Override
     public Complex createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
