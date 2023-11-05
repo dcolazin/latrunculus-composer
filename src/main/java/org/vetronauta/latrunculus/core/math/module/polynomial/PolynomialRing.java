@@ -99,11 +99,6 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     public PolynomialElement<R> getOne() {
         return new PolynomialElement<>(this, getCoefficientRing().getOne());
     }
-
-    @Override
-    public VectorModule<PolynomialElement<R>> getNullModule() {
-        return new VectorModule<>(this, 0);
-    }
     
     @Override
     public boolean isField() {

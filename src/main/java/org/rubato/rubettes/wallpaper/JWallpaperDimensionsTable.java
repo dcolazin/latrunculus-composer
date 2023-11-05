@@ -75,19 +75,20 @@ public class JWallpaperDimensionsTable
         this.getColumnModel().getColumn(2).setCellEditor(new NaturalNumberCellEditor(this));
 		this.getColumnModel().getColumn(3).setCellEditor(new SimpleFormsCellEditor());
 		
-		this.morphisms = new ArrayList<ModuleMorphism>();
-		this.rangeFroms = new HashMap<ModuleMorphism, Integer>();
-		this.rangeTos = new HashMap<ModuleMorphism, Integer>();
-		this.coordinates = new HashMap<ModuleMorphism, List<List<Integer>>>();
+		this.morphisms = new ArrayList<>();
+		this.rangeFroms = new HashMap<>();
+		this.rangeTos = new HashMap<>();
+		this.coordinates = new HashMap<>();
 		
-		this.tempMorphisms = new ArrayList<ModuleMorphism>();
-		this.tempRangeFroms = new HashMap<ModuleMorphism, Integer>();
-		this.tempRangeTos = new HashMap<ModuleMorphism, Integer>();
-		this.tempCoordinates = new HashMap<ModuleMorphism, List<List<Integer>>>();
+		this.tempMorphisms = new ArrayList<>();
+		this.tempRangeFroms = new HashMap<>();
+		this.tempRangeTos = new HashMap<>();
+		this.tempCoordinates = new HashMap<>();
         
         addMouseWheelListener(this);
 	}
-    
+
+	@Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         JComponent c = (JComponent)super.prepareRenderer(renderer, row, column);
         c.setToolTipText(columnToolTip[column]);
@@ -98,7 +99,7 @@ public class JWallpaperDimensionsTable
         int row = getEditingRow();
         int col = getEditingColumn();
         TableCellEditor c = getCellEditor(row, col);
-        if (c != null && c instanceof NaturalNumberCellEditor) {
+        if (c instanceof NaturalNumberCellEditor) {
             if (e.getWheelRotation() < 0) {
                 ((NaturalNumberCellEditor)c).up();
             }
@@ -137,7 +138,7 @@ public class JWallpaperDimensionsTable
 	 */
 	public void addMorphism(ModuleMorphism morphism, int rangeFrom, int rangeTo, List<List<Integer>> coordinates) {
 		Object[] newRow = new Object[]
-		    {morphism, new Integer(rangeFrom).toString(), new Integer(rangeTo).toString(), coordinates};
+		    {morphism, Integer.toString(rangeFrom), Integer.toString(rangeTo), coordinates};
 		DefaultTableModel model = (DefaultTableModel)this.getModel();
 		model.addRow(newRow);
 	}
@@ -168,7 +169,7 @@ public class JWallpaperDimensionsTable
 	@SuppressWarnings("unchecked")
 	private boolean updateTempAttributes() {
 		DefaultTableModel model = (DefaultTableModel)this.getModel();
-		this.tempMorphisms = new ArrayList<ModuleMorphism>();
+		this.tempMorphisms = new ArrayList<>();
 		for (int i = 0; i < model.getRowCount(); i++) {
 			ModuleMorphism currentMorphism = (ModuleMorphism)model.getValueAt(i, 0);
 			//add morphism
@@ -247,7 +248,7 @@ public class JWallpaperDimensionsTable
 	 * @param morphism - a morphism
 	 */
 	public int getTempRangeFrom(ModuleMorphism morphism) {
-		return this.tempRangeFroms.get(morphism).intValue();
+		return this.tempRangeFroms.get(morphism);
 	}
 	
 	/**
@@ -256,7 +257,7 @@ public class JWallpaperDimensionsTable
 	 * @param morphism - a morphism
 	 */
 	public int getTempRangeTo(ModuleMorphism morphism) {
-		return this.tempRangeTos.get(morphism).intValue();
+		return this.tempRangeTos.get(morphism);
 	}
 	
 	/**
@@ -292,7 +293,7 @@ public class JWallpaperDimensionsTable
 	 * @param morphism - a morphism
 	 */
 	public int getRangeFrom(ModuleMorphism morphism) {
-		return this.rangeFroms.get(morphism).intValue();
+		return this.rangeFroms.get(morphism);
 	}
 	
 	/**
@@ -301,7 +302,7 @@ public class JWallpaperDimensionsTable
 	 * @param morphism - a morphism
 	 */
 	public int getRangeTo(ModuleMorphism morphism) {
-		return this.rangeTos.get(morphism).intValue();
+		return this.rangeTos.get(morphism);
 	}
 	
 	/**

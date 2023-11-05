@@ -126,7 +126,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 		double currentPitch = this.root;
 		for (int i = 0; currentPitch <= this.MAX_PITCH; i++) {
 			if (currentPitch >= this.MIN_PITCH) {
-				pitches.add(new Double(currentPitch));
+				pitches.add(currentPitch);
 			}
 			currentPitch += this.intervals[i%this.numberOfNotes];
 		}
@@ -137,7 +137,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 		double currentPitch = this.root-this.intervals[lastIndex];
 		for (int i = lastIndex-1; currentPitch >= this.MIN_PITCH; i--) {
 			if (currentPitch <= this.MAX_PITCH) {
-				pitches.add(new Double(currentPitch));
+				pitches.add(currentPitch);
 			}
 			int currentIndex = i%this.numberOfNotes;
 			if (currentIndex < 0) {
@@ -173,7 +173,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
             JPanel scalePanel = new JPanel();
             scalePanel.setLayout(new GridLayout(2, 1));
             JPanel rootPanel = this.createTitledBorderPanel("Root note (MIDI pitch, c'=60)");
-            this.rootTextField = new JTextField(new Double(this.root).toString(), 5);
+            this.rootTextField = new JTextField(Double.toString(this.root), 5);
             rootPanel.add(this.rootTextField);
             scalePanel.add(rootPanel);
             this.presetsPanel = this.createTitledBorderPanel("Preset or custom scale");
@@ -244,7 +244,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     	//"custom" also returns null, therefore no update
     	if (newIntervals != null) {
     		for (int i = 0; i < newIntervals.length; i++) {
-    			this.intervalTextFields[i].setText(new Double(newIntervals[i]).toString());
+    			this.intervalTextFields[i].setText(Double.toString(newIntervals[i]));
     		}
     	}
     }
@@ -283,9 +283,9 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     
     public void revertProperties() {
     	this.numberOfNotesSlider.setValue(this.numberOfNotes);
-    	this.rootTextField.setText(new Double(this.root).toString());
+    	this.rootTextField.setText(Double.toString(this.root));
     	for (int i = 0; i < this.numberOfNotes; i++) {
-    		this.intervalTextFields[i].setText(new Double(this.intervals[i]).toString());
+    		this.intervalTextFields[i].setText(Double.toString(this.intervals[i]));
     	}
     	//odd trick for obtaining loaded presets...
     	this.updatePresetsComboBoxAndIntervalsPanel(this.numberOfNotes);
@@ -294,7 +294,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     }
     
     protected void setTempRootNote(double root) {
-    	this.rootTextField.setText(new Double(root).toString());
+    	this.rootTextField.setText(Double.toString(root));
     }
     
     protected void setTempPreset(int preset) {

@@ -53,11 +53,6 @@ public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
     }
 
     @Override
-    public Module<?, StringMap<R>> getNullModule() {
-        return null; //TODO after refactoring
-    }
-
-    @Override
     public StringRing<R> getComponentModule(int i) {
         return this;
     }

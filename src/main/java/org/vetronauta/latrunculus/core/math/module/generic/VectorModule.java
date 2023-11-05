@@ -89,11 +89,6 @@ public class VectorModule<R extends RingElement<R>> implements FreeModule<Vector
     }
 
     @Override
-    public VectorModule<R> getNullModule() {
-        return new VectorModule<>(ring, 0); //TODO repository?
-    }
-
-    @Override
     public boolean isNullModule() {
         return dimension == 0;
     }

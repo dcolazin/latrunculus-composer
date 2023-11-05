@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.IdentityMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -54,7 +55,9 @@ public interface Module<E extends ModuleElement<E,R>, R extends RingElement<R>> 
     /**
      * Returns the null-module corresponding to this module.
      */
-    Module<?,R> getNullModule();
+    default Module<?,R> getNullModule() {
+        return new VectorModule<>(getRing(), 0);
+    }
     
     /**
      * Returns true iff this is a null-module.

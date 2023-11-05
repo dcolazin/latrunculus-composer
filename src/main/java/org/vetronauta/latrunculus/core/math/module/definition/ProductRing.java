@@ -137,12 +137,6 @@ public final class ProductRing extends Ring<ProductElement> {
         }
         return ProductElement.make(val);
     }
-
-
-    public FreeModule<?, ProductElement> getNullModule() {
-        return new VectorModule<>(this, 0);
-    }
-    
     
     public int getFactorCount() {
         return factors.length;

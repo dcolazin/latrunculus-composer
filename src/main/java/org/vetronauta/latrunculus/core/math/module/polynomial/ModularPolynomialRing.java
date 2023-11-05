@@ -123,10 +123,6 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return new ModularPolynomialElement<>(this, getCoefficientRing().getOne());
     }
 
-    public FreeModule<?,ModularPolynomialElement<B>> getNullModule() {
-        return new VectorModule<>(this, 0);
-    }
-
     public boolean isField() {
         return false;
     }

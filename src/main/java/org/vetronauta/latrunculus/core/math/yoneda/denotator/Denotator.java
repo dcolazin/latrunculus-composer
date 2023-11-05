@@ -177,8 +177,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @return null if denotator could not be retrieved along the path
      * @throws RubatoException
      */
-    public final Denotator get(int[] path)
-            throws RubatoException {
+    public final Denotator get(int[] path) throws RubatoException {
         return get(path, 0);
     }
 
