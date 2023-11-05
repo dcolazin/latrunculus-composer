@@ -1,10 +1,9 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 

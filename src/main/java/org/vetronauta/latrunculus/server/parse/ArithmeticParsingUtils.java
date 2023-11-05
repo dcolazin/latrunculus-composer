@@ -4,12 +4,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.ModulusWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
@@ -43,9 +41,7 @@ public class ArithmeticParsingUtils {
             //return parseComplex(s);
         }
         if (parsingClass.equals(ZInteger.class)) {
-            //TODO after complete refactoring of ArithmeticNumber
-            throw new UnsupportedOperationException("...");
-            //return parseArithmeticInteger(s);
+            return parseZInteger(s);
         }
         if (parsingClass.equals(Rational.class)) {
             //TODO after complete refactoring of ArithmeticNumber
@@ -53,9 +49,7 @@ public class ArithmeticParsingUtils {
             //return parseRational(s);
         }
         if (parsingClass.equals(Real.class)) {
-            //TODO after complete refactoring of ArithmeticNumber
-            throw new UnsupportedOperationException("...");
-            //return parseArithmeticDouble(s);
+            return parseReal(s);
         }
         throw new NumberFormatException(String.format("parsing class %s is not supported", parsingClass));
     }
@@ -66,16 +60,16 @@ public class ArithmeticParsingUtils {
 
     private static Class<?> detectParsingClass(Ring<?> ring) {
         if (ring instanceof ZRing) {
-            return IntegerWrapper.class;
+            return ZInteger.class;
         }
         if (ring instanceof ZnRing) {
-            return ModulusWrapper.class;
+            return Modulus.class;
         }
         if (ring instanceof QRing) {
             return RationalWrapper.class;
         }
         if (ring instanceof RRing) {
-            return RealWrapper.class;
+            return Real.class;
         }
         if (ring instanceof CRing) {
             return ComplexWrapper.class;
@@ -115,8 +109,8 @@ public class ArithmeticParsingUtils {
         }
     }
 
-    public static IntegerWrapper parseArithmeticInteger(String s) {
-        return new IntegerWrapper(Integer.parseInt(s));
+    public static ZInteger parseZInteger(String s) {
+        return new ZInteger(Integer.parseInt(s));
     }
 
     /**
@@ -145,8 +139,8 @@ public class ArithmeticParsingUtils {
         }
     }
 
-    public static RealWrapper parseArithmeticDouble(String s) {
-        return new RealWrapper(Double.parseDouble(s));
+    public static Real parseReal(String s) {
+        return new Real(Double.parseDouble(s));
     }
 
     public static Ring<?> parseRing(String s) {

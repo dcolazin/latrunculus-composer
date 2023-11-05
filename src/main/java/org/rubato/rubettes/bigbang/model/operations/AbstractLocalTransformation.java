@@ -1,18 +1,17 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
+import org.rubato.rubettes.bigbang.model.BigBangModel;
+import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.server.xml.XMLReader;
+import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.rubato.rubettes.bigbang.model.BigBangModel;
-import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
 
 public abstract class AbstractLocalTransformation extends AbstractTransformation {
 	

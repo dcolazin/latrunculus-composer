@@ -1,24 +1,6 @@
 package org.rubato.rubettes.bigbang.model;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import org.rubato.rubettes.bigbang.model.undo.AddOrInsertOperationEdit;
-import org.rubato.rubettes.bigbang.model.undo.RemoveOperationEdit;
-import org.rubato.rubettes.bigbang.model.undo.UndoManager;
-import org.rubato.rubettes.bigbang.model.undo.AbstractUndoableEdit;
-
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangDenotatorManager;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationProperties;
@@ -35,20 +17,35 @@ import org.rubato.rubettes.bigbang.model.operations.BuildSatellitesOperation;
 import org.rubato.rubettes.bigbang.model.operations.DeleteObjectsOperation;
 import org.rubato.rubettes.bigbang.model.operations.EndWallpaperOperation;
 import org.rubato.rubettes.bigbang.model.operations.FlattenOperation;
+import org.rubato.rubettes.bigbang.model.operations.InputCompositionOperation;
 import org.rubato.rubettes.bigbang.model.operations.ReflectionTransformation;
 import org.rubato.rubettes.bigbang.model.operations.RotationTransformation;
 import org.rubato.rubettes.bigbang.model.operations.ScalingTransformation;
-import org.rubato.rubettes.bigbang.model.operations.InputCompositionOperation;
 import org.rubato.rubettes.bigbang.model.operations.ShapingOperation;
 import org.rubato.rubettes.bigbang.model.operations.ShearingTransformation;
 import org.rubato.rubettes.bigbang.model.operations.TranslationTransformation;
+import org.rubato.rubettes.bigbang.model.undo.AbstractUndoableEdit;
+import org.rubato.rubettes.bigbang.model.undo.AddOrInsertOperationEdit;
+import org.rubato.rubettes.bigbang.model.undo.RemoveOperationEdit;
+import org.rubato.rubettes.bigbang.model.undo.UndoManager;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.PerformanceCheck;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 public class BigBangModel extends Model {
 	

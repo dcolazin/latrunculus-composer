@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rubato.base.Repository;
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -246,7 +245,7 @@ class WallpaperRubetteTest {
 	
 	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
-		assertEquals(new RealWrapper(onsetValue), ((Real) factor.getElement(new int[]{0, 0})).getValue());
+		assertEquals(new Real(onsetValue), factor.getElement(new int[]{0, 0}));
 		assertEquals(new Rational(pitchValue), (factor.getElement(new int[]{1, 0})));
 	}
 	

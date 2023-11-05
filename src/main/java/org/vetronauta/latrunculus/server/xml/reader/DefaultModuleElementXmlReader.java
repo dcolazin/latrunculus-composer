@@ -20,10 +20,10 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -262,24 +262,18 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 next = XMLReader.getNextSibling(next, WORD);
             }
             //TODO actually read proper ArithmeticNumber
-            IntegerWrapper[] factorArray = new IntegerWrapper[factors.size()];
+            ZInteger[] factorArray = new ZInteger[factors.size()];
             String[] wordArray = new String[factors.size()];
             int j = 0;
             Iterator<Integer> fiter = factors.iterator();
             Iterator<String> witer = words.iterator();
             while (fiter.hasNext()) {
-                factorArray[j] = new IntegerWrapper(fiter.next());
+                factorArray[j] = new ZInteger(fiter.next());
                 wordArray[j] = witer.next();
                 j++;
             }
+            return new StringMap<>(wordArray, factorArray);
 
-            throw new UnsupportedOperationException("...");
-            //TODO fix after RingString refactoring
-            /*
-            RingString<?> zstring = new RingString<>(wordArray, factorArray);
-            return new ArithmeticStringElement(StringRingRepository.getRing(ZRing.ring), zstring);
-
-             */
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), WORD);
