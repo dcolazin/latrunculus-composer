@@ -71,8 +71,9 @@ public final class QRing extends Ring<Rational> implements NumberRing {
         return new VectorModule<>(QRing.ring, dimension);
     }
 
-    public boolean equals(Object object) {
-        return this == object;
+    @Override
+    protected boolean nonSingletonEquals(Object object) {
+        return false;
     }
 
     @Override
@@ -118,16 +119,14 @@ public final class QRing extends Ring<Rational> implements NumberRing {
         return "QRing";
     }
 
-    public int hashCode() {
-        return basicHash;
+    @Override
+    protected int nonSingletonHashCode() {
+        return 1;
     }
-    
-    
+
+
     public int getNumberRingOrder() {
         return 200;
     }
-
-
-    private static final int basicHash = "QRing".hashCode();
 
 }

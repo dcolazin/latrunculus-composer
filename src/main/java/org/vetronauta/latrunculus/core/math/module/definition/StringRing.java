@@ -108,12 +108,12 @@ public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof StringRing && baseRing.equals(((StringRing<?>) obj).baseRing);
+    protected boolean nonSingletonEquals(Object object) {
+        return object instanceof StringRing && baseRing.equals(((StringRing<?>) object).baseRing);
     }
 
     @Override
-    public int hashCode() {
+    protected int nonSingletonHashCode() {
         return baseRing.hashCode();
     }
 

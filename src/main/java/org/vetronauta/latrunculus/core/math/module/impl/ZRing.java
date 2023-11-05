@@ -74,8 +74,8 @@ public final class ZRing extends Ring<ZInteger> implements NumberRing {
     }
 
     @Override
-    public boolean equals(Object object) {
-        return this == object;
+    protected boolean nonSingletonEquals(Object object) {
+        return false;
     }
 
 
@@ -122,14 +122,13 @@ public final class ZRing extends Ring<ZInteger> implements NumberRing {
         return "ZRing";
     }
 
-    public int hashCode() {
-        return basicHash;
+    @Override
+    protected int nonSingletonHashCode() {
+        return 1;
     }
 
     public int getNumberRingOrder() {
         return 100;
     }
-
-    private static final int basicHash = "ZRing".hashCode();
 
 }

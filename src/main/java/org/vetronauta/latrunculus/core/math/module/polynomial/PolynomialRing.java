@@ -128,16 +128,10 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object instanceof PolynomialRing) {
-            PolynomialRing<?> r = (PolynomialRing<?>)object;
-            return (getCoefficientRing().equals(r.getCoefficientRing()) &&
-                        getIndeterminate().equals(r.getIndeterminate()));
-        }
-        return false;
+    protected boolean nonSingletonEquals(Object object) {
+        return object instanceof PolynomialRing &&
+                getCoefficientRing().equals(((PolynomialRing<?>) object).getCoefficientRing()) &&
+                getIndeterminate().equals(((PolynomialRing<?>) object).getIndeterminate());
     }
 
     @Override
@@ -242,13 +236,8 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public int hashCode() {
-        int hashCode = basicHash;
-        hashCode ^= coefficientRing.hashCode();
-        hashCode ^= indeterminate.hashCode();
-        return hashCode;
+    protected int nonSingletonHashCode() {
+        return coefficientRing.hashCode() ^ indeterminate.hashCode();
     }
-
-    private static final int basicHash = "PolynomialRing".hashCode();
 
 }

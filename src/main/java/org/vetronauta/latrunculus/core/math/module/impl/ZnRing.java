@@ -39,6 +39,8 @@ import java.util.List;
  */
 public final class ZnRing extends Ring<Modulus> implements NumberRing {
 
+    private final int modulus;
+
     private ZnRing(int modulus) {
         this.modulus = modulus;
     }
@@ -81,16 +83,9 @@ public final class ZnRing extends Ring<Modulus> implements NumberRing {
         return new VectorModule<>(this, dimension);
     }
 
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        else if (object instanceof ZnRing) {
-            return ((ZnRing)object).getModulus() == modulus;
-        }
-        else {
-            return false;
-        }
+    @Override
+    protected boolean nonSingletonEquals(Object object) {
+        return object instanceof ZnRing && modulus == ((ZnRing) object).getModulus();
     }
 
     @Override
@@ -144,14 +139,10 @@ public final class ZnRing extends Ring<Modulus> implements NumberRing {
         return "ZnRing";
     }
 
-    public int hashCode() {
-        return 37*basicHash + modulus;
+    @Override
+    protected int nonSingletonHashCode() {
+        return modulus;
     }
-
-
-    private static final int basicHash = "ZnRing".hashCode();
-
-    private int     modulus;
 
     @Override
     public int getNumberRingOrder() {

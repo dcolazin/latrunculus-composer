@@ -146,21 +146,12 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return ModularPolynomialProperFreeModule.make(getModulus(), dimension);
     }
 
-    
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        else if (object instanceof ModularPolynomialRing) {
-            ModularPolynomialRing r = (ModularPolynomialRing)object;
-            return getModulus().equals(r.getModulus());
-        }
-        else {
-            return false;
-        }
+    @Override
+    protected boolean nonSingletonEquals(Object object) {
+        return object instanceof ModularPolynomialRing && getModulus().equals(((ModularPolynomialRing<?>) object).getModulus());
     }
 
-    
+
     public int compareTo(Module object) {
         if (object instanceof ModularPolynomialRing) {
             ModularPolynomialRing p = (ModularPolynomialRing)object;
@@ -260,14 +251,9 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return "ModularPolynomialRing";
     }
 
-    
-    public int hashCode() {
-        int hashCode = basicHash;
-        hashCode ^= modulus.hashCode();
-        return hashCode;
+    @Override
+    protected int nonSingletonHashCode() {
+        return modulus.hashCode();
     }
-
-    
-    private static final int basicHash = "ModularPolynomialRing".hashCode();
 
 }

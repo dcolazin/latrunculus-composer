@@ -74,8 +74,8 @@ public final class RRing extends Ring<Real> implements NumberRing {
     }
 
     @Override
-    public boolean equals(Object object) {
-        return this == object;
+    protected boolean nonSingletonEquals(Object object) {
+        return false;
     }
 
     @Override
@@ -125,15 +125,13 @@ public final class RRing extends Ring<Real> implements NumberRing {
     }
 
     @Override
-    public int hashCode() {
-        return basicHash;
+    protected int nonSingletonHashCode() {
+        return 1;
     }
-    
+
     @Override
     public int getNumberRingOrder() {
         return 300;
     }
-
-    private static final int basicHash = "RRing".hashCode();
 
 }

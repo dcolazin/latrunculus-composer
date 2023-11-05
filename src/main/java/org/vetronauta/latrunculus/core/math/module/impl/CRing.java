@@ -74,11 +74,6 @@ public final class CRing extends Ring<Complex> implements NumberRing {
     }
 
     @Override
-    public boolean equals(Object object) {
-        return (this == object);
-    }
-
-    @Override
     public Complex createElement(List<? extends ModuleElement<?, ?>> elements) {
         if (!elements.isEmpty()) {
             return this.cast(elements.get(0));
@@ -110,8 +105,9 @@ public final class CRing extends Ring<Complex> implements NumberRing {
         return "CRing";
     }
 
-    public int hashCode() {
-        return basicHash;
+    @Override
+    protected int nonSingletonHashCode() {
+        return 1;
     }
 
     @Override
@@ -124,12 +120,14 @@ public final class CRing extends Ring<Complex> implements NumberRing {
         }
         return super.compareTo(object);
     }
-    
+
+    @Override
+    protected boolean nonSingletonEquals(Object object) {
+        return false;
+    }
+
     public int getNumberRingOrder() {
         return 400;
     }
-
-
-    private static final int basicHash = "CRing".hashCode();
 
 }

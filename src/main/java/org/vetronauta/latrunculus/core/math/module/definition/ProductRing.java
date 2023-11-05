@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Products over rings.
@@ -174,12 +175,12 @@ public final class ProductRing extends Ring<ProductElement> {
         return ProductProperFreeModule.make(this, dimension);
     }
 
-    
-    public boolean equals(Object object) {
-        return this == object;
+    @Override
+    protected boolean nonSingletonEquals(Object object) {
+        return false; //TODO this is wrong
     }
 
-    
+
     public int compareTo(Module object) {
         if (this == object) {
             return 0;
@@ -281,17 +282,13 @@ public final class ProductRing extends Ring<ProductElement> {
         return "ProductRing";
     }
 
-    public int hashCode() {
-        if (hashcode == 0) {
-            hashcode = basicHash;
-            for (int i = 0; i < getFactorCount(); i++) {
-                hashcode = 7*hashcode+getFactor(i).hashCode();
-            }
-        }
-        return hashcode;
+    @Override
+    protected int nonSingletonHashCode() {
+        return Arrays.stream(factors)
+                .mapToInt(Objects::hashCode)
+                .reduce(1, (x, y) -> 7 * x + y);
     }
 
-    
     private ProductRing(Ring[] factors) {
         this.factors = factors;
     }
