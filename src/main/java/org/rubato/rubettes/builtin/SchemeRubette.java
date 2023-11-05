@@ -35,7 +35,6 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.rubato.scheme.*;
 import org.vetronauta.latrunculus.core.scheme.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
 import org.vetronauta.latrunculus.core.scheme.Parser;

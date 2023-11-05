@@ -19,7 +19,10 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
+import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 
 /**
  * The class of rational values.
@@ -77,7 +80,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber add(SComplex n) {
-        return SComplex.make(n.getComplex().sum(q.doubleValue()));
+        return SComplex.make(n.getComplex().sum(new Complex(q.doubleValue())));
     }
     
     public SNumber subtract(SNumber n) {
@@ -97,7 +100,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber subtractFrom(SComplex n) {
-        return SComplex.make(n.getComplex().difference(q.doubleValue()));
+        return SComplex.make(n.getComplex().difference(new Complex(q.doubleValue())));
     }
 
     public SNumber multiply(SNumber n) {
@@ -117,7 +120,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber multiply(SComplex n) {
-        return SComplex.make(n.getComplex().product(q.doubleValue()));
+        return SComplex.make(n.getComplex().product(new Complex(q.doubleValue())));
     }
 
     public SNumber divide(SNumber n) {
@@ -137,7 +140,11 @@ public final class SRational extends SNumber {
     }
     
     public SNumber divideInto(SComplex n) {
-        return SComplex.make(n.getComplex().quotient(q.doubleValue()));
+        try {
+            return SComplex.make(n.getComplex().quotient(new Complex(q.doubleValue())));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
     
     public SNumber neg() {

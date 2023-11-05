@@ -21,8 +21,8 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -753,7 +754,7 @@ abstract class RubatoPrimitives {
     
     protected static SExpr moduleElementToSExpr(ModuleElement element) {
         if (element instanceof Complex) {
-            return new SComplex(new ComplexWrapper(((Complex) element).getReal(), ((Complex) element).getImag()));
+            return new SComplex(new Complex(((Complex) element).getReal(), ((Complex) element).getImag()));
         }
         if (element instanceof Real) {
             return SReal.make(((Real) element).doubleValue());
@@ -796,25 +797,21 @@ abstract class RubatoPrimitives {
             return new Real((((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
-            ComplexWrapper wrapper = ((SComplex)sexpr).getComplex();
-            return new Complex(wrapper.getReal(), wrapper.getImag());
+            return ((SComplex)sexpr).getComplex();
         }
         else if (sexpr.isBoolean()) {
             return new ZInteger(sexpr == SBoolean.TRUE ? 1 : 0);
         }
-        //TODO fix after ArithmeticStringElement
-        /*
         else if (sexpr.isChar()) {
-            return new ArithmeticStringElement<>(ZRing.ring, Character.toString(((SChar)sexpr).getChar()));
+            return new StringMap<>(ZRing.ring, Character.toString(((SChar)sexpr).getChar()));
         }
         else if (sexpr.isString()) {
-            return new ArithmeticStringElement<>(ZRing.ring, ((SString)sexpr).getString());
+            return new StringMap<>(ZRing.ring, ((SString)sexpr).getString());
         }
         else if (sexpr.isSymbol()) {
-            return new ArithmeticStringElement<>(ZRing.ring, (sexpr).toString());
+            return new StringMap<>(ZRing.ring, (sexpr).toString());
         }
 
-         */
         else if (sexpr.isVector()) {
             SExpr[] v = ((SVector)sexpr).getArray();
             if (v.length == 0) {
@@ -824,7 +821,7 @@ abstract class RubatoPrimitives {
                 return sexprToModuleElement(v[0]);
             }
             else {
-                List<ModuleElement>elementList = new LinkedList<ModuleElement>();
+                List<ModuleElement>elementList = new LinkedList<>();
                 ModuleElement first = sexprToModuleElement(v[0]); 
                 if (first != null) {
                     Module module = first.getModule();

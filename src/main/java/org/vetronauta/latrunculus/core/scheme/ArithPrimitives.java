@@ -21,9 +21,10 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
+import org.vetronauta.latrunculus.core.math.arith.Trigonometry;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 
 
 /**
@@ -1248,7 +1249,7 @@ abstract class ArithPrimitives {
                 SExpr b = car(cdr(args));
                 if ((a.isInteger() || a.isRational() || a.isReal()) &&
                     (b.isInteger() || b.isRational() || b.isReal())) {
-                    return new SComplex(new ComplexWrapper(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
+                    return new SComplex(new Complex(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
                 }
                 else {
                     eval.addError(getName()+": expected arguments of type real, but got %1 and %2", a, b);
@@ -1270,7 +1271,7 @@ abstract class ArithPrimitives {
                 SExpr b = car(cdr(args));
                 if ((a.isInteger() || a.isRational() || a.isReal()) &&
                     (b.isInteger() || b.isRational() || b.isReal())) {
-                    return new SComplex(ComplexWrapper.fromPolar(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
+                    return new SComplex(Trigonometry.fromPolar(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
                 }
                 else {
                     eval.addError(getName()+": expected arguments of type real, but got %1 and %2", a, b);

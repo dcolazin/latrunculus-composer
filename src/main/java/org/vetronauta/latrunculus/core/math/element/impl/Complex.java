@@ -163,12 +163,8 @@ public class Complex extends RingElement<Complex> implements Arithmetic {
         return new Complex(real, imag);
     }
 
-    private double norm() {
+    public double norm() {
         return real * real + imag * imag;
-    }
-
-    public double abs() {
-        return Math.sqrt(norm());
     }
 
     @Override

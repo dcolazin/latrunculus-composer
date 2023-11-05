@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin.address;
 
+import org.vetronauta.latrunculus.core.math.arith.Trigonometry;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -90,7 +91,7 @@ class JGraphSelect
             config = new RConfiguration();
             for (ModuleElement m : elements) {
                 List<Complex> p = ((Vector<Complex>) m).getValue();
-                config.addPoint(p.get(0).abs(), p.get(1).abs());
+                config.addPoint(Trigonometry.abs(p.get(0)), Trigonometry.abs(p.get(1)));
             }
         }
         else {

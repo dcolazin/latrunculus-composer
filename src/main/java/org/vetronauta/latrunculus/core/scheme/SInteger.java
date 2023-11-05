@@ -19,7 +19,10 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
+import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
 import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 
 /**
  * The class of integer values.
@@ -72,7 +75,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber add(SComplex n) {
-        return SComplex.make(n.getComplex().sum(i));
+        return SComplex.make(n.getComplex().sum(new Complex(i)));
     }
     
     public SNumber subtract(SNumber n) {
@@ -93,7 +96,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber subtractFrom(SComplex n) {
-        return SComplex.make(n.getComplex().sum(i));
+        return SComplex.make(n.getComplex().sum(new Complex(i)));
     }
 
     public SNumber multiply(SNumber n) {
@@ -113,7 +116,7 @@ public final class SInteger extends SNumber {
     }
 
     public SNumber multiply(SComplex n) {
-        return SComplex.make(n.getComplex().product(i));
+        return SComplex.make(n.getComplex().product(new Complex(i)));
     }
 
     public SNumber divide(SNumber n) {
@@ -149,7 +152,11 @@ public final class SInteger extends SNumber {
     
     public SNumber divideInto(SComplex n) {
         if (i != 0) {
-            return SComplex.make(n.getComplex().quotient(i));
+            try {
+                return SComplex.make(n.getComplex().quotient(new Complex(i)));
+            } catch (DivisionException e) {
+                throw new LatrunculusRuntimeException(e);
+            }
         }
         else {
             throw new ArithmeticException("division by zero");

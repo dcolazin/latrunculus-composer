@@ -19,7 +19,10 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
+import org.vetronauta.latrunculus.core.exception.DivisionException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusRuntimeException;
+import org.vetronauta.latrunculus.core.math.arith.Trigonometry;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 
 /**
  * The class of complex number values.
@@ -32,19 +35,17 @@ public final class SComplex extends SNumber {
      * Creates a Scheme value from the complex number <code>c</code>.
      * If <code>c</code> is a real, an SReal instance is created.
      */
-    public static SNumber make(ComplexWrapper c) {
-        if (c.isReal()) {
+    public static SNumber make(Complex c) {
+        if (c.getImag() == 0.0) {
             return SReal.make(c.getReal());
         }
-        else {
-            return new SComplex(c);
-        }
+        return new SComplex(c);
     }
 
     /**
      * Creates a Scheme complex number value from <code>c</code>.
      */
-    public SComplex(ComplexWrapper c) {
+    public SComplex(Complex c) {
         this.c = c;
     }    
 
@@ -73,15 +74,15 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber add(SInteger n) {
-        return new SComplex(c.sum(new ComplexWrapper(n.getInt())));
+        return new SComplex(c.sum(new Complex(n.getInt())));
     }
 
     public SNumber add(SRational n) {
-        return new SComplex(c.sum(new ComplexWrapper(n.getRational().doubleValue())));
+        return new SComplex(c.sum(new Complex(n.getRational().doubleValue())));
     }
 
     public SNumber add(SReal n) {
-        return new SComplex(c.sum(new ComplexWrapper(n.getDouble())));
+        return new SComplex(c.sum(new Complex(n.getDouble())));
     }
 
     public SNumber add(SComplex n) {
@@ -93,15 +94,15 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber subtractFrom(SInteger n) {
-        return new SComplex(c.difference(new ComplexWrapper(n.getInt())));
+        return new SComplex(c.difference(new Complex(n.getInt())));
     }
 
     public SNumber subtractFrom(SRational n) {
-        return new SComplex(c.difference(new ComplexWrapper(n.getRational().doubleValue())));
+        return new SComplex(c.difference(new Complex(n.getRational().doubleValue())));
     }
 
     public SNumber subtractFrom(SReal n) {
-        return SComplex.make(c.difference(new ComplexWrapper(n.getDouble())));
+        return SComplex.make(c.difference(new Complex(n.getDouble())));
     }
 
     public SNumber subtractFrom(SComplex n) {
@@ -113,15 +114,15 @@ public final class SComplex extends SNumber {
     }
     
     public SNumber multiply(SInteger n) {
-        return SComplex.make(c.product(n.getInt()));
+        return SComplex.make(c.product(new Complex(n.getInt())));
     }
 
     public SNumber multiply(SRational n) {
-        return SComplex.make(c.product(n.getRational().doubleValue()));
+        return SComplex.make(c.product(new Complex(n.getRational().doubleValue())));
     }
 
     public SNumber multiply(SReal n) {
-        return SComplex.make(c.product(n.getDouble()));
+        return SComplex.make(c.product(new Complex(n.getDouble())));
     }
 
     public SNumber multiply(SComplex n) {
@@ -133,84 +134,100 @@ public final class SComplex extends SNumber {
     }
     
     public SNumber divideInto(SInteger n) {
-        return SComplex.make(c.inverse().product(n.getInt()));
+        return SComplex.make(c.inverse().product(new Complex(n.getInt())));
     }
     
     public SNumber divideInto(SRational n) {
-        return SComplex.make(c.inverse().product(n.getRational().doubleValue()));
+        return SComplex.make(c.inverse().product(new Complex(n.getRational().doubleValue())));
     }
     
     public SNumber divideInto(SReal n) {
-        return SComplex.make(c.inverse().product(n.getDouble()));
+        return SComplex.make(c.inverse().product(new Complex(n.getDouble())));
     }
     
     public SNumber divideInto(SComplex n) {
-        return SComplex.make(n.c.quotient(c));
+        try {
+            return SComplex.make(n.c.quotient(c));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
     
     public SNumber neg() {
-        return SComplex.make(c.neg());
+        return SComplex.make(c.negated());
     }
     
     public SNumber abs() {
-        return SReal.make(c.abs());
+        return SReal.make(Trigonometry.abs(c));
     }
     
     public SNumber acos() {
-        return new SComplex(c.acos());
+        return new SComplex(Trigonometry.acos(c));
     }
 
     public SNumber asin() {
-        return new SComplex(c.asin());
+        return new SComplex(Trigonometry.asin(c));
     }
 
     public SNumber atan(SNumber n) {
         if (n.isComplex()) {
-            return new SComplex(c.atan(((SComplex)n).c));
+            return new SComplex(Trigonometry.atan(c, ((SComplex)n).c));
         }
         else {
-            return new SComplex(c.atan(new ComplexWrapper(n.toReal().getDouble())));
+            return new SComplex(Trigonometry.atan(c, new Complex(n.toReal().getDouble())));
         }
     }
 
     public SNumber ceiling() {
-        return SComplex.make(new ComplexWrapper(Math.ceil(c.getReal()), Math.ceil(c.getImag())));
+        return SComplex.make(new Complex(Math.ceil(c.getReal()), Math.ceil(c.getImag())));
     }
 
     public SNumber cos() {
-        return new SComplex(c.cos());
+        try {
+            return new SComplex(Trigonometry.cos(c));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
 
     public SNumber exp() {
-        return SComplex.make(c.exp());
+        return SComplex.make(Trigonometry.exp(c));
     }
 
     public SNumber floor() {
-        return SComplex.make(new ComplexWrapper(Math.floor(c.getReal()), Math.floor(c.getImag())));
+        return SComplex.make(new Complex(Math.floor(c.getReal()), Math.floor(c.getImag())));
     }
 
     public SNumber log() {
-        return new SComplex(c.log());
+        return new SComplex(Trigonometry.log(c));
     }
 
     public SNumber round() {
-        return SComplex.make(new ComplexWrapper(Math.round(c.getReal()), Math.round(c.getImag())));
+        return SComplex.make(new Complex(Math.round(c.getReal()), Math.round(c.getImag())));
     }
 
     public SNumber sin() {
-        return new SComplex(c.sin());
+        try {
+            return new SComplex(Trigonometry.sin(c));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
 
     public SNumber tan() {
-        return new SComplex(c.tan());
+        try {
+            return new SComplex(Trigonometry.tan(c));
+        } catch (DivisionException e) {
+            throw new LatrunculusRuntimeException(e);
+        }
     }
 
     public SNumber truncate() {
-        return SComplex.make(new ComplexWrapper(SReal.truncate(c.getReal()), SReal.truncate(c.getImag())));
+        return SComplex.make(new Complex(SReal.truncate(c.getReal()), SReal.truncate(c.getImag())));
     }
 
     public SNumber angle() {
-        return SReal.make(c.arg());
+        return SReal.make(Trigonometry.arg(c));
     }
 
     public SNumber expt(SNumber n) {
@@ -220,7 +237,7 @@ public final class SComplex extends SNumber {
             }
             else {
                 int e = ((SInteger)n).getInt();
-                ComplexWrapper res = new ComplexWrapper(1);
+                Complex res = new Complex(1);
                 while (e > 0) {
                     res = res.product(c);
                     e--;
@@ -229,10 +246,10 @@ public final class SComplex extends SNumber {
             }
         }
         else if (n.isComplex()) {
-            return new SComplex(c.expt(((SComplex)n).c));
+            return new SComplex(Trigonometry.expt(c, ((SComplex)n).c));
         }
         else {
-            return new SComplex(c.expt(new ComplexWrapper(n.toReal().getDouble())));
+            return new SComplex(Trigonometry.expt(c, new Complex(n.toReal().getDouble())));
         }
     }
 
@@ -245,7 +262,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber sqrt() {
-        return SComplex.make(c.sqrt()); 
+        return SComplex.make(Trigonometry.sqrt(c));
     }
 
     public boolean zero_p() {
@@ -261,13 +278,13 @@ public final class SComplex extends SNumber {
     }
     
     public SReal toReal() {
-        return SReal.make(c.abs());
+        return SReal.make(Trigonometry.abs(c));
     }
     
     public SNumber toInexact() {
         return this;
     }
-    
+
     public String toString() {
         return c.toString();
     }
@@ -279,9 +296,10 @@ public final class SComplex extends SNumber {
     /**
      * Returns the complex number in this Scheme value.
      */
-    public ComplexWrapper getComplex() {
+    public Complex getComplex() {
         return c;
     }
     
-    private ComplexWrapper c;
+    private Complex c;
+
 }
