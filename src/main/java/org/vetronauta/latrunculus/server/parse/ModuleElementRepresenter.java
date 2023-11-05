@@ -29,7 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
@@ -51,9 +51,6 @@ public final class ModuleElementRepresenter {
     //TODO common logic
 
     public static String stringRepresentation(ModuleElement<?,?> element, boolean... parenthesis) {
-        if (element instanceof ArithmeticElement) {
-            return toString((ArithmeticElement<?>) element, parenthesis);
-        }
         if (element instanceof Vector) {
             return toString((Vector<?>) element, parenthesis);
         }
@@ -64,7 +61,7 @@ public final class ModuleElementRepresenter {
             return toString((DirectSumElement<?>) element, parenthesis);
         }
         if (element instanceof ModularPolynomialElement) {
-            return toString((ModularPolynomialElement<?>) element, parenthesis);
+            return stringRepresentation(((ModularPolynomialElement<?>) element).getPolynomial(), parenthesis);
         }
         if (element instanceof ModularPolynomialProperFreeElement) {
             return toString((ModularPolynomialProperFreeElement<?>) element, parenthesis);
@@ -85,11 +82,14 @@ public final class ModuleElementRepresenter {
             // TODO: not yet implemented
             throw new UnsupportedOperationException("Not implemented");
         }
+        if (element instanceof RingElement) {
+            return toString((RingElement<?>) element, parenthesis);
+        }
         throw new UnsupportedOperationException(String.format("cannot parse %s", element));
     }
 
-    private static String toString(ArithmeticElement<?> element, boolean... parens) {
-        String representation = element.getValue().toString();
+    private static String toString(RingElement<?> element, boolean... parens) {
+        String representation = element.toString();
         if (parens.length > 0 && !Character.isDigit(representation.charAt(0))) {
             return TextUtils.parenthesize(representation);
         }

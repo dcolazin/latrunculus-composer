@@ -25,7 +25,6 @@ import org.vetronauta.latrunculus.core.math.matrix.ArrayMatrix;
 import org.vetronauta.latrunculus.core.math.matrix.Matrix;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -214,13 +213,12 @@ class JAffineMorphismType
     
     private ModuleMorphism createMorphism() {
         ArrayMatrix matrix = new ArrayMatrix(ring, rows, cols);
-        List<ArithmeticElement> vector = new ArrayList<>(rows);
+        List<RingElement> vector = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                ArithmeticElement v = (ArithmeticElement)getValue(i, j);
-                matrix.set(i,j,v);
+                matrix.set(i,j,getValue(i, j));
             }
-            vector.add((ArithmeticElement) getValue(i));
+            vector.add(getValue(i));
         }
         return AffineFreeMorphism.make(ring, matrix, new Vector<>(ring, vector));
     }

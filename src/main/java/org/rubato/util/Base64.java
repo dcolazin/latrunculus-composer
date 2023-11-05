@@ -19,9 +19,7 @@
 
 package org.rubato.util;
 
-import org.vetronauta.latrunculus.core.math.arith.number.IntegerWrapper;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.List;
 

@@ -19,29 +19,27 @@
 
 package org.rubato.rubettes.morphing;
 
+import org.rubato.base.RubatoException;
+import org.rubato.base.SimpleAbstractRubette;
+import org.rubato.composer.RunInfo;
+import org.rubato.rubettes.alteration.Alterator;
+import org.rubato.rubettes.alteration.NearestNeighborFinder;
+import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.rubato.rubettes.util.NoteGenerator;
+import org.rubato.rubettes.util.SimpleFormFinder;
+import org.vetronauta.latrunculus.core.math.element.impl.Real;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import org.rubato.base.RubatoException;
-import org.rubato.base.SimpleAbstractRubette;
-import org.rubato.composer.RunInfo;
-import org.vetronauta.latrunculus.core.math.arith.number.RealWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.rubato.rubettes.alteration.Alterator;
-import org.rubato.rubettes.alteration.NearestNeighborFinder;
-import org.rubato.rubettes.util.NoteGenerator;
-import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.rubato.rubettes.util.SimpleFormFinder;
 
 /**
  * A rubette for generating morphs between two denotators.

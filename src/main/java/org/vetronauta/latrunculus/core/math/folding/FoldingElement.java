@@ -28,7 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +40,6 @@ import java.util.Map;
 public class FoldingElement {
 
     public static double[] fold(ModuleElement element, ModuleElement[] others) {
-        if (element instanceof ArithmeticElement) {
-            return FoldingModule.fold(((ArithmeticElement<?>) element).getRing(), others);
-        }
         if (element instanceof Vector) {
             return FoldingModule.multiFold(((Vector<?>) element).getRing(), others, element.getLength());
         }
@@ -56,7 +52,7 @@ public class FoldingElement {
         if (element instanceof ProductElement || element instanceof ProductProperFreeElement) {
             return foldProduct(others);
         }
-        throw new UnsupportedOperationException("Not implemented");
+        return FoldingModule.fold(element.getModule().getRing(), others);
     }
 
     private static double[] foldDirect(ModuleElement element, ModuleElement[] others) {

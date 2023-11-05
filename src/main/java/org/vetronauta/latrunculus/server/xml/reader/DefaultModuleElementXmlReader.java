@@ -35,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.generic.ArithmeticElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
@@ -69,12 +68,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
     
     @Override
     public ModuleElement fromXML(Element element, Class<? extends ModuleElement> clazz, XMLReader reader) {
-        if (ArithmeticElement.class.isAssignableFrom(clazz)) {
-            if (element.hasAttribute(MODULUS_ATTR)) {
-                return readModularArithmeticElement(element, clazz, reader);
-            }
-            return readArithmeticElement(element, clazz, reader);
-        }
         if (Vector.class.isAssignableFrom(clazz)) {
             if (element.hasAttribute(MODULUS_ATTR)) {
                 return readZnVector(element, clazz, reader);
@@ -108,7 +101,10 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         if (RestrictedElement.class.isAssignableFrom(clazz)) {
             return readRestrictedElement(element, clazz, reader);
         }
-        return null;
+        if (element.hasAttribute(MODULUS_ATTR)) {
+            return readModularArithmeticElement(element, clazz, reader);
+        }
+        return readArithmeticElement(element, clazz, reader);
     }
 
     private RingElement<?> readArithmeticElement(Element element, Class<?> clazz, XMLReader reader) {
