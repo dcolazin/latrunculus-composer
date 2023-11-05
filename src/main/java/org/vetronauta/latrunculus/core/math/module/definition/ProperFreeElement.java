@@ -24,8 +24,7 @@ import java.util.LinkedList;
 
 /**
  * The abstract base class for elements in <i>proper</i> free modules.
- * @see ProperFreeModule
- * 
+ *
  * @author Gérard Milmeister
  */
 public abstract class ProperFreeElement<E extends ModuleElement<E,R>, R extends RingElement<R>> implements FreeElement<E,R> {

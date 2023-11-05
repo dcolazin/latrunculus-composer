@@ -35,8 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -99,9 +97,6 @@ public final class ModuleElementParser {
         }
         if (module instanceof PolynomialRing) {
             return (E) parse((PolynomialRing) module, s);
-        }
-        if (module instanceof ProductProperFreeModule) {
-            return (E) parse((ProductProperFreeModule) module, s);
         }
         if (module instanceof ProductRing) {
             return (E) parse((ProductRing) module, s);
@@ -448,23 +443,6 @@ public final class ModuleElementParser {
         else {
             return null;
         }
-    }
-
-    private static ProductProperFreeElement parse(ProductProperFreeModule module, String string) {
-        ArrayList<String> m = internalParseMulti(TextUtils.unparenthesize(string));
-        if (m.size() != module.getDimension()) {
-            return null;
-        }
-
-        ProductElement[] components = new ProductElement[module.getDimension()];
-        for (int i = 0; i < module.getDimension(); i++) {
-            ModuleElement element = parseElement(module.getRing(), m.get(i));
-            if (element == null) {
-                return null;
-            }
-            components[i] = (ProductElement)element;
-        }
-        return (ProductProperFreeElement) ProductProperFreeElement.make(module.getRing(), components);
     }
 
     private static ArrayList<String> internalParseMulti(String s) {

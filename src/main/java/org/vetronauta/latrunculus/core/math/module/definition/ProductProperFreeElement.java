@@ -23,8 +23,7 @@ import org.vetronauta.latrunculus.core.exception.DomainException;
 
 /**
  * Elements in the free module over a product ring.
- * @see ProductProperFreeModule
- * 
+ *
  * @author Gérard Milmeister
  */
 public final class ProductProperFreeElement extends ProperFreeElement<ProductProperFreeElement,ProductElement> {
@@ -214,10 +213,7 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
     
 
     public FreeModule<ProductProperFreeElement, ProductElement> getModule() {
-        if (module == null) {
-            module = (FreeModule<ProductProperFreeElement, ProductElement>) ProductProperFreeModule.make(getRing(), getLength());
-        }
-        return module;
+        return null; //TODO soon to be deprecated
     }
     
 
@@ -346,7 +342,6 @@ public final class ProductProperFreeElement extends ProperFreeElement<ProductPro
 
     
     private final ProductElement[]  value;
-    private FreeModule<ProductProperFreeElement, ProductElement> module;
     private ProductRing       ring;
 
     @Override

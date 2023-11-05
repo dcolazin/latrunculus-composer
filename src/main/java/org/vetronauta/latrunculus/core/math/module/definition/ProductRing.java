@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -138,7 +140,7 @@ public final class ProductRing extends Ring<ProductElement> {
 
 
     public FreeModule<?, ProductElement> getNullModule() {
-        return ProductProperFreeModule.make(this, 0);
+        return new VectorModule<>(this, 0);
     }
     
     
@@ -172,7 +174,7 @@ public final class ProductRing extends Ring<ProductElement> {
 
     
     public FreeModule<?, ProductElement> getFreeModule(int dimension) {
-        return ProductProperFreeModule.make(this, dimension);
+        return new VectorModule<>(this, dimension);
     }
 
     @Override

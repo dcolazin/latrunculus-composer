@@ -23,7 +23,6 @@ import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -89,9 +88,6 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
            }
         if (DirectSumModule.class.isAssignableFrom(clazz)) {
                 return readDirectSumModule(element, clazz, reader);
-           }
-        if (ProductProperFreeModule.class.isAssignableFrom(clazz)) {
-                return readProductProperFreeModule(element, clazz, reader);
            }
         if (ProductRing.class.isAssignableFrom(clazz)) {
                 return readProductRing(element, clazz, reader);
@@ -262,42 +258,6 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
             return null;
         }
-    }
-
-    private Module readProductProperFreeModule(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-
-        if (!element.hasAttribute(DIMENSION_ATTR)) {
-            reader.setError("Type %%1 is missing attribute %%2.", getElementTypeName(clazz), DIMENSION_ATTR);
-            return null;
-        }
-
-        int dimension;
-        try {
-            dimension = Integer.parseInt(element.getAttribute(DIMENSION_ATTR));
-        }
-        catch (NumberFormatException e) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer.", DIMENSION_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-        if (dimension < 0) {
-            reader.setError("Attribute %%1 of type %%2 must be an integer >= 0.", DIMENSION_ATTR, getElementTypeName(clazz));
-            return null;
-        }
-
-        Element childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("Type %%1 must have a child of type <%2>.", getElementTypeName(clazz), MODULE);
-            return null;
-        }
-        Module module = reader.parseModule(childElement);
-        if (module == null || !(module instanceof ProductRing)) {
-            reader.setError("Module in %%1 must be a product ring.", getElementTypeName(clazz));
-            return null;
-        }
-        ProductRing productRing = (ProductRing)module;
-
-        return ProductProperFreeModule.make(productRing, dimension);
     }
 
     private Module readProductRing(Element element, Class<?> clazz, XMLReader reader) {

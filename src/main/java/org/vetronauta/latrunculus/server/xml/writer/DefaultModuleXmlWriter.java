@@ -24,7 +24,6 @@ import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
@@ -85,10 +84,6 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
             write((DirectSumModule) object, writer);
             return;
         }
-        if (object instanceof ProductProperFreeModule) {
-            write((ProductProperFreeModule) object, writer);
-            return;
-        }
         if (object instanceof ProductRing) {
             write((ProductRing) object, writer);
             return;
@@ -143,12 +138,6 @@ public class DefaultModuleXmlWriter implements LatrunculusXmlWriter<Module> {
         for (int i = 0; i < module.getDimension(); i++) {
             definitionXmlWriter.toXML(module.getComponentModule(i), writer);
         }
-        writer.closeBlock();
-    }
-
-    private void write(ProductProperFreeModule module, XMLWriter writer) {
-        writer.openBlockWithType(MODULE, module.getElementTypeName(), DIMENSION_ATTR, module.getDimension());
-        definitionXmlWriter.toXML(module.getRing(), writer);
         writer.closeBlock();
     }
 
