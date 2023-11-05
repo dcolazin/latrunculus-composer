@@ -32,7 +32,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
@@ -62,9 +61,6 @@ public final class ModuleElementRepresenter {
         }
         if (element instanceof ModularPolynomialElement) {
             return stringRepresentation(((ModularPolynomialElement<?>) element).getPolynomial(), parenthesis);
-        }
-        if (element instanceof ModularPolynomialProperFreeElement) {
-            return toString((ModularPolynomialProperFreeElement<?>) element, parenthesis);
         }
         if (element instanceof PolynomialElement) {
             return toString((PolynomialElement<?>) element, parenthesis);
@@ -126,30 +122,6 @@ public final class ModuleElementRepresenter {
             }
             else {
                 return res.toString();
-            }
-        }
-    }
-
-    private static String toString(ModularPolynomialElement element, boolean... parens) {
-        return stringRepresentation(element.getPolynomial(), parens);
-    }
-
-    private static String toString(ModularPolynomialProperFreeElement element, boolean ... parens) {
-        if (element.getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder buf = new StringBuilder(30);
-            buf.append(stringRepresentation(element.getValue(0)));
-            for (int i = 1; i < element.getLength(); i++) {
-                buf.append(",");
-                buf.append(stringRepresentation(element.getValue(i)));
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(buf.toString());
-            }
-            else {
-                return buf.toString();
             }
         }
     }

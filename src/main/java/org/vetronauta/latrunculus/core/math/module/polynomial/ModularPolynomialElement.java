@@ -22,11 +22,13 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -254,17 +256,15 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
         if (n == 1) {
             return this;
         }
-        else if (n == 0) {
-            return ModularPolynomialProperFreeElement.make(getRing(), new ModularPolynomialElement[0]);
+        if (n <= 0) {
+            return new Vector<>(getRing(), new ArrayList<>());
         }
-        else {
-            ModularPolynomialElement[] values = new ModularPolynomialElement[n];
-            values[0] = this;
-            for (int i = 1; i < n; i++) {
-                values[i] = getRing().getZero();
-            }
-            return ModularPolynomialProperFreeElement.make(getRing(), values);
+        List<ModularPolynomialElement<B>> values = new ArrayList<>(n);
+        values.add(this);
+        for (int i = 1; i < n; i++) {
+            values.add(getRing().getZero());
         }
+        return new Vector<>(getRing(), values);
     }
     
     @Override

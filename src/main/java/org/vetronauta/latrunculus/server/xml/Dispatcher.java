@@ -65,8 +65,6 @@ import org.vetronauta.latrunculus.core.math.module.morphism.TranslationMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineFreeMorphism;
 import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineRingMorphism;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
@@ -160,8 +158,7 @@ public class Dispatcher {
         addModule(PolynomialRing.class);
         addModule(PolynomialProperFreeModule.class);
         addModule(ModularPolynomialRing.class);
-        addModule(ModularPolynomialProperFreeModule.class);
-        
+
         addModule(ProductRing.class);
         
         addModule(RestrictedModule.class);
@@ -179,7 +176,6 @@ public class Dispatcher {
         addModuleElement(PolynomialElement.class);
         addModuleElement(PolynomialProperFreeElement.class);
         addModuleElement(ModularPolynomialElement.class);
-        addModuleElement(ModularPolynomialProperFreeElement.class);
 
         addModuleElement(RestrictedElement.class);
         

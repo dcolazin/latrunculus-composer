@@ -33,7 +33,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
@@ -95,10 +94,6 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         }
         if (object instanceof ModularPolynomialElement) {
             write((ModularPolynomialElement) object, writer);
-            return;
-        }
-        if (object instanceof ModularPolynomialProperFreeElement) {
-            write((ModularPolynomialProperFreeElement) object, writer);
             return;
         }
         if (object instanceof RestrictedElement) {
@@ -195,14 +190,6 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
         definitionWriter.toXML(element.getRing(), writer);
         write(element.getPolynomial(), writer);
-        writer.closeBlock();
-    }
-
-    private void write(ModularPolynomialProperFreeElement element, XMLWriter writer) {
-        writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getValue().length; i++) {
-            write(element.getValue(i), writer);
-        }
         writer.closeBlock();
     }
 

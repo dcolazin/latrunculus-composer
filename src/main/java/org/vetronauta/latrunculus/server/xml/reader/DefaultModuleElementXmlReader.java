@@ -25,7 +25,6 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
@@ -36,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
@@ -94,9 +92,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
         if (ModularPolynomialElement.class.isAssignableFrom(clazz)) {
             return readModularPolynomialElement(element, clazz, reader);
-        }
-        if (ModularPolynomialProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readModularPolynomialProperFreeElement(element, clazz, reader);
         }
         if (RestrictedElement.class.isAssignableFrom(clazz)) {
             return readRestrictedElement(element, clazz, reader);
@@ -531,48 +526,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             reader.setError("Type %%1 is missing child of type %%1.", getElementTypeName(clazz), "PolynomialElement");
         }
         return null;
-    }
-
-    private ModuleElement readModularPolynomialProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        Element childElement = XMLReader.getChild(element, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ModularPolynomialElement> elements = new LinkedList<ModularPolynomialElement>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ModularPolynomialElement)) {
-                reader.setError("Children of type %%1 must be of type %%2.", getElementTypeName(clazz), "ModularPolynomialElement");
-                return null;
-            }
-            elements.add((ModularPolynomialElement)moduleElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ModularPolynomialElement)) {
-                    reader.setError("Children of type %%1 must be of type %%2.", getElementTypeName(clazz), "ModularPolynomialElement");
-                    return null;
-                }
-                elements.add((ModularPolynomialElement)moduleElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ModularPolynomialElement[] values = new ModularPolynomialElement[elements.size()];
-            Iterator<ModularPolynomialElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                values[i++] = iter.next();
-            }
-            ModularPolynomialRing rng = values[0].getRing();
-            FreeElement<?,? extends ModularPolynomialElement<?>> result = ModularPolynomialProperFreeElement.make(rng, values);
-            return result;
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     private ModuleElement readRestrictedElement(Element element, Class<?> clazz, XMLReader reader) {

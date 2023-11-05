@@ -26,7 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
+import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialModuleFactory;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
@@ -295,7 +295,7 @@ public class JSelectModule
                 PolynomialRing ring = PolynomialRing.make((Ring)module, getIndeterminate());
                 PolynomialElement modulus = (PolynomialElement) ModuleElementParser.parseElement(ring, pmod);
                 if (modulus != null) {
-                    module = ModularPolynomialProperFreeModule.make(modulus, getDimension());
+                    module = ModularPolynomialModuleFactory.make(modulus, getDimension());
                 }
                 else {
                     return null;

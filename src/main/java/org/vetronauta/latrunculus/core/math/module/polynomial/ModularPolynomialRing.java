@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -123,7 +124,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
     public FreeModule<?,ModularPolynomialElement<B>> getNullModule() {
-        return ModularPolynomialProperFreeModule.make(getModulus(), 0);
+        return new VectorModule<>(this, 0);
     }
 
     public boolean isField() {
@@ -143,7 +144,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
 
     
     public FreeModule<?,ModularPolynomialElement<B>> getFreeModule(int dimension) {
-        return ModularPolynomialProperFreeModule.make(getModulus(), dimension);
+        return ModularPolynomialModuleFactory.make(getModulus(), dimension);
     }
 
     @Override

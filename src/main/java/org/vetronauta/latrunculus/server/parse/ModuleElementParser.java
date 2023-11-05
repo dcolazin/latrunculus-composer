@@ -49,8 +49,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialProperFreeModule;
 import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
 import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialProperFreeElement;
@@ -97,9 +95,6 @@ public final class ModuleElementParser {
         }
         if (module instanceof DirectSumModule) {
             return (E) parse((DirectSumModule) module, s);
-        }
-        if (module instanceof ModularPolynomialProperFreeModule) {
-            return (E) parse((ModularPolynomialProperFreeModule) module, s);
         }
         if (module instanceof ModularPolynomialRing) {
             return (E) parse((ModularPolynomialRing) module, s);
@@ -260,49 +255,6 @@ public final class ModuleElementParser {
             }
         }
         m.add(s.substring(lastpos,pos));
-        return m;
-    }
-
-    private static ModularPolynomialProperFreeElement parse(ModularPolynomialProperFreeModule module, String string) {
-        ArrayList<String> strings = internalParseModularPolyMulti(TextUtils.unparenthesize(string));
-        if (strings.size() < module.getDimension()) {
-            return null;
-        }
-        ModularPolynomialElement[] values = new ModularPolynomialElement[module.getDimension()];
-        for (int i = 0; i < module.getDimension(); i++) {
-            String s = strings.get(i);
-            values[i] = (ModularPolynomialElement) parseElement(module.getRing(), s);
-            if (values[i] == null) {
-                return null;
-            }
-        }
-        return (ModularPolynomialProperFreeElement)ModularPolynomialProperFreeElement.make(module.getRing(), values);
-    }
-
-    private static ArrayList<String> internalParseModularPolyMulti(String s) {
-        int pos = 0;
-        int lastpos = 0;
-        int level = 0;
-        ArrayList<String> m = new ArrayList<>();
-        while (pos < s.length()) {
-            if (s.charAt(pos) == '(') {
-                pos++;
-                level++;
-            }
-            else if (s.charAt(pos) == ')') {
-                pos++;
-                level--;
-            }
-            else if (s.charAt(pos) == ',' && level == 0) {
-                m.add(s.substring(lastpos, pos));
-                pos++;
-                lastpos = pos;
-            }
-            else {
-                pos++;
-            }
-        }
-        m.add(s.substring(lastpos,pos).trim());
         return m;
     }
 
