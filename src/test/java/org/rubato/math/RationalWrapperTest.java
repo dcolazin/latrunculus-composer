@@ -149,7 +149,7 @@ class RationalWrapperTest {
         r = r.inverse();
         assertEquals(new RationalWrapper(-5*11*13, 3*7), r);
         r = new RationalWrapper(0, 5);
-        Assertions.assertThrows(InverseException.class, () -> r.inverse());
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> r.inverse());
     }
 
     @Test

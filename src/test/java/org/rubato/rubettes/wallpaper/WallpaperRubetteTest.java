@@ -91,7 +91,7 @@ class WallpaperRubetteTest {
 	@BeforeEach
 	void setUp() {
 		Denotator note = this.noteForm.createDefaultDenotator();
-		List<Denotator> noteList = new ArrayList<Denotator>();
+		List<Denotator> noteList = new ArrayList<>();
 		noteList.add(note);
 		try {
 			this.denotator = new PowerDenotator(this.emptyName, this.scoreForm, noteList);

@@ -61,11 +61,11 @@ class ScaleRubetteTest {
 		this.rubette.getProperties();
 		assertTrue(this.rubette.applyProperties());
 		PowerDenotator scale = this.rubette.generateScale();
-		assertTrue(scale.getFactorCount() == 75);
+		assertEquals(75, scale.getFactorCount());
 		this.rubette.setTempRootNote(59);
 		this.rubette.applyProperties();
 		scale = this.rubette.generateScale();
-		assertTrue(scale.getFactorCount() == 74);
+		assertEquals(74, scale.getFactorCount());
 		
 		//compare steps for the ionian scale
 		double[] ionian = this.rubette.getScaleMap().get("ionian");
@@ -83,7 +83,7 @@ class ScaleRubetteTest {
 		}
 		
 		//test getInfo()
-		assertTrue(this.rubette.getInfo().equals("ionian"));
+		assertEquals("ionian", this.rubette.getInfo());
 	}
 
 	@Test
@@ -109,7 +109,7 @@ class ScaleRubetteTest {
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			reader.parse();
 			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
-			assertTrue(this.rubette.getInfo().equals("dorian"));
+			assertEquals("dorian", this.rubette.getInfo());
 
 			testFile.createNewFile();
 			writer = new XMLWriter(testFile);
@@ -124,7 +124,7 @@ class ScaleRubetteTest {
 			reader.parse();
 			element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
-			assertTrue(this.rubette.getInfo().equals("custom"));
+			assertEquals("custom", this.rubette.getInfo());
 		} finally {
 			testFile.delete();
 		}
@@ -133,7 +133,7 @@ class ScaleRubetteTest {
 	@Test
 	void testScaleMap() {
 		ScaleMap map = new ScaleMap();
-		assertTrue(map.size() == 13);
+		assertEquals(13, map.size());
 	}
 	
 }

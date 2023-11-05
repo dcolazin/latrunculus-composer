@@ -98,8 +98,7 @@ public final class FormFactory {
      * @param name the name of the new form
      */
     public static SimpleForm makeZStringModuleForm(String name) {
-        return null; //TODO after StringRing refactoring
-        //return new SimpleForm(NameDenotator.make(name), StringRingRepository.getRing(ZRing.ring));
+        return new SimpleForm(NameDenotator.make(name), StringRingRepository.getRing(ZRing.ring));
     }
 
 
@@ -153,7 +152,7 @@ public final class FormFactory {
      * @param forms an array of coordinate forms
      */
     public static ColimitForm makeColimitForm(String name, Form ... forms) {
-        LinkedList<Form> formList = new LinkedList<Form>();
+        LinkedList<Form> formList = new LinkedList<>();
         for (Form form : forms) {
             formList.add(form);
         }

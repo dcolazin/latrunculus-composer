@@ -126,9 +126,9 @@ public final class ConstantMorphism<A extends ModuleElement<A, RA>, B extends Mo
         }
     }
 
-    
+    @Override
     public String toString() {
-        return "ConstantMorphism["+getValue()+"]";
+        return String.format("ConstantMorphism<%s,%s>[%s]", getDomain(), getCodomain(), getValue());
     }
 
     public String getElementTypeName() {

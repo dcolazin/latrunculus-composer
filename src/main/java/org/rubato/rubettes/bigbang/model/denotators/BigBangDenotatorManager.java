@@ -589,10 +589,11 @@ public class BigBangDenotatorManager {
 	 * TODO: well now it is kinda dumb, this method...
 	 */
 	private FactorDenotator getPowersetOrList(DenotatorPath powersetPath) {
-		//System.out.println(powersetPath);
 		try {
 			return (FactorDenotator)this.composition.get(powersetPath.toIntArray());
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (RubatoException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
