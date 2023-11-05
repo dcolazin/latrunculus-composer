@@ -273,5 +273,5 @@ public final class SRational extends SNumber {
         this.q = q;
     }
     
-    private static final RationalWrapper zero = RationalWrapper.getZero();
+    private static final RationalWrapper zero = new RationalWrapper(0);
 }

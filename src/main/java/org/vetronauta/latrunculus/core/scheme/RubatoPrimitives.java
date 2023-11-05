@@ -796,7 +796,8 @@ abstract class RubatoPrimitives {
             return new Real((((SReal)sexpr).getDouble()));
         }
         else if (sexpr.isComplex()) {
-            return new Complex(((SComplex)sexpr).getComplex());
+            ComplexWrapper wrapper = ((SComplex)sexpr).getComplex();
+            return new Complex(wrapper.getReal(), wrapper.getImag());
         }
         else if (sexpr.isBoolean()) {
             return new ZInteger(sexpr == SBoolean.TRUE ? 1 : 0);

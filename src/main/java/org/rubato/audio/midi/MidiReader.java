@@ -19,20 +19,25 @@
 
 package org.rubato.audio.midi;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaMessage;
+import javax.sound.midi.MidiEvent;
+import javax.sound.midi.MidiMessage;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Track;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 
-import javax.sound.midi.*;
-
-import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
-import org.vetronauta.latrunculus.core.math.element.impl.Rational;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import static org.rubato.logeo.DenoFactory.makeDenotator;
 
 /**
  * This class reads in a MIDI file an converts it to a denotator of form Score.

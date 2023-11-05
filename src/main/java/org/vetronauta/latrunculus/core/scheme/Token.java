@@ -21,6 +21,7 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import java.util.HashSet;
 
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
@@ -106,8 +107,8 @@ public final class Token {
     
     public static ComplexWrapper toComplex(String s) {
         try {
-            ComplexWrapper c = ArithmeticParsingUtils.parseComplex(s);
-            return c;
+            Complex c = ArithmeticParsingUtils.parseComplex(s);
+            return new ComplexWrapper(c.getReal(), c.getImag());
         }
         catch (NumberFormatException e) {
             return null;

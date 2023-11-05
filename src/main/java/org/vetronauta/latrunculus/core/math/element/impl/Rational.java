@@ -245,4 +245,20 @@ public class Rational extends RingElement<Rational> implements Arithmetic {
         return numerator * denominator;
     }
 
+    /**
+     * Sets the default quantization to the given value.
+     * The quantization is taken to be the absolute value of <code>quant</code>.
+     * If <code>quant</code> is 0, the initial default value is
+     * used.
+     */
+    public static void setDefaultQuantization(int quant) {
+        int q = Math.abs(quant);
+        if (q == 0) {
+            DEFAULT_QUANT = INITIAL_DEFAULT_QUANT;
+        }
+        else {
+            DEFAULT_QUANT = q;
+        }
+    }
+
 }

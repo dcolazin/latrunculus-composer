@@ -23,7 +23,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -174,8 +173,7 @@ public final class ModuleElementParser {
 
     private static Complex parseC(String string) {
         try {
-            ComplexWrapper value = ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
-            return new Complex(value);
+            return ArithmeticParsingUtils.parseComplex(TextUtils.unparenthesize(string));
         }
         catch (NumberFormatException e) {
             return null;

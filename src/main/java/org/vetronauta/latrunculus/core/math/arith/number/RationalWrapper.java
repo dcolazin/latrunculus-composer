@@ -20,7 +20,6 @@
 package org.vetronauta.latrunculus.core.math.arith.number;
 
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.exception.InverseException;
 
 /**
  * Rational number arithmetic.
@@ -113,22 +112,6 @@ public final class RationalWrapper {
         denom = newRationalWrapper.denom;
     }
 
-    /**
-     * Returns the rational 0/1.
-     */
-    public static RationalWrapper getZero() {
-        return new RationalWrapper(0);
-    }
-
-
-    /**
-     * Returns the rational 1/1.
-     */
-    public static RationalWrapper getOne() {
-        return new RationalWrapper(1);
-    }
-
-
     public boolean equals(Object other) {
         if (!(other instanceof RationalWrapper)) {
             return false;
@@ -142,22 +125,6 @@ public final class RationalWrapper {
      */
     public boolean isZero() {
         return num == 0;
-    }
-
-
-    /**
-     * Returns true iff this number is 1/1.
-     */
-    public boolean isOne() {
-        return num == 1 && denom == 1;
-    }
-
-    public boolean isInvertible() {
-        return !isZero();
-    }
-
-    public boolean isFieldElement() {
-        return true;
     }
 
     public int compareTo(RationalWrapper r) {

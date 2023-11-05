@@ -96,7 +96,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            tmpValue = new Complex(ArithmeticParsingUtils.parseComplex(s));
+            tmpValue = ArithmeticParsingUtils.parseComplex(s);
         }
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());

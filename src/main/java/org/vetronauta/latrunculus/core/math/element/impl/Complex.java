@@ -22,7 +22,6 @@ package org.vetronauta.latrunculus.core.math.element.impl;
 import lombok.Getter;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
@@ -59,11 +58,6 @@ public class Complex extends RingElement<Complex> implements Arithmetic {
     public Complex(double real) {
         this.real = real;
         this.imag = 0.0;
-    }
-
-    public Complex(ComplexWrapper complexWrapper) {
-        this.real = complexWrapper.getReal();
-        this.imag = complexWrapper.getImag();
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 
 public class MainPreferences extends JPreferencesPanel {
 
@@ -75,7 +75,7 @@ public class MainPreferences extends JPreferencesPanel {
         userPrefs.setAskBeforeLeaving(askBeforeLeavingButton.isSelected());
         userPrefs.setDefaultQuantization(Integer.parseInt(defaultQuantField.getText()));
         userPrefs.setShowProgress(showProgressButton.isSelected());
-        RationalWrapper.setDefaultQuantization(userPrefs.getDefaultQuantization());
+        Rational.setDefaultQuantization(userPrefs.getDefaultQuantization());
     }
     
     

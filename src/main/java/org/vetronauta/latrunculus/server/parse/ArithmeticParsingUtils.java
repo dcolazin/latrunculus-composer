@@ -3,8 +3,6 @@ package org.vetronauta.latrunculus.server.parse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.arith.number.ComplexWrapper;
-import org.vetronauta.latrunculus.core.math.arith.number.RationalWrapper;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
@@ -36,17 +34,13 @@ public class ArithmeticParsingUtils {
             throw new NumberFormatException(String.format("cannot detect parsing class for %s", s));
         }
         if (parsingClass.equals(Complex.class)) {
-            //TODO after complete refactoring of ArithmeticNumber
-            throw new UnsupportedOperationException("...");
-            //return parseComplex(s);
+            return parseComplex(s);
         }
         if (parsingClass.equals(ZInteger.class)) {
             return parseZInteger(s);
         }
         if (parsingClass.equals(Rational.class)) {
-            //TODO after complete refactoring of ArithmeticNumber
-            throw new UnsupportedOperationException("...");
-            //return parseRational(s);
+            return parseRational(s);
         }
         if (parsingClass.equals(Real.class)) {
             return parseReal(s);
@@ -66,13 +60,13 @@ public class ArithmeticParsingUtils {
             return Modulus.class;
         }
         if (ring instanceof QRing) {
-            return RationalWrapper.class;
+            return Rational.class;
         }
         if (ring instanceof RRing) {
             return Real.class;
         }
         if (ring instanceof CRing) {
-            return ComplexWrapper.class;
+            return Complex.class;
         }
         return null;
     }
@@ -80,7 +74,7 @@ public class ArithmeticParsingUtils {
     /**
      * Returns the complex number with the string representation <code>s</code>
      */
-    public static ComplexWrapper parseComplex(String s) {
+    public static Complex parseComplex(String s) {
         if (s.length() == 0) {
             throw new NumberFormatException("Empty string makes no complex");
         }
@@ -92,17 +86,17 @@ public class ArithmeticParsingUtils {
             if (pos >= 0) {
                 double real = Double.parseDouble(s.substring(0, pos));
                 double imag = Double.parseDouble(s.substring(pos+3));
-                return new ComplexWrapper(real, imag);
+                return new Complex(real, imag);
             }
             pos = s.indexOf("i*");
             if (pos == 0) {
-                return new ComplexWrapper(0, Double.parseDouble(s.substring(pos+2)));
+                return new Complex(0, Double.parseDouble(s.substring(pos+2)));
             }
             pos = s.indexOf("i");
             if (pos == 0 && s.length() == 1) {
-                return new ComplexWrapper(0, 1);
+                return new Complex(0, 1);
             }
-            return new ComplexWrapper(Double.parseDouble(s));
+            return new Complex(Double.parseDouble(s));
         }
         catch (Exception e) {
             throw new NumberFormatException(e.getMessage());
