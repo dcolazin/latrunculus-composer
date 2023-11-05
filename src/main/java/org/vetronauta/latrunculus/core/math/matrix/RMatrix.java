@@ -373,7 +373,18 @@ public class RMatrix extends Matrix<Real> {
 
     @Override
     public Vector<Real> product(Vector<Real> vector) {
-        return null; //TODO
+        if (columns != vector.getLength()) {
+            throw new ArithmeticException("Unmatched matrix dimensions.");
+        }
+        List<Real> res = new ArrayList<>(rows);
+        for (int r = 0; r < rows; r++) {
+            Real sum = ring.getZero();
+            for (int c = 0; c < columns; c++) {
+                sum = sum.sum((new Real(coefficients[r][c])).product(vector.getComponent(c)));
+            }
+            res.add(sum);
+        }
+        return new Vector<>(ring, res);
     }
 
 
