@@ -22,7 +22,11 @@ package org.vetronauta.latrunculus.core.math.module.morphism;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
+import org.vetronauta.latrunculus.core.math.module.morphism.wrapper.VectorDewrapperMorphism;
+import org.vetronauta.latrunculus.core.math.module.morphism.wrapper.VectorWrapperMorphism;
 
 /**
  * Morphism that represents the composition of two arbitrary morphisms.
@@ -59,6 +63,12 @@ public final class CompositionMorphism<A extends ModuleElement<A,RA>, B extends 
         	throws CompositionException {
         if (!composable(f, g)) {
             throw new CompositionException("CompositionMorphism.make: Cannot compose "+f+" with "+g);
+        }
+        if (f.getDomain() instanceof Ring && g.getCodomain() instanceof VectorModule) {
+            return make(f, new VectorDewrapperMorphism<>(g.getCodomain().getRing()).compose((ModuleMorphism) g));
+        }
+        if (f.getDomain() instanceof VectorModule && g.getCodomain() instanceof Ring) {
+            return make(f.compose(new VectorWrapperMorphism(g.getCodomain().getRing())), g);
         }
         else if (f.isIdentity() && g.isIdentity()) {
             return (ModuleMorphism<X,Z,RX,RZ>) ModuleMorphism.getIdentityMorphism(f.getDomain());
