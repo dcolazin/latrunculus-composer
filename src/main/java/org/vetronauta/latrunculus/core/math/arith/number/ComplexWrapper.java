@@ -217,12 +217,6 @@ public final class ComplexWrapper {
         return true;
     }
 
-    public boolean divides(ArithmeticNumber<?> y) {
-        return false;
-        //return (y instanceof ComplexWrapper) && !this.isZero();
-    }
-
-
     /**
      * Returns the real part of this number.
      */
