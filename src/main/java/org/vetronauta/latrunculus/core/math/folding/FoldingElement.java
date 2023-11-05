@@ -27,7 +27,6 @@ import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class FoldingElement {
         if (element instanceof DirectSumElement) {
             return foldDirect(element, others);
         }
-        if (element instanceof ProductElement || element instanceof ProductProperFreeElement) {
+        if (element instanceof ProductElement) {
             return foldProduct(others);
         }
         return FoldingModule.fold(element.getModule().getRing(), others);
@@ -77,7 +76,7 @@ public class FoldingElement {
         return FoldingElement.fold(x[0], x);
     }
 
-    private static double[] foldProduct(ModuleElement[] others) {
+    public static double[] foldProduct(ModuleElement[] others) {
         double[][] res = new double[others.length][];
         for (int i = 0; i < others.length; i++) {
             res[i] = FoldingElement.fold(others[i], new ModuleElement[] { others[i] } );

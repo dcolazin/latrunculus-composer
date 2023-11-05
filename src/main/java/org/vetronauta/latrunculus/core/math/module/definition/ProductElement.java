@@ -22,7 +22,9 @@ package org.vetronauta.latrunculus.core.math.module.definition;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -337,25 +339,6 @@ public class ProductElement extends RingElement<ProductElement> {
     public RingElement<?> getValue(int i) {
         return factors[i];
     }
-
-    
-    public FreeElement<?,ProductElement> resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        else if (n == 0) {
-            return ProductProperFreeElement.make(getModule(), new ProductElement[0]);
-        }
-        else {
-            ProductElement[] values = new ProductElement[n];
-            values[0] = this;
-            for (int i = 1; i < n; i++) {
-                values[i] = getRing().getZero();
-            }
-            return ProductProperFreeElement.make(values);
-        }
-    }
-    
 
     public boolean equals(Object object) {
         if (this == object) {

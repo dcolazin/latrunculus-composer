@@ -28,6 +28,7 @@ import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -125,6 +126,9 @@ public class FoldingModule {
         }
         if (ring instanceof ZnRing) {
             return multiFoldModulus(elements);
+        }
+        if (ring instanceof ProductRing) {
+            return FoldingElement.foldProduct(elements);
         }
         throw new UnsupportedOperationException(String.format("cannot fold %s", ring));
     }

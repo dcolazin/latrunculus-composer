@@ -251,22 +251,6 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
         return ring.getModulus();
     }
     
-    
-    public FreeElement<?,ModularPolynomialElement<B>> resize(int n) {
-        if (n == 1) {
-            return this;
-        }
-        if (n <= 0) {
-            return new Vector<>(getRing(), new ArrayList<>());
-        }
-        List<ModularPolynomialElement<B>> values = new ArrayList<>(n);
-        values.add(this);
-        for (int i = 1; i < n; i++) {
-            values.add(getRing().getZero());
-        }
-        return new Vector<>(getRing(), values);
-    }
-    
     @Override
     public boolean equals(Object object) {
         if (this == object) {

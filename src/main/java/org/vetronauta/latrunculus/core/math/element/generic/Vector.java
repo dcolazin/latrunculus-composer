@@ -1,17 +1,19 @@
 package org.vetronauta.latrunculus.core.math.element.generic;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ProperFreeElement;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R>, R> {
+public class Vector<R extends RingElement<R>> implements FreeElement<Vector<R>, R> {
 
     //TODO equals considering value.size() == 1
 
@@ -215,5 +217,14 @@ public class Vector<R extends RingElement<R>> extends ProperFreeElement<Vector<R
         return String.format("Vector<%s>", ring.toVisualString());
     }
 
+    @Override
+    public int compareTo(ModuleElement object) {
+        return getModule().compareTo(object.getModule());
+    }
+
+    @Override
+    public Iterator<R> iterator() {
+        return value.stream().map(RingElement::deepCopy).iterator();
+    }
 
 }

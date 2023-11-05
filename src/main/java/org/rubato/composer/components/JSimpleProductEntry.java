@@ -19,10 +19,10 @@
 
 package org.rubato.composer.components;
 
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
@@ -33,6 +33,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
 
@@ -126,7 +127,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
     
     public ModuleElement getValue() {
         boolean error = false;
-        ProductElement[] elements = new ProductElement[simpleEntries.size()];
+        List<ProductElement> elements = new ArrayList<>(simpleEntries.size());
         for (int i = 0; i < simpleEntries.size(); i++) {
             ArrayList<JSimpleEntry> valueEntries = simpleEntries.get(i);
             RingElement[] factors = new RingElement[valueEntries.size()];
@@ -140,9 +141,9 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
             if (error) {
                 return null;
             }
-            elements[i] = ProductElement.make(factors);
+            elements.add(ProductElement.make(factors));
         }
-        return ProductProperFreeElement.make(elements);
+        return new Vector<>(elements.get(0).getRing(), elements);
     }
     
     

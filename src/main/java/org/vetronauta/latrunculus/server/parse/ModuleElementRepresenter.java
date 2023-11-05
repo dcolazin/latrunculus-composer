@@ -27,7 +27,6 @@ import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -66,9 +65,6 @@ public final class ModuleElementRepresenter {
         }
         if (element instanceof ProductElement) {
             return toString((ProductElement) element, parenthesis);
-        }
-        if (element instanceof ProductProperFreeElement) {
-            return toString((ProductProperFreeElement) element, parenthesis);
         }
         if (element instanceof RestrictedElement) {
             // TODO: not yet implemented
@@ -192,25 +188,6 @@ public final class ModuleElementRepresenter {
         }
         buf.append(")");
         return buf.toString();
-    }
-
-    private static String toString(ProductProperFreeElement element, boolean ... parens) {
-        if (element.getLength() == 0) {
-            return "Null";
-        }
-        else {
-            StringBuilder res = new StringBuilder(stringRepresentation(element.getValue(0)));
-            for (int i = 1; i < element.getLength(); i++) {
-                res.append(',');
-                res.append(stringRepresentation(element.getValue(i)));
-            }
-            if (parens.length > 0) {
-                return TextUtils.parenthesize(res.toString());
-            }
-            else {
-                return res.toString();
-            }
-        }
     }
 
     public static String stringRepresentation(Map<String,?> map) {

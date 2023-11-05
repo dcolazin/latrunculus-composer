@@ -28,8 +28,6 @@ import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductProperFreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedElement;
 import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
@@ -78,9 +76,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
         }
         if (ProductElement.class.isAssignableFrom(clazz)) {
             return readProductElement(element, clazz, reader);
-        }
-        if (ProductProperFreeElement.class.isAssignableFrom(clazz)) {
-            return readProductProperFreeElement(element, clazz, reader);
         }
         if (PolynomialElement.class.isAssignableFrom(clazz)) {
             return readPolynomialElement(element, clazz, reader);
@@ -344,65 +339,6 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
             return null;
         }
 
-    }
-
-    private ModuleElement readProductProperFreeElement(Element element, Class<?> clazz, XMLReader reader) {
-        assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
-        Element childElement;
-
-        // get product ring
-        childElement = XMLReader.getChild(element, MODULE);
-        if (childElement == null) {
-            reader.setError("Type %%1 must have a first child of type <%2>.", getElementTypeName(clazz), MODULE);
-            return null;
-        }
-        Module module0 = reader.parseModule(childElement);
-        if (!(module0 instanceof ProductRing)) {
-            reader.setError("Module in %%1 must be a product ring.", getElementTypeName(clazz));
-            return null;
-        }
-        ProductRing productRing = (ProductRing)module0;
-
-        // get components
-        childElement = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-        if (childElement != null) {
-            LinkedList<ProductElement> elements = new LinkedList<>();
-            ModuleElement moduleElement = reader.parseModuleElement(childElement);
-            if (moduleElement == null) {
-                return null;
-            }
-            if (!(moduleElement instanceof ProductElement)) {
-                reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ProductElement");
-                return null;
-            }
-            ProductElement productElement = (ProductElement)moduleElement;
-            elements.add(productElement);
-            Element next = XMLReader.getNextSibling(childElement, MODULE_ELEMENT);
-            while (next != null) {
-                moduleElement = reader.parseModuleElement(next);
-                if (moduleElement == null) {
-                    return null;
-                }
-                if (!(moduleElement instanceof ProductElement)) {
-                    reader.setError("Type %%1 must have children of type %%2.", getElementTypeName(clazz), "ProductElement");
-                    return null;
-                }
-                productElement = (ProductElement)moduleElement;
-                elements.add(productElement);
-                next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
-            }
-            ProductElement[] components = new ProductElement[elements.size()];
-            Iterator<ProductElement> iter = elements.iterator();
-            int i = 0;
-            while (iter.hasNext()) {
-                components[i++] = iter.next();
-            }
-            return ProductProperFreeElement.make(productRing, components);
-        }
-        else {
-            reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
-            return null;
-        }
     }
 
     private ModuleElement readPolynomialElement(Element element, Class<?> clazz, XMLReader reader) {
