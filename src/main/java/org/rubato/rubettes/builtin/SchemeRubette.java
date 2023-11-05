@@ -19,9 +19,9 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.scheme.SExpr.VOID;
-import static org.rubato.scheme.SExpr.car;
-import static org.rubato.scheme.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.VOID;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,6 +36,13 @@ import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.scheme.*;
+import org.vetronauta.latrunculus.core.scheme.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.Parser;
+import org.vetronauta.latrunculus.core.scheme.Primitive;
+import org.vetronauta.latrunculus.core.scheme.SDenotator;
+import org.vetronauta.latrunculus.core.scheme.SExpr;
+import org.vetronauta.latrunculus.core.scheme.SInteger;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -309,7 +316,7 @@ public class SchemeRubette extends AbstractRubette {
     private JLabel            infoLabel = null;
     
     private String      schemeCode = "";
-    private Parser      parser = new Parser();
+    private Parser parser = new Parser();
     private List<SExpr> sexprList = null;
     
     private static final ImageIcon icon;

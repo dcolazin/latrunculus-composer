@@ -17,9 +17,9 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
-import static org.rubato.scheme.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
 
 /**
  * Standard primitive procedures for control structures and environments.

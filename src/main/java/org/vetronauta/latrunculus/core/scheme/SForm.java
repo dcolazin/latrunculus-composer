@@ -17,74 +17,67 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 /**
- * The class representing Scheme character values.
- *  
+ * The class representing forms as Scheme values.
+ * 
  * @author Gérard Milmeister
  */
-public final class SChar extends SExpr {
+public final class SForm extends SExpr {
 
     /**
-     * Creates a Scheme character from <code>c</code>.
+     * Creates a Scheme value from the form <code>f</code>.
      */
-    public SChar(char c) {
-        this.c = c;
+    public SForm(Form f) {
+        this.f = f;
     }
     
     
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-    
+
     
     public boolean eqv_p(SExpr sexpr) {
-        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
+        return this == sexpr;
     }
-    
+
     
     public boolean equal_p(SExpr sexpr) {
-        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
+        return equals(sexpr);
     }
-    
+
     
     public boolean equals(Object obj) {
-        return (obj instanceof SChar) && (((SChar)obj).c == c);
+        return (obj instanceof SForm) && ((SForm)obj).f.equals(f);
     }
+
     
-    
-    public String toString() {
-        if (c == ' ') {
-            return "#\\space";
-        }
-        else if (c == '\n') {
-            return "#\\newline";
-        }
-        else {
-            return "#\\"+c;
-        }
-    }
-    
-    
-    public String display() {
-        return Character.toString(c);
-    }
-    
-    
-    public boolean isChar() {
+    public boolean isForm() {
         return true;
     }
     
+
+    public String toString() {
+        return "#<form:"+f.toString()+">";
+    }
+    
+
+    public String display() {
+        return "#<form:"+f.toString()+">";
+    }
+
     
     /**
-     * Returns the character in this Scheme value.
+     * Returns the form in this Scheme value.
      */
-    public char getChar() {
-        return c;
+    public Form getForm() {
+        return f;
     }
     
     
-    private char c;
+    private Form f;
 }

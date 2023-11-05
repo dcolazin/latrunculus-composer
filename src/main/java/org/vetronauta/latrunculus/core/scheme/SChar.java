@@ -17,68 +17,74 @@
  *
  */
 
-package org.rubato.scheme;
-
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+package org.vetronauta.latrunculus.core.scheme;
 
 
 /**
- * The class representing denotators as Scheme values.
- * 
+ * The class representing Scheme character values.
+ *  
  * @author Gérard Milmeister
  */
-public final class SDenotator extends SExpr {
+public final class SChar extends SExpr {
 
     /**
-     * Creates a Scheme value from the denotator <code>d</code>.
+     * Creates a Scheme character from <code>c</code>.
      */
-    public SDenotator(Denotator d) {
-        this.d = d;
+    public SChar(char c) {
+        this.c = c;
     }
     
     
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-
+    
     
     public boolean eqv_p(SExpr sexpr) {
-        return this == sexpr;
+        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
     }
-
+    
     
     public boolean equal_p(SExpr sexpr) {
-        return equals(sexpr);
+        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
     }
-
+    
     
     public boolean equals(Object obj) {
-        return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
-    }
-
-
-    public boolean isDenotator() {
-        return true;
+        return (obj instanceof SChar) && (((SChar)obj).c == c);
     }
     
-
+    
     public String toString() {
-        return "#<denotator:"+d.toString()+">";
+        if (c == ' ') {
+            return "#\\space";
+        }
+        else if (c == '\n') {
+            return "#\\newline";
+        }
+        else {
+            return "#\\"+c;
+        }
     }
     
-
+    
     public String display() {
-        return "#<denotator:"+d.toString()+">";
+        return Character.toString(c);
+    }
+    
+    
+    public boolean isChar() {
+        return true;
     }
     
     
     /**
-     * Returns the denotator in this Scheme value.
+     * Returns the character in this Scheme value.
      */
-    public Denotator getDenotator() {
-        return d;
+    public char getChar() {
+        return c;
     }
-
     
-    private Denotator d;
+    
+    private char c;
 }

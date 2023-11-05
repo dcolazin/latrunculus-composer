@@ -1,9 +1,9 @@
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.scheme.Token.TokenType;
+import org.vetronauta.latrunculus.core.scheme.Token.TokenType;
 import org.rubato.util.TextUtils;
 
 

@@ -17,10 +17,9 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
-import static org.rubato.scheme.SExpr.*;
-import static org.rubato.scheme.Token.*;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -158,16 +157,16 @@ public class Evaluator {
                 else if (isVar(exp)) { gotoLabel(Label.EVAL_VAR); }
                 else if (exp.isCons()) {
                     SExpr car = car(exp);
-                    if (car == QUOTE) { gotoLabel(Label.EVAL_QUOTE); }
-                    else if (car == COND) { gotoLabel(Label.EVAL_COND); }
-                    else if (car == IF) { gotoLabel(Label.EVAL_IF); }
-                    else if (car == DEFINE) { gotoLabel(Label.EVAL_DEFINE); }
-                    else if (car == SET) { gotoLabel(Label.EVAL_SET); }
-                    else if (car == LAMBDA) { gotoLabel(Label.EVAL_LAMBDA); }
-                    else if (car == LET) { gotoLabel(Label.EVAL_LET); }
-                    else if (car == LET_STAR) { gotoLabel(Label.EVAL_LET_STAR); }
-                    else if (car == AND) { gotoLabel(Label.EVAL_AND); }
-                    else if (car == OR) { gotoLabel(Label.EVAL_OR); }
+                    if (car == Token.QUOTE) { gotoLabel(Label.EVAL_QUOTE); }
+                    else if (car == Token.COND) { gotoLabel(Label.EVAL_COND); }
+                    else if (car == Token.IF) { gotoLabel(Label.EVAL_IF); }
+                    else if (car == Token.DEFINE) { gotoLabel(Label.EVAL_DEFINE); }
+                    else if (car == Token.SET) { gotoLabel(Label.EVAL_SET); }
+                    else if (car == Token.LAMBDA) { gotoLabel(Label.EVAL_LAMBDA); }
+                    else if (car == Token.LET) { gotoLabel(Label.EVAL_LET); }
+                    else if (car == Token.LET_STAR) { gotoLabel(Label.EVAL_LET_STAR); }
+                    else if (car == Token.AND) { gotoLabel(Label.EVAL_AND); }
+                    else if (car == Token.OR) { gotoLabel(Label.EVAL_OR); }
                     else { gotoLabel(Label.EVAL_APP); }
                 }
                 else if (exp.isVoid()) {
@@ -811,7 +810,7 @@ public class Evaluator {
               variables = cdr(variables);
             }
 
-            sexpr.setCar(cons(LAMBDA, cons(new_vars, body)));
+            sexpr.setCar(cons(Token.LAMBDA, cons(new_vars, body)));
             sexpr.setCdr(new_pars);
             return sexpr;
         }
@@ -830,16 +829,16 @@ public class Evaluator {
             SExpr new_let_star;
 
             if (variables.isNull()) {
-                sexpr.setCar(cons(LAMBDA, cons(NULL, body)));
+                sexpr.setCar(cons(Token.LAMBDA, cons(NULL, body)));
                 sexpr.setCdr(NULL);
                 return sexpr;
             }
             if (cdr(variables).isNull()) {
-                sexpr.setCar(LET);
+                sexpr.setCar(Token.LET);
                 return sexpr;
             }
-            new_let_star = cons(LET_STAR, cons(cdr(variables), body));
-            sexpr.setCar(LET);
+            new_let_star = cons(Token.LET_STAR, cons(cdr(variables), body));
+            sexpr.setCar(Token.LET);
             sexpr.setCdr(cons(cons(car(variables), NULL), cons(new_let_star, NULL)));
             return sexpr;
         }
@@ -945,7 +944,7 @@ public class Evaluator {
         }
         else {
             // procedure
-            return cons(LAMBDA, cons(cdr(car(cdr(sexpr))), cdr(cdr(sexpr))));
+            return cons(Token.LAMBDA, cons(cdr(car(cdr(sexpr))), cdr(cdr(sexpr))));
         }
     }
     
@@ -962,7 +961,7 @@ public class Evaluator {
     
     
     private final boolean isElseClause(SExpr clause) {
-        return getPredicate(clause) == ELSE;
+        return getPredicate(clause) == Token.ELSE;
     }
 
     

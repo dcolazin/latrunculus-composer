@@ -17,74 +17,68 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
+
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+
 
 /**
- * The class of Boolean values. There are only two instances,
- * <code>TRUE</code> and <code>FALSE</code>.
+ * The class representing denotators as Scheme values.
  * 
  * @author Gérard Milmeister
  */
-public final class SBoolean extends SExpr {
+public final class SDenotator extends SExpr {
 
     /**
-     * The Scheme value "#t".
+     * Creates a Scheme value from the denotator <code>d</code>.
      */
-    public static SBoolean TRUE = new SBoolean(true);    
-
-    /**
-     * The Scheme value "#f".
-     */
-    public static SBoolean FALSE = new SBoolean(false);
-    
-    
-    /**
-     * Returns the Scheme value corresponding to the boolean <code>b</code>.
-     */
-    public static SBoolean make(boolean b) {
-        return b?TRUE:FALSE;
+    public SDenotator(Denotator d) {
+        this.d = d;
     }
     
     
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-    
+
     
     public boolean eqv_p(SExpr sexpr) {
         return this == sexpr;
     }
-    
+
     
     public boolean equal_p(SExpr sexpr) {
-        return this == sexpr;
+        return equals(sexpr);
     }
-    
+
     
     public boolean equals(Object obj) {
-        return this == obj;
+        return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
     }
-    
-    
-    public String toString() {
-        return "#"+(b?"t":"f");
-    }
-    
-    
-    public String display() {
-        return toString();
-    }
-    
-    
-    public boolean isBoolean() {
+
+
+    public boolean isDenotator() {
         return true;
     }
     
+
+    public String toString() {
+        return "#<denotator:"+d.toString()+">";
+    }
     
-    private SBoolean(boolean b) {
-        this.b = b;
+
+    public String display() {
+        return "#<denotator:"+d.toString()+">";
     }
     
     
-    private boolean b;
+    /**
+     * Returns the denotator in this Scheme value.
+     */
+    public Denotator getDenotator() {
+        return d;
+    }
+
+    
+    private Denotator d;
 }

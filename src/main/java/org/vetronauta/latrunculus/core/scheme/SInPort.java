@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 import java.io.*;
 

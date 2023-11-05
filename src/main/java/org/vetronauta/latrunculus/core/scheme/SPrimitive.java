@@ -17,21 +17,20 @@
  *
  */
 
-package org.rubato.scheme;
-
+package org.vetronauta.latrunculus.core.scheme;
 
 /**
- * The class representing Scheme string values.
+ * The class representing primitive functions as Scheme values.
  * 
  * @author Gérard Milmeister
  */
-public final class SString extends SExpr {
+public final class SPrimitive extends SExpr {
 
     /**
-     * Creates a Scheme string from the given string <code>s</code>.
+     * Creates a primitive function value from the primitive <code>p</code>.
      */
-    public SString(String s) {
-        this.s = s;
+    public SPrimitive(Primitive p) {
+        this.p = p;
     }
     
     public boolean eq_p(SExpr sexpr) {
@@ -43,31 +42,31 @@ public final class SString extends SExpr {
     }
     
     public boolean equal_p(SExpr sexpr) {
-        return (sexpr instanceof SString) && ((SString)sexpr).s.equals(s);
+        return this == sexpr;
     }
     
     public boolean equals(Object obj) {
-        return (obj instanceof SString) && ((SString)obj).s.equals(s);
+        return this == obj;
     }
     
-    public String toString() {
-        return "\""+s+"\"";
-    }
-    
-    public String display() {
-        return s;
-    }
-    
-    public boolean isString() {
+    public boolean isPrimitive() {
         return true;
     }
     
-    /**
-     * Returns the string in this Scheme value.
-     */
-    public String getString() {
-        return s;
+    public String toString() {
+        return "#<primitive:"+p.getName()+">";
     }
     
-    private String s;
+    public String display() {
+        return "#<primitive:"+p.getName()+">";
+    }
+    
+    /**
+     * Returns the primitive function in this Scheme value.
+     */
+    public Primitive getPrimitive() {
+        return p;
+    }
+    
+    private Primitive p; 
 }

@@ -17,71 +17,57 @@
  *
  */
 
-package org.rubato.scheme;
-
-import java.io.PrintStream;
+package org.vetronauta.latrunculus.core.scheme;
 
 
 /**
- * The class wrapping an output port as a Scheme value.
+ * The class representing Scheme string values.
  * 
  * @author Gérard Milmeister
  */
-public final class SOutPort extends SExpr {
+public final class SString extends SExpr {
 
     /**
-     * Creates an output port from a print stream.
+     * Creates a Scheme string from the given string <code>s</code>.
      */
-    public SOutPort(PrintStream port) {
-        this.port = port;
+    public SString(String s) {
+        this.s = s;
     }
-    
     
     public boolean eq_p(SExpr sexpr) {
-        return sexpr == this;
+        return this == sexpr;
     }
-    
     
     public boolean eqv_p(SExpr sexpr) {
-        return sexpr == this;
+        return this == sexpr;
     }
-    
     
     public boolean equal_p(SExpr sexpr) {
-        return sexpr == this;
+        return (sexpr instanceof SString) && ((SString)sexpr).s.equals(s);
     }
-    
     
     public boolean equals(Object obj) {
-        return obj == this;
+        return (obj instanceof SString) && ((SString)obj).s.equals(s);
     }
-    
     
     public String toString() {
-        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
+        return "\""+s+"\"";
     }
-    
     
     public String display() {
-        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
+        return s;
     }
     
+    public boolean isString() {
+        return true;
+    }
     
     /**
-     * Closes the port.
+     * Returns the string in this Scheme value.
      */
-    public void close() {
-        port.close();
+    public String getString() {
+        return s;
     }
     
-    
-    /**
-     * Returns the print stream of this output port.
-     */
-    public PrintStream getPort() {
-        return port;
-    }
-    
-    
-    private PrintStream port;
+    private String s;
 }

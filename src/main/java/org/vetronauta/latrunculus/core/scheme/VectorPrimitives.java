@@ -17,9 +17,9 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
-import static org.rubato.scheme.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
 
 /**
  * Standard primitive procedures dealing with vectors.

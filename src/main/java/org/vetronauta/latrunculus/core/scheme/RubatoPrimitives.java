@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
@@ -47,10 +47,10 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.rubato.scheme.SExpr.NULL;
-import static org.rubato.scheme.SExpr.car;
-import static org.rubato.scheme.SExpr.cdr;
-import static org.rubato.scheme.SExpr.cons;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.NULL;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.SExpr.cons;
 
 
 /**

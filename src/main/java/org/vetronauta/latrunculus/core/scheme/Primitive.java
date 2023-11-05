@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 /**
  * The interface that all primitive functions must implement.

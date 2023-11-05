@@ -21,10 +21,10 @@ package org.rubato.base;
 
 import org.rubato.logeo.FormFactory;
 import org.rubato.rubettes.denotex.DenotexReader;
-import org.rubato.scheme.Env;
-import org.rubato.scheme.Evaluator;
-import org.rubato.scheme.Parser;
-import org.rubato.scheme.SExpr;
+import org.vetronauta.latrunculus.core.scheme.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.Parser;
+import org.vetronauta.latrunculus.core.scheme.SExpr;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;

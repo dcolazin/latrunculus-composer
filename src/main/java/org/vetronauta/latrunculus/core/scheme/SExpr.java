@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 /**
  * This is the abstract base class for all types of Scheme values,

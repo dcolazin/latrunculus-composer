@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
 /**
  * The class representing Scheme pairs.
@@ -30,8 +30,8 @@ public final class SCons extends SExpr {
      * Creates an complete pair where both car and cdr are ().
      */
     public SCons() {
-        this.car = SExpr.NULL;
-        this.cdr = SExpr.NULL;
+        this.car = NULL;
+        this.cdr = NULL;
     }
    
     /**

@@ -17,22 +17,42 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
 
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import java.util.HashMap;
 
 /**
- * The class representing forms as Scheme values.
+ * Class representing Scheme symbol calues. Symbols are unique, i.e., there is always
+ * at most one object for each string representation of a symbol.
  * 
  * @author Gérard Milmeister
  */
-public final class SForm extends SExpr {
+public final class Symbol extends SExpr {
 
     /**
-     * Creates a Scheme value from the form <code>f</code>.
+     * Creates a symbol with string representation <code>s</code>.
      */
-    public SForm(Form f) {
-        this.f = f;
+    public static Symbol make(String s) {
+        Symbol sym = symtab.get(s);
+        if (sym == null) {
+            sym = new Symbol();
+            sym.name = s;
+            symtab.put(s, sym);
+        }
+        return sym;
+    }
+
+    
+    /**
+     * Returns the string representation of the symbol.
+     */
+    public String getName() {
+        return name;
+    }
+    
+    
+    public boolean isSymbol() {
+        return true;
     }
     
     
@@ -47,37 +67,28 @@ public final class SForm extends SExpr {
 
     
     public boolean equal_p(SExpr sexpr) {
-        return equals(sexpr);
+        return this == sexpr;
     }
 
     
     public boolean equals(Object obj) {
-        return (obj instanceof SForm) && ((SForm)obj).f.equals(f);
+        return this == obj;
     }
 
     
-    public boolean isForm() {
-        return true;
-    }
-    
-
     public String toString() {
-        return "#<form:"+f.toString()+">";
+        return name;
     }
-    
 
+    
     public String display() {
-        return "#<form:"+f.toString()+">";
+        return name;
     }
+    
 
+    private Symbol() {}
+
+    private String name;    
     
-    /**
-     * Returns the form in this Scheme value.
-     */
-    public Form getForm() {
-        return f;
-    }
-    
-    
-    private Form f;
+    private static HashMap<String,Symbol> symtab = new HashMap<String,Symbol>(256);
 }

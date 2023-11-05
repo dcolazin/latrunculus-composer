@@ -17,78 +17,74 @@
  *
  */
 
-package org.rubato.scheme;
-
-import java.util.HashMap;
+package org.vetronauta.latrunculus.core.scheme;
 
 /**
- * Class representing Scheme symbol calues. Symbols are unique, i.e., there is always
- * at most one object for each string representation of a symbol.
+ * The class of Boolean values. There are only two instances,
+ * <code>TRUE</code> and <code>FALSE</code>.
  * 
  * @author Gérard Milmeister
  */
-public final class Symbol extends SExpr {
+public final class SBoolean extends SExpr {
 
     /**
-     * Creates a symbol with string representation <code>s</code>.
+     * The Scheme value "#t".
      */
-    public static Symbol make(String s) {
-        Symbol sym = symtab.get(s);
-        if (sym == null) {
-            sym = new Symbol();
-            sym.name = s;
-            symtab.put(s, sym);
-        }
-        return sym;
-    }
+    public static SBoolean TRUE = new SBoolean(true);    
 
+    /**
+     * The Scheme value "#f".
+     */
+    public static SBoolean FALSE = new SBoolean(false);
+    
     
     /**
-     * Returns the string representation of the symbol.
+     * Returns the Scheme value corresponding to the boolean <code>b</code>.
      */
-    public String getName() {
-        return name;
-    }
-    
-    
-    public boolean isSymbol() {
-        return true;
+    public static SBoolean make(boolean b) {
+        return b?TRUE:FALSE;
     }
     
     
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-
+    
     
     public boolean eqv_p(SExpr sexpr) {
         return this == sexpr;
     }
-
+    
     
     public boolean equal_p(SExpr sexpr) {
         return this == sexpr;
     }
-
+    
     
     public boolean equals(Object obj) {
         return this == obj;
     }
-
+    
     
     public String toString() {
-        return name;
+        return "#"+(b?"t":"f");
     }
-
+    
     
     public String display() {
-        return name;
+        return toString();
     }
     
-
-    private Symbol() {}
-
-    private String name;    
     
-    private static HashMap<String,Symbol> symtab = new HashMap<String,Symbol>(256);
+    public boolean isBoolean() {
+        return true;
+    }
+    
+    
+    private SBoolean(boolean b) {
+        this.b = b;
+    }
+    
+    
+    private boolean b;
 }

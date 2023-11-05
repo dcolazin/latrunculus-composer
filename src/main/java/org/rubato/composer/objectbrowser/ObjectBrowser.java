@@ -43,9 +43,9 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.rubato.scheme.Env;
-import org.rubato.scheme.SExpr;
-import org.rubato.scheme.Symbol;
+import org.vetronauta.latrunculus.core.scheme.Env;
+import org.vetronauta.latrunculus.core.scheme.SExpr;
+import org.vetronauta.latrunculus.core.scheme.Symbol;
 import org.vetronauta.latrunculus.server.display.FormDisplay;
 
 /** 

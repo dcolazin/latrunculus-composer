@@ -17,56 +17,71 @@
  *
  */
 
-package org.rubato.scheme;
+package org.vetronauta.latrunculus.core.scheme;
+
+import java.io.PrintStream;
+
 
 /**
- * The class representing primitive functions as Scheme values.
+ * The class wrapping an output port as a Scheme value.
  * 
  * @author Gérard Milmeister
  */
-public final class SPrimitive extends SExpr {
+public final class SOutPort extends SExpr {
 
     /**
-     * Creates a primitive function value from the primitive <code>p</code>.
+     * Creates an output port from a print stream.
      */
-    public SPrimitive(Primitive p) {
-        this.p = p;
+    public SOutPort(PrintStream port) {
+        this.port = port;
     }
+    
     
     public boolean eq_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
+    
     
     public boolean eqv_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
+    
     
     public boolean equal_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
+    
     
     public boolean equals(Object obj) {
-        return this == obj;
+        return obj == this;
     }
     
-    public boolean isPrimitive() {
-        return true;
-    }
     
     public String toString() {
-        return "#<primitive:"+p.getName()+">";
+        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
     }
+    
     
     public String display() {
-        return "#<primitive:"+p.getName()+">";
+        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
     }
+    
     
     /**
-     * Returns the primitive function in this Scheme value.
+     * Closes the port.
      */
-    public Primitive getPrimitive() {
-        return p;
+    public void close() {
+        port.close();
     }
     
-    private Primitive p; 
+    
+    /**
+     * Returns the print stream of this output port.
+     */
+    public PrintStream getPort() {
+        return port;
+    }
+    
+    
+    private PrintStream port;
 }
