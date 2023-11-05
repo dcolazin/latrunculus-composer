@@ -26,7 +26,7 @@ import org.rubato.base.RubatoException;
 import org.rubato.base.Unsafe;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -507,9 +507,8 @@ public final class SimpleDenotator extends Denotator {
     /**
      * Returns the ZString contained in a ZStringElement denotator.
      */
-    public RingString<?> getZString() {
-        return null; //TODO after RingString refactoring
-        //return ((ArithmeticStringElement<IntegerWrapper>)getElement()).getValue();
+    public StringMap<ZInteger> getZString() {
+        return (StringMap<ZInteger>) getElement();
     }
 
 
@@ -517,7 +516,7 @@ public final class SimpleDenotator extends Denotator {
      * Returns the string contained in a ZStringElement denotator.
      */
     public String getString() {
-        return getZString().getString();
+        return getZString().getFirstString();
     }
 
     

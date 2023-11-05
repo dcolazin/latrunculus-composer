@@ -19,8 +19,9 @@
 
 package org.rubato.audio.midi;
 
-import org.vetronauta.latrunculus.core.math.arith.string.RingString;
+import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
@@ -73,15 +74,14 @@ public class MidiChange implements Comparable<MidiChange> {
 
         public static MidiChange getPedalOn(FactorDenotator pedal, int resolution) {
         MidiChange newChange = new MidiChange();
-        RingString<?> v = null; //TODO after RingString refactoring
-        //RingString<IntegerWrapper> v = ((ArithmeticStringElement<IntegerWrapper>)((SimpleDenotator)pedal.getFactor(0)).getElement()).getValue();
+        StringMap<ZInteger> v = (StringMap<ZInteger>) ((SimpleDenotator)pedal.getFactor(0)).getElement();
         double  o = ((SimpleDenotator)pedal.getFactor(1)).getReal();
         double  d = ((SimpleDenotator)pedal.getFactor(2)).getReal();
 
         newChange.onset = (int)Math.round(o*resolution);
         newChange.duration = (int)Math.round(d*resolution);
-        newChange.track = v.getFactorForString("Track").intValue()-1;
-        newChange.channel = v.getFactorForString("Channel").intValue()-1;
+        newChange.track = v.getFactor("Track").intValue() - 1;
+        newChange.channel = v.getFactor("Channel").intValue() - 1;
         newChange.loudness = 127; 
         newChange.pitch = 0x40;
         newChange.type = CONTROL_CHANGE;         

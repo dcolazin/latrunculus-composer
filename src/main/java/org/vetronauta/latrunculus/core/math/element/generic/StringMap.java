@@ -237,6 +237,17 @@ public class StringMap<R extends RingElement<R>> extends RingElement<StringMap<R
         return dict; //TODO deepcopy
     }
 
+    public R getFactor(String s) {
+        return dict.get(s).deepCopy();
+    }
+
+    public String getFirstString() {
+        if (dict.isEmpty()) {
+            return null;
+        }
+        return dict.keySet().iterator().next();
+    }
+
     //TODO as R is mutable, it might be more efficient to use the mutable operation
 
     private void performOnMap(StringMap<R> element, BinaryOperator<R> operator) {
