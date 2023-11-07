@@ -323,7 +323,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
         }
         boolean changed = false;
         int i = 0;
-        LinkedList<Denotator> newFactors = new LinkedList<Denotator>();        
+        LinkedList<Denotator> newFactors = new LinkedList<>();
         for (Denotator factor : getFactors()) {
             if (path[currentPosition] == i) {
                 Denotator newFactor = factor.map(path, currentPosition +1, morphism);
@@ -447,7 +447,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
      * Returns a list of the coordinates of the denotator.
      */
     public List<Denotator> getFactors() {
-        LinkedList<Denotator> list = new LinkedList<Denotator>();
+        LinkedList<Denotator> list = new LinkedList<>();
         for (int i = 0; i < getFactorCount(); i++) {
             list.add(getFactor(i));
         }
@@ -487,16 +487,13 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
     
     @Override
     public int compareTo(Denotator object) {
-        int c = 0;
-        if (this != object) {
-            if (object instanceof LimitDenotator) {
-                c = compareTo((LimitDenotator)object);
-            }
-            else {
-                c = getForm().compareTo(object.getForm());
-            }
+        if (this == object) {
+            return 0;
         }
-        return c;
+        if (object instanceof LimitDenotator) {
+            return compareTo((LimitDenotator)object);
+        }
+        return getForm().compareTo(object.getForm());
     }
 
 

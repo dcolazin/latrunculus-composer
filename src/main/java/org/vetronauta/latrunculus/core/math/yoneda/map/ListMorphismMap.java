@@ -225,9 +225,10 @@ public final class ListMorphismMap implements MorphismMap {
         int bCount = other.getFactorCount();   
         ArrayList<Denotator> aList = list;
         ArrayList<Denotator> bList = other.list;
-        int c = 0;
+        int c;
         for (int i = 0; i < Math.min(aCount, bCount); i++) {
-            if ((c = aList.get(i).compareTo(bList.get(i))) != 0) {
+            c = aList.get(i).compareTo(bList.get(i));
+            if (c != 0) {
                 return c;
             }
         }

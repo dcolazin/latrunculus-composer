@@ -299,9 +299,6 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      */
     protected abstract ModuleMorphism getModuleMorphism(int[] path, int curpos)
         throws RubatoException;
-    
-    
-    public abstract int compareTo(Denotator object);
 
     
     /**

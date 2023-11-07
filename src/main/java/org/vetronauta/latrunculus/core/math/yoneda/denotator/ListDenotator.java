@@ -557,16 +557,13 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     @Override
     public int compareTo(Denotator object) {
-        int c = 0;
-        if (this != object) {
-            if (object instanceof ListDenotator) {
-                c = compareTo((ListDenotator)object);
-            }
-            else {
-                c = getForm().compareTo(object.getForm());
-            }
+        if (this == object) {
+            return 0;
         }
-        return c;
+        if (object instanceof ListDenotator) {
+            return compareTo((ListDenotator)object);
+        }
+        return getForm().compareTo(object.getForm());
     }
 
 

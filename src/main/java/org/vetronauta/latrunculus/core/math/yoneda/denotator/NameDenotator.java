@@ -275,9 +275,7 @@ public final class NameDenotator extends ListDenotator {
         if (object instanceof NameDenotator) {
             return nameEntry.compareTo(((NameDenotator)object).nameEntry);
         }
-        else {
-            return -object.compareTo(this);
-        }
+        return -object.compareTo(this);
     }
 
 

@@ -570,16 +570,13 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     public int compareTo(Denotator object) {
-        int c = 0;
-        if (this != object) {
-            if (object instanceof SimpleDenotator) {
-                c = compareTo((SimpleDenotator)object);
-            }
-            else {
-                c = getForm().compareTo(object.getForm());
-            }
+        if (this == object) {
+            return 0;
         }
-        return c;
+        if (object instanceof SimpleDenotator) {
+            return compareTo((SimpleDenotator)object);
+        }
+        return getForm().compareTo(object.getForm());
     }
 
 

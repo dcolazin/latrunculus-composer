@@ -561,16 +561,13 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
     
     @Override
     public int compareTo(Denotator object) {
-        int c = 0;
-        if (this != object) {
-            if (object instanceof PowerDenotator) {
-                c = compareTo((PowerDenotator)object);
-            }
-            else {
-                c = getForm().compareTo(object.getForm());
-            }
+        if (this == object) {
+            return 0;
         }
-        return c;
+        if (object instanceof PowerDenotator) {
+            return compareTo((PowerDenotator)object);
+        }
+        return getForm().compareTo(object.getForm());
     }
 
 

@@ -384,7 +384,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      */
     @Override
     public Iterator<Denotator> iterator() {
-        LinkedList<Denotator> list = new LinkedList<Denotator>();
+        LinkedList<Denotator> list = new LinkedList<>();
         list.add(getFactor());
         return list.iterator();
     }
@@ -441,7 +441,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * In this case there is only one factor.
      */
     public List<Denotator> getFactors() {
-        LinkedList<Denotator> list = new LinkedList<Denotator>();
+        LinkedList<Denotator> list = new LinkedList<>();
         list.add(getFactor());
         return list;
     }
@@ -450,7 +450,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     /**
      * Returns the index of the factor contained in a colimit denotator.
      */
-    public final int getIndex() {
+    public int getIndex() {
         return index;
     }
     
@@ -458,7 +458,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     /**
      * Returns the index label of the factor contained in a colimit denotator.
      */
-    public final String getLabel() {
+    public String getLabel() {
         return getColimitForm().indexToLabel(getIndex());
     }
 
@@ -466,23 +466,20 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     /**
      * Sets the index of the factor contained in a colimit denotator.
      */
-    private final void setIndex(int index) {
+    private void setIndex(int index) {
         this.index = index;
     }
 
        
     @Override
     public int compareTo(Denotator object) {
-        int c = 0;
-        if (this != object) {
-            if (object instanceof ColimitDenotator) {
-                c = compareTo((ColimitDenotator)object);
-            }
-            else {
-                c = getForm().compareTo(object.getForm());
-            }
+        if (this == object) {
+            return 0;
         }
-        return c;
+        if (object instanceof ColimitDenotator) {
+            return compareTo((ColimitDenotator)object);
+        }
+        return getForm().compareTo(object.getForm());
     }
 
 
