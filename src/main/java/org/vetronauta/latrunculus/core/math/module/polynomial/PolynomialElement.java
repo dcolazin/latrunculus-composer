@@ -429,25 +429,19 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
     }
 
     @Override
-    public int compareTo(ModuleElement object) {
-        if (object instanceof PolynomialElement) {
-            PolynomialElement<?> p = (PolynomialElement<?>)object;
-            int d0 = coefficients.size()-1;
-            int d1 = p.coefficients.size()-1;
-            if (getRing().equals(p.getRing())) {
-                for (int i = 0; i <= Math.min(d0, d1); i++) {
-                    int c = getCoefficient(i).compareTo(p.getCoefficient(i));
-                    if (c != 0) {
-                        return c;
-                    }
+    protected int sameClassCompare(PolynomialElement<R> other) {
+        int d0 = coefficients.size()-1;
+        int d1 = other.coefficients.size()-1;
+        if (getRing().equals(other.getRing())) {
+            for (int i = 0; i <= Math.min(d0, d1); i++) {
+                int c = getCoefficient(i).compareTo(other.getCoefficient(i));
+                if (c != 0) {
+                    return c;
                 }
-                return d0-d1;
             }
-            return getRing().compareTo(p.getRing());
+            return d0-d1;
         }
-        else {
-            return super.compareTo(object);
-        }
+        return getRing().compareTo(other.getRing());
     }
 
     @Override

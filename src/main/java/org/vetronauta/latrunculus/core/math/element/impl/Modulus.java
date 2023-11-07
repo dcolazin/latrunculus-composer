@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.exception.ModulusException;
 import org.vetronauta.latrunculus.core.exception.ZeroDivisorException;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
@@ -184,5 +185,10 @@ public class Modulus extends RingElement<Modulus> implements Arithmetic {
         if (modulus != other.getModulus()) {
             throw new ModulusException(this, other);
         }
+    }
+
+    @Override
+    protected int sameClassCompare(Modulus other) {
+        return intValue() - other.intValue();
     }
 }

@@ -25,6 +25,7 @@ import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -253,6 +254,13 @@ public class Rational extends RingElement<Rational> implements Arithmetic {
         else {
             DEFAULT_QUANT = q;
         }
+    }
+
+    @Override
+    protected int sameClassCompare(Rational other) {
+        int a = numerator * other.denominator;
+        int b = other.numerator * denominator;
+        return a - b;
     }
 
 }

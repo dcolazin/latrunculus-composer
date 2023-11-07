@@ -22,13 +22,10 @@ package org.vetronauta.latrunculus.core.math.module.polynomial;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -266,18 +263,12 @@ public final class ModularPolynomialElement<B extends RingElement<B>> extends Ri
     }
 
     @Override
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ModularPolynomialElement) {
-            ModularPolynomialElement<?> p = (ModularPolynomialElement<?>) object;
-            int c = ring.compareTo(p.ring);
-            if (c == 0) {
-                c = polynomial.compareTo(p.polynomial);
-            }
+    protected int sameClassCompare(ModularPolynomialElement<B> other) {
+        int c = ring.compareTo(other.ring);
+        if (c != 0) {
             return c;
         }
-        else {
-            return super.compareTo(object);
-        }
+        return polynomial.compareTo(other.polynomial);
     }
 
     @Override

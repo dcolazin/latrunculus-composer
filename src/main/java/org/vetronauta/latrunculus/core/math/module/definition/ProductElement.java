@@ -361,27 +361,19 @@ public class ProductElement extends RingElement<ProductElement> {
         }
     }
 
-    
-    public int compareTo(ModuleElement object) {
-        if (object instanceof ProductElement) {
-            ProductElement element = (ProductElement)object;
-            int d = getLength()-element.getLength();
-            if (d != 0) {
-                return d;
-            }
-            else {
-                for (int i = 0; i < getFactorCount(); i++) {
-                    int comp = getValue(i).compareTo(element.getValue(i));
-                    if (comp != 0) {
-                        return comp;
-                    }
-                }
-                return 0;
+    @Override
+    protected int sameClassCompare(ProductElement other) {
+        int d = getLength() - other.getLength();
+        if (d != 0) {
+            return d;
+        }
+        for (int i = 0; i < getFactorCount(); i++) {
+            int comp = getValue(i).compareTo(other.getValue(i));
+            if (comp != 0) {
+                return comp;
             }
         }
-        else {
-            return super.compareTo(object);
-        }
+        return 0;
     }
 
     @Override

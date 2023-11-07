@@ -29,6 +29,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
 import org.vetronauta.latrunculus.core.util.EntryList;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -278,6 +279,44 @@ public class StringMap<R extends RingElement<R>> extends RingElement<StringMap<R
 
     public String getElementTypeName() {
         return String.format("StringMap<%s>", getRing().toVisualString());
+    }
+
+    @Override
+    protected int sameClassCompare(StringMap<R> other) { //TODO might not be correct
+        return compareMaps(other.dict);
+    }
+
+    private int compareMaps(Map<String, ? extends RingElement> otherDict) {
+        Object[] otherKeyArray = otherDict.keySet().toArray();
+        Object[] thisKeyArray = dict.keySet().toArray();
+        Arrays.sort(otherKeyArray);
+        Arrays.sort(thisKeyArray);
+        int len = Math.min(otherKeyArray.length, thisKeyArray.length);
+        for (int i = 0; i < len; i++) {
+            int stringCompare = ((String)thisKeyArray[i]).compareTo((String)otherKeyArray[i]);
+            if (stringCompare == 0) {
+                int comp = compare(dict.get(thisKeyArray[i]), otherDict.get(otherKeyArray[i]));
+                if (comp != 0) {
+                    return comp;
+                }
+            } else {
+                return stringCompare;
+            }
+        }
+        return (thisKeyArray.length - otherKeyArray.length);
+    }
+
+    /**
+     * Compare two factor objects, like compareTo.
+     */
+    protected int compare(RingElement<?> x, RingElement<?> y) {
+        if (x == null && y == null) {
+            return 0;
+        }
+        if (x == null || y == null) {
+            return x != null ? 1 : -1;
+        }
+        return x.compareTo(y);
     }
 
 }

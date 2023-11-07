@@ -213,10 +213,16 @@ public abstract class RingElement<R extends RingElement<R>> implements FreeEleme
     }
     
     @Override
-    public int compareTo(ModuleElement object) {
+    public final int compareTo(ModuleElement object) {
+        if (this.getClass().isAssignableFrom(object.getClass())) {
+            return sameClassCompare((R) object);
+        }
         return getModule().compareTo(object.getModule());
     }
 
+    protected abstract int sameClassCompare(R other);
+
     @Override
     public abstract R deepCopy();
+
 }
