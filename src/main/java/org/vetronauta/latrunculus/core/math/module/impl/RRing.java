@@ -26,6 +26,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
@@ -54,11 +55,6 @@ public final class RRing extends Ring<Real> implements NumberRing {
     }
 
     @Override
-    public boolean hasElement(ModuleElement element) {
-        return element instanceof Real;
-    }
-
-    @Override
     public Real getOne() {
         return new Real(1);
     }
@@ -66,6 +62,11 @@ public final class RRing extends Ring<Real> implements NumberRing {
     @Override
     public boolean isField() {
         return true;
+    }
+
+    @Override
+    public boolean hasRingElement(RingElement<?> element) {
+        return element instanceof Real;
     }
 
     @Override

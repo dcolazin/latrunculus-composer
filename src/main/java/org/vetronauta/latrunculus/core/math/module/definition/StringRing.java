@@ -58,12 +58,12 @@ public class StringRing<R extends RingElement<R>> extends Ring<StringMap<R>> {
     }
 
     @Override
+    public boolean hasRingElement(RingElement<?> element) {
+        return element instanceof StringMap && this.equals(((StringMap<?>) element).getRing());    }
+
+    @Override
     public StringMap<R> cast(ModuleElement<?, ?> element) {
         return null; //TODO consider extracting the map into a class
-    }
-
-    public boolean hasElement(ModuleElement e) {
-        return e instanceof StringMap && this.equals(((StringMap<?>) e).getRing());
     }
     
     public StringMap<R> createElement(List<? extends ModuleElement<?, ?>> elements) {

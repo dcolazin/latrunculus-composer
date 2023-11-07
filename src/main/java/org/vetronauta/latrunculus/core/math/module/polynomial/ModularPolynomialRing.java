@@ -131,16 +131,17 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
         return false;
     }
 
-    public boolean hasElement(ModuleElement element) {
+    @Override
+    public FreeModule<?,ModularPolynomialElement<B>> getFreeModule(int dimension) {
+        return PolynomialModuleFactory.makeModular(getModulus(), dimension);
+    }
+
+    @Override
+    public boolean hasRingElement(RingElement<?> element) {
         if (element instanceof ModularPolynomialElement) {
             return element.getModule().equals(this);
         }
         return false;
-    }
-
-    @Override
-    public FreeModule<?,ModularPolynomialElement<B>> getFreeModule(int dimension) {
-        return PolynomialModuleFactory.makeModular(getModulus(), dimension);
     }
 
     @Override

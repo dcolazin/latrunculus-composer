@@ -17,6 +17,8 @@ public class Vector<R extends RingElement<R>> implements FreeElement<Vector<R>, 
 
     //TODO equals considering value.size() == 1
 
+    //TODO as much as possible, try to not leak this class around, but just use for matrix use and for elements for size != 1
+
     private final List<R> value;
     private final Ring<R> ring;
     private VectorModule<R> module;

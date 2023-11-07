@@ -111,7 +111,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public boolean hasElement(ModuleElement element) {
+    public boolean hasRingElement(RingElement<?> element) {
         if (element instanceof PolynomialElement) {
             return element.getModule().equals(this);
         }

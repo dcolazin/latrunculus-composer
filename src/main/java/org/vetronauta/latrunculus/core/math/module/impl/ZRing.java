@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.Module;
 import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;
@@ -53,9 +54,9 @@ public final class ZRing extends Ring<ZInteger> implements NumberRing {
     public VectorModule<ZInteger> getNullModule() {
         return nullModule;
     }
-    
+
     @Override
-    public boolean hasElement(ModuleElement<?,?> element) {
+    public boolean hasRingElement(RingElement<?> element) {
         return element instanceof ZInteger;
     }
 

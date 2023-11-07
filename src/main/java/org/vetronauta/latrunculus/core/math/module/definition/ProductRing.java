@@ -162,8 +162,9 @@ public final class ProductRing extends Ring<ProductElement> {
         return false;
     }
 
-    public boolean hasElement(ModuleElement element) {
-        return equals(element.getModule());
+    @Override
+    public boolean hasRingElement(RingElement<?> element) {
+        return element instanceof ProductElement && this.equals(element.getModule());
     }
 
     @Override

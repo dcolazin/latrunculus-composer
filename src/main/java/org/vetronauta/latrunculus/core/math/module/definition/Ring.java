@@ -19,6 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.module.definition;
 
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
 
@@ -103,6 +104,18 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
     public Ring<R> getRing() {
         return this;
     }
+
+    public final boolean hasElement(ModuleElement<?,?> element) {
+        if (element instanceof Vector && element.getLength() == 1) {
+            return hasElement(element.getComponent(0));
+        }
+        if (element instanceof RingElement) {
+            return hasRingElement((RingElement<?>) element);
+        }
+        return false;
+    }
+
+    public abstract boolean hasRingElement(RingElement<?> element);
 
     public int compareTo(Module object) {
         return toString().compareTo(object.toString());
