@@ -84,7 +84,7 @@ public final class Address {
         if (denotators.size() == 0) {
             return ZRing.nullModule;
         }
-        LinkedList<Ring> rings = new LinkedList<Ring>();
+        LinkedList<Ring> rings = new LinkedList<>();
         int dim = 0;
         for (Denotator d : denotators) {
             Module module = d.getAddress();

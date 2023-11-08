@@ -210,7 +210,8 @@ class BigBangOperationGraphTest {
 		properties.setEndPoint(new double[]{0,1});
 		this.model.translateObjects(properties);
 		Denotator expectedNode = this.objects.createMultilevelNode(new double[][]{{1,1,0,0,0,0}});
-		assertEquals(expectedNode, this.model.getComposition().get(new int[]{0,1,0}));
+		Denotator actualNode = this.model.getComposition().get(new int[]{0,1,0});
+		assertEquals(expectedNode, actualNode);
 		expectedNode = this.objects.createMultilevelNode(new double[][]{{2,6,0,0,0,0}});
 		assertEquals(expectedNode, this.model.getComposition().get(new int[]{0,1,1}));
 		

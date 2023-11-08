@@ -294,22 +294,19 @@ public final class DenotexParser implements DenotexParserConstants {
         if (s.equals("ZString") || s.equals("ZASCII")) {
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
             if (sub == -1)   {
-                //return StringRingRepository.getRing(ZRing.ring);
-                return null; //TODO after StringRing refactoring
+                return StringRingRepository.getRing(ZRing.ring);
             }
             return StringRingRepository.getModulusRing(sub);
         }
         else if (s.equals("QString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            //return StringRingRepository.getRing(QRing.ring);
-            return null; //TODO after StringRing refactoring
+            return StringRingRepository.getRing(QRing.ring);
         }
         else if (s.equals("RString")) {
             if (sub != -1) throw parseError("Illegal module '" + s + "_n'");
             if (sup != -1) throw parseError("Illegal module '" + s + "^n'");
-            //return StringRingRepository.getRing(RRing.ring);
-            return null; //TODO after StringRing refactoring
+            return StringRingRepository.getRing(RRing.ring);
         }
         else if (s.equals("Z")) {
             if (sup == -1) {

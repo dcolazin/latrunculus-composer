@@ -27,6 +27,7 @@ import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Ring;
 import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
 import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
 import org.vetronauta.latrunculus.core.util.EntryList;
 
 import java.util.Arrays;
@@ -195,7 +196,7 @@ public class StringMap<R extends RingElement<R>> extends RingElement<StringMap<R
 
     @Override
     public StringRing<R> getRing() {
-        return null; //TODO after StringRing refactoring
+        return StringRingRepository.getRing(baseRing);
     }
 
     @Override

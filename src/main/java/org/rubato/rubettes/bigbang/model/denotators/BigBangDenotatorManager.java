@@ -660,7 +660,7 @@ public class BigBangDenotatorManager {
 	}
 	
 	public List<DenotatorPath> sortAndReverse(List<DenotatorPath> paths) {
-		List<DenotatorPath> sortedPaths = new ArrayList<DenotatorPath>(new TreeSet<DenotatorPath>(paths));
+		List<DenotatorPath> sortedPaths = new ArrayList<>(new TreeSet<>(paths));
 		Collections.reverse(sortedPaths);
 		return sortedPaths;
 	}

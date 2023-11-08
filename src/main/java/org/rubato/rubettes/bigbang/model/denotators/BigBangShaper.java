@@ -50,8 +50,8 @@ public class BigBangShaper extends BigBangManipulator {
 	
 	private DenotatorPath shapeAndAddNextSiblings(DenotatorPath firstSiblingPath, Iterator<DenotatorPath> nodePathsIterator, TransformationPaths shapingPaths) {
 		//PerformanceCheck.startTask(".first_sib");
-		List<Denotator> siblings = new ArrayList<Denotator>();
-		List<DenotatorPath> siblingsPaths = new ArrayList<DenotatorPath>();
+		List<Denotator> siblings = new ArrayList<>();
+		List<DenotatorPath> siblingsPaths = new ArrayList<>();
 		
 		siblingsPaths.add(firstSiblingPath);
 		siblings.add(this.denotatorManager.getAbsoluteObject(firstSiblingPath));
@@ -78,13 +78,13 @@ public class BigBangShaper extends BigBangManipulator {
 	 * Returns a list with all the 
 	 */	
 	private void shapeAndReplaceOrAdd(List<Denotator> objects, DenotatorPath anchorPath, List<DenotatorPath> siblingsPaths, TransformationPaths shapingPaths) {
-		Map<Denotator,Double> newObjectsAndOldYValues = new HashMap<Denotator,Double>();
+		Map<Denotator,Double> newObjectsAndOldYValues = new HashMap<>();
 		for (int i = 0; i < objects.size(); i++) {
 			//PerformanceCheck.startTask(".map");
 			this.shapeObject(objects.get(i), newObjectsAndOldYValues, shapingPaths);
 		}
 		//PerformanceCheck.startTask(".add");
-		List<Denotator> newObjects = new ArrayList<Denotator>(newObjectsAndOldYValues.keySet());
+		List<Denotator> newObjects = new ArrayList<>(newObjectsAndOldYValues.keySet());
 		if (!this.copyAndShape) {
 			this.denotatorManager.replaceSiblingObjects(newObjects, siblingsPaths);
 		} else {
