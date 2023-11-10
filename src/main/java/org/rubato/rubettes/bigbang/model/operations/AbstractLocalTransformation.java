@@ -15,18 +15,19 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractLocalTransformation extends AbstractTransformation {
 	
-	private double[] shift1, shift2;
+	private double[] shift1;
+	private double[] shift2;
 	
 	//used for cloning
 	protected AbstractLocalTransformation(BigBangModel model, AbstractLocalTransformation other) {
 		super(model, other);
 	}
 	
-	public AbstractLocalTransformation(BigBangModel model, TransformationProperties properties) {
+	protected AbstractLocalTransformation(BigBangModel model, TransformationProperties properties) {
 		super(model, properties);
 	}
-	
-	public AbstractLocalTransformation(BigBangModel model, XMLReader reader, Element element) {
+
+	protected AbstractLocalTransformation(BigBangModel model, XMLReader reader, Element element) {
 		super(model, reader, element);
 	}
 	
@@ -35,7 +36,8 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		this.shift2 = new double[]{this.center[0],this.center[1]};
 		this.initTransformation(this.getMatrix(), this.getShift());
 	}
-	
+
+	@Override
 	protected void initTransformation(RMatrix matrix, List<Real> shift) {
 		RMatrix identity = new RMatrix(new double[][]{{1,0},{0,1}});
 		List<RMatrix> matrices = new ArrayList<>();
@@ -50,17 +52,19 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 	}
 	
 	protected abstract RMatrix getMatrix();
-	
+
+	@Override
 	public List<AbstractOperation> getSplitOperations(double ratio) {
 		this.modify(1);
-		List<AbstractOperation> shearings = new ArrayList<AbstractOperation>();
+		List<AbstractOperation> shearings = new ArrayList<>();
 		shearings.add(this.createModifiedCopy(ratio));
 		shearings.add(this.createModifiedCopy(1-ratio));
 		return shearings;
 	}
 	
 	protected abstract AbstractLocalTransformation createModifiedCopy(double ratio);
-	
+
+	@Override
 	public double[] getCenter() {
 		return this.center;
 	}
@@ -77,7 +81,8 @@ public abstract class AbstractLocalTransformation extends AbstractTransformation
 		list.add(new Real(0));
 		return list;
 	}
-	
+
+	@Override
 	public void toXML(XMLWriter writer) {
 		super.toXML(writer);
 	}

@@ -1,6 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.BigBangObject;
@@ -22,10 +23,8 @@ class DenotatorValueExtractorTest {
 	}
 	
 	@Test
+	@Disabled("there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable")
 	void testExtractDisplayObjectsWithMultilevelSoundScore() {
-		//TODO reabilitate
-		//TODO there are problems of ClassCastException with TreeSet<AbstractOperation> as AbstractOperation is not Comparable
-		/*
 		this.model.setOrAddComposition(this.objects.multiLevelSoundScore);
 		new DenotatorValueExtractor(this.model.getObjects(), this.model.getComposition());
 		BigBangObjects nodes = this.model.getObjects();
@@ -38,7 +37,6 @@ class DenotatorValueExtractorTest {
 		assertEquals(1.0, lastNode.getNthValue(nodes.getCoordinateSystemValueNames().get(4), 0));
 		assertEquals(2.0, lastNode.getNthValue(DenotatorValueExtractor.SATELLITE_LEVEL, 0));
 		assertEquals(0.0, lastNode.getNthValue(DenotatorValueExtractor.SIBLING_NUMBER, 0));
-	*/
 	}
 
 	@Test

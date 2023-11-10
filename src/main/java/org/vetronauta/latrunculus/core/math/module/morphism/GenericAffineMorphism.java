@@ -67,7 +67,7 @@ public final class GenericAffineMorphism<A extends FreeElement<A, RA>, B extends
             for (int j = 0; j < domainDimension; j++) {
                 matrix.setToZero(i,j); //TODO init
             }
-            vector.add(ring.getOne());
+            vector.add(ring.getZero());
         }
     }
 

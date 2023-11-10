@@ -104,7 +104,9 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		for (int i = 1; i < matrices.size(); i++) {
 			try {
 				morphism = AffineFreeMorphism.make(RRing.ring, matrices.get(i), new Vector<>(RRing.ring, shifts.get(i))).compose(morphism);
-			} catch (CompositionException e) { e.printStackTrace(); }
+			} catch (CompositionException e) {
+				e.printStackTrace();
+			}
 		}
 		this.transformation = morphism;
 	}
@@ -155,7 +157,7 @@ public abstract class AbstractTransformation extends AbstractOperation {
 		this.center = XMLReader.getDoubleArrayAttribute(transformationElement, CENTER_ATTR);
 		this.endingPoint = XMLReader.getDoubleArrayAttribute(transformationElement, ENDING_POINT_ATTR);
 		this.copyAndTransform = XMLReader.getBooleanAttribute(transformationElement, COPY_AND_TRANSFORM_ATTR);
-		this.transformationPaths = new ArrayList<TransformationPaths>();
+		this.transformationPaths = new ArrayList<>();
 		Element pathsElement = XMLReader.getChild(transformationElement, TransformationPaths.TRANSFORMATION_PATHS_TAG);
 		while (pathsElement != null) {
 			this.transformationPaths.add(new TransformationPaths(reader, pathsElement));

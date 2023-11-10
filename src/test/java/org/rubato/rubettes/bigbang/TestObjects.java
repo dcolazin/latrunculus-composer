@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -111,22 +111,22 @@ public class TestObjects {
 	
 	private void createComplexSoundScore() {
 		this.denotatorManager.setOrAddComposition(this.multiLevelSoundScore.deepCopy());
-		List<Denotator> notes = new ArrayList<Denotator>();
+		List<Denotator> notes = new ArrayList<>();
 		notes.add(this.generator.createNoteDenotator(this.NOTE2_ABSOLUTE_VALUES));
 		notes.add(this.generator.createNoteDenotator(this.NOTE1_ABSOLUTE_VALUES));
 		notes.add(this.generator.createNoteDenotator(this.NOTE0_VALUES));
-		List<DenotatorPath> parentPaths = new ArrayList<DenotatorPath>();
+		List<DenotatorPath> parentPaths = new ArrayList<>();
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,0}));
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,0}));
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,1,0,1,0,0}));
 		int[] powersetIndices = new int[]{1, 1, 1};
 		this.denotatorManager.addObjects(notes, parentPaths, powersetIndices);
 		
-		notes = new ArrayList<Denotator>();
+		notes = new ArrayList<>();
 		notes.add(this.generator.createNoteDenotator(this.NOTE2_ABSOLUTE_VALUES));
 		notes.add(this.generator.createNoteDenotator(this.NOTE1_ABSOLUTE_VALUES));
 		notes.add(this.generator.createNoteDenotator(this.NOTE0_VALUES));
-		parentPaths = new ArrayList<DenotatorPath>();
+		parentPaths = new ArrayList<>();
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,0,5,1}));
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,1,0,0}));
 		parentPaths.add(new DenotatorPath(this.generator.getSoundScoreForm(), new int[]{0,1,0,1,0,0,5,0}));
@@ -138,7 +138,7 @@ public class TestObjects {
 		ProductElement element1 = ProductElement.make(new Real((1)), new Real((2)), new Real((3)));
 		ProductElement element2 = ProductElement.make(new Real((4)), new Real((3)), new Real((1)));
 		ProductElement element3 = ProductElement.make(new Real((2)), new Real((1)), new Real((5)));
-		List<Denotator> triples = new ArrayList<Denotator>();
+		List<Denotator> triples = new ArrayList<>();
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element1));
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element2));
 		triples.add(new SimpleDenotator(NameDenotator.make(""), REAL_TRIPLE_FORM, element3));
@@ -150,7 +150,7 @@ public class TestObjects {
 	}
 	
 	private void createIntegerOrReals() throws DomainException, RubatoException {
-		List<Denotator> integerOrReals = new ArrayList<Denotator>();
+		List<Denotator> integerOrReals = new ArrayList<>();
 		integerOrReals.add(new ColimitDenotator(NameDenotator.make(""), INTEGER_OR_REAL_FORM, 1, this.createReal(2.5)));
 		integerOrReals.add(new ColimitDenotator(NameDenotator.make(""), INTEGER_OR_REAL_FORM, 0, this.createInteger(5)));
 		integerOrReals.add(new ColimitDenotator(NameDenotator.make(""), INTEGER_OR_REAL_FORM, 1, this.createReal(3.5)));
@@ -159,13 +159,13 @@ public class TestObjects {
 	}
 	
 	public PowerDenotator createGeneralScore(double[][] notes, double[][] rests) throws RubatoException {
-		List<Denotator> notesAndRests = new ArrayList<Denotator>();
-		for (int i = 0; i < notes.length; i++) {
-			Denotator currentNote = this.objectGenerator.createStandardDenotator(CoolFormRegistrant.NOTE_FORM, notes[i]);
+		List<Denotator> notesAndRests = new ArrayList<>();
+		for (double[] note : notes) {
+			Denotator currentNote = this.objectGenerator.createStandardDenotator(CoolFormRegistrant.NOTE_FORM, note);
 			notesAndRests.add(this.createColimitDenotator(CoolFormRegistrant.NOTE_OR_REST_FORM, 0, currentNote));
 		}
-		for (int i = 0; i < rests.length; i++) {
-			Denotator currentRest = this.objectGenerator.createStandardDenotator(CoolFormRegistrant.REST_FORM, rests[i]);
+		for (double[] rest : rests) {
+			Denotator currentRest = this.objectGenerator.createStandardDenotator(CoolFormRegistrant.REST_FORM, rest);
 			notesAndRests.add(this.createColimitDenotator(CoolFormRegistrant.NOTE_OR_REST_FORM, 1, currentRest));
 		}
 		return new PowerDenotator(NameDenotator.make(""), GENERAL_SCORE_FORM, notesAndRests);
@@ -180,7 +180,7 @@ public class TestObjects {
 	}
 	
 	public PowerDenotator createRationalTriples(double[][] values) throws RubatoException {
-		List<Denotator> triples = new ArrayList<Denotator>();
+		List<Denotator> triples = new ArrayList<>();
 		for (double[] currentValues : values) {
 			triples.add(this.createRationalTriple(currentValues));
 		}
@@ -192,7 +192,7 @@ public class TestObjects {
 	}
 	
 	public PowerDenotator createRealTriples(double[][] values) throws RubatoException {
-		List<Denotator> triples = new ArrayList<Denotator>();
+		List<Denotator> triples = new ArrayList<>();
 		for (double[] currentValues : values) {
 			triples.add(this.createRealTriple(currentValues));
 		}
@@ -231,7 +231,7 @@ public class TestObjects {
 		for (int i = 0; i < intPaths.length; i++) {
 			List<DenotatorPath> currentPaths = null;
 			if (intPaths[i] != null) {
-				currentPaths = Arrays.asList(new DenotatorPath(form, intPaths[i]));
+				currentPaths = Collections.singletonList(new DenotatorPath(form, intPaths[i]));
 			}
 			paths.setDomainPaths(i, currentPaths);
 			paths.setCodomainPaths(i, currentPaths);
@@ -245,7 +245,7 @@ public class TestObjects {
 		list.add(new Real(x));
 		list.add(new Real(y));
 		ModuleMorphism translation = AffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
-		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
+		return new BigBangTransformation(translation, Collections.singletonList(paths), false, null);
 	}
 	
 	public BigBangTransformation makeScaling(int x, int y, TransformationPaths paths) {
@@ -254,11 +254,11 @@ public class TestObjects {
 		list.add(new Real(0));
 		list.add(new Real(0));
 		ModuleMorphism translation = AffineFreeMorphism.make(RRing.ring, identity, new Vector<>(RRing.ring, list));
-		return new BigBangTransformation(translation, Arrays.asList(paths), false, null);
+		return new BigBangTransformation(translation, Collections.singletonList(paths), false, null);
 	}
 	
 	public Set<DenotatorPath> makeNotePaths(int[][] intNotePaths) {
-		Set<DenotatorPath> notePaths = new TreeSet<DenotatorPath>();
+		Set<DenotatorPath> notePaths = new TreeSet<>();
 		for (int[] currentPath: intNotePaths) {
 			notePaths.add(new DenotatorPath(this.SOUND_SCORE_FORM, currentPath));
 		}

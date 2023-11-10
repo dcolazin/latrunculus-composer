@@ -183,6 +183,16 @@ public class Complex extends RingElement<Complex> implements Arithmetic {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other instanceof Complex && real == ((Complex) other).real && imag == ((Complex) other).imag;
+    }
+
+    @Override
+    public int hashCode() {
+        return intValue();
+    }
+
+    @Override
     protected int sameClassCompare(Complex other) {
         if (real != other.real) {
             return Double.compare(real, other.real);
