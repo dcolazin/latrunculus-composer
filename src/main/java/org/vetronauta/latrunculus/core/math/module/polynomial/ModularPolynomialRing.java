@@ -184,7 +184,7 @@ public final class ModularPolynomialRing<B extends RingElement<B>>
     }
 
     
-    public ModularPolynomialElement<B> cast(ModuleElement<?,?> element) {
+    public ModularPolynomialElement<B> ringCast(ModuleElement<?,?> element) {
         if (this.equals(element.getModule())) {
             return (ModularPolynomialElement<B>) element;
         }

@@ -156,7 +156,7 @@ public final class PolynomialRing<R extends RingElement<R>> extends Ring<Polynom
     }
 
     @Override
-    public PolynomialElement<R> cast(ModuleElement<?,?> element) {
+    public PolynomialElement<R> ringCast(ModuleElement<?,?> element) {
         if (this.equals(element.getModule())) {
             return (PolynomialElement<R>) element;
         }

@@ -106,7 +106,7 @@ public final class ZnRing extends Ring<Modulus> implements NumberRing {
     }
 
     @Override
-    public Modulus cast(ModuleElement<?,?> element) {
+    public Modulus ringCast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
             return new Modulus(((Arithmetic) element).intValue(), modulus);
         }

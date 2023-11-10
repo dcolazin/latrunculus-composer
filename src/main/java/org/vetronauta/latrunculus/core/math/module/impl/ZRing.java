@@ -96,7 +96,7 @@ public final class ZRing extends Ring<ZInteger> implements NumberRing {
     }
 
     @Override
-    public ZInteger cast(ModuleElement<?,?> element) {
+    public ZInteger ringCast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
             return new ZInteger(((Arithmetic) element).intValue());
         }

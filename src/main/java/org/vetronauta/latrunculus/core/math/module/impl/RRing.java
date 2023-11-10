@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.impl;
 
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.module.definition.Module;
@@ -96,12 +97,12 @@ public final class RRing extends Ring<Real> implements NumberRing {
     }
 
     @Override
-    public Real cast(ModuleElement<?,?> element) {
+    public Real ringCast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
             return new Real(((Arithmetic) element).doubleValue());
         }
         if (element instanceof DirectSumElement) {
-            return this.cast(element.flatComponentList().get(0));
+            return cast(element.flatComponentList().get(0));
         }
         return null;
     }

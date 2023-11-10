@@ -94,7 +94,7 @@ public final class QRing extends Ring<Rational> implements NumberRing {
         }
     }
 
-    public Rational cast(ModuleElement<?,?> element) {
+    public Rational ringCast(ModuleElement<?,?> element) {
         if (element instanceof Arithmetic) {
             return new Rational(((Arithmetic) element).doubleValue());
         }

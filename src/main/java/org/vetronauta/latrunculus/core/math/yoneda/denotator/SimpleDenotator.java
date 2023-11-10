@@ -27,6 +27,7 @@ import org.rubato.base.Unsafe;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
+import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -448,7 +449,12 @@ public final class SimpleDenotator extends Denotator {
      * Returns the module element.
      */
     public ModuleElement getElement() {
-        return getModuleMorphismMap().getElement();
+        ModuleElement<?,?> mappedElement = getModuleMorphismMap().getElement();
+        if (mappedElement instanceof Vector && mappedElement.getLength() == 1) {
+            //TODO hack, vector leaked... really this should use generics...
+            return mappedElement.getComponent(0);
+        }
+        return mappedElement;
     }
 
 

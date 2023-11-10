@@ -219,7 +219,7 @@ public final class ProductRing extends Ring<ProductElement> {
     }
 
     
-    public ProductElement cast(ModuleElement element) {
+    public ProductElement ringCast(ModuleElement element) {
         if (element instanceof ProductElement) {
             ProductElement pe = (ProductElement)element;
             if (pe.getFactorCount() < getFactorCount()) {
@@ -227,7 +227,7 @@ public final class ProductRing extends Ring<ProductElement> {
             }
             RingElement[] factors0 = new RingElement[getFactorCount()];
             for (int i = 0; i < getFactorCount(); i++) {
-                RingElement factor = (RingElement)getFactor(i).cast(pe.getFactor(i));
+                RingElement factor = getFactor(i).cast(pe.getFactor(i));
                 if (factor == null) {
                     return null;
                 }
@@ -237,9 +237,7 @@ public final class ProductRing extends Ring<ProductElement> {
             }
             return ProductElement.make(factors0);
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
 

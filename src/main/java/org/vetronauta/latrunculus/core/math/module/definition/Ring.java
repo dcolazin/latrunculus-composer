@@ -117,6 +117,16 @@ public abstract class Ring<R extends RingElement<R>> implements FreeModule<R,R> 
 
     public abstract boolean hasRingElement(RingElement<?> element);
 
+    @Override
+    public R cast(ModuleElement<?,?> element) {
+        if (element instanceof Vector && element.getLength() == 1) {
+            return ringCast(element.getComponent(0));
+        }
+        return ringCast(element);
+    }
+
+    protected abstract R ringCast(ModuleElement<?,?> element);
+
     public int compareTo(Module object) {
         return toString().compareTo(object.toString());
     }
