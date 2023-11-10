@@ -14,9 +14,10 @@ public class BigBangAlteration {
 	private List<DenotatorPath> composition0;
 	private List<DenotatorPath> composition1;
 	private List<DenotatorPath> alterationCoordinates;
-	private double startDegree, endDegree;
+	private double startDegree;
+	private double endDegree;
 	private DenotatorPath degreesDimensionPath;
-	private Alterator alterator;
+	private final Alterator alterator;
 	
 	public BigBangAlteration() {
 		this.reset();
@@ -24,23 +25,23 @@ public class BigBangAlteration {
 	}
 	
 	public void reset() {
-		this.composition0 = new ArrayList<DenotatorPath>();
-		this.composition1 = new ArrayList<DenotatorPath>();
-		this.alterationCoordinates = new ArrayList<DenotatorPath>();
+		this.composition0 = new ArrayList<>();
+		this.composition1 = new ArrayList<>();
+		this.alterationCoordinates = new ArrayList<>();
 	}
 	
 	public Set<DenotatorPath> getComposition(int index) {
 		if (index == 0) {
-			return new TreeSet<DenotatorPath>(this.composition0);
+			return new TreeSet<>(this.composition0);
 		}
-		return new TreeSet<DenotatorPath>(this.composition1);
+		return new TreeSet<>(this.composition1);
 	}
 	
 	public void setAlterationComposition(Set<DenotatorPath> nodePaths, Integer index) {
 		if (index == 0) {
-			this.composition0 = new ArrayList<DenotatorPath>(nodePaths);
+			this.composition0 = new ArrayList<>(nodePaths);
 		} else {
-			this.composition1 = new ArrayList<DenotatorPath>(nodePaths);
+			this.composition1 = new ArrayList<>(nodePaths);
 		}
 		this.resetDegrees();
 	}
@@ -56,8 +57,8 @@ public class BigBangAlteration {
 	}
 	
 	public void resetDegrees() {
-		this.setStartDegree(new Double(0));
-		this.setEndDegree(new Double(0));
+		this.setStartDegree(0);
+		this.setEndDegree(0);
 	}
 	
 	public void setStartDegree(double value) {
@@ -73,15 +74,15 @@ public class BigBangAlteration {
 	}
 	
 	public void alter(BigBangDenotatorManager denotatorManager) {
-		if (this.composition0.size() > 0 && this.composition1.size() > 0 && this.alterationCoordinates.size() > 0) {
+		if (!this.composition0.isEmpty() && !this.composition1.isEmpty() && !this.alterationCoordinates.isEmpty()) {
 			this.alterator.setCoordinates(this.alterationCoordinates, this.degreesDimensionPath.getChildPath(0).toIntArray());
-			List<Denotator> composition0 = denotatorManager.getAbsoluteObjects(this.composition0);
-			List<Denotator> composition1 = denotatorManager.getAbsoluteObjects(this.composition1);
-			if (composition1.size() > 0) {
-				for (Denotator currentNeighbor: composition1) {
+			List<Denotator> composition0List = denotatorManager.getAbsoluteObjects(this.composition0);
+			List<Denotator> composition1List = denotatorManager.getAbsoluteObjects(this.composition1);
+			if (!composition1List.isEmpty()) {
+				for (Denotator currentNeighbor: composition1List) {
 					this.alterator.addNeighbor(currentNeighbor);
 				}
-				List<Denotator> alteredObjects = this.alterator.getBigBangAlteration(composition0, this.startDegree, this.endDegree, this.degreesDimensionPath.getChildPath(0).toIntArray());
+				List<Denotator> alteredObjects = this.alterator.getBigBangAlteration(composition0List, this.startDegree, this.endDegree, this.degreesDimensionPath.getChildPath(0).toIntArray());
 				denotatorManager.replaceObjects(alteredObjects, this.composition0);
 			}
 		}

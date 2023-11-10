@@ -11,11 +11,10 @@ import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Vector<R extends RingElement<R>> implements FreeElement<Vector<R>, R> {
-
-    //TODO equals considering value.size() == 1
 
     //TODO as much as possible, try to not leak this class around, but just use for matrix use and for elements for size != 1
 
@@ -221,12 +220,49 @@ public class Vector<R extends RingElement<R>> implements FreeElement<Vector<R>, 
 
     @Override
     public int compareTo(ModuleElement object) {
-        return getModule().compareTo(object.getModule());
+        if (object instanceof RingElement && length() == 1) {
+            return value.get(0).compareTo(object);
+        }
+        if (!(object instanceof Vector)) {
+            return getModule().compareTo(object.getModule());
+        }
+        int currentCompare = length() - object.getLength();
+        if (currentCompare != 0) {
+            return currentCompare;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            currentCompare = value.get(i).compareTo(object.getComponent(i));
+            if (currentCompare != 0) {
+                return currentCompare;
+            }
+        }
+        return 0;
     }
 
     @Override
     public Iterator<R> iterator() {
         return value.stream().map(RingElement::deepCopy).iterator();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof RingElement && length() == 1) {
+            return value.get(0).equals(object);
+        }
+        if (!(object instanceof Vector) || length() != ((Vector<?>) object).getLength()) {
+            return false;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            if (!value.get(i).equals(((Vector<?>) object).getComponent(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.stream().mapToInt(Objects::hashCode).sum();
     }
 
 }

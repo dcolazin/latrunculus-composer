@@ -277,7 +277,7 @@ public class TestObjects {
 		Set<DenotatorPath> allValuePaths = new TreeSet<>(new DenotatorValueFinder(d1, true).getValuePaths());
 		allValuePaths.addAll(new DenotatorValueFinder(d2, true).getValuePaths());
 		for (DenotatorPath currentPath : allValuePaths) {
-			assertEquals(this.objectGenerator.getDoubleValue(d1, currentPath), this.objectGenerator.getDoubleValue(d2, currentPath));
+			assertEquals(this.objectGenerator.getDoubleValue(d1, currentPath), this.objectGenerator.getDoubleValue(d2, currentPath), currentPath.toString());
 		}
 	}
 
