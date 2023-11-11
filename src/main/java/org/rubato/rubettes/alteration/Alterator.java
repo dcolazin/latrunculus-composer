@@ -83,7 +83,7 @@ public class Alterator {
 	//TODO REMOVE!!! CRAP-... BUT GENERALIZE HIERARCHICAL ALTERATION!!!!
 	public List<Denotator> getSoundScoreAlteration(List<Denotator> input0, double startDegree, double endDegree, boolean onlyModulators) {
 		this.neighborFinder.fillKDTree();
-		List<Denotator> alteredDenotators = new ArrayList<Denotator>();
+		List<Denotator> alteredDenotators = new ArrayList<>();
 		Iterator<Denotator> input0Coordinates = input0.iterator();
 		int[][] paths = this.coordinatePaths;
 		//TODO make controllable! (direction along which start/end degrees work)
@@ -116,7 +116,7 @@ public class Alterator {
 	 */
 	public List<Denotator> getBigBangAlteration(List<Denotator> input0, double startDegree, double endDegree, int[] degreesDimensionPath) {
 		this.neighborFinder.fillKDTree();
-		List<Denotator> alteredDenotators = new ArrayList<Denotator>();
+		List<Denotator> alteredDenotators = new ArrayList<>();
 		Iterator<Denotator> input0Coordinates = input0.iterator();
 		int[][] paths = this.coordinatePaths;
 		//TODO make controllable at some point! (direction along which start/end degrees work)
@@ -130,7 +130,7 @@ public class Alterator {
 			endDegrees[i] = endDegree;
 		}
 		try {
-			if (input0.size() > 0) {
+			if (!input0.isEmpty()) {
 				double[][] minAndMax = this.getMinAndMaxDouble(input0.iterator(), differentPaths);
 				while (input0Coordinates.hasNext()) {
 					Denotator currentDenotator = input0Coordinates.next();
@@ -146,7 +146,7 @@ public class Alterator {
 	}
 	
 	public PowerDenotator getAlteration(PowerDenotator input0, PowerDenotator input1) throws RubatoException {
-		List<Denotator> morphedFactors = new ArrayList<Denotator>();
+		List<Denotator> morphedFactors = new ArrayList<>();
 		Iterator<Denotator> input0Coordinates = input0.iterator();
 		int[][] paths = this.dimensionsTable.getPaths();
 		int[][] differentPaths = this.dimensionsTable.getDifferentRelativeToFormPaths();

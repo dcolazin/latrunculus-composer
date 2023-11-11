@@ -143,7 +143,7 @@ public class Real extends RingElement<Real> implements Arithmetic {
 
     @Override
     public int intValue() {
-        return (int) value;
+        return (int) Math.round(value);
     }
 
     @Override
