@@ -30,9 +30,9 @@ import javax.swing.event.ChangeListener;
 
 import org.rubato.composer.components.JMorphismEntry;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.PowerMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.endo.Endomorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.PowerMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.endo.Endomorphism;
 
 class JPowerMorphismType
         extends JMorphismType 

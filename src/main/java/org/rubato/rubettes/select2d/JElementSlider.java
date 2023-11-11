@@ -10,8 +10,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;

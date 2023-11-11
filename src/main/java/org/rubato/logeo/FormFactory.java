@@ -23,12 +23,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
+import org.vetronauta.latrunculus.core.math.module.factory.StringRingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;

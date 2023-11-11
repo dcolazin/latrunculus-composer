@@ -20,9 +20,9 @@
 package org.rubato.composer.components;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 import org.vetronauta.latrunculus.server.parse.ModuleElementRepresenter;
 

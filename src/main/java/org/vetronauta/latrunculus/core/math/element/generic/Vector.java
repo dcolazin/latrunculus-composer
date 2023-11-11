@@ -1,11 +1,8 @@
 package org.vetronauta.latrunculus.core.math.element.generic;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.ArrayList;

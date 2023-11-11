@@ -20,9 +20,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 import org.vetronauta.latrunculus.server.parse.ModuleElementRepresenter;

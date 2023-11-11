@@ -30,7 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 /**

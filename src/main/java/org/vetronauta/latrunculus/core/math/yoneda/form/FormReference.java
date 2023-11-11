@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.rubato.base.RubatoDictionary;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;

@@ -28,11 +28,11 @@ import javax.swing.JButton;
 
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSimpleEntry;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ScaledMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ScaledMorphism;
 
 class JScaleMorphismType extends JMorphismType implements ActionListener {
 

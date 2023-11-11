@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.exception;
 
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 
 /**
  * Indicates that the inverse of a RingElement does not exist.

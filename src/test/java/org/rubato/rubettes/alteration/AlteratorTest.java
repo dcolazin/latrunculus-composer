@@ -12,8 +12,8 @@ import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.affine.AffineProjection;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.affine.AffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.util.ArrayList;

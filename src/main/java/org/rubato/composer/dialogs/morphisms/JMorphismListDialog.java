@@ -31,8 +31,8 @@ import java.util.List;
 import javax.swing.*;
 
 import org.rubato.base.Repository;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 /**
  * @author Gérard Milmeister

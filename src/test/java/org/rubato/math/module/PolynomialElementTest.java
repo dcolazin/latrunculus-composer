@@ -9,8 +9,8 @@ import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.element.generic.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

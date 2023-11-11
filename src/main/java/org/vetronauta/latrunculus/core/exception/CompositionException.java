@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.exception;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 /**
  * Exception thrown if composition of morphisms fails.

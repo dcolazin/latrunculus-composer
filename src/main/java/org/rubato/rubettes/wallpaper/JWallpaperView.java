@@ -22,10 +22,10 @@ package org.rubato.rubettes.wallpaper;
 import org.rubato.composer.dialogs.morphisms.JGeometryView;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 import java.awt.Color;
 import java.awt.Graphics;

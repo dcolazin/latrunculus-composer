@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.core.exception;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 
 /**
  * Exception thrown in cases of mismatched addresses.

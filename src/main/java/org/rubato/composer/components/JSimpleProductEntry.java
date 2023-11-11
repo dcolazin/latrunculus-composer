@@ -20,11 +20,11 @@
 package org.rubato.composer.components;
 
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

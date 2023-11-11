@@ -19,8 +19,8 @@
 
 package org.vetronauta.latrunculus.server.xml.reader;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;

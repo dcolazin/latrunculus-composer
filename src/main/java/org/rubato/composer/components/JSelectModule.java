@@ -20,19 +20,19 @@
 package org.rubato.composer.components;
 
 import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialModuleFactory;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.factory.PolynomialModuleFactory;
+import org.vetronauta.latrunculus.core.math.element.generic.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.repository.RingRepository;
-import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
+import org.vetronauta.latrunculus.core.math.module.factory.RingRepository;
+import org.vetronauta.latrunculus.core.math.module.factory.StringRingRepository;
 import org.vetronauta.latrunculus.server.parse.ModuleElementParser;
 
 import javax.swing.BoxLayout;

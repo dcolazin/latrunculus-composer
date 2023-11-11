@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.element.impl.Complex;
  * @author vetronauta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Trigonometry {
+public final class Trigonometry {
 
     /**
      * Creates a complex number with the polar representation r*e^(i*phi).

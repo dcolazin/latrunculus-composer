@@ -20,13 +20,13 @@
 package org.rubato.composer.components;
 
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ProductElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;

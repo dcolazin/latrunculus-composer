@@ -20,14 +20,13 @@
 package org.vetronauta.latrunculus.core.math.module.impl;
 
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
-import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.element.generic.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 
 import java.util.List;

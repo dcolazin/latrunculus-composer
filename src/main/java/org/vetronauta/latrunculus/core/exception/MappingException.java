@@ -20,8 +20,8 @@
 package org.vetronauta.latrunculus.core.exception;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 /**
  * Exception thrown when a module morphism fails to map an element.

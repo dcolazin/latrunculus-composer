@@ -28,11 +28,11 @@ import java.util.List;
 import javax.swing.Box;
 
 import org.rubato.composer.components.JMorphismEntry;
-import org.vetronauta.latrunculus.core.math.module.definition.FreeModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.SplitMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.SplitMorphism;
 
 public class JSplitMorphismType
         extends JMorphismType implements ActionListener {

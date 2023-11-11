@@ -26,9 +26,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.rubato.composer.components.JSimpleEntry;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.morphism.ConstantMorphism;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.morphism.ConstantMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 class JConstMorphismType extends JMorphismType implements ActionListener {
 

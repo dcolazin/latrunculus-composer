@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductElement;
+import org.vetronauta.latrunculus.core.math.element.generic.DirectSumElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ProductElement;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,14 +20,14 @@
 package org.vetronauta.latrunculus.core.math.yoneda;
 
 import org.rubato.util.Pair;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.NumberRing;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.NumberRing;
+import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.StringRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import java.util.Arrays;

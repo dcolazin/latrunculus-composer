@@ -28,9 +28,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 
 /**
  * 

@@ -32,8 +32,8 @@ import java.awt.event.ActionEvent;
 
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 
 /**
  * A JDialog for selecting the SimpleForms to be transformed by a morphism. For all domain

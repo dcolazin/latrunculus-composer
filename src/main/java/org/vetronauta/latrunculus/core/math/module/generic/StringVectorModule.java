@@ -20,8 +20,7 @@
 package org.vetronauta.latrunculus.core.math.module.generic;
 
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 
 /**
  * @author vetronauta

@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

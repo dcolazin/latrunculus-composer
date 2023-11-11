@@ -23,11 +23,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
-import org.vetronauta.latrunculus.core.math.module.repository.StringRingRepository;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.module.generic.StringRing;
+import org.vetronauta.latrunculus.core.math.module.factory.StringRingRepository;
 import org.vetronauta.latrunculus.core.util.EntryList;
 
 import java.util.Arrays;

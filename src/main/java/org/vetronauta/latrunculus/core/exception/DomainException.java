@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.exception;
 
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 
 /**
  * This exception is thrown whenever a module element operation fails due

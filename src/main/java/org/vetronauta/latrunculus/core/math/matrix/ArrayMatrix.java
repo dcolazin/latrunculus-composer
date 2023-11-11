@@ -20,8 +20,8 @@
 package org.vetronauta.latrunculus.core.math.matrix;
 
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 
 import java.util.ArrayList;
 import java.util.Arrays;

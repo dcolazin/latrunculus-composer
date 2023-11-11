@@ -33,7 +33,7 @@ import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;

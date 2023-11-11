@@ -20,14 +20,14 @@
 package org.vetronauta.latrunculus.server.xml.reader;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
-import org.vetronauta.latrunculus.core.math.module.definition.DirectSumModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Module;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.ProductRing;
-import org.vetronauta.latrunculus.core.math.module.definition.RestrictedModule;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
-import org.vetronauta.latrunculus.core.math.module.definition.StringRing;
+import org.vetronauta.latrunculus.core.math.module.generic.DirectSumModule;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
+import org.vetronauta.latrunculus.core.math.module.generic.RestrictedModule;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.StringRing;
 import org.vetronauta.latrunculus.core.math.module.generic.StringVectorModule;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -35,10 +35,10 @@ import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.vetronauta.latrunculus.core.math.module.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.polynomial.ModularPolynomialRing;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialElement;
-import org.vetronauta.latrunculus.core.math.module.polynomial.PolynomialRing;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.module.generic.ModularPolynomialRing;
+import org.vetronauta.latrunculus.core.math.element.generic.PolynomialElement;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 

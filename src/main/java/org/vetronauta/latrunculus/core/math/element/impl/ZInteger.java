@@ -24,9 +24,8 @@ import org.vetronauta.latrunculus.core.exception.DivisionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.InverseException;
 import org.vetronauta.latrunculus.core.math.element.generic.Arithmetic;
-import org.vetronauta.latrunculus.core.math.module.definition.ModuleElement;
-import org.vetronauta.latrunculus.core.math.module.definition.Ring;
-import org.vetronauta.latrunculus.core.math.module.definition.RingElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 
 /**
