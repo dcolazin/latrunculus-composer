@@ -23,10 +23,12 @@ import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.generic.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.Ring;
+import org.vetronauta.latrunculus.core.util.VoidBiConsumer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 /**
  * Elements with components from arbitrary modules.
@@ -52,7 +54,7 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
     }
 
     public static <I extends RingElement<I>> DirectSumElement<I> make(List<ModuleElement<?,I>> components) {
-        if (components.size() < 1) {
+        if (components.isEmpty()) {
             throw new IllegalArgumentException("There must be at least one component module.");
         }
         if (!checkComponents(components)) {
@@ -86,92 +88,22 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
 
     @Override
     public DirectSumElement<R> sum(DirectSumElement<R> element) throws DomainException {
-        if (getLength() != element.getLength()) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        if (isNullElement()) {
-            if (getModule().hasElement(element)) {
-                return this;
-            }
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        try {
-            List<ModuleElement<?,R>> c = new ArrayList<>(getLength());
-            for (int i = 0; i < getLength(); i++) {
-                c.add(((ModuleElement) components.get(i)).sum(element.getComponent(i)));
-            }
-            return new DirectSumElement<>(c);
-        } catch (DomainException e) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+        return handleBiOperator(element, (x,y) -> ((ModuleElement) x).sum(y));
     }
 
     @Override
     public void add(DirectSumElement<R> element) throws DomainException {
-        if (getLength() != element.getLength()) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        if (isNullElement()) {
-            if (getModule().hasElement(element)) {
-                return;
-            }
-            else {
-                throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");
-            }
-        }
-        try {
-            for (int i = 0; i < getLength(); i++) {
-                ((ModuleElement) components.get(i)).add(element.getComponent(i));
-            }
-        }
-        catch (DomainException e) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+        handleBiConsumer(element, (x,y) -> ((ModuleElement) x).add(y));
     }
 
     @Override
     public DirectSumElement<R> difference(DirectSumElement<R> element) throws DomainException {
-        if (getLength() != element.getLength()) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        if (isNullElement()) {
-            if (getModule().hasElement(element)) {
-                return this;
-            }
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        try {
-            List<ModuleElement<?,R>> c = new ArrayList<>(getLength());
-            for (int i = 0; i < getLength(); i++) {
-                c.add(((ModuleElement) components.get(i)).difference(element.getComponent(i)));
-            }
-            return new DirectSumElement<>(c);
-        } catch (DomainException e) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+        return handleBiOperator(element, (x,y) -> ((ModuleElement) x).difference(y));
     }
 
     @Override
     public void subtract(DirectSumElement<R> element) throws DomainException {
-        if (getLength() != element.getLength()) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
-        if (isNullElement()) {
-            if (getModule().hasElement(element)) {
-                return;
-            }
-            else {
-                throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");
-            }
-        }
-        try {
-            for (int i = 0; i < getLength(); i++) {
-                ((ModuleElement) components.get(i)).subtract(element.getComponent(i));
-            }
-        }
-        catch (DomainException e) {
-            throw new DomainException(this.getModule(), element.getModule());
-        }
+        handleBiConsumer(element, (x,y) -> ((ModuleElement) x).subtract(y));
     }
 
     @Override
@@ -194,8 +126,7 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
     }
 
     @Override
-    public DirectSumElement<R> scaled(R element)
-            throws DomainException {
+    public DirectSumElement<R> scaled(R element) throws DomainException {
         if (isNullElement()) {
             return this;
         }
@@ -351,6 +282,49 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
             newComponents.add(components.get(i).deepCopy());
         }
         return new DirectSumElement<>(newComponents);
+    }
+
+    public DirectSumElement<R> handleBiOperator(DirectSumElement<R> element, BinaryOperator<ModuleElement<?,R>> operator) {
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return this;
+            }
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        try {
+            List<ModuleElement<?,R>> c = new ArrayList<>(getLength());
+            for (int i = 0; i < getLength(); i++) {
+                c.add(operator.apply(components.get(i), element.getComponent(i)));
+            }
+            return new DirectSumElement<>(c);
+        } catch (DomainException e) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+    }
+
+    public void handleBiConsumer(DirectSumElement<R> element, VoidBiConsumer<ModuleElement<?,R>> operator) {
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return;
+            }
+            else {
+                throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");
+            }
+        }
+        try {
+            for (int i = 0; i < getLength(); i++) {
+                operator.accept(components.get(i), element.getComponent(i));
+            }
+        }
+        catch (DomainException e) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
     }
 
 }
