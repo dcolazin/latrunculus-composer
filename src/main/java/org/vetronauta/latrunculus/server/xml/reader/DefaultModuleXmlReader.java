@@ -43,6 +43,7 @@ import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.w3c.dom.Element;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DIMENSION_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.INDETERMINATE_ATTR;
@@ -226,7 +227,7 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
         assert(element.getAttribute(TYPE_ATTR).equals(getElementTypeName(clazz)));
         Element childElement = XMLReader.getChild(element, MODULE);
         if (childElement != null) {
-            LinkedList<Module> elements = new LinkedList<>();
+            LinkedList<Module<?,?>> elements = new LinkedList<>();
             Module module = reader.parseModule(childElement);
             if (module == null) {
                 return null;
@@ -241,13 +242,8 @@ public class DefaultModuleXmlReader implements LatrunculusXmlReader<Module> {
                 elements.add(module);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            Module[] coefficients = new Module[elements.size()];
-            int i = 0;
-            for (Module m : elements) {
-                coefficients[i++] = m;
-            }
             try {
-                return DirectSumModule.make(coefficients);
+                return DirectSumModule.make((List) element);
             }
             catch (IllegalArgumentException e) {
                 reader.setError(e.getMessage());
