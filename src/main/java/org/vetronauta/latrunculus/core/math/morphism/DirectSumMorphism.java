@@ -25,6 +25,9 @@ import org.vetronauta.latrunculus.core.math.module.generic.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The abstract base class for morphisms in a composite module.
  * 
@@ -41,9 +44,9 @@ public abstract class DirectSumMorphism<RA extends RingElement<RA>, RB extends R
         if (!getDomain().hasElement(x)) {
             throw new MappingException("DirectSumAbstractMorphism.map: ", x, this);
         }
-        ModuleElement[] components = new ModuleElement[x.getLength()];
+        List<ModuleElement<?,RA>> components = new ArrayList<>(x.getLength());
         for (int i = 0; i < x.getLength(); i++) {
-            components[i] = x.getComponent(i);
+            components.add(x.getComponent(i));
         }
         return mapValue(DirectSumElement.make(components));
     }

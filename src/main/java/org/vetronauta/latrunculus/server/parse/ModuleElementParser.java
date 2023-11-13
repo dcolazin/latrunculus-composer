@@ -210,15 +210,15 @@ public final class ModuleElementParser {
             return null;
         }
 
-        ModuleElement[] comps = new ModuleElement[module.getDimension()];
+        List<ModuleElement<?,?>> comps = new ArrayList<>(module.getDimension());
         for (int i = 0; i < module.getDimension(); i++) {
             ModuleElement element = parseElement(module.getComponentModule(i), m.get(i));
             if (element == null) {
                 return null;
             }
-            comps[i] = element;
+            comps.add(element);
         }
-        return DirectSumElement.make(comps);
+        return DirectSumElement.make((List) comps);
     }
 
     private static ArrayList<String> internalParseDirectSum(String s) {

@@ -34,13 +34,13 @@ public final class NumberTheory {
      * @return the gcd of x and y, always non negative
      */
     public static int gcd(int x, int y) {
-        int r0, r1, r;
-        r0 = x;
-        r1 = y;
+        int swap;
+        int r0 = x;
+        int r1 = y;
         while (r1 != 0) {
-            r = r1;
+            swap = r1;
             r1 = r0 % r1;
-            r0 = r;
+            r0 = swap;
         }
         
         if (r0 < 0) {
@@ -58,7 +58,7 @@ public final class NumberTheory {
      *            res[0]*x + res[1]*y = gcd(x,y)
      * @return the greatest common divisor of x and y, always non negative
      */
-    public static int exgcd(int x, int y, int res[]) {
+    public static int exgcd(int x, int y, int[] res) {
         int q, r, s, t;
         int r0 = x;
         int s0 = 1;

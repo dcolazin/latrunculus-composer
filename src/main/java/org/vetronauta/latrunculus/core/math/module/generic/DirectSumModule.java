@@ -23,6 +23,7 @@ import org.vetronauta.latrunculus.core.math.element.generic.DirectSumElement;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,12 +50,15 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
             return new DirectSumModule(components);
         }
     }
-    
+
+    public static <X extends RingElement<X>> DirectSumModule<X> make(List<Module<?,X>> components) {
+       return make(components.toArray(new Module[]{}));
+    }
     
     /**
      * Creates a direct sum with no components of the given <code>ring</code>.
      */
-    public static DirectSumModule makeNullModule(Ring ring) {
+    public static <X extends RingElement<X>> DirectSumModule<X> makeNullModule(Ring<X> ring) {
         return new DirectSumModule(ring);
     }
     
@@ -74,18 +78,18 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
     
     
-    public Ring getRing() {
+    public Ring<R> getRing() {
         return ring;
     }
     
     
-    public DirectSumElement getZero() {
+    public DirectSumElement<R> getZero() {
         if (getDimension() == 0) {
             return DirectSumElement.makeNullElement(getRing());
         }
-        ModuleElement[] newComponents = new ModuleElement[getDimension()];
+        List<ModuleElement<?,R>> newComponents = new ArrayList<>(getDimension());
         for (int i = 0; i < getDimension(); i++) {
-            newComponents[i] = getComponentModule(i).getZero();
+            newComponents.add(getComponentModule(i).getZero());
         }
         return DirectSumElement.make(newComponents);
     }
@@ -95,7 +99,7 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
     
 
-    public Module getComponentModule(int i) {
+    public Module<?,R> getComponentModule(int i) {
         return components[i];
     }
     
@@ -124,51 +128,42 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
 	   if (elements.size() < getDimension()) {
 	       return null;
 	   }
-
        if (getDimension() == 0) {
            return DirectSumElement.makeNullElement(getRing());
        }
-       
-       ModuleElement[] values = new ModuleElement[getDimension()];        
-	   int i = 0;
-	
-       for (ModuleElement e : elements) {
-           values[i] = getComponentModule(i).cast(e);
-           if (values[i] == null) {
+       List<ModuleElement<?,R>> values = new ArrayList<>(getDimension());
+       for (int i = 0; i < components.length; i++) {
+           ModuleElement<?,R> castedElement = getComponentModule(i).cast(elements.get(i));
+           if (castedElement == null) {
                return null;
            }
-	       i++;
+           values.add(castedElement);
 	   }
-	
 	   return DirectSumElement.make(values);
     }
 
     
     public DirectSumElement<R> fill(List<ModuleElement<?,?>> elements) {
-        ModuleElement[] newElements = new ModuleElement[getDimension()];
+        List<ModuleElement<?,R>> newElements = new ArrayList<>(getDimension());
+        ModuleElement<?,R> currentElement;
         for (int i = 0; i < getDimension(); i++) {
-            Module component = getComponentModule(i);
+            Module<?,R> component = getComponentModule(i);
             if (component instanceof DirectSumModule) {
-                newElements[i] = ((DirectSumModule)component).fill(elements);
-                if (newElements[i] == null) {
+                currentElement = ((DirectSumModule) component).fill(elements);
+            } else {
+                if (elements.size() < component.getDimension()) {
                     return null;
                 }
-            }
-            else {
-                LinkedList<ModuleElement> moduleElements = new LinkedList<ModuleElement>();
+                List<ModuleElement<?,?>> moduleElements = new ArrayList<>();
                 for (int j = 0; j < component.getDimension(); j++) {
-                    if (elements.size() > 0) {
-                        moduleElements.add(elements.remove(0));
-                    }
-                    else {
-                        return null;
-                    }
+                    moduleElements.add(elements.remove(0));
                 }
-                newElements[i] = component.createElement(moduleElements);
-                if (newElements[i] == null) {
-                    return null;
-                }
+                currentElement = component.createElement(moduleElements);
             }
+            if (currentElement == null) {
+                return null;
+            }
+            newElements.add(currentElement);
         }
         return DirectSumElement.make(newElements);
     }
@@ -276,7 +271,7 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     }
 
     
-    private DirectSumModule(Ring ring) {
+    private DirectSumModule(Ring<R> ring) {
         this.ring = ring;
         this.components = null;
     }
@@ -296,5 +291,5 @@ public final class DirectSumModule<R extends RingElement<R>> implements Module<D
     private static final int basicHash = "DirectSumModule".hashCode();
 
     private Module[] components;
-    private Ring	 ring;
+    private Ring<R>	 ring;
 }

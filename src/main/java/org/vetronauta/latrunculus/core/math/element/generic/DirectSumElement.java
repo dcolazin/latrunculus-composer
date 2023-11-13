@@ -24,6 +24,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.DirectSumModule;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,22 +36,30 @@ import java.util.List;
  */
 public final class DirectSumElement<R extends RingElement<R>> implements ModuleElement<DirectSumElement<R>, R> {
 
-    private ModuleElement<?,R>[] components;
+    private final List<ModuleElement<?,R>> components;
     private DirectSumModule<R> module;
     private final Ring<R> ring;
 
-    public static <I extends RingElement<I>> DirectSumElement<I> make(ModuleElement<?,I>[] components) {
-        if (components.length < 1) {
+    private DirectSumElement(List<ModuleElement<?,R>> components) {
+        this.components = components;
+        this.ring = components.get(0).getModule().getRing();
+    }
+
+    private DirectSumElement(Ring<R> ring) {
+        this.components = null;
+        this.module = DirectSumModule.makeNullModule(ring);
+        this.ring = ring;
+    }
+
+    public static <I extends RingElement<I>> DirectSumElement<I> make(List<ModuleElement<?,I>> components) {
+        if (components.size() < 1) {
             throw new IllegalArgumentException("There must be at least one component module.");
         }
-        else if (!checkComponents(components)) {
+        if (!checkComponents(components)) {
             throw new IllegalArgumentException("Component elements must all be in the same ring.");            
         }
-        else {
-            return new DirectSumElement<>(components);
-        }
+        return new DirectSumElement<>(components);
     }
-    
     
     public static <I extends RingElement<I>> DirectSumElement<I> makeNullElement(Ring<I> ring) {
         return new DirectSumElement<>(ring);
@@ -64,123 +73,103 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
     
     public boolean isZero() {
         for (int i = 0; i < getLength(); i++) {
-            if (!components[i].isZero()) {
+            if (!components.get(i).isZero()) {
                 return false;
             }
         }
         return true;
     }
 
-    public ModuleElement<?,R>[] getComponents() {
+    public List<ModuleElement<?,R>> getComponents() {
         return components;
     }
 
     @Override
     public DirectSumElement<R> sum(DirectSumElement<R> element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            if (isNullElement()) {
-                if (getModule().hasElement(element)) {
-                    return this;
-                }
-                else {
-                    throw new DomainException(this.getModule(), element.getModule());
-                }
-            }
-            try {
-                ModuleElement<?,R>[] c = new ModuleElement[getLength()];
-                for (int i = 0; i < getLength(); i++) {
-                    c[i] = ((ModuleElement) components[i]).sum(element.getComponent(i));
-                }
-                return new DirectSumElement<>(c);
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
         }
-        else {
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return this;
+            }
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        try {
+            List<ModuleElement<?,R>> c = new ArrayList<>(getLength());
+            for (int i = 0; i < getLength(); i++) {
+                c.add(((ModuleElement) components.get(i)).sum(element.getComponent(i)));
+            }
+            return new DirectSumElement<>(c);
+        } catch (DomainException e) {
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
 
     @Override
     public void add(DirectSumElement<R> element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            if (isNullElement()) {
-                if (getModule().hasElement(element)) {
-                    return;
-                }
-                else {
-                    throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");                    
-                }
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return;
             }
-            try {
-                ModuleElement[] newComponents = new ModuleElement[getLength()];
-                for (int i = 0; i < getLength(); i++) {
-                    newComponents[i] = components[i].deepCopy();
-                    newComponents[i].add(element.getComponent(i));
-                }
-                components = newComponents;
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
+            else {
+                throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");
             }
         }
-        else {
+        try {
+            for (int i = 0; i < getLength(); i++) {
+                ((ModuleElement) components.get(i)).add(element.getComponent(i));
+            }
+        }
+        catch (DomainException e) {
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
 
     @Override
     public DirectSumElement<R> difference(DirectSumElement<R> element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            if (isNullElement()) {
-                if (getModule().hasElement(element)) {
-                    return this;
-                }
-                else {
-                    throw new DomainException(this.getModule(), element.getModule());
-                }
-            }
-            try {
-                ModuleElement[] c = new ModuleElement[getLength()];
-                for (int i = 0; i < getLength(); i++) {
-                    c[i] = ((ModuleElement) getComponent(i)).difference(element.getComponent(i));
-                }
-                return new DirectSumElement<>(c);
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
-            }
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
         }
-        else {
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return this;
+            }
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        try {
+            List<ModuleElement<?,R>> c = new ArrayList<>(getLength());
+            for (int i = 0; i < getLength(); i++) {
+                c.add(((ModuleElement) components.get(i)).difference(element.getComponent(i)));
+            }
+            return new DirectSumElement<>(c);
+        } catch (DomainException e) {
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
 
     @Override
     public void subtract(DirectSumElement<R> element) throws DomainException {
-        if (getLength() == element.getLength()) {
-            if (isNullElement()) {
-                if (getModule().hasElement(element)) {
-                    return;
-                }
-                else {
-                    throw new IllegalArgumentException("Cannot subtract "+element+" from "+this+".");                    
-                }
+        if (getLength() != element.getLength()) {
+            throw new DomainException(this.getModule(), element.getModule());
+        }
+        if (isNullElement()) {
+            if (getModule().hasElement(element)) {
+                return;
             }
-            try {
-                ModuleElement[] newComponents = new ModuleElement[getLength()];
-                for (int i = 0; i < getLength(); i++) {
-                    newComponents[i] = components[i].deepCopy();
-                    newComponents[i].subtract(element.getComponent(i));
-                }
-                components = newComponents;
-            }
-            catch (DomainException e) {
-                throw new DomainException(this.getModule(), element.getModule());
+            else {
+                throw new IllegalArgumentException("Cannot sum "+this+" and "+element+".");
             }
         }
-        else {
+        try {
+            for (int i = 0; i < getLength(); i++) {
+                ((ModuleElement) components.get(i)).subtract(element.getComponent(i));
+            }
+        }
+        catch (DomainException e) {
             throw new DomainException(this.getModule(), element.getModule());
         }
     }
@@ -190,9 +179,9 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         if (isNullElement()) {
             return this;
         }
-        ModuleElement[] res = new ModuleElement[getLength()];
+        List<ModuleElement<?,R>> res = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            res[i] = components[i].negated();
+            res.add(components.get(i).negated());
         }
         return new DirectSumElement<>(res);
     }
@@ -200,7 +189,7 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
     @Override
     public void negate() {
         for (int i = 0; i < getLength(); i++) {
-            components[i].negate();
+            components.get(i).negate();
         }
     }
 
@@ -210,57 +199,41 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         if (isNullElement()) {
             return this;
         }
-        ModuleElement<?,R>[] res = new ModuleElement[getLength()];
-        try {
-            for (int i = 0; i < getLength(); i++) {
-                res[i] = components[i].scaled(element);
-            }
-        }
-        catch (DomainException e) {
-            throw new DomainException(this.getRing(), element.getModule());
+        List<ModuleElement<?,R>> res = new ArrayList<>(getLength());
+        for (int i = 0; i < getLength(); i++) {
+            res.add(components.get(i).scaled(element));
         }
         return new DirectSumElement<>(res);
     }
 
     @Override
     public void scale(R element) throws DomainException {
-        try {
-            for (int i = 0; i < getLength(); i++) {
-                components[i] = components[i].scaled(element);
-            }
-        }
-        catch (DomainException e) {
-            throw new DomainException(this.getRing(), element.getModule());
+        for (int i = 0; i < getLength(); i++) {
+            components.get(i).scale(element);
         }
     }
 
     @Override
     public ModuleElement<?,R> getComponent(int i) {
-        return components[i];
+        return components.get(i);
     }
 
     @Override
     public int getLength() {
-        if (components == null) {
-            return 0;
-        }
-        else {
-            return components.length;
-        }
+        return components != null ? components.size() : 0;
     }
 
     @Override
     public DirectSumModule<R> getModule() {
         if (module == null) {
-            Module[] res = new Module[getLength()];
+            List<Module<?,R>> res = new ArrayList<>(getLength());
             for (int i = 0; i < getLength(); i++) {
-                res[i] = components[i].getModule();
+                res.add(components.get(i).getModule());
             }
             module = DirectSumModule.make(res);
         }
         return module;
     }
-    
     
     public Ring<R> getRing() {
         return ring;
@@ -268,52 +241,42 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
     
     @Override
     public boolean equals(Object object) {
-        if (object instanceof ModuleElement) {
-            ModuleElement element = (ModuleElement) object;
-            if (!getRing().equals(element.getModule().getRing())) {
-                return false;
-            }
-            if (getLength() == element.getLength()) {
-                for (int i = 0; i < getLength(); i++) {
-                    if (!components[i].equals(element.getComponent(i))) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
+        //TODO is it correct to only check for ModuleElement and not for DirectSumElement?
+        if (!(object instanceof ModuleElement)) {
             return false;
         }
+        ModuleElement<?,?> element = (ModuleElement<?,?>) object;
+        if (!getRing().equals(element.getModule().getRing()) || getLength() != element.getLength()) {
+            return false;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            if (!components.get(i).equals(element.getComponent(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public int compareTo(ModuleElement object) {
-        if (object instanceof DirectSumElement) {
-            DirectSumElement element = (DirectSumElement)object;
-            if (!getRing().equals(element.getRing())) {
-                return getRing().compareTo(element.getRing());
-            }
-            int d = getLength()-element.getLength();
-            if (d != 0) {
-                return d;
-            }
-            else {
-	            for (int i = 0; i < getLength(); i++) {
-	                int comp = getComponent(i).compareTo(element.getComponent(i));
-	                if (comp != 0) {
-	                    return comp;
-	                }
-	            }
-	            return 0;
-            }
-        }
-        else {
+        if (!(object instanceof DirectSumElement)) {
             return getModule().compareTo(object.getModule());
         }
+        DirectSumElement<?> element = (DirectSumElement<?>) object;
+        if (!getRing().equals(element.getRing())) {
+            return getRing().compareTo(element.getRing());
+        }
+        int d = getLength() - element.getLength();
+        if (d != 0) {
+            return d;
+        }
+        for (int i = 0; i < getLength(); i++) {
+            int comp = getComponent(i).compareTo(element.getComponent(i));
+            if (comp != 0) {
+                return comp;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -325,10 +288,10 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         buf.append(getModule().getRing());
         buf.append("][");
         if (getLength() > 0) {
-            buf.append(components[0]);
+            buf.append(components.get(0));
             for (int i = 1; i < getLength(); i++) {
                 buf.append(",");
-                buf.append(components[i]);
+                buf.append(components.get(i));
             }
         }
         buf.append("]");
@@ -354,10 +317,10 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         }
     }
 
-    private static boolean checkComponents(ModuleElement[] components) {
-        Ring ring = components[0].getModule().getRing();
-        for (int i = 1; i < components.length; i++) {
-            if (!ring.equals(components[i].getModule().getRing())) {
+    private static <X extends RingElement<X>> boolean checkComponents(List<ModuleElement<?,X>> components) {
+        Ring<X> ring = components.get(0).getModule().getRing();
+        for (int i = 1; i < components.size(); i++) {
+            if (!ring.equals(components.get(i).getModule().getRing())) {
                 return false;
             }
         }
@@ -378,28 +341,16 @@ public final class DirectSumElement<R extends RingElement<R>> implements ModuleE
         return hash;
     }
 
-    
-    private DirectSumElement(ModuleElement[] components) {
-        this.components = components;
-        this.ring = components[0].getModule().getRing();
-    }
-
-    
-    private DirectSumElement(Ring ring) {
-        this.components = null;
-        this.module = DirectSumModule.makeNullModule(ring);
-        this.ring = ring;
-    }
-
     @Override
     public DirectSumElement<R> deepCopy() {
         if (isNullElement()) {
             return makeNullElement(getModule().getRing());
         }
-        ModuleElement[] newComponents = new ModuleElement[getLength()];
+        List<ModuleElement<?,R>> newComponents = new ArrayList<>(getLength());
         for (int i = 0; i < getLength(); i++) {
-            newComponents[i] = components[i].deepCopy();
+            newComponents.add(components.get(i).deepCopy());
         }
         return new DirectSumElement<>(newComponents);
     }
+
 }

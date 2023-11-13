@@ -134,10 +134,10 @@ public class DefaultModuleElementXmlWriter implements LatrunculusXmlWriter<Modul
         writer.closeBlock();
     }
 
-    private void write(DirectSumElement element, XMLWriter writer) {
+    private void write(DirectSumElement<?> element, XMLWriter writer) {
         writer.openBlockWithType(MODULE_ELEMENT, element.getElementTypeName());
-        for (int i = 0; i < element.getComponents().length; i++) {
-            definitionWriter.toXML(element.getComponent(i), writer);
+        for (ModuleElement<?,?> internalElement :  element.getComponents()) {
+            definitionWriter.toXML(internalElement, writer);
         }
         writer.closeBlock();
     }

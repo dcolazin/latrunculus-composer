@@ -285,12 +285,11 @@ public class DefaultModuleElementXmlReader implements LatrunculusXmlReader<Modul
                 elements.add(moduleElement);
                 next = XMLReader.getNextSibling(next, MODULE_ELEMENT);
             }
-            ModuleElement[] coefficients = new ModuleElement[elements.size()];
-            int i = 0;
+            List<ModuleElement<?,?>> coefficients = new ArrayList<>(elements.size());
             for (ModuleElement e : elements) {
-                coefficients[i++] = e;
+                coefficients.add(e);
             }
-            return DirectSumElement.make(coefficients);
+            return DirectSumElement.make((List) coefficients);
         }
         else {
             reader.setError("Type %%1 is missing children of type <%2>.", getElementTypeName(clazz), MODULE_ELEMENT);
