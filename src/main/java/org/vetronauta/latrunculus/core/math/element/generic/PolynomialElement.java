@@ -143,7 +143,7 @@ public final class PolynomialElement<R extends RingElement<R>> extends RingEleme
         for (R coefficient : coefficients) {
             newCoefficients.add(coefficient.negated());
         }
-        return new PolynomialElement<>(ring, coefficients);
+        return new PolynomialElement<>(ring, newCoefficients);
     }
 
     @Override
