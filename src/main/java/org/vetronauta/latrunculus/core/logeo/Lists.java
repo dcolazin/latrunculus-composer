@@ -19,19 +19,20 @@
 
 package org.vetronauta.latrunculus.core.logeo;
 
-import java.util.*;
-
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.logeo.functions.Function;
 import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -152,17 +153,6 @@ public final class Lists {
         }
     }
     
-    
-    /**
-     * Appends a denotator to a list denotator.
-     * This operation is destructive on the first argument.
-     */
-    public static void appendElementTo(ListDenotator d, Denotator element)
-            throws RubatoException {
-        d.appendFactor(d);
-    }
-    
-    
     /**
      * Prepend the elements of <i>d2</i> to <i>d1</i>.
      * This operation is destructive on the first argument.
@@ -215,85 +205,6 @@ public final class Lists {
         }
     }
 
-    
-    /**
-     * Prepends a denotator to a list denotator.
-     * This operation is destructive on the first argument.
-     */
-    public static void prependElementTo(ListDenotator d, Denotator element)
-            throws RubatoException {
-        d.prependFactor(element);
-    }
-    
-    
-    /**
-     * Returns a denotator, with <code>f</code> applied to the elements of <code>d</code>.
-     * @param f the function to apply to the arguments, must have arity == 1
-     * @throws RubatoException if <code>d</code> is not of the required form or
-     *         <code>f</code> has arity != 1
-     */
-    public static Denotator map(Function f, ListDenotator d)
-            throws RubatoException {
-        boolean changed = false;
-
-        ListForm form = d.getListForm();
-
-        if (f.getArity() != 1) {
-            throw new RubatoException("Lists.map: Expected arity 1, "+
-                                      "but got %1", f.getArity());
-        }
-    
-        ListMorphismMap m = (ListMorphismMap)d.getCoordinate().getMap();
-        int len = m.getFactorCount();
-
-        if (len == 0) {
-            return d;
-        }
-
-        ArrayList<Denotator> denoList = new ArrayList<Denotator>(len);
-        for (int i = 0; i < len; i++) {
-            Denotator factor = m.getFactor(i);
-            Denotator res = f.evaluate(factor);
-            if (factor != res) {
-                changed = true;
-            }
-            denoList.add(i, res);
-        }
-
-        if (!changed) {
-            // the mapping hasn't changed anything so return the input denotator
-            return d;
-        }
-
-        Form resForm = denoList.get(0).getForm();
-        if (!resForm.equals(m.getFactor(0).getForm())) {
-            form = new ListForm(NameDenotator.make("List",resForm), resForm);
-        }
-
-        return new ListDenotator(null, form, denoList);
-    }
-    
-
-    /**
-     * Applies the function <code>f</code> to every factor of the argument denotator.
-     * @param f the function to apply to the argument factors, must have arity 1
-     * @throws RubatoException if <code>f</code> has arity != 1
-     */
-    public static void apply(Function f, ListDenotator d)
-            throws RubatoException {
-        if (f.getArity() != 1) {
-            throw new RubatoException("List.apply: Expected arity "+
-                                      "1, but got %1", f.getArity());
-        }
-    
-        ListMorphismMap map = (ListMorphismMap)d.getCoordinate().getMap();
-        int len = map.getFactorCount();
-        for (int i = 0; i < len; i++) {
-            f.evaluate(map.getFactor(i));
-        }
-    }
-
-
     /**
      * Returns a denotator, where only the elements from the argument denotator
      * are contained that satisfy predicate p.
@@ -332,89 +243,6 @@ public final class Lists {
         return new ListDenotator(null, form, denoList);        
     }
 
-
-    /**
-     * Zips the function on the two argument lists.
-     * If d1 is a list denotator [d1_1,...,d1_m] and
-     * d2 is a list denotator [d2_1,...,d2_n], then 
-     * zip(f,d1,d2) returns a list denotator 
-     * [f(d1_1, d2_1),...,f(d1_k,d2_k)], where k = min(n,m).
-     * @param f a function of arity 2, must have a first argument of the same
-     * form as a list element of d1 and a second argument of the same form as a
-     * list element of d2
-     * @throws RubatoException if d1 or d2 is not of the required form
-     * or f has not the required type
-     */
-    public static ListDenotator zip(Function f, ListDenotator d1, ListDenotator d2)
-            throws RubatoException {
-        ListForm f1 = d1.getListForm();
-        ListForm f2 = d2.getListForm();
-        ListForm form;
-                
-        Form fe1 = f1.getForm(0);
-        Form fe2 = f2.getForm(0);
-        
-        if (f.getArity() != 2 || !f.getInputForm(0).equals(fe1) || !f.getInputForm(1).equals(fe2)) {
-            throw new RubatoException("Lists.zip: function has not the required type");
-        }
-        
-        ListMorphismMap m1 = (ListMorphismMap)d1.getCoordinate().getMap();
-        ListMorphismMap m2 = (ListMorphismMap)d2.getCoordinate().getMap();
-        
-        LinkedList<Denotator> denoList = new LinkedList<Denotator>();
-        
-        for (int i = 0; i < Math.min(m1.getFactorCount(), m2.getFactorCount()); i++) {
-            Denotator deno1 = m1.getFactor(i);
-            Denotator deno2 = m2.getFactor(i);
-            denoList.add(f.evaluate(deno1, deno2));
-        }
-        
-        if (f.getOutputForm().equals(fe1)) {
-            form = f1;
-        }
-        else if (f.getOutputForm().equals(fe2)) {
-            form = f2;
-        }
-        else {
-            form = new ListForm(NameDenotator.make("List",f.getOutputForm()),
-                                f.getOutputForm());
-        }
-        
-        return new ListDenotator(null, form, denoList);
-    }    
-
-
-    /**
-     * Reduces the argument list denotator using the function f.
-     * If d is a list denotator [d1_1,...,d1_m], then reduce(f, d) returns
-     * f(...f(f(d_1, d_2),d_3)...d_m)
-     * @param f a function of arity 2, must have both arguments of the
-     * same form as the element form of the list denotator.
-     * @throws RubatoException if d is not of the required form
-     * or f has arity != 2
-     */
-    public static Denotator reduce(Function f, ListDenotator d)
-            throws RubatoException{
-        if (f.getArity() != 2) {
-            throw new RubatoException("Lists.reduce: Expected arity 2, "+
-                                      "but got %1", f.getArity());
-        }
-            
-        ListMorphismMap map = (ListMorphismMap)d.getCoordinate().getMap();
-        
-        if (map.getFactorCount() < 2) {
-            throw new RubatoException("Lists.reduce: denotator must have at least 2 factors");
-        }
-        
-        Denotator res = f.evaluate(map.getFactor(0), map.getFactor(1));
-        for (int i = 2; i < map.getFactorCount(); i++) {
-            res = f.evaluate(res, map.getFactor(i));
-        }
-            
-        return res;
-    }
-    
-
     /**
      * Sorts the list denotator according to canonical order.
      */
@@ -433,33 +261,6 @@ public final class Lists {
         List<Denotator> denoList = d.getFactors();
         Collections.sort(denoList, c);
         return ListDenotator._make_unsafe(null, d.getAddress(), d.getListForm(), denoList);
-    }
-
-
-    /**
-     * Removes duplicates from the list denotator.
-     * Requires that the denotator has been sorted before
-     * according to canonical order.
-     */
-    public static ListDenotator removeDuplicates(ListDenotator d) { 
-        if (d.getFactorCount() < 2) {
-            return d;
-        }
-
-        Iterator<Denotator> iter = d.iterator();
-        LinkedList<Denotator> newList = new LinkedList<Denotator>();
-        Denotator element = iter.next();
-        newList.add(element);
-        
-        while (iter.hasNext()) {        
-            Denotator nextElement = iter.next();
-            if (!element.equals(nextElement)) {
-                newList.add(nextElement);
-                element = nextElement;
-            }
-        }
-        
-        return ListDenotator._make_unsafe(null, d.getAddress(), d.getListForm(), newList);
     }
 
 

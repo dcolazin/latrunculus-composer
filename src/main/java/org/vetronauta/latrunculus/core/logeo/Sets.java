@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.logeo.functions.Function;
 import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
@@ -255,54 +254,6 @@ public final class Sets {
         }
         return result;
     }
-
-    
-    /**
-     * Return a denotator, where the function f is applied on the elements of
-     * the argument denotator.
-     * @param f the function to apply to the arguments, must have arity 1
-     * @throws RubatoException if d is not of type power or f has arity != 1
-     */
-    public static Denotator map(Function f, PowerDenotator d)
-            throws RubatoException {
-        boolean changed = false;        
-        PowerForm form = d.getPowerForm();
-
-        if (f.getArity() != 1) {
-            throw new RubatoException("Sets.map: Expected arity 1, "+
-                                      "but got %1", f.getArity());
-        }
-
-        ListMorphismMap m = (ListMorphismMap)d.getCoordinate().getMap();
-        int len = m.getFactorCount();
-        if (len == 0) {
-            return d;
-        }
-
-        ArrayList<Denotator> denoList = new ArrayList<Denotator>(len);
-
-        for (int i = 0; i < len; i++) {
-            Denotator factor = m.getFactor(i);
-            Denotator res = f.evaluate(factor);
-            if (factor != res) {
-                changed = true;
-            }
-            denoList.add(i, res);
-        }
-
-        if (!changed) {
-            // the mapping hasn't changed anything so return the input denotator
-            return d;
-        }
-
-        Form resForm = denoList.get(0).getForm();
-        if (!resForm.equals(m.getFactor(0).getForm())) {
-            form = FormFactory.makePowerForm("Set("+resForm.getNameString()+")", resForm);
-        }
-
-        return new PowerDenotator(null, form, denoList);
-    }
-
 
     /**
      * Returns a denotator, where only the elements from the argument denotator

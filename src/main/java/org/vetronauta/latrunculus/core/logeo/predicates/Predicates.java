@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.logeo.predicates;
 
-import org.vetronauta.latrunculus.core.logeo.functions.Function;
-import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -63,66 +61,16 @@ public final class Predicates {
     }
 
 
-    /**
-     * Returns a predicate of arity 1 that is always true.
-     */
-    public static Predicate getTruePredicate() {
-        return truePredicate;
-    }
-
-
-    /**
-     * Returns a predicate of arity <code>n</code> that is always true.
-     */
-    public static Predicate getTruePredicate(int n) {
-        if (n == 1) {
-            return getTruePredicate();
-        }
-        return new TruePredicate(n);
-    }
-    
-    
-    /**
-     * Returns a predicate based on a function that returns
-     * a denotator of form "Boolean". 
-     */
-    public static Predicate fromFunction(Function f) {
-        return new FunctionPredicate(f);
-    }
-
-
-    private static Predicate truePredicate;
-    
-    static {
-        truePredicate = new TruePredicate(1);
-    }
-
-
     //
     // private classes
     //
 
-    private static class TruePredicate extends AbstractPredicate {
-        
-        public TruePredicate(int arity) {
-            this.arity = arity;
-        }
-        
-        public int getArity() { return arity; }
-        
-        public boolean call(Denotator ... denotators) { return true; }
-        
-        private int arity;
+    private static class Conjunction extends AbstractPredicate {
 
-        public Form getInputForm(int i) {
-            return null;
-        }
-    }
+        private final Predicate p;
+        private final Predicate q;
 
-    private static class Conjunction extends AbstractPredicate {        
-
-        public Conjunction(Predicate p, Predicate q) 
-                throws RubatoException {
+        public Conjunction(Predicate p, Predicate q) throws RubatoException {
             if (!p.isCompatible(q)) {
                 throw new RubatoException("Both predicates must be compatible");
             }
@@ -130,8 +78,7 @@ public final class Predicates {
             this.q = q;
         }
         
-        public boolean call(Denotator ... denotators)
-                throws RubatoException {
+        public boolean call(Denotator... denotators) throws RubatoException {
             return p.call(denotators) && q.call(denotators);
         }
         
@@ -146,14 +93,15 @@ public final class Predicates {
         public String getName() {
             return "("+p.getName()+" && "+q.getName()+")";    
         }
-        
-        private Predicate p, q; 
+
     }
 
     private static class Disjunction extends AbstractPredicate {
 
-        public Disjunction(Predicate p, Predicate q) 
-                throws RubatoException {
+        private final Predicate p;
+        private final Predicate q;
+
+        public Disjunction(Predicate p, Predicate q) throws RubatoException {
             if (!p.isCompatible(q)) {
                 throw new RubatoException("Both predicates must be compatible.");
             }
@@ -161,8 +109,7 @@ public final class Predicates {
             this.q = q;
         }
         
-        public boolean call(Denotator ... denotators)
-                throws RubatoException {
+        public boolean call(Denotator... denotators) throws RubatoException {
             return p.call(denotators) || q.call(denotators);
         }
         
@@ -177,18 +124,18 @@ public final class Predicates {
         public String getName() {
             return "("+p.getName()+" || "+q.getName()+")";    
         }
-        
-        private Predicate p, q; 
+
     }
 
     private static class Negation extends AbstractPredicate {
+
+        private final Predicate p;
 
         public Negation(Predicate p) {
             this.p = p;
         }
         
-        public boolean call(Denotator ... denotators)
-                throws RubatoException {
+        public boolean call(Denotator... denotators) throws RubatoException {
             return !p.call(denotators);
         }
         
@@ -203,40 +150,6 @@ public final class Predicates {
         public String getName() {
             return "!"+p.getName();    
         }
-        
-        private Predicate p; 
     }
-    
-    private static class FunctionPredicate extends AbstractPredicate {
 
-        public FunctionPredicate(Function f) {
-            this.f = f;
-        }
-
-        public boolean call(Denotator ... denotators)
-                throws RubatoException {
-            return f.evaluate(denotators).equals(trueDeno);
-        }
-        
-        public int getArity() {
-            return f.getArity();
-        }
-        
-        public Form getInputForm(int i) {
-            return f.getInputForm(i);
-        }
-
-        public String getName() {
-            return f.getName();    
-        }
-        
-        private Function f;
-    }
-    
-    protected static Denotator trueDeno;
-    
-    static {
-        Repository rep = Repository.systemRepository();
-        trueDeno = rep.getDenotator("True");
-    }
 }

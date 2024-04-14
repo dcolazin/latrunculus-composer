@@ -30,7 +30,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
  */
 
 public class FormPredicate extends AbstractPredicate {
-        
+
+    private final Form form;
+
     /**
      * Creates a predicate that satisfies denotator with the given form.
      */
@@ -53,6 +55,4 @@ public class FormPredicate extends AbstractPredicate {
         return null;
     }
     
-    
-    private Form form;
 }

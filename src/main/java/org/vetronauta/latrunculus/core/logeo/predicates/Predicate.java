@@ -40,49 +40,47 @@ public interface Predicate extends Comparator<Predicate> {
      * Calls the predicate with one argument.
      * The predicate must have arity = 1.
      */
-    public boolean call(Denotator ... denotators)
-        throws RubatoException;
+    boolean call(Denotator ... denotators) throws RubatoException;
 
     /**
      * Returns a predicate that is the conjuction of this and <code>p</code>.
      * Both predicates must have same arity.
      */
-    public Predicate and(Predicate p)
-        throws RubatoException;    
+    Predicate and(Predicate p) throws RubatoException;
     
     /**
      * Returns a predicate that is the disjunction of this and <code>p</code>.
      * Both predicates must have same arity.
      */
-    public Predicate or(Predicate p)
-        throws RubatoException;    
+    Predicate or(Predicate p) throws RubatoException;
     
     /**
      * Returns a predicate that is the negation of this.
      */    
-    public Predicate negated();
+    Predicate negated();
 
     /**
      * Returns the arity of the predicate.
      */
-    public int getArity();
+    int getArity();
 
 
     /**
      * Returns the <code>i</code>th argument form.
      */
-    public Form getInputForm(int i);
+    Form getInputForm(int i);
     
 
     /**
      * Returns the name of the predicate.
      */
-    public String getName();
+    String getName();
 
     /**
      * Returns true if p is compatible to this.
      * Two predicates are compatible if both have the same
      * arity and argument forms.
      */
-    public boolean isCompatible(Predicate p);
+    boolean isCompatible(Predicate p);
+
 }
