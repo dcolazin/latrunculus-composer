@@ -59,16 +59,6 @@ public final class SDenotator extends SExpr {
     public boolean equals(Object obj) {
         return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
     }
-
-    public String toString() {
-        return "#<denotator:"+d.toString()+">";
-    }
-    
-
-    public String display() {
-        return "#<denotator:"+d.toString()+">";
-    }
-    
     
     /**
      * Returns the denotator in this Scheme value.

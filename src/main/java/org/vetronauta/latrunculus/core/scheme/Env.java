@@ -195,17 +195,6 @@ public final class Env extends SExpr {
         return this == obj;
     }
     
-    
-    public String toString() {
-        return "#<environment:"+hashCode()+">";
-    }
-
-    
-    public String display() {
-        return "#<environment:"+hashCode()+">";
-    }    
-    
-    
     private IdentityHashMap<Symbol,SExpr> env = new IdentityHashMap<Symbol,SExpr>();
     private Env link = null;
 

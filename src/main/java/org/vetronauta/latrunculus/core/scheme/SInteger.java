@@ -286,14 +286,6 @@ public final class SInteger extends SNumber {
         return toReal();
     }
     
-    public String toString() {
-        return Integer.toString(i);
-    }
-    
-    public String display() {
-        return Integer.toString(i);
-    }
-    
     /**
      * Returns the integer in this Scheme value.
      */

@@ -60,18 +60,7 @@ public final class SOutPort extends SExpr {
     public boolean equals(Object obj) {
         return obj == this;
     }
-    
-    
-    public String toString() {
-        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
-    }
-    
-    
-    public String display() {
-        return "#<output-port:"+((port == System.out)?"stdout":port.hashCode())+">";
-    }
-    
-    
+
     /**
      * Closes the port.
      */

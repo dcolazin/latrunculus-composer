@@ -220,13 +220,13 @@ abstract class InputOutputPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
             if (l == 1) {
-                eval.getCurrentOutputPort().getPort().print(car(args).display());
+                eval.getCurrentOutputPort().getPort().print(Display.display(car(args)));
                 return SCHEME_VOID;
             }
             else if (l == 2) {
                 SExpr port = car(cdr(args));
                 if (port instanceof SOutPort) {
-                    ((SOutPort)port).getPort().print(car(args).display());
+                    ((SOutPort)port).getPort().print(Display.display(car(args)));
                     return SCHEME_VOID;
                 }
                 else {

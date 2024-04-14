@@ -18,7 +18,5 @@ public class SNull extends SExpr {
     public boolean equal_p(SExpr sexpr) { return this == sexpr; }
     public boolean equals(Object obj) { return this == obj; }
     public int getLength() { return 0; }
-    public String toString() { return "()"; }
-    public String display() { return "()"; }
 
 }

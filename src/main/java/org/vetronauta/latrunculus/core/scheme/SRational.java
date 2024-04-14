@@ -263,14 +263,6 @@ public final class SRational extends SNumber {
         return toReal();
     }
     
-    public String toString() {
-        return q.toString();
-    }
-    
-    public String display() {
-        return q.toString();
-    }
-    
     /**
      * Returns the rational number in this Scheme value.
      */

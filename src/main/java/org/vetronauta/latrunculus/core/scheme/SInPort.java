@@ -61,18 +61,7 @@ public final class SInPort extends SExpr {
     public boolean equals(Object obj) {
         return obj == this;
     }
-    
-    
-    public String toString() {
-        return "#<input-port:"+((port == System.in)?"stdin":port.hashCode())+">";
-    }
-    
-    
-    public String display() {
-        return "#<input-port:"+((port == System.in)?"stdin":port.hashCode())+">";
-    }
-    
-    
+
     /**
      * Closes the port.
      */

@@ -74,17 +74,6 @@ public final class Symbol extends SExpr {
         return this == obj;
     }
 
-    
-    public String toString() {
-        return name;
-    }
-
-    
-    public String display() {
-        return name;
-    }
-    
-
     private Symbol() {}
 
     private String name;    

@@ -106,37 +106,7 @@ public final class SVector extends SExpr {
             return false;
         }
     }
-    
-    public String toString() {
-        StringBuilder buf = new StringBuilder();
-        buf.append("#(");
-        if (v.length >= 1) {
-            buf.append(v[0].toString());
-            for (int i = 1; i < v.length; i++) {
-                buf.append(" ");
-                buf.append(v[i].toString());
-            }
-        }
-        buf.append(")");
-        return buf.toString();
-    }
-    
-    
-    public String display() {
-        StringBuilder buf = new StringBuilder();
-        buf.append("#(");
-        if (v.length >= 1) {
-            buf.append(v[0].display());
-            for (int i = 1; i < v.length; i++) {
-                buf.append(" ");
-                buf.append(v[i].display());
-            }
-        }
-        buf.append(")");
-        return buf.toString();
-    }
-    
-    
+
     /**
      * Returns the array in this Scheme vector.
      */

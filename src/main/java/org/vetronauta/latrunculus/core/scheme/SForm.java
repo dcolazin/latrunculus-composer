@@ -59,16 +59,6 @@ public final class SForm extends SExpr {
         return (obj instanceof SForm) && ((SForm)obj).f.equals(f);
     }
 
-    public String toString() {
-        return "#<form:"+f.toString()+">";
-    }
-    
-
-    public String display() {
-        return "#<form:"+f.toString()+">";
-    }
-
-    
     /**
      * Returns the form in this Scheme value.
      */

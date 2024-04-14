@@ -74,15 +74,9 @@ public abstract class SExpr {
     /**
      * Returns a string representation of this SExpr.
      */
-    public abstract String toString();
-
-    /**
-     * Returns a string representation of this SExpr. This is the
-     * representation intended to show the result of an evaluation,
-     * and should be a valid Scheme expression if possible.
-     */
-    //TODO move to server
-    public abstract String display();
+    public String toString() {
+        return Display.display(this);
+    }
 
     /**
      * Returns true iff this is a number.

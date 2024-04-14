@@ -285,14 +285,6 @@ public final class SComplex extends SNumber {
     public SNumber toInexact() {
         return this;
     }
-
-    public String toString() {
-        return c.toString();
-    }
-    
-    public String display() {
-        return c.toString();
-    }
     
     /**
      * Returns the complex number in this Scheme value.

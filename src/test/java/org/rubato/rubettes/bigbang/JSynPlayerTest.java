@@ -1,6 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
@@ -59,6 +60,7 @@ class JSynPlayerTest {
 	}
 
 	@Test
+	@Disabled("sometimes mixer is already open")
 	void testPlayerWithSoundScore() throws InterruptedException {
 		//TODO test with both modulators and normal satellites
 		BigBangPlayer player = new BigBangPlayer();

@@ -42,7 +42,7 @@ public final class SBoolean extends SExpr {
      * Returns the Scheme value corresponding to the boolean <code>b</code>.
      */
     public static SBoolean make(boolean b) {
-        return b?TRUE:FALSE;
+        return b ? TRUE : FALSE;
     }
 
 
@@ -69,18 +69,7 @@ public final class SBoolean extends SExpr {
     public boolean equals(Object obj) {
         return this == obj;
     }
-    
-    
-    public String toString() {
-        return "#"+(b?"t":"f");
-    }
-    
-    
-    public String display() {
-        return toString();
-    }
 
-    
     private SBoolean(boolean b) {
         this.b = b;
     }

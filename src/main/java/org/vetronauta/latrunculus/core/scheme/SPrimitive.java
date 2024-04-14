@@ -53,15 +53,7 @@ public final class SPrimitive extends SExpr {
     public boolean equals(Object obj) {
         return this == obj;
     }
-    
-    public String toString() {
-        return "#<primitive:"+p.getName()+">";
-    }
-    
-    public String display() {
-        return "#<primitive:"+p.getName()+">";
-    }
-    
+
     /**
      * Returns the primitive function in this Scheme value.
      */

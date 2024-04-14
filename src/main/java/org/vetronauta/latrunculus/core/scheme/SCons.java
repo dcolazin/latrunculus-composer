@@ -126,63 +126,6 @@ public final class SCons extends SExpr {
             return false;
         }
     }
-
-    public String toString() {
-        if (cdr.type() == SType.CONS || cdr.type() == SType.NULL) {
-            SCons cur_cons = this;
-            StringBuilder buf = new StringBuilder();
-            buf.append("(");
-            while (cur_cons != null) {
-                buf.append(cur_cons.car);
-                if (cur_cons.cdr.type() == SType.CONS) {
-                    buf.append(" ");
-                    cur_cons = (SCons)cur_cons.cdr;
-                }
-                else if (cur_cons.cdr.type() == SType.NULL) {
-                    cur_cons = null;
-                }
-                else {
-                    buf.append(" . ");
-                    buf.append(cur_cons.cdr);
-                    cur_cons = null;
-                }
-            }
-            buf.append(")");
-            return buf.toString();
-        }
-        else {
-            return "("+car+" . "+cdr+")";
-        }
-    }
-    
-    public String display() {
-        if (cdr.type() == SType.CONS || cdr.type() == SType.NULL) {
-            SCons cur_cons = this;
-            StringBuilder buf = new StringBuilder();
-            buf.append("(");
-            while (cur_cons != null) {
-                buf.append(cur_cons.car.display());
-                if (cur_cons.cdr.type() == SType.CONS) {
-                    buf.append(" ");
-                    cur_cons = (SCons)cur_cons.cdr;
-                }
-                else if (cur_cons.cdr.type() == SType.NULL) {
-                    cur_cons = null;
-                }
-                else {
-                    buf.append(" . ");
-                    buf.append(cur_cons.cdr.display());
-                    cur_cons = null;
-                }
-            }
-            buf.append(")");
-            return buf.toString();
-        }
-        else {
-            return "("+car.display()+" . "+cdr.display()+")";
-        }
-    }
-    
     
     private SExpr car;
     private SExpr cdr;

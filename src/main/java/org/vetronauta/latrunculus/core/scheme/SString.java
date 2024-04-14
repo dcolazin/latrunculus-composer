@@ -54,15 +54,7 @@ public final class SString extends SExpr {
     public boolean equals(Object obj) {
         return (obj instanceof SString) && ((SString)obj).s.equals(s);
     }
-    
-    public String toString() {
-        return "\""+s+"\"";
-    }
-    
-    public String display() {
-        return s;
-    }
-    
+
     /**
      * Returns the string in this Scheme value.
      */

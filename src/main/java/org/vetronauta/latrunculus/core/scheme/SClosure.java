@@ -67,16 +67,6 @@ public final class SClosure extends SExpr {
             return false;
         }
     }
-    
-    public String toString() {
-        return "#<closure:"+hashCode()+">";
-    }
-
-    
-    public String display() {
-        return "#<closure:"+hashCode()+">";
-    }
-
 
     /**
      * Returns the environment of this closure.

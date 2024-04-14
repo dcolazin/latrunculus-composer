@@ -58,24 +58,7 @@ public final class SChar extends SExpr {
     public boolean equals(Object obj) {
         return (obj instanceof SChar) && (((SChar)obj).c == c);
     }
-    
-    
-    public String toString() {
-        if (c == ' ') {
-            return "#\\space";
-        }
-        else if (c == '\n') {
-            return "#\\newline";
-        }
-        else {
-            return "#\\"+c;
-        }
-    }
 
-    public String display() {
-        return Character.toString(c);
-    }
-    
     /**
      * Returns the character in this Scheme value.
      */

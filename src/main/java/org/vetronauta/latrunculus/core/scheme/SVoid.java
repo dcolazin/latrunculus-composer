@@ -17,7 +17,5 @@ public class SVoid extends SExpr {
     public boolean eqv_p(SExpr sexpr) { return this == sexpr; }
     public boolean equal_p(SExpr sexpr) { return this == sexpr; }
     public boolean equals(Object obj) { return this == obj; }
-    public String toString() { return "NoValue"; }
-    public String display() { return ""; }
 
 }

@@ -273,14 +273,6 @@ public final class SReal extends SNumber {
     public SNumber toInexact() {
         return this;
     }
-    
-    public String toString() {
-        return Double.toString(r);
-    }
-    
-    public String display() {
-        return Double.toString(r);
-    }
 
     public static double truncate(double r) {
         if (r > 0.0) {
