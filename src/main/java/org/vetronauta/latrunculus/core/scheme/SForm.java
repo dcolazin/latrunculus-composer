@@ -34,8 +34,12 @@ public final class SForm extends SExpr {
     public SForm(Form f) {
         this.f = f;
     }
-    
-    
+
+    @Override
+    public SType type() {
+        return SType.FORM;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -54,12 +58,6 @@ public final class SForm extends SExpr {
     public boolean equals(Object obj) {
         return (obj instanceof SForm) && ((SForm)obj).f.equals(f);
     }
-
-    
-    public boolean isForm() {
-        return true;
-    }
-    
 
     public String toString() {
         return "#<form:"+f.toString()+">";

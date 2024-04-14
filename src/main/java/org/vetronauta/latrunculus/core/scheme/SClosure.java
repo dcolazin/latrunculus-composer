@@ -36,6 +36,11 @@ public final class SClosure extends SExpr {
         this.env = env;
     }
 
+    @Override
+    public SType type() {
+        return SType.CLOJURE;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr; 
     }
@@ -62,12 +67,6 @@ public final class SClosure extends SExpr {
             return false;
         }
     }
-
-    
-    public boolean isClosure() {
-        return true;
-    }
-    
     
     public String toString() {
         return "#<closure:"+hashCode()+">";

@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.scheme;
 
 import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
 
 /**
  * Standard primitive procedures for control structures and environments.
@@ -42,7 +43,7 @@ abstract class ControlPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                return SBoolean.make(car.isClosure() || car.isPrimitive());
+                return SBoolean.make(car.type() == SType.CLOJURE || car.type() == SType.PRIMITIVE);
             }
             else {
                 eval.addError("procedure?: expected number of arguments is 1, but got %1", args.getLength());
@@ -56,7 +57,7 @@ abstract class ControlPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                if (car.isInteger() && ((SInteger)car).getInt() == 5) {
+                if (car.type() == SType.INTEGER && ((SInteger)car).getInt() == 5) {
                     return Env.makeStandardEnvironment();
                 }
                 else {
@@ -76,7 +77,7 @@ abstract class ControlPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                if (car.isInteger() && ((SInteger)car).getInt() == 5) {
+                if (car.type() == SType.INTEGER && ((SInteger)car).getInt() == 5) {
                     return new Env();
                 }
                 else {
@@ -107,14 +108,14 @@ abstract class ControlPrimitives {
     static Primitive map = new Primitive() {
         public String getName() { return "map"; }
         public SExpr call(SExpr args, Evaluator eval) {
-            return SExpr.VOID;
+            return SCHEME_VOID;
         }
     };
 
     static Primitive apply = new Primitive() {
         public String getName() { return "apply"; }
         public SExpr call(SExpr args, Evaluator eval) {
-            return SExpr.VOID;
+            return SCHEME_VOID;
         }
     };
 }

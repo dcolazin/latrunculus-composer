@@ -35,8 +35,13 @@ public final class SOutPort extends SExpr {
     public SOutPort(PrintStream port) {
         this.port = port;
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.OUTPUT;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return sexpr == this;
     }

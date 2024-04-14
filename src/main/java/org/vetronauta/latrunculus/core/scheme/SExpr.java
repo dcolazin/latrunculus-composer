@@ -19,38 +19,36 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * This is the abstract base class for all types of Scheme values,
  * e.g., numbers, symbols, conses, closures, etc.
  * 
  * @author Gérard Milmeister
  */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class SExpr {
-    
-    /**
-     * The unique instance of the Scheme () value.
-     */
-    public static final SExpr NULL = new Null();
-    
-    /**
-     * The unique instance representating a non-value result.
-     */
-    public static final SExpr VOID = new Void();
+
+    public abstract SType type();
     
     /**
      * Returns the cons of <code>car</code> and <code>cdr</code>.
      */
-    public static final SCons cons(SExpr car, SExpr cdr) { return new SCons(car, cdr); }
+    public static SCons cons(SExpr car, SExpr cdr) { return new SCons(car, cdr); }
 
     /**
      * Returns the car of <code>sexpr</code>, which must be an SCons.
      */
-    public static final SExpr car(SExpr sexpr) { return sexpr.getCar(); }
+    //TODO remove
+    public static SExpr car(SExpr sexpr) { return sexpr.getCar(); }
 
     /**
      * Returns the car of <code>sexpr</code>, which must be an SCons.
      */
-    public static final SExpr cdr(SExpr sexpr) { return sexpr.getCdr(); }
+    //TODO remove
+    public static SExpr cdr(SExpr sexpr) { return sexpr.getCdr(); }
 
     /**
      * Returns true iff this is equal to <code>sexpr</code> in the eq? sense.
@@ -83,103 +81,25 @@ public abstract class SExpr {
      * representation intended to show the result of an evaluation,
      * and should be a valid Scheme expression if possible.
      */
+    //TODO move to server
     public abstract String display();
-
-    /**
-     * Returns true iff this is the Scheme () value.
-     */
-    public boolean isNull() { return false; }
-
-    /**
-     * Returns true iff this is the Scheme no-value.
-     */
-    public boolean isVoid() { return false; }
-
-    /**
-     * Returns true iff this is a cons.
-     */
-    public boolean isCons() { return false; }
 
     /**
      * Returns true iff this is a number.
      */
     public boolean isNumber() { return false; }
-    
-    /**
-     * Returns true iff this is an integer.
-     */
-    public boolean isInteger() { return false; }
-    
-    /**
-     * Returns true iff this is a rational.
-     */
-    public boolean isRational() { return false; }
-
-    /**
-     * Returns true iff this is a real number.
-     */
-    public boolean isReal() { return false; }
-
-    /**
-     * Returns true iff this is a complex number.
-     */
-    public boolean isComplex() { return false; }
-    
-    /**
-     * Returns true iff this is a Scheme string.
-     */
-    public boolean isString() { return false; }
-
-    /**
-     * Returns true iff this is a character.
-     */
-    public boolean isChar() { return false; }
-
-    /**
-     * Returns true iff this is a boolean.
-     */
-    public boolean isBoolean() { return false; }
-
-    /**
-     * Returns true iff this is a Scheme vector.
-     */
-    public boolean isVector() { return false; }
-
-    /**
-     * Returns true iff this is a Scheme symbol.
-     */
-    public boolean isSymbol() { return false; }
-
-    /**
-     * Returns true iff this is a closure.
-     */
-    public boolean isClosure() { return false; }
-    
-    /**
-     * Returns true iff this is a primitive function.
-     */
-    public boolean isPrimitive() { return false; }
-    
-    /**
-     * Returns true iff this is a Scheme denotator object.
-     */
-    public boolean isDenotator() { return false; }
-
-    /**
-     * Returns true iff this is a Scheme form object.
-     */
-    public boolean isForm() { return false; }
 
     /**
      * Returns true iff this is a list.
      */
-    public boolean isList() { return isCons() || isNull(); }
+    public boolean isList() { return type() == SType.CONS || type() == SType.NULL; }
     
     /**
      * Returns the car of this SExpr.
      * 
      * @return null if this is not a cons
      */
+    //TODO evaluate if this should obly be a SCons method
     public SExpr getCar() { return null; }
     
     /**
@@ -187,54 +107,32 @@ public abstract class SExpr {
      * 
      * @return null if this is not a cons
      */
+    //TODO evaluate if this should obly be a SCons method
     public SExpr getCdr() { return null; }
     
     /**
      * Sets the car of this SExpr. Does nothing if this is not a cons.
      */
+    //TODO evaluate if this should obly be a SCons method
     public void setCar(SExpr sexpr) {}
     
     /**
      * Sets the cdr of this SExpr. Does nothing if this is not a cons.
      */
+    //TODO evaluate if this should obly be a SCons method
     public void setCdr(SExpr sexpr) {}
-    
-    /**
-     * Returns true iff this is a cons.
-     */
-    public boolean isPair() { return false; }
-    
+
     /**
      * Returns the length if this is a regular list, otherwise -1.
      */
+    //TODO evaluate if this should obly be a SCons method
     public int getLength() { return -1; }
     
     /**
      * Returns the <code>i</code>-th element if this is a regular
      * list, otherwise null.
      */
+    //TODO evaluate if this should obly be a SCons method
     public SExpr nth(int i) { return null; }
-    
-    protected SExpr() {}
-    
-    protected static class Null extends SExpr {
-        public boolean isNull() { return true; }
-        public boolean eq_p(SExpr sexpr) { return this == sexpr; }
-        public boolean eqv_p(SExpr sexpr) { return this == sexpr; }
-        public boolean equal_p(SExpr sexpr) { return this == sexpr; }
-        public boolean equals(Object obj) { return this == obj; }
-        public int getLength() { return 0; }
-        public String toString() { return "()"; }
-        public String display() { return "()"; }
-    }
-    
-    protected static class Void extends SExpr {
-        public boolean isVoid() { return true; }
-        public boolean eq_p(SExpr sexpr) { return this == sexpr; }
-        public boolean eqv_p(SExpr sexpr) { return this == sexpr; }
-        public boolean equal_p(SExpr sexpr) { return this == sexpr; }
-        public boolean equals(Object obj) { return this == obj; }
-        public String toString() { return "NoValue"; }
-        public String display() { return ""; }
-    }
+
 }

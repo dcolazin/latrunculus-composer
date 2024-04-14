@@ -141,17 +141,18 @@ public final class Env extends SExpr {
      * value in <code>vals</code>.
      */
     public boolean extendEnv(SExpr vars, SExpr vals) {
-        if (vars.isNull() && vals.isNull()) {
+        //TODO switch
+        if (vars.type() == SType.NULL && vals.type() == SType.NULL) {
             return true;
         }
-        if (vars.isNull()) {
+        if (vars.type() == SType.NULL) {
             return false;
         }
-        if (vars.isSymbol()) {
+        if (vars.type() == SType.SYMBOL) {
             env.put((Symbol)vars, vals);
             return true;
         }
-        if (vals.isNull()) {
+        if (vals.type() == SType.NULL) {
             return false;
         }
 
@@ -161,7 +162,7 @@ public final class Env extends SExpr {
         
         SExpr sym = vars.getCar();
         SExpr val = vals.getCar();
-        if (sym.isSymbol()) {            
+        if (sym.type() == SType.SYMBOL) {            
             put((Symbol)sym, val);
             return true;
         }
@@ -169,8 +170,12 @@ public final class Env extends SExpr {
             return false;
         }
     }
-    
-    
+
+    @Override
+    public SType type() {
+        return SType.ENV;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return equals(sexpr);
     }

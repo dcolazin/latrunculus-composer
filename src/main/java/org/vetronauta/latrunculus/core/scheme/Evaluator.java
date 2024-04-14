@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.scheme;
 
 import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -92,7 +94,7 @@ public class Evaluator {
         }
         else {
             addError("syntax error");
-            return VOID;
+            return SCHEME_VOID;
         }
     }
     
@@ -144,18 +146,18 @@ public class Evaluator {
         while (!finished) {
             if (runInfo != null && runInfo.stopped()) {
                 addError("Evaluation stopped");
-                val = VOID;
+                val = SCHEME_VOID;
                 finish();
             }
             switch (cur_label) {
             case EVAL_DISPATCH:
-                if (exp.isNull()) {
+                if (exp.type() == SType.NULL) {
                     addError("cannot evaluate ()");
                     finish();
                 }
                 else if (isSelfEval(exp)) { gotoLabel(Label.EVAL_SELF); }
                 else if (isVar(exp)) { gotoLabel(Label.EVAL_VAR); }
-                else if (exp.isCons()) {
+                else if (exp.type() == SType.CONS) {
                     SExpr car = car(exp);
                     if (car == Token.QUOTE) { gotoLabel(Label.EVAL_QUOTE); }
                     else if (car == Token.COND) { gotoLabel(Label.EVAL_COND); }
@@ -169,7 +171,7 @@ public class Evaluator {
                     else if (car == Token.OR) { gotoLabel(Label.EVAL_OR); }
                     else { gotoLabel(Label.EVAL_APP); }
                 }
-                else if (exp.isVoid()) {
+                else if (exp.type() == SType.VOID) {
                     addError("cannot evaluate void value");
                     finish();
                 }
@@ -181,7 +183,7 @@ public class Evaluator {
                 break;
                 
             case EVAL_QUOTE:
-                if (!cdr(exp).isCons()) {
+                if (!(cdr(exp).type() == SType.CONS)) {
                     addError("quote: malformed expression");
                     finish();
                 }
@@ -234,20 +236,20 @@ public class Evaluator {
                 unev = restoreReg();
                 env = (Env)restoreReg();                
                 fun = val;
-                if (unev.isNull()) {
-                    argl = NULL;
+                if (unev.type() == SType.NULL) {
+                    argl = SCHEME_NULL;
                     gotoLabel(Label.APPLY_DISPATCH);
                 }
                 else {
                     saveReg(fun);
-                    argl = NULL;
+                    argl = SCHEME_NULL;
                     gotoLabel(Label.EVAL_ARG_LOOP);
                 }
                 break;
                 
             case EVAL_ARG_LOOP:
                 saveReg(argl);
-                if (!unev.isCons()) { 
+                if (!(unev.type() == SType.CONS)) {
                     addError("app: argument list malformed");
                     finish();
                     break;
@@ -361,19 +363,19 @@ public class Evaluator {
                     finish();
                     break;
                 }
-                argl = reverseList(argl, NULL);
+                argl = reverseList(argl, SCHEME_NULL);
                 fun = car(argl);
                 argl = car(cdr(argl));
-                if (argl.isNull()) {
+                if (argl.type() == SType.NULL) {
                     gotoLabel(Label.EVAL_MAP_END);
                     break;
                 }
                 else {
-                    val = NULL;
+                    val = SCHEME_NULL;
                     saveReg(val);
                     saveReg(fun);
                     saveReg(argl);
-                    argl = cons(car(argl), NULL);
+                    argl = cons(car(argl), SCHEME_NULL);
                 }
 
             case EVAL_MAP_LOOP:
@@ -385,17 +387,17 @@ public class Evaluator {
                 argl = cdr(restoreReg());
                 fun = restoreReg();
                 val = cons(val, restoreReg());
-                if (argl.isCons()) {
+                if (argl.type() == SType.CONS) {
                     saveReg(val);
                     saveReg(fun);
                     saveReg(argl);
-                    argl = cons(car(argl), NULL);
+                    argl = cons(car(argl), SCHEME_NULL);
                     gotoLabel(Label.EVAL_MAP_LOOP);
                     break;                    
                 }
                 
             case EVAL_MAP_END:
-                val = reverseList(val, NULL);
+                val = reverseList(val, SCHEME_NULL);
                 cont = restoreLabel();
                 gotoLabel(cont);
                 break;
@@ -411,7 +413,7 @@ public class Evaluator {
                     finish();
                     break;
                 }
-                argl = reverseList(argl, NULL);
+                argl = reverseList(argl, SCHEME_NULL);
                 fun = car(argl);
                 argl = car(cdr(argl));
                 gotoLabel(Label.APPLY_DISPATCH);
@@ -422,7 +424,7 @@ public class Evaluator {
             case EVAL_AND:
               saveLabel(cont);
               unev = cdr(exp);
-              if (unev.isNull()) {
+              if (unev.type() == SType.NULL) {
                   exp = SBoolean.TRUE;
                   gotoLabel(Label.EVAL_AND_LAST_EXP);
                   break;
@@ -430,7 +432,7 @@ public class Evaluator {
               
             case EVAL_AND_SEQ:
               exp = car(unev);
-              if (cdr(unev).isNull()) {
+              if (cdr(unev).type() == SType.NULL) {
                   gotoLabel(Label.EVAL_AND_LAST_EXP);
                   break;
               }
@@ -465,7 +467,7 @@ public class Evaluator {
             case EVAL_OR:
               saveLabel(cont);
               unev = cdr(exp);
-              if (unev.isNull()) {
+              if (unev.type() == SType.NULL) {
                   exp = SBoolean.FALSE;
                   gotoLabel(Label.EVAL_OR_LAST_EXP);
                   break;
@@ -473,7 +475,7 @@ public class Evaluator {
               
             case EVAL_OR_SEQ:
               exp = car(unev);
-              if (cdr(unev).isNull()) {
+              if (cdr(unev).type() == SType.NULL) {
                   gotoLabel(Label.EVAL_OR_LAST_EXP);
                   break;
               }
@@ -522,7 +524,7 @@ public class Evaluator {
 
             case EVAL_COND_RETURN_NIL:
                 cont = restoreLabel();
-                val = NULL;
+                val = SCHEME_NULL;
                 gotoLabel(cont);
                 break;
 
@@ -693,7 +695,7 @@ public class Evaluator {
     }
     
     
-    private final void finish() {
+    private void finish() {
         finished = true;
     }
     
@@ -748,45 +750,45 @@ public class Evaluator {
     }
     
     
-    private final boolean isSelfEval(SExpr sexpr) {
-        return !sexpr.isCons() && !sexpr.isSymbol();
+    private boolean isSelfEval(SExpr sexpr) {
+        return !(sexpr.type() == SType.CONS) && !(sexpr.type() == SType.SYMBOL);
     }
     
     
-    private final boolean isVar(SExpr sexpr) {
-        return sexpr.isSymbol();
+    private boolean isVar(SExpr sexpr) {
+        return sexpr.type() == SType.SYMBOL;
     }
     
     
-    private final SExpr getOperands(SExpr sexpr) {
+    private SExpr getOperands(SExpr sexpr) {
         return cdr(sexpr);
     }
     
     
-    private final SExpr getOperator(SExpr sexpr) {
+    private SExpr getOperator(SExpr sexpr) {
         return car(sexpr);
     }
     
 
-    private final SExpr getFirstOperand(SExpr sexpr) {
+    private SExpr getFirstOperand(SExpr sexpr) {
         return car(sexpr);
     }
     
     
-    private final SExpr getRestOperands(SExpr sexpr) {
+    private SExpr getRestOperands(SExpr sexpr) {
         return cdr(sexpr);
     }
     
     
-    private final boolean isLastOperand(SExpr sexpr) {
-        return cdr(sexpr).isNull();
+    private boolean isLastOperand(SExpr sexpr) {
+        return cdr(sexpr).type() == SType.NULL;
     }
     
     
-    private final SClosure makeClosure(SExpr sexpr, Env env) {
-        if (sexpr.isCons()) {
+    private SClosure makeClosure(SExpr sexpr, Env env) {
+        if (sexpr.type() == SType.CONS) {
             SExpr args = car(sexpr);
-            if (cdr(sexpr).isCons()) {
+            if (cdr(sexpr).type() == SType.CONS) {
                 SExpr body = cdr(sexpr);
                 return new SClosure(args, body, env);
             }
@@ -797,14 +799,14 @@ public class Evaluator {
     }
     
     
-    private final SExpr letToLambda(SExpr sexpr) {
+    private SExpr letToLambda(SExpr sexpr) {
         try {
             SExpr variables = car(cdr(sexpr));
             SExpr body = cdr(cdr(sexpr));
-            SExpr new_vars = NULL;
-            SExpr new_pars = NULL;
+            SExpr new_vars = SCHEME_NULL;
+            SExpr new_pars = SCHEME_NULL;
     
-            while (!variables.isNull()) {
+            while (!(variables.type() == SType.NULL)) {
               new_vars = cons(car(car(variables)), new_vars);
               new_pars = cons(car(cdr(car(variables))), new_pars);
               variables = cdr(variables);
@@ -817,59 +819,59 @@ public class Evaluator {
         catch (NullPointerException e) {
             addError("let: malformed expression");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
     }
     
 
-    private final SExpr letStarToLet(SExpr sexpr) {
+    private SExpr letStarToLet(SExpr sexpr) {
         try {
             SExpr variables = car(cdr(sexpr));
             SExpr body = cdr(cdr(sexpr));
             SExpr new_let_star;
 
-            if (variables.isNull()) {
-                sexpr.setCar(cons(Token.LAMBDA, cons(NULL, body)));
-                sexpr.setCdr(NULL);
+            if (variables.type() == SType.NULL) {
+                sexpr.setCar(cons(Token.LAMBDA, cons(SCHEME_NULL, body)));
+                sexpr.setCdr(SCHEME_NULL);
                 return sexpr;
             }
-            if (cdr(variables).isNull()) {
+            if (cdr(variables).type() == SType.NULL) {
                 sexpr.setCar(Token.LET);
                 return sexpr;
             }
             new_let_star = cons(Token.LET_STAR, cons(cdr(variables), body));
             sexpr.setCar(Token.LET);
-            sexpr.setCdr(cons(cons(car(variables), NULL), cons(new_let_star, NULL)));
+            sexpr.setCdr(cons(cons(car(variables), SCHEME_NULL), cons(new_let_star, SCHEME_NULL)));
             return sexpr;
         }
         catch (NullPointerException e) {
             addError("let*: malformed expression");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
     }
 
     
-    private final SExpr getClauses(SExpr sexpr) {
+    private SExpr getClauses(SExpr sexpr) {
         return cdr(sexpr);
     }
     
     
-    private final boolean hasNoClauses(SExpr clauses) {
-        return clauses.isNull();
+    private boolean hasNoClauses(SExpr clauses) {
+        return clauses.type() == SType.NULL;
     }
     
     
-    private final SExpr getIfTestAndAlt(SExpr sexpr) {
+    private SExpr getIfTestAndAlt(SExpr sexpr) {
         return cdr(sexpr); 
     }
     
     
-    private final SExpr getIfTest(SExpr sexpr) {
-        if (sexpr.isNull()) {
+    private SExpr getIfTest(SExpr sexpr) {
+        if (sexpr.type() == SType.NULL) {
             addError("if: missing test expression");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
         else {
             return car(sexpr);
@@ -877,11 +879,11 @@ public class Evaluator {
     }
     
     
-    private final SExpr getIfTruePart(SExpr sexpr) {
-        if (cdr(sexpr).isNull()) {
+    private SExpr getIfTruePart(SExpr sexpr) {
+        if (cdr(sexpr).type() == SType.NULL) {
             addError("if: missing true part");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
         else {
             return car(cdr(sexpr));
@@ -889,16 +891,16 @@ public class Evaluator {
     }
     
     
-    private final SExpr getActions(SExpr clause) {
+    private SExpr getActions(SExpr clause) {
         return cdr(clause);
     }
     
     
-    private final SExpr setGetVariable(SExpr sexpr) {
-        if (cdr(sexpr).isNull() || cdr(cdr(sexpr)).isNull()) {
+    private SExpr setGetVariable(SExpr sexpr) {
+        if (cdr(sexpr).type() == SType.NULL || cdr(cdr(sexpr)).type() == SType.NULL) {
             addError ("set!: wrong number of arguments");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
         else {  
             return car(cdr(sexpr));
@@ -906,38 +908,38 @@ public class Evaluator {
     }
     
     
-    private final SExpr setGetValue(SExpr sexpr) {
+    private SExpr setGetValue(SExpr sexpr) {
         return car(cdr(cdr(sexpr)));
     }
     
     
-    private final SExpr setVariableValue(SExpr var, SExpr val, Env env) {
+    private SExpr setVariableValue(SExpr var, SExpr val, Env env) {
         if (!env.set((Symbol)var, val)) {
             addError("set!: unbound variable %%1", var);
             finish();
         }
-        return VOID;
+        return SCHEME_VOID;
     }
     
     
-    private final SExpr defineGetVariable(SExpr sexpr) {
+    private SExpr defineGetVariable(SExpr sexpr) {
         if (isVar(car(cdr(sexpr)))) {
             // variable definition
             return car(cdr(sexpr));
         }
-        else if (car(cdr(sexpr)).isCons()) {
+        else if (car(cdr(sexpr)).type() == SType.CONS) {
             // procedure definition
             return car(car(cdr(sexpr)));
         }
         else {
             addError("define: no variable in define expression");
             finish();
-            return VOID;
+            return SCHEME_VOID;
         }
     }
     
     
-    private final SExpr defineGetValue(SExpr sexpr) {
+    private SExpr defineGetValue(SExpr sexpr) {
         if (isVar(car(cdr(sexpr)))) {
             // variable
             return car(cdr(cdr(sexpr)));
@@ -949,45 +951,45 @@ public class Evaluator {
     }
     
     
-    private final SExpr defineVariableValue(SExpr variable, SExpr value, Env env) {
+    private SExpr defineVariableValue(SExpr variable, SExpr value, Env env) {
         env.put((Symbol)variable, value);
-        return VOID;
+        return SCHEME_VOID;
     }
     
     
-    private final boolean isTrue(SExpr expr) {
+    private boolean isTrue(SExpr expr) {
         return expr == SBoolean.TRUE;
     }
     
     
-    private final boolean isElseClause(SExpr clause) {
+    private boolean isElseClause(SExpr clause) {
         return getPredicate(clause) == Token.ELSE;
     }
 
     
-    private final SExpr getPredicate(SExpr clause) {
+    private SExpr getPredicate(SExpr clause) {
         return car(clause);
     }
     
     
-    private final SExpr getFirstClause(SExpr clauses) {
+    private SExpr getFirstClause(SExpr clauses) {
         return car(clauses);
     }
     
 
-    private final SExpr getRestClauses(SExpr clauses) {
+    private SExpr getRestClauses(SExpr clauses) {
         return cdr(clauses);
     }
     
 
-    private final SExpr getIfElsePart(SExpr sexpr) {
-        if (cdr(sexpr).isNull()) {
+    private SExpr getIfElsePart(SExpr sexpr) {
+        if (cdr(sexpr).type() == SType.NULL) {
             addError("if: missing else part");
             finish();
-            return VOID;            
+            return SCHEME_VOID;            
         }
-        else if (cdr(cdr(sexpr)).isNull()) {
-            return VOID;
+        else if (cdr(cdr(sexpr)).type() == SType.NULL) {
+            return SCHEME_VOID;
         }
         else {
             return car(cdr(cdr(sexpr)));
@@ -995,45 +997,45 @@ public class Evaluator {
     }
     
 
-    private final SExpr getFirstExp(SExpr sexpr) {
+    private SExpr getFirstExp(SExpr sexpr) {
         return car(sexpr);
     }
     
     
-    private final SExpr getRestExps(SExpr sexpr) {
+    private SExpr getRestExps(SExpr sexpr) {
         return cdr(sexpr);
     }
     
     
-    private final boolean isLastExp(SExpr sexpr) {
-        return cdr(sexpr).isNull();
+    private boolean isLastExp(SExpr sexpr) {
+        return cdr(sexpr).type() == SType.NULL;
     }
     
     
-    private final boolean isPrimitiveProcedure(SExpr sexpr) {
-        return sexpr.isPrimitive();
+    private boolean isPrimitiveProcedure(SExpr sexpr) {
+        return sexpr.type() == SType.PRIMITIVE;
     }
     
 
-    private final boolean isClosure(SExpr sexpr) {
-        return sexpr.isClosure();
+    private boolean isClosure(SExpr sexpr) {
+        return sexpr.type() == SType.CLOJURE;
     }
     
     
-    private final SExpr applyPrimitiveProcedure(SPrimitive prim, SExpr args) {
-        SExpr sexpr = reverseList(args, NULL);
+    private SExpr applyPrimitiveProcedure(SPrimitive prim, SExpr args) {
+        SExpr sexpr = reverseList(args, SCHEME_NULL);
         if (sexpr == null) {
-            return NULL;
+            return SCHEME_NULL;
         }
         sexpr = prim.getPrimitive().call(sexpr, this);
         if (hasErrors()) {
             finish();
-            return NULL;
+            return SCHEME_NULL;
         }
         else if (sexpr == null) {
             addError("app: can not apply %1 to %2", prim, args);
             finish();
-            return NULL;
+            return SCHEME_NULL;
         }
         else {
             return sexpr;
@@ -1041,11 +1043,11 @@ public class Evaluator {
     }
 
     
-    private final SExpr reverseList(SExpr sexpr, SExpr acc) {
-        if (sexpr.isNull()) {
+    private SExpr reverseList(SExpr sexpr, SExpr acc) {
+        if (sexpr.type() == SType.NULL) {
             return acc;
         }
-        else if (sexpr.isCons()) {
+        else if (sexpr.type() == SType.CONS) {
             return reverseList(cdr(sexpr), cons(car(sexpr), acc));
         }
         else {
@@ -1053,9 +1055,9 @@ public class Evaluator {
         }
     }
     
-    private final Env makeBindings(SExpr funExpr, SExpr args) {
+    private Env makeBindings(SExpr funExpr, SExpr args) {
         SClosure closure = (SClosure)funExpr;
-        SExpr sargs = reverseList(args, NULL);
+        SExpr sargs = reverseList(args, SCHEME_NULL);
         Env newEnv = new Env(closure.getEnv());
         if (!newEnv.extendEnv(closure.getArgs(), sargs)) {
             addError("app: cannot bind variables %1 to values %2", closure.getArgs(), sargs);
@@ -1068,32 +1070,32 @@ public class Evaluator {
     }
     
     
-    private final SExpr getProcedureBody(SExpr funExpr) {
+    private SExpr getProcedureBody(SExpr funExpr) {
         SClosure closure = (SClosure)funExpr;
         return closure.getBody();
     }
 
     
-    private final void saveLabel(Label label) {
+    private void saveLabel(Label label) {
         labelStack.add(0, label);
     }
     
     
-    private final Label restoreLabel() {
+    private Label restoreLabel() {
         return labelStack.remove(0);
     }
     
     
-    private final void saveReg(SExpr sexpr) {
+    private void saveReg(SExpr sexpr) {
         regStack.add(0, sexpr);
     }
     
     
-    private final SExpr restoreReg() {
+    private SExpr restoreReg() {
         return regStack.remove(0);
     }
     
-    private final void gotoLabel(Label label) {
+    private void gotoLabel(Label label) {
         cur_label = label;
     }
 }

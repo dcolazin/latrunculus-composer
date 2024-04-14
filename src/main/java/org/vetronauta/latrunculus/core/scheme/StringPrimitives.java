@@ -43,7 +43,7 @@ public abstract class StringPrimitives {
         public String getName() { return "symbol?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isSymbol());
+                return SBoolean.make(car(args).type() == SType.SYMBOL);
             }
             else {
                 eval.addError("symbol?: expected number of arguments is 1, but got %1", args.getLength());
@@ -56,7 +56,7 @@ public abstract class StringPrimitives {
         public String getName() { return "string?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isString());
+                return SBoolean.make(car(args).type() == SType.STRING);
             }
             else {
                 eval.addError("string?: expected number of arguments is 1, but got %1", args.getLength());
@@ -69,7 +69,7 @@ public abstract class StringPrimitives {
         public String getName() { return "char?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isChar());
+                return SBoolean.make(car(args).type() == SType.CHAR);
             }
             else {
                 eval.addError("char?: expected number of arguments is 1, but got %1", args.getLength());
@@ -83,7 +83,7 @@ public abstract class StringPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr s = car(args);
-                if (s.isSymbol()) {
+                if (s.type() == SType.SYMBOL) {
                     return new SString(((Symbol)s).getName());
                 }
                 else {
@@ -103,7 +103,7 @@ public abstract class StringPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr s = args.nth(0);
-                if (s.isString()) {
+                if (s.type() == SType.STRING) {
                     return Symbol.make(((SString)s).getString());
                 }
                 else {
@@ -144,7 +144,7 @@ public abstract class StringPrimitives {
             int l = args.getLength();
             if (l == 1) {
                 SExpr s = car(args);
-                if (s.isString()) {
+                if (s.type() == SType.STRING) {
                     // TODO: not yet implemented
                     return null;
                 }
@@ -156,8 +156,8 @@ public abstract class StringPrimitives {
             else if (l == 2) {
                 SExpr s = car(args);
                 SExpr r = car(cdr(args));
-                if (s.isString()) {
-                    if (r.isInteger()) {
+                if (s.type() == SType.STRING) {
+                    if (r.type() == SType.INTEGER) {
                         // TODO: not yet implemented
                         return null;
                     }

@@ -33,8 +33,13 @@ public final class SVector extends SExpr {
     public SVector(SExpr[] v) {
         this.v = v;
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.VECTOR;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -101,12 +106,6 @@ public final class SVector extends SExpr {
             return false;
         }
     }
-    
-    
-    public boolean isVector() {
-        return true;
-    }
-    
     
     public String toString() {
         StringBuilder buf = new StringBuilder();

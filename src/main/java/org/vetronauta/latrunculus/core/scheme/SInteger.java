@@ -37,7 +37,12 @@ public final class SInteger extends SNumber {
     public SInteger(int i) {
         this.i = i;
     }
-    
+
+    @Override
+    public SType type() {
+        return SType.INTEGER;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -52,10 +57,6 @@ public final class SInteger extends SNumber {
     
     public boolean equals(Object obj) {
         return (obj instanceof SInteger) && ((SInteger)obj).i == i;
-    }
-    
-    public boolean isInteger() {
-        return true;
     }
 
     public SNumber add(SNumber n) {

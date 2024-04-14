@@ -96,13 +96,13 @@ abstract class ArithPrimitives {
     private static Primitive plus = new Primitive() {
         public String getName() { return "+"; }
         public SExpr call(SExpr args, Evaluator eval) {
-            if (args.isNull()) {
+            if (args.type() == SType.NULL) {
                 return new SInteger(0);
             }
-            else if (args.isCons()) {
+            else if (args.type() == SType.CONS) {
                 SExpr cur = args;
                 SNumber res = new SInteger(0);
-                while (cur.isCons()) {
+                while (cur.type() == SType.CONS) {
                     SExpr car = car(cur);
                     if (car instanceof SNumber) {
                         res = res.add((SNumber)car);
@@ -143,7 +143,7 @@ abstract class ArithPrimitives {
                 if (car(cur) instanceof SNumber) {
                     SNumber n = (SNumber)car(cur);
                     cur = cdr(cur);
-                    while (cur.isCons()) {
+                    while (cur.type() == SType.CONS) {
                         if (cur.getCar() instanceof SNumber) {
                             n = n.subtract((SNumber)car(cur));
                             cur = cdr(cur);
@@ -166,13 +166,13 @@ abstract class ArithPrimitives {
     private static Primitive times = new Primitive() {
         public String getName() { return "*"; }
         public SExpr call(SExpr args, Evaluator eval) {
-            if (args.isNull()) {
+            if (args.type() == SType.NULL) {
                 return new SInteger(1);
             }
-            else if (args.isCons()) {
+            else if (args.type() == SType.CONS) {
                 SExpr cur = args;
                 SNumber res = new SInteger(1);
-                while (cur.isCons()) {
+                while (cur.type() == SType.CONS) {
                     SExpr car = car(cur);
                     if (car instanceof SNumber) {
                         res = res.multiply((SNumber)car);
@@ -216,7 +216,7 @@ abstract class ArithPrimitives {
                     SNumber res = (SNumber)a;
                     SExpr cdr = cdr(args);
                     try {
-                        while (!cdr.isNull()) {
+                        while (!(cdr.type() == SType.NULL)) {
                             SExpr b = car(cdr);
                             if (a instanceof SNumber) {
                                 res = res.divide((SNumber)b);
@@ -256,7 +256,7 @@ abstract class ArithPrimitives {
                     return null;
                 }
                 SExpr cdr = cdr(args);
-                while (cdr.isCons()) {
+                while (cdr.type() == SType.CONS) {
                     SExpr car = car(cdr);
                     if (!car.isNumber()) {
                         eval.addError("=: expected argument of type, but got %1", car);
@@ -308,7 +308,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
-                return SBoolean.make(arg.isReal() || args.isInteger() || args.isRational());
+                return SBoolean.make(arg.type() == SType.REAL || args.type() == SType.INTEGER || args.type() == SType.RATIONAL);
             }
             else {
                 eval.addError("real?: expected number of arguments is 1, but got %1", args.getLength());
@@ -322,7 +322,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr arg = car(args);
-                return SBoolean.make(arg.isRational() || arg.isInteger());
+                return SBoolean.make(arg.type() == SType.RATIONAL || arg.type() == SType.INTEGER);
             }
             else {
                 eval.addError("rational?: expected number of arguments is 1, but got %1", args.getLength());
@@ -335,7 +335,7 @@ abstract class ArithPrimitives {
         public String getName() { return "integer?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isInteger());
+                return SBoolean.make(car(args).type() == SType.INTEGER);
             }
             else {
                 eval.addError("integer?: expected number of arguments is 1, but got %1", args.getLength());
@@ -387,7 +387,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr x = args.nth(0);
-                if (x instanceof SNumber && !x.isComplex()) {
+                if (x instanceof SNumber && !(x.type() == SType.COMPLEX)) {
                     return SBoolean.make(((SNumber)x).positive_p());
                 }
                 else {
@@ -406,7 +406,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr x = args.nth(0);
-                if (x instanceof SNumber && !x.isComplex()) {
+                if (x instanceof SNumber && !(x.type() == SType.COMPLEX)) {
                     return SBoolean.make(((SNumber)x).negative_p());
                 }
                 else {
@@ -444,7 +444,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr sexpr = args.nth(0);
-                return SBoolean.make(sexpr.isInteger() || sexpr.isRational());
+                return SBoolean.make(sexpr.type() == SType.INTEGER || sexpr.type() == SType.RATIONAL);
             }
             else {
                 eval.addError("exact?: expected number of arguments is 1, but got %1", args.getLength());
@@ -458,7 +458,7 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr sexpr = args.nth(0);
-                return SBoolean.make(sexpr.isReal() || sexpr.isComplex());
+                return SBoolean.make(sexpr.type() == SType.REAL || sexpr.type() == SType.COMPLEX);
             }
             else {
                 eval.addError("inexact?: expected number of arguments is 1, but got %1", args.getLength());
@@ -471,7 +471,7 @@ abstract class ArithPrimitives {
         public String getName() { return "boolean?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(args.nth(0).isBoolean());
+                return SBoolean.make(args.nth(0).type() == SType.BOOLEAN);
             }
             else {
                 eval.addError("boolean?: expected number of arguments is 1, but got %1", args.getLength());
@@ -497,14 +497,14 @@ abstract class ArithPrimitives {
         public String getName() { return "<"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError("<: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber last = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError("<: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -528,14 +528,14 @@ abstract class ArithPrimitives {
         public String getName() { return ">"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError(">: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber last = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError(">: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -559,14 +559,14 @@ abstract class ArithPrimitives {
         public String getName() { return "<="; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError("<=: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber last = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError("<=: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -591,14 +591,14 @@ abstract class ArithPrimitives {
         public String getName() { return ">="; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError(">=: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber last = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError(">=: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -623,14 +623,14 @@ abstract class ArithPrimitives {
         public String getName() { return "max"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 1) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError("max: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber max0 = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError("max: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -654,14 +654,14 @@ abstract class ArithPrimitives {
         public String getName() { return "min"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 1) {
-                if (!car(args).isNumber() || car(args).isComplex()) {
+                if (!car(args).isNumber() || car(args).type() == SType.COMPLEX) {
                     eval.addError("min: expected argument of type real, but got %1", car(args));
                     return null;
                 }
                 SNumber min0 = (SNumber)car(args);
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isNumber() || car(cdr).isComplex()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!car(cdr).isNumber() || car(cdr).type() == SType.COMPLEX) {
                         eval.addError("min: expected argument of type real, but got %1", car(cdr));
                         return null;
                     }
@@ -706,7 +706,7 @@ abstract class ArithPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr b = car(cdr(args));
-                if (a.isInteger() && b.isInteger()) {
+                if (a.type() == SType.INTEGER && b.type() == SType.INTEGER) {
                     try {
                         return new SInteger(((SInteger)a).getInt()/((SInteger)b).getInt());
                     }
@@ -733,7 +733,7 @@ abstract class ArithPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr b = car(cdr(args));
-                if (a.isInteger() && b.isInteger()) {
+                if (a.type() == SType.INTEGER && b.type() == SType.INTEGER) {
                     try {
                         return new SInteger(NumberTheory.mod(((SInteger)a).getInt(), ((SInteger)b).getInt()));
                     }
@@ -760,7 +760,7 @@ abstract class ArithPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr b = car(cdr(args));
-                if (a.isInteger() && b.isInteger()) {
+                if (a.type() == SType.INTEGER && b.type() == SType.INTEGER) {
                     try {
                         return new SInteger(((SInteger)a).getInt()%((SInteger)b).getInt());
                     }
@@ -789,7 +789,7 @@ abstract class ArithPrimitives {
                 return new SInteger(0);
             }
             else if (l == 1) {
-                if (car(args).isInteger()) {
+                if (car(args).type() == SType.INTEGER) {
                     return car(args);
                 }
                 else {
@@ -798,14 +798,14 @@ abstract class ArithPrimitives {
                 }
             }
             else {
-                if (!car(args).isInteger()) {
+                if (!(car(args).type() == SType.INTEGER)) {
                     eval.addError("gcd: expected argument of type integer, but got %1", car(args));
                     return null;
                 }
                 int gcd_val = ((SInteger)car(args)).getInt();
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isInteger()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!(car(cdr).type() == SType.INTEGER)) {
                         eval.addError("gcd: expected argument of type integer, but got %1", car(cdr));
                         return null;
                     }
@@ -826,7 +826,7 @@ abstract class ArithPrimitives {
                 return new SInteger(1);
             }
             else if (l == 1) {
-                if (car(args).isInteger()) {
+                if (car(args).type() == SType.INTEGER) {
                     return car(args);
                 }
                 else {
@@ -835,14 +835,14 @@ abstract class ArithPrimitives {
                 }
             }
             else {
-                if (!car(args).isInteger()) {
+                if (!(car(args).type() == SType.INTEGER)) {
                     eval.addError("lcm: expected argument of type integer, but got %1", car(args));
                     return null;
                 }
                 int gcd_val = ((SInteger)car(args)).getInt();
                 SExpr cdr = cdr(args);
-                while (!cdr.isNull()) {
-                    if (!car(cdr).isInteger()) {
+                while (!(cdr.type() == SType.NULL)) {
+                    if (!(car(cdr).type() == SType.INTEGER)) {
                         eval.addError("lcm: expected argument of type integer, but got %1", car(cdr));
                         return null;
                     }
@@ -859,10 +859,10 @@ abstract class ArithPrimitives {
         public String getName() { return "numerator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                if (car(args).isRational()) {
+                if (car(args).type() == SType.RATIONAL) {
                     return new SInteger(((SRational)car(args)).getRational().getNumerator());
                 }
-                else if (car(args).isInteger()) {
+                else if (car(args).type() == SType.INTEGER) {
                     return car(args);
                 }
                 else {
@@ -881,10 +881,10 @@ abstract class ArithPrimitives {
         public String getName() { return "denominator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                if (car(args).isRational()) {
+                if (car(args).type() == SType.RATIONAL) {
                     return new SInteger(((SRational)car(args)).getRational().getDenominator());
                 }
-                else if (car(args).isInteger()) {
+                else if (car(args).type() == SType.INTEGER) {
                     return new SInteger(1);
                 }
                 else {
@@ -1247,8 +1247,8 @@ abstract class ArithPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr b = car(cdr(args));
-                if ((a.isInteger() || a.isRational() || a.isReal()) &&
-                    (b.isInteger() || b.isRational() || b.isReal())) {
+                if ((a.type() == SType.INTEGER || a.type() == SType.RATIONAL || a.type() == SType.REAL) &&
+                    (b.type() == SType.INTEGER || b.type() == SType.RATIONAL || b.type() == SType.REAL)) {
                     return new SComplex(new Complex(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
                 }
                 else {
@@ -1269,8 +1269,8 @@ abstract class ArithPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr b = car(cdr(args));
-                if ((a.isInteger() || a.isRational() || a.isReal()) &&
-                    (b.isInteger() || b.isRational() || b.isReal())) {
+                if ((a.type() == SType.INTEGER || a.type() == SType.RATIONAL || a.type() == SType.REAL) &&
+                    (b.type() == SType.INTEGER || b.type() == SType.RATIONAL || b.type() == SType.REAL)) {
                     return new SComplex(Trigonometry.fromPolar(((SNumber)a).toReal().getDouble(), ((SNumber)b).toReal().getDouble()));
                 }
                 else {
@@ -1290,10 +1290,10 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);                
-                if (a.isInteger() || a.isRational()) {
+                if (a.type() == SType.INTEGER || a.type() == SType.RATIONAL) {
                     return ((SNumber)a).toReal();
                 }
-                else if (a.isReal() || a.isComplex()) {
+                else if (a.type() == SType.REAL || a.type() == SType.COMPLEX) {
                     return a;
                 }
                 else {
@@ -1313,13 +1313,13 @@ abstract class ArithPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);                
-                if (a.isInteger() || a.isRational()) {
+                if (a.type() == SType.INTEGER || a.type() == SType.RATIONAL) {
                     return a;
                 }
-                else if (a.isReal()) {
+                else if (a.type() == SType.REAL) {
                     return SRational.make(new Rational(((SReal)a).getDouble()));
                 }
-                else if (a.isComplex()) {
+                else if (a.type() == SType.COMPLEX) {
                     eval.addError(getName()+": complex argument not supported");
                     return null;
                 }

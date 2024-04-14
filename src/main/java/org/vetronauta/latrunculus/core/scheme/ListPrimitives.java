@@ -20,6 +20,8 @@
 package org.vetronauta.latrunculus.core.scheme;
 
 import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
 
 /**
  * Standard primitive procedures dealing with lists.
@@ -100,7 +102,7 @@ abstract class ListPrimitives {
         public String getName() { return "car"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                if (car(args).isCons()) {
+                if (car(args).type() == SType.CONS) {
                     return car(car(args));
                 }
                 else {
@@ -119,7 +121,7 @@ abstract class ListPrimitives {
         public String getName() { return "cdr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                if (car(args).isCons()) {
+                if (car(args).type() == SType.CONS) {
                     return cdr(car(args));
                 }
                 else {
@@ -145,7 +147,7 @@ abstract class ListPrimitives {
         public String getName() { return "pair?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isCons());
+                return SBoolean.make(car(args).type() == SType.CONS);
             }
             else {
                 eval.addError("pair?: expected number of arguments is 1, but got %1", args.getLength());
@@ -158,7 +160,7 @@ abstract class ListPrimitives {
         public String getName() { return "null?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isNull());
+                return SBoolean.make(car(args).type() == SType.NULL);
             }
             else {
                 eval.addError("null?: expected number of arguments is 1, but got %1", args.getLength());
@@ -204,9 +206,9 @@ abstract class ListPrimitives {
         public String getName() { return "set-car!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
-                if (car(args).isCons()) {
+                if (car(args).type() == SType.CONS) {
                     car(args).setCar(args.nth(1));
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("set-car!: expected argument of type cons, but got %1", car(args));
@@ -224,9 +226,9 @@ abstract class ListPrimitives {
         public String getName() { return "set-cdr!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
-                if (car(args).isCons()) {
+                if (car(args).type() == SType.CONS) {
                     car(args).setCdr(args.nth(1));
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     return null;
@@ -251,11 +253,11 @@ abstract class ListPrimitives {
             }
         }
         public SExpr append(SExpr l, SExpr a) {
-            if (l.isNull()) {
+            if (l.type() == SType.NULL) {
                 return a;
             }
             else {
-                if (l.isCons()) {
+                if (l.type() == SType.CONS) {
                     SExpr c = append(cdr(l), a);
                     if (c != null) {
                         return cons(car(l), c);
@@ -270,7 +272,7 @@ abstract class ListPrimitives {
         public String getName() { return "reverse"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return reverse(car(args), NULL);
+                return reverse(car(args), SCHEME_NULL);
             }
             else {
                 eval.addError("reverse: expected number of arguments is 1, but got %1", args.getLength());
@@ -285,11 +287,11 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr l = args.nth(0);
                 SExpr n = args.nth(1);
-                if (n.isInteger()) {
+                if (n.type() == SType.INTEGER) {
                     int i = ((SInteger)n).getInt();
                     SExpr cdr_val = l;
                     while (i > 0) {
-                        if (cdr_val.isCons()) {
+                        if (cdr_val.type() == SType.CONS) {
                             cdr_val = cdr(cdr_val);
                         }
                         else {
@@ -317,11 +319,11 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr l = args.nth(0);
                 SExpr n = args.nth(1);
-                if (n.isInteger()) {
+                if (n.type() == SType.INTEGER) {
                     int i = ((SInteger)n).getInt();
                     SExpr cdr_val = l;
                     while (i > 0) {
-                        if (cdr_val.isCons()) {
+                        if (cdr_val.type() == SType.CONS) {
                             cdr_val = cdr(cdr_val);
                         }
                         else {
@@ -329,7 +331,7 @@ abstract class ListPrimitives {
                             return null;
                         }
                     }
-                    if (cdr_val.isCons()) {
+                    if (cdr_val.type() == SType.CONS) {
                         return car(cdr_val);
                     }
                     else {
@@ -400,7 +402,7 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     if (lst.getCar().eq_p(obj)) {
                         return lst;
                     }
@@ -421,7 +423,7 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     if (lst.getCar().eqv_p(obj)) {
                         return lst;
                     }
@@ -442,7 +444,7 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     if (lst.getCar().equal_p(obj)) {
                         return lst;
                     }
@@ -463,9 +465,9 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     SExpr a = lst.getCar();
-                    if (a.isCons() && a.getCar().eq_p(obj)) {
+                    if (a.type() == SType.CONS && a.getCar().eq_p(obj)) {
                         return a;
                     }
                     lst = lst.getCdr();
@@ -485,9 +487,9 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     SExpr a = lst.getCar();
-                    if (a.isCons() && a.getCar().eqv_p(obj)) {
+                    if (a.type() == SType.CONS && a.getCar().eqv_p(obj)) {
                         return a;
                     }
                     lst = lst.getCdr();
@@ -507,9 +509,9 @@ abstract class ListPrimitives {
             if (args.getLength() == 2) {
                 SExpr obj = args.nth(0);
                 SExpr lst = args.nth(1);
-                while (lst.isCons()) {
+                while (lst.type() == SType.CONS) {
                     SExpr a = lst.getCar();
-                    if (a.isCons() && a.getCar().equal_p(obj)) {
+                    if (a.type() == SType.CONS && a.getCar().equal_p(obj)) {
                         return a;
                     }
                     lst = lst.getCdr();
@@ -524,11 +526,11 @@ abstract class ListPrimitives {
     };
 
     public static SExpr reverse(SExpr l, SExpr a) {
-        if (l.isNull()) {
+        if (l.type() == SType.NULL) {
             return a;
         }
         else {
-            if (l.isCons()) {
+            if (l.type() == SType.CONS) {
                 return reverse(cdr(l), cons(car(l), a));
             }
             return null;
@@ -539,7 +541,7 @@ abstract class ListPrimitives {
         if (exp == null) {
             return null;
         }
-        else if (exp.isCons()) {
+        else if (exp.type() == SType.CONS) {
             return car(exp);
         }
         else {
@@ -551,7 +553,7 @@ abstract class ListPrimitives {
         if (exp == null) {
             return null;
         }
-        else if (exp.isCons()) {
+        else if (exp.type() == SType.CONS) {
             return cdr(exp);
         }
         else {

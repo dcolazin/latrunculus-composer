@@ -35,8 +35,12 @@ public final class SDenotator extends SExpr {
     public SDenotator(Denotator d) {
         this.d = d;
     }
-    
-    
+
+    @Override
+    public SType type() {
+        return SType.DENOTATOR;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -55,12 +59,6 @@ public final class SDenotator extends SExpr {
     public boolean equals(Object obj) {
         return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
     }
-
-
-    public boolean isDenotator() {
-        return true;
-    }
-    
 
     public String toString() {
         return "#<denotator:"+d.toString()+">";

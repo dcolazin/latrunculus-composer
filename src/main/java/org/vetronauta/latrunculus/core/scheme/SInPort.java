@@ -36,8 +36,13 @@ public final class SInPort extends SExpr {
         this.port = port;
         this.reader = new BufferedReader(new InputStreamReader(port));
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.INPUT;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return sexpr == this;
     }

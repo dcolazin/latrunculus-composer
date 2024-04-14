@@ -47,7 +47,12 @@ public final class SComplex extends SNumber {
      */
     public SComplex(Complex c) {
         this.c = c;
-    }    
+    }
+
+    @Override
+    public SType type() {
+        return SType.COMPLEX;
+    }
 
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
@@ -63,10 +68,6 @@ public final class SComplex extends SNumber {
     
     public boolean equals(Object obj) {
         return (obj instanceof SComplex) && ((SComplex)obj).c.equals(c);
-    }
-    
-    public boolean isComplex() {
-        return true;
     }
     
     public SNumber add(SNumber n) {
@@ -170,7 +171,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber atan(SNumber n) {
-        if (n.isComplex()) {
+        if (n.type() == SType.COMPLEX) {
             return new SComplex(Trigonometry.atan(c, ((SComplex)n).c));
         }
         else {
@@ -231,7 +232,7 @@ public final class SComplex extends SNumber {
     }
 
     public SNumber expt(SNumber n) {
-        if (n.isInteger()) {
+        if (n.type() == SType.INTEGER) {
             if (n.negative_p()) {
                 return new SComplex(c.inverse()).expt(n.neg());
             }
@@ -245,7 +246,7 @@ public final class SComplex extends SNumber {
                 return new SComplex(res); 
             }
         }
-        else if (n.isComplex()) {
+        else if (n.type() == SType.COMPLEX) {
             return new SComplex(Trigonometry.expt(c, ((SComplex)n).c));
         }
         else {

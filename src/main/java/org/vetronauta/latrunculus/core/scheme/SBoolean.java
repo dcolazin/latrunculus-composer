@@ -44,8 +44,13 @@ public final class SBoolean extends SExpr {
     public static SBoolean make(boolean b) {
         return b?TRUE:FALSE;
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.BOOLEAN;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -74,17 +79,11 @@ public final class SBoolean extends SExpr {
     public String display() {
         return toString();
     }
-    
-    
-    public boolean isBoolean() {
-        return true;
-    }
-    
+
     
     private SBoolean(boolean b) {
         this.b = b;
     }
-    
     
     private boolean b;
 }

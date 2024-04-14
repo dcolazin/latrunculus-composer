@@ -33,7 +33,12 @@ public final class SString extends SExpr {
     public SString(String s) {
         this.s = s;
     }
-    
+
+    @Override
+    public SType type() {
+        return SType.STRING;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -56,10 +61,6 @@ public final class SString extends SExpr {
     
     public String display() {
         return s;
-    }
-    
-    public boolean isString() {
-        return true;
     }
     
     /**

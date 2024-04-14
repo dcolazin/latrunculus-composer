@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+
 /**
  * The class representing Scheme pairs.
  * 
@@ -30,8 +32,8 @@ public final class SCons extends SExpr {
      * Creates an complete pair where both car and cdr are ().
      */
     public SCons() {
-        this.car = NULL;
-        this.cdr = NULL;
+        this.car = SCHEME_NULL;
+        this.cdr = SCHEME_NULL;
     }
    
     /**
@@ -66,11 +68,11 @@ public final class SCons extends SExpr {
     public int getLength() {
         int i = 0;
         SExpr cur = this;
-        while  (cur.isCons()) {
+        while  (cur.type() == SType.CONS) {
             i++;
             cur = cur.getCdr();
         }
-        if (cur.isNull()) {
+        if (cur.type() == SType.NULL) {
             return i;
         }
         else {
@@ -87,8 +89,13 @@ public final class SCons extends SExpr {
         }
         return cur.getCar();
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.CONS;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -119,25 +126,19 @@ public final class SCons extends SExpr {
             return false;
         }
     }
-    
-    
-    public boolean isCons() {
-        return true;
-    }
-    
-    
+
     public String toString() {
-        if (cdr.isCons() || cdr.isNull()) {
+        if (cdr.type() == SType.CONS || cdr.type() == SType.NULL) {
             SCons cur_cons = this;
             StringBuilder buf = new StringBuilder();
             buf.append("(");
             while (cur_cons != null) {
                 buf.append(cur_cons.car);
-                if (cur_cons.cdr.isCons()) {
+                if (cur_cons.cdr.type() == SType.CONS) {
                     buf.append(" ");
                     cur_cons = (SCons)cur_cons.cdr;
                 }
-                else if (cur_cons.cdr.isNull()) {
+                else if (cur_cons.cdr.type() == SType.NULL) {
                     cur_cons = null;
                 }
                 else {
@@ -155,17 +156,17 @@ public final class SCons extends SExpr {
     }
     
     public String display() {
-        if (cdr.isCons() || cdr.isNull()) {
+        if (cdr.type() == SType.CONS || cdr.type() == SType.NULL) {
             SCons cur_cons = this;
             StringBuilder buf = new StringBuilder();
             buf.append("(");
             while (cur_cons != null) {
                 buf.append(cur_cons.car.display());
-                if (cur_cons.cdr.isCons()) {
+                if (cur_cons.cdr.type() == SType.CONS) {
                     buf.append(" ");
                     cur_cons = (SCons)cur_cons.cdr;
                 }
-                else if (cur_cons.cdr.isNull()) {
+                else if (cur_cons.cdr.type() == SType.NULL) {
                     cur_cons = null;
                 }
                 else {

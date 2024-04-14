@@ -47,10 +47,10 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.NULL;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.cons;
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
 
 
 /**
@@ -90,7 +90,7 @@ abstract class RubatoPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                return SBoolean.make(car.isForm());
+                return SBoolean.make(car.type() == SType.FORM);
             }
             else {
                 eval.addError("form?: expected number of arguments is 1, but got %1", args.getLength());
@@ -104,7 +104,7 @@ abstract class RubatoPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                return SBoolean.make(car.isDenotator());
+                return SBoolean.make(car.type() == SType.DENOTATOR);
             }
             else {
                 eval.addError("denotator?: expected number of arguments is 1, but got %1", args.getLength());
@@ -118,13 +118,13 @@ abstract class RubatoPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                if (car.isSymbol()) {
+                if (car.type() == SType.SYMBOL) {
                     Form f = rep.getForm(((Symbol)car).getName());
-                    return (f == null)?NULL:new SForm(f);
+                    return (f == null) ? SCHEME_NULL : new SForm(f);
                 }
-                else if (car.isString()) {
+                else if (car.type() == SType.STRING) {
                     Form f = rep.getForm(((SString)car).getString());
-                    return (f == null)?NULL:new SForm(f);
+                    return (f == null) ? SCHEME_NULL : new SForm(f);
                 }
                 else {
                     eval.addError("get-form: expected argument of type symbol or string, but got %1", car);
@@ -143,13 +143,13 @@ abstract class RubatoPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr car = car(args);
-                if (car.isSymbol()) {
+                if (car.type() == SType.SYMBOL) {
                     Denotator d = rep.getDenotator(((Symbol)car).getName());
-                    return (d == null)?NULL:new SDenotator(d);
+                    return (d == null) ? SCHEME_NULL : new SDenotator(d);
                 }
-                else if (car.isString()) {
+                else if (car.type() == SType.STRING) {
                     Denotator d = rep.getDenotator(((SString)car).getString());
-                    return (d == null)?NULL:new SDenotator(d);
+                    return (d == null) ? SCHEME_NULL : new SDenotator(d);
                 }
                 else {
                     eval.addError("get-denotator: expected argument of type symbol or string, but got %1", car);
@@ -167,7 +167,7 @@ abstract class RubatoPrimitives {
         public String getName() { return "get-all-forms"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
-                SExpr res = NULL;
+                SExpr res = SCHEME_NULL;
                 for (Form form : rep.getForms()) {
                     res = cons(new SForm(form), res);
                 }
@@ -184,7 +184,7 @@ abstract class RubatoPrimitives {
         public String getName() { return "get-all-denotators"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
-                SExpr res = NULL;
+                SExpr res = SCHEME_NULL;
                 for (Denotator d : rep.getDenotators()) {
                     res = cons(new SDenotator(d), res);
                 }
@@ -398,7 +398,7 @@ abstract class RubatoPrimitives {
                         return formListToScheme(((ListForm)f).getForms());
                     }
                     else {
-                        return NULL;
+                        return SCHEME_NULL;
                     }                    
                 }
                 else {
@@ -468,7 +468,7 @@ abstract class RubatoPrimitives {
                         return denoListToScheme(((ListDenotator)d).getFactors());
                     }
                     else {
-                        return NULL;
+                        return SCHEME_NULL;
                     }                    
                 }
                 else {
@@ -578,13 +578,13 @@ abstract class RubatoPrimitives {
                 String name = null;
                 Form form;
                 // retrieve name
-                if (arg1.isString()) {
+                if (arg1.type() == SType.STRING) {
                     name = ((SString)arg1).getString();
                 }
-                else if (arg1.isSymbol()) {
+                else if (arg1.type() == SType.SYMBOL) {
                     name = ((Symbol)arg1).toString();
                 }
-                if (!arg2.isForm()) {
+                if (!(arg2.type() == SType.FORM)) {
                     eval.addError("make-denotator: expected 2nd argument of type form, but got %1", arg2);
                     return null;
                 }
@@ -648,19 +648,19 @@ abstract class RubatoPrimitives {
     };
 
     protected static SExpr formListToScheme(List<Form> formList) {
-        SExpr res = NULL;
+        SExpr res = SCHEME_NULL;
         for (Form form : formList) {
             res = cons(new SForm(form), res);
         }
-        return ListPrimitives.reverse(res, NULL);
+        return ListPrimitives.reverse(res, SCHEME_NULL);
     }    
     
     protected static SExpr denoListToScheme(List<Denotator> denoList) {
-        SExpr res = NULL;
+        SExpr res = SCHEME_NULL;
         for (Denotator deno : denoList) {
             res = cons(new SDenotator(deno), res);
         }
-        return ListPrimitives.reverse(res, NULL);
+        return ListPrimitives.reverse(res, SCHEME_NULL);
     }    
     
     protected static Symbol type_of(FormDenotatorTypeEnum type) {
@@ -699,9 +699,9 @@ abstract class RubatoPrimitives {
     protected static Denotator makeLimit(Evaluator eval, String name, Form form, SExpr arg) {
         if (arg.isList()) {
             List<Denotator> denoList = new LinkedList<Denotator>();
-            while (!arg.isNull()) {
+            while (!(arg.type() == SType.NULL)) {
                 SExpr sexpr = car(arg);
-                if (sexpr.isDenotator()) {
+                if (sexpr.type() == SType.DENOTATOR) {
                     denoList.add(((SDenotator)sexpr).getDenotator());
                 }
                 else {
@@ -729,9 +729,9 @@ abstract class RubatoPrimitives {
     protected static Denotator makePowerList(Evaluator eval, String name, Form form, SExpr arg) {
         if (arg.isList()) {
             List<Denotator> denoList = new LinkedList<Denotator>();
-            while (!arg.isNull()) {
+            while (!(arg.type() == SType.NULL)) {
                 SExpr sexpr = car(arg);
-                if (sexpr.isDenotator()) {
+                if (sexpr.type() == SType.DENOTATOR) {
                     denoList.add(((SDenotator)sexpr).getDenotator());
                 }
                 else {
@@ -786,32 +786,33 @@ abstract class RubatoPrimitives {
     }
     
     private static ModuleElement sexprToModuleElement(SExpr sexpr) {
-        if (sexpr.isInteger()) {
+        //TODO switch
+        if (sexpr.type() == SType.INTEGER) {
             return new ZInteger(((SInteger)sexpr).getInt());
         }
-        else if (sexpr.isRational()) {
+        else if (sexpr.type() == SType.RATIONAL) {
             return ((SRational)sexpr).getRational().deepCopy();
         }
-        else if (sexpr.isReal()) {
+        else if (sexpr.type() == SType.REAL) {
             return new Real((((SReal)sexpr).getDouble()));
         }
-        else if (sexpr.isComplex()) {
+        else if (sexpr.type() == SType.COMPLEX) {
             return ((SComplex)sexpr).getComplex();
         }
-        else if (sexpr.isBoolean()) {
+        else if (sexpr.type() == SType.BOOLEAN) {
             return new ZInteger(sexpr == SBoolean.TRUE ? 1 : 0);
         }
-        else if (sexpr.isChar()) {
+        else if (sexpr.type() == SType.CHAR) {
             return new StringMap<>(ZRing.ring, Character.toString(((SChar)sexpr).getChar()));
         }
-        else if (sexpr.isString()) {
+        else if (sexpr.type() == SType.STRING) {
             return new StringMap<>(ZRing.ring, ((SString)sexpr).getString());
         }
-        else if (sexpr.isSymbol()) {
+        else if (sexpr.type() == SType.SYMBOL) {
             return new StringMap<>(ZRing.ring, (sexpr).toString());
         }
 
-        else if (sexpr.isVector()) {
+        else if (sexpr.type() == SType.VECTOR) {
             SExpr[] v = ((SVector)sexpr).getArray();
             if (v.length == 0) {
                 return null;

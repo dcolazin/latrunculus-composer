@@ -19,9 +19,9 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.VOID;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
 
 import java.io.*;
 import java.util.List;
@@ -70,7 +70,7 @@ abstract class InputOutputPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);
-                if (a.isString()) {
+                if (a.type() == SType.STRING) {
                     String name = ((SString)a).getString();
                     try {
                         return new SInPort(new FileInputStream(name));
@@ -97,7 +97,7 @@ abstract class InputOutputPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);
-                if (a.isString()) {
+                if (a.type() == SType.STRING) {
                     String name = ((SString)a).getString();
                         try {
                             return new SOutPort(new PrintStream(new FileOutputStream(name)));
@@ -127,7 +127,7 @@ abstract class InputOutputPrimitives {
                 if (port instanceof SInPort) {
                     SInPort in = (SInPort)port;
                     in.close();
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("close-input-port: expected argument type is input-port, but got %1", car(args));
@@ -149,7 +149,7 @@ abstract class InputOutputPrimitives {
                 if (port instanceof SOutPort) {
                     SOutPort out = (SOutPort)port;
                     out.close();
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("close-input-port: expected argument type is input-port, but got %1", car(args));
@@ -221,13 +221,13 @@ abstract class InputOutputPrimitives {
             int l = args.getLength();
             if (l == 1) {
                 eval.getCurrentOutputPort().getPort().print(car(args).display());
-                return VOID;
+                return SCHEME_VOID;
             }
             else if (l == 2) {
                 SExpr port = car(cdr(args));
                 if (port instanceof SOutPort) {
                     ((SOutPort)port).getPort().print(car(args).display());
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("display: expected 2nd argument of type output-port, but got %1", car(cdr(args)));
@@ -247,13 +247,13 @@ abstract class InputOutputPrimitives {
             int l = args.getLength();
             if (l == 1) {
                 eval.getCurrentOutputPort().getPort().print(car(args));
-                return VOID;
+                return SCHEME_VOID;
             }
             else if (l == 2) {
                 SExpr port = car(cdr(args));
                 if (port instanceof SOutPort) {
                     ((SOutPort)port).getPort().print(car(args));
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("write: expected 2nd argument of type output-port, but got %1", car(cdr(args)));
@@ -272,9 +272,9 @@ abstract class InputOutputPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
             if (l == 1) {
-                if (car(args).isChar()) {
+                if (car(args).type() == SType.CHAR) {
                     eval.getCurrentOutputPort().getPort().print(((SChar)car(args)).getChar());
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("write-char: expected 1st argument of type char, but got %1", car(args));
@@ -282,11 +282,11 @@ abstract class InputOutputPrimitives {
                 }
             }
             else if (l == 2) {
-                if (car(args).isChar()) {
+                if (car(args).type() == SType.CHAR) {
                     SExpr port = car(cdr(args));
                     if (port instanceof SOutPort) {
                         ((SOutPort)port).getPort().print(((SChar)car(args)).getChar());
-                        return VOID;
+                        return SCHEME_VOID;
                     }
                     else {
                         eval.addError("write-char: expected 2nd argument of type output-port, but got %1", car(cdr(args)));
@@ -311,13 +311,13 @@ abstract class InputOutputPrimitives {
             int l = args.getLength();
             if (l == 0) {
                 eval.getCurrentOutputPort().getPort().println();
-                return VOID;
+                return SCHEME_VOID;
             }
             else if (l == 1) {
                 SExpr port = car(args);
                 if (port instanceof SOutPort) {
                     ((SOutPort)port).getPort().println();
-                    return VOID;
+                    return SCHEME_VOID;
                 }
                 else {
                     eval.addError("newline: expected argument of type output-port, but got %1", car(args));
@@ -344,7 +344,7 @@ abstract class InputOutputPrimitives {
                         return null;
                     }
                     else if (res.size() == 0) {
-                        return VOID;
+                        return SCHEME_VOID;
                     }
                     else {
                         return res.get(0);
@@ -367,7 +367,7 @@ abstract class InputOutputPrimitives {
                             return null;
                         }
                         else if (res.size() == 0) {
-                            return VOID;
+                            return SCHEME_VOID;
                         }
                         else {
                             return res.get(0);

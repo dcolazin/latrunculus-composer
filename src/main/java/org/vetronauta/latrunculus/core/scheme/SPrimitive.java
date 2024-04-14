@@ -32,7 +32,12 @@ public final class SPrimitive extends SExpr {
     public SPrimitive(Primitive p) {
         this.p = p;
     }
-    
+
+    @Override
+    public SType type() {
+        return SType.PRIMITIVE;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -47,10 +52,6 @@ public final class SPrimitive extends SExpr {
     
     public boolean equals(Object obj) {
         return this == obj;
-    }
-    
-    public boolean isPrimitive() {
-        return true;
     }
     
     public String toString() {

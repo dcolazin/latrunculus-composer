@@ -40,7 +40,12 @@ public final class SRational extends SNumber {
         }
         return new SRational(q);
     }
-    
+
+    @Override
+    public SType type() {
+        return SType.RATIONAL;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -56,11 +61,7 @@ public final class SRational extends SNumber {
     public boolean equals(Object obj) {
         return (obj instanceof SRational) && ((SRational)obj).q.equals(q);
     }
-    
-    public boolean isRational() {
-        return true;
-    }
-    
+
     public SNumber add(SNumber n) {
         return n.add(this);
     }
@@ -211,7 +212,7 @@ public final class SRational extends SNumber {
     }
 
     public SNumber expt(SNumber n) {
-        if (n.isInteger()) {
+        if (n.type() == SType.INTEGER) {
             if (n.negative_p()) {
                 return new SRational(q.inverse()).expt(n.neg());
             }

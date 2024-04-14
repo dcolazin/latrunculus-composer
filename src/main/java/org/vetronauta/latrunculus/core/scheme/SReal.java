@@ -37,7 +37,12 @@ public final class SReal extends SNumber {
     public static SReal make(double r) {
         return new SReal(r);
     }
-    
+
+    @Override
+    public SType type() {
+        return SType.REAL;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -52,10 +57,6 @@ public final class SReal extends SNumber {
     
     public boolean equals(Object obj) {
         return (obj instanceof SReal) && ((SReal)obj).r == r;
-    }
-    
-    public boolean isReal() {
-        return true;
     }
     
     public SNumber add(SNumber n) {
@@ -186,7 +187,7 @@ public final class SReal extends SNumber {
     }
 
     public SNumber atan(SNumber n) {
-        if (n.isComplex()) {
+        if (n.type() == SType.COMPLEX) {
             return new SComplex(new Complex(r)).atan(n);
         }
         else {
@@ -244,7 +245,7 @@ public final class SReal extends SNumber {
     }
 
     public SNumber expt(SNumber n) {
-        if (n.isComplex()) {
+        if (n.type() == SType.COMPLEX) {
             return new SComplex(new Complex(r)).expt(n);
         }
         else {

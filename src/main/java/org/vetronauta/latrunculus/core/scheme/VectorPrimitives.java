@@ -20,6 +20,7 @@
 package org.vetronauta.latrunculus.core.scheme;
 
 import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
 
 /**
  * Standard primitive procedures dealing with vectors.
@@ -44,7 +45,7 @@ abstract class VectorPrimitives {
         public String getName() { return "vector?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
-                return SBoolean.make(car(args).isVector());
+                return SBoolean.make(car(args).type() == SType.VECTOR);
             }
             else {
                 eval.addError(getName()+": expected number of arguments is 1, but got %1", args.getLength());
@@ -59,9 +60,9 @@ abstract class VectorPrimitives {
             if (args.getLength() == 2) {
                 SExpr n = car(args);
                 SExpr f = car(cdr(args));
-                if (n.isInteger()) {
+                if (n.type() == SType.INTEGER) {
                     int len = (((SInteger)n).getInt());
-                    len = (len < 0)?0:len;
+                    len = Math.max(len, 0);
                     SExpr[] array = new SExpr[len];
                     for (int i = 0; i < len; i++) {
                         array[i] = f;
@@ -105,7 +106,7 @@ abstract class VectorPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);
-                if (a.isVector()) {
+                if (a.type() == SType.VECTOR) {
                     return new SInteger(((SVector)a).getArray().length);
                 }
                 else {
@@ -126,8 +127,8 @@ abstract class VectorPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr n = car(cdr(args));
-                if (a.isVector()) {
-                    if (n.isInteger()) {
+                if (a.type() == SType.VECTOR) {
+                    if (n.type() == SType.INTEGER) {
                         SExpr[] v = ((SVector)a).getArray();
                         int i = ((SInteger)n).getInt();
                         if (i >= 0 && i <= v.length) {
@@ -162,8 +163,8 @@ abstract class VectorPrimitives {
                 SExpr a = car(args);
                 SExpr n = car(cdr(args));
                 SExpr e = car(cdr(cdr(args)));
-                if (a.isVector()) {
-                    if (n.isInteger()) {
+                if (a.type() == SType.VECTOR) {
+                    if (n.type() == SType.INTEGER) {
                         SExpr[] v = ((SVector)a).getArray();
                         int i = ((SInteger)n).getInt();
                         if (i >= 0 && i <= v.length) {
@@ -198,7 +199,7 @@ abstract class VectorPrimitives {
             if (args.getLength() == 2) {
                 SExpr a = car(args);
                 SExpr e = car(cdr(args));
-                if (a.isVector()) {
+                if (a.type() == SType.VECTOR) {
                     SExpr[] v = ((SVector)a).getArray();
                     for (int i = 0; i < v.length; i++) {
                         v[i] = e;
@@ -222,10 +223,10 @@ abstract class VectorPrimitives {
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
                 SExpr a = car(args);
-                if (a.isVector()) {
+                if (a.type() == SType.VECTOR) {
                     SExpr[] v = ((SVector)a).getArray();
                     int m = v.length-1;
-                    SExpr res = NULL;
+                    SExpr res = SCHEME_NULL;
                     while (m >= 0) {
                         res = cons(v[m], res);
                         m--;

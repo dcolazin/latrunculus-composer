@@ -33,8 +33,13 @@ public final class SChar extends SExpr {
     public SChar(char c) {
         this.c = c;
     }
-    
-    
+
+
+    @Override
+    public SType type() {
+        return SType.CHAR;
+    }
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -66,17 +71,10 @@ public final class SChar extends SExpr {
             return "#\\"+c;
         }
     }
-    
-    
+
     public String display() {
         return Character.toString(c);
     }
-    
-    
-    public boolean isChar() {
-        return true;
-    }
-    
     
     /**
      * Returns the character in this Scheme value.

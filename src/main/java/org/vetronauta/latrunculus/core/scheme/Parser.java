@@ -6,6 +6,8 @@ import java.util.List;
 import org.vetronauta.latrunculus.core.scheme.Token.TokenType;
 import org.rubato.util.TextUtils;
 
+import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+
 
 /**
  * This class provides the parser for Scheme expressions. The main
@@ -69,7 +71,7 @@ public class Parser {
         case LPAREN: {
             cur_token = nextToken();
             if (cur_token.type == TokenType.RPAREN) {
-                sexpr = SExpr.NULL;
+                sexpr = SCHEME_NULL;
                 cur_token = nextToken();
             }
             else {
@@ -144,7 +146,7 @@ public class Parser {
     private SExpr parseList() {
         if (cur_token.type == TokenType.RPAREN) {
             cur_token = nextToken();
-            return SExpr.NULL;
+            return SCHEME_NULL;
         }
         else {
             SExpr car = parseSExpr();
@@ -219,7 +221,7 @@ public class Parser {
         cur_token = nextToken();
         SExpr sexpr = parseSExpr();
         if (sexpr != null) {
-            return new SCons(Token.QUOTE, new SCons(sexpr, SExpr.NULL));
+            return new SCons(Token.QUOTE, new SCons(sexpr, SCHEME_NULL));
         }
         else {
             return null;

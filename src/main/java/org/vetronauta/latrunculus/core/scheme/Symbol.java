@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.scheme;
 import java.util.HashMap;
 
 /**
- * Class representing Scheme symbol calues. Symbols are unique, i.e., there is always
+ * Class representing Scheme symbol values. Symbols are unique, i.e., there is always
  * at most one object for each string representation of a symbol.
  * 
  * @author Gérard Milmeister
@@ -49,13 +49,12 @@ public final class Symbol extends SExpr {
     public String getName() {
         return name;
     }
-    
-    
-    public boolean isSymbol() {
-        return true;
+
+    @Override
+    public SType type() {
+        return SType.SYMBOL;
     }
-    
-    
+
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
@@ -90,5 +89,5 @@ public final class Symbol extends SExpr {
 
     private String name;    
     
-    private static HashMap<String,Symbol> symtab = new HashMap<String,Symbol>(256);
+    private static HashMap<String,Symbol> symtab = new HashMap<>(256);
 }

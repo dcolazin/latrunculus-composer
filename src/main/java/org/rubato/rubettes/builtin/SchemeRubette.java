@@ -19,9 +19,9 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.VOID;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
 import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -42,6 +42,7 @@ import org.vetronauta.latrunculus.core.scheme.Primitive;
 import org.vetronauta.latrunculus.core.scheme.SDenotator;
 import org.vetronauta.latrunculus.core.scheme.SExpr;
 import org.vetronauta.latrunculus.core.scheme.SInteger;
+import org.vetronauta.latrunculus.core.scheme.SType;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -247,7 +248,7 @@ public class SchemeRubette extends AbstractRubette {
             }
             else {
                 SExpr arg = car(args);
-                if (arg.isInteger()) {
+                if (arg.type() == SType.INTEGER) {
                     int input = ((SInteger)arg).getInt();
                     if (input >= 0 && input < getInCount()) {
                         Denotator d = getInput(input);
@@ -283,12 +284,12 @@ public class SchemeRubette extends AbstractRubette {
             else {
                 SExpr arg1 = car(args);
                 SExpr arg2 = car(cdr(args));
-                if (arg1.isInteger()) {
+                if (arg1.type() == SType.INTEGER) {
                     int output = ((SInteger)arg1).getInt();
                     if (output >= 0 && output < getOutCount()) {
-                        if (arg2.isDenotator()) {
+                        if (arg2.type() == SType.DENOTATOR) {
                             setOutput(output, ((SDenotator)arg2).getDenotator());
-                            return VOID;
+                            return SCHEME_VOID;
                         }
                         else {
                             eval.addError("set-output: expected 2nd argument of type denotator, but got %1", arg2);
