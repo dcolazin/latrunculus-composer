@@ -19,9 +19,9 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
-import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
-import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,14 +35,14 @@ import org.rubato.composer.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.scheme.Env;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
 import org.vetronauta.latrunculus.core.scheme.Parser;
-import org.vetronauta.latrunculus.core.scheme.Primitive;
-import org.vetronauta.latrunculus.core.scheme.SDenotator;
-import org.vetronauta.latrunculus.core.scheme.SExpr;
-import org.vetronauta.latrunculus.core.scheme.SInteger;
-import org.vetronauta.latrunculus.core.scheme.SType;
+import org.vetronauta.latrunculus.core.scheme.primitive.Primitive;
+import org.vetronauta.latrunculus.core.scheme.expression.SDenotator;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

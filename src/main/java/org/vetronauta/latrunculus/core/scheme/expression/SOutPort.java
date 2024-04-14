@@ -17,66 +17,68 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
-import java.util.HashMap;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+
+import java.io.PrintStream;
+
 
 /**
- * Class representing Scheme symbol values. Symbols are unique, i.e., there is always
- * at most one object for each string representation of a symbol.
+ * The class wrapping an output port as a Scheme value.
  * 
  * @author Gérard Milmeister
  */
-public final class Symbol extends SExpr {
+public final class SOutPort extends SExpr {
 
     /**
-     * Creates a symbol with string representation <code>s</code>.
+     * Creates an output port from a print stream.
      */
-    public static Symbol make(String s) {
-        Symbol sym = symtab.get(s);
-        if (sym == null) {
-            sym = new Symbol();
-            sym.name = s;
-            symtab.put(s, sym);
-        }
-        return sym;
+    public SOutPort(PrintStream port) {
+        this.port = port;
     }
 
-    
-    /**
-     * Returns the string representation of the symbol.
-     */
-    public String getName() {
-        return name;
-    }
 
     @Override
     public SType type() {
-        return SType.SYMBOL;
+        return SType.OUTPUT;
     }
 
     public boolean eq_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
-
+    
     
     public boolean eqv_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
-
+    
     
     public boolean equal_p(SExpr sexpr) {
-        return this == sexpr;
+        return sexpr == this;
     }
-
+    
     
     public boolean equals(Object obj) {
-        return this == obj;
+        return obj == this;
     }
 
-    private Symbol() {}
-
-    private String name;    
+    /**
+     * Closes the port.
+     */
+    public void close() {
+        port.close();
+    }
     
-    private static HashMap<String,Symbol> symtab = new HashMap<>(256);
+    
+    /**
+     * Returns the print stream of this output port.
+     */
+    public PrintStream getPort() {
+        return port;
+    }
+    
+    
+    private PrintStream port;
 }

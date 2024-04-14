@@ -17,7 +17,10 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
+
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 
 /**
  * The interface that all primitive functions must implement.

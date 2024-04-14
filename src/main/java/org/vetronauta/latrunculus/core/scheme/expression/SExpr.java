@@ -17,10 +17,11 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.Display;
 
 /**
  * This is the abstract base class for all types of Scheme values,

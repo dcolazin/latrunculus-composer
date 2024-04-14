@@ -17,49 +17,66 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
+
+import java.util.HashMap;
 
 /**
- * The class representing primitive functions as Scheme values.
+ * Class representing Scheme symbol values. Symbols are unique, i.e., there is always
+ * at most one object for each string representation of a symbol.
  * 
  * @author Gérard Milmeister
  */
-public final class SPrimitive extends SExpr {
+public final class Symbol extends SExpr {
 
     /**
-     * Creates a primitive function value from the primitive <code>p</code>.
+     * Creates a symbol with string representation <code>s</code>.
      */
-    public SPrimitive(Primitive p) {
-        this.p = p;
+    public static Symbol make(String s) {
+        Symbol sym = symtab.get(s);
+        if (sym == null) {
+            sym = new Symbol();
+            sym.name = s;
+            symtab.put(s, sym);
+        }
+        return sym;
+    }
+
+    
+    /**
+     * Returns the string representation of the symbol.
+     */
+    public String getName() {
+        return name;
     }
 
     @Override
     public SType type() {
-        return SType.PRIMITIVE;
+        return SType.SYMBOL;
     }
 
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
+
     
     public boolean eqv_p(SExpr sexpr) {
         return this == sexpr;
     }
+
     
     public boolean equal_p(SExpr sexpr) {
         return this == sexpr;
     }
+
     
     public boolean equals(Object obj) {
         return this == obj;
     }
 
-    /**
-     * Returns the primitive function in this Scheme value.
-     */
-    public Primitive getPrimitive() {
-        return p;
-    }
+    private Symbol() {}
+
+    private String name;    
     
-    private Primitive p; 
+    private static HashMap<String,Symbol> symtab = new HashMap<>(256);
 }

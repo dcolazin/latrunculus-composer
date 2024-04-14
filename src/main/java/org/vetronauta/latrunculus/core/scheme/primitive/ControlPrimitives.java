@@ -17,17 +17,27 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
-import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
 
 /**
  * Standard primitive procedures for control structures and environments.
  * 
  * @author Gérard Milmeister
  */
-abstract class ControlPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ControlPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(procedure_p);
@@ -38,7 +48,7 @@ abstract class ControlPrimitives {
         env.addPrimitive(map);
     }
 
-    private static Primitive procedure_p = new Primitive() {
+    private static final Primitive procedure_p = new Primitive() {
         public String getName() { return "procedure?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -52,7 +62,7 @@ abstract class ControlPrimitives {
         }
     };
 
-    private static Primitive scheme_report_environment = new Primitive() {
+    private static final Primitive scheme_report_environment = new Primitive() {
         public String getName() { return "scheme-report-environment"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -61,18 +71,18 @@ abstract class ControlPrimitives {
                     return Env.makeStandardEnvironment();
                 }
                 else {
-                    eval.addError("scheme-report-enviroment: expected argument is 5, but got %1", car(args));
+                    eval.addError("scheme-report-environment: expected argument is 5, but got %1", car(args));
                     return null;
                 }
             }
             else {
-                eval.addError("scheme-report-enviroment: expected number of arguments is 1, but got %1", args.getLength());
+                eval.addError("scheme-report-environment: expected number of arguments is 1, but got %1", args.getLength());
                 return null;
             }
         }
     };
     
-    private static Primitive null_environment = new Primitive() {
+    private static final Primitive null_environment = new Primitive() {
         public String getName() { return "null-environment"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -81,18 +91,18 @@ abstract class ControlPrimitives {
                     return new Env();
                 }
                 else {
-                    eval.addError("null-enviroment: expected argument is 5, but got %1", car(args));
+                    eval.addError("null-environment: expected argument is 5, but got %1", car(args));
                     return null;
                 }
             }
             else {
-                eval.addError("null-enviroment: expected number of arguments is 1, but got %1", args.getLength());
+                eval.addError("null-environment: expected number of arguments is 1, but got %1", args.getLength());
                 return null;
             }
         }
     };
     
-    private static Primitive interaction_environment = new Primitive() {
+    private static final Primitive interaction_environment = new Primitive() {
         public String getName() { return "interaction-environment"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
@@ -105,14 +115,14 @@ abstract class ControlPrimitives {
         }
     };
     
-    static Primitive map = new Primitive() {
+    public static Primitive map = new Primitive() {
         public String getName() { return "map"; }
         public SExpr call(SExpr args, Evaluator eval) {
             return SCHEME_VOID;
         }
     };
 
-    static Primitive apply = new Primitive() {
+    public static Primitive apply = new Primitive() {
         public String getName() { return "apply"; }
         public SExpr call(SExpr args, Evaluator eval) {
             return SCHEME_VOID;

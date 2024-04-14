@@ -1,6 +1,8 @@
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
 public enum SType {
+
+    //TODO just use reflection?
 
     COMPLEX, INTEGER, RATIONAL, REAL,
     BOOLEAN, CHAR, STRING, VECTOR,

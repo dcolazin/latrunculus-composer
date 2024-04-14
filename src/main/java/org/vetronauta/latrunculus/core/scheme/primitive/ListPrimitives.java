@@ -17,18 +17,28 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
-import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
 
 /**
  * Standard primitive procedures dealing with lists.
  * 
  * @author Gérard Milmeister
  */
-abstract class ListPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ListPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(cons);
@@ -85,7 +95,7 @@ abstract class ListPrimitives {
     }
     
     
-    private static Primitive cons = new Primitive() {
+    private static final Primitive cons = new Primitive() {
         public String getName() { return "cons"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -98,7 +108,7 @@ abstract class ListPrimitives {
         }        
     };
     
-    private static Primitive car = new Primitive() {
+    private static final Primitive car = new Primitive() {
         public String getName() { return "car"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -117,7 +127,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdr = new Primitive() {
+    private static final Primitive cdr = new Primitive() {
         public String getName() { return "cdr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -136,14 +146,14 @@ abstract class ListPrimitives {
         }
     };
     
-    private static Primitive list = new Primitive() {
+    private static final Primitive list = new Primitive() {
         public String getName() { return "list"; }
         public SExpr call(SExpr args, Evaluator eval) {
             return args;
         }
     };
 
-    private static Primitive pair_p = new Primitive() {
+    private static final Primitive pair_p = new Primitive() {
         public String getName() { return "pair?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -156,7 +166,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive null_p = new Primitive() {
+    private static final Primitive null_p = new Primitive() {
         public String getName() { return "null?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -169,7 +179,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive list_p = new Primitive() {
+    private static final Primitive list_p = new Primitive() {
         public String getName() { return "list?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -182,7 +192,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive length = new Primitive() {
+    private static final Primitive length = new Primitive() {
         public String getName() { return "length"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -202,7 +212,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive set_car = new Primitive() {
+    private static final Primitive set_car = new Primitive() {
         public String getName() { return "set-car!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -222,7 +232,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive set_cdr = new Primitive() {
+    private static final Primitive set_cdr = new Primitive() {
         public String getName() { return "set-cdr!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -241,7 +251,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive append = new Primitive() {
+    private static final Primitive append = new Primitive() {
         public String getName() { return "append"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -268,7 +278,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive reverse = new Primitive() {
+    private static final Primitive reverse = new Primitive() {
         public String getName() { return "reverse"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -281,7 +291,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive list_tail = new Primitive() {
+    private static final Primitive list_tail = new Primitive() {
         public String getName() { return "list-tail"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -290,7 +300,7 @@ abstract class ListPrimitives {
                 if (n.type() == SType.INTEGER) {
                     int i = ((SInteger)n).getInt();
                     SExpr cdr_val = l;
-                    while (i > 0) {
+                    while (i > 0) { //TODO INFINITE LOOP
                         if (cdr_val.type() == SType.CONS) {
                             cdr_val = cdr(cdr_val);
                         }
@@ -313,7 +323,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive list_ref = new Primitive() {
+    private static final Primitive list_ref = new Primitive() {
         public String getName() { return "list-ref"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -322,7 +332,7 @@ abstract class ListPrimitives {
                 if (n.type() == SType.INTEGER) {
                     int i = ((SInteger)n).getInt();
                     SExpr cdr_val = l;
-                    while (i > 0) {
+                    while (i > 0) { //TODO INFINITE LOOP
                         if (cdr_val.type() == SType.CONS) {
                             cdr_val = cdr(cdr_val);
                         }
@@ -351,7 +361,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive eq_p = new Primitive() {
+    private static final Primitive eq_p = new Primitive() {
         public String getName() { return "eq?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -366,7 +376,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive eqv_p = new Primitive() {
+    private static final Primitive eqv_p = new Primitive() {
         public String getName() { return "eqv?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -381,7 +391,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive equal_p = new Primitive() {
+    private static final Primitive equal_p = new Primitive() {
         public String getName() { return "equal?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -396,7 +406,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive memq = new Primitive() {
+    private static final Primitive memq = new Primitive() {
         public String getName() { return "memq"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -417,7 +427,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive memv = new Primitive() {
+    private static final Primitive memv = new Primitive() {
         public String getName() { return "memv"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -438,7 +448,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive member = new Primitive() {
+    private static final Primitive member = new Primitive() {
         public String getName() { return "member"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -459,7 +469,7 @@ abstract class ListPrimitives {
         }
     };
     
-    private static Primitive assq = new Primitive() {
+    private static final Primitive assq = new Primitive() {
         public String getName() { return "assq"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -481,7 +491,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive assv = new Primitive() {
+    private static final Primitive assv = new Primitive() {
         public String getName() { return "assv"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -503,7 +513,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive assoc = new Primitive() {
+    private static final Primitive assoc = new Primitive() {
         public String getName() { return "assoc"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -537,7 +547,7 @@ abstract class ListPrimitives {
         }
     }
     
-    protected static SExpr safe_car(SExpr exp) {
+    private static SExpr safe_car(SExpr exp) {
         if (exp == null) {
             return null;
         }
@@ -549,7 +559,7 @@ abstract class ListPrimitives {
         }
     }
     
-    protected static SExpr safe_cdr(SExpr exp) {
+    private static SExpr safe_cdr(SExpr exp) {
         if (exp == null) {
             return null;
         }
@@ -561,7 +571,7 @@ abstract class ListPrimitives {
         }
     }
 
-    private static Primitive caar = new Primitive() {
+    private static final Primitive caar = new Primitive() {
         public String getName() { return "caar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -575,7 +585,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cadr = new Primitive() {
+    private static final Primitive cadr = new Primitive() {
         public String getName() { return "cadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -589,7 +599,7 @@ abstract class ListPrimitives {
         }
     };
     
-    private static Primitive cdar = new Primitive() {
+    private static final Primitive cdar = new Primitive() {
         public String getName() { return "cdar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -603,7 +613,7 @@ abstract class ListPrimitives {
         }
     };
     
-    private static Primitive cddr = new Primitive() {
+    private static final Primitive cddr = new Primitive() {
         public String getName() { return "cddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -617,7 +627,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caaar = new Primitive() {
+    private static final Primitive caaar = new Primitive() {
         public String getName() { return "caaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -631,7 +641,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caadr = new Primitive() {
+    private static final Primitive caadr = new Primitive() {
         public String getName() { return "caadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -645,7 +655,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cadar = new Primitive() {
+    private static final Primitive cadar = new Primitive() {
         public String getName() { return "cadar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -659,7 +669,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caddr = new Primitive() {
+    private static final Primitive caddr = new Primitive() {
         public String getName() { return "caddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -673,7 +683,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdaar = new Primitive() {
+    private static final Primitive cdaar = new Primitive() {
         public String getName() { return "cdaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -687,7 +697,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdadr = new Primitive() {
+    private static final Primitive cdadr = new Primitive() {
         public String getName() { return "cdadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -701,7 +711,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cddar = new Primitive() {
+    private static final Primitive cddar = new Primitive() {
         public String getName() { return "cddar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -715,7 +725,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdddr = new Primitive() {
+    private static final Primitive cdddr = new Primitive() {
         public String getName() { return "cdddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -729,7 +739,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caaaar = new Primitive() {
+    private static final Primitive caaaar = new Primitive() {
         public String getName() { return "caaaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -743,7 +753,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caaadr = new Primitive() {
+    private static final Primitive caaadr = new Primitive() {
         public String getName() { return "caaadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -757,7 +767,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caadar = new Primitive() {
+    private static final Primitive caadar = new Primitive() {
         public String getName() { return "caadar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -771,7 +781,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caaddr = new Primitive() {
+    private static final Primitive caaddr = new Primitive() {
         public String getName() { return "caaddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -785,7 +795,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cadaar = new Primitive() {
+    private static final Primitive cadaar = new Primitive() {
         public String getName() { return "cadaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -799,7 +809,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cadadr = new Primitive() {
+    private static final Primitive cadadr = new Primitive() {
         public String getName() { return "cadadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -813,7 +823,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive caddar = new Primitive() {
+    private static final Primitive caddar = new Primitive() {
         public String getName() { return "caddar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -827,7 +837,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cadddr = new Primitive() {
+    private static final Primitive cadddr = new Primitive() {
         public String getName() { return "cadddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -841,7 +851,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdaaar = new Primitive() {
+    private static final Primitive cdaaar = new Primitive() {
         public String getName() { return "cdaaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -855,7 +865,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdaadr = new Primitive() {
+    private static final Primitive cdaadr = new Primitive() {
         public String getName() { return "cdaadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -869,7 +879,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdadar = new Primitive() {
+    private static final Primitive cdadar = new Primitive() {
         public String getName() { return "cdadar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -883,7 +893,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdaddr = new Primitive() {
+    private static final Primitive cdaddr = new Primitive() {
         public String getName() { return "cdaddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -897,7 +907,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cddaar = new Primitive() {
+    private static final Primitive cddaar = new Primitive() {
         public String getName() { return "cddaar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -911,7 +921,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cddadr = new Primitive() {
+    private static final Primitive cddadr = new Primitive() {
         public String getName() { return "cddadr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -925,7 +935,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cdddar = new Primitive() {
+    private static final Primitive cdddar = new Primitive() {
         public String getName() { return "cdddar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -939,7 +949,7 @@ abstract class ListPrimitives {
         }
     };
 
-    private static Primitive cddddr = new Primitive() {
+    private static final Primitive cddddr = new Primitive() {
         public String getName() { return "cddddr"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {

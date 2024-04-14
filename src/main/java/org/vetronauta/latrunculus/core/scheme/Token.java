@@ -21,8 +21,10 @@ package org.vetronauta.latrunculus.core.scheme;
 
 import java.util.HashSet;
 
+import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 
 
@@ -31,11 +33,9 @@ import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
  * 
  * @author Gérard Milmeister
  */
+@NoArgsConstructor
 public final class Token {
 
-    public Token() {}
-    
-    
     /**
      * Creates a new token with the given <code>type</code>.
      */
@@ -50,7 +50,7 @@ public final class Token {
     
     
     public TokenType type;    
-    public Symbol    symbol;
+    public Symbol symbol;
     public String    string;
     public int       i;
     public double    d;
@@ -119,13 +119,13 @@ public final class Token {
         Integer i = toInt(s);
         if (i != null) {
             token.type = TokenType.INTEGER;
-            token.i = i.intValue();
+            token.i = i;
             return token;
         }
         Double d = toReal(s);
         if (d != null) {
             token.type = TokenType.REAL;
-            token.d = d.doubleValue();
+            token.d = d;
             return token;
         }
         Rational r = toRational(s);
@@ -185,7 +185,7 @@ public final class Token {
     public static final Symbol SET      = Symbol.make("set!");
     
     
-    private static HashSet<Character> symbolChars = new HashSet<Character>();
+    private static HashSet<Character> symbolChars = new HashSet<>();
     
     static {
         symbolChars.add('+');

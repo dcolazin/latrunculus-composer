@@ -17,16 +17,28 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SNumber;
+import org.vetronauta.latrunculus.core.scheme.expression.SString;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
+
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.*;
 
 /**
  * Standard primitive procedures dealing with strings.
  * 
  * @author Gérard Milmeister
  */
-public abstract class StringPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class StringPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(symbol_p);
@@ -39,7 +51,7 @@ public abstract class StringPrimitives {
     }
     
     
-    private static Primitive symbol_p = new Primitive() {
+    private static final Primitive symbol_p = new Primitive() {
         public String getName() { return "symbol?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -52,7 +64,7 @@ public abstract class StringPrimitives {
         }        
     };
 
-    private static Primitive string_p = new Primitive() {
+    private static final Primitive string_p = new Primitive() {
         public String getName() { return "string?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -65,7 +77,7 @@ public abstract class StringPrimitives {
         }        
     };
 
-    private static Primitive char_p = new Primitive() {
+    private static final Primitive char_p = new Primitive() {
         public String getName() { return "char?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -78,7 +90,7 @@ public abstract class StringPrimitives {
         }        
     };
 
-    private static Primitive symbol_to_string = new Primitive() {
+    private static final Primitive symbol_to_string = new Primitive() {
         public String getName() { return "symbol->string"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -98,7 +110,7 @@ public abstract class StringPrimitives {
         }        
     };
 
-    private static Primitive string_to_symbol = new Primitive() {
+    private static final Primitive string_to_symbol = new Primitive() {
         public String getName() { return "string->symbol"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -118,7 +130,7 @@ public abstract class StringPrimitives {
         }        
     };
     
-    private static Primitive number_to_string = new Primitive() {
+    private static final Primitive number_to_string = new Primitive() {
         public String getName() { return "number->string"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -138,7 +150,7 @@ public abstract class StringPrimitives {
         }        
     };
 
-    private static Primitive string_to_number = new Primitive() {
+    private static final Primitive string_to_number = new Primitive() {
         public String getName() { return "string->number"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();

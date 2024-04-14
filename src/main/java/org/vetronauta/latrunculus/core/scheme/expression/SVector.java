@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
 
 /**

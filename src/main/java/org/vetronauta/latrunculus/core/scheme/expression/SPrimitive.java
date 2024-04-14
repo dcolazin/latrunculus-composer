@@ -17,56 +17,51 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-
+import org.vetronauta.latrunculus.core.scheme.primitive.Primitive;
 
 /**
- * The class representing denotators as Scheme values.
+ * The class representing primitive functions as Scheme values.
  * 
  * @author Gérard Milmeister
  */
-public final class SDenotator extends SExpr {
+public final class SPrimitive extends SExpr {
 
     /**
-     * Creates a Scheme value from the denotator <code>d</code>.
+     * Creates a primitive function value from the primitive <code>p</code>.
      */
-    public SDenotator(Denotator d) {
-        this.d = d;
+    public SPrimitive(Primitive p) {
+        this.p = p;
     }
 
     @Override
     public SType type() {
-        return SType.DENOTATOR;
+        return SType.PRIMITIVE;
     }
 
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-
     
     public boolean eqv_p(SExpr sexpr) {
         return this == sexpr;
     }
-
     
     public boolean equal_p(SExpr sexpr) {
-        return equals(sexpr);
+        return this == sexpr;
     }
-
     
     public boolean equals(Object obj) {
-        return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
-    }
-    
-    /**
-     * Returns the denotator in this Scheme value.
-     */
-    public Denotator getDenotator() {
-        return d;
+        return this == obj;
     }
 
+    /**
+     * Returns the primitive function in this Scheme value.
+     */
+    public Primitive getPrimitive() {
+        return p;
+    }
     
-    private Denotator d;
+    private Primitive p; 
 }

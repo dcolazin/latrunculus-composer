@@ -17,17 +17,30 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.SVector;
+
+import java.util.Arrays;
+
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
 
 /**
  * Standard primitive procedures dealing with vectors.
  * 
  * @author Gérard Milmeister
  */
-abstract class VectorPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class VectorPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(vector_p);
@@ -41,7 +54,7 @@ abstract class VectorPrimitives {
         env.addPrimitive(list_to_vector);
     }
 
-    private static Primitive vector_p = new Primitive() {
+    private static final Primitive vector_p = new Primitive() {
         public String getName() { return "vector?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -54,7 +67,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive make_vector = new Primitive() {
+    private static final Primitive make_vector = new Primitive() {
         public String getName() { return "make-vector"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -81,7 +94,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive vector = new Primitive() {
+    private static final Primitive vector = new Primitive() {
         public String getName() { return "vector"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int len = args.getLength();
@@ -101,7 +114,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive vector_length = new Primitive() {
+    private static final Primitive vector_length = new Primitive() {
         public String getName() { return "vector-length"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -121,7 +134,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive vector_ref = new Primitive() {
+    private static final Primitive vector_ref = new Primitive() {
         public String getName() { return "vector-ref"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -156,7 +169,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive vector_set = new Primitive() {
+    private static final Primitive vector_set = new Primitive() {
         public String getName() { return "vector-set!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 3) {
@@ -193,7 +206,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive vector_fill = new Primitive() {
+    private static final Primitive vector_fill = new Primitive() {
         public String getName() { return "vector-fill!"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -201,9 +214,7 @@ abstract class VectorPrimitives {
                 SExpr e = car(cdr(args));
                 if (a.type() == SType.VECTOR) {
                     SExpr[] v = ((SVector)a).getArray();
-                    for (int i = 0; i < v.length; i++) {
-                        v[i] = e;
-                    }
+                    Arrays.fill(v, e);
                     return a;
                 }
                 else {
@@ -218,7 +229,7 @@ abstract class VectorPrimitives {
         }
     };
     
-    private static Primitive vector_to_list = new Primitive() {
+    private static final Primitive vector_to_list = new Primitive() {
         public String getName() { return "vector->list"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -245,7 +256,7 @@ abstract class VectorPrimitives {
         }
     };
 
-    private static Primitive list_to_vector = new Primitive() {
+    private static final Primitive list_to_vector = new Primitive() {
         public String getName() { return "list->vector"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {

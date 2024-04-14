@@ -43,10 +43,10 @@ import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.scheme.Env;
-import org.vetronauta.latrunculus.core.scheme.SExpr;
-import org.vetronauta.latrunculus.core.scheme.SType;
-import org.vetronauta.latrunculus.core.scheme.Symbol;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
 import org.vetronauta.latrunculus.server.display.FormDisplay;
 
 /** 

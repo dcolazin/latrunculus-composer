@@ -32,9 +32,9 @@ import org.rubato.base.Repository;
 import org.rubato.composer.RunInfo;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
-import org.vetronauta.latrunculus.core.scheme.Env;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
-import org.vetronauta.latrunculus.core.scheme.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 
 public class JSchemeDialog
         extends JDialog

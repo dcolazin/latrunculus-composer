@@ -17,7 +17,16 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
+
+import org.vetronauta.latrunculus.core.scheme.primitive.ArithPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.ControlPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.InputOutputPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.ListPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.Primitive;
+import org.vetronauta.latrunculus.core.scheme.primitive.RubatoPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.StringPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.VectorPrimitives;
 
 import java.util.IdentityHashMap;
 import java.util.Set;

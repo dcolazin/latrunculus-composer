@@ -17,81 +17,55 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
-
-import java.io.*;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
 
 /**
- * The class wrapping an input port as a Scheme value.
- * 
+ * The class representing Scheme character values.
+ *  
  * @author Gérard Milmeister
  */
-public final class SInPort extends SExpr {
+public final class SChar extends SExpr {
 
     /**
-     * Creates an input port from an input stream.
+     * Creates a Scheme character from <code>c</code>.
      */
-    public SInPort(InputStream port) {
-        this.port = port;
-        this.reader = new BufferedReader(new InputStreamReader(port));
+    public SChar(char c) {
+        this.c = c;
     }
 
 
     @Override
     public SType type() {
-        return SType.INPUT;
+        return SType.CHAR;
     }
 
     public boolean eq_p(SExpr sexpr) {
-        return sexpr == this;
+        return this == sexpr;
     }
     
     
     public boolean eqv_p(SExpr sexpr) {
-        return sexpr == this;
+        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
     }
     
     
     public boolean equal_p(SExpr sexpr) {
-        return sexpr == this;
+        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
     }
     
     
     public boolean equals(Object obj) {
-        return obj == this;
+        return (obj instanceof SChar) && (((SChar)obj).c == c);
     }
 
     /**
-     * Closes the port.
+     * Returns the character in this Scheme value.
      */
-    public void close() {
-        try {
-            reader.close();
-            port.close();
-        }
-        catch (IOException e) {
-            // do nothing
-        }
+    public char getChar() {
+        return c;
     }
     
     
-    /**
-     * Returns the input stream of this input port.
-     */
-    public InputStream getPort() {
-        return port;
-    }
-    
-    
-    /**
-     * Returns the reader of this input port.
-     */
-    public BufferedReader getReader() {
-        return reader;
-    }
-    
-    
-    private InputStream    port;
-    private BufferedReader reader;
+    private char c;
 }

@@ -17,14 +17,26 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.*;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.arith.Trigonometry;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SComplex;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SNumber;
+import org.vetronauta.latrunculus.core.scheme.expression.SRational;
+import org.vetronauta.latrunculus.core.scheme.expression.SReal;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
 
 
 /**
@@ -32,7 +44,8 @@ import org.vetronauta.latrunculus.core.math.element.impl.Rational;
  * 
  * @author Gérard Milmeister
  */
-abstract class ArithPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ArithPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(plus);
@@ -92,8 +105,7 @@ abstract class ArithPrimitives {
         env.addPrimitive(inexact_to_exact);
     }
     
-    
-    private static Primitive plus = new Primitive() {
+    private static final Primitive plus = new Primitive() {
         public String getName() { return "+"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.type() == SType.NULL) {
@@ -121,7 +133,7 @@ abstract class ArithPrimitives {
         }        
     };
 
-    private static Primitive minus = new Primitive() {
+    private static final Primitive minus = new Primitive() {
         public String getName() { return "-"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int len = args.getLength();
@@ -163,7 +175,7 @@ abstract class ArithPrimitives {
         }
     };
     
-    private static Primitive times = new Primitive() {
+    private static final Primitive times = new Primitive() {
         public String getName() { return "*"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.type() == SType.NULL) {
@@ -190,7 +202,7 @@ abstract class ArithPrimitives {
         }        
     };
     
-    private static Primitive divide = new Primitive() {
+    private static final Primitive divide = new Primitive() {
         public String getName() { return "/"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -218,7 +230,7 @@ abstract class ArithPrimitives {
                     try {
                         while (!(cdr.type() == SType.NULL)) {
                             SExpr b = car(cdr);
-                            if (a instanceof SNumber) {
+                            if (b instanceof SNumber) {
                                 res = res.divide((SNumber)b);
                             }
                             else {
@@ -246,7 +258,7 @@ abstract class ArithPrimitives {
         }        
     };
     
-    private static Primitive equality = new Primitive() {
+    private static final Primitive equality = new Primitive() {
         public String getName() { return "="; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
@@ -263,7 +275,7 @@ abstract class ArithPrimitives {
                         return null;
                     }
                     else if (!car.equals(first)) {
-                        return SBoolean.FALSE; 
+                        return SBoolean.FALSE;
                     }
                     first = car;
                     cdr = cdr(cdr);
@@ -277,7 +289,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive number_p = new Primitive() {
+    private static final Primitive number_p = new Primitive() {
         public String getName() { return "number?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -290,7 +302,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive complex_p = new Primitive() {
+    private static final Primitive complex_p = new Primitive() {
         public String getName() { return "real?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -303,7 +315,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive real_p = new Primitive() {
+    private static final Primitive real_p = new Primitive() {
         public String getName() { return "real?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -317,7 +329,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive rational_p = new Primitive() {
+    private static final Primitive rational_p = new Primitive() {
         public String getName() { return "rational?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -331,7 +343,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive integer_p = new Primitive() {
+    private static final Primitive integer_p = new Primitive() {
         public String getName() { return "integer?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -344,7 +356,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive odd_p = new Primitive() {
+    private static final Primitive odd_p = new Primitive() {
         public String getName() { return "odd?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -363,7 +375,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive even_p = new Primitive() {
+    private static final Primitive even_p = new Primitive() {
         public String getName() { return "even?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -382,7 +394,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive positive_p = new Primitive() {
+    private static final Primitive positive_p = new Primitive() {
         public String getName() { return "positive?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -401,7 +413,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive negative_p = new Primitive() {
+    private static final Primitive negative_p = new Primitive() {
         public String getName() { return "negative?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -420,7 +432,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive zero_p = new Primitive() {
+    private static final Primitive zero_p = new Primitive() {
         public String getName() { return "zero?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -439,7 +451,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive exact_p = new Primitive() {
+    private static final Primitive exact_p = new Primitive() {
         public String getName() { return "exact?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -453,7 +465,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive inexact_p = new Primitive() {
+    private static final Primitive inexact_p = new Primitive() {
         public String getName() { return "inexact?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -467,7 +479,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive boolean_p = new Primitive() {
+    private static final Primitive boolean_p = new Primitive() {
         public String getName() { return "boolean?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -480,7 +492,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive not = new Primitive() {
+    private static final Primitive not = new Primitive() {
         public String getName() { return "not"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -493,7 +505,7 @@ abstract class ArithPrimitives {
         }
     };
     
-    private static Primitive less = new Primitive() {
+    private static final Primitive less = new Primitive() {
         public String getName() { return "<"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
@@ -524,7 +536,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive greater = new Primitive() {
+    private static final Primitive greater = new Primitive() {
         public String getName() { return ">"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
@@ -555,7 +567,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive less_equal = new Primitive() {
+    private static final Primitive less_equal = new Primitive() {
         public String getName() { return "<="; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
@@ -587,7 +599,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive greater_equal = new Primitive() {
+    private static final Primitive greater_equal = new Primitive() {
         public String getName() { return ">="; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 2) {
@@ -619,7 +631,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive  max = new Primitive() {
+    private static final Primitive  max = new Primitive() {
         public String getName() { return "max"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 1) {
@@ -650,7 +662,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive  min = new Primitive() {
+    private static final Primitive  min = new Primitive() {
         public String getName() { return "min"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() >= 1) {
@@ -681,7 +693,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive abs = new Primitive() {
+    private static final Primitive abs = new Primitive() {
         public String getName() { return "abs"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -700,7 +712,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive quotient = new Primitive() {
+    private static final Primitive quotient = new Primitive() {
         public String getName() { return "quotient"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -727,7 +739,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive remainder = new Primitive() {
+    private static final Primitive remainder = new Primitive() {
         public String getName() { return "remainder"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -754,7 +766,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive modulo = new Primitive() {
+    private static final Primitive modulo = new Primitive() {
         public String getName() { return "modulo"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -781,7 +793,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive gcd = new Primitive() {
+    private static final Primitive gcd = new Primitive() {
         public String getName() { return "gcd"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -818,7 +830,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive lcm = new Primitive() {
+    private static final Primitive lcm = new Primitive() {
         public String getName() { return "lcm"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -855,7 +867,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive numerator = new Primitive() {
+    private static final Primitive numerator = new Primitive() {
         public String getName() { return "numerator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -877,7 +889,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive denominator = new Primitive() {
+    private static final Primitive denominator = new Primitive() {
         public String getName() { return "denominator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -899,7 +911,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive sin = new Primitive() {
+    private static final Primitive sin = new Primitive() {
         public String getName() { return "sin"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -918,7 +930,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive cos = new Primitive() {
+    private static final Primitive cos = new Primitive() {
         public String getName() { return "cos"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -937,7 +949,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive tan = new Primitive() {
+    private static final Primitive tan = new Primitive() {
         public String getName() { return "tan"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -956,7 +968,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive asin = new Primitive() {
+    private static final Primitive asin = new Primitive() {
         public String getName() { return "asin"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -975,7 +987,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive acos = new Primitive() {
+    private static final Primitive acos = new Primitive() {
         public String getName() { return "acos"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -994,7 +1006,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive atan = new Primitive() {
+    private static final Primitive atan = new Primitive() {
         public String getName() { return "atan"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -1013,7 +1025,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive expt = new Primitive() {
+    private static final Primitive expt = new Primitive() {
         public String getName() { return "expt"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -1032,7 +1044,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive exp = new Primitive() {
+    private static final Primitive exp = new Primitive() {
         public String getName() { return "exp"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1051,7 +1063,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive log = new Primitive() {
+    private static final Primitive log = new Primitive() {
         public String getName() { return "log"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1070,7 +1082,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive sqrt = new Primitive() {
+    private static final Primitive sqrt = new Primitive() {
         public String getName() { return "sqrt"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1089,7 +1101,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive ceiling = new Primitive() {
+    private static final Primitive ceiling = new Primitive() {
         public String getName() { return "ceiling"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1108,7 +1120,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive floor = new Primitive() {
+    private static final Primitive floor = new Primitive() {
         public String getName() { return "floor"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1127,7 +1139,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive round = new Primitive() {
+    private static final Primitive round = new Primitive() {
         public String getName() { return "round"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1146,7 +1158,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive truncate = new Primitive() {
+    private static final Primitive truncate = new Primitive() {
         public String getName() { return "truncate"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1165,7 +1177,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive angle = new Primitive() {
+    private static final Primitive angle = new Primitive() {
         public String getName() { return "angle"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1184,7 +1196,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive magnitude = new Primitive() {
+    private static final Primitive magnitude = new Primitive() {
         public String getName() { return "magnitude"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1203,7 +1215,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive imag_part = new Primitive() {
+    private static final Primitive imag_part = new Primitive() {
         public String getName() { return "imag-part"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1222,7 +1234,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive real_part = new Primitive() {
+    private static final Primitive real_part = new Primitive() {
         public String getName() { return "real-part"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1241,7 +1253,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive make_rectangular = new Primitive() {
+    private static final Primitive make_rectangular = new Primitive() {
         public String getName() { return "make-rectangular"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -1263,7 +1275,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive make_polar = new Primitive() {
+    private static final Primitive make_polar = new Primitive() {
         public String getName() { return "make-polar"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 2) {
@@ -1285,7 +1297,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive exact_to_inexact = new Primitive() {
+    private static final Primitive exact_to_inexact = new Primitive() {
         public String getName() { return "exact->inexact"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -1308,7 +1320,7 @@ abstract class ArithPrimitives {
         }
     };
 
-    private static Primitive inexact_to_exact = new Primitive() {
+    private static final Primitive inexact_to_exact = new Primitive() {
         public String getName() { return "inexact->exact"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {

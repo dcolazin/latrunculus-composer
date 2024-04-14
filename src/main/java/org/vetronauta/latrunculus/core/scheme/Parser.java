@@ -5,8 +5,19 @@ import java.util.List;
 
 import org.vetronauta.latrunculus.core.scheme.Token.TokenType;
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SChar;
+import org.vetronauta.latrunculus.core.scheme.expression.SComplex;
+import org.vetronauta.latrunculus.core.scheme.expression.SCons;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SRational;
+import org.vetronauta.latrunculus.core.scheme.expression.SReal;
+import org.vetronauta.latrunculus.core.scheme.expression.SString;
+import org.vetronauta.latrunculus.core.scheme.expression.SVector;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
 
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
 
 
 /**
@@ -49,7 +60,7 @@ public class Parser {
      * parsed expressions.
      */
     public List<SExpr> parse() {
-        List<SExpr> list = new LinkedList<SExpr>();
+        List<SExpr> list = new LinkedList<>();
         pos = 0;
         cur_token = nextToken();
         while (!isEOF()) {
@@ -111,7 +122,7 @@ public class Parser {
             break;
         }
         case BOOLEAN: {
-            sexpr = cur_token.b?SBoolean.TRUE:SBoolean.FALSE;
+            sexpr = cur_token.b? SBoolean.TRUE:SBoolean.FALSE;
             cur_token = nextToken();
             break;
         }
@@ -191,7 +202,7 @@ public class Parser {
     
     
     private SExpr parseVector() {
-        List<SExpr> list = new LinkedList<SExpr>();
+        List<SExpr> list = new LinkedList<>();
         SExpr element;
         while (cur_token.type != TokenType.EOF && cur_token.type != TokenType.RPAREN) {
             element = parseSExpr();

@@ -17,8 +17,10 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.rubato.base.Repository;
 import org.rubato.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
@@ -43,14 +45,29 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SChar;
+import org.vetronauta.latrunculus.core.scheme.expression.SComplex;
+import org.vetronauta.latrunculus.core.scheme.expression.SDenotator;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SForm;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SRational;
+import org.vetronauta.latrunculus.core.scheme.expression.SReal;
+import org.vetronauta.latrunculus.core.scheme.expression.SString;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.SVector;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
-import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
-import static org.vetronauta.latrunculus.core.scheme.SExpr.cons;
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cons;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
 
 
 /**
@@ -58,7 +75,8 @@ import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
  * 
  * @author Gérard Milmeister
  */
-abstract class RubatoPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class RubatoPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(form_p);
@@ -85,7 +103,7 @@ abstract class RubatoPrimitives {
         env.addPrimitive(register);
     }
 
-    private static Primitive form_p = new Primitive() {
+    private static final Primitive form_p = new Primitive() {
         public String getName() { return "form?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -99,7 +117,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive denotator_p = new Primitive() {
+    private static final Primitive denotator_p = new Primitive() {
         public String getName() { return "denotator?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -113,7 +131,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive get_form = new Primitive() {
+    private static final Primitive get_form = new Primitive() {
         public String getName() { return "get-form"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -138,7 +156,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive get_denotator = new Primitive() {
+    private static final Primitive get_denotator = new Primitive() {
         public String getName() { return "get-denotator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -163,7 +181,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive get_all_forms = new Primitive() {
+    private static final Primitive get_all_forms = new Primitive() {
         public String getName() { return "get-all-forms"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
@@ -180,7 +198,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive get_all_denotators = new Primitive() {
+    private static final Primitive get_all_denotators = new Primitive() {
         public String getName() { return "get-all-denotators"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
@@ -197,7 +215,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_simple_p = new Primitive() {
+    private static final Primitive type_simple_p = new Primitive() {
         public String getName() { return "type-simple?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -220,7 +238,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_limit_p = new Primitive() {
+    private static final Primitive type_limit_p = new Primitive() {
         public String getName() { return "type-limit?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -243,7 +261,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_colimit_p = new Primitive() {
+    private static final Primitive type_colimit_p = new Primitive() {
         public String getName() { return "type-colimit?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -266,7 +284,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_power_p = new Primitive() {
+    private static final Primitive type_power_p = new Primitive() {
         public String getName() { return "type-power?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -289,7 +307,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_list_p = new Primitive() {
+    private static final Primitive type_list_p = new Primitive() {
         public String getName() { return "type-list?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -312,7 +330,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive type_of = new Primitive() {
+    private static final Primitive type_of = new Primitive() {
         public String getName() { return "type-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -335,7 +353,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive name_of = new Primitive() {
+    private static final Primitive name_of = new Primitive() {
         public String getName() { return "name-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -358,7 +376,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive form_of = new Primitive() {
+    private static final Primitive form_of = new Primitive() {
         public String getName() { return "form-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -378,7 +396,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive forms_of = new Primitive() {
+    private static final Primitive forms_of = new Primitive() {
         public String getName() { return "forms-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -386,16 +404,16 @@ abstract class RubatoPrimitives {
                 if (arg instanceof SForm) {
                     Form f = ((SForm)arg).getForm();
                     if (f instanceof LimitForm) {
-                        return formListToScheme(((LimitForm)f).getForms());
+                        return formListToScheme(f.getForms());
                     }
                     else if (f instanceof ColimitForm) {
-                        return formListToScheme(((ColimitForm)f).getForms());
+                        return formListToScheme(f.getForms());
                     }
                     else if (f instanceof PowerForm) {
-                        return formListToScheme(((PowerForm)f).getForms());
+                        return formListToScheme(f.getForms());
                     }
                     else if (f instanceof ListForm) {
-                        return formListToScheme(((ListForm)f).getForms());
+                        return formListToScheme(f.getForms());
                     }
                     else {
                         return SCHEME_NULL;
@@ -413,7 +431,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive form_count_of = new Primitive() {
+    private static final Primitive form_count_of = new Primitive() {
         public String getName() { return "form-count-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -421,16 +439,16 @@ abstract class RubatoPrimitives {
                 if (arg instanceof SForm) {
                     Form f = ((SForm)arg).getForm();
                     if (f instanceof LimitForm) {
-                        return new SInteger(((LimitForm)f).getFormCount());
+                        return new SInteger(f.getFormCount());
                     }
                     else if (f instanceof ColimitForm) {
-                        return new SInteger(((ColimitForm)f).getFormCount());
+                        return new SInteger(f.getFormCount());
                     }
                     else if (f instanceof PowerForm) {
-                        return new SInteger(((PowerForm)f).getFormCount());
+                        return new SInteger(f.getFormCount());
                     }
                     else if (f instanceof ListForm) {
-                        return new SInteger(((ListForm)f).getFormCount());
+                        return new SInteger(f.getFormCount());
                     }
                     else {
                         return new SInteger(0);
@@ -448,7 +466,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive factors_of = new Primitive() {
+    private static final Primitive factors_of = new Primitive() {
         public String getName() { return "factors-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -483,7 +501,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive factor_count_of = new Primitive() {
+    private static final Primitive factor_count_of = new Primitive() {
         public String getName() { return "factor-count-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -518,7 +536,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive index_of = new Primitive() {
+    private static final Primitive index_of = new Primitive() {
         public String getName() { return "index-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -539,7 +557,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive element_of = new Primitive() {
+    private static final Primitive element_of = new Primitive() {
         public String getName() { return "element-of"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -568,7 +586,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    private static Primitive make_denotator = new Primitive() {
+    private static final Primitive make_denotator = new Primitive() {
         public String getName() { return "make-denotator"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 3) {
@@ -579,10 +597,10 @@ abstract class RubatoPrimitives {
                 Form form;
                 // retrieve name
                 if (arg1.type() == SType.STRING) {
-                    name = ((SString)arg1).getString();
+                    name = ((SString) arg1).getString();
                 }
                 else if (arg1.type() == SType.SYMBOL) {
-                    name = ((Symbol)arg1).toString();
+                    name = arg1.toString();
                 }
                 if (!(arg2.type() == SType.FORM)) {
                     eval.addError("make-denotator: expected 2nd argument of type form, but got %1", arg2);
@@ -626,7 +644,7 @@ abstract class RubatoPrimitives {
         }
     };
     
-    private static Primitive register = new Primitive() {
+    private static final Primitive register = new Primitive() {
         public String getName() { return "register"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -647,7 +665,7 @@ abstract class RubatoPrimitives {
         }
     };
 
-    protected static SExpr formListToScheme(List<Form> formList) {
+    private static SExpr formListToScheme(List<Form> formList) {
         SExpr res = SCHEME_NULL;
         for (Form form : formList) {
             res = cons(new SForm(form), res);
@@ -655,7 +673,7 @@ abstract class RubatoPrimitives {
         return ListPrimitives.reverse(res, SCHEME_NULL);
     }    
     
-    protected static SExpr denoListToScheme(List<Denotator> denoList) {
+    private static SExpr denoListToScheme(List<Denotator> denoList) {
         SExpr res = SCHEME_NULL;
         for (Denotator deno : denoList) {
             res = cons(new SDenotator(deno), res);
@@ -663,7 +681,7 @@ abstract class RubatoPrimitives {
         return ListPrimitives.reverse(res, SCHEME_NULL);
     }    
     
-    protected static Symbol type_of(FormDenotatorTypeEnum type) {
+    private static Symbol type_of(FormDenotatorTypeEnum type) {
         if (type == FormDenotatorTypeEnum.SIMPLE) {
             return simple_sym;
         }
@@ -684,7 +702,7 @@ abstract class RubatoPrimitives {
         }
     }
     
-    protected static Denotator makeSimple(Evaluator eval, String name, Form form, SExpr arg) {
+    private static Denotator makeSimple(Evaluator eval, String name, Form form, SExpr arg) {
         Denotator d = null;
         ModuleElement element = sexprToModuleElement(arg);
         if (element != null) {
@@ -696,7 +714,7 @@ abstract class RubatoPrimitives {
         return d;
     }
     
-    protected static Denotator makeLimit(Evaluator eval, String name, Form form, SExpr arg) {
+    private static Denotator makeLimit(Evaluator eval, String name, Form form, SExpr arg) {
         if (arg.isList()) {
             List<Denotator> denoList = new LinkedList<Denotator>();
             while (!(arg.type() == SType.NULL)) {
@@ -721,14 +739,14 @@ abstract class RubatoPrimitives {
         }
     }
     
-    protected static Denotator makeColimit(Evaluator eval, String name, Form form, SExpr arg) {
-        Denotator d = null;
+    private static Denotator makeColimit(Evaluator eval, String name, Form form, SExpr arg) {
+        Denotator d = null; //TODO implement?
         return d;
     }
     
-    protected static Denotator makePowerList(Evaluator eval, String name, Form form, SExpr arg) {
+    private static Denotator makePowerList(Evaluator eval, String name, Form form, SExpr arg) {
         if (arg.isList()) {
-            List<Denotator> denoList = new LinkedList<Denotator>();
+            List<Denotator> denoList = new LinkedList<>();
             while (!(arg.type() == SType.NULL)) {
                 SExpr sexpr = car(arg);
                 if (sexpr.type() == SType.DENOTATOR) {
@@ -751,7 +769,7 @@ abstract class RubatoPrimitives {
         }
     }
     
-    protected static SExpr moduleElementToSExpr(ModuleElement element) {
+    private static SExpr moduleElementToSExpr(ModuleElement element) {
         if (element instanceof Complex) {
             return new SComplex(new Complex(((Complex) element).getReal(), ((Complex) element).getImag()));
         }
@@ -853,12 +871,12 @@ abstract class RubatoPrimitives {
         }
     }
     
-    private static Symbol simple_sym  = Symbol.make("simple");
-    private static Symbol limit_sym   = Symbol.make("limit");
-    private static Symbol colimit_sym = Symbol.make("colimit");
-    private static Symbol power_sym   = Symbol.make("power");
-    private static Symbol list_sym    = Symbol.make("list");
-    private static Symbol none_sym    = Symbol.make("none");
+    private static final Symbol simple_sym  = Symbol.make("simple");
+    private static final Symbol limit_sym   = Symbol.make("limit");
+    private static final Symbol colimit_sym = Symbol.make("colimit");
+    private static final Symbol power_sym   = Symbol.make("power");
+    private static final Symbol list_sym    = Symbol.make("list");
+    private static final Symbol none_sym    = Symbol.make("none");
 
-    protected static Repository rep = Repository.systemRepository();
+    private static final Repository rep = Repository.systemRepository();
 }

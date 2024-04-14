@@ -17,50 +17,55 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 /**
- * The class representing Scheme string values.
+ * The class representing forms as Scheme values.
  * 
  * @author Gérard Milmeister
  */
-public final class SString extends SExpr {
+public final class SForm extends SExpr {
 
     /**
-     * Creates a Scheme string from the given string <code>s</code>.
+     * Creates a Scheme value from the form <code>f</code>.
      */
-    public SString(String s) {
-        this.s = s;
+    public SForm(Form f) {
+        this.f = f;
     }
 
     @Override
     public SType type() {
-        return SType.STRING;
+        return SType.FORM;
     }
 
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
+
     
     public boolean eqv_p(SExpr sexpr) {
         return this == sexpr;
     }
+
     
     public boolean equal_p(SExpr sexpr) {
-        return (sexpr instanceof SString) && ((SString)sexpr).s.equals(s);
+        return equals(sexpr);
     }
+
     
     public boolean equals(Object obj) {
-        return (obj instanceof SString) && ((SString)obj).s.equals(s);
+        return (obj instanceof SForm) && ((SForm)obj).f.equals(f);
     }
 
     /**
-     * Returns the string in this Scheme value.
+     * Returns the form in this Scheme value.
      */
-    public String getString() {
-        return s;
+    public Form getForm() {
+        return f;
     }
     
-    private String s;
+    
+    private Form f;
 }

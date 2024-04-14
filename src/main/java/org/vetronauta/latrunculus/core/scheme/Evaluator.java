@@ -19,15 +19,26 @@
 
 package org.vetronauta.latrunculus.core.scheme;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.*;
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
-import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.*;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.composer.RunInfo;
 import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SClosure;
+import org.vetronauta.latrunculus.core.scheme.expression.SCons;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SOutPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SPrimitive;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
+import org.vetronauta.latrunculus.core.scheme.primitive.ControlPrimitives;
 
 
 /**

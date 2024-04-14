@@ -17,55 +17,56 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
+
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 
 /**
- * The class representing Scheme character values.
- *  
+ * The class representing denotators as Scheme values.
+ * 
  * @author Gérard Milmeister
  */
-public final class SChar extends SExpr {
+public final class SDenotator extends SExpr {
 
     /**
-     * Creates a Scheme character from <code>c</code>.
+     * Creates a Scheme value from the denotator <code>d</code>.
      */
-    public SChar(char c) {
-        this.c = c;
+    public SDenotator(Denotator d) {
+        this.d = d;
     }
-
 
     @Override
     public SType type() {
-        return SType.CHAR;
+        return SType.DENOTATOR;
     }
 
     public boolean eq_p(SExpr sexpr) {
         return this == sexpr;
     }
-    
+
     
     public boolean eqv_p(SExpr sexpr) {
-        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
-    }
-    
-    
-    public boolean equal_p(SExpr sexpr) {
-        return (sexpr instanceof SChar) && (((SChar)sexpr).c == c);
-    }
-    
-    
-    public boolean equals(Object obj) {
-        return (obj instanceof SChar) && (((SChar)obj).c == c);
+        return this == sexpr;
     }
 
-    /**
-     * Returns the character in this Scheme value.
-     */
-    public char getChar() {
-        return c;
+    
+    public boolean equal_p(SExpr sexpr) {
+        return equals(sexpr);
+    }
+
+    
+    public boolean equals(Object obj) {
+        return (obj instanceof SDenotator) && ((SDenotator)obj).d.equals(d);
     }
     
+    /**
+     * Returns the denotator in this Scheme value.
+     */
+    public Denotator getDenotator() {
+        return d;
+    }
+
     
-    private char c;
+    private Denotator d;
 }

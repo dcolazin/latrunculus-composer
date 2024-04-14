@@ -17,11 +17,25 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.primitive;
 
-import static org.vetronauta.latrunculus.core.scheme.SExpr.car;
-import static org.vetronauta.latrunculus.core.scheme.SExpr.cdr;
-import static org.vetronauta.latrunculus.core.scheme.SVoid.SCHEME_VOID;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.vetronauta.latrunculus.core.scheme.Display;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.Parser;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SChar;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SInPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SOutPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SString;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
+import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cdr;
+import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
 
 import java.io.*;
 import java.util.List;
@@ -32,7 +46,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
-abstract class InputOutputPrimitives {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class InputOutputPrimitives {
+
+    private static final Parser parser = new Parser();
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(port_p);
@@ -51,7 +68,7 @@ abstract class InputOutputPrimitives {
         env.addPrimitive(read);
     }
     
-    private static Primitive port_p = new Primitive() {
+    private static final Primitive port_p = new Primitive() {
         public String getName() { return "port?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -65,7 +82,7 @@ abstract class InputOutputPrimitives {
         }        
     };
 
-    private static Primitive open_input_file = new Primitive() {
+    private static final Primitive open_input_file = new Primitive() {
         public String getName() { return "open-input-file"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -92,7 +109,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive open_output_file = new Primitive() {
+    private static final Primitive open_output_file = new Primitive() {
         public String getName() { return "open-output-file"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -119,7 +136,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive close_input_port = new Primitive() {
+    private static final Primitive close_input_port = new Primitive() {
         public String getName() { return "close-input-port"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -141,7 +158,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive close_output_port = new Primitive() {
+    private static final Primitive close_output_port = new Primitive() {
         public String getName() { return "close-output-port"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -163,7 +180,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive input_port_p = new Primitive() {
+    private static final Primitive input_port_p = new Primitive() {
         public String getName() { return "input-port?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -176,7 +193,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive output_port_p = new Primitive() {
+    private static final Primitive output_port_p = new Primitive() {
         public String getName() { return "output-port?"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 1) {
@@ -189,7 +206,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive current_output_port = new Primitive() {
+    private static final Primitive current_output_port = new Primitive() {
         public String getName() { return "current-output-port"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
@@ -202,7 +219,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive current_input_port = new Primitive() {
+    private static final Primitive current_input_port = new Primitive() {
         public String getName() { return "current-input-port"; }
         public SExpr call(SExpr args, Evaluator eval) {
             if (args.getLength() == 0) {
@@ -215,7 +232,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive display = new Primitive() {
+    private static final Primitive display = new Primitive() {
         public String getName() { return "display"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -241,7 +258,7 @@ abstract class InputOutputPrimitives {
         }
     };
 
-    private static Primitive write = new Primitive() {
+    private static final Primitive write = new Primitive() {
         public String getName() { return "write"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -267,7 +284,7 @@ abstract class InputOutputPrimitives {
         }
     };
 
-    private static Primitive write_char = new Primitive() {
+    private static final Primitive write_char = new Primitive() {
         public String getName() { return "write-char"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -305,7 +322,7 @@ abstract class InputOutputPrimitives {
         }
     };
 
-    private static Primitive newline = new Primitive() {
+    private static final Primitive newline = new Primitive() {
         public String getName() { return "newline"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -331,7 +348,7 @@ abstract class InputOutputPrimitives {
         }
     };
     
-    private static Primitive read = new Primitive() {
+    private static final Primitive read = new Primitive() {
         public String getName() { return "read"; }
         public SExpr call(SExpr args, Evaluator eval) {
             int l = args.getLength();
@@ -390,6 +407,4 @@ abstract class InputOutputPrimitives {
         }
     };
 
-    
-    protected static Parser parser = new Parser();    
 }

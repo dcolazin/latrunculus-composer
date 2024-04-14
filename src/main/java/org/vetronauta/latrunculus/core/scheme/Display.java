@@ -4,6 +4,23 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
+import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
+import org.vetronauta.latrunculus.core.scheme.expression.SChar;
+import org.vetronauta.latrunculus.core.scheme.expression.SComplex;
+import org.vetronauta.latrunculus.core.scheme.expression.SCons;
+import org.vetronauta.latrunculus.core.scheme.expression.SDenotator;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SForm;
+import org.vetronauta.latrunculus.core.scheme.expression.SInPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
+import org.vetronauta.latrunculus.core.scheme.expression.SOutPort;
+import org.vetronauta.latrunculus.core.scheme.expression.SPrimitive;
+import org.vetronauta.latrunculus.core.scheme.expression.SRational;
+import org.vetronauta.latrunculus.core.scheme.expression.SReal;
+import org.vetronauta.latrunculus.core.scheme.expression.SString;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.core.scheme.expression.SVector;
+import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
 
 //TODO move to server?
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -17,9 +17,9 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
-import static org.vetronauta.latrunculus.core.scheme.SNull.SCHEME_NULL;
+import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NULL;
 
 /**
  * The class representing Scheme pairs.

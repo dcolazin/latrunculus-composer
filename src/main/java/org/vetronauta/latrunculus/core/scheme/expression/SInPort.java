@@ -17,29 +17,33 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
-import java.io.PrintStream;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.scheme.expression.SType;
+
+import java.io.*;
 
 
 /**
- * The class wrapping an output port as a Scheme value.
+ * The class wrapping an input port as a Scheme value.
  * 
  * @author Gérard Milmeister
  */
-public final class SOutPort extends SExpr {
+public final class SInPort extends SExpr {
 
     /**
-     * Creates an output port from a print stream.
+     * Creates an input port from an input stream.
      */
-    public SOutPort(PrintStream port) {
+    public SInPort(InputStream port) {
         this.port = port;
+        this.reader = new BufferedReader(new InputStreamReader(port));
     }
 
 
     @Override
     public SType type() {
-        return SType.OUTPUT;
+        return SType.INPUT;
     }
 
     public boolean eq_p(SExpr sexpr) {
@@ -65,17 +69,32 @@ public final class SOutPort extends SExpr {
      * Closes the port.
      */
     public void close() {
-        port.close();
+        try {
+            reader.close();
+            port.close();
+        }
+        catch (IOException e) {
+            // do nothing
+        }
     }
     
     
     /**
-     * Returns the print stream of this output port.
+     * Returns the input stream of this input port.
      */
-    public PrintStream getPort() {
+    public InputStream getPort() {
         return port;
     }
     
     
-    private PrintStream port;
+    /**
+     * Returns the reader of this input port.
+     */
+    public BufferedReader getReader() {
+        return reader;
+    }
+    
+    
+    private InputStream    port;
+    private BufferedReader reader;
 }

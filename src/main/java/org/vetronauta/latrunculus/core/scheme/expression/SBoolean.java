@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.core.scheme;
+package org.vetronauta.latrunculus.core.scheme.expression;
 
 /**
  * The class of Boolean values. There are only two instances,
