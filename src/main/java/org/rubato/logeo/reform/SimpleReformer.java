@@ -22,7 +22,7 @@ package org.rubato.logeo.reform;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.CanonicalMorphism;

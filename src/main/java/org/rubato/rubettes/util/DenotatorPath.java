@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

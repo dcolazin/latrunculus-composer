@@ -30,9 +30,9 @@ import javax.swing.JComponent;
 
 import org.rubato.base.BooleanProperty;
 import org.rubato.base.FileProperty;
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.SimpleAbstractRubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;

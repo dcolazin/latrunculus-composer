@@ -33,7 +33,7 @@ import javax.swing.event.ChangeListener;
 
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JStatusline;
 import org.rubato.composer.icons.Icons;

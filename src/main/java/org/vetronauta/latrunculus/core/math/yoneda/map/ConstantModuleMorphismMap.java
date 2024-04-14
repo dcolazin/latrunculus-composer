@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;

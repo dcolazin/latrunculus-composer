@@ -21,7 +21,7 @@ package org.rubato.logeo;
 
 import java.util.*;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.logeo.functions.Function;
 import org.rubato.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;

@@ -1,7 +1,7 @@
 package org.rubato.rubettes.util;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;

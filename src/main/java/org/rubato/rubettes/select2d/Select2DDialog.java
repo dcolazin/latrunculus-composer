@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.components.JSelectForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

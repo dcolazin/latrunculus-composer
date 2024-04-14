@@ -30,8 +30,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.rubato.base.*;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
@@ -49,7 +51,7 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
 	private static Form PIXEL_FORM = Repository.systemRepository().getForm("Pixel");
 	private static PowerForm IMAGE_FORM = (PowerForm)Repository.systemRepository().getForm("Image");
 	private static Form VS_PIXEL_FORM = Repository.systemRepository().getForm("VariableSizePixel");
-	private static PowerForm VS_IMAGE_FORM = (PowerForm)Repository.systemRepository().getForm("VSPixelImage");
+	private static PowerForm VS_IMAGE_FORM = (PowerForm) Repository.systemRepository().getForm("VSPixelImage");
 	
 	private File imageFile;
 	private boolean variableSizePixels;

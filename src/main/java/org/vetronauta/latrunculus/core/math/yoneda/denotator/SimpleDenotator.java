@@ -21,9 +21,9 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
-import org.rubato.base.Internal;
-import org.rubato.base.RubatoException;
-import org.rubato.base.Unsafe;
+import org.vetronauta.latrunculus.core.util.Internal;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.util.Unsafe;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;

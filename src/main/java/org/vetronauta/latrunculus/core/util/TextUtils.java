@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.util;
+package org.vetronauta.latrunculus.core.util;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public final class TextUtils {
 
     /**
      * Returns a string generated from a pattern <code>string</code>,
-     * where for all <i>n</i>, all occurrences of %n and %nn
+     * where for all <i>n</i>, all occurrences of %n and %%n
      * are replaced by <i>n</i>-th argument in the <code>objects</code> list.
      * %n is replaced by the the string representation of the object,
      * %%n is equivalent to \"%n\".
@@ -53,42 +53,6 @@ public final class TextUtils {
         return string.replaceAll("\"", "\\\\\"");
     }
 
-    
-    /**
-     * Unescapes all escaped characters in the given string.
-     */
-    public static String unescape(String string) {
-        return string.replaceAll("\\\\\"", "\"");
-    }
-    
-    
-    /**
-     * Surrounds the given string with double quotes (").
-     */
-    public static String quote(String string) {
-        return "\""+string+"\"";
-    }
-    
-
-    /**
-     * Removes the double quotes at the beginning and the
-     * end of the given string.
-     */
-    public static String unquote(String string) {
-        // warning: not entirely correct
-        if (string.length() >= 2) {
-            if (string.charAt(0) == '\"') {
-                if (string.charAt(string.length()-1) == '\"') {
-                    if (string.charAt(string.length()-2) != '\\') {
-                        return string.substring(1, string.length()-1);
-                    }
-                }
-            }
-        }
-        return string;
-    }
-
-    
     /**
      * Splits the given string into its parts that are separated
      * by the character <code>c</code>.

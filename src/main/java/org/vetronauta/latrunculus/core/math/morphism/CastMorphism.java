@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.morphism;
 
-import org.rubato.util.Pair;
+import org.vetronauta.latrunculus.core.util.Pair;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;

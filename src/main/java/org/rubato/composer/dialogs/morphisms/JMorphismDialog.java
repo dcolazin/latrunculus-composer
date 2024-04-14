@@ -19,7 +19,7 @@
 
 package org.rubato.composer.dialogs.morphisms;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.plugin.ModuleMorphismPlugin;
 import org.rubato.composer.plugin.PluginManager;

@@ -28,8 +28,8 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-import org.rubato.base.Repository;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;

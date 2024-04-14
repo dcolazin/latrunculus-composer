@@ -19,7 +19,7 @@
 
 package org.rubato.audio.midi;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

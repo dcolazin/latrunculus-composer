@@ -19,7 +19,7 @@
 
 package org.rubato.composer.components;
 
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;

@@ -24,7 +24,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.diagram;
 import java.util.List;
 import java.util.Map;
 
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

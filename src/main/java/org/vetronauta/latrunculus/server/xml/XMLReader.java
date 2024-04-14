@@ -19,8 +19,8 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.rubato.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.rubettes.builtin.MacroRubette;
@@ -68,7 +68,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-import static org.rubato.util.TextUtils.replaceStrings;
+import static org.vetronauta.latrunculus.core.util.TextUtils.replaceStrings;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.CLASS_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DEFINE_MODULE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DEFINE_MODULE_ELEMENT;

@@ -33,7 +33,7 @@ import javax.swing.border.Border;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.components.JSelectModule;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 

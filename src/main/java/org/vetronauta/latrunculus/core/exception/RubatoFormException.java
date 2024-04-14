@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.core.exception;
 
-import org.rubato.base.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
 /**

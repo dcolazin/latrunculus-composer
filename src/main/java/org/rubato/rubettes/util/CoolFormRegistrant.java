@@ -3,7 +3,7 @@ package org.rubato.rubettes.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;

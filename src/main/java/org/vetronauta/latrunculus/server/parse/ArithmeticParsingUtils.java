@@ -2,7 +2,7 @@ package org.vetronauta.latrunculus.server.parse;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;

@@ -17,10 +17,11 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.core.repository;
 
 import org.rubato.logeo.FormFactory;
 import org.rubato.rubettes.denotex.DenotexReader;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
 import org.vetronauta.latrunculus.core.scheme.Parser;

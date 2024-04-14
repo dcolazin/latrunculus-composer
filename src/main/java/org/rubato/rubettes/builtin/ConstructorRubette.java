@@ -30,7 +30,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.rubato.base.*;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;

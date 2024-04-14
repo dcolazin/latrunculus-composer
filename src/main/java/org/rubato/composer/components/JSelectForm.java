@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.forms.TempDictionary;

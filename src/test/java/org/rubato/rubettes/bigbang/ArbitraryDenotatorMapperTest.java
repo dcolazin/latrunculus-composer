@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;

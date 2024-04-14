@@ -26,7 +26,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import org.rubato.base.*;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

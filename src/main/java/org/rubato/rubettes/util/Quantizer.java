@@ -2,7 +2,7 @@ package org.rubato.rubettes.util;
 
 import java.util.Iterator;
 
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;

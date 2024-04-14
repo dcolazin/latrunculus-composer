@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.form;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

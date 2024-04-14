@@ -22,7 +22,7 @@ package org.rubato.logeo;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.logeo.predicates.FormPredicate;
 import org.rubato.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

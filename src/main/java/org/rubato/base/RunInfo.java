@@ -17,25 +17,20 @@
  *
  */
 
-package org.rubato.composer;
+package org.rubato.base;
 
 import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.core.util.Stoppable;
 
 /**
  * A RunInfo provides information about the current running network.
  * 
  * @author Gérard Milmeister
  */
-public interface RunInfo {
-   
-    /**
-     * Returns true iff the current running network has been stopped.
-     */
-    public boolean stopped();
-    
+public interface RunInfo extends Stoppable {
     
     /**
      * Adds a progress message for the specified rubette.
      */
-    public void addMessage(RubetteModel rubette, String msg);
+    void addMessage(RubetteModel rubette, String msg);
 }

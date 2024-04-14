@@ -21,8 +21,8 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;

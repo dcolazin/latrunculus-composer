@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.rubettes.bigbang.model.operations.ScalingTransformation;
 import org.rubato.rubettes.bigbang.model.operations.TranslationTransformation;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

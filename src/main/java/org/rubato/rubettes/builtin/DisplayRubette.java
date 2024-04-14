@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.RubatoConstants;
 import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

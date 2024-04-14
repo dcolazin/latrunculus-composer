@@ -31,9 +31,9 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
 
 import org.rubato.base.AbstractRubette;
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

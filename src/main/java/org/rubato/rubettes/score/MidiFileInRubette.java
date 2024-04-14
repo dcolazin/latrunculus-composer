@@ -22,7 +22,7 @@ package org.rubato.rubettes.score;
 import org.rubato.audio.midi.MidiReader;
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

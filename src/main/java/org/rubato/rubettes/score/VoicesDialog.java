@@ -30,7 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.rubato.audio.midi.MidiPlayer;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 final class VoicesDialog
         extends JDialog

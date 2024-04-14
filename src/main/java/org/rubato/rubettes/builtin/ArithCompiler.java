@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import java.util.HashMap;
 
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 /**
  * Parses an expression of real arithmetic including boolean expressions.

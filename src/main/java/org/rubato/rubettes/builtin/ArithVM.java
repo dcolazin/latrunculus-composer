@@ -24,7 +24,7 @@ import static java.lang.Math.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 /**
  * The virtual machine for execution bytecode created by

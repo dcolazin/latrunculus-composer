@@ -28,13 +28,15 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.rubato.base.*;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.rubato.logeo.reform.Reformer;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

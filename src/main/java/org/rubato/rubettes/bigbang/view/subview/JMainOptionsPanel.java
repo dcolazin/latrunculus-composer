@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;

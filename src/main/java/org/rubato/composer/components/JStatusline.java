@@ -28,7 +28,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 public class JStatusline extends JTextField {
 

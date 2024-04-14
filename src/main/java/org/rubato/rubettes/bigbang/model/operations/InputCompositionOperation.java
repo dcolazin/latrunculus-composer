@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.vetronauta.latrunculus.core.math.MathDefinition;

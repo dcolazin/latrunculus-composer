@@ -22,8 +22,8 @@ package org.rubato.composer.dialogs.forms;
 import java.util.HashMap;
 import java.util.List;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;

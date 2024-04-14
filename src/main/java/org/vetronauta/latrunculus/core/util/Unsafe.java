@@ -17,18 +17,17 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.core.util;
 
 import java.lang.annotation.*;
 
 /**
- * Indicates that a method thus annotated is for internal use.
- * These methods are only used by developers for purposes
- * of optimization or debugging.
+ * Indicates that a method thus annotated is unsafe, i.e.,
+ * it may result in an invalid object without exceptions thrown. 
  */
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface Internal {
+public @interface Unsafe {
     /* empty */
 }

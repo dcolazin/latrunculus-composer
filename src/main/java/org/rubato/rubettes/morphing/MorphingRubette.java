@@ -19,9 +19,9 @@
 
 package org.rubato.rubettes.morphing;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.base.SimpleAbstractRubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.rubettes.alteration.Alterator;
 import org.rubato.rubettes.alteration.NearestNeighborFinder;
 import org.rubato.rubettes.util.MacroNoteGenerator;

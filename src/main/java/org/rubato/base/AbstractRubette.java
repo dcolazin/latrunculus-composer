@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.rubato.composer.rubette.Link;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -19,7 +19,7 @@
 
 package org.rubato.logeo;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.logeo.functions.Function;
 import org.rubato.logeo.predicates.FormPredicate;
 import org.rubato.logeo.predicates.Predicate;

@@ -1,7 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangDenotatorManager;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangTransformation;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;

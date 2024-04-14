@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.parse;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;

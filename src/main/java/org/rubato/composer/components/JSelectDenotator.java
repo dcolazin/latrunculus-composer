@@ -28,7 +28,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.rubato.composer.dialogs.denotators.JDenotatorDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

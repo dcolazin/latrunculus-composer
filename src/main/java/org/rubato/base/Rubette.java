@@ -24,7 +24,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-import org.rubato.composer.RunInfo;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;

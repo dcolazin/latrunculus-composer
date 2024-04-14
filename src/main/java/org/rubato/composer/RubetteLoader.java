@@ -25,7 +25,7 @@ import java.util.List;
 import org.rubato.base.Rubette;
 import org.rubato.composer.plugin.Plugin;
 import org.rubato.composer.plugin.PluginManager;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 /**
  * The RubetteLoader is responsible for loading and registering Rubettes.

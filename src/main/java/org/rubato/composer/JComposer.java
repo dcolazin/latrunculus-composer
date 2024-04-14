@@ -35,7 +35,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileFilter;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.Rubette;
 import org.rubato.composer.dialogs.JModuleDialog;
 import org.rubato.composer.dialogs.JProgress;
@@ -52,7 +52,7 @@ import org.rubato.composer.preferences.UserPreferences;
 import org.rubato.composer.rubette.JRubette;
 import org.rubato.composer.rubette.RubetteModel;
 import org.rubato.rubettes.builtin.MacroRubette;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 

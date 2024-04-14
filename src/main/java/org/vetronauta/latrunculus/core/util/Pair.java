@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.util;
+package org.vetronauta.latrunculus.core.util;
 
 
 /**

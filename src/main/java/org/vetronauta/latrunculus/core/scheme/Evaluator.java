@@ -26,8 +26,8 @@ import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOI
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.composer.RunInfo;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.Stoppable;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
 import org.vetronauta.latrunculus.core.scheme.expression.SClosure;
@@ -89,7 +89,7 @@ public class Evaluator {
      * The evaluator periodically checks this object and
      * terminates whenever <code>runInfo.stopped()</code> is true. 
      */
-    public void setRunInfo(RunInfo runInfo) {
+    public void setRunInfo(Stoppable runInfo) {
         this.runInfo = runInfo;
     }
     
@@ -646,7 +646,7 @@ public class Evaluator {
     private Label cont;
     
     private boolean finished;
-    private RunInfo runInfo;
+    private Stoppable runInfo;
     
     private List<Label>    labelStack = new LinkedList<Label>();
     private List<SExpr>    regStack = new LinkedList<SExpr>();

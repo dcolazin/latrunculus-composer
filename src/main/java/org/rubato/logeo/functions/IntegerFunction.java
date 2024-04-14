@@ -21,7 +21,7 @@ package org.rubato.logeo.functions;
 
 import static org.rubato.logeo.DenoFactory.makeDenotator;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;

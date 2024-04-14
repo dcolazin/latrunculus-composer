@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.FormValueFinder;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;

@@ -38,11 +38,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import org.rubato.base.AbstractRubette;
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
 import org.rubato.base.Rubette;
-import org.rubato.base.RubatoException;
-import org.rubato.composer.RunInfo;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;

@@ -22,7 +22,7 @@ package org.rubato.rubettes.score;
 import javax.swing.*;
 
 import org.rubato.base.*;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;

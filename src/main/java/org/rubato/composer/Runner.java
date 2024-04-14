@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 import org.rubato.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.rubette.RubetteModel;
-import org.rubato.util.TextUtils;
+import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 
 /**

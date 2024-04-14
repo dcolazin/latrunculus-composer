@@ -28,7 +28,7 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 
 public class JSchemeEditor
         extends JDialog

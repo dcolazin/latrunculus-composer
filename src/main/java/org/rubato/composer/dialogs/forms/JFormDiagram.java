@@ -29,7 +29,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.rubato.base.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 

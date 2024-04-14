@@ -27,9 +27,9 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import org.rubato.base.Repository;
-import org.rubato.base.RubatoDictionary;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;

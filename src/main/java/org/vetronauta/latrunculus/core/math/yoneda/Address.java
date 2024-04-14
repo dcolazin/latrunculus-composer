@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
-import org.rubato.util.Pair;
+import org.vetronauta.latrunculus.core.util.Pair;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.NumberRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;

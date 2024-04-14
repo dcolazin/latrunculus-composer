@@ -30,7 +30,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 

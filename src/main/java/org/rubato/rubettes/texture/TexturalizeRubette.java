@@ -1,9 +1,9 @@
 package org.rubato.rubettes.texture;
 
 import org.rubato.base.DoubleProperty;
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.base.SimpleAbstractRubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.util.ObjectGenerator;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;

@@ -31,7 +31,7 @@ import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JStatusline;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

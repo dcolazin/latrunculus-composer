@@ -33,9 +33,9 @@ import javax.swing.event.*;
 
 import org.rubato.audio.midi.MidiPlayer;
 import org.rubato.base.AbstractRubette;
-import org.rubato.base.Repository;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.Rubette;
-import org.rubato.composer.RunInfo;
+import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

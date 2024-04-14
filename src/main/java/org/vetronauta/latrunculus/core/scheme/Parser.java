@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.scheme.Token.TokenType;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.core.scheme.expression.SBoolean;
 import org.vetronauta.latrunculus.core.scheme.expression.SChar;
 import org.vetronauta.latrunculus.core.scheme.expression.SComplex;

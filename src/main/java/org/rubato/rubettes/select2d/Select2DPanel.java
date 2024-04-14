@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.rubato.base.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.components.JFormTree;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.view2d.*;

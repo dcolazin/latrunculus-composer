@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001 Gérard Milmeister
+ * Copyright (C) 2006 Gérard Milmeister
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of version 2 of the GNU General Public
@@ -17,26 +17,18 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.core.util;
 
-import org.rubato.util.TextUtils;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-
+import java.lang.annotation.*;
 
 /**
- * Base exception for all Rubato code.
+ * Indicates that a method thus annotated is for internal use.
+ * These methods are only used by developers for purposes
+ * of optimization or debugging.
  */
-public class RubatoException extends LatrunculusCheckedException {
-
-    //TODO remove...
-
-    public RubatoException() { super(); }
-
-    public RubatoException(String msg) { super(msg); }
-
-    public RubatoException(String msg, Object ... objects) {
-        super(TextUtils.replaceStrings(msg, objects));
-    }
-
-    private static final long serialVersionUID = 8095298542192044628L;
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
+public @interface Internal {
+    /* empty */
 }

@@ -26,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.rubato.base.Rubette;
-import org.rubato.util.TextUtils;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
 public class PluginManager {
 
