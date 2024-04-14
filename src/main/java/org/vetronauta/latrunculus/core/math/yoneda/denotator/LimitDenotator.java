@@ -24,7 +24,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 import org.vetronauta.latrunculus.core.util.Internal;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.util.Unsafe;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.exception.MappingException;

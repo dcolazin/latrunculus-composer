@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;

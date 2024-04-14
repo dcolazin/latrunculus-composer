@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.reform;
+package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,64 +34,39 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
-abstract class LimitReformer extends Reformer {
+abstract class PowerReformer extends Reformer {
 
-    public static LimitReformer make(LimitForm from, Form to) {
-        LimitReformer reformer = null;
-        if (to instanceof SimpleForm) {
-            // limit to simple
-            reformer = makeSimple(from, (SimpleForm)to);
-        }
-        else if (to instanceof LimitForm) {
-            // limit to limit
+    public static PowerReformer make(PowerForm from, Form to) {
+        PowerReformer reformer = null;
+        if (to instanceof LimitForm) {
+            // power to limit
             reformer = makeLimit(from, (LimitForm)to);
         }
         else if (to instanceof ColimitForm) {
-            // limit to colimit
+            // power to colimit
             reformer = makeColimit(from, (ColimitForm)to);
         }
         else if (to instanceof PowerForm) {
-            // limit to power
+            // power to power
             reformer = makePower(from, (PowerForm)to);
         }
         else if (to instanceof ListForm) {
-            // limit to list
+            // power to list
             reformer = makeList(from, (ListForm)to);
         }
         return reformer;
     }
-
-    
-    private static LimitReformer makeSimple(LimitForm from, SimpleForm to) {
-        return LimitSimpleReformer.make(from, to);
-    }
     
     
-    private static LimitReformer makeLimit(LimitForm from, LimitForm to) {
-        int fromCount = from.getFormCount();
-        int toCount = to.getFormCount();
-        int n = Math.min(fromCount, toCount);
-        Reformer[] reformers = new Reformer[n];
-        for (int i = 0; i < n; i++) {
-            reformers[i] = Reformer._make(from.getForm(i), to.getForm(i));
-            if (reformers[i] == null) {
-                return RecursiveLimitReformer.make(from, to);
-            }
-        }
-        return new LimitLimitReformer(to, reformers);
-    }
-    
-    
-    private static LimitReformer makeColimit(LimitForm from, ColimitForm to) {
+    private static PowerReformer makeLimit(PowerForm from, LimitForm to) {
         Reformer reformer = null;
         int toCount = to.getFormCount();
         
         int i = 0;
         while (i < toCount && reformer == null) {
             if (from.equals(to.getForm(i))) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
             }
             i++;
         }
@@ -99,77 +74,106 @@ abstract class LimitReformer extends Reformer {
         if (reformer == null) {
             i = 0;
             while (i < toCount && reformer == null) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
                 i++;
             }
         }
 
         if (reformer != null) {
-            return new LimitColimitReformer(to, reformer, i-1); 
+            return new PowerLimitReformer(to, reformer, i-1); 
         }
         else {
             return null;
         }
     }
     
-
-    private static LimitReformer makePower(LimitForm from, PowerForm to) {
-        Reformer reformer = Reformer._make(from, to.getForm());
-        if (reformer != null) {
-            return new LimitPowerReformer(to, reformer);
-        }
-        else {
-            return null;
-        }
-    }
-
     
-    private static LimitReformer makeList(LimitForm from, ListForm to) {
-        Reformer reformer = Reformer._make(from, to.getForm());
-        if (reformer != null) {
-            return new LimitListReformer(to, reformer);
-        }
-        else {
-            return null;
-        }
-    }
-
-    
-    private static class LimitLimitReformer extends LimitReformer {
+    private static PowerReformer makeColimit(PowerForm from, ColimitForm to) {
+        Reformer reformer = null;
+        int toCount = to.getFormCount();
         
-        public LimitLimitReformer(LimitForm to, Reformer[] reformers) {
+        int i = 0;
+        while (i < toCount && reformer == null) {
+            if (from.equals(to.getForm(i))) {
+                reformer = _make(from, to.getForm(i));
+            }
+            i++;
+        }
+        
+        if (reformer == null) {
+            i = 0;
+            while (i < toCount && reformer == null) {
+                reformer = _make(from, to.getForm(i));
+                i++;
+            }
+        }
+
+        if (reformer != null) {
+            return new PowerColimitReformer(to, reformer, i-1); 
+        }
+        else {
+            return null;
+        }
+    }
+    
+
+    private static PowerReformer makePower(PowerForm from, PowerForm to) {
+        // create a reformer between the base forms
+        Reformer reformer = _make(from.getForm(), to.getForm());
+        if (reformer != null) {
+            return new PowerPowerReformer(to, reformer);
+        }
+        else {
+            return null;
+        }
+    }
+    
+    
+    private static PowerReformer makeList(PowerForm from, ListForm to) {
+        // create a reformer between the base forms
+        Reformer reformer = _make(from.getForm(), to.getForm());
+        if (reformer != null) {
+            return new PowerListReformer(to, reformer);
+        }
+        else {
+            return null;
+        }
+    }
+    
+    
+    private static class PowerLimitReformer extends PowerReformer {
+        
+        public PowerLimitReformer(LimitForm to, Reformer reformer, int index) {
             this.to = to;
-            this.reformers = reformers;
-            this.count = reformers.length;
-            this.toCount = to.getFormCount();
+            this.reformer = reformer;
+            this.index = index;
         }
         
         public Denotator reform(Denotator d)
                 throws RubatoException {
             Module address = d.getAddress();
-            LimitDenotator res = (LimitDenotator)d;
+            Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
-            
-            for (int i = 0; i < count; i++) {
-                list.add(reformers[i].reform(res.getFactor(i)));
+            for (int i = 0; i < to.getFormCount(); i++) {
+                if (i == index) {
+                    list.add(res);
+                }
+                else {
+                    list.add(to.getForm(i).createDefaultDenotator(address));
+                }
             }
-            for (int i = count; i < toCount; i++) {
-                list.add(to.getForm(i).createDefaultDenotator(address));
-            }
-            
             return LimitDenotator._make_unsafe(null, address, to, list);
         }
         
-        private LimitForm  to;
-        private int        toCount;
-        private Reformer[] reformers;
-        private int        count;
+        private LimitForm to;
+        private Reformer  reformer;
+        private int       index;
     }
 
     
-    private static class LimitColimitReformer extends LimitReformer {
+    private static class PowerColimitReformer extends PowerReformer {
         
-        public LimitColimitReformer(ColimitForm to, Reformer reformer, int index) {
+        public PowerColimitReformer(ColimitForm to, Reformer reformer, int index) {
             this.to = to;
             this.reformer = reformer;
             this.index = index;
@@ -187,19 +191,21 @@ abstract class LimitReformer extends Reformer {
     }
 
     
-    private static class LimitPowerReformer extends LimitReformer {
+    private static class PowerPowerReformer extends PowerReformer {
         
-        public LimitPowerReformer(PowerForm to, Reformer reformer) {
+        public PowerPowerReformer(PowerForm to, Reformer reformer) {
             this.to = to;
             this.reformer = reformer;
         }
-    
+        
         public Denotator reform(Denotator d)
                 throws RubatoException {
-            Denotator res = reformer.reform(d);
-            List<Denotator> list = new LinkedList<Denotator>();
-            list.add(res);
-            return PowerDenotator._make_unsafe(null, d.getAddress(), to, list);
+            List<Denotator> factors = ((PowerDenotator)d).getFactors();
+            List<Denotator> newfactors = new LinkedList<Denotator>();
+            for (Denotator f : factors) {
+                newfactors.add(reformer.reform(f));
+            }
+            return new PowerDenotator(null, d.getAddress(), to, newfactors);
         }
         
         private PowerForm to;
@@ -207,22 +213,24 @@ abstract class LimitReformer extends Reformer {
     }
     
     
-    private static class LimitListReformer extends LimitReformer {
+    private static class PowerListReformer extends PowerReformer {
         
-        public LimitListReformer(ListForm to, Reformer reformer) {
+        public PowerListReformer(ListForm to, Reformer reformer) {
             this.to = to;
             this.reformer = reformer;
         }
-    
+        
         public Denotator reform(Denotator d)
                 throws RubatoException {
-            Denotator res = reformer.reform(d);
-            List<Denotator> list = new LinkedList<Denotator>();
-            list.add(res);
-            return ListDenotator._make_unsafe(null, d.getAddress(), to, list);
+            List<Denotator> factors = ((PowerDenotator)d).getFactors();
+            List<Denotator> newfactors = new LinkedList<Denotator>();
+            for (Denotator f : factors) {
+                newfactors.add(reformer.reform(f));
+            }
+            return ListDenotator._make_unsafe(null, d.getAddress(), to, newfactors);
         }
         
         private ListForm to;
         private Reformer reformer;
-    }    
+    }
 }

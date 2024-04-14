@@ -35,7 +35,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 
 
 /**

@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.functions;
+package org.vetronauta.latrunculus.core.logeo.functions;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

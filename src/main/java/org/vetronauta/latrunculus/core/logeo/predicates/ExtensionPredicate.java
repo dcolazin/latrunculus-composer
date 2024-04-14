@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.predicates;
+package org.vetronauta.latrunculus.core.logeo.predicates;
 
 import java.util.Collections;
 import java.util.HashSet;

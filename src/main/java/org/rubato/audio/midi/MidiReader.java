@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 
 /**
  * This class reads in a MIDI file an converts it to a denotator of form Score.

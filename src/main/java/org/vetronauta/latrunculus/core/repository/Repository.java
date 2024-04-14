@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.repository;
 
-import org.rubato.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.rubato.rubettes.denotex.DenotexReader;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
@@ -71,7 +71,7 @@ import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.TreeSet;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
 
 /**

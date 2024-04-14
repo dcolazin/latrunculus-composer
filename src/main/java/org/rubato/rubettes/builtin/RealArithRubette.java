@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo;
+package org.vetronauta.latrunculus.core.logeo;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.exception.DomainException;

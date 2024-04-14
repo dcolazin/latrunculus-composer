@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo;
+package org.vetronauta.latrunculus.core.logeo;
 
 import java.util.LinkedList;
 import java.util.List;

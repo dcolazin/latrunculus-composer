@@ -17,24 +17,24 @@
  *
  */
 
-package org.rubato.logeo.functions;
+package org.vetronauta.latrunculus.core.logeo.functions;
 
-import static org.rubato.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
-
 /**
- * This class can be used to implement function on reals.
+ * This class can be used to implement function on integers.
  * 
  * @author Gérard Milmeister
  */
-public abstract class RealFunction extends AbstractFunction {
+public abstract class IntegerFunction extends AbstractFunction {
 
-    public abstract double evaluate(double ... doubles);
+    public abstract int evaluate(int ... integers);
 
     public Denotator evaluate(Denotator ... denotators)
             throws RubatoException {
@@ -49,16 +49,14 @@ public abstract class RealFunction extends AbstractFunction {
         }
         return evaluate(simples);
     }
-
     
     public Denotator evaluate(SimpleDenotator ... denotators) {
-        double reals[] = new double[denotators.length];
-        for (int i = 0; i < reals.length; i++) {
-            reals[i] = denotators[i].getInteger();
+        int integers[] = new int[denotators.length];
+        for (int i = 0; i < integers.length; i++) {
+            integers[i] = denotators[i].getInteger();
         }
-        return makeDenotator(denotators[0].getSimpleForm(), evaluate(reals));
+        return DenoFactory.makeDenotator(denotators[0].getSimpleForm(), evaluate(integers));
     }
-
 
     public abstract int getArity();
 

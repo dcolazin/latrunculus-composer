@@ -17,14 +17,14 @@
  *
  */
 
-package org.rubato.logeo;
+package org.vetronauta.latrunculus.core.logeo;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.rubato.logeo.predicates.FormPredicate;
-import org.rubato.logeo.predicates.Predicate;
+import org.vetronauta.latrunculus.core.logeo.predicates.FormPredicate;
+import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 

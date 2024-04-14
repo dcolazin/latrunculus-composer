@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.scheme.primitive;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;

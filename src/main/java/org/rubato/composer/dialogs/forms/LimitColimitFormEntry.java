@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
-import org.rubato.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;

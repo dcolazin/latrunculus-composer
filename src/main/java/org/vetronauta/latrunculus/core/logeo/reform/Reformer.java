@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.reform;
+package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.HashMap;
 

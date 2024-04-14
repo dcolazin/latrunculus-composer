@@ -17,13 +17,13 @@
  *
  */
 
-package org.rubato.logeo.reform;
+package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.CanonicalMorphism;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
@@ -95,7 +95,7 @@ abstract class SimpleReformer extends Reformer {
         int i = 0;
         while (i < toCount && reformer == null) {
             if (from.equals(to.getForm(i))) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
             }
             i++;
         }
@@ -103,7 +103,7 @@ abstract class SimpleReformer extends Reformer {
         if (reformer == null) {
             i = 0;
             while (i < toCount && reformer == null) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
                 i++;
             }
         }
@@ -118,7 +118,7 @@ abstract class SimpleReformer extends Reformer {
     
 
     private static SimpleReformer makePower(SimpleForm from, PowerForm to) {
-        Reformer reformer = Reformer._make(from, to.getForm());
+        Reformer reformer = _make(from, to.getForm());
         if (reformer != null) {
             return new SimplePowerReformer(to, reformer);
         }
@@ -129,7 +129,7 @@ abstract class SimpleReformer extends Reformer {
 
     
     private static SimpleReformer makeList(SimpleForm from, ListForm to) {
-        Reformer reformer = Reformer._make(from, to.getForm());
+        Reformer reformer = _make(from, to.getForm());
         if (reformer != null) {
             return new SimpleListReformer(to, reformer);
         }

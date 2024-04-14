@@ -33,7 +33,7 @@ import org.rubato.base.RubatoConstants;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

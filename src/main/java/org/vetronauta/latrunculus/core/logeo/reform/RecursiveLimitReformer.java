@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.reform;
+package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -43,7 +43,7 @@ class RecursiveLimitReformer extends LimitReformer {
             Iterator<Form> from_iter = fromForms.iterator();
             Iterator<Form> to_iter = toForms.iterator();
             for (int i = 0; i < reformers.length; i++) {
-                reformers[i] = Reformer._make(from_iter.next(), to_iter.next());
+                reformers[i] = _make(from_iter.next(), to_iter.next());
                 if (reformers[i] == null) {
                     return null;
                 }

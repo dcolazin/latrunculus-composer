@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.predicates;
+package org.vetronauta.latrunculus.core.logeo.predicates;
 
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;

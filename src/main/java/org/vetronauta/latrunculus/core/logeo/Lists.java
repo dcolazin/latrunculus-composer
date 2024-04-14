@@ -17,13 +17,13 @@
  *
  */
 
-package org.rubato.logeo;
+package org.vetronauta.latrunculus.core.logeo;
 
 import java.util.*;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.rubato.logeo.functions.Function;
-import org.rubato.logeo.predicates.Predicate;
+import org.vetronauta.latrunculus.core.logeo.functions.Function;
+import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.logeo.reform;
+package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +66,7 @@ abstract class ListReformer extends Reformer {
         int i = 0;
         while (i < toCount && reformer == null) {
             if (from.equals(to.getForm(i))) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
             }
             i++;
         }
@@ -74,7 +74,7 @@ abstract class ListReformer extends Reformer {
         if (reformer == null) {
             i = 0;
             while (i < toCount && reformer == null) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
                 i++;
             }
         }
@@ -95,7 +95,7 @@ abstract class ListReformer extends Reformer {
         int i = 0;
         while (i < toCount && reformer == null) {
             if (from.equals(to.getForm(i))) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
             }
             i++;
         }
@@ -103,7 +103,7 @@ abstract class ListReformer extends Reformer {
         if (reformer == null) {
             i = 0;
             while (i < toCount && reformer == null) {
-                reformer = Reformer._make(from, to.getForm(i));
+                reformer = _make(from, to.getForm(i));
                 i++;
             }
         }
@@ -119,7 +119,7 @@ abstract class ListReformer extends Reformer {
 
     private static ListReformer makePower(ListForm from, PowerForm to) {
         // create a reformer between the base forms
-        Reformer reformer = Reformer._make(from.getForm(), to.getForm());
+        Reformer reformer = _make(from.getForm(), to.getForm());
         if (reformer != null) {
             return new ListPowerReformer(to, reformer);
         }
@@ -131,7 +131,7 @@ abstract class ListReformer extends Reformer {
     
     private static ListReformer makeList(ListForm from, ListForm to) {
         // create a reformer between the base forms
-        Reformer reformer = Reformer._make(from.getForm(), to.getForm());
+        Reformer reformer = _make(from.getForm(), to.getForm());
         if (reformer != null) {
             return new ListListReformer(to, reformer);
         }

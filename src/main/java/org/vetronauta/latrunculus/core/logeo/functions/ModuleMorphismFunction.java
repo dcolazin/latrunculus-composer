@@ -17,10 +17,10 @@
  *
  */
 
-package org.rubato.logeo.functions;
+package org.vetronauta.latrunculus.core.logeo.functions;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

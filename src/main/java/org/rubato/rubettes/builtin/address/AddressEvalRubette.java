@@ -33,7 +33,7 @@ import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
 import org.rubato.composer.icons.Icons;
-import org.rubato.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
