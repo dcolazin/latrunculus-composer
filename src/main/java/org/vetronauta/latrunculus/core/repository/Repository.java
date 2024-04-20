@@ -19,16 +19,13 @@
 
 package org.vetronauta.latrunculus.core.repository;
 
-import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.rubato.rubettes.denotex.DenotexReader;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.scheme.expression.Env;
-import org.vetronauta.latrunculus.core.scheme.Evaluator;
-import org.vetronauta.latrunculus.core.scheme.Parser;
-import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
+import org.vetronauta.latrunculus.core.logeo.FormFactory;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
-import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -37,7 +34,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.generic.PolynomialRing;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.NameEntry;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -51,14 +47,16 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.NameForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.core.scheme.Evaluator;
+import org.vetronauta.latrunculus.core.scheme.Parser;
+import org.vetronauta.latrunculus.core.scheme.expression.Env;
+import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.Reader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -68,9 +66,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
 
 /**
  * A repository of forms and denotators, retrievable by their names.
@@ -318,6 +316,13 @@ public class Repository extends Observable implements Dictionary { //TODO this s
             res.add(item.getForm());
         }
         return res;
+    }
+
+    public synchronized List<Form> getCustomForms() {
+        return forms.values().stream()
+            .filter(formItem -> !formItem.isBuiltin())
+            .map(FormItem::getForm)
+            .collect(Collectors.toList());
     }
 
 
@@ -602,6 +607,13 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         return res;
     }
 
+    public synchronized List<Denotator> getCustomDenotators() {
+        return denotators.values().stream()
+            .filter(denotatorItem -> !denotatorItem.isBuiltin())
+            .map(DenotatorItem::getDenotator)
+            .collect(Collectors.toList());
+    }
+
     
     public void setNamespace(NameEntry ns) {
         namespace = ns;        
@@ -629,6 +641,11 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         ModuleItem item = modules.get(name);
         return (item == null)?null:item.getModule();
     }
+
+    public boolean isBuiltinModule(String name) {
+        ModuleItem item = modules.get(name);
+        return isNullOrBuiltin(item);
+    }
     
     
     public List<String> getModuleNames() {
@@ -649,6 +666,11 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         ModuleElementItem item = moduleElements.get(name);
         return (item == null)?null:item.getModuleElement();
     }
+
+    public boolean isBuiltinModuleElement(String name) {
+        ModuleElementItem item = moduleElements.get(name);
+        return isNullOrBuiltin(item);
+    }
     
     
     public List<String> getModuleElementNames() {
@@ -668,6 +690,11 @@ public class Repository extends Observable implements Dictionary { //TODO this s
     public ModuleMorphism getModuleMorphism(String name) {
         ModuleMorphismItem item = moduleMorphisms.get(name);
         return (item == null)?null:item.getModuleMorphism();
+    }
+
+    public boolean isBuiltinModuleMorphism(String name) {
+        ModuleMorphismItem item = moduleMorphisms.get(name);
+        return isNullOrBuiltin(item);
     }
     
     
@@ -690,49 +717,6 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         }
         return list;
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        if (code.length() > 0) {
-            writer.openBlock(SCHEME);
-            writer.writeTextNode(code.trim()+"\n");
-            writer.closeBlock();
-        }        
-        for (Entry<String,ModuleItem> entry : modules.entrySet()) {
-            String name = entry.getKey();
-            ModuleItem item = entry.getValue();
-            if (!item.isBuiltin()) {
-                writer.writeModule(name, item.getModule());
-            }
-        }
-        for (Entry<String,ModuleElementItem> entry : moduleElements.entrySet()) {
-            String name = entry.getKey();
-            ModuleElementItem item = entry.getValue();
-            if (!item.isBuiltin()) {
-                writer.writeModuleElement(name, item.getModuleElement());
-            }
-        }
-        for (Entry<String,ModuleMorphismItem> entry : moduleMorphisms.entrySet()) {
-            String name = entry.getKey();
-            ModuleMorphismItem item = entry.getValue();
-            if (!item.isBuiltin()) {
-                writer.writeModuleMorphism(name, item.getModuleMorphism());
-            }
-        }
-        for (Entry<?,FormItem> entry : forms.entrySet()) {
-            FormItem item = entry.getValue();
-            if (!item.isBuiltin()) {
-                writer.writeForm(item.getForm());
-            }
-        }
-        for (Entry<?,DenotatorItem> entry : denotators.entrySet()) {
-            DenotatorItem item = entry.getValue();
-            if (!item.isBuiltin()) {
-                writer.writeDenotator(item.getDenotator());
-            }
-        }
-    }
-    
 
     /**
      * Prints a tabular representation of the repository on stdout.
@@ -833,6 +817,10 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         Repository rep = new Repository();
         rep.initGlobalRepository();
         return rep;
+    }
+
+    private static boolean isNullOrBuiltin(Item item) {
+        return item == null || item.builtin;
     }
     
     

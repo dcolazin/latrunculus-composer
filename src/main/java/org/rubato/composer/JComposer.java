@@ -55,6 +55,7 @@ import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
+import org.vetronauta.latrunculus.server.xml.writer.RepositoryXmlWriter;
 
 
 /**
@@ -798,8 +799,8 @@ public class JComposer extends JFrame implements Observer {
                 writer.open();
                 
                 // write user defined objects in global repository
-                rep.toXML(writer);
-                
+                RepositoryXmlWriter.toXml(rep, writer);
+
                 // write macro rubettes
                 for (Rubette arubette : manager.getRubettes()) {
                     if (arubette instanceof MacroRubette) {
