@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.util.Pair;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.NumberRing;
@@ -41,7 +43,10 @@ import java.util.List;
  * 
  * @author Gérard Milmeister
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Address {
+
+    private static final HashMap<Pair<Module<?,?>,Module<?,?>>,Ring> RING_ORDER = new HashMap<>();
 
     /**
      * Returns a common module for the given list of modules.
@@ -100,21 +105,6 @@ public final class Address {
         return commonRing.getFreeModule(dim);
     }
     
-    
-    /**
-     * Returns the largest dimension among the given modules.
-     */
-    public static int getMaxDimension(Collection<Module> modules) {
-        int n = 0;
-        for (Module module : modules) {
-            if (module.getDimension() > n) {
-                n = module.getDimension();
-            }
-        }
-        return n;
-    }
-    
-    
     /**
      * Returns the minimal ring among the given rings.
      * @return null if the minimal ring could not be found
@@ -144,10 +134,10 @@ public final class Address {
      * Each pair is cached for later lookup.
      */
     private static Ring getMinRing(Pair<Module<?,?>,Module<?,?>> ringPair) {
-        Ring ring = ringOrder.get(ringPair);
+        Ring ring = RING_ORDER.get(ringPair);
         if (ring == null) {
             ring = getMinRing((Ring)ringPair.first, (Ring)ringPair.second);
-            ringOrder.put(ringPair.copy(), ring);
+            RING_ORDER.put(ringPair.copy(), ring);
         }
         return ring;
     }
@@ -283,13 +273,6 @@ public final class Address {
             throw new UnsupportedOperationException("Not implemented");
         }
     }
-
     
-    /**
-     * Pure utility class, no constructor.
-     */
-    private Address() { /* pure static class */ }
-    
-    private static HashMap<Pair<Module<?,?>,Module<?,?>>,Ring> ringOrder = new HashMap<>();
 }
 

@@ -28,75 +28,58 @@ import java.util.*;
  */
 public final class NameEntry implements Comparable<NameEntry> {
 
+    private static final HashMap<NameEntry,NameEntry> NAME_TABLE = new HashMap<>();
+    private static final String SLASH = "/";
+
+    private final ArrayList<String> names;
+
     public NameEntry() {
-        names = new ArrayList<>();
-    }
-    
-    
-    public NameEntry(String name) {
-        String[] s = name.split("/");
-        names = new ArrayList<>();
-        for (int i = 0; i < s.length; i++) {
-            names.add(s[i]);
-        }
+        this.names = new ArrayList<>();
     }
 
+    public NameEntry(String name) {
+        this.names = new ArrayList<>();
+        this.names.addAll(Arrays.asList(name.split(SLASH)));
+    }
 
 	public NameEntry(String name1, String name2) {
-        names = new ArrayList<String>();
-        String[] s;
-        int i;
-        s = name1.split("/");
-        for (i = 0; i < s.length; i++) {
-            names.add(s[i]);
-        }
-        s = name2.split("/");
-        for (i = 0; i < s.length; i++) {
-            names.add(s[i]);
-        }
+        this.names = new ArrayList<>();
+        this.names.addAll(Arrays.asList(name1.split(SLASH)));
+        this.names.addAll(Arrays.asList(name2.split(SLASH)));
     }
 
-    
     public NameEntry(List<String> nameList) {
-        names = new ArrayList<String>();
+        names = new ArrayList<>();
         names.addAll(nameList);
     }
 
-    
     public void add(String name) {
         names.add(name);
     }
-    
-    
-    public String getString() {
-        StringBuilder nameString = new StringBuilder(30);
-        Iterator<String> iter = names.iterator();
-        if (iter.hasNext()) {
-            nameString.append(iter.next());
-            while (iter.hasNext()) {
-                nameString.append("/");                
-                nameString.append(iter.next());                    
-            }
-        }
-        return nameString.toString(); 
-    }
 
+    public String getString() {
+        StringJoiner joiner = new StringJoiner(SLASH);
+        names.forEach(joiner::add);
+        return joiner.toString();
+    }
 
     public String getString(int i) {
         return names.get(i);
     }
 
-    
     public int getLength() {
         return names.size();
     }
 
-    
+    @Override
     public boolean equals(Object object) {
-        return names.equals(((NameEntry)object).names);
+        if (!(object instanceof NameEntry)) {
+            return false;
+        }
+        return names.equals(((NameEntry) object).names);
     }
 
-    
+    @Override
     public int compareTo(NameEntry entry) {
         ArrayList<String> names1 = entry.names;
         int size = names.size();
@@ -108,99 +91,67 @@ public final class NameEntry implements Comparable<NameEntry> {
                 return c;
             }
         }
-        return size-size1;
+        return size - size1;
     }
 
-
+    @Override
     public String toString() {
         return getString();        
     }
 
-
+    @Override
     public int hashCode() {
         return names.hashCode();
     }
     
-
-    private ArrayList<String> names = null;
 
     //
     // Static lookup methods.
     //
 
     public static NameEntry lookup(NameEntry e) {
-        NameEntry ne = nameTable.get(e);
+        NameEntry ne = NAME_TABLE.get(e);
         if (ne == null) {
-            nameTable.put(e, e);
+            NAME_TABLE.put(e, e);
             return e;
         }
-        else {
-            return ne;
-        }
+        return ne;
     }
-
 
     public static NameEntry lookup(String name) {
         NameEntry e = new NameEntry(name);
-        NameEntry ne = nameTable.get(e);
+        NameEntry ne = NAME_TABLE.get(e);
         if (ne == null) {
-            nameTable.put(e, e);
+            NAME_TABLE.put(e, e);
             return e;
         }
-        else {
-            return ne;
-        }
+        return ne;
     }
-
 
     public static NameEntry lookup(String name1, String name2) {
         NameEntry e = new NameEntry(name1, name2);
-        NameEntry ne = nameTable.get(e);
+        NameEntry ne = NAME_TABLE.get(e);
         if (ne == null) {
-            nameTable.put(e, e);
+            NAME_TABLE.put(e, e);
             return e;
         }
-        else {
-            return ne;
-        }
+        return ne;
     }
-
 
     public static NameEntry lookup(List<String> names) {
         NameEntry e = new NameEntry(names);
-        NameEntry ne = nameTable.get(e);
+        NameEntry ne = NAME_TABLE.get(e);
         if (ne == null) {
-            nameTable.put(e, e);
+            NAME_TABLE.put(e, e);
             return e;
         }
-        else {
-            return ne;
-        }
+        return ne;
     }
 
-    
     public static NameEntry concat(NameEntry a, NameEntry b) {
-        LinkedList<String> names = new LinkedList<String>(a.names);
-        names.addAll(b.names);
-        NameEntry res = lookup(names);
-        return res;
-    }
-
-
-    public static NameEntry concat(NameEntry a, String b) {
-        LinkedList<String> names = new LinkedList<String>(a.names);
-        names.add(b);
-        return lookup(names);
-    }
-
-
-    public static NameEntry concat(String a, NameEntry b) {
-        LinkedList<String> names = new LinkedList<String>();
-        names.add(a);
+        LinkedList<String> names = new LinkedList<>(a.names);
         names.addAll(b.names);
         return lookup(names);
     }
 
-    
-    private static HashMap<NameEntry,NameEntry> nameTable = new HashMap<>();
 }

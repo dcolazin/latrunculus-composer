@@ -37,4 +37,5 @@ public interface Connectable {
     Object getConnector();
     
     void setConnector(Object connector);
+
 }
