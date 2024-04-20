@@ -7,81 +7,82 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-resources-plugin</artifactId>
-			<version>3.3.0</version>
-			<type>maven-plugin</type>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math3</artifactId>
-			<version>3.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung-visualization</artifactId>
-			<version>${jung-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung-graph-impl</artifactId>
-			<version>${jung-version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.processing</groupId>
-		    <artifactId>core</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.github.philburk</groupId>
-		    <artifactId>jsyn</artifactId>
-			<version>17.1.0</version>
-		</dependency>
-		<!-- TODO https://developer-archive.leapmotion.com/documentation/java/devguide/Project_Setup.html -->
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>LeapJava</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.rubato.jars</groupId>
-		    <artifactId>mt4j</artifactId>
-			<version>0.1.0-MAVEN</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>2.0.9</version>
-		</dependency>
-		<!-- test -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>5.10.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	<dependencyManagement><!-- TODO --></dependencyManagement>
-	<modules><!-- TODO -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.0</version>
+				<type>maven-plugin</type>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>3.6.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.12.0</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jung</groupId>
+				<artifactId>jung-visualization</artifactId>
+				<version>${jung-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jung</groupId>
+				<artifactId>jung-graph-impl</artifactId>
+				<version>${jung-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.processing</groupId>
+				<artifactId>core</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.philburk</groupId>
+				<artifactId>jsyn</artifactId>
+				<version>17.1.0</version>
+			</dependency>
+			<!-- TODO https://developer-archive.leapmotion.com/documentation/java/devguide/Project_Setup.html -->
+			<dependency>
+				<groupId>org.rubato.jars</groupId>
+				<artifactId>LeapJava</artifactId>
+				<version>0.1.0-MAVEN</version>
+			</dependency>
+			<dependency>
+				<groupId>org.rubato.jars</groupId>
+				<artifactId>mt4j</artifactId>
+				<version>0.1.0-MAVEN</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.30</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>2.0.9</version>
+			</dependency>
+			<!-- test -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>5.10.0</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
         <module>latrunculus-core</module>
 		<module>latrunculus-wip</module>
 	</modules>
@@ -191,30 +192,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	</developers>
 	<contributors>
 		<contributor>
-			<name>Gérard Milmeister</name>
+			<name>Stefan Göller, Gérard Milmeister, Stefan Müller, Florian Thalmann</name>
 			<roles>
-				<role>Rubato developer</role>
-			</roles>
-		</contributor>
-		<contributor>
-			<name>Florian Thalmann</name>
-			<roles>
-				<role>Rubato developer</role>
-			</roles>
-		</contributor>
-		<contributor>
-			<name>Stefan Müller</name>
-			<roles>
-				<role>Rubato developer</role>
-			</roles>
-		</contributor>
-		<contributor>
-			<name>Stefan Göller</name>
-			<roles>
-				<role>Rubato developer</role>
+				<role>past Rubato developer</role>
 			</roles>
 		</contributor>
 	</contributors>
 
-	<!-- Environment Settings -->
 </project>
