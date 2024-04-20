@@ -2,7 +2,7 @@ package org.rubato.rubettes.alteration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.SimpleFormFinder;
 import org.vetronauta.latrunculus.core.exception.MappingException;
@@ -62,7 +62,7 @@ class AlteratorTest {
 	}
 	
 	@Test
-	void testAlter() throws RubatoException {
+	void testAlter() throws LatrunculusCheckedException {
 		Denotator note1 = this.noteGenerator.createNoteDenotator(0, 50, 120, 1, 0);
 		Denotator note2 = this.noteGenerator.createNoteDenotator(2, 55, 122, 1, 0);
 		Denotator note3 = this.noteGenerator.createNoteDenotator(1, 52.5, 121, 1, 0);

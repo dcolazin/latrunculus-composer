@@ -22,7 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.vetronauta.latrunculus.core.util.Internal;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.util.Unsafe;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
@@ -66,7 +66,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @throws RubatoFormException
      */
     public ColimitDenotator(NameDenotator name, Module address, ColimitForm form, int index, Denotator deno)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         super(name, form);
         setIndex(index);
         
@@ -89,7 +89,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @throws RubatoFormException
      */
     public ColimitDenotator(NameDenotator name, ColimitForm form, int index, Denotator deno)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         super(name, form);
         setIndex(index);
         
@@ -222,12 +222,12 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     @Override
     protected Denotator get(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos == path.length) {
             return this;
         }
         else if (curpos > path.length) {
-            throw new RubatoException("ColimitDenotator.get: Incompatible path, "+
+            throw new LatrunculusCheckedException("ColimitDenotator.get: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -245,7 +245,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     @Override
     protected Denotator replace(int[] path, int currentPosition, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (currentPosition == path.length) {
         	//this.getForm().getForms().contains(d.getForm())
             if (d.hasForm(getForm())) {
@@ -253,19 +253,19 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
                 if (!d.getAddress().equals(getAddress())) {
                     res = d.changeAddress(getAddress());
                     if (res == null) {
-                        throw new RubatoException("ColimitDenotator.replace: Could not change address "+
+                        throw new LatrunculusCheckedException("ColimitDenotator.replace: Could not change address "+
                                                   "from %1 to %2", d.getAddress(), getAddress());
                     }
                 }
                 return res;
             }
             else {
-                throw new RubatoException("ColimitDenotator.replace: Expected denotator of "+
+                throw new LatrunculusCheckedException("ColimitDenotator.replace: Expected denotator of "+
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
         else if (currentPosition > path.length) {
-            throw new RubatoException("ColimitDenotator.replace: Incompatible path, "+
+            throw new LatrunculusCheckedException("ColimitDenotator.replace: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -277,7 +277,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
                 return _make_unsafe(null, getAddress(), getColimitForm(), i, res);
             }
             else {
-                throw new RubatoException("ColimitDenotator.replace: Incompatible index in path,"+
+                throw new LatrunculusCheckedException("ColimitDenotator.replace: Incompatible index in path,"+
                                           "expected 0 <= index < %1, but got %2", getFactorCount(), i); 
             }
         }
@@ -286,9 +286,9 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     @Override
     protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (currentPosition >= path.length) {
-            throw new RubatoException("ColimitDenotator.map: Incompatible path, "+
+            throw new LatrunculusCheckedException("ColimitDenotator.map: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -305,9 +305,9 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     @Override
     protected ModuleElement getElement(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("ColimitDenotator.getElement: Incompatible path, "+
+            throw new LatrunculusCheckedException("ColimitDenotator.getElement: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -323,9 +323,9 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
     
     @Override
     protected ModuleMorphism getModuleMorphism(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("ColimitDenotator.getModuleMorphism: Incompatible path, "+
+            throw new LatrunculusCheckedException("ColimitDenotator.getModuleMorphism: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -396,7 +396,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @throws RubatoFormException if d is not of the required form
      */
     public void setFactor(int i, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         IndexMorphismMap indexmap = (IndexMorphismMap)getCoordinate().getMap();
         if (i >= getForm().getFormCount()) {
             throw new IllegalStateException(""+i+" >= "+getForm().getFormCount());
@@ -411,18 +411,18 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * Sets the factor <code>d</code> at the given label.
      * This is a destructive operation; beware of aliasing.
      *
-     * @throws RubatoException if d is not of the required form
+     * @throws LatrunculusCheckedException if d is not of the required form
      *         or the label does not exist
      */
     public void setFactor(String label, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         int i = getColimitForm().labelToIndex(label);
         if (i < 0) {
-            throw new RubatoException("ColimitDenotator.setFactor: Label %%1 does not exist", label);            
+            throw new LatrunculusCheckedException("ColimitDenotator.setFactor: Label %%1 does not exist", label);            
         }
         IndexMorphismMap indexmap = (IndexMorphismMap)getCoordinate().getMap();
         if (i >= getForm().getFormCount()) {
-            throw new RubatoException("ColimitDenotator.setFactor: Expected index "+
+            throw new LatrunculusCheckedException("ColimitDenotator.setFactor: Expected index "+
                                       "< %1, but got %2", getForm().getFormCount(), i);
         }
         checkDenotator(d, getForm().getForm(i), getAddress());

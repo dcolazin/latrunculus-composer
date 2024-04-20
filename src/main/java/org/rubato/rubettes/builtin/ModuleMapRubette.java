@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JFormTree;
@@ -82,7 +82,7 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
             try {
                 res = input.map(path, morphism);
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError("Could not map %1 onto %2.", morphism, input);
             }
         }

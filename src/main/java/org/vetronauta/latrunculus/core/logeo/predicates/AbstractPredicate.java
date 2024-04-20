@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.logeo.predicates;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
@@ -39,7 +39,7 @@ public abstract class AbstractPredicate implements Predicate {
      * The predicate must have arity equal to the length of the list.
      */
     public abstract boolean call(Denotator ... denotators)
-            throws RubatoException;
+            throws LatrunculusCheckedException;
 
 
     /**
@@ -59,7 +59,7 @@ public abstract class AbstractPredicate implements Predicate {
                 return 0;
             }
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             throw new IllegalArgumentException("Could not compare "+o1+" and "+o2+".");
         }
     }
@@ -69,7 +69,7 @@ public abstract class AbstractPredicate implements Predicate {
      * Both predicates must have same arity.
      */
     public Predicate and(Predicate p1)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return Predicates.and(this, p1);    
     }
     
@@ -79,7 +79,7 @@ public abstract class AbstractPredicate implements Predicate {
      * Both predicates must have same arity.
      */
     public Predicate or(Predicate p)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return Predicates.or(this, p);    
     }
     

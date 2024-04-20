@@ -30,7 +30,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -94,7 +94,7 @@ class WallpaperRubetteTest {
 		noteList.add(note);
 		try {
 			this.denotator = new PowerDenotator(this.emptyName, this.scoreForm, noteList);
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		this.rubette = (WallpaperRubette)new WallpaperRubette().newInstance();
 		this.rubette.setInputForm(this.scoreForm);
 		this.morphisms = new ArrayList<>();
@@ -107,7 +107,7 @@ class WallpaperRubetteTest {
 	}
 	
 	@Test
-	void testMapDenotatorReal() throws RubatoException {
+	void testMapDenotatorReal() throws LatrunculusCheckedException {
 		this.assertThisDenotatorAsDefault();
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(0, 0));
@@ -121,7 +121,7 @@ class WallpaperRubetteTest {
 	}
 
 	@Test
-	void testMapDenotatorInteger() throws RubatoException {
+	void testMapDenotatorInteger() throws LatrunculusCheckedException {
 		this.morphisms.add(new AffineRingMorphism<>(ZRing.ring, new ZInteger(2), new ZInteger(1)));
 		SimpleDenotator newLoudness = new SimpleDenotator(emptyName, loudnessForm, new ZInteger(3));
 		((LimitDenotator)this.denotator.getFactor(0)).setFactor(2, newLoudness);
@@ -134,7 +134,7 @@ class WallpaperRubetteTest {
 	}
 
 	@Test
-	void testGetUnitedMappedDenotatorsWithOneMorphism() throws RubatoException {
+	void testGetUnitedMappedDenotatorsWithOneMorphism() throws LatrunculusCheckedException {
 		this.assertThisDenotatorAsDefault();
 			
 		this.rubette.addMorphism(this.morphisms.get(1), 1, 3, this.createSimplePaths(0, 1, 0, 1));
@@ -146,7 +146,7 @@ class WallpaperRubetteTest {
 	}
 
 	@Test
-	void testGetUnitedMappedDenotatorsWithTwoMorphisms() throws RubatoException {
+	void testGetUnitedMappedDenotatorsWithTwoMorphisms() throws LatrunculusCheckedException {
 		this.assertThisDenotatorAsDefault();
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 0, 1, this.createSimplePaths(1, 1));
@@ -201,7 +201,7 @@ class WallpaperRubetteTest {
 	}
 
 	@Test
-	void testGetUnitedMappedDenotatorsWithRange() throws RubatoException {
+	void testGetUnitedMappedDenotatorsWithRange() throws LatrunculusCheckedException {
 		this.assertThisDenotatorAsDefault();
 			
 		this.rubette.addMorphism(this.morphisms.get(0), 2, 3, this.createSimplePaths(1, 1));
@@ -220,10 +220,10 @@ class WallpaperRubetteTest {
 	
 	/**
 	 * Tests the Wallpaper rubette with a RealSet denotator.
-	 * @throws RubatoException
+	 * @throws LatrunculusCheckedException
 	 */
 	@Test
-	void testGetUnitedMappedDenotatorsWithRealSet() throws RubatoException {
+	void testGetUnitedMappedDenotatorsWithRealSet() throws LatrunculusCheckedException {
 		this.assertThisDenotatorAsDefault();
 		
 		//the paths in the list must be empty, because the realSet's elements are Simples themselves
@@ -243,13 +243,13 @@ class WallpaperRubetteTest {
 		d = new SimpleDenotator(this.emptyName, this.realForm, m);
 	}
 	
-	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws RubatoException {
+	private void assertDenotatorFactor(int factorIndex, int onsetValue, int pitchValue) throws LatrunculusCheckedException {
 		Denotator factor = this.denotator.getFactor(factorIndex);
 		assertEquals(new Real(onsetValue), factor.getElement(new int[]{0, 0}));
 		assertEquals(new Rational(pitchValue), (factor.getElement(new int[]{1, 0})));
 	}
 	
-	private void assertThisDenotatorAsDefault() throws RubatoException {
+	private void assertThisDenotatorAsDefault() throws LatrunculusCheckedException {
 		assertEquals(0, ((Real) this.denotator.getElement(new int[]{0, 0, 0})).getValue());
 		assertEquals((this.denotator.getElement(new int[]{0, 1, 0})), new Rational(0));
 		assertEquals(0, ((ZInteger) this.denotator.getElement(new int[]{0, 2, 0})).intValue());

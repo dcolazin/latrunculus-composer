@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.logeo.predicates;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
@@ -37,7 +37,7 @@ public final class Predicates {
      * Both predicates must have same arity.
      */
     public static Predicate and(Predicate p, Predicate q)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return new Conjunction(p, q);
     }
     
@@ -48,7 +48,7 @@ public final class Predicates {
      * Both predicates must have same arity.
      */
     public static Predicate or(Predicate p, Predicate q)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return new Disjunction(p, q);
     }
         
@@ -70,15 +70,15 @@ public final class Predicates {
         private final Predicate p;
         private final Predicate q;
 
-        public Conjunction(Predicate p, Predicate q) throws RubatoException {
+        public Conjunction(Predicate p, Predicate q) throws LatrunculusCheckedException {
             if (!p.isCompatible(q)) {
-                throw new RubatoException("Both predicates must be compatible");
+                throw new LatrunculusCheckedException("Both predicates must be compatible");
             }
             this.p = p;
             this.q = q;
         }
         
-        public boolean call(Denotator... denotators) throws RubatoException {
+        public boolean call(Denotator... denotators) throws LatrunculusCheckedException {
             return p.call(denotators) && q.call(denotators);
         }
         
@@ -101,15 +101,15 @@ public final class Predicates {
         private final Predicate p;
         private final Predicate q;
 
-        public Disjunction(Predicate p, Predicate q) throws RubatoException {
+        public Disjunction(Predicate p, Predicate q) throws LatrunculusCheckedException {
             if (!p.isCompatible(q)) {
-                throw new RubatoException("Both predicates must be compatible.");
+                throw new LatrunculusCheckedException("Both predicates must be compatible.");
             }
             this.p = p;
             this.q = q;
         }
         
-        public boolean call(Denotator... denotators) throws RubatoException {
+        public boolean call(Denotator... denotators) throws LatrunculusCheckedException {
             return p.call(denotators) || q.call(denotators);
         }
         
@@ -135,7 +135,7 @@ public final class Predicates {
             this.p = p;
         }
         
-        public boolean call(Denotator... denotators) throws RubatoException {
+        public boolean call(Denotator... denotators) throws LatrunculusCheckedException {
             return !p.call(denotators);
         }
         

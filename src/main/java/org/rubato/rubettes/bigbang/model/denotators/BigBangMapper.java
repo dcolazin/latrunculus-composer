@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model.denotators;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
@@ -105,7 +105,7 @@ public class BigBangMapper extends BigBangManipulator {
 				Denotator currentObject = objects.get(i);
 				try {
 					mappedObjects.add(mapper.getMappedDenotator(currentObject));
-				} catch (RubatoException e) {
+				} catch (LatrunculusCheckedException e) {
 					e.printStackTrace();
 				}
 			}

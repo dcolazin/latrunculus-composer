@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.module.generic.ProductRing;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -70,8 +70,8 @@ public class DenotatorPath implements Comparable<DenotatorPath> {
 			} else if (currentForm.getType() != FormDenotatorTypeEnum.SIMPLE) {
 				if (currentForm.getFormCount() <= currentIndex) {
 					//hahaha
-					try { throw new RubatoException("Illegal DenotatorPath: " + this.baseForm.getNameString() + ": " + this); }
-					catch (RubatoException e) { e.printStackTrace(); }
+					try { throw new LatrunculusCheckedException("Illegal DenotatorPath: " + this.baseForm.getNameString() + ": " + this); }
+					catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 				}
 				currentForm = currentForm.getForm(currentIndex);
 			} else {

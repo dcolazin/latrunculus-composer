@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
@@ -166,7 +166,7 @@ abstract class ColimitReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             ColimitDenotator cd = (ColimitDenotator)d;
             int index = cd.getIndex();
             Denotator f = reformers[index].reform(cd.getFactor());
@@ -186,7 +186,7 @@ abstract class ColimitReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             ColimitDenotator cd = (ColimitDenotator)d;
             Module address = d.getAddress();
             int index = cd.getIndex();
@@ -217,7 +217,7 @@ abstract class ColimitReformer extends Reformer {
         }
     
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
             list.add(res);
@@ -237,7 +237,7 @@ abstract class ColimitReformer extends Reformer {
         }
     
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
             list.add(res);
@@ -256,7 +256,7 @@ abstract class ColimitReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             ColimitDenotator cd = (ColimitDenotator)d;
             int index = cd.getIndex();
             Denotator f = reformers[index].reform(cd.getFactor());

@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.DenotatorValueExtractor;
@@ -20,7 +20,7 @@ class DisplayObjectsTest {
 	}
 
 	@Test
-	void testCrucialMethods() throws RubatoException {
+	void testCrucialMethods() throws LatrunculusCheckedException {
 		double[][] rests = new double[][]{{3,1},{4,3}};
 		DisplayObjects objects = this.createDisplayObjects(this.objects.createGeneralScore(this.objects.ABSOLUTE, rests));
 		objects.setActiveColimitCoordinate(0, 0);

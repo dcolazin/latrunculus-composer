@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
@@ -151,11 +151,11 @@ public final class ConstantModuleMorphismMap<A extends ModuleElement<A,RA>, B ex
 
     @Override
     public <C extends ModuleElement<C,RC>, RC extends RingElement<RC>> ModuleMorphismMap<C,B,RC,RB>
-    map(ModuleMorphism<C,A,RC,RA> otherMorphism) throws RubatoException {
+    map(ModuleMorphism<C,A,RC,RA> otherMorphism) throws LatrunculusCheckedException {
         if (otherMorphism.getDomain().equals(otherMorphism.getCodomain())) {
             return new ConstantModuleMorphismMap<>(otherMorphism.getDomain(), getElement());
         }
-        throw new RubatoException("ConstantModuleMorphismMap.map: Domain and codomain of morphism must be equal");
+        throw new LatrunculusCheckedException("ConstantModuleMorphismMap.map: Domain and codomain of morphism must be equal");
     }
     
     @Override

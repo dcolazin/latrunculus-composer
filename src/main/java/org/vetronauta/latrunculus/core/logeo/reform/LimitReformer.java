@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.logeo.reform;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
@@ -145,7 +145,7 @@ abstract class LimitReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Module address = d.getAddress();
             LimitDenotator res = (LimitDenotator)d;
             List<Denotator> list = new LinkedList<Denotator>();
@@ -176,7 +176,7 @@ abstract class LimitReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             return ColimitDenotator._make_unsafe(null, d.getAddress(), to, index, res);
         }
@@ -195,7 +195,7 @@ abstract class LimitReformer extends Reformer {
         }
     
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
             list.add(res);
@@ -215,7 +215,7 @@ abstract class LimitReformer extends Reformer {
         }
     
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
             list.add(res);

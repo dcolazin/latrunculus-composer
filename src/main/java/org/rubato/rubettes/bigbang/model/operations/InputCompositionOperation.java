@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model.operations;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.OperationPathResults;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
@@ -60,14 +60,14 @@ public class InputCompositionOperation extends AbstractOperation {
 			int modifiedNumberOfElements = (int)Math.round(clone.getFactorCount()*this.modificationRatio);
 			try {
 				clone.replaceFactors(clone.getFactors().subList(0, modifiedNumberOfElements));
-			} catch (RubatoException e) { }
+			} catch (LatrunculusCheckedException e) { }
 			this.modifiedComposition = clone;
 		} else if (this.composition instanceof ListDenotator) {
 			ListDenotator clone = ((ListDenotator)this.composition).deepCopy();
 			int modifiedNumberOfElements = (int)Math.round(clone.getFactorCount()*this.modificationRatio);
 			try {
 				clone.replaceFactors(clone.getFactors().subList(0, modifiedNumberOfElements));
-			} catch (RubatoException e) { }
+			} catch (LatrunculusCheckedException e) { }
 			this.modifiedComposition = clone; 
 		} else {
 			this.modifiedComposition = this.composition; 

@@ -1,7 +1,7 @@
 package org.rubato.rubettes.util;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -56,7 +56,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 				PowerDenotator currentMacroScore = this.moveToLayer((PowerDenotator)currentNode.getFactor(1), voiceElement.intValue());
 				newMacroScore.appendFactor(this.createNodeDenotator(currentNote, currentMacroScore));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return newMacroScore;
 	}
 	
@@ -67,7 +67,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 				this.setLayerToVoice((LimitDenotator)currentNote);
 				nodes.add(this.createNodeDenotator(currentNote));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return this.createMacroScore(nodes);
 	}
 	
@@ -95,7 +95,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 	private PowerDenotator createMacroScore(List<Denotator> nodes) {
 		try {
 			return new PowerDenotator(this.emptyName, this.macroScoreForm, nodes);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			return null;
 		}
 	}
@@ -112,7 +112,7 @@ public class MacroNoteGenerator extends NoteGenerator {
 	public LimitDenotator createSpecificNoteDenotator(List<Denotator> coordinates) {
 		try {
 			return new LimitDenotator(this.emptyName, this.noteForm, coordinates);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}

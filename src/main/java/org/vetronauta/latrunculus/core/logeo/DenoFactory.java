@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.logeo;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -425,7 +425,7 @@ public final class DenoFactory {
             }
             }
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             return null;
         }
     }
@@ -504,7 +504,7 @@ public final class DenoFactory {
             try {
                 return new ColimitDenotator(name, (ColimitForm)form, i, d);
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 return null;
             }
         }
@@ -543,10 +543,10 @@ public final class DenoFactory {
      * For forms of type list or power, extend the coordinate list.
      * @param d the denotator whose coordinate list is extended
      * @param denotators array of the coordinate denotator that are added
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public static void extendCoordinate(Denotator d, Denotator ... denotators)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = d.getForm();
         switch (form.getType()) {
             case POWER :
@@ -555,7 +555,7 @@ public final class DenoFactory {
                 ListMorphismMap map = (ListMorphismMap)d.getCoordinate().getMap();
                 for (Denotator deno : denotators) {
                     if (!dia.getForm(0).equals(deno.getForm())) {
-                        throw new RubatoException("DenoFactory.extendCoordinate: Expected "+
+                        throw new LatrunculusCheckedException("DenoFactory.extendCoordinate: Expected "+
                                                   "form %1, but got form ", dia.getForm(0), deno.getForm());
                     }
                     map.appendFactor(deno);
@@ -567,7 +567,7 @@ public final class DenoFactory {
                 break;
             }
             default :
-                throw new RubatoException("DenoFactory.extendCoordinate: Cannot extend denotator of type " + form.getType());
+                throw new LatrunculusCheckedException("DenoFactory.extendCoordinate: Cannot extend denotator of type " + form.getType());
         }
     }
     

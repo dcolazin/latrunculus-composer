@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
@@ -106,7 +106,7 @@ public class StatRubette extends AbstractRubette {
                 }
                 }
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
             }
         }
@@ -149,7 +149,7 @@ public class StatRubette extends AbstractRubette {
                 divide(cur, denoList.size());
                 res = DenoFactory.makeDenotator(form, cur);
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
             }
         }
@@ -195,7 +195,7 @@ public class StatRubette extends AbstractRubette {
                 
                 res = DenoFactory.makeDenotator(form, cur);
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
             }
         }
@@ -259,7 +259,7 @@ public class StatRubette extends AbstractRubette {
     }
     
     
-    private void divide(ModuleElement e, int s) throws RubatoException {
+    private void divide(ModuleElement e, int s) throws LatrunculusCheckedException {
         Ring r = e.getModule().getRing();
         if (r.equals(RRing.ring)) {
             e.scale(new Real((1/(double)s)));
@@ -271,7 +271,7 @@ public class StatRubette extends AbstractRubette {
             e.scale(new Complex(1/(double)s));
         }
         else {
-            throw new RubatoException("Cannot take averages over ring "+r);
+            throw new LatrunculusCheckedException("Cannot take averages over ring "+r);
         }
     }
     

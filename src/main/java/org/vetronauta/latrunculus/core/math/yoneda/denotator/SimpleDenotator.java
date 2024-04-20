@@ -23,7 +23,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
@@ -301,12 +301,12 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     protected Denotator get(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos == path.length) {
             return this;
         }
         else {
-            throw new RubatoException("SimpleDenotator.get: Incompatible path, "+
+            throw new LatrunculusCheckedException("SimpleDenotator.get: Incompatible path, "+
                                       "expected path length == %1, but got length %2",
                                       curpos, path.length);
         }
@@ -315,26 +315,26 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     protected Denotator replace(int[] path, int currentPosition, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (currentPosition == path.length) {
             if (d.hasForm(getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
                     res = d.changeAddress(getAddress());
                     if (res == null) {
-                        throw new RubatoException("SimpleDenotator.replace: Could not change address "+
+                        throw new LatrunculusCheckedException("SimpleDenotator.replace: Could not change address "+
                                                   "from %1 to %2", d.getAddress(), getAddress());
                     }
                 }
                 return res;
             }
             else {
-                throw new RubatoException("SimpleDenotator.replace: Expected denotator of "+
+                throw new LatrunculusCheckedException("SimpleDenotator.replace: Expected denotator of "+
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
         else {
-            throw new RubatoException("SimpleDenotator.replace: Incompatible path, "+
+            throw new LatrunculusCheckedException("SimpleDenotator.replace: Incompatible path, "+
                                       "expected length == %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -342,9 +342,9 @@ public final class SimpleDenotator extends Denotator {
 
     @Override
     protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (path.length != currentPosition) {
-            throw new RubatoException("SimpleDenotator.map: Incompatible path, "+
+            throw new LatrunculusCheckedException("SimpleDenotator.map: Incompatible path, "+
                                       "expected length %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -364,7 +364,7 @@ public final class SimpleDenotator extends Denotator {
      *                 the module of the denotator
      */    
     public SimpleDenotator map(ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         boolean coordSame = (getCoordinate() == getFrameCoordinate());
         ModuleMorphismMap newMap;
         newMap = getModuleMorphismMap().map(morphism);
@@ -401,9 +401,9 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     protected ModuleElement getElement(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("SimpleDenotator.getElement: Incompatible path, "+
+            throw new LatrunculusCheckedException("SimpleDenotator.getElement: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -413,9 +413,9 @@ public final class SimpleDenotator extends Denotator {
     
     @Override
     protected ModuleMorphism getModuleMorphism(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("SimpleDenotator.getModuleMorphism: Incompatible path, "+
+            throw new LatrunculusCheckedException("SimpleDenotator.getModuleMorphism: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }

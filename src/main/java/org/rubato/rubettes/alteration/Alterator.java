@@ -1,7 +1,7 @@
 package org.rubato.rubettes.alteration;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -76,7 +76,7 @@ public class Alterator {
 				morphedDenotator = this.morphDenotator(currentDenotator.copy(), nearestNeighbour.copy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees);
 				alteredDenotators.add((LimitDenotator)morphedDenotator);
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return alteredDenotators;
 	}*/
 	
@@ -102,7 +102,7 @@ public class Alterator {
 				morphedDenotator = this.morphSoundDenotator(currentDenotator.deepCopy(), nearestNeighbour.deepCopy(), pathIndices, paths, differentPaths, minAndMax, startDegrees, endDegrees, onlyModulators);
 				alteredDenotators.add(morphedDenotator);
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return alteredDenotators;
 	}
 	
@@ -141,11 +141,11 @@ public class Alterator {
 					alteredDenotators.add(morphedDenotator);
 				}
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return alteredDenotators;
 	}
 	
-	public PowerDenotator getAlteration(PowerDenotator input0, PowerDenotator input1) throws RubatoException {
+	public PowerDenotator getAlteration(PowerDenotator input0, PowerDenotator input1) throws LatrunculusCheckedException {
 		List<Denotator> morphedFactors = new ArrayList<>();
 		Iterator<Denotator> input0Coordinates = input0.iterator();
 		int[][] paths = this.dimensionsTable.getPaths();
@@ -180,7 +180,7 @@ public class Alterator {
 		return indices;
 	}
 	
-	protected double[][] getMinAndMaxDouble(Iterator<Denotator> denotators, int[][] paths) throws RubatoException {
+	protected double[][] getMinAndMaxDouble(Iterator<Denotator> denotators, int[][] paths) throws LatrunculusCheckedException {
 		double[] minima = new double[paths.length];
 		double[] maxima = new double[paths.length];
 		//set starting values
@@ -206,14 +206,14 @@ public class Alterator {
 		return new double[][]{minima, maxima};
 	}
 	
-	protected Denotator morphDenotator(Denotator morphed, Denotator pole, int[] indices, int[][] allPaths, int[][] differentPaths, double[][] minAndMax, double[] startDegrees, double[] endDegrees) throws RubatoException {
+	protected Denotator morphDenotator(Denotator morphed, Denotator pole, int[] indices, int[][] allPaths, int[][] differentPaths, double[][] minAndMax, double[] startDegrees, double[] endDegrees) throws LatrunculusCheckedException {
 		double[] doubleValues = this.getCastDoubleValues(morphed, differentPaths);
 		double[] degrees = this.getInterpolatedDegrees(startDegrees, endDegrees, doubleValues, minAndMax, indices);
 		
 		return this.alterDenotator(morphed, pole, allPaths, degrees);
 	}
 	
-	protected Denotator morphSoundDenotator(Denotator morphed, Denotator pole, int[] indices, int[][] allPaths, int[][] differentPaths, double[][] minAndMax, double[] startDegrees, double[] endDegrees, boolean onlyModulators) throws RubatoException {
+	protected Denotator morphSoundDenotator(Denotator morphed, Denotator pole, int[] indices, int[][] allPaths, int[][] differentPaths, double[][] minAndMax, double[] startDegrees, double[] endDegrees, boolean onlyModulators) throws LatrunculusCheckedException {
 		double[] doubleValues = this.getCastDoubleValues(morphed, differentPaths);
 		double[] degrees = this.getInterpolatedDegrees(startDegrees, endDegrees, doubleValues, minAndMax, indices);
 		
@@ -236,7 +236,7 @@ public class Alterator {
 		return morphedDenotator;
 	}
 	
-	private void alterModulators(Denotator note, Denotator pole, DenotatorPath currentPath, int[][] paths, double[] degrees) throws RubatoException {
+	private void alterModulators(Denotator note, Denotator pole, DenotatorPath currentPath, int[][] paths, double[] degrees) throws LatrunculusCheckedException {
 		DenotatorPath currentModulatorsPath = currentPath.getPowersetPath(1);
 		PowerDenotator modulators = (PowerDenotator)note.get(currentModulatorsPath.toIntArray());
 		PowerDenotator poleModulators = (PowerDenotator)pole.get(currentModulatorsPath.toIntArray());
@@ -256,7 +256,7 @@ public class Alterator {
 		}
 	}
 	
-	private double[] getCastDoubleValues(Denotator denotator, int[][] paths) throws RubatoException{
+	private double[] getCastDoubleValues(Denotator denotator, int[][] paths) throws LatrunculusCheckedException{
 		double[] values = new double[paths.length];
 		for (int i = 0; i < values.length; i++) {
 			values[i] = RRing.ring.cast(denotator.getElement(paths[i])).getValue();
@@ -280,7 +280,7 @@ public class Alterator {
 	
 	
 	
-	public Denotator alter(Denotator d1, Denotator d2, double degree, int[][] paths) throws RubatoException {
+	public Denotator alter(Denotator d1, Denotator d2, double degree, int[][] paths) throws LatrunculusCheckedException {
 		for (int i = 0; i < paths.length; i++) {
 			int[] currentPath = paths[i];
 			d1 = this.replaceSimpleDenotatorWithAltered(d1, d2, currentPath, degree);
@@ -288,7 +288,7 @@ public class Alterator {
 		return d1;
 	}
 	
-	protected Denotator alterDenotator(Denotator d1, Denotator d2, int[][] paths, double[] degrees) throws RubatoException {
+	protected Denotator alterDenotator(Denotator d1, Denotator d2, int[][] paths, double[] degrees) throws LatrunculusCheckedException {
 		for (int i = 0; i < paths.length; i++) {
 			int[] currentPath = paths[i];
 			d1 = this.replaceSimpleDenotatorWithAltered(d1, d2, currentPath, degrees[i]);
@@ -296,7 +296,7 @@ public class Alterator {
 		return d1;
 	}
 	
-	protected Denotator replaceSimpleDenotatorWithAltered(Denotator d1, Denotator d2, int[] path, double degree) throws RubatoException {
+	protected Denotator replaceSimpleDenotatorWithAltered(Denotator d1, Denotator d2, int[] path, double degree) throws LatrunculusCheckedException {
 		SimpleDenotator simple1 = (SimpleDenotator) d1.get(path);
 		ModuleMorphism morphism0 = simple1.getModuleMorphism();
 		ModuleMorphism morphism1 = ((SimpleDenotator) d2.get(path)).getModuleMorphism();

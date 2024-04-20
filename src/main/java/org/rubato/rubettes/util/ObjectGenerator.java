@@ -1,6 +1,6 @@
 package org.rubato.rubettes.util;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -102,7 +102,7 @@ public class ObjectGenerator {
 					}
 				}
 			}
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 		}
 		return object;
@@ -143,7 +143,7 @@ public class ObjectGenerator {
 				}
 				return null;
 			}
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -173,7 +173,7 @@ public class ObjectGenerator {
 		if (formInDenotator != null && (denotatorInForm == null || formInDenotator.size() <= denotatorInForm.size())) {
 			try {
 				return denotator.get(formInDenotator.toIntArray());
-			} catch (RubatoException e) { e.printStackTrace(); }
+			} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		} else if (denotatorInForm != null) {
 			return this.createDenotator(form, denotatorInForm, denotator);
 		}
@@ -196,7 +196,7 @@ public class ObjectGenerator {
 						subPathsQueue.add(currentSubPath.getChildPath(i));
 					}
 				}
-			} catch (RubatoException e) { e.printStackTrace(); }
+			} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		}
 		return null;
 	}
@@ -230,7 +230,7 @@ public class ObjectGenerator {
 		Denotator defaultDenotator = form.createDefaultDenotator(); 
 		try {
 			return defaultDenotator.replace(path.toIntArray(), denotator);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -302,7 +302,7 @@ public class ObjectGenerator {
 						}
 					}
 				}
-			} catch (RubatoException e) { e.printStackTrace(); }
+			} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		}
 		return simples;
 	}
@@ -312,7 +312,7 @@ public class ObjectGenerator {
 			for (DenotatorPath currentPath : simples.keySet()) {
 				object = object.replace(currentPath.toIntArray(), simples.get(currentPath));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return object;
 	}
 	
@@ -368,7 +368,7 @@ public class ObjectGenerator {
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
-		} catch (RubatoException e) { }
+		} catch (LatrunculusCheckedException e) { }
 		return object;
 	}
 	
@@ -380,7 +380,7 @@ public class ObjectGenerator {
 				SimpleDenotator newSimple = new SimpleDenotator(NameDenotator.make(""), oldSimple.getSimpleForm(), newElement);
 				return object.replace(simplePath, newSimple);
 			}
-		} catch (RubatoException e) { }
+		} catch (LatrunculusCheckedException e) { }
 		return object;
 	}
 	

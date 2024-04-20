@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.Ring;
@@ -105,12 +105,12 @@ abstract class LimitSimpleReformer extends LimitReformer {
         }
     
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Module address = d.getAddress();
             LimitDenotator ld = (LimitDenotator)d;
             List<ModuleElement> fromElements = new LinkedList<ModuleElement>();
             if (!collectElements(ld, fromElements)) {
-                throw new RubatoException();
+                throw new LatrunculusCheckedException();
             }
             
             Iterator<ModuleElement> element_iter = fromElements.iterator();

@@ -37,7 +37,7 @@ $ mvn javadoc:javadoc
 * [ ] OSC support
 * [ ] JSON serialization
 * [ ] Linting and improve maintainability
-* [ ] SLF4J
+* [ ] SLF4J (remove System.out, e.printStacktrace, ...)
 * [ ] Review i18n
 * [ ] Move package org.rubato to org.vetronauta.latrunculus
 * [ ] Initial splash art

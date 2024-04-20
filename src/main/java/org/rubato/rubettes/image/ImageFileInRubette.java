@@ -33,7 +33,7 @@ import org.rubato.base.*;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
@@ -111,7 +111,7 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
     			return new PowerDenotator(NameDenotator.make(""), ImageFileInRubette.VS_IMAGE_FORM, pixels);
     		}
     		return new PowerDenotator(NameDenotator.make(""), ImageFileInRubette.IMAGE_FORM, pixels);
-    	} catch (RubatoException e) {
+    	} catch (LatrunculusCheckedException e) {
     		e.printStackTrace();
     		return null;
     	}

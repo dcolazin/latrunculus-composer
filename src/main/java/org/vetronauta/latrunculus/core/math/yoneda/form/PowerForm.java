@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
@@ -147,7 +147,7 @@ public final class PowerForm extends Form {
         try {
             res = new PowerDenotator(null, this, new LinkedList<>());
         } 
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             e.printStackTrace();
         }
         return res;
@@ -162,7 +162,7 @@ public final class PowerForm extends Form {
         try {
             res = new PowerDenotator(null, address, this, new LinkedList<>());
         } 
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             e.printStackTrace();
         }
         return res;

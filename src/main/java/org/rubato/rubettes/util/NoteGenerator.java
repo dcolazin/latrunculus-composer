@@ -20,7 +20,7 @@
 package org.rubato.rubettes.util;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -97,7 +97,7 @@ public abstract class NoteGenerator {
 				PowerDenotator currentSubScore = this.convertToSpecificScore((PowerDenotator) currentNode.getFactor(1));
 				newSpecificScore.appendFactor(this.createNodeDenotator(currentNote, currentSubScore));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return newSpecificScore;
 	}
 	
@@ -111,7 +111,7 @@ public abstract class NoteGenerator {
 				currentNode.setFactor(1, currentMacroScore);
 				newMacroScore.appendFactor(this.copyAndSetLayer(currentNode, layerIndex));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return newMacroScore;
 	}
 	
@@ -173,7 +173,7 @@ public abstract class NoteGenerator {
 	public PowerDenotator createScoreWithMelody() {
 		try {
 			return new PowerDenotator(this.emptyName, this.scoreForm, this.currentMelody);
-		} catch (RubatoException e) { return null; }
+		} catch (LatrunculusCheckedException e) { return null; }
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public abstract class NoteGenerator {
 				elements.add(noteDenotator.getElement(new int[]{i, 0}));
 			}
 			return this.createNoteDenotator(elements);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -284,7 +284,7 @@ public abstract class NoteGenerator {
 				newElements.add(note.getElement(currentPath).difference(referenceNote.getElement(currentPath)));
 			}
 			modulators = (PowerDenotator)note.get(new int[]{6});
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return this.createNoteDenotator(newElements, modulators);
 	}
 	
@@ -311,7 +311,7 @@ public abstract class NoteGenerator {
 				newElements.add(note.getElement(currentPath).sum(referenceNote.getElement(currentPath)));
 			}
 			modulators = (PowerDenotator)note.get(new int[]{6});
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return this.createNoteDenotator(newElements, modulators);
 	}
 	
@@ -357,7 +357,7 @@ public abstract class NoteGenerator {
 	private LimitDenotator copyNoteAndSetLayer(LimitDenotator note, int layerIndex) {
 		note = note.deepCopy();
 		Denotator layer = this.createSimpleDenotator(this.layerForm, new ZInteger(layerIndex));
-		try { note.setFactor(2, layer); } catch (RubatoException e) { }
+		try { note.setFactor(2, layer); } catch (LatrunculusCheckedException e) { }
 		return note;
 	}
 	
@@ -365,7 +365,7 @@ public abstract class NoteGenerator {
 		//TODO:NEW: LAYER IN NOTE!!!!!!!
 		try {
 			return ((ZInteger)node.getElement(new int[]{2,0})).intValue();
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return -1;
 		}
@@ -378,9 +378,9 @@ public abstract class NoteGenerator {
 	 * @param onset - the new onset
 	 * @param loudness - the new loudness
 	 * @param duration - the new duration
-	 * @throws RubatoException
+	 * @throws LatrunculusCheckedException
 	 */
-	public void modifyNoteDenotator(LimitDenotator note, double onset, int loudness, double duration) throws RubatoException {
+	public void modifyNoteDenotator(LimitDenotator note, double onset, int loudness, double duration) throws LatrunculusCheckedException {
 		this.modifyNoteDenotator(note, onset, duration);
 		Denotator loudnessDenotator = this.createSimpleDenotator(this.loudnessForm, new ZInteger(loudness));
 		note.setFactor(2, loudnessDenotator);
@@ -392,9 +392,9 @@ public abstract class NoteGenerator {
 	 * @param note - the note, the values of which have to be replaced
 	 * @param onset - the new onset
 	 * @param duration - the new duration
-	 * @throws RubatoException
+	 * @throws LatrunculusCheckedException
 	 */
-	public void modifyNoteDenotator(LimitDenotator note, double onset, double duration) throws RubatoException {
+	public void modifyNoteDenotator(LimitDenotator note, double onset, double duration) throws LatrunculusCheckedException {
 		Denotator onsetDenotator = this.createSimpleDenotator(this.onsetForm, new Real((onset)));
 		Denotator durationDenotator = this.createSimpleDenotator(this.durationForm, new Real((duration)));
 		
@@ -408,7 +408,7 @@ public abstract class NoteGenerator {
 			SimpleForm form = (SimpleForm)note.getFactor(elementPath[0]).getForm();
 			Denotator newCoordinate = this.createSimpleDenotator(form, newElement);
 			note.setFactor(elementPath[0], newCoordinate);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -416,13 +416,13 @@ public abstract class NoteGenerator {
 	public Double getDoubleValue(Denotator note, int[] elementPath) {
 		try {
 			return RRing.ring.cast(note.getElement(elementPath)).getValue();
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	protected void setLayerToVoice(LimitDenotator note) throws RubatoException {
+	protected void setLayerToVoice(LimitDenotator note) throws LatrunculusCheckedException {
 		int[] voicePath = new int[]{4,0};
 		ZInteger voiceElement = (ZInteger)note.getElement(voicePath).deepCopy();
 		Denotator currentLayer = this.createSimpleDenotator(this.layerForm, voiceElement);

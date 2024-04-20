@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.logeo.predicates;
 
 import java.util.Comparator;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
@@ -40,19 +40,19 @@ public interface Predicate extends Comparator<Predicate> {
      * Calls the predicate with one argument.
      * The predicate must have arity = 1.
      */
-    boolean call(Denotator ... denotators) throws RubatoException;
+    boolean call(Denotator ... denotators) throws LatrunculusCheckedException;
 
     /**
      * Returns a predicate that is the conjuction of this and <code>p</code>.
      * Both predicates must have same arity.
      */
-    Predicate and(Predicate p) throws RubatoException;
+    Predicate and(Predicate p) throws LatrunculusCheckedException;
     
     /**
      * Returns a predicate that is the disjunction of this and <code>p</code>.
      * Both predicates must have same arity.
      */
-    Predicate or(Predicate p) throws RubatoException;
+    Predicate or(Predicate p) throws LatrunculusCheckedException;
     
     /**
      * Returns a predicate that is the negation of this.

@@ -1,6 +1,6 @@
 package org.rubato.rubettes.util;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
@@ -61,7 +61,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 	 * maps the input denotator using the input morphism and respecting the paths selected
 	 * in the morphisms table. The output denotator is of the same form as the input denotator.
 	 */
-	public PowerDenotator getMappedPowerDenotator(PowerDenotator input) throws RubatoException {
+	public PowerDenotator getMappedPowerDenotator(PowerDenotator input) throws LatrunculusCheckedException {
 		//prepare output
 		PowerDenotator output = new PowerDenotator(NameDenotator.make(""), input.getAddress(), input.getPowerForm(), new ArrayList<>());
 		
@@ -84,7 +84,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		return output;
 	}
 	
-	public Denotator getMappedDenotator(Denotator denotator) throws RubatoException {
+	public Denotator getMappedDenotator(Denotator denotator) throws LatrunculusCheckedException {
 		ModuleMorphism morphism = this.morphism.compose(this.makeInitialInjectionSum(denotator));
 		return this.makeFinalProjections(denotator, morphism);
 	}
@@ -93,7 +93,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 	 * adapt the morphism of every simple denotator in morphismPaths to the main morphism
 	 * by composing it with an injection
 	 */
-	private ModuleMorphism makeInitialInjectionSum(Denotator denotator) throws RubatoException {
+	private ModuleMorphism makeInitialInjectionSum(Denotator denotator) throws LatrunculusCheckedException {
 		ModuleMorphism injectionSum = null;
 		for (int j = 0; j < this.domainDim; j++) {
 			
@@ -131,7 +131,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		return injectionSum;
 	}
 	
-	private ModuleMorphism makeInitialProjection(Denotator denotator, DenotatorPath path) throws RubatoException {
+	private ModuleMorphism makeInitialProjection(Denotator denotator, DenotatorPath path) throws LatrunculusCheckedException {
 		SimpleDenotator simple = this.getSimpleDenotator(denotator, path.getDenotatorSubpath().toIntArray());
 		ModuleMorphism currentMorphism = simple.getModuleMorphism();
 		ModuleElement currentElement = simple.getElement();
@@ -148,7 +148,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 		return currentMorphism;
 	}
 	
-	private Denotator makeFinalProjections(Denotator mappedDenotator, ModuleMorphism m) throws RubatoException {
+	private Denotator makeFinalProjections(Denotator mappedDenotator, ModuleMorphism m) throws LatrunculusCheckedException {
 		for (int i = 0; i < this.codomainDim; i++) {
 			ModuleMorphism projectedM = m;
 			
@@ -268,7 +268,7 @@ public class ArbitraryDenotatorMapper<A extends ModuleElement<A, RA>, B extends 
 	 * also handles the empty path [] in case the denotator itself is of type simple
 	 */
 	//TODO: put all these somewhere else
-	private SimpleDenotator getSimpleDenotator(Denotator denotator, int[] path) throws RubatoException {
+	private SimpleDenotator getSimpleDenotator(Denotator denotator, int[] path) throws LatrunculusCheckedException {
 		if (path.length == 0){
 			return (SimpleDenotator)denotator;
 		}

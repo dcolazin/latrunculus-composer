@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.core.exception;
 
+import org.vetronauta.latrunculus.core.util.TextUtils;
+
 /**
  * @author vetronauta
  */
@@ -30,6 +32,10 @@ public class LatrunculusCheckedException extends Exception {
 
     public LatrunculusCheckedException(String message) {
         super(message);
+    }
+
+    public LatrunculusCheckedException(String msg, Object ... objects) {
+        this(TextUtils.replaceStrings(msg, objects));
     }
 
     public LatrunculusCheckedException(Throwable th) {

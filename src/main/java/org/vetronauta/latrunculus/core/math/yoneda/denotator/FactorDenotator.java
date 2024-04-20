@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 
 /**
  * Interface for denotators that have factors.
@@ -48,7 +48,7 @@ public interface FactorDenotator extends Iterable<Denotator> {
      * This is a destructive operation; beware of aliasing.
      */
     public void setFactor(int i, Denotator d)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
 
     /**
      * Appends, if possible, the factor <code>d</code>.
@@ -56,7 +56,7 @@ public interface FactorDenotator extends Iterable<Denotator> {
      * @return true iff the append is successful
      */
     public boolean appendFactor(Denotator d)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
     
     /**
      * Returns a (new) list of the coordinates of the denotator.

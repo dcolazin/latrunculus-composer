@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.core.logeo.reform;
 
 import java.util.HashMap;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -46,11 +46,11 @@ public abstract class Reformer {
      * Creates a new denotator from <code>d</code>
      * with the configured form.
      *
-     * @throws RubatoException if <code>d</code> does not have the
+     * @throws LatrunculusCheckedException if <code>d</code> does not have the
      *                         configured form
      */
     public abstract Denotator reform(Denotator d)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
     
 
     /**
@@ -151,12 +151,12 @@ public abstract class Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             if (d.getForm().equals(from)) {
                 return reformer.reform(d);
             }
             else {
-                throw new RubatoException("Reformer.reform: Expected form %%1, but got form %%2", from, d.getForm());
+                throw new LatrunculusCheckedException("Reformer.reform: Expected form %%1, but got form %%2", from, d.getForm());
             }
         }
         

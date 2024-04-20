@@ -1,7 +1,7 @@
 package org.rubato.rubettes.bigbang;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangDenotatorManager;
 import org.rubato.rubettes.bigbang.model.denotators.BigBangTransformation;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
@@ -104,7 +104,7 @@ public class TestObjects {
 			this.createProductRingRealTriples();
 			this.createFreeRationalTriples();
 			this.createIntegerOrReals();
-		} catch (RubatoException err) {
+		} catch (LatrunculusCheckedException err) {
 			err.printStackTrace();
 		}
 	}
@@ -134,7 +134,7 @@ public class TestObjects {
 		this.denotatorManager.addObjects(notes, parentPaths, powersetIndices);
 	}
 	
-	private void createProductRingRealTriples() throws DomainException, RubatoException {
+	private void createProductRingRealTriples() throws DomainException, LatrunculusCheckedException {
 		ProductElement element1 = ProductElement.make(new Real((1)), new Real((2)), new Real((3)));
 		ProductElement element2 = ProductElement.make(new Real((4)), new Real((3)), new Real((1)));
 		ProductElement element3 = ProductElement.make(new Real((2)), new Real((1)), new Real((5)));
@@ -145,11 +145,11 @@ public class TestObjects {
 		this.realTriples = new PowerDenotator(NameDenotator.make(""), REAL_TRIPLES_FORM, triples);
 	}
 	
-	private void createFreeRationalTriples() throws DomainException, RubatoException {
+	private void createFreeRationalTriples() throws DomainException, LatrunculusCheckedException {
 		this.rationalTriples = this.createRationalTriples(new double[][]{{1, 2, 3},{4, 3, 1},{2, 1, 5},{3, 4, 2}});
 	}
 	
-	private void createIntegerOrReals() throws DomainException, RubatoException {
+	private void createIntegerOrReals() throws DomainException, LatrunculusCheckedException {
 		List<Denotator> integerOrReals = new ArrayList<>();
 		integerOrReals.add(new ColimitDenotator(NameDenotator.make(""), INTEGER_OR_REAL_FORM, 1, this.createReal(2.5)));
 		integerOrReals.add(new ColimitDenotator(NameDenotator.make(""), INTEGER_OR_REAL_FORM, 0, this.createInteger(5)));
@@ -158,7 +158,7 @@ public class TestObjects {
 		this.integerOrReals = new PowerDenotator(NameDenotator.make(""), INTEGER_OR_REALS_FORM, integerOrReals);
 	}
 	
-	public PowerDenotator createGeneralScore(double[][] notes, double[][] rests) throws RubatoException {
+	public PowerDenotator createGeneralScore(double[][] notes, double[][] rests) throws LatrunculusCheckedException {
 		List<Denotator> notesAndRests = new ArrayList<>();
 		for (double[] note : notes) {
 			Denotator currentNote = this.objectGenerator.createStandardDenotator(CoolFormRegistrant.NOTE_FORM, note);
@@ -171,7 +171,7 @@ public class TestObjects {
 		return new PowerDenotator(NameDenotator.make(""), GENERAL_SCORE_FORM, notesAndRests);
 	}
 	
-	public LimitDenotator createMultilevelNode(double[][] parameters) throws RubatoException {
+	public LimitDenotator createMultilevelNode(double[][] parameters) throws LatrunculusCheckedException {
 		return (LimitDenotator)this.generator.createMultiLevelSoundScore(parameters).get(new int[]{0});
 	}
 	
@@ -179,7 +179,7 @@ public class TestObjects {
 		return this.objectGenerator.createStandardDenotator(CoolFormRegistrant.DYAD_FORM, pitches);
 	}
 	
-	public PowerDenotator createRationalTriples(double[][] values) throws RubatoException {
+	public PowerDenotator createRationalTriples(double[][] values) throws LatrunculusCheckedException {
 		List<Denotator> triples = new ArrayList<>();
 		for (double[] currentValues : values) {
 			triples.add(this.createRationalTriple(currentValues));
@@ -191,7 +191,7 @@ public class TestObjects {
 		return this.objectGenerator.createStandardDenotator(this.RATIONAL_TRIPLE_FORM, values);
 	}
 	
-	public PowerDenotator createRealTriples(double[][] values) throws RubatoException {
+	public PowerDenotator createRealTriples(double[][] values) throws LatrunculusCheckedException {
 		List<Denotator> triples = new ArrayList<>();
 		for (double[] currentValues : values) {
 			triples.add(this.createRealTriple(currentValues));
@@ -203,14 +203,14 @@ public class TestObjects {
 		return this.objectGenerator.createStandardDenotator(this.REAL_TRIPLE_FORM, values);
 	}
 	
-	public Denotator createIntegerOrReal(boolean integer, double value) throws RubatoException {
+	public Denotator createIntegerOrReal(boolean integer, double value) throws LatrunculusCheckedException {
 		if (integer) {
 			return this.createColimitDenotator(INTEGER_OR_REAL_FORM, 0, this.createInteger((int)value));
 		}
 		return this.createColimitDenotator(INTEGER_OR_REAL_FORM, 1, this.createReal(value));
 	}
 	
-	private ColimitDenotator createColimitDenotator(ColimitForm form, int index, Denotator coordinate) throws RubatoException {
+	private ColimitDenotator createColimitDenotator(ColimitForm form, int index, Denotator coordinate) throws LatrunculusCheckedException {
 		return new ColimitDenotator(NameDenotator.make(""), form, index, coordinate);
 	}
 	

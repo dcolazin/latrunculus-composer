@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
  * 
  * @author Gérard Milmeister
  */
-public final class RubatoFormException extends RubatoException {
+public final class RubatoFormException extends LatrunculusCheckedException {
 
     /**
      * Creates a standard RubatoFormException with a message.

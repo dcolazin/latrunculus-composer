@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.logeo.reform;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
@@ -150,7 +150,7 @@ abstract class ListReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Module address = d.getAddress();
             Denotator res = reformer.reform(d);
             List<Denotator> list = new LinkedList<Denotator>();
@@ -180,7 +180,7 @@ abstract class ListReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             Denotator res = reformer.reform(d);
             return ColimitDenotator._make_unsafe(null, d.getAddress(), to, index, res);
         }
@@ -199,7 +199,7 @@ abstract class ListReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             List<Denotator> factors = ((ListDenotator)d).getFactors();
             List<Denotator> newfactors = new LinkedList<Denotator>();
             for (Denotator f : factors) {
@@ -221,7 +221,7 @@ abstract class ListReformer extends Reformer {
         }
         
         public Denotator reform(Denotator d)
-                throws RubatoException {
+                throws LatrunculusCheckedException {
             List<Denotator> factors = ((ListDenotator)d).getFactors();
             List<Denotator> newfactors = new LinkedList<Denotator>();
             for (Denotator f : factors) {

@@ -21,7 +21,7 @@ package org.rubato.rubettes.morphing;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -55,7 +55,7 @@ class MorphingRubetteTest {
 	}
 	
 	@Test
-	void testGetTimeInfo() throws RubatoException {
+	void testGetTimeInfo() throws LatrunculusCheckedException {
 		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
 		assertTrue(timeInfo1[0] == 0 && timeInfo1[1] == 5);
@@ -63,7 +63,7 @@ class MorphingRubetteTest {
 	}
 
 	@Test
-	void testMakeTimeCorrection() throws RubatoException {
+	void testMakeTimeCorrection() throws LatrunculusCheckedException {
 		this.rubette.makeTimeCorrection(score1, score2);
 		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
@@ -80,7 +80,7 @@ class MorphingRubetteTest {
 	}
 
 	@Test
-	void testMakeTimeCorrection2() throws RubatoException {
+	void testMakeTimeCorrection2() throws LatrunculusCheckedException {
 		this.rubette.makeTimeCorrection(score2, score1);
 		double[] timeInfo1 = this.rubette.getTimeInfo(score1);
 		double[] timeInfo2 = this.rubette.getTimeInfo(score2);
@@ -97,7 +97,7 @@ class MorphingRubetteTest {
 	}
 
 	@Test
-	void testGetMorph() throws RubatoException {
+	void testGetMorph() throws LatrunculusCheckedException {
 		this.rubette.setInput(score2,score3);
 		this.rubette.makeTimeCorrection(score2, score3);
 		PowerDenotator morph = this.rubette.getMorph();
@@ -119,11 +119,11 @@ class MorphingRubetteTest {
 		}
 	}
 	
-	private double getPitch(Denotator denotator) throws RubatoException {
+	private double getPitch(Denotator denotator) throws LatrunculusCheckedException {
 		return ((Rational)denotator.getElement(new int[]{1,0})).doubleValue();
 	}
 	
-	private double getDuration(Denotator denotator) throws RubatoException {
+	private double getDuration(Denotator denotator) throws LatrunculusCheckedException {
 		return ((Real)denotator.getElement(new int[]{3,0})).getValue();
 	}
 

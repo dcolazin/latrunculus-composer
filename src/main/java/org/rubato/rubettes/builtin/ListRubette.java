@@ -31,7 +31,7 @@ import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Lists;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
@@ -129,7 +129,7 @@ public class ListRubette extends AbstractRubette {
         try {
             res = Lists.concat(denotators);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -147,7 +147,7 @@ public class ListRubette extends AbstractRubette {
                     res = Lists.appendElement(res, d);
                 }
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
                 res = null;
             }
@@ -168,7 +168,7 @@ public class ListRubette extends AbstractRubette {
                     res = Lists.prependElement(res, d);
                 }
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
                 res = null;
             }

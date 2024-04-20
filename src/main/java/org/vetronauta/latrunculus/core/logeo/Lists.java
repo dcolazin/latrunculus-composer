@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.logeo;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
@@ -46,14 +46,14 @@ public final class Lists {
     /**
      * Returns a list denotator that is the
      * concatenation of <code>d1</code> and <code>d2</code>.
-     * @throws RubatoException if <code>d1</code> or <code>d2</code>
+     * @throws LatrunculusCheckedException if <code>d1</code> or <code>d2</code>
      *                         is not of the required form
      */
     public static ListDenotator concat(ListDenotator d1, ListDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {
-            throw new RubatoException("Lists.concat: "+d1+" and "+d2+" do not have the same base form");
+            throw new LatrunculusCheckedException("Lists.concat: "+d1+" and "+d2+" do not have the same base form");
         }
 
         List<Denotator> factors1 = d1.getFactors();
@@ -61,7 +61,7 @@ public final class Lists {
         if (!d1.getAddress().equals(d2.getAddress())) {
             Module newAddress = Address.getCommonModule(d1.getAddress(), d2.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Lists.concat: Could not find a common address for "+d1+" and "+d2);
+                throw new LatrunculusCheckedException("Lists.concat: Could not find a common address for "+d1+" and "+d2);
             }
             factors1 = readdress(factors1, newAddress);
             factors2 = readdress(factors2, newAddress);
@@ -80,10 +80,10 @@ public final class Lists {
     /**
      * Returns a list denotator that is the concatenation
      * of the argument list denotators.
-     * @throws RubatoException if the denotators do not have the required form
+     * @throws LatrunculusCheckedException if the denotators do not have the required form
      */
     public static ListDenotator concat(ListDenotator ... denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (denoList.length == 0) {
             return null;
         }
@@ -98,20 +98,20 @@ public final class Lists {
     /**
      * Appends the elements of <code>d2</code> to <code>d1</code>.
      * This operation is destructive on the first argument.
-     * @throws RubatoException if <code>d1</code> or <code>d2</code>
+     * @throws LatrunculusCheckedException if <code>d1</code> or <code>d2</code>
      *                         is not of the required form, or if they
      *                         do not have the same address
      */
     public static void appendTo(ListDenotator d1, ListDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {
             // different base forms
-            throw new RubatoException("Lists.appendTo: "+d1+" and "+d2+" do not have the same base form");
+            throw new LatrunculusCheckedException("Lists.appendTo: "+d1+" and "+d2+" do not have the same base form");
         }
         else if (d1.getAddress().equals(d2.getAddress())) {
             // different addresses
-            throw new RubatoException("Lists.appendTo: "+d1+" and "+d2+" do not have the same address");
+            throw new LatrunculusCheckedException("Lists.appendTo: "+d1+" and "+d2+" do not have the same address");
         }
         else {
             ListMorphismMap m1 = (ListMorphismMap)d1.getCoordinate().getMap();
@@ -127,11 +127,11 @@ public final class Lists {
      * Appends an element denotator to a list denotator.
      */
     public static ListDenotator appendElement(ListDenotator d, Denotator element)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         ListForm form = d.getListForm();
         
         if (!form.getForm().equals(element.getForm())) {
-            throw new RubatoException("Lists.appendElement: Expected form "+
+            throw new LatrunculusCheckedException("Lists.appendElement: Expected form "+
                                       "%1, but got form %2", form.getForm(), element.getForm());            
         }
         
@@ -140,7 +140,7 @@ public final class Lists {
         if (!d.getAddress().equals(element.getAddress())) {
             Module newAddress = Address.getCommonModule(d.getAddress(), element.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("List.appendElement: Could not find a common address for "+d+" and "+element);
+                throw new LatrunculusCheckedException("List.appendElement: Could not find a common address for "+d+" and "+element);
             }
             factors = readdress(factors, newAddress);
             factor = factor.changeAddress(newAddress);
@@ -156,14 +156,14 @@ public final class Lists {
     /**
      * Prepend the elements of <i>d2</i> to <i>d1</i>.
      * This operation is destructive on the first argument.
-     * @throws RubatoException if d1 or d2 is not of the required form
+     * @throws LatrunculusCheckedException if d1 or d2 is not of the required form
      */
     public static void prependTo(ListDenotator d1, ListDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
 
         if (form == null) {
-            throw new RubatoException("Lists.prepentTo: "+d1+" and "+d2+" have not the same factor form");
+            throw new LatrunculusCheckedException("Lists.prepentTo: "+d1+" and "+d2+" have not the same factor form");
         }
 
         ListMorphismMap m1 = (ListMorphismMap)d1.getCoordinate().getMap();
@@ -179,11 +179,11 @@ public final class Lists {
      * Prepends a denotator to a list denotator.
      */
     public static ListDenotator prependElement(ListDenotator d, Denotator element)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         ListForm form = d.getListForm();
         
         if (!form.getForm().equals(element.getForm())) {
-            throw new RubatoException("Lists.prependElement: Expected element of form "+
+            throw new LatrunculusCheckedException("Lists.prependElement: Expected element of form "+
                                       "%1, but got %2", form.getForm(), element.getForm());            
         }
         
@@ -192,7 +192,7 @@ public final class Lists {
         if (!d.getAddress().equals(element.getAddress())) {
             Module newAddress = Address.getCommonModule(d.getAddress(), element.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Lists.prepentElement: Could not find a common address for "+d+" and "+element);
+                throw new LatrunculusCheckedException("Lists.prepentElement: Could not find a common address for "+d+" and "+element);
             }
             factors = readdress(factors, newAddress);
             factor = factor.changeAddress(newAddress);
@@ -209,15 +209,15 @@ public final class Lists {
      * Returns a denotator, where only the elements from the argument denotator
      * are contained that satisfy predicate p.
      * @param p the predicate that the elements must satisfy, must have arity 1
-     * @throws RubatoException if <code>d</code> has not the required form or
+     * @throws LatrunculusCheckedException if <code>d</code> has not the required form or
      *                                  <code>p</code> has arity != 1
      */
     public static ListDenotator select(Predicate p, ListDenotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         ListForm form = d.getListForm();
    
         if (p.getArity() != 1) {
-            throw new RubatoException("Lists.select: Expected arity "+
+            throw new LatrunculusCheckedException("Lists.select: Expected arity "+
                                       "1, but got %1", p.getArity());
         }
 

@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.operations.ScalingTransformation;
 import org.rubato.rubettes.bigbang.model.operations.TranslationTransformation;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -190,7 +190,7 @@ class BigBangOperationGraphTest {
 	}
 
 	@Test
-	void testFatefulModificationOfPastWithSatellites() throws RubatoException {
+	void testFatefulModificationOfPastWithSatellites() throws LatrunculusCheckedException {
 		this.model.setOrAddComposition(this.objects.generator.createEmptyScore());
 		int[][] paths = new int[][]{{0,0},{0,1}};
 		double[][] values = new double[][]{{0,60},{1,60},{2,65}};

@@ -31,7 +31,7 @@ import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
  * 
  * @author Gérard Milmeister
  */
-public final class MappingException extends RubatoException {
+public final class MappingException extends LatrunculusCheckedException {
 
     /**
      * Creates a MappingException with a standard message string.

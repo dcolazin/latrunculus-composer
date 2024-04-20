@@ -28,7 +28,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.Module;
  * 
  * @author Gérard Milmeister
  */
-public final class RubatoAddressException extends RubatoException {
+public final class RubatoAddressException extends LatrunculusCheckedException {
 
     /**
      * Creates a standard RubatoAddressException.

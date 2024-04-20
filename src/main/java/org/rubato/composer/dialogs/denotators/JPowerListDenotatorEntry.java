@@ -33,7 +33,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.repository.Dictionary;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -97,7 +97,7 @@ public class JPowerListDenotatorEntry
                 res = new PowerDenotator(NameDenotator.make(name), powerForm, denoList);
             }
         }
-        catch (RubatoException e) { /* do nothing */ }
+        catch (LatrunculusCheckedException e) { /* do nothing */ }
         return res;
     }
     

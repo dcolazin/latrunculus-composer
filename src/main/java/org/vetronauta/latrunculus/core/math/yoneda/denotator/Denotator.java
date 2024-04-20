@@ -26,7 +26,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.RubatoFormException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -173,9 +173,9 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * at this denotator.
      * 
      * @return null if denotator could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
-    public final Denotator get(int[] path) throws RubatoException {
+    public final Denotator get(int[] path) throws LatrunculusCheckedException {
         return get(path, 0);
     }
 
@@ -186,9 +186,9 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * 
      * @param curpos the current position in the path
      * @return null if denotator could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
-    protected abstract Denotator get(int[] path, int curpos) throws RubatoException;
+    protected abstract Denotator get(int[] path, int curpos) throws LatrunculusCheckedException;
 
     /**
      * Returns a denotator by replacing the denotator
@@ -196,11 +196,11 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * 
      * @param path the path at the end of which the denotator is replaced
      * @param d the denotator to put at the path 
-     * @throws RubatoException if the specified denotator
+     * @throws LatrunculusCheckedException if the specified denotator
      *         is of the wrong form or address
      */
     public final Denotator replace(int[] path, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return replace(path, 0, d);
     }
 
@@ -212,22 +212,22 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @param path the path at the end of which the denotator is replaced
      * @param currentPosition the current position in the path
      * @param d the denotator to put at the path 
-     * @throws RubatoException if the specified denotator
+     * @throws LatrunculusCheckedException if the specified denotator
      *         is of the wrong form or address
      */
     protected abstract Denotator replace(int[] path, int currentPosition
             , Denotator d)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
     
     
     /**
      * Maps this denotator using the given <code>morphism</code>
      * along the specified <code>path</code>.
      * 
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public final Denotator map(int[] path, ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return map(path, 0, morphism);
     }
     
@@ -239,10 +239,10 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * 
      * @param currentPosition the current position in the path
      * @return null if element could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     protected abstract Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
 
     
     /**
@@ -251,10 +251,10 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * along the path.
      * 
      * @return null if element could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public final ModuleElement getElement(int[] path)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return getElement(path, 0);
     }
     
@@ -266,10 +266,10 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * 
      * @param curpos the current position in the path
      * @return null if element could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     protected abstract ModuleElement getElement(int[] path, int curpos)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
     
     
     /**
@@ -278,10 +278,10 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * along the path.
      * 
      * @return null if morphism could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public final ModuleMorphism getModuleMorphism(int[] path)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return getModuleMorphism(path, 0);
     }
     
@@ -293,10 +293,10 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * 
      * @param curpos the current position in the path
      * @return null if morphism could not be retrieved along the path
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     protected abstract ModuleMorphism getModuleMorphism(int[] path, int curpos)
-        throws RubatoException;
+        throws LatrunculusCheckedException;
 
     
     /**

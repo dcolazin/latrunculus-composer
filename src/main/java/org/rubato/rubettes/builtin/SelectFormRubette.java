@@ -36,7 +36,7 @@ import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Select;
 import org.vetronauta.latrunculus.core.util.TextUtils;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
@@ -65,7 +65,7 @@ public class SelectFormRubette extends AbstractRubette {
                 List<Denotator> denoList = Select.select(baseForm, input);
                 output = DenoFactory.makeDenotator(outputForm, denoList);                
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e.getMessage()+".");
             }
         }

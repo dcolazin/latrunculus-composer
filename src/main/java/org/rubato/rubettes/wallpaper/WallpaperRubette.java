@@ -22,7 +22,7 @@ package org.rubato.rubettes.wallpaper;
 import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
@@ -113,7 +113,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
         		List<ModuleMorphism> morphisms = new ArrayList<ModuleMorphism>(this.morphismsTable.getMorphisms());
         		PowerDenotator output = this.getUnitedMappedDenotators(input, morphisms);
         		this.setOutput(0, output);
-        	} catch (RubatoException e) { 
+        	} catch (LatrunculusCheckedException e) { 
         		e.printStackTrace();
         		this.addError("Error while running.");
         	}
@@ -124,7 +124,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
      * calls getUnitedMappedDenotators with all current morphisms in the table. Used for testing
      * only. 
      */
-	protected PowerDenotator getUnitedMappedDenotators(PowerDenotator input) throws RubatoException {
+	protected PowerDenotator getUnitedMappedDenotators(PowerDenotator input) throws LatrunculusCheckedException {
 		return this.getUnitedMappedDenotators(input, this.morphismsTable.getMorphisms());
 	}
 	
@@ -133,7 +133,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 	 * denotator with set union of all mappings of the input denotator's elements. 
 	 * Recursive method!
 	 */
-	private PowerDenotator getUnitedMappedDenotators(PowerDenotator input, List<ModuleMorphism> morphisms) throws RubatoException {
+	private PowerDenotator getUnitedMappedDenotators(PowerDenotator input, List<ModuleMorphism> morphisms) throws LatrunculusCheckedException {
 		//remove first morphism from the list and get its range
 		ModuleMorphism currentMorphism = morphisms.remove(0);
 		int currentRangeFrom = this.morphismsTable.getRangeFrom(currentMorphism);
@@ -177,7 +177,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 		return output;
 	}
 	
-	protected PowerDenotator mapDenotator(PowerDenotator input, ModuleMorphism morphism) throws RubatoException {
+	protected PowerDenotator mapDenotator(PowerDenotator input, ModuleMorphism morphism) throws LatrunculusCheckedException {
 		TransformationPaths paths = this.createTransformationPaths(morphism);
 		ArbitraryDenotatorMapper mapper = new ArbitraryDenotatorMapper(morphism, paths);
 		return mapper.getMappedPowerDenotator(input);

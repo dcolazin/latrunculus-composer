@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -67,7 +67,7 @@ class RecursiveLimitReformer extends LimitReformer {
     
     
     public Denotator reform(Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         LimitDenotator ld = (LimitDenotator)d;
         List<Denotator> fromList = new LinkedList<Denotator>();
         collectDenotators(ld, fromList);

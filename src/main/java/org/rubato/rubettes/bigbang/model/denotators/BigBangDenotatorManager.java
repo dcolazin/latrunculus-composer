@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -286,7 +286,7 @@ public class BigBangDenotatorManager {
 			newObjects = this.internalAddObjectsAsRelative(newObjects, powersetPath);
 			if (newObjects != null) {
 				//System.out.print("......."+this.findPaths(newObjects, powersetPath) + "...");
-				//try {this.composition.get(powersetPath.toIntArray()).display();} catch(RubatoException e) {};
+				//try {this.composition.get(powersetPath.toIntArray()).display();} catch(LatrunculusCheckedException e) {};
 				List<DenotatorPath> newPaths = this.findPaths(newObjects, powersetPath);
 				newPaths.removeAll(Collections.singleton(null));
 				//find satellites!!!
@@ -513,7 +513,7 @@ public class BigBangDenotatorManager {
 		object = this.objectGenerator.convertDenotatorIfNecessary(object, ((Denotator)powerset).getForm().getForms().get(0));
 		try {
 			powerset.appendFactor(object);
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		if (powerset.getFactorCount() > previousFactorCount) {
 			return object;
 		}
@@ -591,7 +591,7 @@ public class BigBangDenotatorManager {
 	private FactorDenotator getPowersetOrList(DenotatorPath powersetPath) {
 		try {
 			return (FactorDenotator)this.composition.get(powersetPath.toIntArray());
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -616,7 +616,7 @@ public class BigBangDenotatorManager {
 					}
 				}
 			}
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -653,7 +653,7 @@ public class BigBangDenotatorManager {
 				return this.composition.get(intPath);
 			}
 			return this.composition;
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}

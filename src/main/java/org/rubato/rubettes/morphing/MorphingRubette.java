@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.morphing;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.base.RunInfo;
 import org.rubato.rubettes.alteration.Alterator;
@@ -90,7 +90,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 					this.makeTimeCorrection(this.d1, this.d2);
 				}
 				this.setOutput(0, this.getMorph());
-			} catch (RubatoException e) {
+			} catch (LatrunculusCheckedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -122,7 +122,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		this.elementPaths = finder.getElementPaths();
 	}
 	
-	protected void makeTimeCorrection(PowerDenotator score1, PowerDenotator score2) throws RubatoException {
+	protected void makeTimeCorrection(PowerDenotator score1, PowerDenotator score2) throws LatrunculusCheckedException {
 		double[] timeInfo1 = this.getTimeInfo(score1);
 		double[] timeInfo2 = this.getTimeInfo(score2);
 		this.newDuration = (timeInfo1[1]+timeInfo2[1])/2;
@@ -135,7 +135,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 	 * Returns an array with the following time information about a Score denotator:
 	 * {smallest onset, total duration (difference between greatest and smallest onset)}.
 	 */
-	protected double[] getTimeInfo(PowerDenotator score) throws RubatoException {
+	protected double[] getTimeInfo(PowerDenotator score) throws LatrunculusCheckedException {
 		double minOnset, maxOnset;
 		int[] onsetPath = {0,0};
 		Iterator<Denotator> notes = score.iterator();
@@ -155,7 +155,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 	 * specified factors. By the first in the beginning and the second in the end. At the
 	 * positions inbetween, the two factors are interpolated. 
 	 */
-	private void makeTimeCorrection(PowerDenotator score, double[] timeInfo, boolean back) throws RubatoException {
+	private void makeTimeCorrection(PowerDenotator score, double[] timeInfo, boolean back) throws LatrunculusCheckedException {
 		Iterator<Denotator> notes = score.iterator();
 		int[] onsetPath = {0,0};
 		int[] durationPath = {3,0};
@@ -203,7 +203,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 	 * specified factors. By the first in the beginning and the second in the end. At the
 	 * positions inbetween, the two factors are interpolated. 
 	 *
-	private void makeTimeCorrection(PowerDenotator score, double[] timeInfo, double[] factors) throws RubatoException {
+	private void makeTimeCorrection(PowerDenotator score, double[] timeInfo, double[] factors) throws LatrunculusCheckedException {
 		Iterator<Denotator> notes = score.iterator();
 		int[] onsetPath = {0,0};
 		int[] durationPath = {3,0};
@@ -226,7 +226,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		}
 	}
 	
-	private void makeTimeCorrectionRe(PowerDenotator score, double[] timeInfo, double[] factors) throws RubatoException {
+	private void makeTimeCorrectionRe(PowerDenotator score, double[] timeInfo, double[] factors) throws LatrunculusCheckedException {
 		Iterator<Denotator> notes = score.iterator();
 		int[] onsetPath = {0,0};
 		int[] durationPath = {3,0};
@@ -247,7 +247,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		}
 	}*/
 	
-	protected PowerDenotator getMorph() throws RubatoException {
+	protected PowerDenotator getMorph() throws LatrunculusCheckedException {
 		Map<Denotator, Denotator> neighborMap1 = this.getNeighborMap(this.d1, this.d2);
 		Map<Denotator, Denotator> neighborMap2 = this.getNeighborMap(this.d2, this.d1);
 		Set<Denotator> neighbors1 = new HashSet<Denotator>(neighborMap1.values());
@@ -257,7 +257,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		return morph;
 	}
 	
-	private PowerDenotator getBasicMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws RubatoException {
+	private PowerDenotator getBasicMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws LatrunculusCheckedException {
 		int[] positionPath = {0,0}; //onset for now...
 		PowerDenotator partialMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<>());
 		Iterator<Denotator> keys = neighborMap.keySet().iterator();
@@ -278,7 +278,7 @@ public class MorphingRubette extends SimpleAbstractRubette {
 		return partialMorph;
 	}
 	
-	private PowerDenotator getAdditionalMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws RubatoException {
+	private PowerDenotator getAdditionalMorph(Map<Denotator, Denotator> neighborMap, Set<Denotator> complementSet) throws LatrunculusCheckedException {
 		int[] positionPath = {0,0}; //onset for now...
 		Iterator<Denotator> keys = neighborMap.keySet().iterator();
 		PowerDenotator additionalMorph = new PowerDenotator(NameDenotator.make(""), this.inputForm, new ArrayList<>());

@@ -29,9 +29,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.repository.Dictionary;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
@@ -61,7 +61,7 @@ public class JColimitDenotatorEntry
         try {
             res = new ColimitDenotator(NameDenotator.make(name), form, currentIndex, d);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             res = null;
         }
         return res;

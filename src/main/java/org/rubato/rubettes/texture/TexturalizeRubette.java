@@ -1,7 +1,7 @@
 package org.rubato.rubettes.texture;
 
 import org.rubato.base.DoubleProperty;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.SimpleAbstractRubette;
 import org.rubato.base.RunInfo;
 import org.rubato.rubettes.util.CoolFormRegistrant;
@@ -74,7 +74,7 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 			}
 			
 			this.setOutput(0, texture);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return;
 		}

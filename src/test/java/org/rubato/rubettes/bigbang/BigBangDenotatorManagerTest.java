@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -66,7 +66,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testAddNote() throws RubatoException {
+	void testAddNote() throws LatrunculusCheckedException {
 		this.denotatorManager.setForm(this.objects.SOUND_SCORE_FORM);
 		DenotatorPath topLevelPath = new DenotatorPath(this.objects.SOUND_SCORE_FORM);
 		OperationPathResults pathResults = this.denotatorManager.addObjects(topLevelPath, this.generateNodeValueMapList(this.objects.NOTE0_VALUES));
@@ -104,7 +104,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testGetAbsoluteNote() throws RubatoException {
+	void testGetAbsoluteNote() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
 		DenotatorPath nodePath = new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0,1,0});
 		this.assertEqualNodes(this.objects.node2Relative, this.denotatorManager.getComposition().get(nodePath.toIntArray()));
@@ -112,7 +112,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testRemoveNotes() throws RubatoException {
+	void testRemoveNotes() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		assertEquals(3, ((PowerDenotator) this.denotatorManager.getComposition()).getFactorCount());
 		List<DenotatorPath> paths = new ArrayList<>();
@@ -132,7 +132,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testRemoveSatelliteNote() throws RubatoException {
+	void testRemoveSatelliteNote() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
 		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
 		List<DenotatorPath> paths = new ArrayList<>();
@@ -206,7 +206,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testMapRationalTriples() throws RubatoException {
+	void testMapRationalTriples() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.rationalTriples);
 		BigBangTransformation translation = this.objects.makeTranslation(-1,-2, this.rationalTriplesPaths);
 		Set<DenotatorPath> triplesPath = new TreeSet<>();
@@ -221,7 +221,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testMapRealTriples() throws RubatoException {
+	void testMapRealTriples() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.realTriples);
 		BigBangTransformation translation = this.objects.makeTranslation(-2,-3, this.realTriplesPaths);
 		Set<DenotatorPath> triplesPath = new TreeSet<>();
@@ -264,7 +264,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testMapNodesMultiLevel() throws RubatoException {
+	void testMapNodesMultiLevel() throws LatrunculusCheckedException {
 		this.objects.multiLevelSoundScore.appendFactor(this.objects.generator.createNodeDenotator(this.objects.note2Absolute));
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
 		BigBangTransformation translation = this.objects.makeTranslation(-2, -1, this.nodePaths);
@@ -287,7 +287,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testMapSoundScoreModulators() throws RubatoException {
+	void testMapSoundScoreModulators() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
@@ -311,7 +311,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testBuildSatellites() throws RubatoException {
+	void testBuildSatellites() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
@@ -329,7 +329,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testBuildSoundScoreModulators() throws RubatoException {
+	void testBuildSoundScoreModulators() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{1}));
@@ -353,7 +353,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testFlatten() throws RubatoException {
+	void testFlatten() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
 		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1})).getFactorCount());
 		assertEquals(1, ((PowerDenotator) this.denotatorManager.getComposition().get(new int[]{0, 1, 0, 1})).getFactorCount());
@@ -370,7 +370,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testFlatten2() throws RubatoException {
+	void testFlatten2() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.multiLevelSoundScore);
 		TreeSet<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0,1,0}));
@@ -389,7 +389,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testShapeNotes() throws RubatoException {
+	void testShapeNotes() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.SOUND_SCORE_FORM, new int[]{0}));
@@ -411,7 +411,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testShapeRationalTriples() throws RubatoException {
+	void testShapeRationalTriples() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.rationalTriples);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.RATIONAL_TRIPLES_FORM, new int[]{0}));
@@ -437,7 +437,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testShapeRealTriples() throws RubatoException {
+	void testShapeRealTriples() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.realTriples);
 		Set<DenotatorPath> paths = new TreeSet<>();
 		paths.add(new DenotatorPath(this.objects.REAL_TRIPLES_FORM, new int[]{0}));
@@ -505,7 +505,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testAlteration() throws RubatoException {
+	void testAlteration() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> comp0 = this.objects.makeNotePaths(new int[][]{{0},{1}});
 		Set<DenotatorPath> comp1 = this.objects.makeNotePaths(new int[][]{{2}});
@@ -530,7 +530,7 @@ class BigBangDenotatorManagerTest {
 	}
 
 	@Test
-	void testTotalAlteration() throws RubatoException {
+	void testTotalAlteration() throws LatrunculusCheckedException {
 		this.denotatorManager.setOrAddComposition(this.objects.flatSoundScore);
 		Set<DenotatorPath> comp0 = this.objects.makeNotePaths(new int[][]{{0},{1}});
 		Set<DenotatorPath> comp1 = this.objects.makeNotePaths(new int[][]{{2}});
@@ -618,7 +618,7 @@ class BigBangDenotatorManagerTest {
 		return Collections.singletonList(valueMap);
 	}
 	
-	private void assertEqualNodes(Denotator note1, Denotator note2) throws RubatoException {
+	private void assertEqualNodes(Denotator note1, Denotator note2) throws LatrunculusCheckedException {
 		for (int i = 0; i < 6; i++) {
 			assertEquals(note1.get(new int[]{0,i}).getCoordinate(), note2.get(new int[]{0,i}).getCoordinate());
 		}

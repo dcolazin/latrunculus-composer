@@ -28,7 +28,7 @@ import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -111,7 +111,7 @@ public class RhythmizeRubette extends SimpleAbstractRubette {
 					break;
 				}
 			}
-		} catch(RubatoException e) {}
+		} catch(LatrunculusCheckedException e) {}
 		
 		this.setOutput(0, score);
 	}

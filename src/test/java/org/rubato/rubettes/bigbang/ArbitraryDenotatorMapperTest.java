@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
@@ -36,7 +36,7 @@ class ArbitraryDenotatorMapperTest {
 	}
 
 	@Test
-	void testMappingOfNodeDenotators() throws RubatoException {
+	void testMappingOfNodeDenotators() throws LatrunculusCheckedException {
 		//create paths to map onset x pitch -> onset x pitch
 		TransformationPaths paths = this.objects.createStandardTransformationPaths(
 				this.objects.SOUND_NODE_FORM, new int[][]{{0,0},{0,1}});
@@ -52,7 +52,7 @@ class ArbitraryDenotatorMapperTest {
 	}
 
 	@Test
-	void testMappingOfColimitDenotators() throws RubatoException {
+	void testMappingOfColimitDenotators() throws LatrunculusCheckedException {
 		//create paths to map int x real -> int x real
 		TransformationPaths paths = this.objects.createStandardTransformationPaths(
 				this.objects.INTEGER_OR_REAL_FORM, new int[][]{{0},{1}});
@@ -82,7 +82,7 @@ class ArbitraryDenotatorMapperTest {
 	}
 
 	@Test
-	void testMappingOfColimitDenotators2() throws RubatoException {
+	void testMappingOfColimitDenotators2() throws LatrunculusCheckedException {
 		TransformationPaths paths = new TransformationPaths();
 		//add Duration paths for both types of configurations: note and rest
 		DenotatorPath noteDurationPath = new DenotatorPath(this.objects.GENERAL_NOTE_FORM, new int[]{0,3});

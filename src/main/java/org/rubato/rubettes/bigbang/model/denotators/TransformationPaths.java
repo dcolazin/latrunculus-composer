@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -86,7 +86,7 @@ public class TransformationPaths {
 						return currentPath;
 					}
 				//do nothing if path leads to error, just try next one
-				} catch (RubatoException e) { }
+				} catch (LatrunculusCheckedException e) { }
 			}
 		}
 		return null;

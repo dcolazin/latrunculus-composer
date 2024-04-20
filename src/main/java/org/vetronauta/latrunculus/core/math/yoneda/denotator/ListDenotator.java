@@ -22,7 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.vetronauta.latrunculus.core.util.Internal;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.util.Unsafe;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Lists;
@@ -65,7 +65,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @throws RubatoFormException
      */
     public ListDenotator(NameDenotator name, Module address, ListForm form, List<Denotator> cds)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         super(name, form);
         
         FormDiagram diagram = form.getFormDiagram();
@@ -88,7 +88,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @throws RubatoFormException
      */
     public ListDenotator(NameDenotator name, ListForm form, List<Denotator> cds)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         super(name, form);
         
         FormDiagram diagram = form.getFormDiagram();
@@ -232,12 +232,12 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     @Override
     protected Denotator get(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos == path.length) {
             return this;
         }
         else if (curpos > path.length) {
-            throw new RubatoException("ListDenotator.get: Incompatible path, "+
+            throw new LatrunculusCheckedException("ListDenotator.get: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -256,26 +256,26 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     @Override
     protected Denotator replace(int[] path, int currentPosition, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (currentPosition == path.length) {
             if (d.hasForm(getForm())) {
                 Denotator res = d;
                 if (!d.getAddress().equals(getAddress())) {
                     res = d.changeAddress(getAddress());
                     if (res == null) {
-                        throw new RubatoException("ListDenotator.replace: Could not change address "+
+                        throw new LatrunculusCheckedException("ListDenotator.replace: Could not change address "+
                                                   "from %1 to %2", d.getAddress(), getAddress());
                     }
                 }
                 return res;
             }
             else {
-                throw new RubatoException("ListDenotator.replace: Expected denotator of "+
+                throw new LatrunculusCheckedException("ListDenotator.replace: Expected denotator of "+
                                           "form %1, but got %2", getForm(), d.getForm());
             }
         }
         else if (currentPosition > path.length) {
-            throw new RubatoException("LimitDenotator.replace: Incompatible path, "+
+            throw new LatrunculusCheckedException("LimitDenotator.replace: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -285,7 +285,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
                 if (!d.getAddress().equals(getAddress())) {
                     res = d.changeAddress(getAddress());
                     if (res == null) {
-                        throw new RubatoException("ListDenotator.replace: Could not change address "+
+                        throw new LatrunculusCheckedException("ListDenotator.replace: Could not change address "+
                                                   "from %1 to %2", d.getAddress(), getAddress());
                     }
                 }
@@ -293,7 +293,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
                 denoList.add(res);
                 return _make_unsafe(null, getAddress(), getListForm(), denoList);
             }
-            throw new RubatoException("ListDenotator.replace: Expected denotator of "+
+            throw new LatrunculusCheckedException("ListDenotator.replace: Expected denotator of "+
                                       "form %1, but got %2", getListForm().getForm(), d.getForm());
         }
         else {
@@ -308,9 +308,9 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     @Override
     protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (currentPosition >= path.length) {
-            throw new RubatoException("ListDenotator.map: Incompatible path, "+
+            throw new LatrunculusCheckedException("ListDenotator.map: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                     currentPosition, path.length);
         }
@@ -338,9 +338,9 @@ public class ListDenotator extends Denotator implements FactorDenotator {
 
     @Override
     protected ModuleElement getElement(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("ListDenotator.getElement: Incompatible path, "+
+            throw new LatrunculusCheckedException("ListDenotator.getElement: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -355,9 +355,9 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     @Override
     protected ModuleMorphism getModuleMorphism(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (curpos >= path.length) {
-            throw new RubatoException("ListDenotator.getModuleMorphism: Incompatible path, "+
+            throw new LatrunculusCheckedException("ListDenotator.getModuleMorphism: Incompatible path, "+
                                       "expected length >= %1, but got length %2",
                                       curpos, path.length);
         }
@@ -402,14 +402,14 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * Sets the factor <code>d</code> in position <code>i</code>.
      * This is a destructive operation; beware of aliasing.
      * 
-     * @throws RubatoException if <code>d</code> is not of the required form
+     * @throws LatrunculusCheckedException if <code>d</code> is not of the required form
      *         or <code>i</code> is out of range
      */
     public void setFactor(int i, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         ListMorphismMap listmap = getListMorphismMap();
         if (i < 0 || i >= listmap.getFactorCount()) {
-            throw new RubatoException("ListDenotator.setFactor: Expected index "+
+            throw new LatrunculusCheckedException("ListDenotator.setFactor: Expected index "+
                                       "0 <= index < %1, but got %2", listmap.getFactorCount(), i);
         }
         checkDenotator(d, getListForm().getForm(), getAddress());
@@ -424,7 +424,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @throws RubatoFormException if <code>d</code> is not of the required form
      */
     public boolean appendFactor(Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         checkDenotator(d, getListForm().getForm(), getAddress());
         getListMorphismMap().appendFactor(d);
         return true;
@@ -446,7 +446,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @throws RubatoFormException if <code>d</code> is not of the required form
      */
     public void prependFactor(Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         checkDenotator(d, getForm().getForm(0), getAddress());
         getListMorphismMap().prependFactor(d);
     }
@@ -456,11 +456,11 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * Sets the factor list to a new list of denotators.
      * 
      * @param denoList the list of factor denotators
-     * @throws RubatoException if the list of denotators doesn't match
+     * @throws LatrunculusCheckedException if the list of denotators doesn't match
      *         the form of the denotator.
      */
     public void replaceFactors(List<Denotator> denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form baseForm = getListForm().getForm();
         ListMorphismMap newMap = new ListMorphismMap(denoList.size());
 
@@ -474,10 +474,10 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     
     /**
      * Returns a new denotator with <code>d</code> appended to this list denotator.
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public ListDenotator concat(ListDenotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return Lists.concat(this, d);
     }
 
@@ -485,20 +485,20 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     /**
      * Appends <code>d</code> to this denotator.
      * This is a destructive operation.
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public void appendTo(ListDenotator d) 
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Lists.appendTo(this, d);
     }
 
     
     /**
      * Returns a new denotator with <code>d</code> prepended to this list denotator.
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public ListDenotator prepend(ListDenotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         return Lists.concat(this, d);
     }
 
@@ -506,10 +506,10 @@ public class ListDenotator extends Denotator implements FactorDenotator {
     /**
      * Prepends <code>d</code> to this denotator.
      * This is a destructive operation.
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public void prependTo(ListDenotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Lists.prependTo(this, d);
     }
 

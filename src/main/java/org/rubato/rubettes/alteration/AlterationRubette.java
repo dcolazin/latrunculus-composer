@@ -41,7 +41,7 @@ import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
 import org.rubato.base.Rubette;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
@@ -116,7 +116,7 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
 			try {
 				PowerDenotator output = this.alterator.getAlteration(input0, input1);
 				this.setOutput(0, output);
-			} catch (RubatoException e) {
+			} catch (LatrunculusCheckedException e) {
 				e.printStackTrace();
 				this.addError("Error during rubette execution.");
 			}

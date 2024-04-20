@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -86,7 +86,7 @@ public class NearestNeighborFinder {
 			int[] currentPath = this.elementPaths[i];
 			try {
 				key[i] = RRing.ring.cast(denotator.getElement(currentPath)).getValue();
-			} catch (RubatoException e) { e.printStackTrace(); }
+			} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		}
 		return key;
 	}

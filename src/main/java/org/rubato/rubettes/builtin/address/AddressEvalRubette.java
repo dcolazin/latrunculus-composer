@@ -23,7 +23,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JModuleElementEntry;
@@ -220,7 +220,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             catch (MappingException e) {
                 addError(e);
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 addError(e);
             }
         }

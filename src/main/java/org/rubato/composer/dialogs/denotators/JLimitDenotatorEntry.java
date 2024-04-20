@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.repository.Dictionary;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -68,7 +68,7 @@ public class JLimitDenotatorEntry
         try {
             res = new LimitDenotator(NameDenotator.make(name), form, denoList);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             res = null;
         }
         return res;

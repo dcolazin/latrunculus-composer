@@ -30,9 +30,9 @@ import org.rubato.base.*;
 import org.rubato.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Sets;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -138,7 +138,7 @@ public class SetRubette extends AbstractRubette {
         try {
             res = Sets.union(denotators);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -154,7 +154,7 @@ public class SetRubette extends AbstractRubette {
         try {
             res = Sets.intersection(denotators);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -170,7 +170,7 @@ public class SetRubette extends AbstractRubette {
         try {
             res = Sets.symmetric(denotators);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -186,7 +186,7 @@ public class SetRubette extends AbstractRubette {
         try {
             res = Sets.difference(denotators);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -223,7 +223,7 @@ public class SetRubette extends AbstractRubette {
         try {
             res = Sets.addElements(p, denoList);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             addError(e);
         }
         return res;
@@ -275,7 +275,7 @@ public class SetRubette extends AbstractRubette {
                         }
                         return factor;
                     }
-                    catch (RubatoException e) {
+                    catch (LatrunculusCheckedException e) {
                         addError(e);
                         return null;
                     }

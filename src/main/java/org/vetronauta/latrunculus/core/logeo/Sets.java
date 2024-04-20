@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.Address;
@@ -52,14 +52,14 @@ public final class Sets {
     
     /**
      * Returns the set union of the specified power denotators.
-     * @throws RubatoException if <code>d1</code> or <code>d2</code>
+     * @throws LatrunculusCheckedException if <code>d1</code> or <code>d2</code>
      *                         is not of the required form
      */
     public static PowerDenotator union(PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {   
-            throw new RubatoException("Sets.union: "+d1+" and "+d2+" do not have the same base form");
+            throw new LatrunculusCheckedException("Sets.union: "+d1+" and "+d2+" do not have the same base form");
         }
         
         List<Denotator> factors1 = d1.getFactors();
@@ -67,7 +67,7 @@ public final class Sets {
         if (!d1.getAddress().equals(d2.getAddress())) {
             Module newAddress = Address.getCommonModule(d1.getAddress(), d2.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Sets.union: Could not find a common address for "+d1+" and "+d2);
+                throw new LatrunculusCheckedException("Sets.union: Could not find a common address for "+d1+" and "+d2);
             }
             factors1 = readdress(factors1, newAddress);
             factors2 = readdress(factors2, newAddress);
@@ -86,10 +86,10 @@ public final class Sets {
      * Returns the set union of argument list of denotators. 
      * @param denoList input array of power denotators must have
      *                 length > 0 and must have no null elements
-     * @throws RubatoException if the denotators do not have the required form
+     * @throws LatrunculusCheckedException if the denotators do not have the required form
      */
     public static PowerDenotator union(PowerDenotator ... denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (denoList.length == 0) {
             return null;
         }
@@ -107,13 +107,13 @@ public final class Sets {
     
     /**
      * Returns the set intersection of argument denotators.
-     * @throws RubatoException if d1 and d2 are not of the required form
+     * @throws LatrunculusCheckedException if d1 and d2 are not of the required form
      */
     public static PowerDenotator intersection(PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {
-            throw new RubatoException("Sets.intersection: "+d1+" and "+d2+" have not the same factor form");
+            throw new LatrunculusCheckedException("Sets.intersection: "+d1+" and "+d2+" have not the same factor form");
         }
         
         List<Denotator> factors1 = d1.getFactors();
@@ -121,7 +121,7 @@ public final class Sets {
         if (!d1.getAddress().equals(d2.getAddress())) {
             Module newAddress = Address.getCommonModule(d1.getAddress(), d2.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Sets.intersection: Could not find a common address for "+d1+" and "+d2);
+                throw new LatrunculusCheckedException("Sets.intersection: Could not find a common address for "+d1+" and "+d2);
             }
             factors1 = readdress(factors1, newAddress);
             factors2 = readdress(factors2, newAddress);
@@ -139,10 +139,10 @@ public final class Sets {
      * Returns the set intersection of argument list of denotators.
      * @param denoList input array of power denotators must have
      *                 length > 0 and must have no null elements
-     * @throws RubatoException if the denotators have not the required form
+     * @throws LatrunculusCheckedException if the denotators have not the required form
      */
     public static PowerDenotator intersection(PowerDenotator ... denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (denoList.length == 0) {
             return null;
         }
@@ -160,13 +160,13 @@ public final class Sets {
 
     /**
      * Returns the set difference of argument denotators.
-     * @throws RubatoException if d1 and d2 are not of the required form
+     * @throws LatrunculusCheckedException if d1 and d2 are not of the required form
      */
     public static PowerDenotator difference(PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {
-            throw new RubatoException("Sets.difference: "+d1+" and "+d2+" have not the same factor form");
+            throw new LatrunculusCheckedException("Sets.difference: "+d1+" and "+d2+" have not the same factor form");
         }
         
         List<Denotator> factors1 = d1.getFactors();
@@ -174,7 +174,7 @@ public final class Sets {
         if (!d1.getAddress().equals(d2.getAddress())) {
             Module newAddress = Address.getCommonModule(d1.getAddress(), d2.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Sets.difference: Could not find a common address for "+d1+" and "+d2);
+                throw new LatrunculusCheckedException("Sets.difference: Could not find a common address for "+d1+" and "+d2);
             }
             factors1 = readdress(factors1, newAddress);
             factors2 = readdress(factors2, newAddress);
@@ -190,10 +190,10 @@ public final class Sets {
     
     /**
      * Returns the set difference of argument list of denotators.
-     * @throws RubatoException if the denotators have not the required form
+     * @throws LatrunculusCheckedException if the denotators have not the required form
      */
     public static PowerDenotator difference(PowerDenotator ... denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (denoList.length == 0) {
             return null;
         }
@@ -211,13 +211,13 @@ public final class Sets {
     
     /**
      * Returns the symmetric set difference of argument denotators.
-     * @throws RubatoException if d1 and d2 are not of the required form
+     * @throws LatrunculusCheckedException if d1 and d2 are not of the required form
      */
     public static PowerDenotator symmetric(PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Form form = processArguments(d1, d2);
         if (form == null) {
-            throw new RubatoException("Sets.symmetric: "+d1+" and "+d2+" have not the same factor form");
+            throw new LatrunculusCheckedException("Sets.symmetric: "+d1+" and "+d2+" have not the same factor form");
         }
 
         List<Denotator> factors1 = d1.getFactors();
@@ -225,7 +225,7 @@ public final class Sets {
         if (!d1.getAddress().equals(d2.getAddress())) {
             Module newAddress = Address.getCommonModule(d1.getAddress(), d2.getAddress());
             if (newAddress == null) {
-                throw new RubatoException("Sets.symmetric: Could not find a common address for "+d1+" and "+d2);
+                throw new LatrunculusCheckedException("Sets.symmetric: Could not find a common address for "+d1+" and "+d2);
             }
             factors1 = readdress(factors1, newAddress);
             factors2 = readdress(factors2, newAddress);
@@ -241,10 +241,10 @@ public final class Sets {
 
     /**
      * Returns the symmetric set difference of argument list of denotators.
-     * @throws RubatoException if the denotators have not the required form
+     * @throws LatrunculusCheckedException if the denotators have not the required form
      */
     public static PowerDenotator symmetric(PowerDenotator ... denoList)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         if (denoList.length == 0) {
             return null;
         }
@@ -259,15 +259,15 @@ public final class Sets {
      * Returns a denotator, where only the elements from the argument denotator
      * are contained that satisfy predicate p.
      * @param p the predicate that the elements must satisfy, must have arity 1
-     * @throws RubatoException if d is not of type power or p has arity != 1
+     * @throws LatrunculusCheckedException if d is not of type power or p has arity != 1
      */
     public static Denotator select(Predicate p, PowerDenotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         boolean changed = false;
         PowerForm form = d.getPowerForm();
 
         if (p.getArity() != 1) {
-            throw new RubatoException("Sets.select: Expected arity 1, "+
+            throw new LatrunculusCheckedException("Sets.select: Expected arity 1, "+
                                       "but got %1", p.getArity());
         }
 
@@ -295,10 +295,10 @@ public final class Sets {
     
     /**
      * Returns the Cartesian product of two denotators of type power.
-     * @throws RubatoException if d1 or d2 is not of type power
+     * @throws LatrunculusCheckedException if d1 or d2 is not of type power
      */
     public static PowerDenotator cartesian(PowerForm resForm, PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         ListMorphismMap m1 = (ListMorphismMap)d1.getCoordinate().getMap();
         ListMorphismMap m2 = (ListMorphismMap)d2.getCoordinate().getMap();
 
@@ -327,10 +327,10 @@ public final class Sets {
     
     /**
      * Returns the disjoint union of two denotators of type power.
-     * @throws RubatoException if d1 or d2 is not of type power
+     * @throws LatrunculusCheckedException if d1 or d2 is not of type power
      */
     public static Denotator disjointUnion(PowerDenotator d1, PowerDenotator d2)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         PowerForm form1 = d1.getPowerForm();
         PowerForm form2 = d2.getPowerForm();
 
@@ -360,7 +360,7 @@ public final class Sets {
     //
     
     public static PowerDenotator addElement(PowerDenotator d, Denotator element)
-            throws RubatoException {        
+            throws LatrunculusCheckedException {        
         List<Denotator> newList = new LinkedList<Denotator>();
         newList.addAll(d.getFactors());
         newList.add(element);
@@ -369,7 +369,7 @@ public final class Sets {
 
     
     public static PowerDenotator addElements(PowerDenotator d, Denotator ... elements)
-            throws RubatoException {        
+            throws LatrunculusCheckedException {        
         List<Denotator> newList = new LinkedList<Denotator>();
         newList.addAll(d.getFactors());
         for (int i = 0; i < elements.length; i++) {
@@ -380,7 +380,7 @@ public final class Sets {
     
 
     public static PowerDenotator addElements(PowerDenotator d, List<Denotator> elements)
-            throws RubatoException {        
+            throws LatrunculusCheckedException {        
         List<Denotator> newList = new LinkedList<Denotator>();
         newList.addAll(d.getFactors());
         newList.addAll(elements);

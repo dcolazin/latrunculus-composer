@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.rubato.rubettes.util.DenotatorPath;
@@ -177,7 +177,7 @@ class DenotatorPathTest {
 	}
 
 	@Test
-	void testOtherStuffForThesisTest() throws RubatoException {
+	void testOtherStuffForThesisTest() throws LatrunculusCheckedException {
 		SimpleForm onset = FormFactory.makeQModuleForm("Onset");
 		Module eulerPitchSpace = new VectorModule<>(ZRing.ring, 3);
 		SimpleForm eulerPitch = FormFactory.makeModuleForm("EulerPitch", eulerPitchSpace);

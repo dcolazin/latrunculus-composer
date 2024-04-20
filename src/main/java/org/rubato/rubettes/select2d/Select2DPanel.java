@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.composer.components.JFormTree;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.view2d.*;
@@ -486,7 +486,7 @@ class Select2DPanel
                 select2DView.recalcScreenCoords();
                 select2DView.repaint();
             }
-            catch (RubatoException e) {
+            catch (LatrunculusCheckedException e) {
                 clearView();
                 return;
             }

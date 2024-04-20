@@ -2,7 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
@@ -25,7 +25,7 @@ class PowerDenotatorTest {
 	}
 
 	@Test
-	void testCopy() throws RubatoException {
+	void testCopy() throws LatrunculusCheckedException {
 		PowerDenotator copy = this.macroScore.deepCopy();
 		assertEquals(copy, this.macroScore);
 		assertTrue(copy != this.macroScore);
@@ -33,7 +33,7 @@ class PowerDenotatorTest {
 		this.checkIfDeepCopied(copy, this.macroScore, new int[]{0,1,0,1,0});
 	}
 	
-	private void checkIfDeepCopied(Denotator d1, Denotator d2, int[] path) throws RubatoException {
+	private void checkIfDeepCopied(Denotator d1, Denotator d2, int[] path) throws LatrunculusCheckedException {
 		Denotator insideD1 = d1.get(path);
 		Denotator insideD2 = d2.get(path);
 		assertEquals(insideD1, insideD2);

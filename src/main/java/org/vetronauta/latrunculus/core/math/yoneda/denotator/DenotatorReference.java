@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
@@ -96,32 +96,32 @@ public final class DenotatorReference extends Denotator {
     
     @Override
     protected Denotator get(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         throw new Error("Fatal error: DenotatorReference.get should never be called");
     }
     
     @Override
-    protected Denotator replace(int[] path, int currentPosition, Denotator d) throws RubatoException {
+    protected Denotator replace(int[] path, int currentPosition, Denotator d) throws LatrunculusCheckedException {
         throw new Error("Fatal error: DenotatorReference.replace should never be called");
     }
     
     @Override
     protected Denotator map(int[] path, int currentPosition, ModuleMorphism morphism)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         throw new Error("Fatal error: DenotatorReference.map should never be called");
     }
 
     
     @Override
     protected ModuleElement getElement(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         throw new Error("Fatal error: DenotatorReference.getElement should never be called");
     }
     
     
     @Override
     protected ModuleMorphism getModuleMorphism(int[] path, int curpos)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         throw new Error("Fatal error: DenotatorReference.getModuleMorphism should never be called");
     }
     

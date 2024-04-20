@@ -1,7 +1,7 @@
 package org.rubato.rubettes.util;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -49,7 +49,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 				this.setLayerToVoice((LimitDenotator)currentSoundNote);
 				soundNodes.add(this.createNodeDenotator(currentSoundNote));
 			}
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		return this.createSoundScore(soundNodes);
 	}
 	
@@ -77,7 +77,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 	private PowerDenotator createSoundScore(List<Denotator> nodes) {
 		try {
 			return new PowerDenotator(this.emptyName, this.soundScoreForm, nodes);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			return null;
 		}
 	}
@@ -114,7 +114,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 			}
 			//this takes a lot of time compared to the other operations
 			return new LimitDenotator(this.emptyName, this.soundNoteForm, coordinates);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -127,7 +127,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 			//note.setFactor(6, this.createEmptyModulators());
 			return this.createNodeDenotator(note);
 			//this takes a lot of time compared to the other operations
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -145,7 +145,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 				}
 			}
 			return new PowerDenotator(this.emptyName, this.modulatorsForm, modulators);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -156,13 +156,13 @@ public class SoundNoteGenerator extends NoteGenerator {
 			List<Denotator> modulators = new ArrayList<Denotator>();
 			modulators.add(this.createModulatorNoteDenotator(20, 10));
 			return new PowerDenotator(this.emptyName, this.modulatorsForm, modulators);
-		} catch (RubatoException e) {
+		} catch (LatrunculusCheckedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws RubatoException {
+	private LimitDenotator createModulatorNoteDenotator(int relativeFrequency, int relativeAmplitude) throws LatrunculusCheckedException {
 		Rational modulatorPitch = new Rational(relativeFrequency);
 		ZInteger modulatorLoudness = new ZInteger(relativeAmplitude);
 		List<Denotator> coordinates = new ArrayList<>();
@@ -177,7 +177,7 @@ public class SoundNoteGenerator extends NoteGenerator {
 		return new LimitDenotator(this.emptyName, this.soundNoteForm, coordinates);
 	}
 	
-	private PowerDenotator createEmptyModulators() throws RubatoException {
+	private PowerDenotator createEmptyModulators() throws LatrunculusCheckedException {
 		List<Denotator> modulators = new ArrayList<>();
 		return new PowerDenotator(this.emptyName, this.modulatorsForm, modulators);
 	}

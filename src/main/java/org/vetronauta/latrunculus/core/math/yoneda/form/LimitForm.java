@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -149,10 +149,10 @@ public final class LimitForm extends Form {
      * @return the form at the coordinate with the given label  
      */
     public Form getForm(String label)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         int i = labelToIndex(label);
         if (i < 0) {
-            throw new RubatoException("LimitForm.getForm: Label %%1 does not exist", label);
+            throw new LatrunculusCheckedException("LimitForm.getForm: Label %%1 does not exist", label);
         }
         return getForm(i);
     }
@@ -267,7 +267,7 @@ public final class LimitForm extends Form {
         try {
             res = new LimitDenotator(null, this, cds);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             e.printStackTrace();
         }
         return res;
@@ -286,7 +286,7 @@ public final class LimitForm extends Form {
         try {
             res = new LimitDenotator(null, this, cds);
         }
-        catch (RubatoException e) {
+        catch (LatrunculusCheckedException e) {
             e.printStackTrace();
         }
         return res;

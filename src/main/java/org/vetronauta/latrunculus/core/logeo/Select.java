@@ -22,7 +22,7 @@ package org.vetronauta.latrunculus.core.logeo;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.predicates.FormPredicate;
 import org.vetronauta.latrunculus.core.logeo.predicates.Predicate;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -41,10 +41,10 @@ public final class Select {
      * that satisfy predicate <code>p</code>.
      * @param p the predicate should be able to return a result for any
      *          form of denotator
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public static List<Denotator> select(Predicate p, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         LinkedList<Denotator> results = new LinkedList<Denotator>();
         select(p, d, results);
         return results;
@@ -56,10 +56,10 @@ public final class Select {
      * that satisfy predicate <code>p</code>.
      * @param p the predicate needs only to return a result for an argument of
      *          form <code>f</code>
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public static List<Denotator> select(Form f, Predicate p, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Predicate predicate = new FormPredicate(f).and(p);
         return select(predicate, d);
     }
@@ -67,17 +67,17 @@ public final class Select {
 
     /**
      * Returns the nodes of form f from d.
-     * @throws RubatoException
+     * @throws LatrunculusCheckedException
      */
     public static List<Denotator> select(Form f, Denotator d)
-            throws RubatoException {
+            throws LatrunculusCheckedException {
         Predicate predicate = new FormPredicate(f);
         return select(predicate, d);
     }
         
 
     private static void select(Predicate p, Denotator d, List<Denotator> denoList)
-            throws RubatoException {        
+            throws LatrunculusCheckedException {        
         if (p.call(d)) {
             denoList.add(d);
         }

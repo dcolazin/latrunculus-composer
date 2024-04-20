@@ -1,6 +1,6 @@
 package org.rubato.rubettes.bigbang.model;
 
-import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.FormValueFinder;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -53,13 +53,13 @@ public class DenotatorValueExtractor {
 				//composition.display();
 			}
 			this.extractObjects(composition, null, null, 0, 0, 0, new DenotatorPath(baseForm));
-		} catch (RubatoException e) { e.printStackTrace(); }
+		} catch (LatrunculusCheckedException e) { e.printStackTrace(); }
 		this.objects.updateValues();
 		this.objects.setMinMaxValues(this.getMinValues(), this.getMaxValues());
 	}
 	
 	//recursive method!!
-	private void extractObjects(Denotator currentDenotator, BigBangObject parentObject, BigBangObject currentObject, int satelliteLevel, int siblingNumber, int colimitIndex, DenotatorPath currentPath) throws RubatoException {
+	private void extractObjects(Denotator currentDenotator, BigBangObject parentObject, BigBangObject currentObject, int satelliteLevel, int siblingNumber, int colimitIndex, DenotatorPath currentPath) throws LatrunculusCheckedException {
 		FormDenotatorTypeEnum denotatorType = currentDenotator.getType();
 		if (denotatorType == FormDenotatorTypeEnum.POWER || denotatorType == FormDenotatorTypeEnum.LIST) {
 			FactorDenotator currentPower = (FactorDenotator)currentDenotator;
