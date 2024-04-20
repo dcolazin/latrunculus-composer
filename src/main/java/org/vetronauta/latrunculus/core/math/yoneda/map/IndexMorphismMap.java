@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -170,7 +170,7 @@ public final class IndexMorphismMap implements MorphismMap {
     }
     
     
-    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary dict, Map<Object,Object> history) {
         Denotator d = getFactor();
         if (d instanceof DenotatorReference) {
             Denotator newDenotator = dict.getDenotator(d.getNameString());

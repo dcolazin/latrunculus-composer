@@ -28,7 +28,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.rubato.composer.dialogs.denotators.JDenotatorDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -38,27 +38,27 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 public class JSelectDenotator extends JPanel implements ActionListener {
 
-    public JSelectDenotator(RubatoDictionary dict) {
+    public JSelectDenotator(Dictionary dict) {
         this.dict = dict;
         createLayout();
     }
 
     
-    public JSelectDenotator(RubatoDictionary dict, FormDenotatorTypeEnum type) {
+    public JSelectDenotator(Dictionary dict, FormDenotatorTypeEnum type) {
         this.type = type;
         this.dict = dict;
         createLayout();
     }
     
 
-    public JSelectDenotator(RubatoDictionary dict, Form form) {
+    public JSelectDenotator(Dictionary dict, Form form) {
         this.dict = dict;
         this.form = form;
         createLayout();
     }
     
     
-    public JSelectDenotator(RubatoDictionary dict, Form form, String label) {
+    public JSelectDenotator(Dictionary dict, Form form, String label) {
         this.dict = dict;
         this.form = form;
         this.label = label;
@@ -232,7 +232,7 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     private String    label     = null;
     private Denotator denotator = null;
     
-    private RubatoDictionary dict = null;
+    private Dictionary dict = null;
     
     private static final String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); 
     private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); 

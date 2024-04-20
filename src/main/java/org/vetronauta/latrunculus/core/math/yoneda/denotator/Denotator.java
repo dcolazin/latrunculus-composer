@@ -36,7 +36,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
 import java.util.ArrayList;
@@ -428,13 +428,13 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
      * @param dict contains the lookup table
      * @return true if all references have been resolved
      */
-    public boolean resolveReferences(RubatoDictionary dict) {
+    public boolean resolveReferences(Dictionary dict) {
         Map<Object,Object> history = new HashMap<>();
         return resolveReferences(dict, history);
     }
     
 
-    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary dict, Map<Object,Object> history) {
         if (history.containsKey(this)) {
             return true;
         }

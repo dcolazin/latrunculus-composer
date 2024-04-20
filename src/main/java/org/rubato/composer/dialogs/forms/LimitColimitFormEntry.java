@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -37,7 +37,7 @@ public class LimitColimitFormEntry
         extends AbstractFormEntry
         implements ActionListener {
 
-    public LimitColimitFormEntry(RubatoDictionary dict, FormDenotatorTypeEnum type) {
+    public LimitColimitFormEntry(Dictionary dict, FormDenotatorTypeEnum type) {
         this.type = type;
         setLayout(new BorderLayout());
         formDiagram = new JFormDiagram(dict);

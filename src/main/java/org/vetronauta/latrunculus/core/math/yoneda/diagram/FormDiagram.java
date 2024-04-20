@@ -22,7 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.diagram;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.Yoneda;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -305,7 +305,7 @@ public final class FormDiagram implements Diagram {
     } 
     
     
-    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary dict, Map<Object,Object> history) {
         for (int i = 0; i < getFormCount(); i++) {
             Form form = getForm(i);
             if (form instanceof FormReference) {

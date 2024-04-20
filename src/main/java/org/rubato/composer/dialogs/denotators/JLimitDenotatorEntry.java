@@ -28,7 +28,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -45,7 +45,7 @@ public class JLimitDenotatorEntry
     }
 
 
-    public JLimitDenotatorEntry(LimitForm form, RubatoDictionary dict) {
+    public JLimitDenotatorEntry(LimitForm form, Dictionary dict) {
         this.form = form;
         this.dict = dict;
         setLayout(new BorderLayout());
@@ -113,5 +113,5 @@ public class JLimitDenotatorEntry
 
     private LimitForm          form;
     private JSelectDenotator[] selectDenotator;
-    private RubatoDictionary   dict;
+    private Dictionary dict;
 }

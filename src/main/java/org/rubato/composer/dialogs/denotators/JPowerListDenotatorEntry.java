@@ -32,7 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.dialogs.JSelectDenotatorDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -58,7 +58,7 @@ public class JPowerListDenotatorEntry
     }
 
     
-    public JPowerListDenotatorEntry(PowerForm form, RubatoDictionary dict) {
+    public JPowerListDenotatorEntry(PowerForm form, Dictionary dict) {
         powerForm = form;
         listForm = null;
         baseForm = form.getForm();
@@ -70,7 +70,7 @@ public class JPowerListDenotatorEntry
     }
 
     
-    public JPowerListDenotatorEntry(ListForm form, RubatoDictionary dict) {
+    public JPowerListDenotatorEntry(ListForm form, Dictionary dict) {
         powerForm = null;
         listForm = form;
         baseForm = form.getForm();
@@ -294,7 +294,7 @@ public class JPowerListDenotatorEntry
 
     private DenotatorListModel listModel;
     
-    private RubatoDictionary dict;
+    private Dictionary dict;
 
     private static final Border emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 }

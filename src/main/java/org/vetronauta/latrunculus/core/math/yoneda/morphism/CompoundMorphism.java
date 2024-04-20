@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.MappingException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -249,7 +249,7 @@ public final class CompoundMorphism extends YonedaMorphism {
     }
     
 
-    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary dict, Map<Object,Object> history) {
         return (domain.resolveReferences(dict, history) &&
                 codomain.resolveReferences(dict, history) &&
                 map.resolveReferences(dict, history));

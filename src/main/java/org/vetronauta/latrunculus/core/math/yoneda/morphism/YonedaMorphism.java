@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.morphism;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -168,7 +168,7 @@ public abstract class YonedaMorphism implements Yoneda, Comparable<YonedaMorphis
      * 
      * @return true iff all references have been resolved.
      */
-    public abstract boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history);
+    public abstract boolean resolveReferences(Dictionary dict, Map<Object,Object> history);
 
     /**
      * Returns a hash code for this morphism.

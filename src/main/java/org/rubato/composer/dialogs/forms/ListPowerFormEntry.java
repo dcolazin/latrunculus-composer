@@ -25,7 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.rubato.composer.components.JSelectForm;
 import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -35,7 +35,7 @@ public class ListPowerFormEntry
         extends AbstractFormEntry
         implements ActionListener {
 
-    public ListPowerFormEntry(RubatoDictionary dict, FormDenotatorTypeEnum type) {
+    public ListPowerFormEntry(Dictionary dict, FormDenotatorTypeEnum type) {
         setLayout(new BorderLayout());
         this.type = type;
         selectForm = new JSelectForm(dict);

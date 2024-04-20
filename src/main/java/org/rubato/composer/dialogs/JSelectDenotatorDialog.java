@@ -29,14 +29,14 @@ import java.util.Collection;
 
 import javax.swing.*;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 public final class JSelectDenotatorDialog extends JDialog {
 
-    public static Denotator showDialog(Component comp, RubatoDictionary dict) {
+    public static Denotator showDialog(Component comp, Dictionary dict) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectDenotatorDialog dialog = new JSelectDenotatorDialog(frame, comp);
         dialog.setDenotators(dict.getDenotators());
@@ -46,7 +46,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
     
     
-    public static Denotator showDialog(Component comp, RubatoDictionary dict, FormDenotatorTypeEnum type) {
+    public static Denotator showDialog(Component comp, Dictionary dict, FormDenotatorTypeEnum type) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectDenotatorDialog dialog = new JSelectDenotatorDialog(frame, comp, type);
         Collection<Denotator> allDenos = dict.getDenotators();
@@ -63,7 +63,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     }
 
     
-    public static Denotator showDialog(Component comp, RubatoDictionary dict, Form form) {
+    public static Denotator showDialog(Component comp, Dictionary dict, Form form) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectDenotatorDialog dialog = new JSelectDenotatorDialog(frame, comp, form);
         Collection<Denotator> allDenos = dict.getDenotators();

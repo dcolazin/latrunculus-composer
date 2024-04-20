@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.forms.TempDictionary;
@@ -39,13 +39,13 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
 public class JSelectForm extends JPanel implements ActionListener {
 
-    public JSelectForm(RubatoDictionary dict) {
+    public JSelectForm(Dictionary dict) {
         this.dict = dict;
         createLayout();
     }
 
     
-    public JSelectForm(RubatoDictionary dict, FormDenotatorTypeEnum... types) {
+    public JSelectForm(Dictionary dict, FormDenotatorTypeEnum... types) {
         this.types = new ArrayList<>();
         for (int i = 0; i < types.length; i++) {
             this.types.add(types[i]);
@@ -55,7 +55,7 @@ public class JSelectForm extends JPanel implements ActionListener {
     }
     
 
-    public JSelectForm(RubatoDictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
+    public JSelectForm(Dictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
         this.types = types;
         this.dict = dict;
         createLayout();
@@ -201,7 +201,7 @@ public class JSelectForm extends JPanel implements ActionListener {
     private Form               baseForm = null;
     private ArrayList<FormDenotatorTypeEnum> types    = null;
     
-    private RubatoDictionary dict = null;
+    private Dictionary dict = null;
     
     private static final String FORM = Messages.getString("JSelectForm.form");
     private static final String CREATE_BUTTON = Messages.getString("JSelectForm.create");

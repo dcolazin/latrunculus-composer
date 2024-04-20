@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.exception.MappingException;
@@ -81,5 +81,5 @@ public interface MorphismMap extends DeepCopyable<MorphismMap>, Comparable<Morph
 
     List<Denotator> getDenotatorDependencies(List<Denotator> list);
    
-    boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history);
+    boolean resolveReferences(Dictionary dict, Map<Object,Object> history);
 }

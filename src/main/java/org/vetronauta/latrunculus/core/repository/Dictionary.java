@@ -27,7 +27,7 @@ import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-public interface RubatoDictionary {
+public interface Dictionary {
 
     /**
      * Returns a list of all forms.

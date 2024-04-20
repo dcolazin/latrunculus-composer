@@ -23,16 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
-public class TempDictionary implements RubatoDictionary {
+public class TempDictionary implements Dictionary {
 
-    public TempDictionary(RubatoDictionary dict) {
+    public TempDictionary(Dictionary dict) {
         this.dict = dict;     
         this.forms = new HashMap<String,Form>();
     }
@@ -103,6 +103,6 @@ public class TempDictionary implements RubatoDictionary {
     }
     
     
-    private RubatoDictionary     dict;
+    private Dictionary dict;
     private HashMap<String,Form> forms;
 }

@@ -29,7 +29,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.rubato.composer.dialogs.JSelectFormDialog;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 
@@ -37,7 +37,7 @@ public class JFormDiagram
         extends JPanel
         implements ActionListener, ListSelectionListener {
 
-    public JFormDiagram(RubatoDictionary dict) {
+    public JFormDiagram(Dictionary dict) {
         this.dict = dict;
         createLayout();
     }
@@ -476,7 +476,7 @@ public class JFormDiagram
     
     private DiagramPanel diagramPanel;
     
-    private RubatoDictionary dict;
+    private Dictionary dict;
     private int selectedIndex = -1;
     
     protected boolean[][] morphMatrix = new boolean[0][0];

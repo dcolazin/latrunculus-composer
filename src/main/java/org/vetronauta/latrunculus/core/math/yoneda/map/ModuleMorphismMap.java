@@ -21,7 +21,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.map;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.exception.CompositionException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
@@ -270,7 +270,7 @@ public class ModuleMorphismMap<A extends ModuleElement<A,RA>, B extends ModuleEl
      * @return true iff all references have been resolved.
      */
     @Override
-    public boolean resolveReferences(RubatoDictionary reader, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary reader, Map<Object,Object> history) {
         return true;
     }
     

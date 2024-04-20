@@ -19,7 +19,7 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -76,7 +76,7 @@ public final class FormReference extends Form {
         throw new UnsupportedOperationException();
     }
     
-    public boolean resolveReferences(RubatoDictionary dict) {
+    public boolean resolveReferences(Dictionary dict) {
         return true;
     }
     

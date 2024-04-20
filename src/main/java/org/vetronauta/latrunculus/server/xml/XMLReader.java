@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.rubato.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.rubettes.builtin.MacroRubette;
@@ -93,7 +93,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
  * 
  * @author Gérard Milmeister
  */
-public final class XMLReader implements RubatoDictionary {
+public final class XMLReader implements Dictionary {
 
     //TODO proper chain of responsibility
     private final LatrunculusRestrictedXmlReader<MathDefinition> definitionReader = new DefaultDefinitionXmlReader();

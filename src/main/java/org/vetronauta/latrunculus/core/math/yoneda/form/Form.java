@@ -22,7 +22,7 @@
 package org.vetronauta.latrunculus.core.math.yoneda.form;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;
@@ -331,12 +331,12 @@ public abstract class Form extends AbstractConnectableYoneda implements Comparab
      * 
      * @return true iff all references have been resolved.
      */
-    public boolean resolveReferences(RubatoDictionary dict) {
+    public boolean resolveReferences(Dictionary dict) {
         return resolveReferences(dict, new IdentityHashMap<>());
     }
     
     
-    public boolean resolveReferences(RubatoDictionary dict, Map<Object,Object> history) {
+    public boolean resolveReferences(Dictionary dict, Map<Object,Object> history) {
         if (history.containsKey(this)) {
             return true;
         }

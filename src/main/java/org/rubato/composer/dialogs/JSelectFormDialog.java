@@ -19,7 +19,7 @@
 
 package org.rubato.composer.dialogs;
 
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
@@ -52,7 +52,7 @@ import static org.rubato.composer.Utilities.installEscapeKey;
 
 public final class JSelectFormDialog extends JDialog {
 
-    public static Form showDialog(Component comp, RubatoDictionary dict) {
+    public static Form showDialog(Component comp, Dictionary dict) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectFormDialog dialog = new JSelectFormDialog(frame, comp);
         dialog.setForms(dict.getForms());
@@ -61,7 +61,7 @@ public final class JSelectFormDialog extends JDialog {
     }
     
     
-    public static Form showDialog(Component comp, RubatoDictionary dict,
+    public static Form showDialog(Component comp, Dictionary dict,
                                   Form baseForm, ArrayList<FormDenotatorTypeEnum> types) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectFormDialog dialog = new JSelectFormDialog(frame, comp, types);
@@ -84,7 +84,7 @@ public final class JSelectFormDialog extends JDialog {
     }
 
     
-    public static Form showDialog(Component comp, RubatoDictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
+    public static Form showDialog(Component comp, Dictionary dict, ArrayList<FormDenotatorTypeEnum> types) {
         Frame frame = JOptionPane.getFrameForComponent(comp);
         JSelectFormDialog dialog = new JSelectFormDialog(frame, comp, types);
         LinkedList<Form> newList = new LinkedList<>();

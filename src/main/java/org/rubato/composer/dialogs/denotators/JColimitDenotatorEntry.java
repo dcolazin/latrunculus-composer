@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.repository.Dictionary;
 import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
@@ -47,7 +47,7 @@ public class JColimitDenotatorEntry
     }
 
     
-    public JColimitDenotatorEntry(ColimitForm form, RubatoDictionary dict) {
+    public JColimitDenotatorEntry(ColimitForm form, Dictionary dict) {
         this.form = form;
         this.dict = dict;
         setLayout(new BorderLayout());
@@ -123,5 +123,5 @@ public class JColimitDenotatorEntry
     private JComboBox        comboBox;
     private JSelectDenotator selectDenotator;
     private int              currentIndex = 0;
-    private RubatoDictionary dict;
+    private Dictionary dict;
 }
