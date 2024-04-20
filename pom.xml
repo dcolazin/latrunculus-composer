@@ -5,7 +5,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	<groupId>org.vetronauta</groupId>
 	<artifactId>latrunculus-composer</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<dependencies>
 		<dependency>
@@ -81,7 +81,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		</dependency>
 	</dependencies>
 	<dependencyManagement><!-- TODO --></dependencyManagement>
-	<modules><!-- TODO --></modules>
+	<modules><!-- TODO -->
+        <module>latrunculus-core</module>
+		<module>latrunculus-wip</module>
+	</modules>
 
 	<properties>
 	    <maven.compiler.source>1.8</maven.compiler.source>

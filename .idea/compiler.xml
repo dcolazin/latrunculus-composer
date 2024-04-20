@@ -7,7 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="latrunculus-composer" />
+        <module name="latrunculus-wip" />
+        <module name="latrunculus-core" />
       </profile>
     </annotationProcessing>
   </component>
