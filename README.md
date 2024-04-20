@@ -28,6 +28,9 @@ $ mvn javadoc:javadoc
 * [ ] Be ready to be able to update to Java 11 when needed (and consider updating)
 * [ ] Separation of the server "core" components and of the client "gui" components
   * [ ] latrunculus-core (math library)
+    * [x] separation
+    * [ ] review
+    * [ ] tests
   * [ ] latrunculus-server
   * [ ] latrunculus-swing-client
 * [ ] Move the BigBang rubette to a different jar, as many dependencies are required for this rubette and not for the core composer?
@@ -36,6 +39,7 @@ $ mvn javadoc:javadoc
 * [ ] Test coverage >70% and review current tests
 * [ ] OSC support
 * [ ] JSON serialization
+* [ ] HTTP server
 * [ ] Linting and improve maintainability
 * [ ] SLF4J (remove System.out, e.printStacktrace, ...)
 * [ ] Review i18n
