@@ -56,7 +56,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -65,7 +64,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Observable;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
@@ -717,79 +715,6 @@ public class Repository extends Observable implements Dictionary { //TODO this s
         }
         return list;
     }
-
-    /**
-     * Prints a tabular representation of the repository on stdout.
-     */
-    public void display() {
-        display(System.out);
-    }
-
-
-    /**
-     * Prints a tabular representation of the repository.
-     * @param out print to this PrintStream
-     */
-    public void display(PrintStream out) {
-        int width = 70;
-        out.print("┍"); repeat(out, "━", width-2); out.println("┑");
-        out.print("│Forms"); repeat(out, " ", width-7); out.println("│");
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<FormItem> formSet = new TreeSet<>(forms.values());
-        for (FormItem item : formSet) {
-            Form f = item.getForm();
-            String s = f.getName().getNameEntry()+": "+f; 
-            out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
-        }
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        out.print("│Denotators"); repeat(out, " ", width-12); out.println("│");
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<DenotatorItem> denoSet = new TreeSet<>(denotators.values());
-        for (DenotatorItem item : denoSet) {
-            Denotator d = item.getDenotator();
-            String s = d.getName().getNameEntry()+": "+d.getForm().getName().getNameEntry();
-            out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
-        }
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        out.print("│Modules"); repeat(out, " ", width-9); out.println("│");
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleItem> moduleSet = new TreeSet<>(modules.values());
-        for (ModuleItem item : moduleSet) {
-            String s = item.getName()+": "+item.getModule();
-            out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
-        }
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        out.print("│Module Elements"); repeat(out, " ", width-17); out.println("│");
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleElementItem> moduleElementSet = new TreeSet<>(moduleElements.values());
-        for (ModuleElementItem item : moduleElementSet) {
-            String s = item.getName()+": "+item.getModuleElement();
-            out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
-        }
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        out.print("│Module Morphisms"); repeat(out, " ", width-18); out.println("│");
-        out.print("├"); repeat(out, "─", width-2); out.println("┤");
-        TreeSet<ModuleMorphismItem> moduleMorphismSet = new TreeSet<>(moduleMorphisms.values());
-        for (ModuleMorphismItem item : moduleMorphismSet) {
-            String s = item.getName()+": "+item.getModuleMorphism();
-            out.print("│"+s); repeat(out, " ", width-s.length()-2); out.println("│");
-        }
-        out.print("┕");
-        repeat(out, "━", width-2);
-        out.print("┙");
-        out.println();
-    }
-
-    
-    /**
-     * Print out the string <code>c</code> repeated <code>n</code> times.
-     */
-    private void repeat(PrintStream out, String c, int n) {
-        for (int i = 0; i < n; i++) {
-            out.print(c);
-        }
-    }
-    
 
     /**
      * Returns the global system-wide repository.
