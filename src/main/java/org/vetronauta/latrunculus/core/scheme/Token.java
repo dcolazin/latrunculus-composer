@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
-import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 
 
 /**
@@ -72,8 +71,7 @@ public final class Token {
     
     public static Double toReal(String s) {
         try {
-            Double d = Double.valueOf(s);
-            return d;
+            return Double.valueOf(s);
         }
         catch (NumberFormatException e) {
             return null;
@@ -83,8 +81,7 @@ public final class Token {
     
     public static Integer toInt(String s) {
         try {
-            Integer i = Integer.valueOf(s);
-            return i;
+            return Integer.valueOf(s);
         }
         catch (NumberFormatException e) {
             return null;
@@ -94,7 +91,7 @@ public final class Token {
     
     public static Rational toRational(String s) {
         try {
-            return ArithmeticParsingUtils.parseRational(s);
+            return SchemeParsingUtils.parseRational(s);
         }
         catch (NumberFormatException e) {
             return null;
@@ -104,7 +101,7 @@ public final class Token {
     
     public static Complex toComplex(String s) {
         try {
-            return ArithmeticParsingUtils.parseComplex(s);
+            return SchemeParsingUtils.parseComplex(s);
         }
         catch (NumberFormatException e) {
             return null;
@@ -150,7 +147,7 @@ public final class Token {
      * 
      * @author Gérard Milmeister
      */
-    public static enum TokenType {
+    public enum TokenType {
         LPAREN,
         RPAREN,
         INTEGER,

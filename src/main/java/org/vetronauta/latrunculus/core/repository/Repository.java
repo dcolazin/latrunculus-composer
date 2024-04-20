@@ -51,11 +51,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.NameForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,7 +79,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.SCHEME;
  * 
  * @author Gérard Milmeister
  */
-public class Repository extends Observable implements Dictionary {
+public class Repository extends Observable implements Dictionary { //TODO this stuff should be in server package?
 
     /**
      * Registers a form with repository.
@@ -171,32 +169,13 @@ public class Repository extends Observable implements Dictionary {
      * Registers the objects in the XML file of the reader.
      * @return true if successful
      */
-    public synchronized boolean registerXML(Reader reader) { 
-        XMLReader xmlReader = new XMLReader(reader, this);
-        xmlReader.parse();
-        if (xmlReader.hasError()) {
+    public synchronized boolean registerXML(LoadableDictionary dictionary) {
+        dictionary.read();
+        if (dictionary.hasError()) {
             return false;
         }
-        return register(xmlReader.getForms(), xmlReader.getDenotators());
+        return register(dictionary.getForms(), dictionary.getDenotators());
     }
-    
-    
-    /**
-     * Registers the objects in the XML file with the specified file name.
-     * @return true if successful
-     * @throws IOException
-     */
-    public synchronized boolean registerXMLFile(String filename) 
-            throws IOException {
-        XMLReader xmlReader = new XMLReader(new File(filename));
-        xmlReader.parse();
-        if (xmlReader.hasError()) {
-            return false;
-        }
-
-        return register(xmlReader.getForms(), xmlReader.getDenotators());
-    }
-    
     
     public synchronized void registerDenotexResource(String denotex)
             throws RubatoException {
