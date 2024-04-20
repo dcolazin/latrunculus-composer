@@ -34,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.map.IndexMorphismMap;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusAddressException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
@@ -63,7 +63,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @param form    the form of the denotator
      * @param index   the index within the colimit form
      * @param deno    the factor of the denotator at the given index
-     * @throws RubatoFormException
+     * @throws LatrunculusFormException
      */
     public ColimitDenotator(NameDenotator name, Module address, ColimitForm form, int index, Denotator deno)
             throws LatrunculusCheckedException {
@@ -86,7 +86,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * @param form  the form of the denotator
      * @param index the index within the colimit form
      * @param deno  the factor of the denotator at the given index
-     * @throws RubatoFormException
+     * @throws LatrunculusFormException
      */
     public ColimitDenotator(NameDenotator name, ColimitForm form, int index, Denotator deno)
             throws LatrunculusCheckedException {
@@ -393,7 +393,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
      * Sets the factor <code>d</code> in position <code>i</code>.
      * This is a destructive operation; beware of aliasing.
      * @throws IllegalStateException if the position i is not in the required range
-     * @throws RubatoFormException if d is not of the required form
+     * @throws LatrunculusFormException if d is not of the required form
      */
     public void setFactor(int i, Denotator d)
             throws LatrunculusCheckedException {
@@ -640,7 +640,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         }
         try {
             checkDenotator(getFactor(), getColimitForm().getForm(getIndex()), getAddress());
-        } catch (RubatoAddressException | RubatoFormException e) {
+        } catch (LatrunculusAddressException | LatrunculusFormException e) {
             return false;
         }
         return true;

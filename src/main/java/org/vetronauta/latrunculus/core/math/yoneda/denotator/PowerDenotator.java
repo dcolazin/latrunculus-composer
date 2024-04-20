@@ -34,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusAddressException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.map.AutoListMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
@@ -730,10 +730,10 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
                 try {
                     checkDenotator(d, getPowerForm().getForm(), getAddress());
                 }
-                catch (RubatoAddressException e) {
+                catch (LatrunculusAddressException e) {
                     return false;
                 }
-                catch (RubatoFormException e) {
+                catch (LatrunculusFormException e) {
                     return false;
                 }
             }

@@ -25,9 +25,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusAddressException;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusFormException;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
@@ -472,25 +472,25 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
     }
 
 
-    protected static RubatoAddressException addressMismatchException(Denotator d, Module address) {
+    protected static LatrunculusAddressException addressMismatchException(Denotator d, Module address) {
         String s = TextUtils.replaceStrings("Denotator has address %%1, but required address is %%2",
                                             d.getAddress(), address);
-        return new RubatoAddressException(s, d.getAddress(), address);        
+        return new LatrunculusAddressException(s, d.getAddress(), address);
     }
 
 
     protected static void checkDenotator(Denotator d, Form f)
-            throws RubatoFormException {
+            throws LatrunculusFormException {
         if (!d.hasForm(f)) {
-            throw new RubatoFormException(d.getForm(), f, "Denotator.checkDenotator");
+            throw new LatrunculusFormException(d.getForm(), f, "Denotator.checkDenotator");
         }
     }
 
 
     protected static void checkDenotator(Denotator d, Form f, Module address)
-            throws RubatoFormException, RubatoAddressException {
+            throws LatrunculusFormException, LatrunculusAddressException {
         if (!d.hasForm(f)) {
-            throw new RubatoFormException(d.getForm(), f, "Denotator.checkDenotator");
+            throw new LatrunculusFormException(d.getForm(), f, "Denotator.checkDenotator");
         }
         else if (d.nullAddressed() && address.isNullModule()) {
             return;

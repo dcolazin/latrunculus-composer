@@ -65,7 +65,7 @@ import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 /**
  * A repository of forms and denotators, retrievable by their names.
  * There is a global repository, that should contain all forms
- * and named denotators used troughout the Rubato system.
+ * and named denotators used troughout the Latrunculus system.
  * 
  * @author Gérard Milmeister
  */

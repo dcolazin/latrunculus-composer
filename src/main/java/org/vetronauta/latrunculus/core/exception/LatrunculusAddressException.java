@@ -28,16 +28,16 @@ import org.vetronauta.latrunculus.core.math.module.generic.Module;
  * 
  * @author Gérard Milmeister
  */
-public final class RubatoAddressException extends LatrunculusCheckedException {
+public final class LatrunculusAddressException extends LatrunculusCheckedException {
 
     /**
-     * Creates a standard RubatoAddressException.
+     * Creates a standard LatrunculusAddressException.
      * 
      * @param s description of the exception
      * @param receivedAddress the actual address
      * @param expectedAddress the expected address
      */
-    public RubatoAddressException(String s, Module receivedAddress, Module expectedAddress) {
+    public LatrunculusAddressException(String s, Module receivedAddress, Module expectedAddress) {
         super(s);
         this.receivedAddress = receivedAddress;
         this.expectedAddress = expectedAddress;

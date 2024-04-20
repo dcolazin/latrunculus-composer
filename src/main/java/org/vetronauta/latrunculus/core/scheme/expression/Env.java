@@ -24,7 +24,7 @@ import org.vetronauta.latrunculus.core.scheme.primitive.ControlPrimitives;
 import org.vetronauta.latrunculus.core.scheme.primitive.InputOutputPrimitives;
 import org.vetronauta.latrunculus.core.scheme.primitive.ListPrimitives;
 import org.vetronauta.latrunculus.core.scheme.primitive.Primitive;
-import org.vetronauta.latrunculus.core.scheme.primitive.RubatoPrimitives;
+import org.vetronauta.latrunculus.core.scheme.primitive.LatrunculusPrimitives;
 import org.vetronauta.latrunculus.core.scheme.primitive.StringPrimitives;
 import org.vetronauta.latrunculus.core.scheme.primitive.VectorPrimitives;
 
@@ -210,7 +210,7 @@ public final class Env extends SExpr {
 
     /**
      * Creates a ground environment containing bindings for
-     * all standard and all Rubato-specific primitives.
+     * all standard and all Latrunculus-specific primitives.
      */
     public static Env makeGlobalEnvironment() {
         Env env = new Env();
@@ -232,7 +232,7 @@ public final class Env extends SExpr {
     
     /**
      * Resets this environment to contain only standard 
-     * and Rubato-specific primitives. 
+     * and Latrunculus-specific primitives.
      */
     public void resetGlobal() {
         link = null;
@@ -253,7 +253,7 @@ public final class Env extends SExpr {
     
     private void fillGlobalEnvironment() {
         fillStandardEnvironment();
-        RubatoPrimitives.fillEnvironment(this);
+        LatrunculusPrimitives.fillEnvironment(this);
     }
 
     

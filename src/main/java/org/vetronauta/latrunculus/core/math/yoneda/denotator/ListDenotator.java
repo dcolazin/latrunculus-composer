@@ -35,8 +35,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusAddressException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
@@ -62,7 +62,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @param address the address of the denotator, null if null-addressed
      * @param form    the form of the denotator
      * @param cds     a list of coordinate denotators
-     * @throws RubatoFormException
+     * @throws LatrunculusFormException
      */
     public ListDenotator(NameDenotator name, Module address, ListForm form, List<Denotator> cds)
             throws LatrunculusCheckedException {
@@ -85,7 +85,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * @param name the name of the denotator, null if denotator is anomymous
      * @param form the form of the denotator
      * @param cds  a list of coordinate denotators
-     * @throws RubatoFormException
+     * @throws LatrunculusFormException
      */
     public ListDenotator(NameDenotator name, ListForm form, List<Denotator> cds)
             throws LatrunculusCheckedException {
@@ -421,7 +421,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * Appends a factor.
      * This is a destructive operation; beware of aliasing.
      * 
-     * @throws RubatoFormException if <code>d</code> is not of the required form
+     * @throws LatrunculusFormException if <code>d</code> is not of the required form
      */
     public boolean appendFactor(Denotator d)
             throws LatrunculusCheckedException {
@@ -443,7 +443,7 @@ public class ListDenotator extends Denotator implements FactorDenotator {
      * Prepends a factor.
      * This is a destructive operation; beware of aliasing.
      * 
-     * @throws RubatoFormException if <code>d</code> is not of the required form
+     * @throws LatrunculusFormException if <code>d</code> is not of the required form
      */
     public void prependFactor(Denotator d)
             throws LatrunculusCheckedException {
@@ -710,10 +710,10 @@ public class ListDenotator extends Denotator implements FactorDenotator {
             try {
                 checkDenotator(d, getListForm().getForm(), getAddress());
             }
-            catch (RubatoAddressException e) {
+            catch (LatrunculusAddressException e) {
                 return false;
             }
-            catch (RubatoFormException e) {
+            catch (LatrunculusFormException e) {
                 return false;
             }
         }

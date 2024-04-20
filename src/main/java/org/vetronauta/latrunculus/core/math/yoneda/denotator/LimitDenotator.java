@@ -34,8 +34,8 @@ import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.diagram.FormDiagram;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ListMorphismMap;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusAddressException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusFormException;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
@@ -648,10 +648,10 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
                 try {
                     checkDenotator(d, getLimitForm().getForm(i++), getAddress());
                 }
-                catch (RubatoAddressException e) {
+                catch (LatrunculusAddressException e) {
                     return false;
                 }
-                catch (RubatoFormException e) {
+                catch (LatrunculusFormException e) {
                     return false;
                 }
             }

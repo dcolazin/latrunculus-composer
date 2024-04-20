@@ -71,12 +71,12 @@ import static org.vetronauta.latrunculus.core.scheme.expression.SNull.SCHEME_NUL
 
 
 /**
- * Rubato-specific primitive procedures.
+ * Latrunculus-specific primitive procedures.
  * 
  * @author Gérard Milmeister
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class RubatoPrimitives {
+public final class LatrunculusPrimitives {
 
     public static void fillEnvironment(Env env) {
         env.addPrimitive(form_p);

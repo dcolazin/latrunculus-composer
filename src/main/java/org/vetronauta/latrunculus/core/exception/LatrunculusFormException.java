@@ -28,16 +28,16 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
  * 
  * @author Gérard Milmeister
  */
-public final class RubatoFormException extends LatrunculusCheckedException {
+public final class LatrunculusFormException extends LatrunculusCheckedException {
 
     /**
-     * Creates a standard RubatoFormException with a message.
+     * Creates a standard LatrunculusFormException with a message.
      * 
      * @param expected the form that was required
      * @param received the actual form
      * @param msg message of the exception
      */
-    public RubatoFormException(String msg, Form expected, Form received) {
+    public LatrunculusFormException(String msg, Form expected, Form received) {
         super(msg);
         this.expected = expected;
         this.received = received;
@@ -45,13 +45,13 @@ public final class RubatoFormException extends LatrunculusCheckedException {
 
     
     /**
-     * Creates a standard RubatoFormException with an automatically
+     * Creates a standard LatrunculusFormException with an automatically
      * generated message.
      * 
      * @param expected the form that was required
      * @param received the actual form
      */
-    public RubatoFormException(Form expected, Form received, String src) {
+    public LatrunculusFormException(Form expected, Form received, String src) {
         this(src+": expected form "+expected+", got "+received+".", expected, received);
     }
     
