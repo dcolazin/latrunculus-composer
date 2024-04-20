@@ -21,11 +21,10 @@
 
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
-import org.vetronauta.latrunculus.core.util.Internal;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.util.Unsafe;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -34,30 +33,20 @@ import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
-import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.map.ModuleMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.util.Internal;
+import org.vetronauta.latrunculus.core.util.Unsafe;
 
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MORPHISM_MAP;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.SIMPLE_TYPE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 
 /**
  * Simple denotator class.
@@ -683,84 +672,6 @@ public final class SimpleDenotator extends Denotator {
         return list;
     }
 
-    /**
-     * Reads XML representation from <code>reader</code> starting with <code>element</code>.
-     *
-     * @return a simple denotator or null if parsing failed
-     */
-    public static SimpleDenotator fromXML(XMLReader reader, Element element) {
-        assert(element.getAttribute(TYPE_ATTR).equals(SIMPLE_TYPE_VALUE));
-
-        // read the form
-        if (!element.hasAttribute(FORM_ATTR)) {
-            reader.setError("Type %%1 of element <%2> is missing attribute %%3.", SIMPLE_TYPE_VALUE, DENOTATOR, FORM_ATTR);
-            return null;
-        }
-        String formName = element.getAttribute(FORM_ATTR);
-        Form form = reader.getForm(formName);
-        if (form == null) {
-            reader.setError("Form with name %%1 does not exist.", formName);
-            return null;
-        }
-        if (!(form instanceof SimpleForm)) {
-            reader.setError("Form with name %%1 is not a form of type %%2.", formName, SIMPLE_TYPE_VALUE);
-            return null;
-        }
-
-        // read the name
-        NameDenotator name = null;
-        if (element.hasAttribute(NAME_ATTR)) {
-            String nameString = element.getAttribute(NAME_ATTR);
-            name = NameDenotator.make(nameString);
-        }
-
-        // read the coordinate (MorphismMap)
-        MorphismMap map;
-        CompoundMorphism cm;
-        CompoundMorphism fcm;
-        Element childElement = XMLReader.getChild(element, MORPHISM_MAP);
-        if (childElement != null) {
-            map = reader.parseMorphismMap(childElement);
-
-            if (map == null) {
-                return null;
-            }
-            if (map instanceof ModuleMorphismMap) {
-                ModuleMorphismMap mm = (ModuleMorphismMap)map;
-                fcm = cm = new CompoundMorphism(mm.getDomain(), mm.getCodomain(), mm);
-            }
-            else {
-                reader.setError("Morphism map in a simple denotator must be a module morphism map.");
-                return null;
-            }
-
-            // read the frame coordinate, if present
-            childElement = XMLReader.getChild(childElement, MORPHISM_MAP);
-            if (childElement != null) {
-                map = reader.parseMorphismMap(childElement);
-
-                if (map == null) {
-                    return null;
-                }
-                if (map instanceof ModuleMorphismMap) {
-                    ModuleMorphismMap mm = (ModuleMorphismMap)map;
-                    fcm = new CompoundMorphism(mm.getDomain(), mm.getCodomain(), mm);
-                }
-                else {
-                    reader.setError("Morphism map in a simple denotator must be a module morphism map.");
-                    return null;
-                }
-            }
-
-            return new SimpleDenotator(name, (SimpleForm)form, cm, fcm);
-        }
-        else {
-            reader.setError("Missing element <%1>.", MORPHISM_MAP);
-            return null;
-        }
-    }
-
-    
     @Override
     protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
         indent(out, indent);

@@ -430,7 +430,7 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
     }
     
     
-    protected abstract void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent);
+    protected abstract void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent); //TODO this should be in server package
 
     
     /**
