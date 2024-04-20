@@ -47,6 +47,7 @@ import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 import org.vetronauta.latrunculus.core.scheme.expression.SType;
 import org.vetronauta.latrunculus.core.scheme.expression.Symbol;
+import org.vetronauta.latrunculus.server.display.DenotatorDisplay;
 import org.vetronauta.latrunculus.server.display.FormDisplay;
 
 /** 
@@ -338,7 +339,7 @@ public class ObjectBrowser
         }
         public String toDisplay() {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
-            denotator.display(new PrintStream(bs));
+            DenotatorDisplay.display(denotator, new PrintStream(bs));
             return bs.toString();
         }
         public void edit() {}

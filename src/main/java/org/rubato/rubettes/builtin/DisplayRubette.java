@@ -26,6 +26,7 @@ import org.rubato.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.server.display.DenotatorDisplay;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
@@ -155,7 +156,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
                     definitionXmlWriter.toXML(input, writer);
                 }
                 else {
-                    input.display(ps);
+                    DenotatorDisplay.display(input, ps);
                 }
                 display.setFont(Font.decode("Monospaced"));
                 display.setText(bs.toString());

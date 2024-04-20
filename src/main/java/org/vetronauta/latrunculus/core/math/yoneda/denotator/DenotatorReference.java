@@ -20,14 +20,12 @@
 package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 
 import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 
-import java.io.PrintStream;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -138,13 +136,6 @@ public final class DenotatorReference extends Denotator {
     public Iterator<Denotator> iterator() {
         throw new Error("Fatal error: DenotatorReference.iterator should never be called");
     }
-    
-    
-    @Override
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        throw new Error("Fatal error: DenotatorReference.display should never be called");
-    }
-
     
     @Override
     public boolean check() {

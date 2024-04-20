@@ -23,6 +23,7 @@ package org.rubato.rubettes.denotex;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.server.display.DenotatorDisplay;
 import org.vetronauta.latrunculus.server.display.FormDisplay;
 
 import java.io.InputStream;
@@ -160,7 +161,7 @@ public class DenotexReader {
     private boolean error = false;
     private String errorMsg;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { //TODO remove all the debugging mains around, move them to test?
         String formstr = "A1:.limit[Integer,Integer]";
         Form f = readForm(formstr);
         Repository.systemRepository().register(f);
@@ -170,6 +171,6 @@ public class DenotexReader {
         if (d == null)
             System.out.println("Error");
         else
-            d.display();
+            DenotatorDisplay.display(d);
     }
 }

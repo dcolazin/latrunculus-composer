@@ -42,7 +42,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -684,30 +683,6 @@ public final class PowerDenotator extends Denotator implements FactorDenotator {
         }
         return list;
     }
-    
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+ getForm().getType());
-        out.println("; Address: "+getAddress());
-
-        indent += 4;
-        
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-            return;            
-        }
-        else {
-            recursionCheckStack.addFirst(this);
-            for (Denotator d : this) {
-                d.display(out, recursionCheckStack, indent);
-            }
-            recursionCheckStack.removeFirst();
-        }
-    }
-
     
     /**
      * Normalizes power denotator.

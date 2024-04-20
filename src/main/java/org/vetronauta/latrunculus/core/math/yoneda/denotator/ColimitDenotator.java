@@ -40,7 +40,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -616,29 +615,7 @@ public final class ColimitDenotator extends Denotator implements FactorDenotator
         }
         return list;
     }
-    
-    @Override
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+ getForm().getType());
-        out.println("; Address: "+getAddress());
 
-        indent += 4;
-        
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        } else {
-            IndexMorphismMap map = (IndexMorphismMap)getCoordinate().getMap();
-            recursionCheckStack.addFirst(this);
-            map.getFactor().display(out, recursionCheckStack, indent);
-            recursionCheckStack.removeFirst();
-        }        
-    }
-
-    
     /**
      * Creates a new limit denotator without checking whatsoever.
      * The arguments must result in a correct denotator, otherwise

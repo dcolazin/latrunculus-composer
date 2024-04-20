@@ -42,6 +42,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.server.display.DenotatorDisplay;
 
 public class JPowerListDenotatorEntry
         extends AbstractDenotatorEntry
@@ -225,7 +226,7 @@ public class JPowerListDenotatorEntry
     private void displayDenotator(Denotator d) {
         if (d != null) {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
-            d.display(new PrintStream(bs));
+            DenotatorDisplay.display(d, new PrintStream(bs));
             display.setText(bs.toString());
             display.setCaretPosition(0);
         }

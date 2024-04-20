@@ -43,7 +43,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 import org.vetronauta.latrunculus.core.util.Internal;
 import org.vetronauta.latrunculus.core.util.Unsafe;
 
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -671,32 +670,6 @@ public final class SimpleDenotator extends Denotator {
         }
         return list;
     }
-
-    @Override
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+ getForm().getType());
-        out.println("; Address: "+getAddress());
-
-        indent += 4;
-        
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-        } else {
-            indent(out, indent);
-            ModuleMorphismMap moduleMorphismMap = getModuleMorphismMap();
-            if (moduleMorphismMap.isConstant()) {
-                out.println(moduleMorphismMap.getElement());
-            }
-            else {
-                out.println(moduleMorphismMap.getMorphism());
-            }
-        }        
-    }    
-
     
     /**
      * Creates a new simple denotator without checking whatsoever.

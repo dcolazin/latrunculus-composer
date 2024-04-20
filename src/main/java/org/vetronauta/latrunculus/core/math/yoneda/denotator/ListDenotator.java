@@ -42,7 +42,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -680,27 +679,6 @@ public class ListDenotator extends Denotator implements FactorDenotator {
         }
         return list;
     }
-    
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+ getForm().getType());
-        out.println("; Address: "+getAddress());
-
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent+4);
-            out.println("...");
-            return;            
-        }
-
-        recursionCheckStack.addFirst(this);
-        for (Denotator d : this) {
-            d.display(out, recursionCheckStack, indent+4);
-        }
-        recursionCheckStack.removeFirst();
-    }
-
     
     /**
      * Creates a new list denotator without checking whatsoever.

@@ -41,7 +41,6 @@ import org.vetronauta.latrunculus.core.math.yoneda.morphism.CompoundMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.ProperIdentityMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -616,33 +615,7 @@ public final class LimitDenotator extends Denotator implements FactorDenotator {
         }
         return list;
     }
-    
-    @Override
-    protected void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent) {
-        indent(out, indent);
-        out.print("Name: \""+getNameString()+"\"");
-        out.print("; Form: \""+getForm().getNameString()+"\"");
-        out.print("; Type: "+getForm().getType());
-        out.println("; Address: "+getAddress());
 
-        indent += 4;
-        
-        if (recursionCheck(recursionCheckStack)) {
-            indent(out, indent);
-            out.println("...");
-            return;            
-        }
-        else {
-	        ListMorphismMap map = (ListMorphismMap)getCoordinate().getMap();
-	        recursionCheckStack.addFirst(this);
-	        for (int i = 0; i < map.getFactorCount(); i++) {
-	            map.getFactor(i).display(out, recursionCheckStack, indent);
-	        }
-	        recursionCheckStack.removeFirst();
-        }
-    }
-
-    
     /**
      * Creates a new limit denotator without checking whatsoever.
      * The arguments must result in a correct denotator, otherwise

@@ -24,25 +24,23 @@ package org.vetronauta.latrunculus.core.math.yoneda.denotator;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
-import org.vetronauta.latrunculus.core.util.TextUtils;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.generic.Module;
-import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.exception.MappingException;
+import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
+import org.vetronauta.latrunculus.core.exception.RubatoException;
+import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.AbstractConnectableYoneda;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.exception.RubatoAddressException;
-import org.vetronauta.latrunculus.core.exception.RubatoFormException;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.morphism.YonedaMorphism;
+import org.vetronauta.latrunculus.core.repository.RubatoDictionary;
+import org.vetronauta.latrunculus.core.util.TextUtils;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -412,53 +410,6 @@ public abstract class Denotator extends AbstractConnectableYoneda implements Com
         }
     }
 
-    /**
-     * Print denotator to stdout.
-     */
-    public final void display() {
-        display(System.out);
-    }
-
-
-    /**
-     * Print denotator to a stream.
-     * 
-     * @param out the stream to print to
-     */
-    public final void display(PrintStream out) {
-        display(out, new LinkedList<>(), 0);
-    }
-    
-    
-    protected abstract void display(PrintStream out, LinkedList<Denotator> recursionCheckStack, int indent); //TODO this should be in server package
-
-    
-    /**
-     * Returns true if this denotator is in the recursion stack.
-     */
-    protected final boolean recursionCheck(LinkedList<Denotator> recursionCheckStack) {
-        for (Denotator d : recursionCheckStack) {
-            if (d == this) {
-                return true;
-            }
-        }
-	    return false;
-    }
-    
-
-    /**
-     * Print out a number of white spaces to a stream.
-     * 
-     * @param out the stream to print to
-     * @param n the number of spaces to print
-     */
-    protected static void indent(PrintStream out, int n) {
-        for (int i = 0; i < n; i++) {
-            out.print(" ");
-        }
-    }
-    
-    
     /**
      * Returns a list of the named denotators that this denotator depends on.
      * A named denotator always depends on itself.
