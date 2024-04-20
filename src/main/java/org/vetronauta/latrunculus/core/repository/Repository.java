@@ -19,8 +19,6 @@
 
 package org.vetronauta.latrunculus.core.repository;
 
-import org.rubato.rubettes.denotex.DenotexReader;
-import org.vetronauta.latrunculus.core.exception.RubatoException;
 import org.vetronauta.latrunculus.core.logeo.FormFactory;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
@@ -52,10 +50,6 @@ import org.vetronauta.latrunculus.core.scheme.Parser;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -162,47 +156,17 @@ public class Repository extends Observable implements Dictionary { //TODO this s
 
     
     /**
-     * Registers the objects in the XML file of the reader.
+     * Registers the objects in the LoadableDictionary.
      * @return true if successful
      */
-    public synchronized boolean registerXML(LoadableDictionary dictionary) {
+    public synchronized boolean registerLoadableDictionary(LoadableDictionary dictionary) {
         dictionary.read();
         if (dictionary.hasError()) {
             return false;
         }
         return register(dictionary.getForms(), dictionary.getDenotators());
     }
-    
-    public synchronized void registerDenotexResource(String denotex)
-            throws RubatoException {
-        ClassLoader loader = ClassLoader.getSystemClassLoader();
-        InputStream ins = loader.getResourceAsStream(denotex);
-        DenotexReader reader = new DenotexReader(ins, this);
-        reader.read();
-        if (reader.hasError()) {
-            throw new RubatoException(reader.getErrorMsg());
-        }
 
-        register(reader.getForms(), reader.getDenotators());
-    }
-
-
-    public synchronized void registerDenotexFile(String filename)
-            throws RubatoException, IOException {
-        FileInputStream fs = new FileInputStream(filename);
-        BufferedInputStream bs = new BufferedInputStream(fs);
-        DenotexReader reader = new DenotexReader(bs, this);
-        reader.read();
-        fs.close();
-            
-        if (reader.hasError()) {
-            throw new RubatoException(reader.getErrorMsg());
-        }
-
-        register(reader.getForms(), reader.getDenotators());
-    }
-
-    
     /**
      * Registers a collection of forms and a collection of denotators.
      * Performs a rollback, if the registration fails

@@ -20,6 +20,10 @@
 
 package org.rubato.rubettes.denotex;
 
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
+import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.repository.LoadableDictionary;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -32,7 +36,7 @@ import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DenotexReader {
+public class DenotexReader implements LoadableDictionary {
 
     public DenotexReader(InputStream in) {
         this(in, Repository.systemRepository());
@@ -57,6 +61,7 @@ public class DenotexReader {
     }
     
 
+    @Override
     public void read() {
         if (!read) {            
             read = true;
@@ -129,7 +134,12 @@ public class DenotexReader {
         LinkedList<Form> formList = new LinkedList<>();
         formList.addAll(symtab.getForms().values());
         return formList;
-    }    
+    }
+
+    @Override
+    public Form getForm(String name) {
+        return symtab.getForms().get(name);
+    }
 
 
     public List<Denotator> getDenotators() {
@@ -141,9 +151,29 @@ public class DenotexReader {
         denoList.addAll(symtab.getNamedDenotators().values());
         denoList.addAll(symtab.getAnonymousDenotators());
         return denoList;
-    }    
+    }
 
+    @Override
+    public Denotator getDenotator(String name) {
+        return symtab.getNamedDenotators().get(name);
+    }
 
+    @Override
+    public Module getModule(String name) {
+        return symtab.getModules().get(name);
+    }
+
+    @Override
+    public ModuleElement getModuleElement(String name) {
+        return null;
+    }
+
+    @Override
+    public ModuleMorphism getModuleMorphism(String name) {
+        return null;
+    }
+
+    @Override
     public boolean hasError() {
         return error;
     }
