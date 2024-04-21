@@ -354,9 +354,9 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             
             JPanel evalTypeSelectPanel = new JPanel();
             evalTypeSelectPanel.setLayout(new BorderLayout());
-            evalTypeSelectPanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.evaltype"))); 
+            evalTypeSelectPanel.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.evaltype")));
             evalTypeSelect = new JComboBox(evalTypes);
-            evalTypeSelect.setToolTipText(Messages.getString("AddressEvalRubette.evaltypetooltip")); 
+            evalTypeSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.evaltypetooltip"));
             evalTypeSelect.setEditable(false);
             evalTypeSelect.setSelectedIndex(evalType);
             evalTypeSelect.addActionListener(this);
@@ -528,22 +528,22 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     public String getInTip(int i) {
         if (i == 0) {
            if (outputForm == null) {
-               return Messages.getString("AddressEvalRubette.inputdeno"); 
+               return AddressMessages.getString("AddressEvalRubette.inputdeno");
            }
            else {
-               return TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.inputdenotator"), outputForm.getForm(0).getNameString()); 
+               return TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.inputdenotator"), outputForm.getForm(0).getNameString());
            }
         }
         else {
-            return Messages.getString("AddressEvalRubette.evaldenotator"); 
+            return AddressMessages.getString("AddressEvalRubette.evaldenotator");
         }
     }
     
     
     public String getOutTip(int i) {
-        String name = Messages.getString("AddressEvalRubette.outputdeno"); 
+        String name = AddressMessages.getString("AddressEvalRubette.outputdeno");
         if (outputForm != null) {
-            name = TextUtils.replaceStrings(Messages.getString("AddressEvalRubette.outputdenotator"), outputForm.getNameString()); 
+            name = TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.outputdenotator"), outputForm.getNameString());
         }
         return name;
     }
@@ -583,7 +583,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
 
         if (child == null) {
             // there must be a type
-            reader.setError(Messages.getString("AddressEvalRubette.missingelement"), EVALTYPE); 
+            reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), EVALTYPE);
             return null;
         }
         
@@ -602,7 +602,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                 }                
             }
             else {
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT); 
+                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT);
             }
         }
         else if (t == EVAL_TYPE_LIST) {
@@ -611,7 +611,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (child == null) {
                 // no output form has been given
                 // there must be an output form
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), FORM); 
+                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), FORM);
                 return null;
             }
             // get output form
@@ -620,7 +620,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (child == null) {
                 // no module has been given
                 // there must be a module
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE); 
+                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE);
                 return null;
             }
             Module module0 = reader.parseModule(child);
@@ -635,7 +635,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
                     return null;
                 }
                 if (!module0.hasElement(e)) {
-                    reader.setError(Messages.getString("AddressEvalRubette.wrongmodule"), e.getModule(), module0); 
+                    reader.setError(AddressMessages.getString("AddressEvalRubette.wrongmodule"), e.getModule(), module0);
                     return null;
                 }
                 list.add(e);
@@ -653,7 +653,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (child == null) {
                 // no module morphism has been given
                 // there must be a module morphism
-                reader.setError(Messages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM); 
+                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM);
                 return null;
             }
             ModuleMorphism morphism0 = reader.parseModuleMorphism(child);
@@ -690,8 +690,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         if (type == EVAL_TYPE_ELEMENT) {
             Module m = (module == null)? ZRing.ring:module;
             elementEntry = new JModuleElementEntry(m);
-            elementEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.moduleelement"))); 
-            elementEntry.setToolTipText(Messages.getString("AddressEvalRubette.selectelement")); 
+            elementEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.moduleelement")));
+            elementEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.selectelement"));
             if (moduleElement != null) {
                 elementEntry.setModuleElement(moduleElement);
             }
@@ -700,8 +700,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         else if (type == EVAL_TYPE_LIST) {
             Box box = Box.createVerticalBox();
             outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
-            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
+            outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
+            outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
             if (outputForm != null) {
                 outputFormSelect.setForm(outputForm);
             }
@@ -710,14 +710,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             Module m = (module == null)?ZRing.ring:module;
             
             listModuleEntry = new JModuleEntry();
-            listModuleEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementmodule"))); 
+            listModuleEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementmodule")));
             listModuleEntry.setModule(m);
             listModuleEntry.addActionListener(this);
             box.add(listModuleEntry);
             
             elementList = new JModuleElementList(m);
-            elementList.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.elementlist"))); 
-            elementList.setToolTipText(Messages.getString("AddressEvalRubette.elementlisttooltip")); 
+            elementList.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementlist")));
+            elementList.setToolTipText(AddressMessages.getString("AddressEvalRubette.elementlisttooltip"));
             if (elements != null) {
                 elementList.addElements(elements);
             }
@@ -726,14 +726,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             
             box = Box.createHorizontalBox();
             box.add(Box.createHorizontalGlue());
-            basisButton = new JButton(Messages.getString("AddressEvalRubette.basisvectors")); 
-            basisButton.setToolTipText(Messages.getString("AddressEvalRubette.basistooltip")); 
+            basisButton = new JButton(AddressMessages.getString("AddressEvalRubette.basisvectors"));
+            basisButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.basistooltip"));
             basisButton.addActionListener(this);
             basisButton.setEnabled(module instanceof FreeModule);                
             box.add(basisButton);
             box.add(Box.createHorizontalStrut(5));
-            graphButton = new JButton(Messages.getString("AddressEvalRubette.graphical")); 
-            graphButton.setToolTipText(Messages.getString("AddressEvalRubette.graphtooltip")); 
+            graphButton = new JButton(AddressMessages.getString("AddressEvalRubette.graphical"));
+            graphButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.graphtooltip"));
             graphButton.addActionListener(this);
             box.add(graphButton);
             box.add(Box.createHorizontalGlue());
@@ -746,14 +746,14 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             if (morphism != null) {
                 morphismEntry.setMorphism(morphism);
             }
-            morphismEntry.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.changemorph"))); 
-            morphismEntry.setToolTipText(Messages.getString("AddressEvalRubette.changemorphtooltip")); 
+            morphismEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.changemorph")));
+            morphismEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.changemorphtooltip"));
             addressPanel.add(morphismEntry, BorderLayout.CENTER);
         }
         else if (type == EVAL_TYPE_INPUT) {
             Box box = Box.createVerticalBox();
             JPanel typePanel = new JPanel();
-            typePanel.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.resulttype"))); 
+            typePanel.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.resulttype")));
             ButtonGroup group = new ButtonGroup();
             simpleButton = new JRadioButton(SIMPLE);
             group.add(simpleButton);
@@ -768,8 +768,8 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             box.add(typePanel);            
             
             outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(Messages.getString("AddressEvalRubette.outputform"))); 
-            outputFormSelect.setToolTipText(Messages.getString("AddressEvalRubette.setoutputform")); 
+            outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
+            outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
             if (outputForm != null) {
                 outputFormSelect.setForm(outputForm);
             }
@@ -921,32 +921,32 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private static final int EVAL_TYPE_INPUT   = 4;
     
     private static final String[] evalTypes = {
-        Messages.getString("AddressEvalRubette.evalnull"), 
-        Messages.getString("AddressEvalRubette.evalelement"), 
-        Messages.getString("AddressEvalRubette.evalllist"), 
-        Messages.getString("AddressEvalRubette.changeaddress"), 
-        Messages.getString("AddressEvalRubette.evalinput") 
+        AddressMessages.getString("AddressEvalRubette.evalnull"),
+        AddressMessages.getString("AddressEvalRubette.evalelement"),
+        AddressMessages.getString("AddressEvalRubette.evalllist"),
+        AddressMessages.getString("AddressEvalRubette.changeaddress"),
+        AddressMessages.getString("AddressEvalRubette.evalinput")
     };
     
     // Message strings
-    private static final String INPUT_NULL_ERROR    = Messages.getString("AddressEvalRubette.inputnullerror");
-    private static final String INPUT_WRONG_FORM    = Messages.getString("AddressEvalRubette.inputwrongform");
-    private static final String ELEMENTNOTSET_ERROR = Messages.getString("AddressEvalRubette.elementnotset"); 
-    private static final String MODULENOTSET_ERROR  = Messages.getString("AddressEvalRubette.modulenotset"); 
-    private static final String ADDRESSMODULE_ERROR = Messages.getString("AddressEvalRubette.addressmoduleerror");     
-    private static final String LISTNOTSET_ERROR    = Messages.getString("AddressEvalRubette.listnotset"); 
-    private static final String OUTPUTFORMNOTSET_ERROR = Messages.getString("AddressEvalRubette.outputformnotset"); 
-    private static final String MORPHISMNOTSET_ERROR = Messages.getString("AddressEvalRubette.morphismnotset"); 
-    private static final String ADDRESSMORPHISM_ERROR = Messages.getString("AddressEvalRubette.addressmorphismerror"); 
-    private static final String NOMODULE_ERROR      = Messages.getString("AddressEvalRubette.modnotset"); 
-    private static final String NOELEMENT_ERROR     = Messages.getString("AddressEvalRubette.modelnotset"); 
-    private static final String NOOUTPUTFORM_ERROR  = Messages.getString("AddressEvalRubette.oformnotset"); 
-    private static final String NOELEMENTS_ERROR    = Messages.getString("AddressEvalRubette.noellist"); 
-    private static final String NOMORPHISM_ERROR    = Messages.getString("AddressEvalRubette.modmorphnotset"); 
-    private static final String INPUT2WRONGTYPE_ERROR = Messages.getString("AddressEvalRubette.secinputwrongtype"); 
-    private static final String INPUT2NOTSET_ERROR  = Messages.getString("AddressEvalRubette.secinputnull"); 
-    private static final String SIMPLE              = Messages.getString("AddressEvalRubette.simple"); 
-    private static final String LISTORPOWER         = Messages.getString("AddressEvalRubette.listorpower"); 
+    private static final String INPUT_NULL_ERROR    = AddressMessages.getString("AddressEvalRubette.inputnullerror");
+    private static final String INPUT_WRONG_FORM    = AddressMessages.getString("AddressEvalRubette.inputwrongform");
+    private static final String ELEMENTNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.elementnotset");
+    private static final String MODULENOTSET_ERROR  = AddressMessages.getString("AddressEvalRubette.modulenotset");
+    private static final String ADDRESSMODULE_ERROR = AddressMessages.getString("AddressEvalRubette.addressmoduleerror");
+    private static final String LISTNOTSET_ERROR    = AddressMessages.getString("AddressEvalRubette.listnotset");
+    private static final String OUTPUTFORMNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.outputformnotset");
+    private static final String MORPHISMNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.morphismnotset");
+    private static final String ADDRESSMORPHISM_ERROR = AddressMessages.getString("AddressEvalRubette.addressmorphismerror");
+    private static final String NOMODULE_ERROR      = AddressMessages.getString("AddressEvalRubette.modnotset");
+    private static final String NOELEMENT_ERROR     = AddressMessages.getString("AddressEvalRubette.modelnotset");
+    private static final String NOOUTPUTFORM_ERROR  = AddressMessages.getString("AddressEvalRubette.oformnotset");
+    private static final String NOELEMENTS_ERROR    = AddressMessages.getString("AddressEvalRubette.noellist");
+    private static final String NOMORPHISM_ERROR    = AddressMessages.getString("AddressEvalRubette.modmorphnotset");
+    private static final String INPUT2WRONGTYPE_ERROR = AddressMessages.getString("AddressEvalRubette.secinputwrongtype");
+    private static final String INPUT2NOTSET_ERROR  = AddressMessages.getString("AddressEvalRubette.secinputnull");
+    private static final String SIMPLE              = AddressMessages.getString("AddressEvalRubette.simple");
+    private static final String LISTORPOWER         = AddressMessages.getString("AddressEvalRubette.listorpower");
 
     private static final ImageIcon icon;
 

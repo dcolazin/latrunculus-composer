@@ -38,7 +38,7 @@ public class SimpleFormEntry
         setLayout(new BorderLayout());
         moduleEntry = new JModuleEntry();
         moduleEntry.addActionListener(this);
-        moduleEntry.setBorder(makeTitledBorder(Messages.getString("SimpleFormEntry.module"))); 
+        moduleEntry.setBorder(makeTitledBorder(DialogFormsMessages.getString("SimpleFormEntry.module")));
         add(moduleEntry, BorderLayout.CENTER);
     }
     

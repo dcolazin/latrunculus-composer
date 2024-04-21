@@ -59,7 +59,7 @@ public abstract class AbstractRubette implements Rubette {
      * Rubette list, if this Rubette is selected in the list.
      */
     public String getLongDescription() {
-        return Messages.getString("AbstractRubette.nodescription")+getName()+".";
+        return AbstractRubetteMessages.getString("AbstractRubette.nodescription")+getName()+".";
     }
 
     /**

@@ -69,7 +69,7 @@ public class ConstructorRubette extends AbstractRubette {
     
     public void run(RunInfo runInfo) {
         if (form == null) {
-            addError(Messages.getString("ConstructorRubette.noform")); 
+            addError(BuiltinMessages.getString("ConstructorRubette.noform"));
             return;            
         }
         switch (form.getType()) {
@@ -90,7 +90,7 @@ public class ConstructorRubette extends AbstractRubette {
                 break;
             }
             default: {
-                addError(Messages.getString("ConstructorRubette.formwrongtype")); 
+                addError(BuiltinMessages.getString("ConstructorRubette.formwrongtype"));
             }
         }
     }
@@ -128,7 +128,7 @@ public class ConstructorRubette extends AbstractRubette {
             Denotator d = getInput(i);
             if (d != null) {
                 if (hasInput) {
-                    addError(Messages.getString("ConstructorRubette.onlyonenonnullinput")); 
+                    addError(BuiltinMessages.getString("ConstructorRubette.onlyonenonnullinput"));
                     return;
                 }
                 inputDenotator = d;
@@ -137,7 +137,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (!hasInput) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
+            addError(BuiltinMessages.getString("ConstructorRubette.atleastonenonnullinput"));
             return;
         }
         Denotator out = null;
@@ -161,7 +161,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (cds.size() == 0) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
+            addError(BuiltinMessages.getString("ConstructorRubette.atleastonenonnullinput"));
             return;
         }
         Denotator out = null;
@@ -185,7 +185,7 @@ public class ConstructorRubette extends AbstractRubette {
             }
         }
         if (cds.size() == 0) {
-            addError(Messages.getString("ConstructorRubette.atleastonenonnullinput")); 
+            addError(BuiltinMessages.getString("ConstructorRubette.atleastonenonnullinput"));
             return;
         }
         Denotator out = null;

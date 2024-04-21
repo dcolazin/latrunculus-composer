@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer.dialogs.morphisms;
+package org.rubato.composer.preferences;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class PreferencesMessages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/dialogs/morphisms/messages";
+    private static final String BUNDLE_NAME = "bundles/composer/preferences/messages"; 
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private PreferencesMessages() {}
 
     public static String getString(String key) {
         try {

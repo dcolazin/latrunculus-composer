@@ -58,17 +58,17 @@ public class MuxRubette extends AbstractRubette {
                 if (n > getInCount()-2) { n = getInCount()-2; }
             }
             else {
-                addError(Messages.getString("MuxRubette.nonintegererror")); 
+                addError(BuiltinMessages.getString("MuxRubette.nonintegererror"));
                 return;
             }
         }
         else {
-            addError(Messages.getString("MuxRubette.nonintegererror")); 
+            addError(BuiltinMessages.getString("MuxRubette.nonintegererror"));
             return;            
         }
         Denotator output = getInput(n+1);
         if (output == null) {
-            addError(Messages.getString("MuxRubette.nullerror"), n+1); 
+            addError(BuiltinMessages.getString("MuxRubette.nullerror"), n+1);
             return;
         }
         setOutput(0, output);

@@ -1,15 +1,15 @@
-package org.rubato.composer.dialogs.scheme;
+package org.vetronauta.latrunculus.plugin.base;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class Messages {
-    private static final String BUNDLE_NAME = "bundles/composer/dialogs/scheme/messages";
+public class AbstractRubetteMessages {
+    private static final String BUNDLE_NAME = "bundles/base/messages"; 
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
             .getBundle(BUNDLE_NAME);
 
-    private Messages() {
+    private AbstractRubetteMessages() {
     }
 
     public static String getString(String key) {

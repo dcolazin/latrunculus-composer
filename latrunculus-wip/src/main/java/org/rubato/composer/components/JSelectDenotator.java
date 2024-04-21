@@ -234,10 +234,10 @@ public class JSelectDenotator extends JPanel implements ActionListener {
     
     private Dictionary dict = null;
     
-    private static final String CREATE_BUTTON = Messages.getString("JSelectDenotator.create"); 
-    private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectDenotator.createtip"); 
-    private static final String SELECT_BUTTON = Messages.getString("JSelectDenotator.select"); 
-    private static final String SELECT_BUTTON_TIP = Messages.getString("JSelectDenotator.selecttip"); 
-    private static final String ANONYMOUS = Messages.getString("JSelectDenotator.anonymous"); 
-    private static final String SELECT_DENOTATOR = Messages.getString("JSelectDenotator.selectdenotator");  
+    private static final String CREATE_BUTTON = ComponentsMessages.getString("JSelectDenotator.create");
+    private static final String CREATE_BUTTON_TIP = ComponentsMessages.getString("JSelectDenotator.createtip");
+    private static final String SELECT_BUTTON = ComponentsMessages.getString("JSelectDenotator.select");
+    private static final String SELECT_BUTTON_TIP = ComponentsMessages.getString("JSelectDenotator.selecttip");
+    private static final String ANONYMOUS = ComponentsMessages.getString("JSelectDenotator.anonymous");
+    private static final String SELECT_DENOTATOR = ComponentsMessages.getString("JSelectDenotator.selectdenotator");
 }

@@ -81,7 +81,7 @@ public class PluginManager {
             }
         }
         catch (IOException e) {
-            setError(Messages.getString("PluginManager.couldnotloadfile"), file.getName()); 
+            setError(PluginMessages.getString("PluginManager.couldnotloadfile"), file.getName());
         }
     }
     
@@ -100,25 +100,25 @@ public class PluginManager {
                         addPlugin((Plugin)obj);
                     }
                     else {
-                        setError(Messages.getString("PluginManager.notaplugin"), fileName, className); 
+                        setError(PluginMessages.getString("PluginManager.notaplugin"), fileName, className);
                     }
                 }
                 else {
-                    setError(Messages.getString("PluginManager.notaplugin"), fileName, className); 
+                    setError(PluginMessages.getString("PluginManager.notaplugin"), fileName, className);
                 }
             }
         }
         catch (ClassNotFoundException e) {
-            setError(Messages.getString("PluginManager.classnotfound"), fileName, className); 
+            setError(PluginMessages.getString("PluginManager.classnotfound"), fileName, className);
         }
         catch (IllegalAccessException e) {
-            setError(Messages.getString("PluginManager.illegalaccess"), fileName, className); 
+            setError(PluginMessages.getString("PluginManager.illegalaccess"), fileName, className);
         }
         catch (InstantiationException e) {
-            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           
+            setError(PluginMessages.getString("PluginManager.couldnotinst"), fileName, className);
         }
         catch (Exception e) {
-            setError(Messages.getString("PluginManager.couldnotinst"), fileName, className);           
+            setError(PluginMessages.getString("PluginManager.couldnotinst"), fileName, className);
         }
     }
     

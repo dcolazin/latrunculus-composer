@@ -51,19 +51,19 @@ public class JSimpleDenotatorEntry
         Box addressButtonBox = Box.createHorizontalBox();
         addressButtonBox.add(Box.createHorizontalGlue());
         
-        nonNullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.nonnull")); 
+        nonNullButton = new JRadioButton(DenotatorsMessages.getString("JSimpleDenotatorEntry.nonnull"));
         nonNullButton.addActionListener(this);
         buttonGroup.add(nonNullButton);
         addressButtonBox.add(nonNullButton);
         addressButtonBox.add(Box.createHorizontalStrut(10));
         
-        nullButton = new JRadioButton(Messages.getString("JSimpleDenotatorEntry.null")); 
+        nullButton = new JRadioButton(DenotatorsMessages.getString("JSimpleDenotatorEntry.null"));
         nullButton.addActionListener(this);
         buttonGroup.add(nullButton);
         addressButtonBox.add(nullButton);
         addressButtonBox.add(Box.createHorizontalGlue());
         
-        addressButtonBox.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.addresstype"))); 
+        addressButtonBox.setBorder(makeTitledBorder(DenotatorsMessages.getString("JSimpleDenotatorEntry.addresstype")));
 
         nullButton.setSelected(true);
         
@@ -71,7 +71,7 @@ public class JSimpleDenotatorEntry
         
         // element and morphism panel            
         valuePanel = new JPanel();
-        valuePanel.setBorder(makeTitledBorder(Messages.getString("JSimpleDenotatorEntry.value"))); 
+        valuePanel.setBorder(makeTitledBorder(DenotatorsMessages.getString("JSimpleDenotatorEntry.value")));
         valuePanel.setLayout(new BorderLayout());
         fillValuePanel();
         add(valuePanel, BorderLayout.CENTER);

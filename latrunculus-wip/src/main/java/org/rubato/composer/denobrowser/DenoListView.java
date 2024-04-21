@@ -153,7 +153,7 @@ public class DenoListView
 		for (int i = 0; i < names.length; i++) {
 			String name = denos[i].getNameString();
 			if (name.length() == 0) {
-                name = Messages.getString("DenoListView.anonymous");
+                name = DenoBrowserMessages.getString("DenoListView.anonymous");
             }
 			names[i] = name;
 		}
@@ -173,23 +173,23 @@ public class DenoListView
 		JPopupMenu popup = new JPopupMenu();
 		JMenuItem menuItem;
 		if (d.getForm().getType() == FormDenotatorTypeEnum.SIMPLE) {
-			menuItem = new JMenuItem(Messages.getString("DenoListView.edit"));
+			menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.edit"));
 			menuItem.addActionListener(this);
 			menuItem.setActionCommand("edit");
 			popup.add(menuItem);
 		}
 		else {
-			menuItem = new JMenuItem(Messages.getString("DenoListView.clear"));
+			menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.clear"));
 			menuItem.addActionListener(this);
 			menuItem.setActionCommand("clear");
 			popup.add(menuItem);
 
-			menuItem = new JMenuItem(Messages.getString("DenoListView.set"));
+			menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.set"));
 			menuItem.addActionListener(this);
 			menuItem.setActionCommand("set");
 			popup.add(menuItem);
 		}
-		menuItem = new JMenuItem(Messages.getString("DenoListView.register"));
+		menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.register"));
 		menuItem.addActionListener(this);
 		menuItem.setActionCommand("register");
 		popup.add(menuItem);
@@ -205,11 +205,11 @@ public class DenoListView
 			case POWER:
 			case LIST: {
 				Form subForm = form.getForm(0);
-				menuItem = new JMenuItem(Messages.getString("DenoListView.addnew")+subForm.getNameString());
+				menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.addnew")+subForm.getNameString());
 				menuItem.addActionListener(this);
 				menuItem.setActionCommand("add_new");
 				popup.add(menuItem);
-				menuItem = new JMenuItem(Messages.getString("DenoListView.addexisting")+subForm.getNameString());
+				menuItem = new JMenuItem(DenoBrowserMessages.getString("DenoListView.addexisting")+subForm.getNameString());
 				menuItem.addActionListener(this);
 				menuItem.setActionCommand("add_existing");
 				popup.add(menuItem);

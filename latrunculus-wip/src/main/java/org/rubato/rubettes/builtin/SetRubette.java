@@ -100,7 +100,7 @@ public class SetRubette extends AbstractRubette {
                 }
                 else {
                     if (!d.getPowerForm().getForm().equals(baseForm)) {
-                        addError(Messages.getString("SetRubette.wrongbaseform"), i); 
+                        addError(BuiltinMessages.getString("SetRubette.wrongbaseform"), i);
                     }
                     else {
                         denoList.add(d);
@@ -125,7 +125,7 @@ public class SetRubette extends AbstractRubette {
             return (PowerDenotator)d;
         }
         else {
-            addError(Messages.getString("SetRubette.notpowererror"), i); 
+            addError(BuiltinMessages.getString("SetRubette.notpowererror"), i);
             return null;
         }
     }
@@ -133,7 +133,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doUnion(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); 
+            addError(BuiltinMessages.getString("SetRubette.novalidinput"));
             return null;
         }
         PowerDenotator res = null;
@@ -149,7 +149,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doIntersection(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); 
+            addError(BuiltinMessages.getString("SetRubette.novalidinput"));
             return null;
         }
         PowerDenotator res = null;
@@ -165,7 +165,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doSymmetric(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); 
+            addError(BuiltinMessages.getString("SetRubette.novalidinput"));
             return null;
         }
         PowerDenotator res = null;
@@ -181,7 +181,7 @@ public class SetRubette extends AbstractRubette {
     
     private Denotator doDifference(PowerDenotator[] denotators) {
         if (denotators.length == 0) {
-            addError(Messages.getString("SetRubette.novalidinput")); 
+            addError(BuiltinMessages.getString("SetRubette.novalidinput"));
             return null;
         }
         PowerDenotator res = null;
@@ -198,11 +198,11 @@ public class SetRubette extends AbstractRubette {
     private Denotator doAddElements() {
         Denotator d = getInput(0);
         if (d == null) {
-            addError(Messages.getString("SetRubette.notnull")); 
+            addError(BuiltinMessages.getString("SetRubette.notnull"));
             return null;
         }
         else if (!(d instanceof PowerDenotator)) {
-            addError(Messages.getString("SetRubette.powerdeno")); 
+            addError(BuiltinMessages.getString("SetRubette.powerdeno"));
             return null;
         }
         PowerDenotator p = (PowerDenotator)d;
@@ -216,7 +216,7 @@ public class SetRubette extends AbstractRubette {
                     denoList.add(di);
                 }
                 else {
-                    addError(Messages.getString("SetRubette.wrongform"), i+1); 
+                    addError(BuiltinMessages.getString("SetRubette.wrongform"), i+1);
                 }
             }
         }
@@ -247,12 +247,12 @@ public class SetRubette extends AbstractRubette {
                 return DenoFactory.makeDenotator(baseForm, denoList);
             }
             else {
-                addError(Messages.getString("SetRubette.basenotpower")); 
+                addError(BuiltinMessages.getString("SetRubette.basenotpower"));
                 return null;
             }
         }
         else {
-            addError(Messages.getString("SetRubette.notpower")); 
+            addError(BuiltinMessages.getString("SetRubette.notpower"));
             return null;
         }
     }
@@ -266,7 +266,7 @@ public class SetRubette extends AbstractRubette {
                 List<Denotator> factors = d.getFactors();
                 Iterator<Denotator> iter = factors.iterator();
                 if (!iter.hasNext()) {
-                    addError(Messages.getString("SetRubette.onefactor")); 
+                    addError(BuiltinMessages.getString("SetRubette.onefactor"));
                     return null;                    
                 }
                 else {
@@ -284,12 +284,12 @@ public class SetRubette extends AbstractRubette {
                 }
             }
             else {
-                addError(Messages.getString("SetRubette.basenotpower")); 
+                addError(BuiltinMessages.getString("SetRubette.basenotpower"));
                 return null;
             }
         }
         else {
-            addError(Messages.getString("SetRubette.notpower")); 
+            addError(BuiltinMessages.getString("SetRubette.notpower"));
             return null;
         }
     }
@@ -349,7 +349,7 @@ public class SetRubette extends AbstractRubette {
             inSlider.setInValue(getInCount());
             properties.add(inSlider, BorderLayout.NORTH);
             
-            JLabel opLabel = new JLabel(Messages.getString("SetRubette.operation")+": ");  
+            JLabel opLabel = new JLabel(BuiltinMessages.getString("SetRubette.operation")+": ");
             properties.add(opLabel, BorderLayout.WEST);
             
             opSelect = new JComboBox();
@@ -456,13 +456,13 @@ public class SetRubette extends AbstractRubette {
     private static final int INTERALL     = 6;
 
     private static final String[] opNames = {
-            Messages.getString("SetRubette.union"), 
-            Messages.getString("SetRubette.intersection"), 
-            Messages.getString("SetRubette.difference"), 
-            Messages.getString("SetRubette.symdiff"), 
-            Messages.getString("SetRubette.addelement"), 
-            Messages.getString("SetRubette.unionall"), 
-            Messages.getString("SetRubette.interall") 
+            BuiltinMessages.getString("SetRubette.union"),
+            BuiltinMessages.getString("SetRubette.intersection"),
+            BuiltinMessages.getString("SetRubette.difference"),
+            BuiltinMessages.getString("SetRubette.symdiff"),
+            BuiltinMessages.getString("SetRubette.addelement"),
+            BuiltinMessages.getString("SetRubette.unionall"),
+            BuiltinMessages.getString("SetRubette.interall")
     };
 
     static {

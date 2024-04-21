@@ -41,7 +41,7 @@ public class JSchemeDialog
         implements ActionListener, KeyListener, Observer {
 
     public JSchemeDialog(Frame frame) {
-        super(frame, Messages.getString("JSchemeDialog.schemeinteraction"), false); 
+        super(frame, SchemeMessages.getString("JSchemeDialog.schemeinteraction"), false);
         setLayout(new BorderLayout());
 
         rep = Repository.systemRepository();
@@ -79,22 +79,22 @@ public class JSchemeDialog
         
         buttonBox.add(Box.createHorizontalGlue());
 
-        stopButton = new JButton(Messages.getString("JSchemeDialog.stopbutton")); 
-        stopButton.setToolTipText(Messages.getString("JSchemeDialog.stoptooltip")); 
+        stopButton = new JButton(SchemeMessages.getString("JSchemeDialog.stopbutton"));
+        stopButton.setToolTipText(SchemeMessages.getString("JSchemeDialog.stoptooltip"));
         stopButton.addActionListener(this);
         buttonBox.add(stopButton);
 
         buttonBox.add(Box.createHorizontalStrut(3));
 
-        clearButton = new JButton(Messages.getString("JSchemeDialog.clearbutton")); 
-        clearButton.setToolTipText(Messages.getString("JSchemeDialog.cleartooltip")); 
+        clearButton = new JButton(SchemeMessages.getString("JSchemeDialog.clearbutton"));
+        clearButton.setToolTipText(SchemeMessages.getString("JSchemeDialog.cleartooltip"));
         clearButton.addActionListener(this);
         buttonBox.add(clearButton);
 
         buttonBox.add(Box.createHorizontalStrut(3));
 
-        initButton = new JButton(Messages.getString("JSchemeDialog.initbutton")); 
-        initButton.setToolTipText(Messages.getString("JSchemeDialog.inittooltip")); 
+        initButton = new JButton(SchemeMessages.getString("JSchemeDialog.initbutton"));
+        initButton.setToolTipText(SchemeMessages.getString("JSchemeDialog.inittooltip"));
         initButton.addActionListener(this);
         buttonBox.add(initButton);
         
@@ -176,9 +176,9 @@ public class JSchemeDialog
         }
         else if (src == initButton) {
             int res = JOptionPane.showConfirmDialog(this,
-                                                    Messages.getString("JSchemeDialog.10")+ 
-                                                    Messages.getString("JSchemeDialog.11"), 
-                                                    Messages.getString("JSchemeDialog.12"), 
+                                                    SchemeMessages.getString("JSchemeDialog.10")+
+                                                    SchemeMessages.getString("JSchemeDialog.11"),
+                                                    SchemeMessages.getString("JSchemeDialog.12"),
                                                     JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION) {
                 env.resetGlobal();

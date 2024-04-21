@@ -56,7 +56,7 @@ public class JSimpleProductEntry extends JSimpleEntry implements KeyListener {
             c.weightx = 0.0;
             c.fill = GridBagConstraints.NONE;
             c.gridwidth = GridBagConstraints.RELATIVE;
-            JLabel label = (dim == 1)?new JLabel(""):new JLabel(Messages.getString("JSimpleProductEntry.value")+" #"+i+":");   //$NON-NLS-3$ //$NON-NLS-4$
+            JLabel label = (dim == 1)?new JLabel(""):new JLabel(ComponentsMessages.getString("JSimpleProductEntry.value")+" #"+i+":");   //$NON-NLS-3$ //$NON-NLS-4$
             gbl.setConstraints(label, c);
             add(label);
             c.weightx = 1.0;

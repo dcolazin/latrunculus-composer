@@ -85,8 +85,8 @@ public final class JRubette extends JPanel
         }
 
         if (model.hasProperties()) {
-            JButton propertiesButton = new JButton(Messages.getString("JRubette.properties")); 
-            propertiesButton.setToolTipText(Messages.getString("JRubette.propertiestooltip")); 
+            JButton propertiesButton = new JButton(RubetteMessages.getString("JRubette.properties"));
+            propertiesButton.setToolTipText(RubetteMessages.getString("JRubette.propertiestooltip"));
             propertiesButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, propertiesButton.getPreferredSize().height);
             propertiesButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -98,8 +98,8 @@ public final class JRubette extends JPanel
         }
 
         if (model.hasView()) {
-            JButton viewButton = new JButton(Messages.getString("JRubette.view")); 
-            viewButton.setToolTipText(Messages.getString("JRubette.viewtooltip")); 
+            JButton viewButton = new JButton(RubetteMessages.getString("JRubette.view"));
+            viewButton.setToolTipText(RubetteMessages.getString("JRubette.viewtooltip"));
             viewButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, viewButton.getPreferredSize().height);
             viewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -111,8 +111,8 @@ public final class JRubette extends JPanel
         }
         
         if (model.getRubette() instanceof MacroRubette) {
-            JButton openButton = new JButton(Messages.getString("JRubette.open")); 
-            openButton.setToolTipText(Messages.getString("JRubette.opentooltip")); 
+            JButton openButton = new JButton(RubetteMessages.getString("JRubette.open"));
+            openButton.setToolTipText(RubetteMessages.getString("JRubette.opentooltip"));
             openButton.setBounds(MARGIN_LEFT+5, wy, size.width-MARGIN_RIGHT-MARGIN_LEFT-10, openButton.getPreferredSize().height);
             openButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -195,7 +195,7 @@ public final class JRubette extends JPanel
         buttonPanel.setLayout(new GridLayout(1, 1, 5, 5));
         buttonPanel.setBorder(emptyBorder);
         
-        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); 
+        JButton hideButton = new JButton(RubetteMessages.getString("JRubette.hide"));
         hideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.setVisible(false);
@@ -222,7 +222,7 @@ public final class JRubette extends JPanel
         buttonsPanel.setLayout(new GridLayout(1,3,5,5));
         buttonsPanel.setBorder(emptyBorder);
         
-        JButton hideButton = new JButton(Messages.getString("JRubette.hide")); 
+        JButton hideButton = new JButton(RubetteMessages.getString("JRubette.hide"));
         hideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.setVisible(false);
@@ -231,7 +231,7 @@ public final class JRubette extends JPanel
         hideButton.setToolTipText("Hide properties window");
         buttonsPanel.add(hideButton);
         
-        JButton revertButton = new JButton(Messages.getString("JRubette.revert")); 
+        JButton revertButton = new JButton(RubetteMessages.getString("JRubette.revert"));
         revertButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 model.getRubette().revertProperties();
@@ -240,7 +240,7 @@ public final class JRubette extends JPanel
         revertButton.setToolTipText("Revert properties to previous values");
         buttonsPanel.add(revertButton);
         
-        JButton applyButton = new JButton(Messages.getString("JRubette.apply")); 
+        JButton applyButton = new JButton(RubetteMessages.getString("JRubette.apply"));
         applyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 applyProperties(false);
@@ -249,7 +249,7 @@ public final class JRubette extends JPanel
         applyButton.setToolTipText("Apply properties");
         buttonsPanel.add(applyButton);
         
-        JButton applyAndHideButton = new JButton(Messages.getString("JRubette.applyandhide")); 
+        JButton applyAndHideButton = new JButton(RubetteMessages.getString("JRubette.applyandhide"));
         applyAndHideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 applyProperties(true);
@@ -274,11 +274,11 @@ public final class JRubette extends JPanel
         if (getJNetwork() instanceof JMacroRubetteView) {
             Rubette rubette = getModel().getRubette();
             if (rubette instanceof MacroInputRubette) {
-                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeinprop")); 
+                getJNetwork().getJComposer().showErrorDialog(RubetteMessages.getString("JRubette.cannotchangeinprop"));
                 return false;
             }
             if (rubette instanceof MacroOutputRubette) {
-                getJNetwork().getJComposer().showErrorDialog(Messages.getString("JRubette.cannotchangeoutprop"));  
+                getJNetwork().getJComposer().showErrorDialog(RubetteMessages.getString("JRubette.cannotchangeoutprop"));
                 return false;
             }
         }
@@ -754,14 +754,14 @@ public final class JRubette extends JPanel
         item = new JMenuTitleItem(getRubetteName());
         popup.add(item);
         popup.addSeparator();
-        item = new JMenuItem(Messages.getString("JRubette.rename")); 
+        item = new JMenuItem(RubetteMessages.getString("JRubette.rename"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     rename();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JRubette.remove")); 
+        item = new JMenuItem(RubetteMessages.getString("JRubette.remove"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeRubette();
@@ -799,7 +799,7 @@ public final class JRubette extends JPanel
             popup.add(item);
         }
         if (getModel().getRubette() instanceof MacroRubette) {
-            item = new JMenuItem(Messages.getString("JRubette.open")); 
+            item = new JMenuItem(RubetteMessages.getString("JRubette.open"));
             item.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         openNetwork();
@@ -910,12 +910,12 @@ public final class JRubette extends JPanel
         if (viewDialog != null) {
             viewDialog.setTitle(getJNetwork().getName()+" - "+ 
                                 model.getName()+" - "+ 
-                                Messages.getString("JRubette.viewtitle")); 
+                                RubetteMessages.getString("JRubette.viewtitle"));
         }
         if (propertiesDialog != null) {
             propertiesDialog.setTitle(getJNetwork().getName()+" - "+ 
                                       model.getName()+" - "+ 
-                                      Messages.getString("JRubette.propertiestitle")); 
+                                      RubetteMessages.getString("JRubette.propertiestitle"));
         }
         if (model.hasInfo()) {
             infoLabel.setText(getInfo());
@@ -942,7 +942,7 @@ public final class JRubette extends JPanel
     
     private String getInfo() {
         String s = model.getInfo();
-        return (s == null || s.length() == 0)?Messages.getString("JRubette.info"):s;  
+        return (s == null || s.length() == 0)? RubetteMessages.getString("JRubette.info"):s;
     }
     
     

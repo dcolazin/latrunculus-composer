@@ -143,7 +143,7 @@ public class ModuleListView
 	private ModuleElement editValue(ModuleElement el) {
         ModuleElement resEl = null;
 		if (el instanceof RingElement) {
-			String res = JOptionPane.showInputDialog(this, Messages.getString("ModuleListView.valueforelement"), ModuleElementRepresenter.stringRepresentation(el));
+			String res = JOptionPane.showInputDialog(this, DenoBrowserMessages.getString("ModuleListView.valueforelement"), ModuleElementRepresenter.stringRepresentation(el));
 			if (res != null) {
 				resEl = ModuleElementParser.parseElement(el.getModule(), res);
 			}
@@ -154,7 +154,7 @@ public class ModuleListView
 	private void popupMenu(int x, int y, int index) {
 		JPopupMenu popup = new JPopupMenu();
 		JMenuItem menuItem;
-    	menuItem = new JMenuItem(Messages.getString("ModuleListView.edit")); 
+    	menuItem = new JMenuItem(DenoBrowserMessages.getString("ModuleListView.edit"));
 		menuItem.addActionListener(this);
 	    menuItem.setActionCommand("edit"); 
 		popup.add(menuItem);		

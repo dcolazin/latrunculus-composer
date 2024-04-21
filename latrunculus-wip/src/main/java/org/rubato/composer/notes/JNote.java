@@ -167,7 +167,7 @@ public class JNote
     private JPopupMenu createPopupMenu() {
         JPopupMenu popup = new JPopupMenu();
         JMenuItem item;
-        item = new JMenuItem(Messages.getString("JNote.remove")); 
+        item = new JMenuItem(NotesMessages.getString("JNote.remove"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeJNote();
@@ -175,7 +175,7 @@ public class JNote
             });
         popup.add(item);
         if (titleField.isVisible()) {
-            item = new JMenuItem(Messages.getString("JNote.removetitle")); 
+            item = new JMenuItem(NotesMessages.getString("JNote.removetitle"));
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeTitle();
@@ -183,7 +183,7 @@ public class JNote
             });
         }
         else {
-            item = new JMenuItem(Messages.getString("JNote.addtitle")); 
+            item = new JMenuItem(NotesMessages.getString("JNote.addtitle"));
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     addTitle();
@@ -191,14 +191,14 @@ public class JNote
             });
         }
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNote.bgcolor")); 
+        item = new JMenuItem(NotesMessages.getString("JNote.bgcolor"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     changeBackgroundColor();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNote.fgcolor")); 
+        item = new JMenuItem(NotesMessages.getString("JNote.fgcolor"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     changeForegroundColor();
@@ -243,7 +243,7 @@ public class JNote
         if (colorChooser == null) {
             colorChooser = new JColorChooser();
         }
-        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosefgcolor"), fgColor); 
+        Color color = JColorChooser.showDialog(this, NotesMessages.getString("JNote.chosefgcolor"), fgColor);
         if (color != null) {
             setForegroundColor(color);
         }        
@@ -268,7 +268,7 @@ public class JNote
         if (colorChooser == null) {
             colorChooser = new JColorChooser();
         }
-        Color color = JColorChooser.showDialog(this, Messages.getString("JNote.chosebgcolor"), fgColor); 
+        Color color = JColorChooser.showDialog(this, NotesMessages.getString("JNote.chosebgcolor"), fgColor);
         if (color != null) {
             setBackgroundColor(color);
         }        

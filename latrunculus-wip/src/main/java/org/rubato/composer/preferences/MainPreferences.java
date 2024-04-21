@@ -37,15 +37,15 @@ public class MainPreferences extends JPreferencesPanel {
     protected void createLayout() {
         zigzagBox = new JComboBox(linkTypes);
         zigzagBox.setSelectedIndex(userPrefs.getLinkType());
-        addPreference(Messages.getString("MainPreferences.defaultlink"), zigzagBox); 
+        addPreference(PreferencesMessages.getString("MainPreferences.defaultlink"), zigzagBox);
         
         saveGeometryButton = new JCheckBox();
         saveGeometryButton.setSelected(userPrefs.getGeometrySaved());
-        addPreference(Messages.getString("MainPreferences.savesize"), saveGeometryButton); 
+        addPreference(PreferencesMessages.getString("MainPreferences.savesize"), saveGeometryButton);
 
         askBeforeLeavingButton = new JCheckBox();
         askBeforeLeavingButton.setSelected(userPrefs.getAskBeforeLeaving());
-        addPreference(Messages.getString("MainPreferences.askleaving"), askBeforeLeavingButton); 
+        addPreference(PreferencesMessages.getString("MainPreferences.askleaving"), askBeforeLeavingButton);
 
         Box box = Box.createHorizontalBox();
         defaultQuantField = new JTextField();
@@ -54,14 +54,14 @@ public class MainPreferences extends JPreferencesPanel {
         defaultQuantField.setPreferredSize(new Dimension(100, 0));
         box.add(defaultQuantField);
         box.add(Box.createHorizontalStrut(5));
-        JButton quantReset = new JButton(Messages.getString("MainPreferences.reset")); 
+        JButton quantReset = new JButton(PreferencesMessages.getString("MainPreferences.reset"));
         quantReset.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                defaultQuantField.setText("1920"); 
            } 
         });
         box.add(quantReset);
-        addPreference(Messages.getString("MainPreferences.defaultquant"), box);  
+        addPreference(PreferencesMessages.getString("MainPreferences.defaultquant"), box);
         
         showProgressButton= new JCheckBox();
         showProgressButton.setSelected(userPrefs.getShowProgress());
@@ -80,14 +80,14 @@ public class MainPreferences extends JPreferencesPanel {
     
     
     public String getTitle() {
-        return Messages.getString("MainPreferences.main"); 
+        return PreferencesMessages.getString("MainPreferences.main");
     }
     
     
     private static final String[] linkTypes = {
-        Messages.getString("MainPreferences.line"), 
-        Messages.getString("MainPreferences.zigzag"), 
-        Messages.getString("MainPreferences.curve") 
+        PreferencesMessages.getString("MainPreferences.line"),
+        PreferencesMessages.getString("MainPreferences.zigzag"),
+        PreferencesMessages.getString("MainPreferences.curve")
     };
     
     private   JComboBox  zigzagBox;

@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer.plugin;
+package org.rubato.composer.objectbrowser;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class ObjectBrowseMessages {
 
-    private static final String BUNDLE_NAME = "bundles/composer/plugin/messages"; 
+    private static final String BUNDLE_NAME = "bundles/composer/objectbrowser/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private ObjectBrowseMessages() {}
 
     public static String getString(String key) {
         try {

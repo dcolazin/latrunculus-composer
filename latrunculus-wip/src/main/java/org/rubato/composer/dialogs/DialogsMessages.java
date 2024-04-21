@@ -22,13 +22,13 @@ package org.rubato.composer.dialogs;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class DialogsMessages {
 
     private static final String BUNDLE_NAME = "bundles/composer/dialogs/messages"; 
     
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() { /* pure static class */ }
+    private DialogsMessages() { /* pure static class */ }
     
     public static String getString(String key) {
         try {

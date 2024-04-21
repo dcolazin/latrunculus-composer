@@ -51,7 +51,7 @@ class JAffineGraphDialog extends JDialog implements ActionListener {
 
     
     public JAffineGraphDialog(Frame frame, Ring ring) {
-        super(frame, Messages.getString("JAffineGraphDialog.designtrafo"), true); 
+        super(frame, MorphismsMessages.getString("JAffineGraphDialog.designtrafo"), true);
         this.ring = ring;
         createLayout();
     }
@@ -100,11 +100,11 @@ class JAffineGraphDialog extends JDialog implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(Box.createGlue());
-        applyButton = new JButton(Messages.getString("JAffineGraphDialog.apply")); 
+        applyButton = new JButton(MorphismsMessages.getString("JAffineGraphDialog.apply"));
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        cancelButton = new JButton(Messages.getString("JAffineGraphDialog.cancel")); 
+        cancelButton = new JButton(MorphismsMessages.getString("JAffineGraphDialog.cancel"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         buttonBox.add(Box.createGlue());        

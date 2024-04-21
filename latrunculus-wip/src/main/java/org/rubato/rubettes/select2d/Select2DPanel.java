@@ -700,18 +700,18 @@ class Select2DPanel
     // Strings (tooltips, titles...)
     //
     
-    private static final String NEWSEL_TIP      = Messages.getString("Select2DPanel.createnewselectiontip"); 
-    private static final String SELSEL_TIP      = Messages.getString("Select2DPanel.selectselectiontip"); 
-    private static final String ADD_TIP         = Messages.getString("Select2DPanel.addselpt"); 
-    private static final String REMOVE_TIP      = Messages.getString("Select2DPanel.remselpt"); 
-    private static final String MOVE_TIP        = Messages.getString("Select2DPanel.move"); 
-    private static final String IDENTIFY_TIP    = Messages.getString("Select2DPanel.identify"); 
-    private static final String ZOOM_TIP        = Messages.getString("Select2DPanel.windowzoomtip"); 
-    private static final String AUTO_ZOOM_TIP   = Messages.getString("Select2DPanel.zoom"); 
-    private static final String XAXISTREE_TITLE = Messages.getString("Select2DPanel.xaxis"); 
-    private static final String YAXISTREE_TITLE = Messages.getString("Select2DPanel.yaxis"); ;
-    private static final String EXTENT_TITLE    = Messages.getString("Select2DPanel.extent"); ;
-    private static final String POINTER_TITLE   = Messages.getString("Select2DPanel.pointer"); ;    
+    private static final String NEWSEL_TIP      = Select2DRubetteMessages.getString("Select2DPanel.createnewselectiontip");
+    private static final String SELSEL_TIP      = Select2DRubetteMessages.getString("Select2DPanel.selectselectiontip");
+    private static final String ADD_TIP         = Select2DRubetteMessages.getString("Select2DPanel.addselpt");
+    private static final String REMOVE_TIP      = Select2DRubetteMessages.getString("Select2DPanel.remselpt");
+    private static final String MOVE_TIP        = Select2DRubetteMessages.getString("Select2DPanel.move");
+    private static final String IDENTIFY_TIP    = Select2DRubetteMessages.getString("Select2DPanel.identify");
+    private static final String ZOOM_TIP        = Select2DRubetteMessages.getString("Select2DPanel.windowzoomtip");
+    private static final String AUTO_ZOOM_TIP   = Select2DRubetteMessages.getString("Select2DPanel.zoom");
+    private static final String XAXISTREE_TITLE = Select2DRubetteMessages.getString("Select2DPanel.xaxis");
+    private static final String YAXISTREE_TITLE = Select2DRubetteMessages.getString("Select2DPanel.yaxis"); ;
+    private static final String EXTENT_TITLE    = Select2DRubetteMessages.getString("Select2DPanel.extent"); ;
+    private static final String POINTER_TITLE   = Select2DRubetteMessages.getString("Select2DPanel.pointer"); ;
     
     //
     // Icons

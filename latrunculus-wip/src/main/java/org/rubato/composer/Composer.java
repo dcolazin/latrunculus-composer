@@ -153,7 +153,7 @@ public class Composer implements WindowStateListener {
                     break;
                 }
                 else {
-                    frame.showErrorDialog(Messages.getString("Composer.couldnotopen"), arg);
+                    frame.showErrorDialog(ComposerMessages.getString("Composer.couldnotopen"), arg);
                     break;
                 }
             }

@@ -203,9 +203,9 @@ public class JSelectForm extends JPanel implements ActionListener {
     
     private Dictionary dict = null;
     
-    private static final String FORM = Messages.getString("JSelectForm.form");
-    private static final String CREATE_BUTTON = Messages.getString("JSelectForm.create");
-    private static final String CREATE_BUTTON_TIP = Messages.getString("JSelectForm.createtip");
-    private static final String SELECT_BUTTON = Messages.getString("JSelectForm.select");
-    private static final String SELECT_BUTTON_TIP = Messages.getString("JSelectForm.selecttip");
+    private static final String FORM = ComponentsMessages.getString("JSelectForm.form");
+    private static final String CREATE_BUTTON = ComponentsMessages.getString("JSelectForm.create");
+    private static final String CREATE_BUTTON_TIP = ComponentsMessages.getString("JSelectForm.createtip");
+    private static final String SELECT_BUTTON = ComponentsMessages.getString("JSelectForm.select");
+    private static final String SELECT_BUTTON_TIP = ComponentsMessages.getString("JSelectForm.selecttip");
 }

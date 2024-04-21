@@ -38,7 +38,7 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
         setLayout(new GridLayout(n, 1, 5, 5));
         if (in) {
             inSlider = new JSlider();
-            inBorder = new TitledBorder(emptyBorder, Messages.getString("JConnectorSliders.numberInputs")); 
+            inBorder = new TitledBorder(emptyBorder, ComponentsMessages.getString("JConnectorSliders.numberInputs"));
             inSlider.setBorder(inBorder);
             inSlider.setPaintTicks(true);
             inSlider.setMajorTickSpacing(1);
@@ -49,7 +49,7 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
         }
         if (out) {
             outSlider = new JSlider();
-            outBorder = new TitledBorder(emptyBorder, Messages.getString("JConnectorSliders.numberOutputs")); 
+            outBorder = new TitledBorder(emptyBorder, ComponentsMessages.getString("JConnectorSliders.numberOutputs"));
             outSlider.setBorder(outBorder);
             outSlider.setPaintTicks(true);
             outSlider.setMajorTickSpacing(1);
@@ -91,7 +91,7 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
             n = inSlider.getMaximum();
         }
         inSlider.setValue(n);
-        inBorder.setTitle(Messages.getString("JConnectorSliders.numberInputs")+": "+n);  
+        inBorder.setTitle(ComponentsMessages.getString("JConnectorSliders.numberInputs")+": "+n);
     }    
 
     
@@ -108,7 +108,7 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
             n = outSlider.getMaximum();
         }
         outSlider.setValue(n);
-        outBorder.setTitle(Messages.getString("JConnectorSliders.numberOutputs")+": "+n);  
+        outBorder.setTitle(ComponentsMessages.getString("JConnectorSliders.numberOutputs")+": "+n);
     }
 
     
@@ -119,10 +119,10 @@ public class JConnectorSliders extends JPanel implements ChangeListener {
     
     public void stateChanged(ChangeEvent e) {
         if (inSlider != null) {
-            inBorder.setTitle(Messages.getString("JConnectorSliders.numberInputs")+": "+getInValue());  
+            inBorder.setTitle(ComponentsMessages.getString("JConnectorSliders.numberInputs")+": "+getInValue());
         }
         if (outSlider != null) {
-            outBorder.setTitle(Messages.getString("JConnectorSliders.numberOutputs")+": "+getOutValue());  
+            outBorder.setTitle(ComponentsMessages.getString("JConnectorSliders.numberOutputs")+": "+getOutValue());
         }
     }
     

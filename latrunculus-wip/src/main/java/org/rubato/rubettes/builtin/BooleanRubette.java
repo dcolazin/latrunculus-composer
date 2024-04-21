@@ -61,7 +61,7 @@ public final class BooleanRubette extends AbstractRubette {
 
     public void run(RunInfo runInfo) {
         if (!expression.hasCode()) {
-            addError(Messages.getString("BooleanRubette.novalidexpression")); 
+            addError(BuiltinMessages.getString("BooleanRubette.novalidexpression"));
             return;
         }
         for (int i = 0; i < getInCount(); i++) {
@@ -74,7 +74,7 @@ public final class BooleanRubette extends AbstractRubette {
                 values[i] = (n==0)?false:true;
             }
             else {
-                addError(Messages.getString("BooleanRubette.inputwrongform"), i, "Boolean");  
+                addError(BuiltinMessages.getString("BooleanRubette.inputwrongform"), i, "Boolean");
             }
         }
         if (!hasErrors()) {
@@ -139,7 +139,7 @@ public final class BooleanRubette extends AbstractRubette {
         int newInCount = inSlider.getInValue();
         String expr = exprTextArea.getText().trim();
         if (expr.length() == 0) {
-            infoLabel.setText(Messages.getString("BooleanRubette.noexpression")); 
+            infoLabel.setText(BuiltinMessages.getString("BooleanRubette.noexpression"));
             return false;
         }
         boolean ok = expression.parse(expr, newInCount);
@@ -180,7 +180,7 @@ public final class BooleanRubette extends AbstractRubette {
 
     
     public String getOutTip(int i) {
-        return Messages.getString("BooleanRubette.result"); 
+        return BuiltinMessages.getString("BooleanRubette.result");
     }
     
 

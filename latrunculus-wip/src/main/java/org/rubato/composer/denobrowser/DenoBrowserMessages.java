@@ -3,13 +3,13 @@ package org.rubato.composer.denobrowser;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class DenoBrowserMessages {
     
     private static final String BUNDLE_NAME = "bundles/composer/denobrowser/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() { /* pure static class */ }
+    private DenoBrowserMessages() { /* pure static class */ }
 
     public static String getString(String key) {
         try {

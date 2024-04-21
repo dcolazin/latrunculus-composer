@@ -35,7 +35,7 @@ public class JSchemeEditor
         implements ActionListener, KeyListener, Observer {
 
     public JSchemeEditor(Frame frame) {
-        super(frame, Messages.getString("JSchemeEditor.schemeeditor"), false); 
+        super(frame, SchemeMessages.getString("JSchemeEditor.schemeeditor"), false);
         setLayout(new BorderLayout());
 
         rep = Repository.systemRepository();
@@ -63,8 +63,8 @@ public class JSchemeEditor
         
         buttonBox.add(Box.createHorizontalGlue());
 
-        saveButton = new JButton(Messages.getString("JSchemeEditor.savebutton")); 
-        saveButton.setToolTipText(Messages.getString("JSchemeEditor.savetooltip")); 
+        saveButton = new JButton(SchemeMessages.getString("JSchemeEditor.savebutton"));
+        saveButton.setToolTipText(SchemeMessages.getString("JSchemeEditor.savetooltip"));
         saveButton.addActionListener(this);
         buttonBox.add(saveButton);
 
@@ -100,7 +100,7 @@ public class JSchemeEditor
             }
             else {
                 errorArea.setForeground(Color.GREEN);
-                errorArea.setText(Messages.getString("JSchemeEditor.savedmsg")); 
+                errorArea.setText(SchemeMessages.getString("JSchemeEditor.savedmsg"));
             }
         }
     }

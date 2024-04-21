@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer.notes;
+package org.rubato.composer;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class ComposerMessages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/notes/messages"; 
+    private static final String BUNDLE_NAME = "bundles/composer/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private ComposerMessages() { /* static class */ }
 
     public static String getString(String key) {
         try {

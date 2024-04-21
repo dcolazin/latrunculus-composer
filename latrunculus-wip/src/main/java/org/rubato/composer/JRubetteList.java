@@ -78,16 +78,16 @@ public final class JRubetteList extends JPanel implements ActionListener {
         buttonPanel.setLayout(new GridLayout(3, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
-        addButton = new JButton(Messages.getString("JRubetteList.add")); 
+        addButton = new JButton(ComposerMessages.getString("JRubetteList.add"));
         addButton.setEnabled(false);
         buttonPanel.add(addButton);
         
-        editButton = new JButton(Messages.getString("JRubetteList.edit")); 
+        editButton = new JButton(ComposerMessages.getString("JRubetteList.edit"));
         editButton.setEnabled(false);
         editButton.addActionListener(this);
         buttonPanel.add(editButton);
         
-        removeButton = new JButton(Messages.getString("JRubetteList.remove")); 
+        removeButton = new JButton(ComposerMessages.getString("JRubetteList.remove"));
         removeButton.setEnabled(false);
         removeButton.addActionListener(this);
         buttonPanel.add(removeButton);

@@ -215,7 +215,7 @@ public class NetworkModel {
     public static NetworkModel fromXML(XMLReader reader, Element networkElement) {
         String name = networkElement.getAttribute(NAME_ATTR).trim();
         if (name.length() == 0) {
-            reader.setError(Messages.getString("NetworkModel.missingattr"), NETWORK, NAME_ATTR); 
+            reader.setError(NetworkMessages.getString("NetworkModel.missingattr"), NETWORK, NAME_ATTR);
             return null;
         }
         else {
@@ -233,7 +233,7 @@ public class NetworkModel {
                 int y = XMLReader.getIntAttribute(child, Y_ATTR, 0);
                 Rubette rubette = manager.getRubetteByClassName(rubClass);
                 if (rubette == null) {
-                    reader.setError(Messages.getString("NetworkModel.classnotavailable"), rubClass); 
+                    reader.setError(NetworkMessages.getString("NetworkModel.classnotavailable"), rubClass);
                 }
                 else {
                     rubette = rubette.fromXML(reader, child);
@@ -269,7 +269,7 @@ public class NetworkModel {
                     destModel.setInLink(link);
                 }
                 else {
-                    reader.setError(Messages.getString("NetworkModel.cannotlink"), 
+                    reader.setError(NetworkMessages.getString("NetworkModel.cannotlink"),
                                     srcModel == null?"unknown":srcModel.getName(), srcPos,
                                     destModel== null?"unknown":destModel.getName(), destPos);
                 }

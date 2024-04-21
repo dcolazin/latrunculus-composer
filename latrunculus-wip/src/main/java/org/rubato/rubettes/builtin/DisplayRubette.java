@@ -77,7 +77,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
         if (input == null) {
-            addError(Messages.getString("DisplayRubette.inputnotset")); 
+            addError(BuiltinMessages.getString("DisplayRubette.inputnotset"));
         }
     }
 
@@ -162,7 +162,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
                 display.setText(bs.toString());
             }
             else {
-                display.setText(Messages.getString("DisplayRubette.nodenotator")); 
+                display.setText(BuiltinMessages.getString("DisplayRubette.nodenotator"));
             }
         }
     }
@@ -185,7 +185,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     
     
     public String getInTip(int i) {
-        return Messages.getString("DisplayRubette.intip"); 
+        return BuiltinMessages.getString("DisplayRubette.intip");
     }
 
     

@@ -188,7 +188,7 @@ public class JComposer extends JFrame implements Observer {
         JMenuBar menuBar = new JMenuBar();
 
         // File menu
-        JMenu fileMenu = new JMenu(org.rubato.composer.Messages.getString("JComposer.file"));
+        JMenu fileMenu = new JMenu(ComposerMessages.getString("JComposer.file"));
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem newItem = new JMenuItem(newAction);
@@ -288,7 +288,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(editMenu);
         
         // Rubette menu
-        JMenu rubMenu = new JMenu(org.rubato.composer.Messages.getString("JComposer.rubette"));
+        JMenu rubMenu = new JMenu(ComposerMessages.getString("JComposer.rubette"));
         rubMenu.setMnemonic(KeyEvent.VK_R);
 
         JMenuItem addRubetteItem = new JMenuItem(addRubetteAction);
@@ -300,7 +300,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(rubMenu);
 
         // Network menu
-        JMenu netMenu = new JMenu(org.rubato.composer.Messages.getString("JComposer.network"));
+        JMenu netMenu = new JMenu(ComposerMessages.getString("JComposer.network"));
         netMenu.setMnemonic(KeyEvent.VK_N);
 
         JMenuItem newNetItem = new JMenuItem(newNetworkAction);
@@ -330,7 +330,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(netMenu);
 
         // Tools menu
-        JMenu toolsMenu = new JMenu(org.rubato.composer.Messages.getString("JComposer.tools"));
+        JMenu toolsMenu = new JMenu(ComposerMessages.getString("JComposer.tools"));
         toolsMenu.setMnemonic(KeyEvent.VK_T);
         
         JMenuItem moduleItem = new JMenuItem(moduleAction);
@@ -382,7 +382,7 @@ public class JComposer extends JFrame implements Observer {
         menuBar.add(toolsMenu);
         
         // Help menu
-        JMenu helpMenu = new JMenu(org.rubato.composer.Messages.getString("JComposer.help"));
+        JMenu helpMenu = new JMenu(ComposerMessages.getString("JComposer.help"));
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
         JMenuItem aboutItem = new JMenuItem(aboutAction);
@@ -408,10 +408,10 @@ public class JComposer extends JFrame implements Observer {
         bottomPanel.add(bottomTabs, BorderLayout.CENTER);
         
         problemList = new JProblemList();
-        bottomTabs.addTab(org.rubato.composer.Messages.getString("JComposer.problems"), problemList);
+        bottomTabs.addTab(ComposerMessages.getString("JComposer.problems"), problemList);
         
         messageLog = new JMessageLog();
-        bottomTabs.addTab(org.rubato.composer.Messages.getString("JComposer.messagelog"), messageLog);
+        bottomTabs.addTab(ComposerMessages.getString("JComposer.messagelog"), messageLog);
         
         bottomPanel.setPreferredSize(new Dimension(0, 150));
         return bottomPanel;
@@ -428,12 +428,12 @@ public class JComposer extends JFrame implements Observer {
         
         rubetteList = new JRubetteList(this);
         rubetteList.addAddButtonAction(addRubetteAction);
-        rightTabs.addTab(org.rubato.composer.Messages.getString("JComposer.rubettes"), rubetteList);
+        rightTabs.addTab(ComposerMessages.getString("JComposer.rubettes"), rubetteList);
         
         networkList = new JNetworkList();
         networkList.addNewButtonAction(newNetworkAction);
         networkList.setShowAction(showNetworkAction);
-        rightTabs.addTab(org.rubato.composer.Messages.getString("JComposer.networks"), networkList);
+        rightTabs.addTab(ComposerMessages.getString("JComposer.networks"), networkList);
         
         rightPanel.setPreferredSize(new Dimension(200, 0));
         return rightPanel;
@@ -482,7 +482,7 @@ public class JComposer extends JFrame implements Observer {
         msg = TextUtils.replaceStrings(msg, objects);
         Frame frame = JOptionPane.getFrameForComponent(this);
         setStatusError(msg, objects);
-        JOptionPane.showMessageDialog(frame, msg, TITLE_STRING+": "+ org.rubato.composer.Messages.getString("JComposer.error"), JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, msg, TITLE_STRING+": "+ ComposerMessages.getString("JComposer.error"), JOptionPane.ERROR_MESSAGE);
     }
     
     
@@ -567,7 +567,7 @@ public class JComposer extends JFrame implements Observer {
             return;
         }
         discardProject();
-        setStatusInfo(org.rubato.composer.Messages.getString("JComposer.newprojectcreated"));
+        setStatusInfo(ComposerMessages.getString("JComposer.newprojectcreated"));
     }
     
     
@@ -595,7 +595,7 @@ public class JComposer extends JFrame implements Observer {
     public boolean loseProject() {
         if (hasChanged && !networkContainer.isEmpty()) {
             // do we want to lose the current networks
-            int i = JOptionPane.showConfirmDialog(this, org.rubato.composer.Messages.getString("JComposer.dosaveproject"));
+            int i = JOptionPane.showConfirmDialog(this, ComposerMessages.getString("JComposer.dosaveproject"));
             if (i == JOptionPane.OK_OPTION) {
                 save();
                 return true;
@@ -653,7 +653,7 @@ public class JComposer extends JFrame implements Observer {
                 for (String error : reader.getErrors()) {
                     setStatusError(error);
                 }
-                showErrorDialog(org.rubato.composer.Messages.getString("JComposer.couldnotloadfile"), file.getName());
+                showErrorDialog(ComposerMessages.getString("JComposer.couldnotloadfile"), file.getName());
             }
             else {
                 discardProject();
@@ -678,7 +678,7 @@ public class JComposer extends JFrame implements Observer {
                 
                 // register all parsed denotators and forms
                 if (!rep.register(reader.getForms(), reader.getDenotators())) {
-                    setStatusError(org.rubato.composer.Messages.getString("JComposer.couldnotregister"));
+                    setStatusError(ComposerMessages.getString("JComposer.couldnotregister"));
                     return;
                 }
                 
@@ -696,7 +696,7 @@ public class JComposer extends JFrame implements Observer {
                         addJNetwork(jnetwork, model.getName());
                     }
                     else {
-                        setStatusError(org.rubato.composer.Messages.getString("JComposer.couldnotaddnetwork"), model.getName());
+                        setStatusError(ComposerMessages.getString("JComposer.couldnotaddnetwork"), model.getName());
                     }
                 }
                 currentFile = file;
@@ -706,7 +706,7 @@ public class JComposer extends JFrame implements Observer {
                 }
                 fileChooser.setCurrentDirectory(getCurrentDirectory());
                 messageLog.clearMessages();
-                setStatusInfo(org.rubato.composer.Messages.getString("JComposer.projectedfileloaded"), currentFile.getName());
+                setStatusInfo(ComposerMessages.getString("JComposer.projectedfileloaded"), currentFile.getName());
                 setChanged(false);
                 recentFiles.activate(file);
             }
@@ -714,7 +714,7 @@ public class JComposer extends JFrame implements Observer {
         catch (IOException e) {
             // this should not happen
             logger.warning(TextUtils.replaceStrings("Could not load file", file.getAbsoluteFile()));
-            setStatusError(org.rubato.composer.Messages.getString("JComposer.filenotfound"), file.getName());
+            setStatusError(ComposerMessages.getString("JComposer.filenotfound"), file.getName());
         }
         setCursor(cursor);
     }
@@ -758,17 +758,17 @@ public class JComposer extends JFrame implements Observer {
                             addJNetwork(jnetwork, model.getName());
                         }
                         else {
-                            setStatusError(org.rubato.composer.Messages.getString("JComposer.couldnotaddnetwork"), model.getName());
+                            setStatusError(ComposerMessages.getString("JComposer.couldnotaddnetwork"), model.getName());
                         }
                     }
                     setCurrentDirectory(fileChooser.getCurrentDirectory());
                     setChanged(true);
-                    setStatusInfo(org.rubato.composer.Messages.getString("JComposer.definitionsloaded"), selectedFile.getName());
+                    setStatusInfo(ComposerMessages.getString("JComposer.definitionsloaded"), selectedFile.getName());
                 }
             }
             catch (FileNotFoundException e) {
                 // this should not happen
-                setStatusError(org.rubato.composer.Messages.getString("JComposer.filenotfound"), selectedFile.getName());
+                setStatusError(ComposerMessages.getString("JComposer.filenotfound"), selectedFile.getName());
             }
         }
     }
@@ -816,7 +816,7 @@ public class JComposer extends JFrame implements Observer {
                 recentFiles.activate(currentFile);
             }
             catch (IOException e) {
-                setStatusError(org.rubato.composer.Messages.getString("JComposer.couldnotsavefile"), currentFile.getName());
+                setStatusError(ComposerMessages.getString("JComposer.couldnotsavefile"), currentFile.getName());
             }
         }
     }
@@ -845,7 +845,7 @@ public class JComposer extends JFrame implements Observer {
             }
             if (selectedFile.exists()) {
                 // do we want to override an existing file?
-                String text = TextUtils.replaceStrings(org.rubato.composer.Messages.getString("JComposer.wantoverwrite"), selectedFile.getName());
+                String text = TextUtils.replaceStrings(ComposerMessages.getString("JComposer.wantoverwrite"), selectedFile.getName());
                 int i = JOptionPane.showConfirmDialog(this, text); 
                 if (i != JOptionPane.OK_OPTION) {
                     return;
@@ -906,13 +906,13 @@ public class JComposer extends JFrame implements Observer {
     public void addJRubette() {
         JNetwork jnetwork = getCurrentJNetwork();
         if (jnetwork == null) {
-            setStatusError(org.rubato.composer.Messages.getString("JComposer.novisiblenetwork"));
+            setStatusError(ComposerMessages.getString("JComposer.novisiblenetwork"));
             return;
         }
         // there is visible network
         JRubette jrubette = rubetteList.getCurrentRubette();
         if (jrubette == null) {
-            setStatusError(org.rubato.composer.Messages.getString("JComposer.norubetteselected"));
+            setStatusError(ComposerMessages.getString("JComposer.norubetteselected"));
             return;
         }
         addJRubette(jnetwork, jrubette);
@@ -964,7 +964,7 @@ public class JComposer extends JFrame implements Observer {
     public void newJNetwork() {
         JNetwork jnetwork = networkContainer.newJNetwork();
         setChanged(true);
-        setStatusInfo(org.rubato.composer.Messages.getString("JComposer.networkadded"), jnetwork.getName());
+        setStatusInfo(ComposerMessages.getString("JComposer.networkadded"), jnetwork.getName());
     }
     
     
@@ -1005,7 +1005,7 @@ public class JComposer extends JFrame implements Observer {
         String name = jnetwork.getName();
         networkContainer.removeJNetwork(jnetwork);
         setChanged(true);
-        setStatusInfo(org.rubato.composer.Messages.getString("JComposer.networkremoved"), name);
+        setStatusInfo(ComposerMessages.getString("JComposer.networkremoved"), name);
     }
     
     
@@ -1344,7 +1344,7 @@ public class JComposer extends JFrame implements Observer {
                 return f.isDirectory() || f.getName().endsWith(".rbo");
             }
             public String getDescription() {
-                return org.rubato.composer.Messages.getString("JComposer.rubatofiles");
+                return ComposerMessages.getString("JComposer.rubatofiles");
             }
         });        
     }
@@ -1363,49 +1363,49 @@ public class JComposer extends JFrame implements Observer {
     
     // file actions
     
-    private Action newAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.new"), Icons.newIcon, org.rubato.composer.Messages.getString("JComposer.newproject")) {
+    private Action newAction = new ComposerAction(ComposerMessages.getString("JComposer.new"), Icons.newIcon, ComposerMessages.getString("JComposer.newproject")) {
         public void actionPerformed(ActionEvent e) {
             newProject();
         }
     };
 
 
-    private Action openAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.open"), Icons.openIcon, org.rubato.composer.Messages.getString("JComposer.openproject")) {
+    private Action openAction = new ComposerAction(ComposerMessages.getString("JComposer.open"), Icons.openIcon, ComposerMessages.getString("JComposer.openproject")) {
         public void actionPerformed(ActionEvent e) {
             open();
         }
     };
 
 
-    private Action addAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.adddefinitions"), Icons.addIcon, org.rubato.composer.Messages.getString("JComposer.adddefinitionsfile")) {
+    private Action addAction = new ComposerAction(ComposerMessages.getString("JComposer.adddefinitions"), Icons.addIcon, ComposerMessages.getString("JComposer.adddefinitionsfile")) {
         public void actionPerformed(ActionEvent e) {
             addDefinitions();
         }
     };
 
 
-    private Action revertAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.revert"), Icons.revertIcon, org.rubato.composer.Messages.getString("JComposer.reverttofile")) {
+    private Action revertAction = new ComposerAction(ComposerMessages.getString("JComposer.revert"), Icons.revertIcon, ComposerMessages.getString("JComposer.reverttofile")) {
         public void actionPerformed(ActionEvent e) {
             revert();
         }
     };
 
 
-    private Action saveAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.save"), Icons.saveIcon, "Save project") {
+    private Action saveAction = new ComposerAction(ComposerMessages.getString("JComposer.save"), Icons.saveIcon, "Save project") {
         public void actionPerformed(ActionEvent e) {
             save();
         }
     };
 
 
-    private Action saveasAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.saveas"), Icons.saveasIcon, org.rubato.composer.Messages.getString("JComposer.saveasnewfile")) {
+    private Action saveasAction = new ComposerAction(ComposerMessages.getString("JComposer.saveas"), Icons.saveasIcon, ComposerMessages.getString("JComposer.saveasnewfile")) {
         public void actionPerformed(ActionEvent e) {
             saveas();
         }
     };
 
 
-    private Action quitAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.quit"), Icons.quitIcon, org.rubato.composer.Messages.getString("JComposer.leavecomposer")) {
+    private Action quitAction = new ComposerAction(ComposerMessages.getString("JComposer.quit"), Icons.quitIcon, ComposerMessages.getString("JComposer.leavecomposer")) {
         public void actionPerformed(ActionEvent e) {
             quit();
         }
@@ -1443,28 +1443,28 @@ public class JComposer extends JFrame implements Observer {
     };
 
     
-    private Action addRubetteAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.addrubette"), null, org.rubato.composer.Messages.getString("JComposer.addnewinstance")) {
+    private Action addRubetteAction = new ComposerAction(ComposerMessages.getString("JComposer.addrubette"), null, ComposerMessages.getString("JComposer.addnewinstance")) {
         public void actionPerformed(ActionEvent e) {
             addJRubette();
         }
     };
 
 
-    private Action newNetworkAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.newnetwork"), Icons.newnetIcon, org.rubato.composer.Messages.getString("JComposer.createnewnetwork")) {
+    private Action newNetworkAction = new ComposerAction(ComposerMessages.getString("JComposer.newnetwork"), Icons.newnetIcon, ComposerMessages.getString("JComposer.createnewnetwork")) {
         public void actionPerformed(ActionEvent e) {
             newJNetwork();
         }
     };
     
     
-    private Action closeNetworkAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.closenetwork"), Icons.closeIcon, org.rubato.composer.Messages.getString("JComposer.closediscardnetwork")) {
+    private Action closeNetworkAction = new ComposerAction(ComposerMessages.getString("JComposer.closenetwork"), Icons.closeIcon, ComposerMessages.getString("JComposer.closediscardnetwork")) {
         public void actionPerformed(ActionEvent e) {
             JNetwork jnetwork = getCurrentJNetwork();
             if (jnetwork != null && !jnetwork.isEmpty()) {
                 // network not empty
                 int res = JOptionPane.showOptionDialog(JComposer.this,
-                                                       org.rubato.composer.Messages.getString("JComposer.shouldclosenetwork"),
-                                                       org.rubato.composer.Messages.getString("JComposer.closenetworktitle"),
+                                                       ComposerMessages.getString("JComposer.shouldclosenetwork"),
+                                                       ComposerMessages.getString("JComposer.closenetworktitle"),
                                                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                                        null, null, null);
                 if (res != JOptionPane.YES_OPTION) {
@@ -1476,77 +1476,77 @@ public class JComposer extends JFrame implements Observer {
     };
     
     
-    private Action showNetworkAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.shownetwork"), null, org.rubato.composer.Messages.getString("JComposer.shownetwork")) {
+    private Action showNetworkAction = new ComposerAction(ComposerMessages.getString("JComposer.shownetwork"), null, ComposerMessages.getString("JComposer.shownetwork")) {
         public void actionPerformed(ActionEvent e) {
             showJNetwork(networkList.getCurrentNetwork());
         }
     };
 
     
-    private Action runAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.run"), Icons.runIcon, org.rubato.composer.Messages.getString("JComposer.runnetwork")) {
+    private Action runAction = new ComposerAction(ComposerMessages.getString("JComposer.run"), Icons.runIcon, ComposerMessages.getString("JComposer.runnetwork")) {
         public void actionPerformed(ActionEvent e) {
             startRun();
         }        
     };
     
     
-    private Action stopAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.stop"), Icons.stopIcon, org.rubato.composer.Messages.getString("JComposer.stopnetwork")) {
+    private Action stopAction = new ComposerAction(ComposerMessages.getString("JComposer.stop"), Icons.stopIcon, ComposerMessages.getString("JComposer.stopnetwork")) {
         public void actionPerformed(ActionEvent e) {
             runner.stop();
         }        
     };
 
 
-    private Action moduleAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.modulebuilder"), Icons.moduleIcon, org.rubato.composer.Messages.getString("JComposer.createmodules")) {
+    private Action moduleAction = new ComposerAction(ComposerMessages.getString("JComposer.modulebuilder"), Icons.moduleIcon, ComposerMessages.getString("JComposer.createmodules")) {
         public void actionPerformed(ActionEvent e) {
             showModuleBuilder();
         }        
     };
     
     
-    private Action moduleMorphismAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.morphismbuilder"), Icons.morphIcon, org.rubato.composer.Messages.getString("JComposer.createmorphisms")) {
+    private Action moduleMorphismAction = new ComposerAction(ComposerMessages.getString("JComposer.morphismbuilder"), Icons.morphIcon, ComposerMessages.getString("JComposer.createmorphisms")) {
         public void actionPerformed(ActionEvent e) {
             showModuleMorphismBuilder();
         }        
     };
 
     
-    private Action denotatorAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.denotatorbuilder"), Icons.denoIcon, org.rubato.composer.Messages.getString("JComposer.createdenotators")) {
+    private Action denotatorAction = new ComposerAction(ComposerMessages.getString("JComposer.denotatorbuilder"), Icons.denoIcon, ComposerMessages.getString("JComposer.createdenotators")) {
         public void actionPerformed(ActionEvent e) {
             showDenotatorBuilder();
         }        
     };
     
     
-    private Action formAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.formbuilder"), Icons.formIcon, org.rubato.composer.Messages.getString("JComposer.createforms")) {
+    private Action formAction = new ComposerAction(ComposerMessages.getString("JComposer.formbuilder"), Icons.formIcon, ComposerMessages.getString("JComposer.createforms")) {
         public void actionPerformed(ActionEvent e) {
             showFormBuilder();
         }        
     };
     
     
-    private Action browseAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.objectbrowser"), Icons.browseIcon, org.rubato.composer.Messages.getString("JComposer.browseobjects")) {
+    private Action browseAction = new ComposerAction(ComposerMessages.getString("JComposer.objectbrowser"), Icons.browseIcon, ComposerMessages.getString("JComposer.browseobjects")) {
         public void actionPerformed(ActionEvent e) {
             showObjectBrowser();
         }        
     };
     
     
-    private Action schemeAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.schemeinteraction"), Icons.schemeIcon, org.rubato.composer.Messages.getString("JComposer.openschemeinteraction")) {
+    private Action schemeAction = new ComposerAction(ComposerMessages.getString("JComposer.schemeinteraction"), Icons.schemeIcon, ComposerMessages.getString("JComposer.openschemeinteraction")) {
         public void actionPerformed(ActionEvent e) {
             showSchemeDialog();
         }        
     };
     
     
-    private Action schemeEditAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.schemeeditor"), Icons.schemeEditIcon, org.rubato.composer.Messages.getString("JComposer.openschemeeditor")) {
+    private Action schemeEditAction = new ComposerAction(ComposerMessages.getString("JComposer.schemeeditor"), Icons.schemeEditIcon, ComposerMessages.getString("JComposer.openschemeeditor")) {
         public void actionPerformed(ActionEvent e) {
             showSchemeEditor();
         }        
     };
     
     
-    private Action prefAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.preferences"), Icons.prefIcon, org.rubato.composer.Messages.getString("JComposer.editpreferences")) {
+    private Action prefAction = new ComposerAction(ComposerMessages.getString("JComposer.preferences"), Icons.prefIcon, ComposerMessages.getString("JComposer.editpreferences")) {
         public void actionPerformed(ActionEvent e) {
             if (preferences == null) {
                 preferences = new JPreferences(JOptionPane.getFrameForComponent(JComposer.this));
@@ -1556,7 +1556,7 @@ public class JComposer extends JFrame implements Observer {
     };
     
     
-    private Action aboutAction = new ComposerAction(org.rubato.composer.Messages.getString("JComposer.aboutrubato"), null, "") {
+    private Action aboutAction = new ComposerAction(ComposerMessages.getString("JComposer.aboutrubato"), null, "") {
         private Timer timer = null; 
         public void actionPerformed(ActionEvent e) {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

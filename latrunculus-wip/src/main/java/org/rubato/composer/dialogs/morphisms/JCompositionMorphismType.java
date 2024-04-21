@@ -63,8 +63,8 @@ class JCompositionMorphismType
         morphismCountSpinner = new JSpinner();
         morphismCountSpinner.setValue(morphismCount);
         morphismCountSpinner.addChangeListener(this);
-        morphismCountSpinner.setToolTipText(Messages.getString("JCompositionMorphism.setcompnumber")); 
-        morphismCountPanel.setBorder(makeTitledBorder(Messages.getString("JCompositionMorphism.compnumber"))); 
+        morphismCountSpinner.setToolTipText(MorphismsMessages.getString("JCompositionMorphism.setcompnumber"));
+        morphismCountPanel.setBorder(makeTitledBorder(MorphismsMessages.getString("JCompositionMorphism.compnumber")));
         morphismCountPanel.add(morphismCountSpinner);        
         add(morphismCountPanel);
         

@@ -63,17 +63,17 @@ public class RubetteLoader {
                 Class<?> cls = classLoader.loadClass(className);
                 Rubette rubette = (Rubette)cls.newInstance();
                 String name = rubette.getName();
-                splash.setMessage(Messages.getString("RubetteLoader.loading") + " " + name + " Rubette");   //$NON-NLS-3$
+                splash.setMessage(ComposerMessages.getString("RubetteLoader.loading") + " " + name + " Rubette");   //$NON-NLS-3$
                 rubetteManager.addRubette(className, rubette);
             }
             catch (ClassNotFoundException e) {
-                setError(Messages.getString("RubetteLoader.classnotfound"), className); 
+                setError(ComposerMessages.getString("RubetteLoader.classnotfound"), className);
             }
             catch (IllegalAccessException e) {
-                setError(Messages.getString("RubetteLoader.illegalaccess"), className); 
+                setError(ComposerMessages.getString("RubetteLoader.illegalaccess"), className);
             }
             catch (InstantiationException e) {
-                setError(Messages.getString("RubetteLoader.couldnotinst"), className);           
+                setError(ComposerMessages.getString("RubetteLoader.couldnotinst"), className);
             }
         }
     }
@@ -86,12 +86,12 @@ public class RubetteLoader {
         pluginManager.loadPlugins();
         for (Rubette rubette : pluginManager.getRubettes()) {
             String name = rubette.getName();
-            splash.setMessage(Messages.getString("RubetteLoader.loading")+" "+name+" Rubette");   //$NON-NLS-3$
+            splash.setMessage(ComposerMessages.getString("RubetteLoader.loading")+" "+name+" Rubette");   //$NON-NLS-3$
             rubetteManager.addRubette(rubette);
         }
         for (Plugin plugin : pluginManager.getPlugins()) {
             String name = plugin.getClass().getCanonicalName();
-            splash.setMessage(Messages.getString("RubetteLoader.loading")+" "+name);  ;
+            splash.setMessage(ComposerMessages.getString("RubetteLoader.loading")+" "+name);  ;
             plugin.init();
         }
         splash.setMessage(" "); 

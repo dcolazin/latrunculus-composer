@@ -60,7 +60,7 @@ public class JPreferences extends JDialog {
         
         pack();
         setResizable(false);
-        setTitle("Rubato Composer: "+Messages.getString("JPreferences.preferences"));  
+        setTitle("Rubato Composer: "+ PreferencesMessages.getString("JPreferences.preferences"));
         
         Rectangle r = frame.getBounds();
         Rectangle r1 = getBounds();
@@ -83,21 +83,21 @@ public class JPreferences extends JDialog {
     }
     
     
-    private Action applyAction = new AbstractAction(Messages.getString("JPreferences.apply")) { 
+    private Action applyAction = new AbstractAction(PreferencesMessages.getString("JPreferences.apply")) {
         public void actionPerformed(ActionEvent e) {
             apply();
         }
     };
     
     
-    private Action closeAction = new AbstractAction(Messages.getString("JPreferences.close")) { 
+    private Action closeAction = new AbstractAction(PreferencesMessages.getString("JPreferences.close")) {
         public void actionPerformed(ActionEvent e) {
             JPreferences.this.setVisible(false);
         }
     };
     
 
-    private Action applyAndCloseAction = new AbstractAction(Messages.getString("JPreferences.applyandclose")) { 
+    private Action applyAndCloseAction = new AbstractAction(PreferencesMessages.getString("JPreferences.applyandclose")) {
         public void actionPerformed(ActionEvent e) {
             apply();
             JPreferences.this.setVisible(false);

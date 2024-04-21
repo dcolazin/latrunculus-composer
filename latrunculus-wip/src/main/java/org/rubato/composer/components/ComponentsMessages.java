@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.rubettes.builtin.address;
+package org.rubato.composer.components;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+final class ComponentsMessages {
     
-    private static final String BUNDLE_NAME = "bundles/rubettes/builtin/address/messages";
+    private static final String BUNDLE_NAME = "bundles/composer/components/messages"; 
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private ComponentsMessages() { /* pure static class */ }
 
     public static String getString(String key) {
         try {

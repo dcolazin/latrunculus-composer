@@ -93,7 +93,7 @@ public class Runner implements Runnable {
             }
             catch (Exception e) {
                 e.printStackTrace();
-                addProblem(Messages.getString("Runner.exceptionproblem"), model); 
+                addProblem(ComposerMessages.getString("Runner.exceptionproblem"), model);
             }
             composer.makeProgress(i+1);
         }

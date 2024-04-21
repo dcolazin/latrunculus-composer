@@ -107,19 +107,19 @@ public class JSelectModule
         c.weighty = 0.0;        
         c.insets = new Insets(2, 2, 2, 2); 
 
-        JLabel ringLabel = new JLabel(Messages.getString("JSelectModule.ring")+": ");  
+        JLabel ringLabel = new JLabel(ComponentsMessages.getString("JSelectModule.ring")+": ");
         gridbag.setConstraints(ringLabel, c);
         ringSelectPanel.add(ringLabel);
         
         ringSelect = new JComboBox(rings);
-        ringSelect.setToolTipText(Messages.getString("JSelectModule.baseringtooltip")); 
+        ringSelect.setToolTipText(ComponentsMessages.getString("JSelectModule.baseringtooltip"));
         ringSelect.addActionListener(this);
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.weightx = 1.0;
         gridbag.setConstraints(ringSelect, c);
         ringSelectPanel.add(ringSelect);
                 
-        modLabel = new JLabel(Messages.getString("JSelectModule.modulus")+": ");  
+        modLabel = new JLabel(ComponentsMessages.getString("JSelectModule.modulus")+": ");
         modLabel.setVisible(false);
         c.gridwidth = 1;
         c.weightx = 0.0;
@@ -127,7 +127,7 @@ public class JSelectModule
         ringSelectPanel.add(modLabel);
 
         modSpinner = new JIntegerSpinner(2, Integer.MAX_VALUE);
-        modSpinner.setToolTipText(Messages.getString("JSelectModule.modtooltip")); 
+        modSpinner.setToolTipText(ComponentsMessages.getString("JSelectModule.modtooltip"));
         modSpinner.setVisible(false);
         modSpinner.setValue(Integer.valueOf(2));
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -135,14 +135,14 @@ public class JSelectModule
         gridbag.setConstraints(modSpinner, c);
         ringSelectPanel.add(modSpinner);
 
-        JLabel polLabel = new JLabel(Messages.getString("JSelectModule.polynomial")+": ");          
+        JLabel polLabel = new JLabel(ComponentsMessages.getString("JSelectModule.polynomial")+": ");
         c.gridwidth = 1;
         c.weightx = 0.0;
         gridbag.setConstraints(polLabel, c);
         ringSelectPanel.add(polLabel);
 
         polSwitch = new JCheckBox();
-        polSwitch.setToolTipText(Messages.getString("JSelectModule.polytooltip")); 
+        polSwitch.setToolTipText(ComponentsMessages.getString("JSelectModule.polytooltip"));
         polSwitch.setSelected(false);
         polSwitch.addChangeListener(this);
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -150,7 +150,7 @@ public class JSelectModule
         gridbag.setConstraints(polSwitch, c);
         ringSelectPanel.add(polSwitch);
 
-        indLabel = new JLabel(Messages.getString("JSelectModule.indeterminate")+": ");  
+        indLabel = new JLabel(ComponentsMessages.getString("JSelectModule.indeterminate")+": ");
         indLabel.setVisible(false);
         c.gridwidth = 1;
         c.weightx = 0.0;
@@ -158,7 +158,7 @@ public class JSelectModule
         ringSelectPanel.add(indLabel);
 
         indField = new JTextField("X"); 
-        indField.setToolTipText(Messages.getString("JSelectModule.indtooltip")); 
+        indField.setToolTipText(ComponentsMessages.getString("JSelectModule.indtooltip"));
         indField.setHorizontalAlignment(SwingConstants.RIGHT);
         indField.setVisible(false);
         indField.addActionListener(this);
@@ -184,7 +184,7 @@ public class JSelectModule
         gridbag.setConstraints(pmodField, c);
         ringSelectPanel.add(pmodField);
 
-        dimLabel = new JLabel(Messages.getString("JSelectModule.dimension")+": ");  
+        dimLabel = new JLabel(ComponentsMessages.getString("JSelectModule.dimension")+": ");
         dimLabel.setVisible(!this.isring);
         c.gridwidth = 1;
         c.weightx = 0.0;
@@ -192,7 +192,7 @@ public class JSelectModule
         ringSelectPanel.add(dimLabel);
 
         dimSpinner = new JIntegerSpinner(0, Integer.MAX_VALUE);
-        dimSpinner.setToolTipText(Messages.getString("JSelectModule.dimensiontooltip")); 
+        dimSpinner.setToolTipText(ComponentsMessages.getString("JSelectModule.dimensiontooltip"));
         dimSpinner.setVisible(!this.isring);
         dimSpinner.setValue(Integer.valueOf(1));
 //        dimSpinner.addChangeListener(this);
@@ -201,7 +201,7 @@ public class JSelectModule
         gridbag.setConstraints(dimSpinner, c);
         ringSelectPanel.add(dimSpinner);
                 
-        factorLabel = new JLabel(Messages.getString("JSelectModule.factors")+": ");  
+        factorLabel = new JLabel(ComponentsMessages.getString("JSelectModule.factors")+": ");
         factorLabel.setVisible(false);
         c.gridwidth = 1;
         c.weightx = 0.0;
@@ -209,7 +209,7 @@ public class JSelectModule
         ringSelectPanel.add(factorLabel);
 
         factorSpinner = new JIntegerSpinner(2, Integer.MAX_VALUE);
-        factorSpinner.setToolTipText(Messages.getString("JSelectModule.factornrtooltip")); 
+        factorSpinner.setToolTipText(ComponentsMessages.getString("JSelectModule.factornrtooltip"));
         factorSpinner.setVisible(false);
         factorSpinner.setValue(Integer.valueOf(2));
         factorSpinner.addChangeListener(this);
@@ -369,9 +369,9 @@ public class JSelectModule
         int factorCount = getFactorCount();
         factorModules = new JSelectModule[factorCount];
         for (int i = 0; i < factorCount; i++) {
-            String title = Messages.getString("JSelectModule.factor")+" "+i;  
+            String title = ComponentsMessages.getString("JSelectModule.factor")+" "+i;
             JPanel factorViewPart = new JPanel();
-            factorViewPart.setToolTipText(TextUtils.replaceStrings(Messages.getString("JSelectModule.factornr"), i)); 
+            factorViewPart.setToolTipText(TextUtils.replaceStrings(ComponentsMessages.getString("JSelectModule.factornr"), i));
             factorViewPart.setLayout(new BorderLayout());
             factorViewPart.setBorder(makeTitledBorder(title));
             factorModules[i] = new JSelectModule(true);
@@ -470,15 +470,15 @@ public class JSelectModule
     private static final int PRODUCT  = 9;
     
     private String[] rings = {
-            "Z ("+Messages.getString("JSelectModule.integers")+")",   //$NON-NLS-3$
-            "Zn ("+Messages.getString("JSelectModule.modintegers")+")",   //$NON-NLS-3$
-            "Q ("+Messages.getString("JSelectModule.rationals")+")",   //$NON-NLS-3$
-            "R ("+Messages.getString("JSelectModule.reals")+")",   //$NON-NLS-3$
-            "C ("+Messages.getString("JSelectModule.complexes")+")",   //$NON-NLS-3$
+            "Z ("+ ComponentsMessages.getString("JSelectModule.integers")+")",   //$NON-NLS-3$
+            "Zn ("+ ComponentsMessages.getString("JSelectModule.modintegers")+")",   //$NON-NLS-3$
+            "Q ("+ ComponentsMessages.getString("JSelectModule.rationals")+")",   //$NON-NLS-3$
+            "R ("+ ComponentsMessages.getString("JSelectModule.reals")+")",   //$NON-NLS-3$
+            "C ("+ ComponentsMessages.getString("JSelectModule.complexes")+")",   //$NON-NLS-3$
             "Z-String", 
             "Zn-String", 
             "C-String", 
             "R-String", 
-            Messages.getString("JSelectModule.productring") 
+            ComponentsMessages.getString("JSelectModule.productring")
     };
 }

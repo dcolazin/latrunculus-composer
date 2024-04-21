@@ -41,7 +41,7 @@ public class LimitColimitFormEntry
         this.type = type;
         setLayout(new BorderLayout());
         formDiagram = new JFormDiagram(dict);
-        formDiagram.setBorder(makeTitledBorder(Messages.getString("LimitColimitFormEntry.diagram"))); 
+        formDiagram.setBorder(makeTitledBorder(DialogFormsMessages.getString("LimitColimitFormEntry.diagram")));
         add(formDiagram, BorderLayout.CENTER);
     }
     

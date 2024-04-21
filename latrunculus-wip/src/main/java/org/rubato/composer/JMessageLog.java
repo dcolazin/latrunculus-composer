@@ -43,7 +43,7 @@ public class JMessageLog extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        clearButton = new JButton(Messages.getString("JMessageLog.clear"));
+        clearButton = new JButton(ComposerMessages.getString("JMessageLog.clear"));
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clearMessages();
@@ -56,15 +56,15 @@ public class JMessageLog extends JPanel {
                 checkAction();
             }
         };
-        infoCheck = new JCheckBox(Messages.getString("JMessageLog.info"));
+        infoCheck = new JCheckBox(ComposerMessages.getString("JMessageLog.info"));
         infoCheck.addActionListener(checkListener);
         infoCheck.setSelected(true);
         buttonPanel.add(infoCheck);
-        warningCheck = new JCheckBox(Messages.getString("JMessageLog.warnings"));
+        warningCheck = new JCheckBox(ComposerMessages.getString("JMessageLog.warnings"));
         warningCheck.addActionListener(checkListener);
         warningCheck.setSelected(true);
         buttonPanel.add(warningCheck);
-        errorCheck = new JCheckBox(Messages.getString("JMessageLog.errors"));
+        errorCheck = new JCheckBox(ComposerMessages.getString("JMessageLog.errors"));
         errorCheck.addActionListener(checkListener);        
         errorCheck.setSelected(true);
         buttonPanel.add(errorCheck);

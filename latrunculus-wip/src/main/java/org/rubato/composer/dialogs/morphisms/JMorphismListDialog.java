@@ -42,7 +42,7 @@ public class JMorphismListDialog
         implements ActionListener {
 
     public JMorphismListDialog(Frame frame, Module domain, Module codomain) {
-        super(frame, Messages.getString("JMorphismListDialog.selectmorphism"), true); 
+        super(frame, MorphismsMessages.getString("JMorphismListDialog.selectmorphism"), true);
         setLayout(new BorderLayout());
         
         this.domain = domain;
@@ -69,13 +69,13 @@ public class JMorphismListDialog
         
         JPanel buttonBox = new JPanel();
         
-        cancelButton = new JButton(Messages.getString("JMorphismListDialog.cancel")); 
+        cancelButton = new JButton(MorphismsMessages.getString("JMorphismListDialog.cancel"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        okButton = new JButton(Messages.getString("JMorphismListDialog.ok")); 
+        okButton = new JButton(MorphismsMessages.getString("JMorphismListDialog.ok"));
         okButton.addActionListener(this);
         buttonBox.add(okButton);
         

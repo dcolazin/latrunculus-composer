@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.rubettes.select2d;
+package org.rubato.composer.dialogs.denotators;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class DenotatorsMessages {
     
-    private static final String BUNDLE_NAME = "bundles/rubettes/select2d/messages"; 
+    private static final String BUNDLE_NAME = "bundles/composer/dialogs/denotators/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private DenotatorsMessages() { /* pure static class */ }
 
     public static String getString(String key) {
         try {

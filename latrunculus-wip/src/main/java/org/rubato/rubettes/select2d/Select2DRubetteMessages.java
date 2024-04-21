@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer.rubette;
+package org.rubato.rubettes.select2d;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class Select2DRubetteMessages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/rubette/messages"; 
+    private static final String BUNDLE_NAME = "bundles/rubettes/select2d/messages"; 
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() {}
+    private Select2DRubetteMessages() {}
 
     public static String getString(String key) {
         try {

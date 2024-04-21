@@ -98,7 +98,7 @@ public class JMorphismDialog
     
     
     public JMorphismDialog(Frame frame, boolean naming, ModuleMorphism morphism) {
-        super(frame, Messages.getString("JMorphismDialog.dialogtitle"), true); 
+        super(frame, MorphismsMessages.getString("JMorphismDialog.dialogtitle"), true);
         this.domain   = morphism.getDomain();
         this.codomain = morphism.getCodomain();
         this.naming   = naming;
@@ -108,7 +108,7 @@ public class JMorphismDialog
     
     
     public JMorphismDialog(Frame frame, boolean modal, boolean naming, Module domain, Module codomain) {
-        super(frame, Messages.getString("JMorphismDialog.createmorphism"), modal); 
+        super(frame, MorphismsMessages.getString("JMorphismDialog.createmorphism"), modal);
         this.domain   = domain;
         this.codomain = codomain;
         this.naming   = naming;
@@ -203,7 +203,7 @@ public class JMorphismDialog
         
         // buttons
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        clearButton = new JButton(Messages.getString("JMorphismDialog.clear")); 
+        clearButton = new JButton(MorphismsMessages.getString("JMorphismDialog.clear"));
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clear();
@@ -212,7 +212,7 @@ public class JMorphismDialog
         buttonBox.add(clearButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        createButton = new JButton(Messages.getString("JMorphismDialog.create")); 
+        createButton = new JButton(MorphismsMessages.getString("JMorphismDialog.create"));
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 create();
@@ -221,7 +221,7 @@ public class JMorphismDialog
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        cancelButton = new JButton(Messages.getString("JMorphismDialog.cancel")); 
+        cancelButton = new JButton(MorphismsMessages.getString("JMorphismDialog.cancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -316,10 +316,10 @@ public class JMorphismDialog
             morphismType.setSelectedItem(AFFINE_TYPE);
         }
         else if (m instanceof GenericAffineMorphism) {
-            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); 
+            JOptionPane.showMessageDialog(this, MorphismsMessages.getString("JMorphismDialog.cannotedit"));
         }
         else {
-            JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.cannotedit")); 
+            JOptionPane.showMessageDialog(this, MorphismsMessages.getString("JMorphismDialog.cannotedit"));
         }
         selectMorphismType();
         if (jmorphismType != null) {
@@ -345,7 +345,7 @@ public class JMorphismDialog
         if (naming) {
             String name = nameField.getText().trim();
             if (name.length() == 0) {
-                JOptionPane.showMessageDialog(this, Messages.getString("JMorphismDialog.namenotempty"), Messages.getString("JMorphismDialog.nameerror"), JOptionPane.ERROR_MESSAGE);  
+                JOptionPane.showMessageDialog(this, MorphismsMessages.getString("JMorphismDialog.namenotempty"), MorphismsMessages.getString("JMorphismDialog.nameerror"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             else {
@@ -509,7 +509,7 @@ public class JMorphismDialog
             else if (selectedType.equals(CANONICAL_TYPE)) {
                 setMorphism(CanonicalMorphism.make(domain, codomain));
                 if (morphism == null) {
-                    setError(Messages.getString("JMorphismDialog.cannotcreatecanonical")); 
+                    setError(MorphismsMessages.getString("JMorphismDialog.cannotcreatecanonical"));
                 }
                 else {
                     setResult(morphism.toString());
@@ -580,7 +580,7 @@ public class JMorphismDialog
                     }
                 }
                 if (!isplugin) {
-                    setError(Messages.getString("JMorphismDialog.nyi")); 
+                    setError(MorphismsMessages.getString("JMorphismDialog.nyi"));
                 }
             }
         }
@@ -646,32 +646,32 @@ public class JMorphismDialog
     private static final PluginManager pluginManager = PluginManager.getManager();
     
     private static final Border domainBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.domain")); 
+        makeTitledBorder(MorphismsMessages.getString("JMorphismDialog.domain"));
     private static final Border codomainBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.codomain")); 
+        makeTitledBorder(MorphismsMessages.getString("JMorphismDialog.codomain"));
     private static final Border nameBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.name")); 
+        makeTitledBorder(MorphismsMessages.getString("JMorphismDialog.name"));
     private static final Border morphismTypeBorder =
-        makeTitledBorder(Messages.getString("JMorphismDialog.morphismtype")); 
+        makeTitledBorder(MorphismsMessages.getString("JMorphismDialog.morphismtype"));
     
-    private static final String AFFINE_TYPE      = Messages.getString("JMorphismDialog.affine"); 
-    private static final String CANONICAL_TYPE   = Messages.getString("JMorphismDialog.canonical");    
-    private static final String COMPOSITION_TYPE = Messages.getString("JMorphismDialog.composition"); 
-    private static final String CONJUGATION_TYPE = Messages.getString("JMorphismDialog.conjugation"); 
-    private static final String CONSTANT_TYPE    = Messages.getString("JMorphismDialog.constant"); 
-    private static final String DIFFERENCE_TYPE  = Messages.getString("JMorphismDialog.difference"); 
-    private static final String GEOMETRY_TYPE    = Messages.getString("JMorphismDialog.geometry"); 
-    private static final String IDENTITY_TYPE    = Messages.getString("JMorphismDialog.identity"); 
-    private static final String MODULO_TYPE      = Messages.getString("JMorphismDialog.modulo"); 
-    private static final String NONE_TYPE        = Messages.getString("JMorphismDialog.none"); 
-    private static final String POLYNOMIAL_TYPE  = Messages.getString("JMorphismDialog.polynomial"); 
-    private static final String POWER_TYPE       = Messages.getString("JMorphismDialog.power"); 
-    private static final String PRODUCT_TYPE     = Messages.getString("JMorphismDialog.product"); 
-    private static final String PROJECTION_TYPE  = Messages.getString("JMorphismDialog.projection"); 
-    private static final String REORDER_TYPE     = Messages.getString("JMorphismDialog.reorder"); 
-    private static final String SCALED_TYPE      = Messages.getString("JMorphismDialog.scaled"); 
-    private static final String SHUFFLE_TYPE     = Messages.getString("JMorphismDialog.shuffle"); 
-    private static final String SPLIT_TYPE       = Messages.getString("JMorphismDialog.split"); 
-    private static final String SUM_TYPE         = Messages.getString("JMorphismDialog.sum"); 
-    private static final String TRANSLATION_TYPE = Messages.getString("JMorphismDialog.translation"); 
+    private static final String AFFINE_TYPE      = MorphismsMessages.getString("JMorphismDialog.affine");
+    private static final String CANONICAL_TYPE   = MorphismsMessages.getString("JMorphismDialog.canonical");
+    private static final String COMPOSITION_TYPE = MorphismsMessages.getString("JMorphismDialog.composition");
+    private static final String CONJUGATION_TYPE = MorphismsMessages.getString("JMorphismDialog.conjugation");
+    private static final String CONSTANT_TYPE    = MorphismsMessages.getString("JMorphismDialog.constant");
+    private static final String DIFFERENCE_TYPE  = MorphismsMessages.getString("JMorphismDialog.difference");
+    private static final String GEOMETRY_TYPE    = MorphismsMessages.getString("JMorphismDialog.geometry");
+    private static final String IDENTITY_TYPE    = MorphismsMessages.getString("JMorphismDialog.identity");
+    private static final String MODULO_TYPE      = MorphismsMessages.getString("JMorphismDialog.modulo");
+    private static final String NONE_TYPE        = MorphismsMessages.getString("JMorphismDialog.none");
+    private static final String POLYNOMIAL_TYPE  = MorphismsMessages.getString("JMorphismDialog.polynomial");
+    private static final String POWER_TYPE       = MorphismsMessages.getString("JMorphismDialog.power");
+    private static final String PRODUCT_TYPE     = MorphismsMessages.getString("JMorphismDialog.product");
+    private static final String PROJECTION_TYPE  = MorphismsMessages.getString("JMorphismDialog.projection");
+    private static final String REORDER_TYPE     = MorphismsMessages.getString("JMorphismDialog.reorder");
+    private static final String SCALED_TYPE      = MorphismsMessages.getString("JMorphismDialog.scaled");
+    private static final String SHUFFLE_TYPE     = MorphismsMessages.getString("JMorphismDialog.shuffle");
+    private static final String SPLIT_TYPE       = MorphismsMessages.getString("JMorphismDialog.split");
+    private static final String SUM_TYPE         = MorphismsMessages.getString("JMorphismDialog.sum");
+    private static final String TRANSLATION_TYPE = MorphismsMessages.getString("JMorphismDialog.translation");
 }

@@ -120,10 +120,10 @@ public class JMacroRubetteView extends JNetwork {
     
     private JNetwork jnetwork;
     
-    private static final String MACROINPUT_ERROR  = Messages.getString("JMacroRubetteView.macroinputerror"); 
-    private static final String MACROOUTPUT_ERROR = Messages.getString("JMacroRubetteView.macrooutputerror"); 
-    private static final String NOTADDINPUT_ERROR   = Messages.getString("JMacroRubetteView.notaddinputerror"); 
-    private static final String NOTADDOUTPUT_ERROR  = Messages.getString("JMacroRubetteView.notaddoutputerror");     
-    private static final String CREATENOTE          = Messages.getString("JMacroRubetteView.createnote"); 
-    private static final String CLOSENETWORK        = Messages.getString("JMacroRubetteView.closenetwork"); 
+    private static final String MACROINPUT_ERROR  = NetworkMessages.getString("JMacroRubetteView.macroinputerror");
+    private static final String MACROOUTPUT_ERROR = NetworkMessages.getString("JMacroRubetteView.macrooutputerror");
+    private static final String NOTADDINPUT_ERROR   = NetworkMessages.getString("JMacroRubetteView.notaddinputerror");
+    private static final String NOTADDOUTPUT_ERROR  = NetworkMessages.getString("JMacroRubetteView.notaddoutputerror");
+    private static final String CREATENOTE          = NetworkMessages.getString("JMacroRubetteView.createnote");
+    private static final String CLOSENETWORK        = NetworkMessages.getString("JMacroRubetteView.closenetwork");
 }

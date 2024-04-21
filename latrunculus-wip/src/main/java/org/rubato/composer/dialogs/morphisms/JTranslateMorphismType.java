@@ -46,7 +46,7 @@ class JTranslateMorphismType extends JMorphismType implements ActionListener {
         add(Box.createVerticalStrut(5));
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); 
+        JButton applyButton = new JButton(MorphismsMessages.getString("JMorphismDialog.apply"));
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         add(buttonBox);

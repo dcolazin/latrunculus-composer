@@ -86,7 +86,7 @@ public final class JSelectDenotatorDialog extends JDialog {
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
+        super(frame, DialogsMessages.getString("JSelectDenotatorDialog.selectdenotator"), true);
         createContents();
         setLocationRelativeTo(comp);
         installEscapeKey(this);
@@ -94,18 +94,18 @@ public final class JSelectDenotatorDialog extends JDialog {
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp, FormDenotatorTypeEnum type) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
+        super(frame, DialogsMessages.getString("JSelectDenotatorDialog.selectdenotator"), true);
         createContents();
-        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.type")+": "+type);  
+        infoLabel.setText(DialogsMessages.getString("JSelectDenotatorDialog.type")+": "+type);
         setLocationRelativeTo(comp);
         installEscapeKey(this);
     }
     
     
     private JSelectDenotatorDialog(Frame frame, Component comp, Form form) {
-        super(frame, Messages.getString("JSelectDenotatorDialog.selectdenotator"), true); 
+        super(frame, DialogsMessages.getString("JSelectDenotatorDialog.selectdenotator"), true);
         createContents();
-        infoLabel.setText(Messages.getString("JSelectDenotatorDialog.form")+": "+form.getNameString());  
+        infoLabel.setText(DialogsMessages.getString("JSelectDenotatorDialog.form")+": "+form.getNameString());
         setLocationRelativeTo(comp);
         installEscapeKey(this);
     }
@@ -140,11 +140,11 @@ public final class JSelectDenotatorDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 5, 5));
         
-        cancelButton = new JButton(Messages.getString("JSelectDenotatorDialog.cancel")); 
+        cancelButton = new JButton(DialogsMessages.getString("JSelectDenotatorDialog.cancel"));
         cancelButton.addActionListener(e -> cancel());
         buttonPanel.add(cancelButton);
         
-        okButton = new JButton(Messages.getString("JSelectDenotatorDialog.ok")); 
+        okButton = new JButton(DialogsMessages.getString("JSelectDenotatorDialog.ok"));
         okButton.addActionListener(e -> ok());
         buttonPanel.add(okButton);
         

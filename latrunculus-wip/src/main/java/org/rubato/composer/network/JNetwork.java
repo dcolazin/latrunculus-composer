@@ -279,7 +279,7 @@ public class JNetwork extends JLayeredPane
         if (position != null) { jrubette.moveJRubette(position); }
         setChanged();
         refresh();
-        jcomposer.setStatusInfo(Messages.getString("JNetwork.rubetteadded"), jrubette.getRubetteName()); 
+        jcomposer.setStatusInfo(NetworkMessages.getString("JNetwork.rubetteadded"), jrubette.getRubetteName());
     }
 
 
@@ -295,7 +295,7 @@ public class JNetwork extends JLayeredPane
             jcomposer.removeJNetworkForModel(nrubette.getNetworkModel());
         }
         jcomposer.removeProblemsFor(jrubette);
-        jcomposer.setStatusInfo(Messages.getString("JNetwork.rubetteremoved"), jrubette.getModel().getName()); 
+        jcomposer.setStatusInfo(NetworkMessages.getString("JNetwork.rubetteremoved"), jrubette.getModel().getName());
         setChanged();
         clearSelection();
         refresh();
@@ -376,7 +376,7 @@ public class JNetwork extends JLayeredPane
         }
         else {
             String s = (src.getType() == Connector.INPUT)?"input":"output";  
-            jcomposer.setStatusError(Messages.getString("JNetwork.cannotlink"), s); 
+            jcomposer.setStatusError(NetworkMessages.getString("JNetwork.cannotlink"), s);
         }
     }
 
@@ -391,11 +391,11 @@ public class JNetwork extends JLayeredPane
             src.addOutLink(jlink, srcPos);
             dest.setInLink(jlink, destPos);
             addLink(jlink);
-            jcomposer.setStatusInfo(Messages.getString("JNetwork.linkadded"), 
+            jcomposer.setStatusInfo(NetworkMessages.getString("JNetwork.linkadded"),
                                     src, srcPos, dest, destPos);
         }
         else {
-            jcomposer.setStatusError(Messages.getString("JNetwork.cannotmakelink"), 
+            jcomposer.setStatusError(NetworkMessages.getString("JNetwork.cannotmakelink"),
                                      src, srcPos, dest, destPos);
         }
     }
@@ -404,7 +404,7 @@ public class JNetwork extends JLayeredPane
     public void removeLink(JLink link) {
         link.detach();
         links.remove(link);
-        jcomposer.setStatusInfo(Messages.getString("JNetwork.linkremoved"), 
+        jcomposer.setStatusInfo(NetworkMessages.getString("JNetwork.linkremoved"),
                                 link.getSrc(), link.getSrcPos(), link.getDest(), link.getDestPos());
         setChanged();
         refresh();
@@ -644,28 +644,28 @@ public class JNetwork extends JLayeredPane
 
     private JPopupMenu getLinkPopup(final JLink jlink) {
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem item = new JMenuItem(Messages.getString("JNetwork.removelink")); 
+        JMenuItem item = new JMenuItem(NetworkMessages.getString("JNetwork.removelink"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeLink(jlink);
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.diagonal")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.diagonal"));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jlink.setType(JLink.LINE);
             }
         });        
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.zigzag")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.zigzag"));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jlink.setType(JLink.ZIGZAG);
             }
         });        
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.curved")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.curved"));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jlink.setType(JLink.CURVE);
@@ -682,28 +682,28 @@ public class JNetwork extends JLayeredPane
         item = new JMenuTitleItem(model.getName());
         popup.add(item);
         popup.addSeparator();
-        item = new JMenuItem(Messages.getString("JNetwork.rename")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.rename"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     renameNetwork();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.discard")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.discard"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeNetwork();
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.createnote")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.createnote"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createNote(x, y);
                 }
             });
         popup.add(item);
-        item = new JMenuItem(Messages.getString("JNetwork.createfromnet")); 
+        item = new JMenuItem(NetworkMessages.getString("JNetwork.createfromnet"));
         item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createRubette();
@@ -795,11 +795,11 @@ public class JNetwork extends JLayeredPane
             }
         }
         if (inCount > 1) {
-            jcomposer.showErrorDialog(Messages.getString("JNetwork.inrubetteerror")); 
+            jcomposer.showErrorDialog(NetworkMessages.getString("JNetwork.inrubetteerror"));
             return;
         }
         if (outCount > 1) {
-            jcomposer.showErrorDialog(Messages.getString("JNetwork.outrubetteerror")); 
+            jcomposer.showErrorDialog(NetworkMessages.getString("JNetwork.outrubetteerror"));
             return;
         }
 
@@ -945,8 +945,8 @@ public class JNetwork extends JLayeredPane
 
     private Dimension currentSize = PREFERRED_SIZE;
     
-    private static final String NAMENOTEMPTY_ERROR      = Messages.getString("JNetwork.namenotempty"); 
-    private static final String NAMEALREADYEXISTS_ERROR = Messages.getString("JNetwork.alreadyexists"); 
-    private static final String NAMEOFNETWORK_ERROR     = Messages.getString("JNetwork.nameofnetwork"); 
-    private static final String ENTERNAME_MSG           = Messages.getString("JNetwork.entername"); 
+    private static final String NAMENOTEMPTY_ERROR      = NetworkMessages.getString("JNetwork.namenotempty");
+    private static final String NAMEALREADYEXISTS_ERROR = NetworkMessages.getString("JNetwork.alreadyexists");
+    private static final String NAMEOFNETWORK_ERROR     = NetworkMessages.getString("JNetwork.nameofnetwork");
+    private static final String ENTERNAME_MSG           = NetworkMessages.getString("JNetwork.entername");
 }

@@ -58,7 +58,7 @@ public class MacroRubette extends AbstractRubette {
             try {
                 rubette.run(runInfo);
                 if (rubette.hasErrors()) {
-                    addError(Messages.getString("MacroRubette.error"));
+                    addError(BuiltinMessages.getString("MacroRubette.error"));
                 }
                 else {
                     rubette.updateView();

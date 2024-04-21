@@ -173,20 +173,20 @@ public class Select2DRubette extends AbstractRubette {
     
     public String getInTip(int i) {
         if (form == null) {
-            return Messages.getString("Select2DRubette.inputdenotip"); 
+            return Select2DRubetteMessages.getString("Select2DRubette.inputdenotip");
         }
         else {
-            return Messages.getString("Select2DRubette.inputdenoformtip")+form.getNameString(); 
+            return Select2DRubetteMessages.getString("Select2DRubette.inputdenoformtip")+form.getNameString();
         }
     }
 
 
     public String getOutTip(int i) {
         if (form == null) {
-            return Messages.getString("Select2DRubette.outputdenotip"); 
+            return Select2DRubetteMessages.getString("Select2DRubette.outputdenotip");
         }
         else {
-            return Messages.getString("Select2DRubette.outputdenoformtip")+form.getNameString(); 
+            return Select2DRubetteMessages.getString("Select2DRubette.outputdenoformtip")+form.getNameString();
         }
     }
 
@@ -292,9 +292,9 @@ public class Select2DRubette extends AbstractRubette {
     
     private static final ImageIcon icon;
 
-    private static final String INPUTNULL_ERROR  = Messages.getString("Select2DRubette.inputnullerror"); ;
-    private static final String FORMNOTSET_ERROR = Messages.getString("Select2DRubette.formnotseterror"); ;
-    private static final String FORMNOTSET_INFO  = Messages.getString("Select2DRubette.noformsetinfo"); ;
+    private static final String INPUTNULL_ERROR  = Select2DRubetteMessages.getString("Select2DRubette.inputnullerror"); ;
+    private static final String FORMNOTSET_ERROR = Select2DRubetteMessages.getString("Select2DRubette.formnotseterror"); ;
+    private static final String FORMNOTSET_INFO  = Select2DRubetteMessages.getString("Select2DRubette.noformsetinfo"); ;
     
     static {
         icon = Icons.loadIcon(Select2DRubette.class, "/images/rubettes/select2d/select2dicon.png"); 

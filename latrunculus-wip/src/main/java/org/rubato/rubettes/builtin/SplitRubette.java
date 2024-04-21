@@ -61,12 +61,12 @@ public class SplitRubette
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
         if (input == null) {
-            addError(Messages.getString("SplitRubette.inputnull"));
+            addError(BuiltinMessages.getString("SplitRubette.inputnull"));
             return;
         }
         
         if (form == null) {
-            addError(Messages.getString("SplitRubette.noform"));
+            addError(BuiltinMessages.getString("SplitRubette.noform"));
             return;
         }        
         
@@ -75,7 +75,7 @@ public class SplitRubette
         }
         
         if (!input.getForm().equals(form)) {
-            addError(Messages.getString("SplitRubette.wrongform"));
+            addError(BuiltinMessages.getString("SplitRubette.wrongform"));
             return;
         }
     

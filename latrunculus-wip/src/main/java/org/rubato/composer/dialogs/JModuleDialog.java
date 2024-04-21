@@ -55,7 +55,7 @@ public final class JModuleDialog
 
     
     public JModuleDialog(Frame frame, boolean modal, boolean naming) {
-        super(frame, Messages.getString("JModuleDialog.createmodule"), modal);
+        super(frame, DialogsMessages.getString("JModuleDialog.createmodule"), modal);
         this.naming = naming;
         
         setLayout(new BorderLayout(0, 5));
@@ -72,11 +72,11 @@ public final class JModuleDialog
         if (naming) {
             nameok = false;
             Box nameBox = new Box(BoxLayout.X_AXIS);
-            JLabel nameLabel = new JLabel(Messages.getString("JModuleDialog.name")+":");  
+            JLabel nameLabel = new JLabel(DialogsMessages.getString("JModuleDialog.name")+":");
             nameBox.add(nameLabel);
             nameBox.add(Box.createHorizontalStrut(10));
             nameField = new JTextField();
-            nameField.setToolTipText(Messages.getString("JModuleDialog.modulenametooltip"));
+            nameField.setToolTipText(DialogsMessages.getString("JModuleDialog.modulenametooltip"));
             nameField.addCaretListener(this);
             nameBox.add(nameField);
             bottomBox.add(nameBox);
@@ -84,14 +84,14 @@ public final class JModuleDialog
         }
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
-        createButton = new JButton(Messages.getString("JModuleDialog.create"));
-        createButton.setToolTipText(Messages.getString("JModuleDialog.createtooltip"));
+        createButton = new JButton(DialogsMessages.getString("JModuleDialog.create"));
+        createButton.setToolTipText(DialogsMessages.getString("JModuleDialog.createtooltip"));
         createButton.addActionListener(this);
         buttonBox.add(createButton);
         buttonBox.add(Box.createHorizontalStrut(10));
         
-        cancelButton = new JButton(Messages.getString("JModuleDialog.cancel"));
-        cancelButton.setToolTipText(Messages.getString("JModuleDialog.canceltooltip"));
+        cancelButton = new JButton(DialogsMessages.getString("JModuleDialog.cancel"));
+        cancelButton.setToolTipText(DialogsMessages.getString("JModuleDialog.canceltooltip"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         bottomBox.add(buttonBox);
@@ -132,7 +132,7 @@ public final class JModuleDialog
             if (naming) {
                 String name = nameField.getText().trim();
                 if (name.length() == 0) {
-                    JOptionPane.showMessageDialog(this, Messages.getString("JModuleDialog.namenotempty"), Messages.getString("JModuleDialog.nameerror"), JOptionPane.ERROR_MESSAGE);  
+                    JOptionPane.showMessageDialog(this, DialogsMessages.getString("JModuleDialog.namenotempty"), DialogsMessages.getString("JModuleDialog.nameerror"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 

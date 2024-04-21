@@ -53,7 +53,7 @@ class JGraphSelectDialog extends JDialog implements ActionListener {
 
     
     public JGraphSelectDialog(Frame frame, Ring ring, List<ModuleElement> elements) {
-        super(frame, Messages.getString("JGraphSelectDialog.selectgraph"), true);
+        super(frame, AddressMessages.getString("JGraphSelectDialog.selectgraph"), true);
         this.ring = ring;
         createLayout(elements);
     }
@@ -97,11 +97,11 @@ class JGraphSelectDialog extends JDialog implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(Box.createGlue());
-        applyButton = new JButton(Messages.getString("JGraphSelectDialog.apply"));
+        applyButton = new JButton(AddressMessages.getString("JGraphSelectDialog.apply"));
         applyButton.addActionListener(this);
         buttonBox.add(applyButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        cancelButton = new JButton(Messages.getString("JGraphSelectDialog.cancel"));
+        cancelButton = new JButton(AddressMessages.getString("JGraphSelectDialog.cancel"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         buttonBox.add(Box.createGlue());        

@@ -160,8 +160,8 @@ public class JModuleEntry extends JPanel implements ActionListener {
     private EventListenerList listenerList = new EventListenerList();   
 
     private static final String EMPTY_STRING = ""; 
-    private static final String SELECT_BUTTON = Messages.getString("JModuleEntry.select"); ;
-    private static final String SELECT_BUTTON_TIP = Messages.getString("JModuleEntry.selectmodule"); 
-    private static final String CREATE_BUTTON = Messages.getString("JModuleEntry.create"); 
-    private static final String CREATE_BUTTON_TIP = Messages.getString("JModuleEntry.createmodule"); 
+    private static final String SELECT_BUTTON = ComponentsMessages.getString("JModuleEntry.select"); ;
+    private static final String SELECT_BUTTON_TIP = ComponentsMessages.getString("JModuleEntry.selectmodule");
+    private static final String CREATE_BUTTON = ComponentsMessages.getString("JModuleEntry.create");
+    private static final String CREATE_BUTTON_TIP = ComponentsMessages.getString("JModuleEntry.createmodule");
 }

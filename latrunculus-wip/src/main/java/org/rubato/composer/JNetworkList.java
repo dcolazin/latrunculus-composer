@@ -44,7 +44,7 @@ public class JNetworkList extends JPanel {
                 }
             });
         add(new JScrollPane(networkList), BorderLayout.CENTER);
-        newButton = new JButton(Messages.getString("JNetworkList.newnetwork")); 
+        newButton = new JButton(ComposerMessages.getString("JNetworkList.newnetwork"));
         add(newButton, BorderLayout.SOUTH);
     }
     

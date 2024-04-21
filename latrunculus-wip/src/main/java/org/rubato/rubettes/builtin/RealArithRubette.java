@@ -62,7 +62,7 @@ public class RealArithRubette extends AbstractRubette {
     
     public void run(RunInfo runInfo) {
         if (vm == null) {
-            addError(Messages.getString("RealArithRubette.novalidexpression")); 
+            addError(BuiltinMessages.getString("RealArithRubette.novalidexpression"));
             return;
         }
         SimpleForm resForm = realForm;
@@ -87,11 +87,11 @@ public class RealArithRubette extends AbstractRubette {
                     values[i] = ((SimpleDenotator)d).getModInteger();                    
                 }
                 else {
-                    addError(Messages.getString("RealArithRubette.inputnotreal"), i); 
+                    addError(BuiltinMessages.getString("RealArithRubette.inputnotreal"), i);
                 }
             }
             else {
-                addError(Messages.getString("RealArithRubette.inputnotreal"), i); 
+                addError(BuiltinMessages.getString("RealArithRubette.inputnotreal"), i);
             }
         }
         if (!hasErrors()) {
@@ -150,12 +150,12 @@ public class RealArithRubette extends AbstractRubette {
             box.add(inSlider);
             
             JPanel resultPanel = new JPanel();
-            resultPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("RealArithRubette.resulttype"))); 
+            resultPanel.setBorder(BorderFactory.createTitledBorder(BuiltinMessages.getString("RealArithRubette.resulttype")));
             ButtonGroup group = new ButtonGroup();
-            final JRadioButton realButton = new JRadioButton(Messages.getString("RealArithRubette.real")); 
+            final JRadioButton realButton = new JRadioButton(BuiltinMessages.getString("RealArithRubette.real"));
             group.add(realButton);
             resultPanel.add(realButton);
-            JRadioButton booleanButton = new JRadioButton(Messages.getString("RealArithRubette.boolean")); 
+            JRadioButton booleanButton = new JRadioButton(BuiltinMessages.getString("RealArithRubette.boolean"));
             resultPanel.add(booleanButton);
             group.add(booleanButton);
             realButton.setSelected(isResultReal);
@@ -190,7 +190,7 @@ public class RealArithRubette extends AbstractRubette {
         int newInCount = inSlider.getInValue();
         String expr = exprTextArea.getText().trim();
         if (expr.length() == 0) {
-            infoLabel.setText(Messages.getString("RealArithRubette.noexpression")); 
+            infoLabel.setText(BuiltinMessages.getString("RealArithRubette.noexpression"));
             return false;
         }
         boolean ok = compile(expr, newInCount);
@@ -227,12 +227,12 @@ public class RealArithRubette extends AbstractRubette {
     
     
     public String getInTip(int i) {
-        return TextUtils.replaceStrings(Messages.getString("RealArithRubette.intip"), i); 
+        return TextUtils.replaceStrings(BuiltinMessages.getString("RealArithRubette.intip"), i);
     }
 
     
     public String getOutTip(int i) {
-        return Messages.getString("RealArithRubette.outtip"); 
+        return BuiltinMessages.getString("RealArithRubette.outtip");
     }
     
 

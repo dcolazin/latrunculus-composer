@@ -56,7 +56,7 @@ class JScaleMorphismType extends JMorphismType implements ActionListener {
         
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         
-        JButton applyButton = new JButton(Messages.getString("JMorphismDialog.apply")); 
+        JButton applyButton = new JButton(MorphismsMessages.getString("JMorphismDialog.apply"));
         applyButton.addActionListener(this);
         
         buttonBox.add(applyButton);

@@ -210,14 +210,14 @@ public class JModuleElementList
 
     private Module          module;
 
-    private static final String ADD        = Messages.getString("JModuleElementList.add"); 
-    private static final String REMOVE     = Messages.getString("JModuleElementList.remove"); 
-    private static final String CLEAR      = Messages.getString("JModuleElementList.clear"); 
-    private static final String UP         = Messages.getString("JModuleElementList.up"); 
-    private static final String DOWN       = Messages.getString("JModuleElementList.down"); 
-    private static final String ADD_TIP    = Messages.getString("JModuleElementList.addtooltip"); 
-    private static final String REMOVE_TIP = Messages.getString("JModuleElementList.removetooltip"); 
-    private static final String CLEAR_TIP  = Messages.getString("JModuleElementList.cleartooltip"); 
-    private static final String UP_TIP     = Messages.getString("JModuleElementList.uptip"); 
-    private static final String DOWN_TIP   = Messages.getString("JModuleElementList.downtip"); 
+    private static final String ADD        = ComponentsMessages.getString("JModuleElementList.add");
+    private static final String REMOVE     = ComponentsMessages.getString("JModuleElementList.remove");
+    private static final String CLEAR      = ComponentsMessages.getString("JModuleElementList.clear");
+    private static final String UP         = ComponentsMessages.getString("JModuleElementList.up");
+    private static final String DOWN       = ComponentsMessages.getString("JModuleElementList.down");
+    private static final String ADD_TIP    = ComponentsMessages.getString("JModuleElementList.addtooltip");
+    private static final String REMOVE_TIP = ComponentsMessages.getString("JModuleElementList.removetooltip");
+    private static final String CLEAR_TIP  = ComponentsMessages.getString("JModuleElementList.cleartooltip");
+    private static final String UP_TIP     = ComponentsMessages.getString("JModuleElementList.uptip");
+    private static final String DOWN_TIP   = ComponentsMessages.getString("JModuleElementList.downtip");
 }

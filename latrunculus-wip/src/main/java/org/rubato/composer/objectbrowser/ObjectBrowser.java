@@ -58,7 +58,7 @@ public class ObjectBrowser
         implements ListSelectionListener, ActionListener, Observer {
 
     public ObjectBrowser(Frame frame) {
-        super(frame, Messages.getString("ObjectBrowser.objectbrowser"), false);
+        super(frame, ObjectBrowseMessages.getString("ObjectBrowser.objectbrowser"), false);
         createLayout();
         installEscapeKey(this);
         rep.addObserver(this);
@@ -77,18 +77,18 @@ public class ObjectBrowser
                 selectedType = typeList.getSelectedIndex();
                 updateObjectList();
                 objectList.setSelectedIndex(0);
-                objectListBorder.setTitle(Messages.getString("ObjectBrowser.objects")+" - "+typeStrings[selectedType]);  
+                objectListBorder.setTitle(ObjectBrowseMessages.getString("ObjectBrowser.objects")+" - "+typeStrings[selectedType]);
                 repaint();
             }
             else if (src == objectList) {
                 ListItem item = (ListItem)objectList.getSelectedValue();
                 if (item != null) {
-                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview")+" - "+item.name);  
+                    objectViewBorder.setTitle(ObjectBrowseMessages.getString("ObjectBrowser.objectview")+" - "+item.name);
                     objectView.setText(item.toDisplay());
                     objectView.setCaretPosition(0);
                 }
                 else {
-                    objectViewBorder.setTitle(Messages.getString("ObjectBrowser.objectview"));
+                    objectViewBorder.setTitle(ObjectBrowseMessages.getString("ObjectBrowser.objectview"));
                     objectView.setText(null);
                 }
                 repaint();
@@ -123,7 +123,7 @@ public class ObjectBrowser
         typeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         typeList.addListSelectionListener(this);
         scrollPane = new JScrollPane(typeList);
-        scrollPane.setBorder(makeTitledBorder(Messages.getString("ObjectBrowser.objecttype")));
+        scrollPane.setBorder(makeTitledBorder(ObjectBrowseMessages.getString("ObjectBrowser.objecttype")));
         listPanel.add(scrollPane);
         
         objectList = new JList();
@@ -131,7 +131,7 @@ public class ObjectBrowser
         objectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         objectList.addListSelectionListener(this);
         scrollPane = new JScrollPane(objectList);
-        objectListBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objects"));
+        objectListBorder = (TitledBorder)makeTitledBorder(ObjectBrowseMessages.getString("ObjectBrowser.objects"));
         scrollPane.setBorder(objectListBorder);
         listPanel.add(scrollPane);
         
@@ -144,7 +144,7 @@ public class ObjectBrowser
         objectView.setEditable(false);
         objectView.setFocusable(false);
         scrollPane = new JScrollPane(objectView);
-        objectViewBorder = (TitledBorder)makeTitledBorder(Messages.getString("ObjectBrowser.objectview"));
+        objectViewBorder = (TitledBorder)makeTitledBorder(ObjectBrowseMessages.getString("ObjectBrowser.objectview"));
         objectPanel.setBorder(objectViewBorder);
         objectPanel.add(scrollPane, BorderLayout.CENTER);
         
@@ -152,7 +152,7 @@ public class ObjectBrowser
                
         Box buttonBox = Box.createHorizontalBox();
         buttonBox.add(Box.createHorizontalGlue());
-        editButton = new JButton(Messages.getString("ObjectBrowser.editbutton"));
+        editButton = new JButton(ObjectBrowseMessages.getString("ObjectBrowser.editbutton"));
         editButton.addActionListener(this);
         editButton.setEnabled(false);
         buttonBox.add(editButton);
@@ -382,11 +382,11 @@ public class ObjectBrowser
     private static final int SCHEME          = 5;
     
     private static final String[] typeStrings = {
-        Messages.getString("ObjectBrowser.modules"),
-        Messages.getString("ObjectBrowser.moduleelements"),
-        Messages.getString("ObjectBrowser.modulemorphisms"),
-        Messages.getString("ObjectBrowser.forms"),
-        Messages.getString("ObjectBrowser.denotators"),
-        Messages.getString("ObjectBrowser.schemeobjects")
+        ObjectBrowseMessages.getString("ObjectBrowser.modules"),
+        ObjectBrowseMessages.getString("ObjectBrowser.moduleelements"),
+        ObjectBrowseMessages.getString("ObjectBrowser.modulemorphisms"),
+        ObjectBrowseMessages.getString("ObjectBrowser.forms"),
+        ObjectBrowseMessages.getString("ObjectBrowser.denotators"),
+        ObjectBrowseMessages.getString("ObjectBrowser.schemeobjects")
     };
 }

@@ -192,26 +192,26 @@ public class JPowerListDenotatorEntry
         // button box
         Box buttonBox = Box.createHorizontalBox();
         buttonBox.add(Box.createHorizontalGlue());
-        addButton = new JButton(Messages.getString("JPowerListDenotatorEntry.add")); 
+        addButton = new JButton(DenotatorsMessages.getString("JPowerListDenotatorEntry.add"));
         addButton.addActionListener(this);
         buttonBox.add(addButton);
         buttonBox.add(Box.createHorizontalStrut(5));
-        addNewButton = new JButton(Messages.getString("JPowerListDenotatorEntry.addnew")); 
+        addNewButton = new JButton(DenotatorsMessages.getString("JPowerListDenotatorEntry.addnew"));
         addNewButton.addActionListener(this);
         buttonBox.add(addNewButton);
         buttonBox.add(Box.createHorizontalStrut(5));
-        removeButton = new JButton(Messages.getString("JPowerListDenotatorEntry.remove")); 
+        removeButton = new JButton(DenotatorsMessages.getString("JPowerListDenotatorEntry.remove"));
         removeButton.setEnabled(false);
         removeButton.addActionListener(this);
         buttonBox.add(removeButton);
         if (isList) {
             buttonBox.add(Box.createHorizontalStrut(5));
-            upButton = new JButton(Messages.getString("JPowerListDenotatorEntry.up")); 
+            upButton = new JButton(DenotatorsMessages.getString("JPowerListDenotatorEntry.up"));
             upButton.setEnabled(false);
             upButton.addActionListener(this);
             buttonBox.add(upButton);
             buttonBox.add(Box.createHorizontalStrut(5));
-            downButton = new JButton(Messages.getString("JPowerListDenotatorEntry.down")); 
+            downButton = new JButton(DenotatorsMessages.getString("JPowerListDenotatorEntry.down"));
             downButton.setEnabled(false);
             downButton.addActionListener(this);
             buttonBox.add(downButton);

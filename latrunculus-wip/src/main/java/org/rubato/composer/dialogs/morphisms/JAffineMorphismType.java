@@ -137,7 +137,7 @@ class JAffineMorphismType
              ring instanceof ZRing || ring instanceof ZnRing ||
              ring instanceof CRing)
             && rows == 2 && cols == 2) {
-            graphButton = new JButton(Messages.getString("JAffineMorphism.graphical")); 
+            graphButton = new JButton(MorphismsMessages.getString("JAffineMorphism.graphical"));
             graphButton.addActionListener(this);
             add(graphButton, BorderLayout.SOUTH);
         }

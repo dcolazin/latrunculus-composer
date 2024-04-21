@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer.dialogs.denotators;
+package org.rubato.composer.rubette;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class RubetteMessages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/dialogs/denotators/messages";
+    private static final String BUNDLE_NAME = "bundles/composer/rubette/messages"; 
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() { /* pure static class */ }
+    private RubetteMessages() {}
 
     public static String getString(String key) {
         try {

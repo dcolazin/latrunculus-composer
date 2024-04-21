@@ -17,18 +17,18 @@
  *
  */
 
-package org.rubato.composer;
+package org.rubato.composer.dialogs.forms;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class Messages {
+class DialogFormsMessages {
     
-    private static final String BUNDLE_NAME = "bundles/composer/messages";
+    private static final String BUNDLE_NAME = "bundles/composer/dialogs/forms/messages";
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
-    private Messages() { /* static class */ }
+    private DialogFormsMessages() {}
 
     public static String getString(String key) {
         try {

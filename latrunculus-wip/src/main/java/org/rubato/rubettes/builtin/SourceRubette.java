@@ -65,7 +65,7 @@ public class SourceRubette extends AbstractRubette {
                 setDenotator(d);
             }
             else {
-                addError(Messages.getString("SourceRubette.namenotavailable"), s); 
+                addError(BuiltinMessages.getString("SourceRubette.namenotavailable"), s);
                 return;
             }
         }
@@ -102,8 +102,8 @@ public class SourceRubette extends AbstractRubette {
             selector = new JSelectDenotator(Repository.systemRepository());
             selector.setDenotator(denotator);
             properties.add(selector, BorderLayout.CENTER);
-            refreshBox = new JCheckBox(Messages.getString("SourceRubette.selfrefreshable")); 
-            refreshBox.setToolTipText(Messages.getString("SourceRubette.selfrefreshtooltip")); 
+            refreshBox = new JCheckBox(BuiltinMessages.getString("SourceRubette.selfrefreshable"));
+            refreshBox.setToolTipText(BuiltinMessages.getString("SourceRubette.selfrefreshtooltip"));
             refreshBox.setSelected(refreshable);
             properties.add(refreshBox, BorderLayout.SOUTH);
         }
@@ -140,7 +140,7 @@ public class SourceRubette extends AbstractRubette {
 
     
     public String getShortDescription() {
-        return Messages.getString("SourceRubette.containsdenotator"); 
+        return BuiltinMessages.getString("SourceRubette.containsdenotator");
     }
 
     
@@ -150,7 +150,7 @@ public class SourceRubette extends AbstractRubette {
     
     
     public String getOutTip(int i) {
-        return Messages.getString("SourceRubette.storeddenotator"); 
+        return BuiltinMessages.getString("SourceRubette.storeddenotator");
     }
 
     

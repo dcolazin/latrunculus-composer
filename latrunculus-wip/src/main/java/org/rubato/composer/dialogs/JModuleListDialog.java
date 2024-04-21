@@ -43,7 +43,7 @@ public final class JModuleListDialog
         implements ActionListener {
     
     public JModuleListDialog(Frame frame) {
-        super(frame, Messages.getString("JModuleListDialog.selectmodule"), true); 
+        super(frame, DialogsMessages.getString("JModuleListDialog.selectmodule"), true);
         setLayout(new BorderLayout());
         moduleList = new JList(getModuleNames());
         moduleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -64,11 +64,11 @@ public final class JModuleListDialog
         });
         add(new JScrollPane(moduleList), BorderLayout.CENTER);
         JPanel buttonBox = new JPanel();
-        cancelButton = new JButton(Messages.getString("JModuleListDialog.cancel")); 
+        cancelButton = new JButton(DialogsMessages.getString("JModuleListDialog.cancel"));
         cancelButton.addActionListener(this);
         buttonBox.add(cancelButton);
         buttonBox.add(Box.createHorizontalStrut(10));
-        okButton = new JButton(Messages.getString("JModuleListDialog.ok")); 
+        okButton = new JButton(DialogsMessages.getString("JModuleListDialog.ok"));
         okButton.addActionListener(this);
         buttonBox.add(okButton);
         add(buttonBox, BorderLayout.SOUTH);

@@ -55,13 +55,13 @@ public class JFormDiagram
         
         c.gridx = 0;
         c.gridy = 0;
-        JLabel fromLabel = new JLabel(Messages.getString("JFormDiagram.from")+":");  
+        JLabel fromLabel = new JLabel(DialogFormsMessages.getString("JFormDiagram.from")+":");
         gridbag.setConstraints(fromLabel, c);
         lists.add(fromLabel);
         
         c.gridx = 2;
         c.gridy = 0;
-        JLabel toLabel = new JLabel(Messages.getString("JFormDiagram.to")+":");  
+        JLabel toLabel = new JLabel(DialogFormsMessages.getString("JFormDiagram.to")+":");
         gridbag.setConstraints(toLabel, c);
         lists.add(toLabel);
 
@@ -110,64 +110,64 @@ public class JFormDiagram
         buttonBox.setLayout(gridbag);
         buttonBox.setBorder(BorderFactory.createEmptyBorder(5, 5, 2, 5));
         
-        addButton = new JButton(Messages.getString("JFormDiagram.add")); 
-        addButton.setToolTipText(Messages.getString("JFormDiagram.addtip")); 
+        addButton = new JButton(DialogFormsMessages.getString("JFormDiagram.add"));
+        addButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.addtip"));
         addButton.addActionListener(this);
         gridbag.setConstraints(addButton, c);
         buttonBox.add(addButton);
         
-        addNewButton = new JButton(Messages.getString("JFormDiagram.addnew")); 
-        addNewButton.setToolTipText(Messages.getString("JFormDiagram.addnewtip")); 
+        addNewButton = new JButton(DialogFormsMessages.getString("JFormDiagram.addnew"));
+        addNewButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.addnewtip"));
         addNewButton.addActionListener(this);
         gridbag.setConstraints(addNewButton, c);
         buttonBox.add(addNewButton);
         
-        removeButton = new JButton(Messages.getString("JFormDiagram.remove")); 
-        removeButton.setToolTipText(Messages.getString("JFormDiagram.removetip")); 
+        removeButton = new JButton(DialogFormsMessages.getString("JFormDiagram.remove"));
+        removeButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.removetip"));
         removeButton.addActionListener(this);
         removeButton.setEnabled(false);
         gridbag.setConstraints(removeButton, c);
         buttonBox.add(removeButton);
         
-        upButton = new JButton(Messages.getString("JFormDiagram.up")); 
-        upButton.setToolTipText(Messages.getString("JFormDiagram.uptip")); 
+        upButton = new JButton(DialogFormsMessages.getString("JFormDiagram.up"));
+        upButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.uptip"));
         upButton.addActionListener(this);
         upButton.setEnabled(false);
         c.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(upButton, c);
         buttonBox.add(upButton);
 
-        JLabel labelLabel = new JLabel(Messages.getString("JFormDiagram.label")+": ");  
+        JLabel labelLabel = new JLabel(DialogFormsMessages.getString("JFormDiagram.label")+": ");
         labelLabel.setHorizontalAlignment(JLabel.RIGHT);
         c.gridwidth = 1;
         gridbag.setConstraints(labelLabel, c);
         buttonBox.add(labelLabel);
         
         labelField = new JTextField();
-        labelField.setToolTipText(Messages.getString("JFormDiagram.labeltip")); 
+        labelField.setToolTipText(DialogFormsMessages.getString("JFormDiagram.labeltip"));
         c.gridwidth = 2;
         gridbag.setConstraints(labelField, c);
         buttonBox.add(labelField);
         
 
-        downButton = new JButton(Messages.getString("JFormDiagram.down"));   
-        downButton.setToolTipText(Messages.getString("JFormDiagram.downtip")); 
+        downButton = new JButton(DialogFormsMessages.getString("JFormDiagram.down"));
+        downButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.downtip"));
         downButton.addActionListener(this);
         downButton.setEnabled(false);
         c.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(downButton, c);
         buttonBox.add(downButton);
         
-        setMorphButton = new JButton(Messages.getString("JFormDiagram.setmorph"));        
-        setMorphButton.setToolTipText(Messages.getString("JFormDiagram.setmorphtip")); 
+        setMorphButton = new JButton(DialogFormsMessages.getString("JFormDiagram.setmorph"));
+        setMorphButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.setmorphtip"));
         setMorphButton.addActionListener(this);
         setMorphButton.setEnabled(false);
         c.gridwidth = 2;
         gridbag.setConstraints(setMorphButton, c);
         buttonBox.add(setMorphButton);
         
-        removeMorphButton = new JButton(Messages.getString("JFormDiagram.remmorph")); 
-        removeMorphButton.setToolTipText(Messages.getString("JFormDiagram.remmorphtip")); 
+        removeMorphButton = new JButton(DialogFormsMessages.getString("JFormDiagram.remmorph"));
+        removeMorphButton.setToolTipText(DialogFormsMessages.getString("JFormDiagram.remmorphtip"));
         removeMorphButton.addActionListener(this);
         removeMorphButton.setEnabled(false);
         c.gridwidth = 2;
