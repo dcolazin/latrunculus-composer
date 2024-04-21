@@ -29,7 +29,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 
-import org.rubato.audio.midi.MidiPlayer;
+import org.vetronauta.latrunculus.server.midi.MidiPlayer;
 import org.rubato.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.base.Rubette;

@@ -29,7 +29,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.rubato.audio.midi.MidiPlayer;
+import org.vetronauta.latrunculus.server.midi.MidiPlayer;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
 final class VoicesDialog

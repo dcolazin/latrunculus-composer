@@ -17,14 +17,17 @@
  *
  */
 
-package org.rubato.audio.midi;
+package org.vetronauta.latrunculus.server.midi;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.vetronauta.latrunculus.core.math.element.generic.StringMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MidiChange implements Comparable<MidiChange> {
 
     //TODO enum
@@ -34,6 +37,14 @@ public class MidiChange implements Comparable<MidiChange> {
     static final int TEMPO_CHANGE   = 3;
     static final int TIME_CHANGE    = 4;
     static final int CONTROL_CHANGE = 5;
+
+    private int onset    = 0;
+    private int pitch    = 0;
+    private int loudness = 0;
+    private int duration = 0;
+    private int channel  = 0;
+    private int track    = 0;
+    private int type;
     
     public MidiChange(FactorDenotator note, int resolution) {
         double   o = ((SimpleDenotator)note.getFactor(0)).getReal();
@@ -147,7 +158,7 @@ public class MidiChange implements Comparable<MidiChange> {
         track = t;
     }
 
-
+    @Override
     public int compareTo(MidiChange note) {
         int c = onset-note.onset;
         if (c < 0) {
@@ -164,8 +175,8 @@ public class MidiChange implements Comparable<MidiChange> {
         }
     }
 
-    
-        public String toString() {
+    @Override
+    public String toString() {
         StringBuilder buf = new StringBuilder(40);
         buf.append("MidiChange[");
         buf.append("onset=");
@@ -186,14 +197,4 @@ public class MidiChange implements Comparable<MidiChange> {
         return buf.toString();
     }
 
-    
-    private MidiChange() { /* do nothing */ }
-
-    private int onset    = 0;
-    private int pitch    = 0;
-    private int loudness = 0;
-    private int duration = 0;
-    private int channel  = 0;
-    private int track    = 0;
-    private int type;
 }

@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.score;
 
-import org.rubato.audio.midi.MidiReader;
+import org.vetronauta.latrunculus.server.midi.MidiReader;
 import org.rubato.base.AbstractRubette;
 import org.rubato.base.Rubette;
 import org.rubato.base.RunInfo;

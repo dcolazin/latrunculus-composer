@@ -17,20 +17,39 @@
  *
  */
 
-package org.rubato.audio.midi;
+package org.vetronauta.latrunculus.server.midi;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.*;
-
-import javax.sound.midi.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+
+import javax.sound.midi.Instrument;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaEventListener;
+import javax.sound.midi.MetaMessage;
+import javax.sound.midi.MidiEvent;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Soundbank;
+import javax.sound.midi.Synthesizer;
+import javax.sound.midi.Track;
+import javax.sound.midi.Transmitter;
 
 
 /**
@@ -528,16 +547,16 @@ public class MidiPlayer implements MetaEventListener {
 
     private ActionListener stopListener = null;
     
-    private Receiver    receiver    = null;
+    private Receiver receiver    = null;
     private Transmitter transmitter = null;
     private Synthesizer synthesizer = null;
-    private Sequencer   sequencer   = null;
+    private Sequencer sequencer   = null;
     private boolean     opened      = false;
     private double      latency;
 
     private List<Receiver> receivers = new LinkedList<Receiver>();
     
-    private Sequence  sequence   = null;
+    private Sequence sequence   = null;
     private int       resolution = 480;    // ticks per quarter note
     private int       mspq       = 500000; // microseconds per quarter note
     private Denotator score      = null;

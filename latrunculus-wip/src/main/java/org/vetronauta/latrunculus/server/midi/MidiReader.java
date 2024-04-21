@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.audio.midi;
+package org.vetronauta.latrunculus.server.midi;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
