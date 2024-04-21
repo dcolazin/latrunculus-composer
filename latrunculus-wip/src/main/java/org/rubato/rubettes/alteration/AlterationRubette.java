@@ -19,43 +19,27 @@
 
 package org.rubato.rubettes.alteration;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.END;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.GLOBAL;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.START;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import lombok.Getter;
+import lombok.Setter;
+import org.rubato.composer.Utilities;
+import org.rubato.composer.components.JSelectForm;
+import org.rubato.composer.components.JStatusline;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Window;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.Utilities;
-import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.components.JStatusline;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
 
 /**
  * A rubette for performing the alteration of a denotator towards another.
@@ -68,9 +52,9 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
 	private PowerForm inputForm;
 	@Getter
 	private boolean global;
-	@Getter
+	@Getter @Setter
 	private double globalStartDegree;
-	@Getter
+	@Getter @Setter
 	private double globalEndDegree;
 	
 	private JPanel propertiesPanel;
@@ -264,12 +248,12 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
     /*
      * sets this input form and updates properties window and internal variables
      */
-    protected void setInputForm(PowerForm form) {
+	public void setInputForm(PowerForm form) {
 		this.inputForm = form;
 		this.updateInputFormInProperties();
 	}
     
-    protected void setGlobal(boolean global) {
+    public void setGlobal(boolean global) {
     	this.global = global;
     	this.updateGlobalDegreeInTable();
     }
@@ -415,24 +399,6 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
     
     public String getOutTip(int i) {
         return "Output power denotator";
-    }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-		AlterationRubette loadedRubette = new AlterationRubette();
-		Element child = XMLReader.getChild(element, FORM);
-		loadedRubette.setInputForm((PowerForm) reader.parseAndResolveForm(child));
-		
-		Element nextChild = XMLReader.getNextSibling(child, GLOBAL);
-		if (nextChild != null) {
-			loadedRubette.globalStartDegree = XMLReader.getRealAttribute(nextChild, START, 0);
-			loadedRubette.globalEndDegree = XMLReader.getRealAttribute(nextChild, END, 1);
-			loadedRubette.setGlobal(true);
-			child = nextChild;
-		}
-		
-		loadedRubette.dimensionsTable.fromXML(reader, child);
-		
-		return loadedRubette;
     }
 
 }

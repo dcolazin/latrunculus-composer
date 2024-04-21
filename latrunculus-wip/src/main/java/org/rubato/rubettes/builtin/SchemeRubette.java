@@ -35,6 +35,7 @@ import java.util.List;
 import javax.swing.*;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
@@ -184,46 +185,6 @@ public class SchemeRubette extends AbstractRubette {
         return "Output denotator #"+i; 
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        int inCount;
-        int outCount;
-        String text = "";
-
-        Element child = XMLReader.getChild(element, INPUTS);
-        if (child != null) {
-            inCount = XMLReader.getIntAttribute(child, NUMBER_ATTR, 1, 8, 0);
-        }
-        else {
-            reader.setError("Expected element <%1>", INPUTS);
-            return null;
-        }
-        
-        child = XMLReader.getNextSibling(child, OUTPUTS);
-        if (child != null) {
-            outCount = XMLReader.getIntAttribute(child, NUMBER_ATTR, 1, 8, 0);
-        }
-        else {
-            reader.setError("Expected element <%1>", OUTPUTS);
-            return null;
-        }
-        child = XMLReader.getNextSibling(child, CODE);
-        if (child != null) {
-            text = XMLReader.getText(child).trim();
-        }
-        else {
-            reader.setError("Expected element <%1>", CODE);
-            return null;
-        }
-        
-        SchemeRubette r = new SchemeRubette();
-        r.setInCount(inCount);
-        r.setOutCount(outCount);
-        r.schemeCode = text;
-        r.sexprList = r.parser.parse(r.schemeCode);
-        return r;
-    }
-
-    
     private void addPrimitives(Env env) {
         env.addPrimitive(get_input);
         env.addPrimitive(set_output);
@@ -306,9 +267,11 @@ public class SchemeRubette extends AbstractRubette {
     private JTextArea         schemeCodeArea = null;
     private JLabel            infoLabel = null;
 
-    @Getter
+    @Getter @Setter
     private String      schemeCode = "";
+    @Getter
     private Parser parser = new Parser();
+    @Setter
     private List<SExpr> sexprList = null;
     
     private static final ImageIcon icon;

@@ -19,30 +19,22 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-
-import java.awt.BorderLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.logeo.reform.Reformer;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
+import org.vetronauta.latrunculus.core.logeo.reform.Reformer;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import java.awt.*;
 
 
 public class ReformRubette extends AbstractRubette {
@@ -51,8 +43,12 @@ public class ReformRubette extends AbstractRubette {
         setInCount(1);
         setOutCount(1);
     }
-       
-    
+
+    public ReformRubette(Form form) {
+        this();
+        this.outputForm = form;
+    }
+
     public void run(RunInfo runInfo) {
         Denotator d = getInput(0);
         if (d == null) {
@@ -153,19 +149,7 @@ public class ReformRubette extends AbstractRubette {
             return TextUtils.replaceStrings("Output dennotator of form %%1", outputForm.getNameString());
         }
     }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Form form = null;
-        Element child = XMLReader.getChild(element, FORM);
-        if (child != null) {
-            form = reader.parseAndResolveForm(child);
-        }
-        ReformRubette rubette = new ReformRubette();
-        rubette.outputForm = form;
-        return rubette;
-    }
 
-    
     private JPanel      properties = null;
     private JSelectForm selectForm = null;
     @Getter

@@ -19,22 +19,13 @@
 
 package org.rubato.composer.network;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.*;
-
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-
-import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.JComposer;
-import org.rubato.composer.RubetteManager;
 import org.rubato.composer.notes.NoteModel;
 import org.rubato.composer.rubette.Link;
 import org.rubato.composer.rubette.RubetteModel;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class NetworkModel {
 
@@ -171,84 +162,7 @@ public class NetworkModel {
     public ArrayList<NoteModel> getNotes() {
         return notes;
     }
-    
-    public static NetworkModel fromXML(XMLReader reader, Element networkElement) {
-        String name = networkElement.getAttribute(NAME_ATTR).trim();
-        if (name.length() == 0) {
-            reader.setError(NetworkMessages.getString("NetworkModel.missingattr"), NETWORK, NAME_ATTR);
-            return null;
-        }
-        else {
-            NetworkModel networkModel = new NetworkModel(name);
-            RubetteManager manager = RubetteManager.getManager();
-            HashMap<Integer,RubetteModel> rubetteModelMap = new HashMap<Integer,RubetteModel>();
-            
-            // read rubettes
-            Element child = XMLReader.getChild(networkElement, RUBETTE);
-            while (child != null) {
-                String rubName = child.getAttribute(NAME_ATTR);
-                String rubClass = child.getAttribute(CLASS_ATTR);
-                int serial = XMLReader.getIntAttribute(child, SERIAL_ATTR, 0);
-                int x = XMLReader.getIntAttribute(child, X_ATTR, 0);
-                int y = XMLReader.getIntAttribute(child, Y_ATTR, 0);
-                Rubette rubette = manager.getRubetteByClassName(rubClass);
-                if (rubette == null) {
-                    reader.setError(NetworkMessages.getString("NetworkModel.classnotavailable"), rubClass);
-                }
-                else {
-                    rubette = rubette.fromXML(reader, child);
-                    if (rubette != null) {
-                        RubetteModel rmodel = new RubetteModel(rubette, name);
-                        rmodel.setName(rubName);
-                        rmodel.setLocation(new Point(x, y));
-                        rubetteModelMap.put(serial, rmodel);
-                        networkModel.addRubette(rmodel);
-                    }
-                }
-                child = XMLReader.getNextSibling(child, RUBETTE);
-            }
-            
-            if (reader.hasError()) {
-                return null;
-            }
 
-            // read links
-            child = XMLReader.getChild(networkElement, LINK);
-            while (child != null) {
-                int src = XMLReader.getIntAttribute(child, SRC_ATTR, 0);
-                int srcPos = XMLReader.getIntAttribute(child, SRCPOS_ATTR, 0);
-                int dest = XMLReader.getIntAttribute(child, DEST_ATTR, 0);
-                int destPos = XMLReader.getIntAttribute(child, DESTPOS_ATTR, 0);
-                int type = XMLReader.getIntAttribute(child, TYPE_ATTR, 0);
-                RubetteModel srcModel = rubetteModelMap.get(src);
-                RubetteModel destModel = rubetteModelMap.get(dest);
-                if (srcModel != null && destModel != null) {
-                    Link link = new Link(srcModel, srcPos, destModel, destPos);
-                    link.setType(type);
-                    srcModel.addOutLink(link);
-                    destModel.setInLink(link);
-                }
-                else {
-                    reader.setError(NetworkMessages.getString("NetworkModel.cannotlink"),
-                                    srcModel == null?"unknown":srcModel.getName(), srcPos,
-                                    destModel== null?"unknown":destModel.getName(), destPos);
-                }
-                child = XMLReader.getNextSibling(child, LINK);
-            }
-
-            // read notes
-            child = XMLReader.getChild(networkElement, NOTE);
-            while (child != null) {
-                NoteModel noteModel = NoteModel.fromXML(reader, child);
-                networkModel.addNote(noteModel);
-                child = XMLReader.getNextSibling(child, NOTE);
-            }
-            
-            return networkModel;
-        }
-    }
-    
-    
     public NetworkModel newInstance() {
         ArrayList<RubetteModel> newRubettes = new ArrayList<>(rubettes.size());
         for (int i = 0; i < rubettes.size(); i++) {
@@ -256,8 +170,7 @@ public class NetworkModel {
             rmodel.setSerial(i);
             newRubettes.add(rmodel.newInstance());
         }
-        for (int i = 0; i < rubettes.size(); i++) {
-            RubetteModel rmodel = rubettes.get(i);
+        for (RubetteModel rmodel : rubettes) {
             for (int j = 0; j < rmodel.getInLinkCount(); j++) {
                 Link link = rmodel.getInLink(j);
                 int src = link.getSrcModel().getSerial();
@@ -273,7 +186,7 @@ public class NetworkModel {
             }
         }
         
-        ArrayList<NoteModel> newNotes = new ArrayList<NoteModel>(notes.size());
+        ArrayList<NoteModel> newNotes = new ArrayList<>(notes.size());
         for (NoteModel nmodel : notes) {
             newNotes.add(nmodel.newInstance());
         }
@@ -317,10 +230,10 @@ public class NetworkModel {
     private JNetwork  jnetwork;
     private String    name;
     private String    info = ""; 
-    private ArrayList<RubetteModel> rubettes = new ArrayList<RubetteModel>();
-    private ArrayList<RubetteModel> roots = new ArrayList<RubetteModel>();
-    private ArrayList<RubetteModel> coroots = new ArrayList<RubetteModel>();
-    private ArrayList<RubetteModel> dependents = new ArrayList<RubetteModel>(100);
-    private ArrayList<RubetteModel> dependencies = new ArrayList<RubetteModel>(100);
-    private ArrayList<NoteModel> notes = new ArrayList<NoteModel>();
+    private ArrayList<RubetteModel> rubettes = new ArrayList<>();
+    private ArrayList<RubetteModel> roots = new ArrayList<>();
+    private ArrayList<RubetteModel> coroots = new ArrayList<>();
+    private ArrayList<RubetteModel> dependents = new ArrayList<>(100);
+    private ArrayList<RubetteModel> dependencies = new ArrayList<>(100);
+    private ArrayList<NoteModel> notes = new ArrayList<>();
 }

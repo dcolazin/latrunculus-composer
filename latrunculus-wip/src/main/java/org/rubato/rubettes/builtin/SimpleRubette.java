@@ -19,49 +19,32 @@
 
 package org.rubato.rubettes.builtin;
 
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JSimpleEntry;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.math.yoneda.map.ConstantModuleMorphismMap;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.rubato.composer.Utilities.getJDialog;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 
 public class SimpleRubette extends AbstractRubette implements ActionListener {    
@@ -330,21 +313,7 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     public String getOutTip(int i) {
         return BuiltinMessages.getString("SimpleRubette.storeddenotator");
     }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, DENOTATOR);
-        Denotator d = null;
-        if (child != null) {
-            d = reader.parseDenotator(child);
-        }
-        SimpleRubette rubette = new SimpleRubette();
-        if (d instanceof SimpleDenotator) {
-            rubette.setDenotator((SimpleDenotator)d);
-        }
-        return rubette;
-    }
 
-    
     private JPanel          properties    = null;
     private JLabel          emptyLabel    = new JLabel(BuiltinMessages.getString("SimpleRubette.novalue"));
     private SimpleForm      form          = null;

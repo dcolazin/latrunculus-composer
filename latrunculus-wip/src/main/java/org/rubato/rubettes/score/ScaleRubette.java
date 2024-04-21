@@ -19,39 +19,27 @@
 
 package org.rubato.rubettes.score;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashSet;
+import lombok.Getter;
+import lombok.Setter;
+import org.rubato.composer.Utilities;
+import org.rubato.composer.components.JStatusline;
+import org.rubato.composer.icons.Icons;
+import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.rubato.rubettes.util.NoteGenerator;
+import org.rubato.rubettes.util.ScaleMap;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.Utilities;
-import org.rubato.composer.components.JStatusline;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
-import org.rubato.rubettes.util.NoteGenerator;
-import org.rubato.rubettes.util.MacroNoteGenerator;
-import org.rubato.rubettes.util.ScaleMap;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
-
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INTERVAL;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_OF_NOTES;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PRESET;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.ROOT;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SCALE;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SEMITONES;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 /**
  * A rubette for generating preset and custom scales. The output is a Score denotator with
@@ -65,13 +53,13 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 	private final int MIN_PITCH = 0;
 	private final int MAX_PITCH = 127;
 
-	@Getter
+	@Getter @Setter
 	private int numberOfNotes;
-	@Getter
+	@Getter @Setter
 	private double root;
-	@Getter
+	@Getter @Setter
 	private int preset;
-	@Getter
+	@Getter @Setter
 	private double[] intervals;
 	
 	private ScaleMap scaleMap;
@@ -405,30 +393,5 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     public ImageIcon getIcon() {
         return icon;
     }
-
-	@Override
-	public Rubette fromXML(XMLReader reader, Element element) {
-		ScaleRubette loadedRubette = new ScaleRubette();
-		loadedRubette.getProperties();
-		Element child = XMLReader.getChild(element, SCALE);
-		int numberOfNotes = XMLReader.getIntAttribute(child, NUMBER_OF_NOTES, 7);
-		loadedRubette.numberOfNotes = numberOfNotes;
-		loadedRubette.root = XMLReader.getRealAttribute(child, ROOT, 60);
-		int loadedPreset = XMLReader.getIntAttribute(child, PRESET, 0);
-		loadedRubette.preset = loadedPreset;
-		if (loadedPreset == 0) {
-			double[] intervals = new double[numberOfNotes];
-			int i = 0;
-			Element nextSibling = XMLReader.getChild(child, INTERVAL);
-			while (nextSibling != null) {
-				intervals[i] = XMLReader.getRealAttribute(nextSibling, SEMITONES, 1);
-				nextSibling = XMLReader.getNextSibling(nextSibling, INTERVAL);
-				i++;
-			}
-			loadedRubette.intervals = intervals;
-		}
-		loadedRubette.revertProperties();
-		return loadedRubette;
-	}
 
 }

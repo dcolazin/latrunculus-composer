@@ -19,16 +19,11 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
-import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
+import java.util.List;
 
 /**
  * Interface for Rubettes.
@@ -87,18 +82,6 @@ public interface Rubette {
      * All properties are copied if possible.
      */
     Rubette duplicate();
-    
-    /**
-     * Creates a Rubette from an XML description starting with <code>element</code>.
-     */
-    Rubette fromXML(XMLReader reader, Element element);
-
-    /**
-     * Writes an XML description of this rubette.
-     * This method should write XML for the configuration of this
-     * Rubette.
-     */
-    default void toXML(XMLWriter writer) {}
 
     /**
      * Returns an icon for this Rubette.
@@ -264,13 +247,6 @@ public interface Rubette {
      * This is usually called by the Runner.
      */
     Denotator getOutput(int i);
-
-    /**
-     * Returns the RubetteModel, that this Rubette is attached to.
-     * This may be useful to retrieve information about the
-     * environment.
-     */
-    RubetteModel getModel();
 
     /**
      * Adds an error string to the current error state.

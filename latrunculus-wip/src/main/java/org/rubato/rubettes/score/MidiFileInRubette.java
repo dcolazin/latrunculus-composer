@@ -25,8 +25,6 @@ import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.vetronauta.latrunculus.server.midi.MidiReader;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
@@ -40,14 +38,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FILE;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.STORE_DENOTATOR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.TEMPO_FACTOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class MidiFileInRubette extends AbstractRubette {
 
@@ -271,35 +261,6 @@ public class MidiFileInRubette extends AbstractRubette {
 
     public String getOutTip(int i) {
         return "Denotator of form \"Score\"";
-    }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        String fileName = "";
-        double f = 1.0;
-        Denotator score = null;
-        boolean store = false;
-        Element child = XMLReader.getChild(element, FILE);
-        if (child != null) {
-            fileName = XMLReader.getStringAttribute(child, NAME_ATTR);
-        }
-        child = XMLReader.getNextSibling(child, TEMPO_FACTOR);
-        if (child != null) {
-            f = XMLReader.getRealAttribute(child, VALUE_ATTR, 1.0);
-        }
-        child = XMLReader.getNextSibling(child, STORE_DENOTATOR);
-        if (child != null) {
-            if (TRUE_VALUE.equals(child.getAttribute(VALUE_ATTR))) store = true;
-        }
-        child = XMLReader.getNextSibling(child, DENOTATOR);
-        if (child != null) {
-            score = reader.parseDenotator(child);
-        }
-        MidiFileInRubette newRubette = new MidiFileInRubette();
-        newRubette.setMidiFile(reader.toAbsolutePath(fileName));
-        newRubette.setTempoFactor(f);
-        newRubette.setScore(score);
-        newRubette.setStoreDenotator(store);
-        return newRubette;
     }
 
     

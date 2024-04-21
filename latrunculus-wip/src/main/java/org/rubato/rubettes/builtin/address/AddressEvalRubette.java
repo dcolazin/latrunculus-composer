@@ -21,12 +21,6 @@ package org.rubato.rubettes.builtin.address;
 
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JModuleElementEntry;
 import org.rubato.composer.components.JModuleElementList;
 import org.rubato.composer.components.JModuleEntry;
@@ -34,13 +28,13 @@ import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
-import org.vetronauta.latrunculus.core.util.TextUtils;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.logeo.DenoFactory;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Modulus;
@@ -48,9 +42,9 @@ import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
 import org.vetronauta.latrunculus.core.math.element.impl.ZInteger;
 import org.vetronauta.latrunculus.core.math.module.FreeUtils;
+import org.vetronauta.latrunculus.core.math.module.factory.RingRepository;
 import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
-import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.Ring;
 import org.vetronauta.latrunculus.core.math.module.generic.VectorModule;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
@@ -59,7 +53,6 @@ import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
-import org.vetronauta.latrunculus.core.math.module.factory.RingRepository;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
@@ -69,22 +62,15 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.util.TextUtils;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -95,12 +81,6 @@ import java.util.stream.Collectors;
 
 import static org.rubato.composer.Utilities.getJDialog;
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EVALTYPE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * 
@@ -112,7 +92,33 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         setInCount(1);
         setOutCount(1);
     }
-    
+
+    public AddressEvalRubette(int evalType) {
+        this();
+        this.evalType = evalType;
+    }
+
+    public AddressEvalRubette(int evalType, ModuleElement moduleElement, Module module) {
+        this(evalType);
+        this.moduleElement = moduleElement;
+        this.module = module;
+    }
+
+    public AddressEvalRubette(int evalType, Form form, List<ModuleElement> elements, Module module) {
+        this(evalType, form);
+        this.elements = elements;
+        this.module = module;
+    }
+
+    public AddressEvalRubette(int evalType, ModuleMorphism morphism) {
+        this(evalType);
+        this.morphism = morphism;
+    }
+
+    public AddressEvalRubette(int evalType, Form form) {
+        this(evalType);
+        this.outputForm = form;
+    }
 
     public void run(RunInfo runInfo)  {
         Denotator input = getInput(0);
@@ -547,116 +553,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         return name;
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        int t = 0;
-        AddressEvalRubette newRubette = null;
-        
-        Element child = XMLReader.getChild(element, EVALTYPE);
-
-        if (child == null) {
-            // there must be a type
-            reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), EVALTYPE);
-            return null;
-        }
-        
-        t = XMLReader.getIntAttribute(child, VALUE_ATTR, 0, evalTypes.length-1, 0);
-
-        if (t == EVAL_TYPE_ELEMENT) {
-            // type evaluate at element
-            child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
-            if (child != null) {
-                ModuleElement mel = reader.parseModuleElement(child);
-                if (mel != null) {
-                    newRubette = new AddressEvalRubette();
-                    newRubette.evalType = t;
-                    newRubette.moduleElement  = mel;
-                    newRubette.module   = mel.getModule();
-                }                
-            }
-            else {
-                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT);
-            }
-        }
-        else if (t == EVAL_TYPE_LIST) {
-            // type evaluate at list of elements
-            child = XMLReader.getNextSibling(child, FORM);
-            if (child == null) {
-                // no output form has been given
-                // there must be an output form
-                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), FORM);
-                return null;
-            }
-            // get output form
-            Form oform = reader.parseAndResolveForm(child);
-            child = XMLReader.getNextSibling(child, MODULE);
-            if (child == null) {
-                // no module has been given
-                // there must be a module
-                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE);
-                return null;
-            }
-            Module module0 = reader.parseModule(child);
-            if (module0 == null) {
-                return null;
-            }
-            LinkedList<ModuleElement> list = new LinkedList<>();
-            child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
-            while (child != null) {
-                ModuleElement e = reader.parseModuleElement(child);
-                if (e == null) {
-                    return null;
-                }
-                if (!module0.hasElement(e)) {
-                    reader.setError(AddressMessages.getString("AddressEvalRubette.wrongmodule"), e.getModule(), module0);
-                    return null;
-                }
-                list.add(e);
-                child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
-            }
-            newRubette = new AddressEvalRubette();
-            newRubette.evalType = t;
-            newRubette.outputForm = oform;
-            newRubette.elements = list;
-            newRubette.module = module0;
-        }
-        else if (t == EVAL_TYPE_CHANGE) {
-            // type change address
-            child = XMLReader.getNextSibling(child, MODULE_MORPHISM);
-            if (child == null) {
-                // no module morphism has been given
-                // there must be a module morphism
-                reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE_MORPHISM);
-                return null;
-            }
-            ModuleMorphism morphism0 = reader.parseModuleMorphism(child);
-            if (morphism0 == null) {
-                return null;
-            }
-            newRubette = new AddressEvalRubette();
-            newRubette.evalType = t;
-            newRubette.morphism = morphism0;
-        }
-        else if (t == EVAL_TYPE_INPUT) {
-            // get output form if any
-            Form oform = null;
-            child = XMLReader.getNextSibling(child, FORM);
-            if (child != null) {
-                oform = reader.parseAndResolveForm(child);
-            }
-            newRubette = new AddressEvalRubette();
-            newRubette.evalType = t;
-            newRubette.outputForm = oform;
-            newRubette.setInCount(2);
-        }
-        else {
-            newRubette = new AddressEvalRubette();
-            newRubette.evalType = 0;
-        }
-        
-        return newRubette;
-    }
-
-    
     private void layoutAddressPanel(int type) {
         addressPanel.removeAll();
         if (type == EVAL_TYPE_ELEMENT) {
@@ -897,7 +793,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     public static final int EVAL_TYPE_LIST    = 2;
     public static final int EVAL_TYPE_CHANGE  = 3;
     public static final int EVAL_TYPE_INPUT   = 4;
-    
+
     private static final String[] evalTypes = {
         AddressMessages.getString("AddressEvalRubette.evalnull"),
         AddressMessages.getString("AddressEvalRubette.evalelement"),
@@ -905,7 +801,10 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         AddressMessages.getString("AddressEvalRubette.changeaddress"),
         AddressMessages.getString("AddressEvalRubette.evalinput")
     };
-    
+
+    public static final int EVAL_TYPE_TYPE_LENGTH   = evalTypes.length;
+
+
     // Message strings
     private static final String INPUT_NULL_ERROR    = AddressMessages.getString("AddressEvalRubette.inputnullerror");
     private static final String INPUT_WRONG_FORM    = AddressMessages.getString("AddressEvalRubette.inputwrongform");

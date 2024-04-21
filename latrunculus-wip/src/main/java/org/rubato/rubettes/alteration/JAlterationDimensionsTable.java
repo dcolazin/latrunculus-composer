@@ -19,29 +19,18 @@
 
 package org.rubato.rubettes.alteration;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.DIMENSION;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.END_DEGREE;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.START_DEGREE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
+import org.rubato.rubettes.util.JPropertiesTable;
+import org.rubato.rubettes.util.SimpleFormFinder;
+import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-
-import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
-import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.rubato.rubettes.util.JPropertiesTable;
-import org.rubato.rubettes.util.SimpleFormFinder;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
 
 /**
  * A table in which alteration dimensions are represented as rows.
@@ -177,7 +166,7 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	/*
 	 * Adds a row containing the specified parameters to the table.
 	 */
-	protected void addDimension(SimpleForm form, double startPercentage, double endPercentage, SimpleForm relative) {
+	public void addDimension(SimpleForm form, double startPercentage, double endPercentage, SimpleForm relative) {
 		if (this.simpleFormsBox != null) {
 			String start = new Double(startPercentage).toString();
 			String end = new Double(endPercentage).toString();
@@ -378,26 +367,6 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	
 	private Set<SimpleForm> getDifferentRelativeToForms() {
 		return new HashSet<>(this.relativeToForms);
-	}
-
-	protected void fromXML(XMLReader reader, Element element) {
-		Element nextSibling = XMLReader.getNextSibling(element, DIMENSION);
-		
-		while (nextSibling != null) {
-			double startDegree = XMLReader.getRealAttribute(nextSibling, START_DEGREE, 0);
-			double endDegree = XMLReader.getRealAttribute(nextSibling, END_DEGREE, 1);
-			
-			Element child = XMLReader.getChild(nextSibling, FORM);
-			SimpleForm selectedForm = (SimpleForm) reader.parseAndResolveForm(child);
-			
-			child = XMLReader.getNextSibling(child, FORM);
-			SimpleForm relativeToForm = (SimpleForm) reader.parseAndResolveForm(child);
-			
-			this.addDimension(selectedForm, startDegree, endDegree, relativeToForm);
-			nextSibling = XMLReader.getNextSibling(nextSibling, DIMENSION);
-		}
-		
-		this.applyChanges();
 	}
 
 }

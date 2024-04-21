@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin.address;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class AddressMessages {
+public class AddressMessages {
     
     private static final String BUNDLE_NAME = "bundles/rubettes/builtin/address/messages";
 

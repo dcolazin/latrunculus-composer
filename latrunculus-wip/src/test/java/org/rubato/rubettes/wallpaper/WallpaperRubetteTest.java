@@ -29,6 +29,7 @@ package org.rubato.rubettes.wallpaper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.rubato.rubettes.alteration.AlterationRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
@@ -50,6 +51,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
+import org.vetronauta.latrunculus.plugin.xml.reader.DefaultRubetteXmlReader;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -175,7 +177,6 @@ class WallpaperRubetteTest {
 
 		try {
 			Reader bufferedReader = new BufferedReader(new FileReader(testFile));
-			//PrintStream stream = new PrintStream(new ByteArrayOutputStream());
 			XMLWriter writer = new XMLWriter(testFile);
 			XMLReader reader = new XMLReader(bufferedReader);
 			writer.open();
@@ -184,7 +185,7 @@ class WallpaperRubetteTest {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			reader.parse();
-			this.rubette = (WallpaperRubette) this.rubette.fromXML(reader, element);
+			this.rubette = (WallpaperRubette) new DefaultRubetteXmlReader().fromXML(element, WallpaperRubette.class, reader);
 			this.denotator = this.rubette.getUnitedMappedDenotators(this.denotator);
 		} finally {
 			testFile.delete();

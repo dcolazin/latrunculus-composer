@@ -19,35 +19,29 @@
 
 package org.rubato.rubettes.score;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.List;
-
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.filechooser.FileFilter;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import lombok.Setter;
 import org.rubato.composer.Utilities;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.server.xml.XMLConstants;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FILE;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FREQ;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PROLOG;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.TIMESCALE;
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.List;
 
 public final class ScoreToCsoundRubette extends AbstractRubette {
 
@@ -249,29 +243,6 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
         return "Denotator of form \"Score\"";
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        ScoreToCsoundRubette newRubette = new ScoreToCsoundRubette();
-        Element child = XMLReader.getChild(element, FILE);
-        if (child != null) {
-            String fileName = XMLReader.getStringAttribute(child, XMLConstants.NAME_ATTR);
-            newRubette.setScoFile(reader.toAbsolutePath(fileName));            
-        }
-        child = XMLReader.getChild(element, TIMESCALE);
-        if (child != null) {
-            newRubette.timeScale = Math.max(XMLReader.getRealAttribute(child, XMLConstants.VALUE_ATTR, 0.5), 0.0);
-        }
-        child = XMLReader.getChild(element, FREQ);
-        if (child != null) {
-            newRubette.a4freq = Math.max(XMLReader.getRealAttribute(child, XMLConstants.VALUE_ATTR, 440.0), 1.0);
-        }
-        child = XMLReader.getChild(element, PROLOG);
-        if (child != null) {
-            newRubette.prolog = XMLReader.getText(child).trim();
-        }
-        return newRubette;
-    }
-    
-
     public String getScoFileName() {
         String fileName = "";
         if (scoFile != null) {
@@ -295,7 +266,7 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     }
     
     
-    private void setScoFile(String fileName) {
+    public void setScoFile(String fileName) {
         scoFile = new File(fileName);
     }
     
@@ -379,11 +350,11 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     private File         selectedFile     = null;
     private File         currentDirectory = new File(".");
     private JFileChooser fileChooser      = null;
-    @Getter
+    @Getter @Setter
     private String       prolog           = "";
-    @Getter
+    @Getter @Setter
     private double       a4freq           = 440.0;
-    @Getter
+    @Getter @Setter
     private double       timeScale        = 0.5;
     private final double ff               = Math.pow(2.0, 1.0/12.0);
 

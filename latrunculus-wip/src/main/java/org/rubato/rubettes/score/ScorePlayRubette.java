@@ -19,36 +19,38 @@
 
 package org.rubato.rubettes.score;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import java.util.List;
-import java.util.Timer;
-
-import javax.sound.midi.MidiUnavailableException;
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.*;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.server.midi.MidiPlayer;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import lombok.Setter;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import org.vetronauta.latrunculus.server.midi.MidiPlayer;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.MAP_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.VOICES;
+import javax.sound.midi.MidiUnavailableException;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public final class ScorePlayRubette extends AbstractRubette implements
         ActionListener, ChangeListener {
@@ -456,32 +458,6 @@ public final class ScorePlayRubette extends AbstractRubette implements
         return "Denotator of form \"Score\"";
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        ScorePlayRubette rubette = new ScorePlayRubette();
-        Element child = XMLReader.getChild(element, VOICES);
-        if (child != null) {
-            String map = child.getAttribute(MAP_ATTR);
-            String[] vcs = map.split(",");
-            int[] voices0 = new int[vcs.length];
-            for (int i = 0; i < voices0.length; i++) {
-                try {
-                    voices0[i] = Integer.parseInt(vcs[i]);
-                    if (voices0[i] < 0) {
-                        voices0[i] = 0;
-                    }
-                    else if (voices0[i] > 15) {
-                        voices0[i] = 15;
-                    }
-                }
-                catch (NumberFormatException e) {
-                    voices0[i] = 0;
-                }
-            }            
-            rubette.voices = voices0;
-        }
-        return rubette;
-    }
-
     private MidiPlayer midiPlayer = null;
     
     private JPanel    view          = null;
@@ -506,7 +482,7 @@ public final class ScorePlayRubette extends AbstractRubette implements
     private static final int   MAX_FACTOR   = 100;
     
     protected double duration = 0;
-    @Getter
+    @Getter @Setter
     private int[] voices = new int[1];
     private static final DecimalFormat format = new DecimalFormat("0.00");
     private static final Form scoreForm;

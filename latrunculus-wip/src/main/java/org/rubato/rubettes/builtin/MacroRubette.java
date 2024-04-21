@@ -19,22 +19,15 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INFO;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LONG;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SHORT;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NETWORK;
-
-import javax.swing.ImageIcon;
-
+import org.rubato.composer.icons.Icons;
+import org.rubato.composer.network.NetworkModel;
+import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
-import org.rubato.composer.network.NetworkModel;
-import org.rubato.composer.rubette.RubetteModel;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
 
 
 public class MacroRubette extends AbstractRubette {
@@ -208,25 +201,7 @@ public class MacroRubette extends AbstractRubette {
             return "";
         }
     }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element infoElement = XMLReader.getChild(element, INFO);
-        String info0 = XMLReader.getText(infoElement).trim();
-        Element shortElement = XMLReader.getNextSibling(infoElement, SHORT);
-        String shortDesc0 = XMLReader.getText(shortElement).trim();
-        Element longElement = XMLReader.getNextSibling(shortElement, LONG);
-        String longDesc0 = XMLReader.getText(longElement).trim();
-        Element networkElement = XMLReader.getNextSibling(longElement, NETWORK);
-        NetworkModel model = NetworkModel.fromXML(reader, networkElement);
-        MacroRubette rubette = new MacroRubette();
-        rubette.setNetworkModel(model);
-        rubette.setInfo(info0);
-        rubette.setShortDescription(shortDesc0);
-        rubette.setLongDescription(longDesc0);
-        return rubette;
-    }
 
-    
     public String toString() {
         return "MacroRubette["+networkModel+"]";
     }

@@ -20,30 +20,17 @@
 package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.rubato.composer.components.JSelectDenotator;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.components.JSelectDenotator;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
 
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.REFRESHABLE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class SourceRubette extends AbstractRubette {
@@ -51,6 +38,12 @@ public class SourceRubette extends AbstractRubette {
     public SourceRubette() {
         setInCount(0);
         setOutCount(1);
+    }
+
+    public SourceRubette(Denotator denotator, boolean refreshable) {
+        this();
+        this.denotator = denotator;
+        this.refreshable = refreshable;
     }
 
     
@@ -150,25 +143,6 @@ public class SourceRubette extends AbstractRubette {
         return BuiltinMessages.getString("SourceRubette.storeddenotator");
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Denotator d = null;
-        boolean r = false; 
-        Element child = XMLReader.getChild(element, REFRESHABLE);
-        String val = child.getAttribute(VALUE_ATTR);
-        if (val.equals(TRUE_VALUE)) {
-            r = true;
-        }
-        child = XMLReader.getNextSibling(child, DENOTATOR);
-        if (child != null) {
-            d = reader.parseDenotator(child);
-        }
-        SourceRubette rubette = new SourceRubette();
-        rubette.setRefreshable(r);
-        rubette.setDenotator(d);
-        return rubette;
-    }
-    
-    
     private void setDenotator(Denotator d) {
         denotator = d;
         if (d == null) {

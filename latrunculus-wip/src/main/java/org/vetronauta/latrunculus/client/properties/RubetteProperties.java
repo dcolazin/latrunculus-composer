@@ -62,26 +62,7 @@ public class RubetteProperties implements DeepCopyable<RubetteProperties> {
             prop.revert();
         }
     }
-    
-    public RubetteProperties fromXML(XMLReader reader, Element element) {        
-        RubetteProperties newProp = deepCopy();
-        Node node = element.getFirstChild();
-        while (node != null) {
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element e = (Element)node;
-                String key = e.getTagName();
-                RubetteProperty property = newProp.get(key);
-                if (property != null) {
-                    property = property.fromXML(reader, e);
-                    newProp.put(property);
-                }
-            }
-            node = node.getNextSibling();
-        }
-        return newProp;
-    }
-    
-    
+
     public RubetteProperties deepCopy() {
         RubetteProperties newProp = new RubetteProperties();
         for (Entry<String,RubetteProperty> entry : properties.entrySet()) {

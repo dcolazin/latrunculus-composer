@@ -20,42 +20,28 @@
 package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JFormTree;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import javax.swing.Box;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PATH;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class ModuleMapRubette extends AbstractRubette implements ActionListener {
     
@@ -63,7 +49,21 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
         setInCount(1);
         setOutCount(1);
     }
-    
+
+    public ModuleMapRubette(Form form) {
+        this();
+        this.inputForm = form;
+    }
+
+    public ModuleMapRubette(Form form, int[] path) {
+        this(form);
+        this.path = path;
+    }
+
+    public ModuleMapRubette(Form form, int[] path, ModuleMorphism morphism) {
+        this(form, path);
+        this.morphism = morphism;
+    }
 
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
@@ -254,79 +254,6 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
     public String getOutTip(int i) {
         return "Mapped output denotator";
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Form iform = null;
-        ModuleMapRubette newRubette = null;
-        
-        Element child = XMLReader.getChild(element, FORM);
-        if (child == null) {
-            // no input form has been given
-            newRubette = new ModuleMapRubette();
-            return newRubette;
-        }
-        
-        // get input form
-        iform = reader.parseAndResolveForm(child);
-        if (iform == null) {
-            return null;
-        }
-        
-        // get path
-        child = XMLReader.getNextSibling(child, PATH);
-        if (child == null) {
-            // no path has been given
-            newRubette = new ModuleMapRubette();
-            newRubette.inputForm = iform;
-            return newRubette;
-        }        
-        String pathString = child.getAttribute(VALUE_ATTR);
-        int[] p = parsePath(pathString);
-        if (p == null) {
-            reader.setError("Path has not the correct format");
-            return null;
-        }
-        
-        // get module morphism
-        child = XMLReader.getNextSibling(child, MODULE_MORPHISM);
-        if (child == null) {
-            // no module morphism has been given
-            newRubette = new ModuleMapRubette();
-            newRubette.inputForm = iform;
-            newRubette.path = p;
-            return newRubette;
-        }
-        ModuleMorphism m = reader.parseModuleMorphism(child);
-        if (m == null) {
-            return null;
-        }
-        
-        newRubette = new ModuleMapRubette();
-        newRubette.inputForm = iform;
-        newRubette.path = p;
-        newRubette.morphism = m;
-        return newRubette;
-    }
-    
-    
-    private static int[] parsePath(String pathString) {
-        String p = pathString.trim();
-        if (p.length() == 0) {
-            return new int[0];
-        }
-        String[] strings = pathString.trim().split(",");
-        int[] path = new int[strings.length];
-        for (int i = 0; i < path.length; i++) {
-            try {
-                path[i] = Integer.parseInt(strings[i]);
-            }
-            catch (NumberFormatException e) {
-                return null;
-            }
-        }
-        return path;
-    }
-
 
     @Getter
     private Form           inputForm = null;

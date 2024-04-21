@@ -31,6 +31,7 @@ import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.morphism.affine.AffineProjection;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
+import org.vetronauta.latrunculus.plugin.xml.reader.DefaultRubetteXmlReader;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -277,7 +278,6 @@ class AlterationRubetteTest {
 		}
 		try {
 			Reader bufferedReader = new BufferedReader(new FileReader(testFile));
-			//PrintStream stream = new PrintStream(new ByteArrayOutputStream());
 			XMLWriter writer = new XMLWriter(testFile);
 			XMLReader reader = new XMLReader(bufferedReader);
 			writer.open();
@@ -287,7 +287,7 @@ class AlterationRubetteTest {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			reader.parse();
-			this.rubette = (AlterationRubette) this.rubette.fromXML(reader, element);
+			this.rubette = (AlterationRubette) new DefaultRubetteXmlReader().fromXML(element, AlterationRubette.class, reader);
 		} finally {
 			testFile.delete();
 		}

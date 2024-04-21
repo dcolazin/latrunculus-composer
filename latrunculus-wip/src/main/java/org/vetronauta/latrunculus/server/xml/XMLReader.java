@@ -19,23 +19,25 @@
 
 package org.vetronauta.latrunculus.server.xml;
 
-import org.vetronauta.latrunculus.core.repository.LoadableDictionary;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
+import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.DenotatorReference;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.form.FormReference;
 import org.vetronauta.latrunculus.core.math.yoneda.map.MorphismMap;
+import org.vetronauta.latrunculus.core.repository.LoadableDictionary;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.xml.reader.DefaultRubetteXmlReader;
 import org.vetronauta.latrunculus.server.xml.reader.DefaultDefinitionXmlReader;
 import org.vetronauta.latrunculus.server.xml.reader.LatrunculusRestrictedXmlReader;
+import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -48,17 +50,15 @@ import org.xml.sax.SAXParseException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,6 +97,7 @@ public final class XMLReader implements LoadableDictionary {
 
     //TODO proper chain of responsibility
     private final LatrunculusRestrictedXmlReader<MathDefinition> definitionReader = new DefaultDefinitionXmlReader();
+    private final DefaultRubetteXmlReader rubetteReader = new DefaultRubetteXmlReader();
 
     /**
      * Creates an XMLReader from the given <code>file</code>.
@@ -108,7 +109,7 @@ public final class XMLReader implements LoadableDictionary {
         try {
             // try to find out if the file is compressed
             InputStream in = new GZIPInputStream(new FileInputStream(file));
-            reader = new InputStreamReader(in, "UTF-8");
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
         } catch (IOException e) {
             // not compressed
         }
@@ -150,11 +151,7 @@ public final class XMLReader implements LoadableDictionary {
             Document document = builder.parse(new InputSource(r));
             parseStart(document.getDocumentElement());
             resolveReferences();
-        }
-        catch (SAXException e) {
-            setError(e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             setError(e);
         }
     }
@@ -165,24 +162,6 @@ public final class XMLReader implements LoadableDictionary {
      */
     public void parse() {
         parse(reader);
-    }
-    
-    
-    /**
-     * Parses an XML file with the specified file name.
-     * @throws FileNotFoundException
-     */
-    public void parseFile(String fileName)
-            throws FileNotFoundException {
-        parse(new BufferedReader(new FileReader(fileName)));        
-    }
-    
-
-    /**
-     * Parses an XML file contained in the specified string.
-     */
-    public void parseString(String string) {
-        parse(new StringReader(string));
     }
 
 
@@ -214,7 +193,7 @@ public final class XMLReader implements LoadableDictionary {
      */
     public void setError(String string) {
         if (errors == null) {
-            errors = new LinkedList<String>();
+            errors = new LinkedList<>();
         }
         errors.add(string);
         error = true;
@@ -242,18 +221,18 @@ public final class XMLReader implements LoadableDictionary {
      * The XML reader is ready to be used again for a new XML file.
      */
     private void reset() {
-        modules         = new HashMap<String,Module>();
-        elements        = new HashMap<String,ModuleElement>();
-        moduleMorphisms = new HashMap<String,ModuleMorphism>();
-        forms           = new HashMap<String, Form>();
-        denotators      = new HashMap<String, Denotator>();
-        networks        = new LinkedList<NetworkModel>();
-        rubettes        = new LinkedList<Rubette>();
+        modules         = new HashMap<>();
+        elements        = new HashMap<>();
+        moduleMorphisms = new HashMap<>();
+        forms           = new HashMap<>();
+        denotators      = new HashMap<>();
+        networks        = new LinkedList<>();
+        rubettes        = new LinkedList<>();
         schemeCode      = ""; 
 
-        formsToBeResolved = new LinkedList<Form>();
-        denosToBeResolved = new LinkedList<Denotator>();
-        errors            = new LinkedList<String>();
+        formsToBeResolved = new LinkedList<>();
+        denosToBeResolved = new LinkedList<>();
+        errors            = new LinkedList<>();
         error             = false;
     }
     
@@ -281,32 +260,34 @@ public final class XMLReader implements LoadableDictionary {
     private void parseRoot(Node node) {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             String name = node.getNodeName();
-            if (name.equals(DEFINE_MODULE)) {
-                parseModuleDefinition((Element)node);
-            }
-            else if (name.equals(DEFINE_MODULE_ELEMENT)) {
-                parseElementDefinition((Element)node);
-            }
-            else if (name.equals(DEFINE_MODULE_MORPHISM)) {
-                parseModuleMorphismDefinition((Element)node);                
-            }
-            else if (name.equals(DENOTATOR)) {
-                parseDenotatorDefinition((Element)node);                
-            }
-            else if (name.equals(FORM)) {
-                parseFormDefinition((Element)node);                
-            }
-            else if (name.equals(NETWORK)) {
-                parseNetworkDefinition((Element)node);                
-            }
-            else if (name.equals(RUBETTE)) {
-                parseRubetteDefinition((Element)node);                
-            }
-            else if (name.equals(SCHEME)) {
-                parseSchemeCode((Element)node);                
-            }
-            else {
-                setError("Toplevel element <%1> not recognized", name);
+            switch (name) {
+                case DEFINE_MODULE:
+                    parseModuleDefinition((Element) node);
+                    break;
+                case DEFINE_MODULE_ELEMENT:
+                    parseElementDefinition((Element) node);
+                    break;
+                case DEFINE_MODULE_MORPHISM:
+                    parseModuleMorphismDefinition((Element) node);
+                    break;
+                case DENOTATOR:
+                    parseDenotatorDefinition((Element) node);
+                    break;
+                case FORM:
+                    parseFormDefinition((Element) node);
+                    break;
+                case NETWORK:
+                    parseNetworkDefinition((Element) node);
+                    break;
+                case RUBETTE:
+                    parseRubetteDefinition((Element) node);
+                    break;
+                case SCHEME:
+                    parseSchemeCode((Element) node);
+                    break;
+                default:
+                    setError("Toplevel element <%1> not recognized", name);
+                    break;
             }
         }
     }
@@ -363,7 +344,7 @@ public final class XMLReader implements LoadableDictionary {
             String moduleClass = moduleNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> cls = Class.forName(moduleClass);
-                Method method = cls.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); 
+                Method method = cls.getMethod("fromXML", XMLReader.class, Element.class);
                 return (Module)method.invoke(cls, new Object[] { this, moduleNode });
             }
             catch (ClassNotFoundException e) {
@@ -436,7 +417,7 @@ public final class XMLReader implements LoadableDictionary {
             String elementClass = elementNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> cls = Class.forName(elementClass);
-                Method method = cls.getMethod("fromXML", new Class[] { XMLReader.class, Element.class });
+                Method method = cls.getMethod("fromXML", XMLReader.class, Element.class);
                 return (ModuleElement)method.invoke(cls, new Object[] { this, elementNode });
             }
             catch (ClassNotFoundException e) {
@@ -508,7 +489,7 @@ public final class XMLReader implements LoadableDictionary {
             String morphismClass = morphismNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> c = Class.forName(morphismClass);
-                Method m = c.getMethod("fromXML", new Class[] { XMLReader.class, Element.class }); 
+                Method m = c.getMethod("fromXML", XMLReader.class, Element.class);
                 return (ModuleMorphism)m.invoke(c, new Object[] { this, morphismNode });
             }
             catch (ClassNotFoundException e) {
@@ -545,7 +526,7 @@ public final class XMLReader implements LoadableDictionary {
             String morphismMapClass = morphismMapNode.getAttribute(CLASS_ATTR);
             try {
                 Class<?> cls = Class.forName(morphismMapClass);
-                Method method = cls.getMethod("fromXML", new Class[] { XMLReader.class, Element.class });
+                Method method = cls.getMethod("fromXML", XMLReader.class, Element.class);
                 return (MorphismMap)method.invoke(cls, new Object[] { this, morphismMapNode });
             }
             catch (ClassNotFoundException e) {
@@ -705,7 +686,7 @@ public final class XMLReader implements LoadableDictionary {
     public Form parseAndResolveForm(Element formNode) {
         Form f = parseForm(formNode);
         if (f instanceof FormReference) {
-            String s = ((FormReference)f).getNameString();
+            String s = f.getNameString();
             f = getForm(s);
         }
         //inserted by florian. otherwise coordinators might still be references...
@@ -719,7 +700,7 @@ public final class XMLReader implements LoadableDictionary {
      * The parsed network is put into the <i>networks</i> list.
      */
     private void parseNetworkDefinition(Element networkNode) {
-        NetworkModel model = NetworkModel.fromXML(this, networkNode);
+        NetworkModel model = rubetteReader.readNetworkModel(this, networkNode);
         if (model != null) {
             networks.add(model);
         }
@@ -736,8 +717,7 @@ public final class XMLReader implements LoadableDictionary {
             setError("Rubette must have a name");
         }
         else {
-            MacroRubette rubette = new MacroRubette();
-            MacroRubette nrubette = (MacroRubette)rubette.fromXML(this, rubetteNode);
+            MacroRubette nrubette = (MacroRubette) rubetteReader.fromXML(rubetteNode, MacroRubette.class, this);
             nrubette.setName(name);
             rubettes.add(nrubette);
         }
@@ -889,11 +869,11 @@ public final class XMLReader implements LoadableDictionary {
     }
    
 	public static List<Integer> getIntListAttribute(Element element, String attr) {
-	   	List<Integer> intList = new ArrayList<Integer>();
+	   	List<Integer> intList = new ArrayList<>();
 	   	String listString = XMLReader.getStringAttribute(element, attr);
 	   	listString = listString.substring(1, listString.length()-1);
 	   	listString = listString.replaceAll(" ", "");
-		List<String> stringList = new ArrayList<String>(Arrays.asList(listString.split(",")));
+		List<String> stringList = new ArrayList<>(Arrays.asList(listString.split(",")));
 		for (String currentIntString : stringList) {
 	   		if (currentIntString.length() > 0) {
 				intList.add(Integer.parseInt(currentIntString));
@@ -912,11 +892,11 @@ public final class XMLReader implements LoadableDictionary {
     }
    
 	public static List<Double> getDoubleListAttribute(Element element, String attr) {
-	   	List<Double> doubleList = new ArrayList<Double>();
+	   	List<Double> doubleList = new ArrayList<>();
 	   	String listString = XMLReader.getStringAttribute(element, attr);
 	   	listString = listString.substring(1, listString.length()-1);
 	   	listString = listString.replaceAll(" ", "");
-		List<String> stringList = new ArrayList<String>(Arrays.asList(listString.split(",")));
+		List<String> stringList = new ArrayList<>(Arrays.asList(listString.split(",")));
 	   	for (String currentDoubleString : stringList) {
 	   		if (currentDoubleString.length() > 0) {
 	   			doubleList.add(Double.parseDouble(currentDoubleString));
@@ -924,54 +904,6 @@ public final class XMLReader implements LoadableDictionary {
 		}
 	    return doubleList;
 	}
-    
-    /**
-     * Displays the modules that have been parsed.
-     */
-    public void printModules() {
-        for (Map.Entry<String,Module> entry : modules.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); 
-        }
-    }
-    
-    
-    /**
-     * Displays the module elements that have been parsed.
-     */
-    public void printElements() {
-        for (Map.Entry<String,ModuleElement> entry : elements.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); 
-        }
-    }
-    
-    
-    /**
-     * Displays the forms that have been parsed.
-     */
-    public void printForms() {
-        for (Map.Entry<String,Form> entry : forms.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); 
-        }
-    }
-    
-    
-    /**
-     * Displays the denotators that have been parsed.
-     */
-    public void printDenotators() {
-        for (Map.Entry<String,Denotator> entry : denotators.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue()); 
-        }
-    }
-
-    
-    /**
-     * Returns the parsed module elements as a map from names to elements. 
-     */
-    public Map<String,ModuleElement> getModuleElements() {
-        return elements;
-    }
-    
 
     /**
      * Returns the names of all parsed module elements.
@@ -1020,15 +952,6 @@ public final class XMLReader implements LoadableDictionary {
         return module;
     }
     
-
-    /**
-     * Returns the parsed module morphisms as a map from names to morphisms. 
-     */
-    public Map<String,ModuleMorphism> getModuleMorphisms() {
-        return moduleMorphisms;
-    }
-    
-    
     /**
      * Returns the names of all parsed module morphisms.
      */
@@ -1056,7 +979,7 @@ public final class XMLReader implements LoadableDictionary {
      * Returns a list of all denotators parsed from XML.
      */
     public List<Denotator> getDenotators() {
-        return new LinkedList<Denotator>(denotators.values());
+        return new LinkedList<>(denotators.values());
     }
 
     
@@ -1079,7 +1002,7 @@ public final class XMLReader implements LoadableDictionary {
      * Returns a list of all forms parsed from XML.
      */
     public List<Form> getForms() {
-        return new LinkedList<Form>(forms.values());
+        return new LinkedList<>(forms.values());
     }
     
     
@@ -1129,17 +1052,7 @@ public final class XMLReader implements LoadableDictionary {
     public void addFormToBeResolved(Form f) {
         formsToBeResolved.add(f);
     }
-    
-    
-    /**
-     * Adds the given denotator to the list of denotators
-     * that have to be resolved later.
-     */
-    public void addDenoToBeResolved(Denotator d) {
-        denosToBeResolved.add(d);
-    }
-    
-    
+
     /**
      * Returns an absolute path based on the specified (relative) path.
      */
@@ -1170,7 +1083,7 @@ public final class XMLReader implements LoadableDictionary {
                 success = false;
             }
         }
-        formsToBeResolved = new LinkedList<Form>();
+        formsToBeResolved = new LinkedList<>();
         return success;
     }
 
@@ -1183,7 +1096,7 @@ public final class XMLReader implements LoadableDictionary {
                 success = false;
             }
         }
-        denosToBeResolved = new LinkedList<Denotator>();
+        denosToBeResolved = new LinkedList<>();
         return success;
     }
     
@@ -1219,6 +1132,6 @@ public final class XMLReader implements LoadableDictionary {
     private LinkedList<Denotator> denosToBeResolved;
     private Repository            repository;
 
-    private Reader reader = null;
+    private Reader reader;
     private File   file   = null;
 }

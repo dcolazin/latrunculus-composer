@@ -19,35 +19,26 @@
 
 package org.rubato.rubettes.builtin;
 
-import java.awt.BorderLayout;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.*;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Sets;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OPERATION;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OP_ATTR;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class SetRubette extends AbstractRubette {
@@ -55,6 +46,12 @@ public class SetRubette extends AbstractRubette {
     public SetRubette() {
         setInCount(2);
         setOutCount(1);
+    }
+
+    public SetRubette(int inCount, int op) {
+        this();
+        setInCount(inCount);
+        this.op = op;
     }
     
 
@@ -411,28 +408,6 @@ public class SetRubette extends AbstractRubette {
         return "Output denotator"; 
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        // read operation type
-        Element child = XMLReader.getChild(element, OPERATION);
-        if (child == null) {
-            return null;
-        }
-        int op0 = XMLReader.getIntAttribute(child, OP_ATTR, 0, opNames.length-1, 0);
-
-        // read number of inputs
-        child = XMLReader.getChild(element, INPUTS);
-        if (child == null) {
-            return null;
-        }
-        int n = XMLReader.getIntAttribute(child, NUMBER_ATTR, 1, 8, 2);
-        
-        SetRubette newRubette = new SetRubette();
-        newRubette.op = op0;
-        newRubette.setInCount(n);
-        return newRubette;
-    }
-
-    
     private JPanel            properties = null;
     private JComboBox         opSelect = null;
     private JConnectorSliders inSlider = null;
@@ -460,6 +435,8 @@ public class SetRubette extends AbstractRubette {
             BuiltinMessages.getString("SetRubette.unionall"),
             BuiltinMessages.getString("SetRubette.interall")
     };
+
+    public static final int SET_OP_LENGTH = opNames.length;
 
     static {
        icon = Icons.loadIcon(SetRubette.class, "/images/rubettes/builtin/seticon.png"); 

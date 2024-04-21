@@ -19,35 +19,26 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SELECTED;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.*;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static org.rubato.composer.Utilities.makeTitledBorder;
 
 
 public class SplitRubette
@@ -231,33 +222,6 @@ public class SplitRubette
             formListModel.setForm((LimitForm)formSelector.getForm());
         }
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, FORM);
-        Form f = reader.parseAndResolveForm(child);
-        SplitRubette newRubette = new SplitRubette();
-        if (f instanceof LimitForm) {
-            LimitForm limitForm = (LimitForm)f;
-            int formCount = limitForm.getFormCount();
-            ArrayList<Integer> selected = new ArrayList<>();
-            child = XMLReader.getNextSibling(child, SELECTED);
-            while (child != null) {
-                int i = XMLReader.getIntAttribute(child, VALUE_ATTR, 0, Integer.MAX_VALUE, 0);
-                if (i < formCount && !selected.contains(i)) {
-                    selected.add(i);
-                }
-                child = XMLReader.getNextSibling(child, SELECTED);
-            }
-            Collections.sort(selected);
-            int[] sel = new int[selected.size()];
-            for (int i = 0; i < sel.length; i++) {
-                sel[i] = selected.get(i);
-            }
-            newRubette.set(limitForm, sel);
-        }
-        return newRubette;
-    }
-
     
     private JPanel        properties = null;
     private JSelectForm   formSelector = null;

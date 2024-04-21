@@ -22,7 +22,7 @@ package org.rubato.composer.network;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-class NetworkMessages {
+public class NetworkMessages {
     
     private static final String BUNDLE_NAME = "bundles/composer/network/messages"; 
 

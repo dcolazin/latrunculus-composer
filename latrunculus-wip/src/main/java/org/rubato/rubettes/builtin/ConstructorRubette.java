@@ -19,36 +19,29 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-
-import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ColimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 /**
@@ -329,15 +322,6 @@ public class ConstructorRubette extends AbstractRubette {
     public Form getForm() {
         return form;        
     }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, FORM);
-        Form f = reader.parseAndResolveForm(child);
-        ConstructorRubette newRubette = new ConstructorRubette();
-        newRubette.setForm(f);
-        return newRubette;
-    }
-
     
     private JPanel      properties = null;
     private JSelectForm formSelector = null;

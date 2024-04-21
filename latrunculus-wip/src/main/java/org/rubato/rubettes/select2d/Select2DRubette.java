@@ -19,34 +19,32 @@
 
 package org.rubato.rubettes.select2d;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SELECTION_PANEL;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Select2DRubette extends AbstractRubette {
 
     public Select2DRubette() {
         setInCount(1);
         setOutCount(2);
+    }
+
+    public Select2DRubette(Form form, ArrayList<Select2DPanel> selections) {
+        this();
+        this.form = form;
+        this.selections = selections;
     }
 
     
@@ -232,41 +230,6 @@ public class Select2DRubette extends AbstractRubette {
         }
         selections.add(selection);
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, FORM);
-        if (child == null) {
-            // no form
-            Select2DRubette rubette = new Select2DRubette();
-            return rubette;
-        }
-        
-        // parse form
-        Form f = reader.parseAndResolveForm(child);
-        if (f == null) {
-            // invalid form
-            return null;
-        }
-        
-        // parse selection panels
-        child = XMLReader.getNextSibling(child, SELECTION_PANEL);
-        ArrayList<Select2DPanel> selectionPanels = new ArrayList<Select2DPanel>();
-        while (child != null) {
-            Select2DPanel panel = Select2DPanel.fromXML(reader, child, f);
-            if (panel != null) {
-                selectionPanels.add(panel);
-            }
-            child = XMLReader.getNextSibling(child, SELECTION_PANEL);
-        }
-        
-        Select2DRubette rubette = new Select2DRubette();
-        rubette.form = f;
-        rubette.selections = selectionPanels;
-        rubette.getProperties();
-        
-        return rubette;
-    }
-    
 
     // properties
     private Form                     form = null;

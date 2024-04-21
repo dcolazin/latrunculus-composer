@@ -19,31 +19,21 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.rubato.composer.Utilities.getJDialog;
-import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.COUNT_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LABEL;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LABELS;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
-
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
+import org.rubato.composer.components.JConnectorSliders;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+
+import static org.rubato.composer.Utilities.getJDialog;
+import static org.rubato.composer.Utilities.makeTitledBorder;
 
 public class MacroInputRubette
         extends AbstractRubette
@@ -53,6 +43,13 @@ public class MacroInputRubette
         setInCount(0);
         setOutCount(1);
         labels = new String[1];
+    }
+
+    public MacroInputRubette(int outCount, String[] labels) {
+        this();
+        this.setOutCount(outCount);
+        this.values = new Denotator[outCount];
+        this.labels = labels;
     }
     
     
@@ -198,25 +195,6 @@ public class MacroInputRubette
             }
         }
     }
-    
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, LABELS);
-        int outCount = XMLReader.getIntAttribute(child, COUNT_ATTR, 1, 8, 1);
-        String[] lbls = new String[outCount];
-        child = XMLReader.getChild(child, LABEL);
-        int i = 0;
-        while (child != null) {
-            lbls[i] = child.getAttribute(NAME_ATTR);
-            i++;
-            child = XMLReader.getNextSibling(child, LABEL);
-        }
-        MacroInputRubette rubette = new MacroInputRubette();
-        rubette.setOutCount(outCount);
-        rubette.values = new Denotator[outCount];
-        rubette.labels = lbls;
-        return rubette;
-    }
-
     
     private JPanel            properties = null;
     private JConnectorSliders outSlider  = null;

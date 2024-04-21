@@ -19,25 +19,18 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NAME;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
-
-import java.awt.BorderLayout;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 
 public class RegisterRubette extends AbstractRubette {
@@ -164,18 +157,6 @@ public class RegisterRubette extends AbstractRubette {
         return "Registered output denotator";
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        RegisterRubette newRubette = new RegisterRubette();
-        String name = null;
-        Element child = XMLReader.getChild(element, NAME);
-        if (child != null) {
-            name = child.getAttribute(VALUE_ATTR);
-        }
-        newRubette.setDenotatorName(name);
-        return newRubette;
-    }
-
-    
     private JPanel     properties = null;
     private JTextField nameField = null;
     private String     denotatorName = null; // either null or of length > 0

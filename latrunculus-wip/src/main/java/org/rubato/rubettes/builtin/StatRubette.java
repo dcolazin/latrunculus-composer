@@ -20,25 +20,20 @@
 package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Select;
-import org.vetronauta.latrunculus.core.exception.DomainException;
+import org.vetronauta.latrunculus.core.math.element.generic.FreeElement;
+import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.element.impl.Real;
-import org.vetronauta.latrunculus.core.math.element.generic.FreeElement;
 import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
-import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.module.generic.Ring;
-import org.vetronauta.latrunculus.core.math.element.generic.RingElement;
 import org.vetronauta.latrunculus.core.math.module.impl.CRing;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
@@ -47,23 +42,18 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLConstants;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OPERATION;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OP_ATTR;
 
 public class StatRubette extends AbstractRubette {
 
@@ -71,7 +61,12 @@ public class StatRubette extends AbstractRubette {
         setInCount(1);
         setOutCount(1);
     }
-    
+
+    public StatRubette(Form form, int op) {
+        this();
+        this.form = form;
+        this.op = op;
+    }
 
     public void run(RunInfo runInfo) {
         Denotator input = getInput(0);
@@ -372,27 +367,6 @@ public class StatRubette extends AbstractRubette {
         return rubette;
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        // read operation type
-        Element child = XMLReader.getChild(element, OPERATION);
-        if (child == null) {
-            return null;
-        }
-        int op0 = XMLReader.getIntAttribute(child, OP_ATTR, 0, opNames.length-1, 0);
-        
-        Form form0 = null;
-        child = XMLReader.getNextSibling(child, XMLConstants.FORM);
-        if (child != null) {
-            form0 = reader.parseAndResolveForm(child);
-        }
-        
-        StatRubette newRubette = new StatRubette();
-        newRubette.op = op0;
-        newRubette.form = form0;
-        return newRubette;
-    }
-
-
     private JPanel      properties = null;
     private JSelectForm selectForm = null;
     private JComboBox   opSelect   = null;
@@ -420,6 +394,8 @@ public class StatRubette extends AbstractRubette {
         "Sum",
         "Product"
     };
+
+    public static final int STAT_OP_LENGTH = opNames.length;
     
     static {
         icon = Icons.loadIcon(StatRubette.class, "/images/rubettes/builtin/staticon.png");

@@ -20,12 +20,6 @@
 package org.rubato.rubettes.wallpaper;
 
 import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
@@ -33,42 +27,24 @@ import org.rubato.rubettes.bigbang.model.denotators.TransformationPaths;
 import org.rubato.rubettes.util.ArbitraryDenotatorMapper;
 import org.rubato.rubettes.util.DenotatorPath;
 import org.rubato.rubettes.util.SimpleFormFinder;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
+import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.ELEMENT_PATH;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INT;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.MORPHISM;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.R_FROM;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.R_TO;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 /**
  * A rubette that creates a wallpaper using an input power denotator and a number of morphisms.
@@ -328,7 +304,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
     /*
      * sets this input form and updates properties window and internal variables
      */
-    protected void setInputForm(PowerForm form) {
+	public void setInputForm(PowerForm form) {
 		this.inputForm = form;
 		if (this.selectForm != null) {
 			this.selectForm.setForm(form);
@@ -390,7 +366,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
     /*
      * adds a morphism to this morphisms table. method used by fromXML() and and the test methods.
      */
-    protected void addMorphism(ModuleMorphism morphism, int rangeFrom, int rangeTo, List<List<Integer>> coordinates) {
+	public void addMorphism(ModuleMorphism morphism, int rangeFrom, int rangeTo, List<List<Integer>> coordinates) {
     	this.morphismsTable.addMorphism(morphism, rangeFrom, rangeTo, coordinates);
     	this.morphismsTable.applyChanges();
     }
@@ -463,37 +439,6 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
     
     public String getOutTip(int i) {
         return "Output power denotator";
-    }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-		WallpaperRubette loadedRubette = new WallpaperRubette();
-        loadedRubette.init();
-		Element child = XMLReader.getChild(element, FORM);
-		loadedRubette.setInputForm((PowerForm)reader.parseAndResolveForm(child));
-		
-		child = XMLReader.getNextSibling(child, MORPHISM);
-		while (child != null) {
-			int currentFrom = XMLReader.getIntAttribute(child, R_FROM, 0);
-			int currentTo = XMLReader.getIntAttribute(child, R_TO, 1);
-			Element grandChild = XMLReader.getChild(child, MODULE_MORPHISM);
-			ModuleMorphism currentMorphism = reader.parseModuleMorphism(grandChild);
-			List<List<Integer>> currentElementPaths = new ArrayList<List<Integer>>();
-			grandChild = XMLReader.getNextSibling(grandChild, ELEMENT_PATH);
-			while (grandChild != null) {
-				List<Integer> currentElementPath = new ArrayList<Integer>();
-				Element greatGrandChild = XMLReader.getChild(grandChild, INT);
-				while (greatGrandChild != null) {
-					int currentInt = XMLReader.getIntAttribute(greatGrandChild, VALUE_ATTR, 0);
-					currentElementPath.add(currentInt);
-					greatGrandChild = XMLReader.getNextSibling(greatGrandChild, INT);
-				}
-				currentElementPaths.add(currentElementPath);
-				grandChild = XMLReader.getNextSibling(grandChild, ELEMENT_PATH);
-			}
-			loadedRubette.addMorphism(currentMorphism, currentFrom, currentTo, currentElementPaths);
-			child = XMLReader.getNextSibling(child, MORPHISM);
-		}
-		return loadedRubette;
     }
 
 }

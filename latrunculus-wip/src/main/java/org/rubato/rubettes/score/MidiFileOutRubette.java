@@ -19,27 +19,26 @@
 
 package org.rubato.rubettes.score;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import org.vetronauta.latrunculus.server.midi.MidiPlayer;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
-
-import org.vetronauta.latrunculus.server.midi.MidiPlayer;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class MidiFileOutRubette extends AbstractRubette {
 
@@ -182,20 +181,6 @@ public class MidiFileOutRubette extends AbstractRubette {
     public String getInTip(int i) {
         return "Denotator of form \"Score\"";
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, "File");
-        if (child != null) {
-            String fileName = XMLReader.getStringAttribute(child, "name");
-            MidiFileOutRubette newRubette = new MidiFileOutRubette();
-            newRubette.setMidiFile(reader.toAbsolutePath(fileName));            
-            return newRubette;
-        }
-        else {
-            return null;
-        }
-    }
-
     
     public String getMidiFileName() {
         String fileName = "";
@@ -220,7 +205,7 @@ public class MidiFileOutRubette extends AbstractRubette {
     }
     
     
-    private void setMidiFile(String fileName) {
+    public void setMidiFile(String fileName) {
         midiFile = new File(fileName);
     }
     

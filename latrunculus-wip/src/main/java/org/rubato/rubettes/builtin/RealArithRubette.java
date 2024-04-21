@@ -19,39 +19,31 @@
 
 package org.rubato.rubettes.builtin;
 
-import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPRESSION;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPR_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.RES_ATTR;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import lombok.Setter;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
-import org.vetronauta.latrunculus.core.util.TextUtils;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
+import org.vetronauta.latrunculus.core.repository.Repository;
+import org.vetronauta.latrunculus.core.util.TextUtils;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+
+import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
 
 
 public class RealArithRubette extends AbstractRubette {
@@ -60,9 +52,7 @@ public class RealArithRubette extends AbstractRubette {
         setInCount(1);
         setOutCount(1);
         values = new double[getInCount()];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = 0.0;
-        }
+        Arrays.fill(values, 0.0);
     }
 
     
@@ -246,23 +236,7 @@ public class RealArithRubette extends AbstractRubette {
         return icon;
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        RealArithRubette rubette = new RealArithRubette();
-        Element child = XMLReader.getChild(element, INPUTS);
-        if (child != null) {
-            int n = XMLReader.getIntAttribute(child, NUMBER_ATTR, 1);
-            rubette.setInCount(n);
-            child = XMLReader.getNextSibling(child, EXPRESSION);
-            if (child != null) {
-                rubette.expressionString = XMLReader.getStringAttribute(child, EXPR_ATTR);
-                rubette.isResultReal = (XMLReader.getIntAttribute(child, RES_ATTR, 1) == 1);
-                rubette.compile(rubette.expressionString, n);
-            }
-        }
-        return rubette;
-    }
-    
-    private boolean compile(String expr, int nrArgs) {
+    public boolean compile(String expr, int nrArgs) {
         if (compiler == null) {
             compiler = new ArithCompiler();
         }
@@ -279,13 +253,13 @@ public class RealArithRubette extends AbstractRubette {
     private JPanel            properties = null;
     private JTextArea         exprTextArea = null;
     private JLabel            infoLabel = null;
-    @Getter
+    @Getter @Setter
     private String            expressionString = ""; 
     private double[]          values = null;
     private JConnectorSliders inSlider = null;
     private ArithCompiler     compiler = null;
     private ArithVM           vm = null;
-    @Getter
+    @Getter @Setter
     protected boolean         isResultReal = true;      
     
     private static final SimpleForm realForm; 

@@ -19,26 +19,18 @@
 
 package org.rubato.rubettes.builtin;
 
-import java.awt.BorderLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class MuxRubette extends AbstractRubette {
@@ -153,20 +145,6 @@ public class MuxRubette extends AbstractRubette {
     public String getOutTip(int i) {
         return "Output denotator"; 
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, INPUTS);
-        if (child != null) {
-            int n = XMLReader.getIntAttribute(child, NUMBER_ATTR, 2, 8, 2);
-            MuxRubette r = new MuxRubette();
-            r.setInCount(n);
-            return r;
-        }
-        else {
-            return null;
-        }
-    }
-
     
     private JPanel properties = null;
     private JConnectorSliders inSlider = null;

@@ -21,11 +21,13 @@ package org.rubato.rubettes.score;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.rubato.rubettes.alteration.AlterationRubette;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.rubettes.util.ScaleMap;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.plugin.xml.reader.DefaultRubetteXmlReader;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -108,7 +110,7 @@ class ScaleRubetteTest {
 			writer.close();
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			reader.parse();
-			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
+			this.rubette = (ScaleRubette) new DefaultRubetteXmlReader().fromXML(element, ScaleRubette.class, reader);
 			assertEquals("dorian", this.rubette.getInfo());
 
 			testFile.createNewFile();
@@ -123,7 +125,7 @@ class ScaleRubetteTest {
 			writer.close();
 			reader.parse();
 			element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
-			this.rubette = (ScaleRubette) this.rubette.fromXML(reader, element);
+			this.rubette = (ScaleRubette) new DefaultRubetteXmlReader().fromXML(element, ScaleRubette.class, reader);
 			assertEquals("custom", this.rubette.getInfo());
 		} finally {
 			testFile.delete();

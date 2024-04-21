@@ -19,31 +19,23 @@
 
 package org.rubato.rubettes.builtin;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.*;
-
 import lombok.Getter;
-import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import lombok.Setter;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPRESSION;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPR_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -191,26 +183,11 @@ public final class BooleanRubette extends AbstractRubette {
     public ImageIcon getIcon() {
         return icon;
     }
-
-    public Rubette fromXML(XMLReader reader, Element element) {
-        BooleanRubette rubette = new BooleanRubette();
-        Element child = XMLReader.getChild(element, INPUTS);
-        if (child != null) {
-            int n = XMLReader.getIntAttribute(child, NUMBER_ATTR, 1);
-            rubette.setInCount(n);
-            child = XMLReader.getNextSibling(child, EXPRESSION);
-            if (child != null) {
-                rubette.expressionString = XMLReader.getStringAttribute(child, EXPR_ATTR);
-                rubette.expression.parse(rubette.expressionString, getInCount());
-            }
-        }
-        return rubette;
-    }
-    
     
     private JPanel       properties = null;
     private JTextArea    exprTextArea = null;
     private JLabel       infoLabel = null;
+    @Getter @Setter
     private String       expressionString = "";
     @Getter
     private Expression   expression;
@@ -218,14 +195,14 @@ public final class BooleanRubette extends AbstractRubette {
     private JConnectorSliders inSlider = null;
     
     
-    protected final class Expression {
+    public final class Expression {
         
         public boolean parse(String expr, int inputCount) {
             ins = inputCount;
             str = expr.trim();
             pos = 0;
             ch = nextChar();
-            newCode = new ArrayList<Integer>();
+            newCode = new ArrayList<>();
             boolean ok = parseExpr();
             if (ok) {
                 code = new int[newCode.size()];

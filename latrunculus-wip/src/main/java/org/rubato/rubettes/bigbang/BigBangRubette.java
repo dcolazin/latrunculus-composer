@@ -1,21 +1,17 @@
 package org.rubato.rubettes.bigbang;
 
-import javax.swing.JComponent;
-
-import lombok.Getter;
-import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
-import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.view.model.BigBangSwingView;
 import org.rubato.rubettes.bigbang.view.model.MTBigBangView;
 import org.rubato.rubettes.util.CoolFormRegistrant;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
+
+import javax.swing.*;
 
 public class BigBangRubette extends AbstractRubette {
 	
@@ -33,7 +29,7 @@ public class BigBangRubette extends AbstractRubette {
 		this(null);
 	}
 	
-	private BigBangRubette(BigBangModel model) {
+	public BigBangRubette(BigBangModel model) {
 		new CoolFormRegistrant().registerAllTheCoolStuff();
 		this.setInCount(1);
         this.setOutCount(1);
@@ -99,14 +95,6 @@ public class BigBangRubette extends AbstractRubette {
 	
 	public JComponent getView() {
 		return this.view.getPanel();
-	}
-
-	@Override
-	public Rubette fromXML(XMLReader reader, Element element) {
-		new CoolFormRegistrant().registerAllTheCoolStuff();
-		BigBangModel loadedModel = BigBangModel.fromXML(reader, element);
-		return new BigBangRubette(loadedModel);
-		//return new BigBangRubette(new BigBangModel());
 	}
 
 }

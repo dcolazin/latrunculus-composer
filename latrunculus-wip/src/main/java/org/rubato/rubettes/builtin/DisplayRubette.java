@@ -20,43 +20,26 @@
 package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
+import lombok.Setter;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.server.display.DenotatorDisplay;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import java.awt.BorderLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.XML;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 
 /**
@@ -187,18 +170,6 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
         return BuiltinMessages.getString("DisplayRubette.intip");
     }
 
-    public Rubette fromXML(XMLReader reader, Element element) {
-        Element child = XMLReader.getChild(element, XML);
-        boolean xmlValue = false;
-        if (child != null) {
-            String val = child.getAttribute(VALUE_ATTR);
-            xmlValue = val.equals(TRUE_VALUE);
-        }
-        DisplayRubette newRubette = new DisplayRubette();
-        newRubette.isXML = xmlValue;
-        return newRubette;
-    }
-
 
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -213,7 +184,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     private JRadioButton textButton;
     private JRadioButton xmlButton;
 
-    @Getter
+    @Getter @Setter
     private boolean isXML = false;
     
     private static final ImageIcon icon;

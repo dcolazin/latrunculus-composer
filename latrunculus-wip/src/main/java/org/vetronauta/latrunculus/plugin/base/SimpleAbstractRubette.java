@@ -19,14 +19,12 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
-import javax.swing.JComponent;
-
+import lombok.Setter;
 import org.vetronauta.latrunculus.client.properties.JRubettePropertiesDialog;
 import org.vetronauta.latrunculus.client.properties.RubetteProperties;
 import org.vetronauta.latrunculus.client.properties.RubetteProperty;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
 
 public abstract class SimpleAbstractRubette extends AbstractRubette {
 
@@ -93,20 +91,8 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
         rubette.properties = properties.deepCopy();
         return rubette;
     }
-    
-    
-    public final Rubette fromXML(XMLReader reader, Element element) {
-        RubetteProperties newProp = null;
-        if (properties != null) {
-             newProp = properties.fromXML(reader, element);
-        }
-        SimpleAbstractRubette rubette = (SimpleAbstractRubette)newInstance();
-        rubette.properties = newProp;
-        //had to add this, Gerard's code was buggy
-        rubette.applyProperties();
-        return rubette;
-    }
 
+    @Setter
     private RubetteProperties properties = null;
     private JRubettePropertiesDialog dialog = null;
 }

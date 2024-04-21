@@ -160,17 +160,6 @@ public abstract class AbstractRubette implements Rubette {
         return output[i];
     }
     
-    
-    /**
-     * Returns the RubetteModel, that this Rubette is attached to.
-     * This may be useful to retrieve information about the
-     * environment.
-     */
-    public final RubetteModel getModel() {
-        return model;
-    }
-    
-    
     /**
      * Adds an error string to the current error state.
      * If an error occurs in the run() method, this method
@@ -187,7 +176,7 @@ public abstract class AbstractRubette implements Rubette {
      */
     public final void addError(Exception e) {
         String s = e.getMessage().trim();
-        if (!s.substring(s.length()-1).equals(".")) { 
+        if (!s.endsWith(".")) {
             s += "."; 
         }
         errors.add(s);
