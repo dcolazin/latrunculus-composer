@@ -36,7 +36,7 @@ import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.dialogs.JModuleDialog;
 import org.rubato.composer.dialogs.JProgress;
 import org.rubato.composer.dialogs.denotators.JDenotatorDialog;

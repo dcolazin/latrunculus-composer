@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Gérard Milmeister
+ * Copyright (C) 2005 Gérard Milmeister
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of version 2 of the GNU General Public
@@ -17,12 +17,20 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.plugin.base;
 
-public interface RubatoConstants {
+import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.core.util.Stoppable;
 
-    // Rubette groups
-    public final static String OTHER_GROUP = "Other";
-    public final static String CORE_GROUP  = "Core";
-    public final static String MACRO_GROUP = "Macro";
+/**
+ * A RunInfo provides information about the current running network.
+ * 
+ * @author Gérard Milmeister
+ */
+public interface RunInfo extends Stoppable {
+    
+    /**
+     * Adds a progress message for the specified rubette.
+     */
+    void addMessage(RubetteModel rubette, String msg);
 }

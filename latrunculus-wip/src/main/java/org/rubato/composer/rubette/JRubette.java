@@ -29,7 +29,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.JComposer;
 import org.rubato.composer.JRubetteList;
 import org.rubato.composer.components.JMenuTitleItem;

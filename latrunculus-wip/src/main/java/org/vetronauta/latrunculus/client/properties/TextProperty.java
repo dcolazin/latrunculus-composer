@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;

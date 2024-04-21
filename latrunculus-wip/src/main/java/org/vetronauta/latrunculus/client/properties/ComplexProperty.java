@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -29,88 +29,52 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public class StringProperty
-        extends RubetteProperty
-        implements ActionListener, CaretListener {
+public class ComplexProperty extends RubetteProperty implements ActionListener, CaretListener {
 
-    public StringProperty(String key, String name, String value, int min, int max) {
+    public ComplexProperty(String key, String name, Complex value) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
-        if (min > max) {
-            int t = min;
-            min = max;
-            max = t;
-        }
-        this.min = min;
-        this.max = max;
     }
     
-    
-    public StringProperty(String key, String name, String value, int min) {
-        this(key, name, value, min, Integer.MAX_VALUE);
-    }
-    
-    
-    public StringProperty(String key, String name, String value) {
-        this(key, name, value, 0);
-    }
-    
-    
-    public StringProperty(StringProperty prop) {
+    public ComplexProperty(ComplexProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
-        this.min = prop.min;
-        this.max = prop.max;
     }
-    
-    
+
     public Object getValue() {
         return value;
     }
     
     
     public void setValue(Object value) {
-        if (value instanceof String) {
-            setString((String)value);
+        if (value instanceof Complex) {
+            setComplex((Complex) value);
         }
     }
     
     
-    public String getString() {
+    public Complex getComplex() {
         return value; 
     }
     
     
-    public void setString(String value) {
-        if (value.length() < min) {
-            value = fillStringToLength(value, min);
-        }
-        else if (value.length() > max) {
-            value = value.substring(0, max);
-        }
+    public void setComplex(Complex value) {
         this.value = value;
         this.tmpValue = value;
     }
+    
 
-    
-    private String fillStringToLength(String val, int minLength) {
-        String res = val;
-        for (int i = val.length(); i < minLength; i++) {
-            res += "X"; 
-        }
-        return res;
-    }
-    
-    
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(value);
+        textField.setText(getComplex().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -131,27 +95,27 @@ public class StringProperty
     public void update() {
         textField.setBackground(bgColor);
         String s = textField.getText();
-        if (s.length() >= min && s.length() <= max) {
-            tmpValue = s;
-            return;
+        try {
+            tmpValue = ArithmeticParsingUtils.parseComplex(s);
         }
+        catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
     }
     
     
     public void apply() {
-        setString(tmpValue);
+        setComplex(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(value);
+        textField.setText(value.toString());
     }
     
     @Override
-    public StringProperty deepCopy() {
-        return new StringProperty(this);
+    public ComplexProperty deepCopy() {
+        return new ComplexProperty(this);
     }
     
     
@@ -161,21 +125,25 @@ public class StringProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        StringProperty property = deepCopy();
-        property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR));
+        ComplexProperty property = deepCopy();
+        String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
+        try {
+            property.setValue(ArithmeticParsingUtils.parseComplex(s));
+        }
+        catch (NumberFormatException e) {
+            property.setValue(value);
+        }
         return property;
     }
-
+    
     
         public String toString() {
-        return "StringProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
+        return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
     
-    private String value;
-    private int min;
-    private int max;
-    private String tmpValue;
+    private Complex value;
+    private Complex tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

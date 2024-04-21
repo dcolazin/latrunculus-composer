@@ -2,10 +2,10 @@ package org.rubato.rubettes.bigbang;
 
 import javax.swing.JComponent;
 
-import org.rubato.base.AbstractRubette;
-import org.rubato.base.RubatoConstants;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.rubato.rubettes.bigbang.controller.BigBangController;
 import org.rubato.rubettes.bigbang.model.BigBangModel;

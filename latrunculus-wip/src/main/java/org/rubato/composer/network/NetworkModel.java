@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.JComposer;
 import org.rubato.composer.RubetteManager;
 import org.rubato.composer.notes.NoteModel;

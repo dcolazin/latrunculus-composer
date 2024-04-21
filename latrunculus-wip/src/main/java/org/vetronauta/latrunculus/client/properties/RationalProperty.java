@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -29,20 +29,22 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public class DoubleProperty
+public class RationalProperty
         extends RubetteProperty
         implements ActionListener, CaretListener {
 
-    public DoubleProperty(String key, String name, double value, double min, double max) {
+    public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
-        if (min > max) {
-            double t = min;
+        if (min.compareTo(max) > 0) {
+            Rational t = min;
             min = max;
             max = t;
         }
@@ -51,12 +53,12 @@ public class DoubleProperty
     }
     
     
-    public DoubleProperty(String key, String name, double value) {
-        this(key, name, value, Double.MIN_VALUE, Double.MAX_VALUE);
+    public RationalProperty(String key, String name, Rational value) {
+        this(key, name, value, new Rational(Integer.MIN_VALUE), new Rational(Integer.MAX_VALUE));
     }
     
     
-    public DoubleProperty(DoubleProperty prop) {
+    public RationalProperty(RationalProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
@@ -71,22 +73,22 @@ public class DoubleProperty
     
     
     public void setValue(Object value) {
-        if (value instanceof Double) {
-            setDouble((Double)value);
+        if (value instanceof Rational) {
+            setRational((Rational)value);
         }
     }
     
     
-    public double getDouble() {
+    public Rational getRational() {
         return value; 
     }
     
     
-    public void setDouble(double value) {
-        if (value < min) {
+    public void setRational(Rational value) {
+        if (value.compareTo(min) < 0) {
             value = min;
         }
-        else if (value > max) {
+        else if (value.compareTo(max) > 0) {
             value = max;
         }
         this.value = value;
@@ -96,7 +98,7 @@ public class DoubleProperty
 
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(Double.toString(getDouble()));
+        textField.setText(getRational().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -118,30 +120,30 @@ public class DoubleProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            double d = Double.parseDouble(s);
-            if (d >= min && d <= max) {
+            Rational d = ArithmeticParsingUtils.parseRational(s);
+            if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
                 tmpValue = d;
                 return;
             }
         }
-        catch (NumberFormatException e) { /* do nothing */ }
+        catch (NumberFormatException e) {}
         textField.setBackground(prefs.getEntryErrorColor());
     }
     
     
     public void apply() {
-        setDouble(tmpValue);
+        setRational(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(Double.toString(value));
+        textField.setText(value.toString());
     }
     
     @Override
-    public DoubleProperty deepCopy() {
-        return new DoubleProperty(this);
+    public RationalProperty deepCopy() {
+        return new RationalProperty(this);
     }
     
     
@@ -151,21 +153,27 @@ public class DoubleProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        DoubleProperty property = deepCopy();
-        property.setValue(XMLReader.getRealAttribute(element, VALUE_ATTR, value));
+        RationalProperty property = deepCopy();
+        String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
+        try {
+            property.setValue(ArithmeticParsingUtils.parseRational(s));
+        }
+        catch (NumberFormatException e) {
+            property.setValue(value);
+        }
         return property;
     }
     
     
         public String toString() {
-        return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
+        return "RationalProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
     
-    private double value;
-    private double min;
-    private double max;
-    private double tmpValue;
+    private Rational value;
+    private Rational min;
+    private Rational max;
+    private Rational tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

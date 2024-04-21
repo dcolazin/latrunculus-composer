@@ -22,7 +22,7 @@ package org.rubato.composer;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.plugin.Plugin;
 import org.rubato.composer.plugin.PluginManager;
 import org.vetronauta.latrunculus.core.util.TextUtils;

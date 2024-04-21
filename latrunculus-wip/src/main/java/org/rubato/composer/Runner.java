@@ -24,10 +24,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.rubette.RubetteModel;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
 

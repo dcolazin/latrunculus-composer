@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

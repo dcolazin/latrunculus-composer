@@ -24,12 +24,12 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 
 
 public class RubetteTransferable implements Transferable {
 
-    public static final String rubetteType = DataFlavor.javaJVMLocalObjectMimeType+";class=org.rubato.base.AbstractRubette"; 
+    public static final String rubetteType = DataFlavor.javaJVMLocalObjectMimeType+";class=org.vetronauta.latrunculus.plugin.base.AbstractRubette";
     public static final DataFlavor rubetteFlavor;
 
     

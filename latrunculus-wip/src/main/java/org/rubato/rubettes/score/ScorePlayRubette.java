@@ -32,10 +32,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
 import org.vetronauta.latrunculus.server.midi.MidiPlayer;
-import org.rubato.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

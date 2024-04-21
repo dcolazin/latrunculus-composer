@@ -28,15 +28,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 import org.vetronauta.latrunculus.core.util.TextUtils;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
@@ -46,7 +48,7 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.w3c.dom.Element;
 
 
-public class RealArithRubette extends AbstractRubette {    
+public class RealArithRubette extends AbstractRubette {
     
     public RealArithRubette() {
         setInCount(1);

@@ -17,15 +17,20 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.plugin.base;
 
 import javax.swing.JComponent;
 
+import org.vetronauta.latrunculus.client.properties.JRubettePropertiesDialog;
+import org.vetronauta.latrunculus.client.properties.RubetteProperties;
+import org.vetronauta.latrunculus.client.properties.RubetteProperty;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public abstract class SimpleAbstractRubette extends AbstractRubette {
+
+    //TODO separate the server component from the client one
 
     /**
      * Returns the rubette properties of this rubette.

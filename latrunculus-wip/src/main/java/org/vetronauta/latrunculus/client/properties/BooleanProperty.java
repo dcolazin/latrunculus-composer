@@ -17,37 +17,39 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
+import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-import org.rubato.composer.components.JSelectFile;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public class FileProperty extends RubetteProperty implements ActionListener {
+public class BooleanProperty extends RubetteProperty implements ActionListener {
 	
-	private File value;
-	private File tmpValue;
+	private boolean value;
+	private boolean tmpValue;
 	private String[] allowedExtensions;
-	private JSelectFile fileSelector;
-	private boolean saving;
+	private JPanel propertyPanel;
+	private JCheckBox booleanCheckbox;
 	
     
-    public FileProperty(String key, String name, String[] allowedExtensions, boolean saving) {
+    public BooleanProperty(String key, String name, boolean value) {
         super(key, name);
-        this.allowedExtensions = allowedExtensions;
-        this.saving = saving;
+        this.value = value;
     }
     
     
-    public FileProperty(FileProperty property) {
+    public BooleanProperty(BooleanProperty property) {
         super(property);
         this.allowedExtensions = property.allowedExtensions;
         this.value = property.value;
@@ -55,74 +57,75 @@ public class FileProperty extends RubetteProperty implements ActionListener {
     
     
     public Object getValue() {
-        return value;
+        return this.value;
     }
     
     
     public void setValue(Object value) {
-        if (value instanceof File) {
-            this.setFile((File)value);
+        if (value instanceof Boolean) {
+            this.setBoolean((Boolean)value);
         }
     }
     
     
-    public File getFile() {
-        return value; 
+    public boolean getBoolean() {
+        return this.value; 
     }
     
     
-    public void setFile(File value) {
+    public void setBoolean(boolean value) {
         this.value = value;
         this.tmpValue = value;
     }
     
     
     public JComponent getJComponent() {
-        this.fileSelector = new JSelectFile(this.allowedExtensions, this.saving);
-        this.fileSelector.disableBorder();
-        this.fileSelector.addActionListener(this);
-        this.fileSelector.setFile(this.value);
-        return this.fileSelector;
+    	this.propertyPanel = new JPanel();
+    	this.propertyPanel.setLayout(new BorderLayout(2, 0));        
+        /*if (this.getName() != null) {
+        	this.propertyPanel.setBorder(makeTitledBorder(this.getName()));
+        } else {
+        	this.propertyPanel.setBorder(makeTitledBorder("Boolean:"));
+        }*/
+        
+        this.booleanCheckbox = new JCheckBox();
+        this.booleanCheckbox.setSelected(this.value);
+        this.booleanCheckbox.addActionListener(this);
+        this.propertyPanel.add(this.booleanCheckbox, BorderLayout.CENTER);
+        
+        return this.propertyPanel;
     }
 
     
     public void actionPerformed(ActionEvent e) {
-        this.tmpValue = this.fileSelector.getFile();
+        this.tmpValue = this.booleanCheckbox.isSelected();
     }
     
     
     public void apply() {
-        this.setFile(this.tmpValue);
+        this.setBoolean(this.tmpValue);
     }
     
     
     public void revert() {
         this.tmpValue = value;
-        this.fileSelector.setFile(this.value);
+        this.booleanCheckbox.setSelected(this.tmpValue);
     }
     
     @Override
-    public FileProperty deepCopy() {
-        return new FileProperty(this);
+    public BooleanProperty deepCopy() {
+        return new BooleanProperty(this);
     }
     
     
     public void toXML(XMLWriter writer) {
-    	String canonicalPath = "";
-    	if (this.value != null) {
-    		try {
-    			canonicalPath = this.value.getCanonicalPath(); 
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    	}
-        writer.empty(getKey(), VALUE_ATTR, writer.toRelativePath(canonicalPath));
+        writer.empty(getKey(), VALUE_ATTR, this.value?TRUE_VALUE:FALSE_VALUE);
     }
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        FileProperty property = this.deepCopy();
-        property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
+        BooleanProperty property = this.deepCopy();
+        property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE));
         return property;
     }
 

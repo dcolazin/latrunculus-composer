@@ -29,9 +29,10 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import org.rubato.base.*;
+import org.vetronauta.latrunculus.client.properties.BooleanProperty;
+import org.vetronauta.latrunculus.client.properties.FileProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -40,6 +41,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.rubato.rubettes.util.ObjectGenerator;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 
 /**
  * Imports any GIF, PNG, JPEG, BMP, or WBMP image file and converts it to an image denotator 

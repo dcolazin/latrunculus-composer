@@ -21,11 +21,13 @@ package org.rubato.rubettes.score;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.vetronauta.latrunculus.client.properties.DoubleProperty;
+import org.vetronauta.latrunculus.client.properties.IntegerProperty;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 
 /**
  * A rubette for generating random melodies according to specified criteria. The output denotators

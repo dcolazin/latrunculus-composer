@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
 public class PluginManager {

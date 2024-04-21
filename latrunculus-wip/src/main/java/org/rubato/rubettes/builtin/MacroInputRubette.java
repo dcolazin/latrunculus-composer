@@ -31,10 +31,10 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.rubato.base.AbstractRubette;
-import org.rubato.base.RubatoConstants;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

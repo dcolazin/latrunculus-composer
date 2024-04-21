@@ -20,12 +20,12 @@
 package org.rubato.rubettes.builtin.address;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.rubato.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JModuleElementEntry;
 import org.rubato.composer.components.JModuleElementList;
 import org.rubato.composer.components.JModuleEntry;

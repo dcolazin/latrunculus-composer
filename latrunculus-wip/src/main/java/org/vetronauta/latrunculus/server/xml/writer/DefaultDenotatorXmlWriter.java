@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.server.xml.writer;
 
 import lombok.RequiredArgsConstructor;
-import org.rubato.base.LatrunculusError;
+import org.vetronauta.latrunculus.server.exception.LatrunculusError;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

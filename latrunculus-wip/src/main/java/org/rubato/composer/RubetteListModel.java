@@ -28,7 +28,7 @@ import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.icons.Icons;
 
 class RubetteListModel extends DefaultListModel {

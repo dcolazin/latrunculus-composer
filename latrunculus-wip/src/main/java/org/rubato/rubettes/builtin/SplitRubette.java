@@ -31,9 +31,8 @@ import java.util.Collections;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -41,6 +40,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.LimitForm;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

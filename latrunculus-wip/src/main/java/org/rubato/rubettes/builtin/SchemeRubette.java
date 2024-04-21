@@ -30,9 +30,8 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -44,6 +43,9 @@ import org.vetronauta.latrunculus.core.scheme.expression.SDenotator;
 import org.vetronauta.latrunculus.core.scheme.expression.SExpr;
 import org.vetronauta.latrunculus.core.scheme.expression.SInteger;
 import org.vetronauta.latrunculus.core.scheme.expression.SType;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;

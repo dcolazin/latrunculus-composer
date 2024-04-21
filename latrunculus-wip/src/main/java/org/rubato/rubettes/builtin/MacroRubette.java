@@ -23,10 +23,10 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.NETWORK;
 
 import javax.swing.ImageIcon;
 
-import org.rubato.base.AbstractRubette;
-import org.rubato.base.RubatoConstants;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.rubette.RubetteModel;

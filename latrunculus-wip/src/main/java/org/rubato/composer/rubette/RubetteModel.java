@@ -30,7 +30,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 

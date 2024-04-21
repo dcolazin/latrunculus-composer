@@ -20,8 +20,8 @@
 package org.rubato.rubettes.morphing;
 
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.rubato.base.SimpleAbstractRubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.rubettes.alteration.Alterator;
 import org.rubato.rubettes.alteration.NearestNeighborFinder;
 import org.rubato.rubettes.util.MacroNoteGenerator;

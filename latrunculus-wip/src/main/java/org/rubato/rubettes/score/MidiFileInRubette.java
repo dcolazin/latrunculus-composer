@@ -20,9 +20,9 @@
 package org.rubato.rubettes.score;
 
 import org.vetronauta.latrunculus.server.midi.MidiReader;
-import org.rubato.base.AbstractRubette;
-import org.rubato.base.Rubette;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

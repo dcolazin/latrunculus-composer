@@ -21,13 +21,14 @@ package org.rubato.rubettes.score;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
+import org.vetronauta.latrunculus.client.properties.DoubleProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 
 /**
  * A rubette that quantizes a Score denotator according to the given time and pitch units. Rounds onset, pitch,

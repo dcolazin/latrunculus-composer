@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -29,22 +29,20 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.element.impl.Rational;
-import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
-public class RationalProperty
+public class StringProperty
         extends RubetteProperty
         implements ActionListener, CaretListener {
 
-    public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {
+    public StringProperty(String key, String name, String value, int min, int max) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
-        if (min.compareTo(max) > 0) {
-            Rational t = min;
+        if (min > max) {
+            int t = min;
             min = max;
             max = t;
         }
@@ -53,12 +51,17 @@ public class RationalProperty
     }
     
     
-    public RationalProperty(String key, String name, Rational value) {
-        this(key, name, value, new Rational(Integer.MIN_VALUE), new Rational(Integer.MAX_VALUE));
+    public StringProperty(String key, String name, String value, int min) {
+        this(key, name, value, min, Integer.MAX_VALUE);
     }
     
     
-    public RationalProperty(RationalProperty prop) {
+    public StringProperty(String key, String name, String value) {
+        this(key, name, value, 0);
+    }
+    
+    
+    public StringProperty(StringProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
@@ -73,32 +76,41 @@ public class RationalProperty
     
     
     public void setValue(Object value) {
-        if (value instanceof Rational) {
-            setRational((Rational)value);
+        if (value instanceof String) {
+            setString((String)value);
         }
     }
     
     
-    public Rational getRational() {
+    public String getString() {
         return value; 
     }
     
     
-    public void setRational(Rational value) {
-        if (value.compareTo(min) < 0) {
-            value = min;
+    public void setString(String value) {
+        if (value.length() < min) {
+            value = fillStringToLength(value, min);
         }
-        else if (value.compareTo(max) > 0) {
-            value = max;
+        else if (value.length() > max) {
+            value = value.substring(0, max);
         }
         this.value = value;
         this.tmpValue = value;
     }
-    
 
+    
+    private String fillStringToLength(String val, int minLength) {
+        String res = val;
+        for (int i = val.length(); i < minLength; i++) {
+            res += "X"; 
+        }
+        return res;
+    }
+    
+    
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(getRational().toString());
+        textField.setText(value);
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -119,31 +131,27 @@ public class RationalProperty
     public void update() {
         textField.setBackground(bgColor);
         String s = textField.getText();
-        try {
-            Rational d = ArithmeticParsingUtils.parseRational(s);
-            if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
-                tmpValue = d;
-                return;
-            }
+        if (s.length() >= min && s.length() <= max) {
+            tmpValue = s;
+            return;
         }
-        catch (NumberFormatException e) {}
         textField.setBackground(prefs.getEntryErrorColor());
     }
     
     
     public void apply() {
-        setRational(tmpValue);
+        setString(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(value.toString());
+        textField.setText(value);
     }
     
     @Override
-    public RationalProperty deepCopy() {
-        return new RationalProperty(this);
+    public StringProperty deepCopy() {
+        return new StringProperty(this);
     }
     
     
@@ -153,27 +161,21 @@ public class RationalProperty
     
     
     public RubetteProperty fromXML(XMLReader reader, Element element) {
-        RationalProperty property = deepCopy();
-        String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
-        try {
-            property.setValue(ArithmeticParsingUtils.parseRational(s));
-        }
-        catch (NumberFormatException e) {
-            property.setValue(value);
-        }
+        StringProperty property = deepCopy();
+        property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR));
         return property;
-    }
-    
-    
-        public String toString() {
-        return "RationalProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
     
-    private Rational value;
-    private Rational min;
-    private Rational max;
-    private Rational tmpValue;
+        public String toString() {
+        return "StringProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
+    }
+
+    
+    private String value;
+    private int min;
+    private int max;
+    private String tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

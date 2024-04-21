@@ -28,16 +28,17 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
+import org.vetronauta.latrunculus.client.properties.FileProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 
 /**
  * A rubette that converts a Score denotator to LilyPond code and writes it to a file

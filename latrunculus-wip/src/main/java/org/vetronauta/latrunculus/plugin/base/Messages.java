@@ -1,4 +1,4 @@
-package org.rubato.base;
+package org.vetronauta.latrunculus.plugin.base;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

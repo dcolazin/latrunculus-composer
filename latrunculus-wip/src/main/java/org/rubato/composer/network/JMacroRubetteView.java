@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.JComposer;
 import org.rubato.composer.components.JMenuTitleItem;
 import org.rubato.composer.rubette.JRubette;

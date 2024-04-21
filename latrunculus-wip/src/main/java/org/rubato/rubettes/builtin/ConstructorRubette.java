@@ -29,9 +29,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.rubato.base.*;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
@@ -45,6 +44,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
+import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
+import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
@@ -57,7 +59,7 @@ import org.w3c.dom.Element;
  * 
  * @author Gérard Milmeister
  */
-public class ConstructorRubette extends AbstractRubette {       
+public class ConstructorRubette extends AbstractRubette {
     
     public ConstructorRubette() {
         setInCount(0);

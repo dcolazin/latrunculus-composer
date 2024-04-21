@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.client.properties;
 
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.MathDefinition;

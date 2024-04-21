@@ -21,7 +21,7 @@ package org.vetronauta.latrunculus.server.xml;
 
 import org.vetronauta.latrunculus.core.repository.LoadableDictionary;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.core.math.MathDefinition;

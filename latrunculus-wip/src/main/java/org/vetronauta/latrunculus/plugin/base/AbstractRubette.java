@@ -17,9 +17,10 @@
  *
  */
 
-package org.rubato.base;
+package org.vetronauta.latrunculus.plugin.base;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vetronauta.latrunculus.server.exception.LatrunculusError;
 import org.rubato.composer.rubette.Link;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -58,7 +59,7 @@ public abstract class AbstractRubette implements Rubette {
      * Rubette list, if this Rubette is selected in the list.
      */
     public String getLongDescription() {
-        return Messages.getString("AbstractRubette.nodescription")+getName()+"."; 
+        return Messages.getString("AbstractRubette.nodescription")+getName()+".";
     }
 
     /**

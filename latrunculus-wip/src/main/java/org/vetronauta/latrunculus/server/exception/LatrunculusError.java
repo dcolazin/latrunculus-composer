@@ -1,4 +1,4 @@
-package org.rubato.base;
+package org.vetronauta.latrunculus.server.exception;
 
 public class LatrunculusError extends Error {
 

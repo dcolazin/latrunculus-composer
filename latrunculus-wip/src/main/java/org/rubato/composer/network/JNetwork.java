@@ -32,7 +32,7 @@ import java.util.LinkedList;
 
 import javax.swing.*;
 
-import org.rubato.base.Rubette;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.*;
 import org.rubato.composer.components.JMenuTitleItem;
 import org.rubato.composer.dialogs.JNewMacroRubetteDialog;

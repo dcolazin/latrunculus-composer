@@ -23,15 +23,17 @@ import java.util.Iterator;
 
 import javax.swing.*;
 
-import org.rubato.base.*;
-import org.rubato.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
+import org.vetronauta.latrunculus.client.properties.DoubleProperty;
+import org.vetronauta.latrunculus.client.properties.IntegerProperty;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
+import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 
 /**
  * A rubette for providing each note of an input Score denotators with new rhythmic quality,
