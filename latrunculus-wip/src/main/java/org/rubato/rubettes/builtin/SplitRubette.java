@@ -20,6 +20,7 @@
 package org.rubato.rubettes.builtin;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SELECTED;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
@@ -31,6 +32,7 @@ import java.util.Collections;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
@@ -229,22 +231,7 @@ public class SplitRubette
             formListModel.setForm((LimitForm)formSelector.getForm());
         }
     }
-    
-    
-    private static final String SELECTED = "Selected";
-    
-    public void toXML(XMLWriter writer) {
-        if (form != null) {
-            writer.writeFormRef(form);
-            if (selectedForms != null) {
-                for (int i = 0; i < selectedForms.length; i++) {
-                    writer.empty(SELECTED, VALUE_ATTR, selectedForms[i]);
-                }
-            }
-        }
-    }
-    
-    
+
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, FORM);
         Form f = reader.parseAndResolveForm(child);
@@ -252,7 +239,7 @@ public class SplitRubette
         if (f instanceof LimitForm) {
             LimitForm limitForm = (LimitForm)f;
             int formCount = limitForm.getFormCount();
-            ArrayList<Integer> selected = new ArrayList<Integer>();
+            ArrayList<Integer> selected = new ArrayList<>();
             child = XMLReader.getNextSibling(child, SELECTED);
             while (child != null) {
                 int i = XMLReader.getIntAttribute(child, VALUE_ATTR, 0, Integer.MAX_VALUE, 0);
@@ -276,6 +263,7 @@ public class SplitRubette
     private JSelectForm   formSelector = null;
     private JList         formList = null;
     private FormListModel formListModel = null;
+    @Getter
     private int[]         selectedForms = null;
     private LimitForm     form = null;
     private String        formName = " ";

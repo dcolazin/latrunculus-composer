@@ -183,12 +183,6 @@ public class MidiFileOutRubette extends AbstractRubette {
         return "Denotator of form \"Score\"";
     }
 
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty("File", "name", writer.toRelativePath(getMidiFileName()));
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, "File");
         if (child != null) {
@@ -203,7 +197,7 @@ public class MidiFileOutRubette extends AbstractRubette {
     }
 
     
-    private String getMidiFileName() {
+    public String getMidiFileName() {
         String fileName = "";
         if (midiFile != null) {
             try {

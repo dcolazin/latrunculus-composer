@@ -229,7 +229,7 @@ public class RubetteModel {
     
     
     public void toXML(XMLWriter writer) {
-        rubette.toXML(writer);
+        writer.writeRubette(rubette);
     }
 
     

@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.select2d;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SELECTION_PANEL;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.util.ArrayList;
@@ -219,7 +220,7 @@ public class Select2DRubette extends AbstractRubette {
     
     public ArrayList<Select2DPanel> getSelections() {
         if (selections == null) {
-            selections = new ArrayList<Select2DPanel>();
+            selections = new ArrayList<>();
         }
         return selections;
     }
@@ -227,26 +228,11 @@ public class Select2DRubette extends AbstractRubette {
     
     public void addSelection(Select2DPanel selection) {
         if (selections == null) {
-            selections = new ArrayList<Select2DPanel>();
+            selections = new ArrayList<>();
         }
         selections.add(selection);
     }
-    
-    
-    private static final String SELECTION_PANEL = "SelectionPanel"; 
-    
-    public void toXML(XMLWriter writer) {
-        if (form != null) {
-            writer.writeFormRef(form);
-            for (Select2DPanel panel : selections) {
-                writer.openBlock(SELECTION_PANEL);
-                panel.toXML(writer);
-                writer.closeBlock();
-            }
-        }
-    }
-    
-    
+
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, FORM);
         if (child == null) {

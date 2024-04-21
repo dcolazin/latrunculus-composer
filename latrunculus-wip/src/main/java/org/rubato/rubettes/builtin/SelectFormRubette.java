@@ -28,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JSelectForm;
@@ -166,14 +167,6 @@ public class SelectFormRubette extends AbstractRubette {
             return "Output denotator";
         }
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        if (outputForm != null) {
-            writer.writeFormRef(outputForm);
-        }
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Form form = null;
@@ -209,6 +202,7 @@ public class SelectFormRubette extends AbstractRubette {
     
     private JPanel properties = null;
     private JSelectForm selectForm = null;
+    @Getter
     private Form outputForm = null; 
     private Form baseForm = null;
     private static final ImageIcon icon = Icons.emptyIcon;

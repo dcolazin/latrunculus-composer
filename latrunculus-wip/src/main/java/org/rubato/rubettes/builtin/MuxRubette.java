@@ -35,8 +35,10 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
 
 
 public class MuxRubette extends AbstractRubette {
@@ -50,7 +52,7 @@ public class MuxRubette extends AbstractRubette {
     public void run(RunInfo runInfo) {
         int n = 0;
         Denotator d = getInput(0);
-        if (d != null && d instanceof SimpleDenotator) {
+        if (d instanceof SimpleDenotator) {
             SimpleDenotator sd = (SimpleDenotator)d;
             if (sd.getSimpleForm().getModule() == ZRing.ring) {
                 n = sd.getInteger();
@@ -152,15 +154,6 @@ public class MuxRubette extends AbstractRubette {
         return "Output denotator"; 
     }
 
-    
-    private static final String INPUTS      = "Inputs"; 
-    private static final String NUMBER_ATTR = "number"; 
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(INPUTS, NUMBER_ATTR, getInCount());
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, INPUTS);
         if (child != null) {

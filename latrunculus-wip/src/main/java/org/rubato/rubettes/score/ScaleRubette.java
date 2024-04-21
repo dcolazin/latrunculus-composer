@@ -31,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
@@ -45,6 +46,13 @@ import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INTERVAL;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_OF_NOTES;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PRESET;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.ROOT;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SCALE;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SEMITONES;
+
 /**
  * A rubette for generating preset and custom scales. The output is a Score denotator with
  * all scale notes with pitches between 0 and 127. Their onset is 0, their duration 1.
@@ -56,10 +64,14 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 	private final int MAX_NUMBER_OF_NOTES = 12;
 	private final int MIN_PITCH = 0;
 	private final int MAX_PITCH = 127;
-	
+
+	@Getter
 	private int numberOfNotes;
+	@Getter
 	private double root;
+	@Getter
 	private int preset;
+	@Getter
 	private double[] intervals;
 	
 	private ScaleMap scaleMap;
@@ -393,28 +405,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     public ImageIcon getIcon() {
         return icon;
     }
-    
-    private static final String SCALE = "Scale";
-    private static final String NUMBER_OF_NOTES = "numberOfNotes";
-    private static final String ROOT = "rootNote";
-    private static final String PRESET = "preset";
-    private static final String INTERVAL = "interval";
-    private static final String SEMITONES = "semitones";
-    
-    @Override
-    public void toXML(XMLWriter writer) {
-    	writer.openBlock(SCALE,
-			NUMBER_OF_NOTES, this.numberOfNotes,
-			ROOT, this.root,
-			PRESET, this.preset);
-    		if (this.preset == 0) {
-    			for (int i = 0; i < this.intervals.length; i++) {
-    				writer.empty(INTERVAL, SEMITONES, this.intervals[i]);
-    			}
-    		}
-    	writer.closeBlock();
-	}
-	
+
 	@Override
 	public Rubette fromXML(XMLReader reader, Element element) {
 		ScaleRubette loadedRubette = new ScaleRubette();

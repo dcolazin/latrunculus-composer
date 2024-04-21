@@ -19,6 +19,9 @@
 
 package org.rubato.rubettes.alteration;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.DIMENSION;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.END_DEGREE;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.START_DEGREE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.util.HashSet;
@@ -74,10 +77,10 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 		this.rubette = rubette;
 		this.simpleFormFinder = new SimpleFormFinder(null);
 		
-		this.selectedForms = new ArrayList<SimpleForm>();
-		this.startPercentages = new ArrayList<Double>();
-		this.endPercentages = new ArrayList<Double>();
-		this.relativeToForms = new ArrayList<SimpleForm>();
+		this.selectedForms = new ArrayList<>();
+		this.startPercentages = new ArrayList<>();
+		this.endPercentages = new ArrayList<>();
+		this.relativeToForms = new ArrayList<>();
 		this.global = false;
 	}
 
@@ -143,8 +146,8 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 		for (int i = 0; i < model.getRowCount(); i++) {
 			this.startDegreesBuffer.add(model.getValueAt(i, 1));
 			this.endDegreesBuffer.add(model.getValueAt(i, 2));
-			model.setValueAt(new Double(startDegree).toString(), i, 1);
-			model.setValueAt(new Double(endDegree).toString(), i, 2);
+			model.setValueAt(Double.toString(startDegree), i, 1);
+			model.setValueAt(Double.toString(endDegree), i, 2);
 		}
 	}
 	
@@ -266,6 +269,10 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	public SimpleForm getForm(int index) {
 		return this.selectedForms.get(index);
 	}
+
+	public SimpleForm getRelativeForm(int index) {
+		return this.relativeToForms.get(index);
+	}
 	
 	/**
 	 * Returns the path of the SimpleForm to be altered by the specified dimension.
@@ -309,7 +316,7 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	 * @param index - the dimension index
 	 */
 	public double getStartPercentage(int index) {
-		return this.startPercentages.get(index).doubleValue();
+		return this.startPercentages.get(index);
 	}
 	
 	/**
@@ -317,7 +324,7 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	 * @param index - the dimension index
 	 */
 	public double getEndPercentage(int index) {
-		return this.endPercentages.get(index).doubleValue();
+		return this.endPercentages.get(index);
 	}
 	
 	/**
@@ -326,7 +333,7 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	public double[] getStartDegrees() {
 		double[] degrees = new double[this.startPercentages.size()];
 		for (int i = 0; i < degrees.length; i++) {
-			degrees[i] = this.startPercentages.get(i).doubleValue();
+			degrees[i] = this.startPercentages.get(i);
 		}
 		return degrees;
 	}
@@ -337,7 +344,7 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	public double[] getEndDegrees() {
 		double[] degrees = new double[this.endPercentages.size()];
 		for (int i = 0; i < degrees.length; i++) {
-			degrees[i] = this.endPercentages.get(i).doubleValue();
+			degrees[i] = this.endPercentages.get(i);
 		}
 		return degrees;
 	}
@@ -370,34 +377,15 @@ public class JAlterationDimensionsTable extends JPropertiesTable {
 	}
 	
 	private Set<SimpleForm> getDifferentRelativeToForms() {
-		Set<SimpleForm> differentRelativeToForms = new HashSet<SimpleForm>(); 
-		for (int i = 0; i < this.relativeToForms.size(); i++) {
-			differentRelativeToForms.add(this.relativeToForms.get(i));
-		}
-		return differentRelativeToForms;
+		return new HashSet<>(this.relativeToForms);
 	}
-	
-	private static final String DIMENSION = "Dimension";
-	private static final String START = "startDegree";
-	private static final String END = "endDegree";
-	
-	protected void toXML(XMLWriter writer) {
-		for (int i = 0; i < this.dimensionCount(); i++) {
-			writer.openBlock(DIMENSION,
-				START, this.startPercentages.get(i),
-				END, this.endPercentages.get(i));
-			writer.writeFormRef(this.selectedForms.get(i));
-			writer.writeFormRef(this.relativeToForms.get(i));
-			writer.closeBlock();
-		}
-	}
-	
+
 	protected void fromXML(XMLReader reader, Element element) {
 		Element nextSibling = XMLReader.getNextSibling(element, DIMENSION);
 		
 		while (nextSibling != null) {
-			double startDegree = XMLReader.getRealAttribute(nextSibling, START, 0);
-			double endDegree = XMLReader.getRealAttribute(nextSibling, END, 1);
+			double startDegree = XMLReader.getRealAttribute(nextSibling, START_DEGREE, 0);
+			double endDegree = XMLReader.getRealAttribute(nextSibling, END_DEGREE, 1);
 			
 			Element child = XMLReader.getChild(nextSibling, FORM);
 			SimpleForm selectedForm = (SimpleForm) reader.parseAndResolveForm(child);

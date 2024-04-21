@@ -48,7 +48,6 @@ import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 
@@ -330,14 +329,6 @@ public class ConstructorRubette extends AbstractRubette {
     public Form getForm() {
         return form;        
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        if (form != null) {
-            writer.writeFormRef(form);
-        }
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, FORM);

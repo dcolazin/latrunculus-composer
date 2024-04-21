@@ -36,15 +36,18 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.TYPE_ATTR;
 import java.io.*;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
+import org.rubato.composer.network.NetworkModel;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.vetronauta.latrunculus.plugin.xml.writer.DefaultNetworkModelXmlWriter;
+import org.vetronauta.latrunculus.plugin.xml.writer.DefaultRubetteXmlWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
 
 
@@ -57,6 +60,8 @@ public class XMLWriter {
 
     //TODO constructor? or remove some logic from here?
     private final DefaultDefinitionXmlWriter definitionWriter = new DefaultDefinitionXmlWriter();
+    private final DefaultRubetteXmlWriter rubetteWriter = new DefaultRubetteXmlWriter(); //TODO constructor is needed to separate the plugin module
+    private final DefaultNetworkModelXmlWriter networkWriter = new DefaultNetworkModelXmlWriter(); //TODO constructor is needed to separate the plugin module
 
     /**
      * Creates a non-compressing writer to the specified file.
@@ -88,8 +93,8 @@ public class XMLWriter {
         }
         this.file = file;
         this.indent = 0;
-        denoOccurrences = new HashSet<String>();
-        elementStack = new LinkedList<String>();
+        denoOccurrences = new HashSet<>();
+        elementStack = new LinkedList<>();
     }
     
     
@@ -100,8 +105,8 @@ public class XMLWriter {
     public XMLWriter(PrintStream out, int indent) {
         this.out = out;
         this.indent = indent;
-        denoOccurrences = new HashSet<String>();
-        elementStack = new LinkedList<String>();
+        denoOccurrences = new HashSet<>();
+        elementStack = new LinkedList<>();
     }
     
     
@@ -386,10 +391,13 @@ public class XMLWriter {
      */
     public void writeModule(String name, Module module) {
         openBlock(DEFINE_MODULE, NAME_ATTR, name);
-        definitionWriter.toXML(module, this);
+        writeModule(module);
         closeBlock();
     }
-    
+
+    public void writeModule(Module module) {
+        definitionWriter.toXML(module, this);
+    }
     
     /**
      * Writes the XML representation of the given module element
@@ -397,8 +405,12 @@ public class XMLWriter {
      */
     public void writeModuleElement(String name, ModuleElement moduleElement) {
         openBlock(DEFINE_MODULE_ELEMENT, NAME_ATTR, name);
-        definitionWriter.toXML(moduleElement, this);
+        writeModuleElement(moduleElement);
         closeBlock();
+    }
+
+    public void writeModuleElement(ModuleElement moduleElement) {
+        definitionWriter.toXML(moduleElement, this);
     }
     
     
@@ -408,8 +420,12 @@ public class XMLWriter {
      */
     public void writeModuleMorphism(String name, ModuleMorphism morphism) {
         openBlock(DEFINE_MODULE_MORPHISM, NAME_ATTR, name);
-        definitionWriter.toXML(morphism, this);
+        writeModuleMorphism(morphism);
         closeBlock();
+    }
+
+    public void writeModuleMorphism(ModuleMorphism morphism) {
+        definitionWriter.toXML(morphism, this);
     }
     
     
@@ -442,17 +458,6 @@ public class XMLWriter {
         empty(FORM, REF_ATTR, name);
     }
     
-    
-    /**
-     * Writes the XML representations of the specified list of forms.
-     */
-    public void writeForms(List<Form> forms) {
-        for (Form f : forms) {
-            definitionWriter.toXML(f, this);
-        }
-    }
-
-    
     /**
      * Writes the XML representation of the specified denotator.
      */
@@ -470,17 +475,6 @@ public class XMLWriter {
             }
         }
     }
-
-
-    /**
-     * Writes the XML representations of the specified list of denotators.
-     */
-    public void writeDenotators(List<Denotator> denotators) {
-        for (Denotator d : denotators) {
-            writeDenotator(d);
-        }
-    }
-    
         
     /**
      * Writes a reference to the specified denotator.
@@ -493,7 +487,15 @@ public class XMLWriter {
         else {
             definitionWriter.toXML(d, this);
         }
-    }    
+    }
+
+    public void writeRubette(Rubette r) {
+        rubetteWriter.toXML(r, this);
+    }
+
+    public void writeNetworkModel(NetworkModel r) {
+        networkWriter.toXML(r, this);
+    }
     
 
     /**

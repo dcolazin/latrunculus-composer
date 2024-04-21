@@ -179,7 +179,7 @@ class WallpaperRubetteTest {
 			XMLWriter writer = new XMLWriter(testFile);
 			XMLReader reader = new XMLReader(bufferedReader);
 			writer.open();
-			this.rubette.toXML(writer);
+			writer.writeRubette(this.rubette);
 			writer.close();
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();

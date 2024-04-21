@@ -31,6 +31,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.server.midi.MidiPlayer;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
@@ -45,6 +46,9 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.MAP_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.VOICES;
 
 public final class ScorePlayRubette extends AbstractRubette implements
         ActionListener, ChangeListener {
@@ -452,21 +456,6 @@ public final class ScorePlayRubette extends AbstractRubette implements
         return "Denotator of form \"Score\"";
     }
 
-    
-    static final String VOICES = "Voices";
-
-    static final String MAP_ATTR = "map";
-
-    public void toXML(XMLWriter writer) {
-        StringBuilder buf = new StringBuilder();
-        buf.append(voices[0]);
-        for (int i = 1; i < voices.length; i++) {
-            buf.append(",");
-            buf.append(voices[i]);
-        }
-        writer.empty(VOICES, MAP_ATTR, buf.toString());
-    }
-
     public Rubette fromXML(XMLReader reader, Element element) {
         ScorePlayRubette rubette = new ScorePlayRubette();
         Element child = XMLReader.getChild(element, VOICES);
@@ -517,6 +506,7 @@ public final class ScorePlayRubette extends AbstractRubette implements
     private static final int   MAX_FACTOR   = 100;
     
     protected double duration = 0;
+    @Getter
     private int[] voices = new int[1];
     private static final DecimalFormat format = new DecimalFormat("0.00");
     private static final Form scoreForm;

@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import lombok.Getter;
 import org.rubato.rubettes.bigbang.model.BigBangModel;
 import org.rubato.rubettes.bigbang.model.operations.AbstractOperation;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
@@ -21,14 +21,24 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.util.Pair;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CLASSNAME_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.GRAPH_TAG;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.HEAD_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LOGICAL_POSITION_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_OF_STATES_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OPERATION_TAG;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.TAIL_ATTR;
+
 public class BigBangOperationGraph extends DirectedSparseMultigraph<CompositionState,AbstractOperation> {
 	
 	private List<CompositionState> compositionStates;
 	private CompositionState selectedCompositionState;
 	private CompositionState insertionState;
 	private AbstractOperation selectedOperation;
+	@Getter
 	private List<AbstractOperation> allOperationsInAddedOrder;
-	//all edits in the graph in their logical order of execution 
+	//all edits in the graph in their logical order of execution
+	@Getter
 	private List<AbstractOperation> allOperationsInLogicalOrder;
 	//all edits executed on way to selectedCompositionState in order of execution
 	private List<AbstractOperation> currentlyExecutedOperationsInOrder;
@@ -98,6 +108,10 @@ public class BigBangOperationGraph extends DirectedSparseMultigraph<CompositionS
 			return this.compositionStates.get(index);
 		}
 		return null;
+	}
+
+	public int getCompositionStateSize() {
+		return this.compositionStates.size();
 	}
 	
 	public void deselectCompositionStates() {
@@ -432,29 +446,6 @@ public class BigBangOperationGraph extends DirectedSparseMultigraph<CompositionS
 		this.updateCurrentlyExecutedEditsAndStatesAndTimes();
 	}
 
-	private static final String GRAPH_TAG = "TransformationGraph";
-	private static final String NUMBER_OF_STATES_ATTR = "numberOfStates";
-	private static final String OPERATION_TAG = "Operation";
-	private static final String CLASSNAME_ATTR = "className";
-	private static final String HEAD_ATTR = "head";
-	private static final String TAIL_ATTR = "tail";
-	private static final String LOGICAL_POSITION_ATTR = "logicalPosition";
-	
-	public void toXML(XMLWriter writer) {
-		writer.openBlock(GRAPH_TAG, NUMBER_OF_STATES_ATTR, this.compositionStates.size());
-		for (AbstractOperation currentOperation : this.allOperationsInAddedOrder) {
-			Pair<CompositionState> currentEndpoints = this.getEndpoints(currentOperation);
-			int currentHead = currentEndpoints.getFirst().getIndex();
-			int currentTail = currentEndpoints.getSecond().getIndex();
-			writer.openBlock(OPERATION_TAG, CLASSNAME_ATTR, currentOperation.getClass().getName(),
-					HEAD_ATTR, currentHead, TAIL_ATTR, currentTail,
-					LOGICAL_POSITION_ATTR, this.allOperationsInLogicalOrder.indexOf(currentOperation));
-			currentOperation.toXML(writer);
-			writer.closeBlock();
-		}
-		writer.closeBlock();
-	}
-	
 	public static BigBangOperationGraph fromXML(BigBangModel model, XMLReader reader, Element element) {
 		BigBangOperationGraph graph = new BigBangOperationGraph();
 		Element graphElement = XMLReader.getChild(element, GRAPH_TAG);

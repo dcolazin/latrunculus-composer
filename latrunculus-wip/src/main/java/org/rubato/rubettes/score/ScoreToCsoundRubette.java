@@ -30,6 +30,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
@@ -42,6 +43,11 @@ import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FILE;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FREQ;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PROLOG;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.TIMESCALE;
 
 public final class ScoreToCsoundRubette extends AbstractRubette {
 
@@ -101,7 +107,7 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
         }
         newRubette.timeScale = timeScale;
         newRubette.a4freq    = a4freq;
-        newRubette.prolog    = new String(prolog);
+        newRubette.prolog    = prolog;
         
         return newRubette;
     }
@@ -243,22 +249,6 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
         return "Denotator of form \"Score\"";
     }
 
-    
-    static final String FILE      = "File";
-    static final String PROLOG    = "Prolog";
-    static final String TIMESCALE = "TimeScale";
-    static final String FREQ      = "Freq";
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(FILE, XMLConstants.NAME_ATTR, writer.toRelativePath(getScoFileName()));
-        writer.empty(TIMESCALE, XMLConstants.VALUE_ATTR, timeScale);
-        writer.empty(FREQ, XMLConstants.VALUE_ATTR, a4freq);
-        writer.openBlock(PROLOG);
-        writer.writeTextNode(prolog);
-        writer.closeBlock();
-    }
-
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         ScoreToCsoundRubette newRubette = new ScoreToCsoundRubette();
         Element child = XMLReader.getChild(element, FILE);
@@ -282,7 +272,7 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     }
     
 
-    private String getScoFileName() {
+    public String getScoFileName() {
         String fileName = "";
         if (scoFile != null) {
             try {
@@ -389,8 +379,11 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     private File         selectedFile     = null;
     private File         currentDirectory = new File(".");
     private JFileChooser fileChooser      = null;
-    private String       prolog           = ""; 
+    @Getter
+    private String       prolog           = "";
+    @Getter
     private double       a4freq           = 440.0;
+    @Getter
     private double       timeScale        = 0.5;
     private final double ff               = Math.pow(2.0, 1.0/12.0);
 

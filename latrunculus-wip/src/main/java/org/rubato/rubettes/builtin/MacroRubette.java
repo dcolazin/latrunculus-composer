@@ -19,6 +19,9 @@
 
 package org.rubato.rubettes.builtin;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INFO;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LONG;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.SHORT;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.NETWORK;
 
 import javax.swing.ImageIcon;
@@ -31,7 +34,6 @@ import org.rubato.composer.icons.Icons;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 
@@ -206,41 +208,6 @@ public class MacroRubette extends AbstractRubette {
             return "";
         }
     }
-    
-    
-    private static final String INFO  = "Info";
-    private static final String SHORT = "ShortDescription";
-    private static final String LONG  = "LongDescription";
-
-    
-    public void toXML(XMLWriter writer) {
-        if (getInfo().length() > 0) {
-            writer.openBlock(INFO);
-            writer.writeTextNode("\n"+getInfo()+"\n");  
-            writer.closeBlock();
-        }
-        else {
-            writer.empty(INFO);
-        }
-        if (getShortDescription().length() > 0) {
-            writer.openBlock(SHORT);
-            writer.writeTextNode("\n"+getShortDescription()+"\n");  
-            writer.closeBlock();
-        }
-        else {
-            writer.empty(SHORT);
-        }
-        if (getLongDescription().length() > 0) {
-            writer.openBlock(LONG);
-            writer.writeTextNode("\n"+getLongDescription()+"\n");  
-            writer.closeBlock();
-        }
-        else {
-            writer.empty(LONG);            
-        }
-        networkModel.toXML(writer);
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Element infoElement = XMLReader.getChild(element, INFO);

@@ -33,8 +33,10 @@ import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OUTPUTS;
 
 
 /**
@@ -133,15 +135,6 @@ public class LatchRubette extends AbstractRubette {
         return "Output denotator #"+i; 
     }
 
-    
-    private static final String OUTPUTS     = "Outputs"; 
-    private static final String NUMBER_ATTR = "number"; 
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(OUTPUTS, NUMBER_ATTR, getOutCount());
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, OUTPUTS);

@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -61,6 +62,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OPERATION;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OP_ATTR;
 
 public class StatRubette extends AbstractRubette {
 
@@ -368,18 +371,6 @@ public class StatRubette extends AbstractRubette {
         rubette.form = form;
         return rubette;
     }
-    
-
-    private static final String OPERATION   = "Operation";
-    private static final String OP_ATTR     = "op";
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(OPERATION, OP_ATTR, op);
-        if (form != null) {
-            writer.writeFormRef(form);
-        }
-    }
-
 
     public Rubette fromXML(XMLReader reader, Element element) {
         // read operation type
@@ -408,9 +399,12 @@ public class StatRubette extends AbstractRubette {
 
     private static final ImageIcon icon;
 
+    @Getter
     private int  op   = MIN;
+    @Getter
     private Form form = null;
-    
+
+    //TODO enum
     private static final int MIN      = 0;
     private static final int MAX      = 1;
     private static final int MEAN     = 2;

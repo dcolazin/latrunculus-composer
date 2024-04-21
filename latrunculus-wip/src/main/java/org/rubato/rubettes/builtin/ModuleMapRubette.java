@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -51,14 +52,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.PATH;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class ModuleMapRubette extends AbstractRubette implements ActionListener {
-
-    //TODO rubette writer
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
     
     public ModuleMapRubette() {
         setInCount(1);
@@ -256,30 +255,6 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
         return "Mapped output denotator";
     }
 
-    
-    private static final String PATH = "Path";
-    
-    public void toXML(XMLWriter writer) {
-        if (inputForm != null) {
-            writer.writeFormRef(inputForm);
-            if (path != null) {
-                StringBuilder buf = new StringBuilder(20);
-                if (path.length > 0) {
-                    buf.append(path[0]);
-                    for (int i = 1; i < path.length; i++) {
-                        buf.append(",");
-                        buf.append(path[i]);
-                    }
-                }
-                writer.empty(PATH, VALUE_ATTR, buf.toString());
-                if (morphism != null) {
-                    definitionXmlWriter.toXML(morphism, writer);
-                }
-            }
-        }
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         Form iform = null;
         ModuleMapRubette newRubette = null;
@@ -353,8 +328,11 @@ public class ModuleMapRubette extends AbstractRubette implements ActionListener 
     }
 
 
+    @Getter
     private Form           inputForm = null;
+    @Getter
     private ModuleMorphism morphism = null;
+    @Getter
     private int[]          path = null;
 
     private JPanel         properties = null;

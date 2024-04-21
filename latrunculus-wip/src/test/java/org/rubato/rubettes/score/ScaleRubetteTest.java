@@ -104,7 +104,7 @@ class ScaleRubetteTest {
 			this.rubette.setTempPreset(2);
 			this.rubette.applyProperties();
 			writer.open();
-			this.rubette.toXML(writer);
+			writer.writeRubette(this.rubette);
 			writer.close();
 			Element element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();
 			reader.parse();
@@ -119,7 +119,7 @@ class ScaleRubetteTest {
 			this.rubette.setTempPreset(0);
 			this.rubette.applyProperties();
 			writer.open();
-			this.rubette.toXML(writer);
+			writer.writeRubette(rubette);
 			writer.close();
 			reader.parse();
 			element = builder.parse(new InputSource(bufferedReader)).getDocumentElement();

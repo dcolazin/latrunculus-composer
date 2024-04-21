@@ -835,7 +835,7 @@ public class JNetwork extends JLayeredPane
 
     
     public void toXML(XMLWriter writer) {
-        model.toXML(writer);
+        writer.writeNetworkModel(model);
     }
     
     

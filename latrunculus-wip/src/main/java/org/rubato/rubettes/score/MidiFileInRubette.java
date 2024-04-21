@@ -19,36 +19,19 @@
 
 package org.rubato.rubettes.score;
 
-import org.vetronauta.latrunculus.server.midi.MidiReader;
+import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.server.midi.MidiReader;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
 import org.w3c.dom.Element;
 
 import javax.sound.midi.InvalidMidiDataException;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -58,16 +41,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.FILE;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.STORE_DENOTATOR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.TEMPO_FACTOR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 public class MidiFileInRubette extends AbstractRubette {
-
-    //TODO rubette writer
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public MidiFileInRubette() {
         setInCount(0);
@@ -290,21 +272,6 @@ public class MidiFileInRubette extends AbstractRubette {
     public String getOutTip(int i) {
         return "Denotator of form \"Score\"";
     }
-
-    
-    private static final String FILE = "File";
-    private static final String TEMPO_FACTOR = "TempoFactor";
-    private static final String STORE_DENOTATOR = "StoreDenotator";
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(FILE, NAME_ATTR, writer.toRelativePath(getMidiFileName()));
-        writer.empty(TEMPO_FACTOR, VALUE_ATTR, getTempoFactor());
-        writer.empty(STORE_DENOTATOR, VALUE_ATTR, storeDenotator?TRUE_VALUE:FALSE_VALUE);
-        if (storeDenotator && score != null) {
-            definitionXmlWriter.toXML(score, writer);
-        }
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         String fileName = "";
@@ -336,7 +303,7 @@ public class MidiFileInRubette extends AbstractRubette {
     }
 
     
-    private String getMidiFileName() {
+    public String getMidiFileName() {
         String fileName = "";
         if (midiFile != null) {
             try {

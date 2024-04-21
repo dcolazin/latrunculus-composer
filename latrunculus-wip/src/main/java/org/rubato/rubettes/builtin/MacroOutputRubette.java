@@ -21,6 +21,9 @@ package org.rubato.rubettes.builtin;
 
 import static org.rubato.composer.Utilities.getJDialog;
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.COUNT_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LABEL;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.LABELS;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.NAME_ATTR;
 
 import java.awt.BorderLayout;
@@ -59,6 +62,9 @@ public class MacroOutputRubette
         }
     }
 
+    public String getLabel(int i) {
+        return labels[i];
+    }
 
     public String getGroup() {
         return RubatoConstants.CORE_GROUP;
@@ -195,22 +201,6 @@ public class MacroOutputRubette
             }
         }
     }
-    
-    
-    private static final String LABELS     = "Labels";
-    private static final String LABEL      = "Label";
-    private static final String COUNT_ATTR = "count";
-
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(LABELS, COUNT_ATTR, getInCount());
-        for (int i = 0; i < getInCount(); i++) {
-            String s = labels[i]==null?"":labels[i].trim();
-            writer.empty(LABEL, NAME_ATTR, s);
-        }
-        writer.closeBlock();
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, LABELS);

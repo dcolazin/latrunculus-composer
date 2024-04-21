@@ -45,7 +45,7 @@ import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.w3c.dom.Element;
 
-class Select2DPanel
+public class Select2DPanel
         extends JPanel
         implements ActionListener {
 

@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin.address;
 
+import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
@@ -94,6 +95,7 @@ import java.util.stream.Collectors;
 
 import static org.rubato.composer.Utilities.getJDialog;
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EVALTYPE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_ELEMENT;
@@ -105,9 +107,6 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
  * @author Gérard Milmeister
  */
 public final class AddressEvalRubette extends AbstractRubette implements ActionListener {
-
-    //TODO writer for rubettes and properties
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public AddressEvalRubette() {
         setInCount(1);
@@ -548,33 +547,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         return name;
     }
 
-
-    private static final String EVALTYPE = "EvalType"; 
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(EVALTYPE, VALUE_ATTR, evalType);
-        if (evalType == EVAL_TYPE_ELEMENT) {
-            definitionXmlWriter.toXML(moduleElement, writer);
-        }
-        else if (evalType == EVAL_TYPE_LIST) {
-            if (outputForm != null) {
-                writer.writeFormRef(outputForm);
-                definitionXmlWriter.toXML(module, writer);
-                for (ModuleElement el : elements) {
-                    definitionXmlWriter.toXML(el, writer);
-                }
-            }
-        }
-        else if (evalType == EVAL_TYPE_CHANGE) {
-            definitionXmlWriter.toXML(morphism, writer);
-        }
-        else if (evalType == EVAL_TYPE_INPUT && (outputForm != null)) {
-                writer.writeFormRef(outputForm);
-
-        }
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         int t = 0;
         AddressEvalRubette newRubette = null;
@@ -905,20 +877,26 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private JButton             graphButton     = null;
     private JRadioButton        simpleButton    = null;
     private JRadioButton        listButton      = null;
-    
+
+    @Getter
     private Form          outputForm    = null;
+    @Getter
     private Module        module        = null;
+    @Getter
     private ModuleElement moduleElement = null;
+    @Getter
     private int           evalType      = EVAL_TYPE_NULL;
-    
+    @Getter
     private List<ModuleElement> elements = null;
+    @Getter
     private ModuleMorphism      morphism = null; 
-    
-    private static final int EVAL_TYPE_NULL    = 0;
-    private static final int EVAL_TYPE_ELEMENT = 1;
-    private static final int EVAL_TYPE_LIST    = 2;
-    private static final int EVAL_TYPE_CHANGE  = 3;
-    private static final int EVAL_TYPE_INPUT   = 4;
+
+    //TODO enum
+    public static final int EVAL_TYPE_NULL    = 0;
+    public static final int EVAL_TYPE_ELEMENT = 1;
+    public static final int EVAL_TYPE_LIST    = 2;
+    public static final int EVAL_TYPE_CHANGE  = 3;
+    public static final int EVAL_TYPE_INPUT   = 4;
     
     private static final String[] evalTypes = {
         AddressMessages.getString("AddressEvalRubette.evalnull"),

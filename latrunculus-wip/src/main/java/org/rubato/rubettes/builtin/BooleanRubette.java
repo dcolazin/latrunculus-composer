@@ -22,9 +22,11 @@ package org.rubato.rubettes.builtin;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
@@ -36,8 +38,12 @@ import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPRESSION;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPR_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
 
 
 /**
@@ -53,9 +59,7 @@ public final class BooleanRubette extends AbstractRubette {
         setInCount(2);
         setOutCount(1);
         values = new boolean[getInCount()];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = false;
-        }
+        Arrays.fill(values, false);
     }
     
 
@@ -71,7 +75,7 @@ public final class BooleanRubette extends AbstractRubette {
             }
             else if (d.getForm().equals(booleanForm)) {
                 int n = ((SimpleDenotator)d).getModInteger();
-                values[i] = (n==0)?false:true;
+                values[i] = n != 0;
             }
             else {
                 addError(BuiltinMessages.getString("BooleanRubette.inputwrongform"), i, "Boolean");
@@ -187,20 +191,7 @@ public final class BooleanRubette extends AbstractRubette {
     public ImageIcon getIcon() {
         return icon;
     }
-    
-    
-    private static final String INPUTS      = "Inputs"; 
-    private static final String EXPRESSION  = "Expression"; 
-    private static final String NUMBER_ATTR = "number"; 
-    private static final String EXPR_ATTR   = "expr"; 
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(INPUTS, NUMBER_ATTR, getInCount());
-        writer.empty(EXPRESSION, EXPR_ATTR, expression);
-    }
 
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         BooleanRubette rubette = new BooleanRubette();
         Element child = XMLReader.getChild(element, INPUTS);
@@ -220,7 +211,8 @@ public final class BooleanRubette extends AbstractRubette {
     private JPanel       properties = null;
     private JTextArea    exprTextArea = null;
     private JLabel       infoLabel = null;
-    private String       expressionString = ""; 
+    private String       expressionString = "";
+    @Getter
     private Expression   expression;
     private boolean[]    values = null;
     private JConnectorSliders inSlider = null;

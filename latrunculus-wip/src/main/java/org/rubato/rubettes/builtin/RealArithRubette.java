@@ -20,6 +20,11 @@
 package org.rubato.rubettes.builtin;
 
 import static org.vetronauta.latrunculus.core.logeo.DenoFactory.makeDenotator;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPRESSION;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.EXPR_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.RES_ATTR;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,6 +33,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
@@ -239,23 +245,7 @@ public class RealArithRubette extends AbstractRubette {
     public ImageIcon getIcon() {
         return icon;
     }
-    
-    
-    private static final String INPUTS      = "Inputs"; 
-    private static final String EXPRESSION  = "Expression"; 
-    private static final String NUMBER_ATTR = "number"; 
-    private static final String RES_ATTR    = "res"; 
-    private static final String EXPR_ATTR   = "expr"; 
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(INPUTS, NUMBER_ATTR, getInCount());
-        writer.empty(EXPRESSION,
-                     RES_ATTR, isResultReal?1:0,
-                     EXPR_ATTR, expressionString);
-    }
 
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         RealArithRubette rubette = new RealArithRubette();
         Element child = XMLReader.getChild(element, INPUTS);
@@ -271,7 +261,6 @@ public class RealArithRubette extends AbstractRubette {
         }
         return rubette;
     }
-
     
     private boolean compile(String expr, int nrArgs) {
         if (compiler == null) {
@@ -290,11 +279,13 @@ public class RealArithRubette extends AbstractRubette {
     private JPanel            properties = null;
     private JTextArea         exprTextArea = null;
     private JLabel            infoLabel = null;
+    @Getter
     private String            expressionString = ""; 
     private double[]          values = null;
     private JConnectorSliders inSlider = null;
     private ArithCompiler     compiler = null;
     private ArithVM           vm = null;
+    @Getter
     protected boolean         isResultReal = true;      
     
     private static final SimpleForm realForm; 

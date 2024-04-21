@@ -806,7 +806,7 @@ public class JComposer extends JFrame implements Observer {
                     if (arubette instanceof MacroRubette) {
                         String name = arubette.getName();
                         writer.openBlock(RUBETTE, NAME_ATTR, name);
-                        arubette.toXML(writer);
+                        writer.writeRubette(arubette);
                         writer.closeBlock();
                     }
                 }

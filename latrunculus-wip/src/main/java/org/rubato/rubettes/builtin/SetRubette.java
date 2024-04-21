@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
 import org.rubato.composer.icons.Icons;
@@ -42,6 +43,11 @@ import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
+
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OPERATION;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OP_ATTR;
 
 
 public class SetRubette extends AbstractRubette {
@@ -405,18 +411,6 @@ public class SetRubette extends AbstractRubette {
         return "Output denotator"; 
     }
 
-    
-    private static final String INPUTS      = "Inputs"; 
-    private static final String NUMBER_ATTR = "number"; 
-    private static final String OPERATION   = "Operation"; 
-    private static final String OP_ATTR     = "op"; 
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(OPERATION, OP_ATTR, op);
-        writer.empty(INPUTS, NUMBER_ATTR, getInCount());
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         // read operation type
         Element child = XMLReader.getChild(element, OPERATION);
@@ -444,9 +438,11 @@ public class SetRubette extends AbstractRubette {
     private JConnectorSliders inSlider = null;
     
     private static final ImageIcon icon;
-    
+
+    @Getter
     private int op = UNION;
-    
+
+    //TODO enum
     private static final int UNION        = 0;
     private static final int INTERSECTION = 1;
     private static final int DIFFERENCE   = 2;

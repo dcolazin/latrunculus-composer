@@ -2,6 +2,7 @@ package org.rubato.rubettes.bigbang;
 
 import javax.swing.JComponent;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
@@ -20,7 +21,7 @@ public class BigBangRubette extends AbstractRubette {
 	
 	public static final boolean IS_MULTITOUCH = false;
 	public static final String STANDARD_FORM_NAME = "FMSet";
-	
+
 	private BigBangModel model;
 	private BigBangSwingView view;
 	private BigBangController controller;
@@ -49,6 +50,10 @@ public class BigBangRubette extends AbstractRubette {
         }
         this.model.setController(this.controller);
         this.model.setMultiTouch(false);
+	}
+
+	public BigBangModel getBigBangModel() {
+		return model;
 	}
 
 	@Override
@@ -96,11 +101,6 @@ public class BigBangRubette extends AbstractRubette {
 		return this.view.getPanel();
 	}
 
-	@Override
-	public void toXML(XMLWriter writer) {
-		this.model.toXML(writer);
-	}
-	
 	@Override
 	public Rubette fromXML(XMLReader reader, Element element) {
 		new CoolFormRegistrant().registerAllTheCoolStuff();

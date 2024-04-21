@@ -22,6 +22,10 @@ package org.rubato.rubettes.builtin;
 import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
 import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cdr;
 import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CODE;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OUTPUTS;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,6 +34,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
@@ -47,7 +52,6 @@ import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 
@@ -180,22 +184,6 @@ public class SchemeRubette extends AbstractRubette {
         return "Output denotator #"+i; 
     }
 
-    
-    private static final String INPUTS      = "Inputs"; 
-    private static final String OUTPUTS     = "Outputs"; 
-    private static final String CODE        = "Code"; 
-    private static final String NUMBER_ATTR = "number"; 
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(INPUTS, NUMBER_ATTR, getOutCount());
-        writer.empty(OUTPUTS, NUMBER_ATTR, getOutCount());
-        writer.openBlock(CODE);
-        writer.writeTextNode(schemeCode.trim()+"\n");
-        writer.closeBlock();
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         int inCount;
         int outCount;
@@ -317,7 +305,8 @@ public class SchemeRubette extends AbstractRubette {
     private JConnectorSliders sliders = null;
     private JTextArea         schemeCodeArea = null;
     private JLabel            infoLabel = null;
-    
+
+    @Getter
     private String      schemeCode = "";
     private Parser parser = new Parser();
     private List<SExpr> sexprList = null;

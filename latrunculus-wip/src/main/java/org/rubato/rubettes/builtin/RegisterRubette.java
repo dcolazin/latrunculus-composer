@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NAME;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
 import java.awt.BorderLayout;
@@ -163,17 +164,6 @@ public class RegisterRubette extends AbstractRubette {
         return "Registered output denotator";
     }
 
-    
-    private static final String NAME = "Name";
-    
-    
-    public void toXML(XMLWriter writer) {
-        String name = getDenotatorName();
-        name = (name == null)?"":name;
-        writer.empty(NAME, VALUE_ATTR, name);
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         RegisterRubette newRubette = new RegisterRubette();
         String name = null;

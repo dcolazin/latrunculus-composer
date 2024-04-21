@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
@@ -52,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.rubato.composer.Utilities.makeTitledBorder;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.XML;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
@@ -64,9 +66,6 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
  * @author Gérard Milmeister
  */
 public class DisplayRubette extends AbstractRubette implements ActionListener {
-
-    //TODO rubette writer
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
 
     public DisplayRubette() {
         setInCount(1);
@@ -153,7 +152,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
                 PrintStream ps = new PrintStream(bs);
                 if (isXML) {
                     XMLWriter writer = new XMLWriter(ps);
-                    definitionXmlWriter.toXML(input, writer);
+                    writer.writeDenotator(input);
                 }
                 else {
                     DenotatorDisplay.display(input, ps);
@@ -188,14 +187,6 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
         return BuiltinMessages.getString("DisplayRubette.intip");
     }
 
-    
-    private static final String XML = "XML";
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(XML, VALUE_ATTR, isXML?TRUE_VALUE:FALSE_VALUE);
-    }
-    
-    
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, XML);
         boolean xmlValue = false;
@@ -221,7 +212,8 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
     private JTextArea    display = null;
     private JRadioButton textButton;
     private JRadioButton xmlButton;
-    
+
+    @Getter
     private boolean isXML = false;
     
     private static final ImageIcon icon;

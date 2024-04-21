@@ -172,46 +172,6 @@ public class NetworkModel {
         return notes;
     }
     
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(NETWORK, NAME_ATTR, getName());
-        int i = 0;
-        for (RubetteModel rmodel : rubettes) {
-            String cls = rmodel.getRubette().getClass().getCanonicalName();
-            String n = rmodel.getName();
-            rmodel.setSerial(i);
-            Point pt = rmodel.getLocation();
-            Object[] attrs = new Object[6+((pt!=null)?4:0)];
-            attrs[0] = NAME_ATTR;
-            attrs[1] = n;
-            attrs[2] = CLASS_ATTR;
-            attrs[3] = cls;
-            attrs[4] = SERIAL_ATTR;
-            attrs[5] = i;
-            if (pt != null) {
-                attrs[6] = X_ATTR;
-                attrs[7] = pt.x;
-                attrs[8] = Y_ATTR;
-                attrs[9] = pt.y;
-            }
-            writer.openBlock(RUBETTE, attrs);
-            rmodel.toXML(writer);
-            writer.closeBlock();
-            i++;
-        }
-        for (RubetteModel rmodel : rubettes) {
-            for (int j = 0; j < rmodel.getInLinkCount(); j++) {
-                Link link = rmodel.getInLink(j);
-                link.toXML(writer);
-            }
-        }
-        for (NoteModel note : notes) {
-            note.toXML(writer);
-        }
-        writer.closeBlock();
-    }
-    
-    
     public static NetworkModel fromXML(XMLReader reader, Element networkElement) {
         String name = networkElement.getAttribute(NAME_ATTR).trim();
         if (name.length() == 0) {

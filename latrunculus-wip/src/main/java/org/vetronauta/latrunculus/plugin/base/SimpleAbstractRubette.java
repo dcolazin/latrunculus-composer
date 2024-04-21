@@ -107,14 +107,6 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
         return rubette;
     }
 
-    
-    public final void toXML(XMLWriter writer) {
-        if (properties != null) {
-            properties.toXML(writer);
-        }
-    }
-    
-    
     private RubetteProperties properties = null;
     private JRubettePropertiesDialog dialog = null;
 }

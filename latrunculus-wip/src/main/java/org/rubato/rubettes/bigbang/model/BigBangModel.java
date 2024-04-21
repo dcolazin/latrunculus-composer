@@ -35,7 +35,6 @@ import org.vetronauta.latrunculus.core.math.matrix.RMatrix;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
@@ -521,12 +520,6 @@ public class BigBangModel extends Model {
 		clonedModel.operationGraph = this.operationGraph.clone(clonedModel);
 		clonedModel.updateComposition();
 		return clonedModel;
-	}
-
-	public void toXML(XMLWriter writer) {
-		writer.writeFormRef(this.denotators.getForm());
-		//System.out.println("TOXML " +this.denotators.getForm());
-		this.operationGraph.toXML(writer);
 	}
 	
 	public static BigBangModel fromXML(XMLReader reader, Element element) {

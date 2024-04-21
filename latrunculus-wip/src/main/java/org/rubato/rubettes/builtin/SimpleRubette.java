@@ -66,9 +66,6 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.DENOTATOR;
 
 public class SimpleRubette extends AbstractRubette implements ActionListener {    
 
-    //TODO rubette writer
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
-
     public SimpleRubette() {
         setInCount(0);
         setOutCount(1);
@@ -333,14 +330,6 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     public String getOutTip(int i) {
         return BuiltinMessages.getString("SimpleRubette.storeddenotator");
     }
-
-    
-    public void toXML(XMLWriter writer) {
-        if (denotator != null) {
-            definitionXmlWriter.toXML(denotator, writer);
-        }
-    }
-    
     
     public Rubette fromXML(XMLReader reader, Element element) {
         Element child = XMLReader.getChild(element, DENOTATOR);

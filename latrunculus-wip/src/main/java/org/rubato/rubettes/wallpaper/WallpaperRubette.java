@@ -19,6 +19,7 @@
 
 package org.rubato.rubettes.wallpaper;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -60,6 +61,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.ELEMENT_PATH;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INT;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.MORPHISM;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.R_FROM;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.R_TO;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.MODULE_MORPHISM;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
@@ -71,9 +77,7 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
  */
 public class WallpaperRubette extends AbstractRubette implements ActionListener {
 
-	//TODO rubette writer
-	private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
-	
+	@Getter
 	private PowerForm inputForm = null;
 	private SimpleFormFinder simpleFormFinder;
     
@@ -461,36 +465,6 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
         return "Output power denotator";
     }
 
-    private static final String MORPHISM = "Morphism";
-	private static final String R_FROM = "rangeFrom";
-	private static final String R_TO = "rangeTo";
-	private static final String PATH = "ElementPath";
-	private static final String INT = "Integer";
-    
-    public void toXML(XMLWriter writer) {
-        if (this.inputForm != null) {
-            writer.writeFormRef(this.inputForm);
-			for (int i = 0; i < this.morphismsTable.getMorphismCount(); i++) {
-				ModuleMorphism currentMorphism = this.morphismsTable.getMorphism(i);
-				writer.openBlock(MORPHISM,
-					R_FROM, this.morphismsTable.getRangeFrom(currentMorphism),
-					R_TO, this.morphismsTable.getRangeTo(currentMorphism));
-				definitionXmlWriter.toXML(currentMorphism, writer);
-				List<List<Integer>> currentElementPaths
-					= this.morphismsTable.getCoordinates(currentMorphism);
-				for (int j = 0; j < currentElementPaths.size(); j++) {
-					List<Integer> currentElementPath = currentElementPaths.get(j);
-					writer.openBlock(PATH);
-					for (int k = 0; k < currentElementPath.size(); k++) {
-						writer.empty(INT, VALUE_ATTR, currentElementPath.get(k));
-					}
-					writer.closeBlock();
-				}
-				writer.closeBlock();
-			}
-        }
-    }
-    
     public Rubette fromXML(XMLReader reader, Element element) {
 		WallpaperRubette loadedRubette = new WallpaperRubette();
         loadedRubette.init();
@@ -504,17 +478,17 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 			Element grandChild = XMLReader.getChild(child, MODULE_MORPHISM);
 			ModuleMorphism currentMorphism = reader.parseModuleMorphism(grandChild);
 			List<List<Integer>> currentElementPaths = new ArrayList<List<Integer>>();
-			grandChild = XMLReader.getNextSibling(grandChild, PATH);
+			grandChild = XMLReader.getNextSibling(grandChild, ELEMENT_PATH);
 			while (grandChild != null) {
 				List<Integer> currentElementPath = new ArrayList<Integer>();
 				Element greatGrandChild = XMLReader.getChild(grandChild, INT);
 				while (greatGrandChild != null) {
 					int currentInt = XMLReader.getIntAttribute(greatGrandChild, VALUE_ATTR, 0);
-					currentElementPath.add(new Integer(currentInt));
+					currentElementPath.add(currentInt);
 					greatGrandChild = XMLReader.getNextSibling(greatGrandChild, INT);
 				}
 				currentElementPaths.add(currentElementPath);
-				grandChild = XMLReader.getNextSibling(grandChild, PATH);
+				grandChild = XMLReader.getNextSibling(grandChild, ELEMENT_PATH);
 			}
 			loadedRubette.addMorphism(currentMorphism, currentFrom, currentTo, currentElementPaths);
 			child = XMLReader.getNextSibling(child, MORPHISM);

@@ -98,7 +98,7 @@ public interface Rubette {
      * This method should write XML for the configuration of this
      * Rubette.
      */
-    void toXML(XMLWriter writer);
+    default void toXML(XMLWriter writer) {}
 
     /**
      * Returns an icon for this Rubette.

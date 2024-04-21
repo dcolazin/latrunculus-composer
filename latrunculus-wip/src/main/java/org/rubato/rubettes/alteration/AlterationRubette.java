@@ -19,6 +19,9 @@
 
 package org.rubato.rubettes.alteration;
 
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.END;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.GLOBAL;
+import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.START;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.FORM;
 
 import java.awt.event.ActionEvent;
@@ -37,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import lombok.Getter;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -59,10 +63,14 @@ import org.w3c.dom.Element;
  * @author Florian Thalmann
  */
 public class AlterationRubette extends AbstractRubette implements ActionListener, FocusListener {
-	
+
+	@Getter
 	private PowerForm inputForm;
+	@Getter
 	private boolean global;
+	@Getter
 	private double globalStartDegree;
+	@Getter
 	private double globalEndDegree;
 	
 	private JPanel propertiesPanel;
@@ -356,7 +364,7 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
 		}
 	}
 	
-	protected JAlterationDimensionsTable getDimensionsTable() {
+	public JAlterationDimensionsTable getDimensionsTable() {
 		return this.dimensionsTable;
 	}
     
@@ -408,24 +416,7 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
     public String getOutTip(int i) {
         return "Output power denotator";
     }
-    
-    private static final String GLOBAL = "Global";
-    private static final String START = "start";
-    private static final String END = "end";
-    
-    public void toXML(XMLWriter writer) {
-        if (this.inputForm != null) {
-            writer.writeFormRef(this.inputForm);
-            if (this.global) {
-            	writer.empty(GLOBAL,
-            		START, this.globalStartDegree,
-            		END, this.globalEndDegree);
-            }
-            
-            this.dimensionsTable.toXML(writer);
-        }
-    }
-	
+
     public Rubette fromXML(XMLReader reader, Element element) {
 		AlterationRubette loadedRubette = new AlterationRubette();
 		Element child = XMLReader.getChild(element, FORM);
