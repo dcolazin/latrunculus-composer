@@ -19,19 +19,14 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.rubato.composer.preferences.UserPreferences;
 
-import javax.swing.JComponent;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-
-import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class IntegerProperty
         extends RubetteProperty
@@ -143,13 +138,6 @@ public class IntegerProperty
     public IntegerProperty deepCopy() {
         return new IntegerProperty(this);
     }
-
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        IntegerProperty property = deepCopy();
-        property.setValue(XMLReader.getIntAttribute(element, VALUE_ATTR, min, max, value));
-        return property;
-    }
-
     
     public String toString() {
         return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";

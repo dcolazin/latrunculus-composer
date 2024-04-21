@@ -23,10 +23,6 @@ import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
-
 public class TextProperty
         extends RubetteProperty
         implements CaretListener {
@@ -131,13 +127,6 @@ public class TextProperty
         return new TextProperty(this);
     }
 
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        TextProperty property = deepCopy();
-        property.setValue(XMLReader.getText(element).trim());
-        return property;
-    }
-
-    
     public String toString() {
         return "TextProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+rows+","+cols+"]";
     }

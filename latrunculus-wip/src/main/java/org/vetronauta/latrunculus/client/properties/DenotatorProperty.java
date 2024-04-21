@@ -20,35 +20,20 @@
 package org.vetronauta.latrunculus.client.properties;
 
 import org.rubato.composer.components.JSelectDenotator;
-import org.vetronauta.latrunculus.core.math.MathDefinition;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
-import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
-import org.w3c.dom.Element;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DenotatorProperty extends RubetteProperty implements ActionListener {
 
-    //TODO the writer for Rubettes and properties?
-    private final LatrunculusXmlWriter<MathDefinition> definitionXmlWriter = new DefaultDefinitionXmlWriter();
-
     public DenotatorProperty(String key, String name, Denotator value) {
         super(key, name);
         this.value = value;
     }
-    
-    
-    public DenotatorProperty(String key, String name) {
-        this(key, name, null);
-    }
-    
-    
+
     public DenotatorProperty(DenotatorProperty prop) {
         super(prop);
         this.value = prop.value;
@@ -107,21 +92,7 @@ public class DenotatorProperty extends RubetteProperty implements ActionListener
         return new DenotatorProperty(this);
     }
 
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        DenotatorProperty property = deepCopy();
-        Element child = XMLReader.getChild(element, "Denotator"); 
-        if (child == null) {
-            property.setDenotator(null);
-        }
-        else {
-            Denotator d = reader.parseDenotator(child);
-            property.setDenotator(d);
-        }
-        return property;
-    }
-
-    
-        public String toString() {
+    public String toString() {
         return "DenotatorProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

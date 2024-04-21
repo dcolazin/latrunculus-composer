@@ -19,44 +19,38 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
+import org.vetronauta.latrunculus.core.util.DeepCopyable;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.vetronauta.latrunculus.core.util.DeepCopyable;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 public class RubetteProperties implements DeepCopyable<RubetteProperties> {
+
+    private final HashMap<String,RubetteProperty> properties;
 
     public RubetteProperties() {
         properties = new HashMap<>();
     }
     
-    
     public void put(RubetteProperty prop) {
         properties.put(prop.getKey(), prop);
     }
-    
-    
+
     public RubetteProperty get(String key) {
         return properties.get(key);
     }
-    
-    
+
     public Collection<RubetteProperty> getProperties() {
         return properties.values();
     }
-    
-    
+
     public void apply() {
         for (RubetteProperty prop : properties.values()) {
             prop.apply();
         }
     }
-    
-    
+
     public void revert() {
         for (RubetteProperty prop : properties.values()) {
             prop.revert();
@@ -72,16 +66,14 @@ public class RubetteProperties implements DeepCopyable<RubetteProperties> {
     }
     
 
-        public String toString() {
-        String s;
-        s = "------------------------------------------------\n";
+    public String toString() {
+        StringBuilder s;
+        s = new StringBuilder("------------------------------------------------\n");
         for (RubetteProperty prop : properties.values()) {
-            s += prop+"\n";
+            s.append(prop).append("\n");
         }
-        s += "------------------------------------------------\n";
-        return s;
+        s.append("------------------------------------------------\n");
+        return s.toString();
     }
 
-    
-    private HashMap<String,RubetteProperty> properties;
 }

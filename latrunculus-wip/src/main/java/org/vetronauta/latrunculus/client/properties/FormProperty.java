@@ -19,17 +19,13 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JComponent;
-
 import org.rubato.composer.components.JSelectForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.core.repository.Repository;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FormProperty
         extends RubetteProperty
@@ -39,12 +35,6 @@ public class FormProperty
         super(key, name);
         this.value = value;
     }
-    
-    
-    public FormProperty(String key, String name) {
-        this(key, name, null);
-    }
-    
     
     public FormProperty(FormProperty prop) {
         super(prop);
@@ -104,20 +94,6 @@ public class FormProperty
         return new FormProperty(this);
     }
 
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        FormProperty property = deepCopy();
-        Element child = XMLReader.getChild(element, "Form"); 
-        if (child == null) {
-            property.setForm(null);
-        }
-        else {
-            Form f = reader.parseAndResolveForm(child);
-            property.setForm(f);
-        }
-        return property;
-    }
-
-    
     public String toString() {
         return "FormProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }

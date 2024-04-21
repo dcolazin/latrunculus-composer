@@ -19,21 +19,16 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-
 import org.rubato.composer.preferences.UserPreferences;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ComplexProperty extends RubetteProperty implements ActionListener, CaretListener {
 
@@ -118,20 +113,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
         return new ComplexProperty(this);
     }
 
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        ComplexProperty property = deepCopy();
-        String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
-        try {
-            property.setValue(ArithmeticParsingUtils.parseComplex(s));
-        }
-        catch (NumberFormatException e) {
-            property.setValue(value);
-        }
-        return property;
-    }
-    
-    
-        public String toString() {
+    public String toString() {
         return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

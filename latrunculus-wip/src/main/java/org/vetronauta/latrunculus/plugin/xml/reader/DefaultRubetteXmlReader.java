@@ -42,9 +42,21 @@ import org.rubato.rubettes.select2d.Select2DPanel;
 import org.rubato.rubettes.select2d.Select2DRubette;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.wallpaper.WallpaperRubette;
+import org.vetronauta.latrunculus.client.properties.BooleanProperty;
+import org.vetronauta.latrunculus.client.properties.ComplexProperty;
+import org.vetronauta.latrunculus.client.properties.DenotatorProperty;
+import org.vetronauta.latrunculus.client.properties.DoubleProperty;
+import org.vetronauta.latrunculus.client.properties.FileProperty;
+import org.vetronauta.latrunculus.client.properties.FormProperty;
+import org.vetronauta.latrunculus.client.properties.IntegerProperty;
+import org.vetronauta.latrunculus.client.properties.RationalProperty;
 import org.vetronauta.latrunculus.client.properties.RubetteProperties;
 import org.vetronauta.latrunculus.client.properties.RubetteProperty;
+import org.vetronauta.latrunculus.client.properties.StringProperty;
+import org.vetronauta.latrunculus.client.properties.TextProperty;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.core.math.element.impl.Rational;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -55,6 +67,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.math.yoneda.form.SimpleForm;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
 import org.vetronauta.latrunculus.server.xml.reader.LatrunculusXmlReader;
@@ -62,6 +75,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1027,9 +1041,9 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element e = (Element)node;
                 String key = e.getTagName();
-                RubetteProperty property = newProp.get(key);
+                RubetteProperty property = newProp.get(key); //TODO this cannot work... properties are empty!
                 if (property != null) {
-                    property = property.fromXML(reader, e); //TODO
+                    property = readRubetteProperty(reader, e, property.getClass(), key);
                     newProp.put(property);
                 }
             }
@@ -1038,5 +1052,101 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return newProp;
     }
 
+    private RubetteProperty readRubetteProperty(XMLReader reader, Element element, Class<? extends RubetteProperty> clazz, String key) {
+        if (BooleanProperty.class.isAssignableFrom(clazz)) {
+            return readBooleanProperty(reader, element, key);
+        }
+        if (ComplexProperty.class.isAssignableFrom(clazz)) {
+            return readComplexProperty(reader, element, key);
+        }
+        if (DenotatorProperty.class.isAssignableFrom(clazz)) {
+            return readDenotatorProperty(reader, element, key);
+        }
+        if (DoubleProperty.class.isAssignableFrom(clazz)) {
+            return readDoubleProperty(reader, element, key);
+        }
+        if (FileProperty.class.isAssignableFrom(clazz)) {
+            return readFileProperty(reader, element, key);
+        }
+        if (FormProperty.class.isAssignableFrom(clazz)) {
+            return readFormProperty(reader, element, key);
+        }
+        if (IntegerProperty.class.isAssignableFrom(clazz)) {
+            return readIntegerProperty(reader, element, key);
+        }
+        if (RationalProperty.class.isAssignableFrom(clazz)) {
+            return readRationalProperty(reader, element, key);
+        }
+        if (StringProperty.class.isAssignableFrom(clazz)) {
+            return readStringProperty(reader, element, key);
+        }
+        if (TextProperty.class.isAssignableFrom(clazz)) {
+            return readTextProperty(reader, element, key);
+        }
+        return null;
+    }
+
+    private RubetteProperty readBooleanProperty(XMLReader reader, Element element, String key) {
+        boolean value = XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE);
+        return new BooleanProperty(key, key, value);
+    }
+
+    private RubetteProperty readComplexProperty(XMLReader reader, Element element, String key) {
+        Complex complex;
+        try {
+            complex = ArithmeticParsingUtils.parseComplex(XMLReader.getStringAttribute(element, VALUE_ATTR));
+        } catch (NumberFormatException e) {
+            complex = new Complex();
+        }
+        return new ComplexProperty(key, key, complex);
+    }
+
+    private RubetteProperty readDenotatorProperty(XMLReader reader, Element element, String key) {
+        Element child = XMLReader.getChild(element, "Denotator");
+        Denotator denotator = null;
+        if (child != null) {
+            denotator = reader.parseDenotator(child);
+        }
+        return new DenotatorProperty(key, key, denotator);
+    }
+
+    private RubetteProperty readDoubleProperty(XMLReader reader, Element element, String key) {
+        return new DoubleProperty(key, key, XMLReader.getRealAttribute(element, VALUE_ATTR, 0));
+    }
+
+    private RubetteProperty readFileProperty(XMLReader reader, Element element, String key) {
+        FileProperty property = new FileProperty(key, key, null, false);
+        property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
+        return property;
+    }
+
+    private RubetteProperty readFormProperty(XMLReader reader, Element element, String key) {
+        Element child = XMLReader.getChild(element, "Form");
+        Form form = child != null ? reader.parseAndResolveForm(child) : null;
+        return new FormProperty(key, key, form);
+    }
+
+    private RubetteProperty readIntegerProperty(XMLReader reader, Element element, String key) {
+        return new IntegerProperty(key, key, XMLReader.getIntAttribute(element, VALUE_ATTR, Integer.MIN_VALUE, Integer.MAX_VALUE, 0));
+    }
+
+    private RubetteProperty readRationalProperty(XMLReader reader, Element element, String key) {
+        String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
+        Rational rational;
+        try {
+           rational = ArithmeticParsingUtils.parseRational(s);
+        } catch (NumberFormatException e) {
+            rational = new Rational(0);
+        }
+        return new RationalProperty(key, key, rational);
+    }
+
+    private RubetteProperty readStringProperty(XMLReader reader, Element element, String key) {
+        return new StringProperty(key, key, XMLReader.getStringAttribute(element, VALUE_ATTR));
+    }
+
+    private RubetteProperty readTextProperty(XMLReader reader, Element element, String key) {
+        return new TextProperty(key, key, XMLReader.getText(element).trim());
+    }
 
 }

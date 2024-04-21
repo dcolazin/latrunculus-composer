@@ -19,17 +19,12 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
+import org.rubato.composer.components.JSelectFile;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JComponent;
-
-import org.rubato.composer.components.JSelectFile;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
 
 public class FileProperty extends RubetteProperty implements ActionListener {
 	
@@ -105,14 +100,7 @@ public class FileProperty extends RubetteProperty implements ActionListener {
     public FileProperty deepCopy() {
         return new FileProperty(this);
     }
-    
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        FileProperty property = this.deepCopy();
-        property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
-        return property;
-    }
 
-    
     public String toString() {
         return "FileProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }

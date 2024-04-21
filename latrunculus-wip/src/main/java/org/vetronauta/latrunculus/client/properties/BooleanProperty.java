@@ -19,20 +19,10 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
-import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
-
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
-import org.w3c.dom.Element;
 
 public class BooleanProperty extends RubetteProperty implements ActionListener {
 	
@@ -116,13 +106,6 @@ public class BooleanProperty extends RubetteProperty implements ActionListener {
     public BooleanProperty deepCopy() {
         return new BooleanProperty(this);
     }
-
-    public RubetteProperty fromXML(XMLReader reader, Element element) {
-        BooleanProperty property = this.deepCopy();
-        property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE));
-        return property;
-    }
-
     
     public String toString() {
         return "BooleanProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";

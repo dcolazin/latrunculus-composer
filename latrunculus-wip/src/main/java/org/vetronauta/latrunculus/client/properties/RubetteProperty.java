@@ -19,11 +19,9 @@
 
 package org.vetronauta.latrunculus.client.properties;
 
-import javax.swing.JComponent;
-
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
+
+import javax.swing.*;
 
 public abstract class RubetteProperty implements Comparable<RubetteProperty>, DeepCopyable<RubetteProperty> {
 
@@ -81,10 +79,6 @@ public abstract class RubetteProperty implements Comparable<RubetteProperty>, De
     
     public abstract void revert();
 
-    public abstract RubetteProperty fromXML(XMLReader reader, Element element);
-
-    protected static String VALUE_ATTR = "value";  
-    
     private String key;
     private String name;
     private int order;
