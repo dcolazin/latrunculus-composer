@@ -130,15 +130,7 @@ public class TextProperty
     public TextProperty deepCopy() {
         return new TextProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(getKey());
-        writer.writeTextNode(value);
-        writer.closeBlock();
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         TextProperty property = deepCopy();
         property.setValue(XMLReader.getText(element).trim());
@@ -146,7 +138,7 @@ public class TextProperty
     }
 
     
-        public String toString() {
+    public String toString() {
         return "TextProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+rows+","+cols+"]";
     }
 

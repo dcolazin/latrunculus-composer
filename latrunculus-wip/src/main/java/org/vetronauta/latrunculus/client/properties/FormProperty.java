@@ -103,17 +103,7 @@ public class FormProperty
     public FormProperty deepCopy() {
         return new FormProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(getKey());
-        if (value != null) {
-            writer.writeFormRef(value);
-        }
-        writer.closeBlock();
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         FormProperty property = deepCopy();
         Element child = XMLReader.getChild(element, "Form"); 
@@ -128,7 +118,7 @@ public class FormProperty
     }
 
     
-        public String toString() {
+    public String toString() {
         return "FormProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 

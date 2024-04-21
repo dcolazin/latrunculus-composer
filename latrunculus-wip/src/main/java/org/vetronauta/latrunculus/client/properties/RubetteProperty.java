@@ -23,7 +23,6 @@ import javax.swing.JComponent;
 
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 
 public abstract class RubetteProperty implements Comparable<RubetteProperty>, DeepCopyable<RubetteProperty> {
@@ -72,7 +71,7 @@ public abstract class RubetteProperty implements Comparable<RubetteProperty>, De
     }
     
     
-    public abstract Object getValue();
+    public abstract Object getValue(); //TODO generic
     
     public abstract void setValue(Object value);
     
@@ -81,9 +80,7 @@ public abstract class RubetteProperty implements Comparable<RubetteProperty>, De
     public abstract void apply();
     
     public abstract void revert();
-    
-    public abstract void toXML(XMLWriter writer);
-    
+
     public abstract RubetteProperty fromXML(XMLReader reader, Element element);
 
     protected static String VALUE_ATTR = "value";  

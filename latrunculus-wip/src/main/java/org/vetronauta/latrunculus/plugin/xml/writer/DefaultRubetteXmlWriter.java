@@ -527,7 +527,7 @@ public class DefaultRubetteXmlWriter implements LatrunculusXmlWriter<Rubette> {
     }
 
     private void write(SimpleAbstractRubette rubette, XMLWriter writer) {
-        rubette.getRubetteProperties().toXML(writer); //TODO propertiesWriter
+        writer.writeRubetteProperties(rubette.getRubetteProperties());
     }
 
 }

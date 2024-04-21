@@ -25,7 +25,6 @@ import java.util.Map.Entry;
 
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -63,14 +62,6 @@ public class RubetteProperties implements DeepCopyable<RubetteProperties> {
             prop.revert();
         }
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        for (RubetteProperty prop : properties.values()) {
-            prop.toXML(writer);
-        }
-    }
-    
     
     public RubetteProperties fromXML(XMLReader reader, Element element) {        
         RubetteProperties newProp = deepCopy();

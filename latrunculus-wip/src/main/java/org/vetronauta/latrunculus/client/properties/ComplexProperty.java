@@ -117,13 +117,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
     public ComplexProperty deepCopy() {
         return new ComplexProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, value);
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         ComplexProperty property = deepCopy();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);

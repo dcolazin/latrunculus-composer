@@ -145,13 +145,7 @@ public class RationalProperty
     public RationalProperty deepCopy() {
         return new RationalProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, value);
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         RationalProperty property = deepCopy();
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);

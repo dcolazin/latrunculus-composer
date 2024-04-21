@@ -39,6 +39,8 @@ import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
 
 import org.rubato.composer.network.NetworkModel;
+import org.vetronauta.latrunculus.client.properties.RubetteProperties;
+import org.vetronauta.latrunculus.client.properties.RubetteProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -47,6 +49,7 @@ import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.xml.writer.DefaultNetworkModelXmlWriter;
+import org.vetronauta.latrunculus.plugin.xml.writer.DefaultPropertyXmlWriter;
 import org.vetronauta.latrunculus.plugin.xml.writer.DefaultRubetteXmlWriter;
 import org.vetronauta.latrunculus.server.xml.writer.DefaultDefinitionXmlWriter;
 
@@ -62,6 +65,7 @@ public class XMLWriter {
     private final DefaultDefinitionXmlWriter definitionWriter = new DefaultDefinitionXmlWriter();
     private final DefaultRubetteXmlWriter rubetteWriter = new DefaultRubetteXmlWriter(); //TODO constructor is needed to separate the plugin module
     private final DefaultNetworkModelXmlWriter networkWriter = new DefaultNetworkModelXmlWriter(); //TODO constructor is needed to separate the plugin module
+    private final DefaultPropertyXmlWriter propertyWriter = new DefaultPropertyXmlWriter(); //TODO constructor is needed to separate the plugin module
 
     /**
      * Creates a non-compressing writer to the specified file.
@@ -495,6 +499,12 @@ public class XMLWriter {
 
     public void writeNetworkModel(NetworkModel r) {
         networkWriter.toXML(r, this);
+    }
+
+    public void writeRubetteProperties(RubetteProperties properties) {
+        for (RubetteProperty prop : properties.getProperties()) {
+            propertyWriter.toXML(prop, this);
+        }
     }
     
 

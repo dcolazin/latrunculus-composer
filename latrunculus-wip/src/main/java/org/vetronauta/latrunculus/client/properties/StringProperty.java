@@ -154,12 +154,6 @@ public class StringProperty
         return new StringProperty(this);
     }
     
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, value);
-    }
-    
-    
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         StringProperty property = deepCopy();
         property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR));
@@ -167,7 +161,7 @@ public class StringProperty
     }
 
     
-        public String toString() {
+    public String toString() {
         return "StringProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

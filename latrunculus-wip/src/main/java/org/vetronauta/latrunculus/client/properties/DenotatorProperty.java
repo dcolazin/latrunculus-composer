@@ -106,17 +106,7 @@ public class DenotatorProperty extends RubetteProperty implements ActionListener
     public DenotatorProperty deepCopy() {
         return new DenotatorProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.openBlock(getKey());
-        if (value != null) {
-            definitionXmlWriter.toXML(value, writer);
-        }
-        writer.closeBlock();
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         DenotatorProperty property = deepCopy();
         Element child = XMLReader.getChild(element, "Denotator"); 

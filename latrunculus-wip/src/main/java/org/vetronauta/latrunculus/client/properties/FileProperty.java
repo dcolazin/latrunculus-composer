@@ -106,20 +106,6 @@ public class FileProperty extends RubetteProperty implements ActionListener {
         return new FileProperty(this);
     }
     
-    
-    public void toXML(XMLWriter writer) {
-    	String canonicalPath = "";
-    	if (this.value != null) {
-    		try {
-    			canonicalPath = this.value.getCanonicalPath(); 
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    	}
-        writer.empty(getKey(), VALUE_ATTR, writer.toRelativePath(canonicalPath));
-    }
-    
-    
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         FileProperty property = this.deepCopy();
         property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));

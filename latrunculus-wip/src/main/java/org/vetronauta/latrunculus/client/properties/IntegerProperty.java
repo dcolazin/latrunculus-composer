@@ -143,13 +143,7 @@ public class IntegerProperty
     public IntegerProperty deepCopy() {
         return new IntegerProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, value);
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         IntegerProperty property = deepCopy();
         property.setValue(XMLReader.getIntAttribute(element, VALUE_ATTR, min, max, value));
@@ -157,7 +151,7 @@ public class IntegerProperty
     }
 
     
-        public String toString() {
+    public String toString() {
         return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 

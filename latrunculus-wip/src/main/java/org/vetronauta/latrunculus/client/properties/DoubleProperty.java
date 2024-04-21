@@ -144,12 +144,6 @@ public class DoubleProperty
         return new DoubleProperty(this);
     }
     
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, value);
-    }
-    
-    
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         DoubleProperty property = deepCopy();
         property.setValue(XMLReader.getRealAttribute(element, VALUE_ATTR, value));

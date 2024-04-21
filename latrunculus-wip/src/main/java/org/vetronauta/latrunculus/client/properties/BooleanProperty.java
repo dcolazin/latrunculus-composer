@@ -116,13 +116,7 @@ public class BooleanProperty extends RubetteProperty implements ActionListener {
     public BooleanProperty deepCopy() {
         return new BooleanProperty(this);
     }
-    
-    
-    public void toXML(XMLWriter writer) {
-        writer.empty(getKey(), VALUE_ATTR, this.value?TRUE_VALUE:FALSE_VALUE);
-    }
-    
-    
+
     public RubetteProperty fromXML(XMLReader reader, Element element) {
         BooleanProperty property = this.deepCopy();
         property.setValue(XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE));
@@ -131,7 +125,7 @@ public class BooleanProperty extends RubetteProperty implements ActionListener {
 
     
     public String toString() {
-        return "FileProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+        return "BooleanProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
 }
