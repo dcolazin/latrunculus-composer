@@ -25,7 +25,7 @@ import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.server.xml.Dispatcher;
 
-public abstract class ModuleMorphismPlugin implements Plugin {
+public abstract class ModuleMorphismOldPlugin implements OldPlugin {
 
     public final void init() {
         Dispatcher.getDispatcher().addModuleMorphism(getPrototype());

@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
 
@@ -29,7 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StringProperty
-        extends RubetteProperty
+        extends PluginProperty
         implements ActionListener, CaretListener {
 
     public StringProperty(String key, String name, String value, int min, int max) {

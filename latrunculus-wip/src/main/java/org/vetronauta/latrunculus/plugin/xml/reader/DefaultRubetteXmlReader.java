@@ -42,18 +42,18 @@ import org.rubato.rubettes.select2d.Select2DPanel;
 import org.rubato.rubettes.select2d.Select2DRubette;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.wallpaper.WallpaperRubette;
-import org.vetronauta.latrunculus.client.properties.BooleanProperty;
-import org.vetronauta.latrunculus.client.properties.ComplexProperty;
-import org.vetronauta.latrunculus.client.properties.DenotatorProperty;
-import org.vetronauta.latrunculus.client.properties.DoubleProperty;
-import org.vetronauta.latrunculus.client.properties.FileProperty;
-import org.vetronauta.latrunculus.client.properties.FormProperty;
-import org.vetronauta.latrunculus.client.properties.IntegerProperty;
-import org.vetronauta.latrunculus.client.properties.RationalProperty;
-import org.vetronauta.latrunculus.client.properties.RubetteProperties;
-import org.vetronauta.latrunculus.client.properties.RubetteProperty;
-import org.vetronauta.latrunculus.client.properties.StringProperty;
-import org.vetronauta.latrunculus.client.properties.TextProperty;
+import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
+import org.vetronauta.latrunculus.plugin.properties.ComplexProperty;
+import org.vetronauta.latrunculus.plugin.properties.DenotatorProperty;
+import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
+import org.vetronauta.latrunculus.plugin.properties.FileProperty;
+import org.vetronauta.latrunculus.plugin.properties.FormProperty;
+import org.vetronauta.latrunculus.plugin.properties.IntegerProperty;
+import org.vetronauta.latrunculus.plugin.properties.RationalProperty;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
+import org.vetronauta.latrunculus.plugin.properties.StringProperty;
+import org.vetronauta.latrunculus.plugin.properties.TextProperty;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -1020,7 +1020,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
     }
 
     private Rubette readSimpleAbstractRubette(XMLReader reader, Element element, Class<? extends Rubette> clazz) {
-        RubetteProperties newProp = readRubetteProperties(reader, element);
+        PluginProperties newProp = readRubetteProperties(reader, element);
         SimpleAbstractRubette rubette;
         try {
             rubette = (SimpleAbstractRubette) clazz.newInstance();
@@ -1034,14 +1034,14 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return rubette;
     }
 
-    private RubetteProperties readRubetteProperties(XMLReader reader, Element element) {
-        RubetteProperties newProp = new RubetteProperties();
+    private PluginProperties readRubetteProperties(XMLReader reader, Element element) {
+        PluginProperties newProp = new PluginProperties();
         Node node = element.getFirstChild();
         while (node != null) {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element e = (Element)node;
                 String key = e.getTagName();
-                RubetteProperty property = newProp.get(key); //TODO this cannot work... properties are empty!
+                PluginProperty property = newProp.get(key); //TODO this cannot work... properties are empty!
                 if (property != null) {
                     property = readRubetteProperty(reader, e, property.getClass(), key);
                     newProp.put(property);
@@ -1052,7 +1052,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return newProp;
     }
 
-    private RubetteProperty readRubetteProperty(XMLReader reader, Element element, Class<? extends RubetteProperty> clazz, String key) {
+    private PluginProperty readRubetteProperty(XMLReader reader, Element element, Class<? extends PluginProperty> clazz, String key) {
         if (BooleanProperty.class.isAssignableFrom(clazz)) {
             return readBooleanProperty(reader, element, key);
         }
@@ -1086,12 +1086,12 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return null;
     }
 
-    private RubetteProperty readBooleanProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readBooleanProperty(XMLReader reader, Element element, String key) {
         boolean value = XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE);
         return new BooleanProperty(key, key, value);
     }
 
-    private RubetteProperty readComplexProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readComplexProperty(XMLReader reader, Element element, String key) {
         Complex complex;
         try {
             complex = ArithmeticParsingUtils.parseComplex(XMLReader.getStringAttribute(element, VALUE_ATTR));
@@ -1101,7 +1101,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return new ComplexProperty(key, key, complex);
     }
 
-    private RubetteProperty readDenotatorProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readDenotatorProperty(XMLReader reader, Element element, String key) {
         Element child = XMLReader.getChild(element, "Denotator");
         Denotator denotator = null;
         if (child != null) {
@@ -1110,27 +1110,27 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return new DenotatorProperty(key, key, denotator);
     }
 
-    private RubetteProperty readDoubleProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readDoubleProperty(XMLReader reader, Element element, String key) {
         return new DoubleProperty(key, key, XMLReader.getRealAttribute(element, VALUE_ATTR, 0));
     }
 
-    private RubetteProperty readFileProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readFileProperty(XMLReader reader, Element element, String key) {
         FileProperty property = new FileProperty(key, key, null, false);
         property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
         return property;
     }
 
-    private RubetteProperty readFormProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readFormProperty(XMLReader reader, Element element, String key) {
         Element child = XMLReader.getChild(element, "Form");
         Form form = child != null ? reader.parseAndResolveForm(child) : null;
         return new FormProperty(key, key, form);
     }
 
-    private RubetteProperty readIntegerProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readIntegerProperty(XMLReader reader, Element element, String key) {
         return new IntegerProperty(key, key, XMLReader.getIntAttribute(element, VALUE_ATTR, Integer.MIN_VALUE, Integer.MAX_VALUE, 0));
     }
 
-    private RubetteProperty readRationalProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readRationalProperty(XMLReader reader, Element element, String key) {
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         Rational rational;
         try {
@@ -1141,11 +1141,11 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return new RationalProperty(key, key, rational);
     }
 
-    private RubetteProperty readStringProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readStringProperty(XMLReader reader, Element element, String key) {
         return new StringProperty(key, key, XMLReader.getStringAttribute(element, VALUE_ATTR));
     }
 
-    private RubetteProperty readTextProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty readTextProperty(XMLReader reader, Element element, String key) {
         return new TextProperty(key, key, XMLReader.getText(element).trim());
     }
 

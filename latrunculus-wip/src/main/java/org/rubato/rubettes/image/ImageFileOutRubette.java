@@ -28,8 +28,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-import org.vetronauta.latrunculus.client.properties.BooleanProperty;
-import org.vetronauta.latrunculus.client.properties.FileProperty;
+import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
+import org.vetronauta.latrunculus.plugin.properties.FileProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;

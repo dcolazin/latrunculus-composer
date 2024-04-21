@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import javax.swing.*;
 
 public class JRubettePropertiesDialog extends JPanel {
 
-    public JRubettePropertiesDialog(RubetteProperties properties) {
+    public JRubettePropertiesDialog(PluginProperties properties) {
         this.properties = properties;
         createLayout();
     }
@@ -41,12 +41,12 @@ public class JRubettePropertiesDialog extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         panel.setLayout(layout);
 
-        ArrayList<RubetteProperty> props = new ArrayList<RubetteProperty>(properties.getProperties());
+        ArrayList<PluginProperty> props = new ArrayList<PluginProperty>(properties.getProperties());
         Collections.sort(props);
 
         c.insets = new Insets(5, 5, 5, 5); 
 
-        for (RubetteProperty property : props) {
+        for (PluginProperty property : props) {
             c.weightx = 0.0;
             c.gridwidth = 1;
             c.weighty = 0.0;
@@ -72,7 +72,7 @@ public class JRubettePropertiesDialog extends JPanel {
     }
     
     
-    private RubetteProperties properties;
+    private PluginProperties properties;
 
     private static final long serialVersionUID = 1L;
 }

@@ -17,9 +17,11 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
+import org.vetronauta.latrunculus.core.math.element.impl.Complex;
+import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -28,70 +30,46 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IntegerProperty
-        extends RubetteProperty
-        implements ActionListener, CaretListener {
+public class ComplexProperty extends PluginProperty implements ActionListener, CaretListener {
 
-    public IntegerProperty(String key, String name, int value, int min, int max) {
+    public ComplexProperty(String key, String name, Complex value) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
-        if (min > max) {
-            int t = min;
-            min = max;
-            max = t;
-        }
-        this.min = min;
-        this.max = max;
     }
     
-    
-    public IntegerProperty(String key, String name, int value) {
-        this(key, name, value, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-    
-    
-    public IntegerProperty(IntegerProperty prop) {
+    public ComplexProperty(ComplexProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
-        this.min = prop.min;
-        this.max = prop.max;
     }
-    
-    
+
     public Object getValue() {
         return value;
     }
     
     
     public void setValue(Object value) {
-        if (value instanceof Integer) {
-            setInt((Integer)value);
+        if (value instanceof Complex) {
+            setComplex((Complex) value);
         }
     }
     
     
-    public int getInt() {
+    public Complex getComplex() {
         return value; 
     }
     
     
-    public void setInt(int value) {
-        if (value < min) {
-            value = min;
-        }
-        else if (value > max) {
-            value = max;
-        }
+    public void setComplex(Complex value) {
         this.value = value;
         this.tmpValue = value;
     }
     
-    
+
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(Integer.toString(getInt()));
+        textField.setText(getComplex().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -113,11 +91,7 @@ public class IntegerProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            int i = Integer.parseInt(s);
-            if (i >= min && i <= max) {
-                tmpValue = i;
-                return;
-            }
+            tmpValue = ArithmeticParsingUtils.parseComplex(s);
         }
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
@@ -125,29 +99,27 @@ public class IntegerProperty
     
     
     public void apply() {
-        setInt(tmpValue);
+        setComplex(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(Integer.toString(value));
+        textField.setText(value.toString());
     }
     
     @Override
-    public IntegerProperty deepCopy() {
-        return new IntegerProperty(this);
+    public ComplexProperty deepCopy() {
+        return new ComplexProperty(this);
     }
-    
+
     public String toString() {
-        return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
+        return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
     
-    private int value;
-    private int min;
-    private int max;
-    private int tmpValue;
+    private Complex value;
+    private Complex tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

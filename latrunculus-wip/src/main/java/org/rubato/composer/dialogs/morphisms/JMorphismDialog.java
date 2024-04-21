@@ -21,7 +21,7 @@ package org.rubato.composer.dialogs.morphisms;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.rubato.composer.components.JModuleEntry;
-import org.rubato.composer.plugin.ModuleMorphismPlugin;
+import org.rubato.composer.plugin.ModuleMorphismOldPlugin;
 import org.rubato.composer.plugin.PluginManager;
 import org.vetronauta.latrunculus.core.math.module.generic.FreeModule;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
@@ -465,7 +465,7 @@ public class JMorphismDialog
             }
             
             // add all module morphisms from plugins
-            for (ModuleMorphismPlugin m : pluginManager.getModuleMorphismPlugins()) {
+            for (ModuleMorphismOldPlugin m : pluginManager.getModuleMorphismPlugins()) {
                 if (m.checkSignature(domain, codomain)) {
                     items.add(m.getName());
                 }
@@ -566,7 +566,7 @@ public class JMorphismDialog
             }
             else {
                 boolean isplugin = false;
-                for (ModuleMorphismPlugin m : pluginManager.getModuleMorphismPlugins()) {
+                for (ModuleMorphismOldPlugin m : pluginManager.getModuleMorphismPlugins()) {
                     if (selectedType.equals(m.getName())) {
                         JMorphismType jtype = m.getJMorphismType(this);
                         if (jtype != null) {

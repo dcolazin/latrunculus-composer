@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.components.JSelectFile;
 
@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class FileProperty extends RubetteProperty implements ActionListener {
+public class FileProperty extends PluginProperty implements ActionListener {
 	
 	private File value;
 	private File tmpValue;

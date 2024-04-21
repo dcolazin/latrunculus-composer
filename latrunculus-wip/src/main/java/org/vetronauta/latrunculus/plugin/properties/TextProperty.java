@@ -17,14 +17,14 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 public class TextProperty
-        extends RubetteProperty
+        extends PluginProperty
         implements CaretListener {
 
     public TextProperty(String key, String name, String value, int cols, int rows, boolean lineWrap, boolean wordWrap) {

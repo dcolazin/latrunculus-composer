@@ -17,26 +17,24 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
-import org.rubato.composer.components.JSelectForm;
-import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
+import org.rubato.composer.components.JSelectDenotator;
+import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.repository.Repository;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormProperty
-        extends RubetteProperty
-        implements ActionListener {
+public class DenotatorProperty extends PluginProperty implements ActionListener {
 
-    public FormProperty(String key, String name, Form value) {
+    public DenotatorProperty(String key, String name, Denotator value) {
         super(key, name);
         this.value = value;
     }
-    
-    public FormProperty(FormProperty prop) {
+
+    public DenotatorProperty(DenotatorProperty prop) {
         super(prop);
         this.value = prop.value;
     }
@@ -48,60 +46,60 @@ public class FormProperty
     
     
     public void setValue(Object value) {
-        if (value instanceof Form) {
-            setForm((Form)value);
+        if (value instanceof Denotator) {
+            setDenotator((Denotator)value);
         }
     }
     
     
-    public Form getForm() {
+    public Denotator getDenotator() {
         return value; 
     }
     
     
-    public void setForm(Form value) {
+    public void setDenotator(Denotator value) {
         this.value = value;
         this.tmpValue = value;
     }
     
     
     public JComponent getJComponent() {
-        selectForm = new JSelectForm(rep);
-        selectForm.disableBorder();
-        selectForm.addActionListener(this);
-        selectForm.setForm(value);
-        return selectForm;
+        selectDenotator = new JSelectDenotator(rep);
+        selectDenotator.disableBorder();
+        selectDenotator.addActionListener(this);
+        selectDenotator.setDenotator(value);
+        return selectDenotator;
     }
 
     
     public void actionPerformed(ActionEvent e) {
-        tmpValue = selectForm.getForm();
+        tmpValue = selectDenotator.getDenotator();
     }
     
     
     public void apply() {
-        setForm(tmpValue);
+        setDenotator(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        selectForm.setForm(tmpValue);
+        selectDenotator.setDenotator(tmpValue);
     }
     
     @Override
-    public FormProperty deepCopy() {
-        return new FormProperty(this);
+    public DenotatorProperty deepCopy() {
+        return new DenotatorProperty(this);
     }
 
     public String toString() {
-        return "FormProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+        return "DenotatorProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
     
-    private Form value;
-    private Form tmpValue;
-    private JSelectForm selectForm;
+    private Denotator value;
+    private Denotator tmpValue;
+    private JSelectDenotator selectDenotator;
     
     private static Repository rep = Repository.systemRepository();
 }

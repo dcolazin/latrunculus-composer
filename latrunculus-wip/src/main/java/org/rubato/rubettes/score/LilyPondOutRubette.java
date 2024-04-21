@@ -34,7 +34,7 @@ import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
-import org.vetronauta.latrunculus.client.properties.FileProperty;
+import org.vetronauta.latrunculus.plugin.properties.FileProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;

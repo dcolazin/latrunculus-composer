@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.rubato.composer.plugin.Plugin;
+import org.rubato.composer.plugin.OldPlugin;
 import org.rubato.composer.plugin.PluginManager;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
@@ -89,7 +89,7 @@ public class RubetteLoader {
             splash.setMessage(ComposerMessages.getString("RubetteLoader.loading")+" "+name+" Rubette");   //$NON-NLS-3$
             rubetteManager.addRubette(rubette);
         }
-        for (Plugin plugin : pluginManager.getPlugins()) {
+        for (OldPlugin plugin : pluginManager.getPlugins()) {
             String name = plugin.getClass().getCanonicalName();
             splash.setMessage(ComposerMessages.getString("RubetteLoader.loading")+" "+name);  ;
             plugin.init();

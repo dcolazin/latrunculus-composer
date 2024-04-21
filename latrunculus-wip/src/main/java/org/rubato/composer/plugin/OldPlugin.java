@@ -26,7 +26,7 @@ package org.rubato.composer.plugin;
  * 
  * @author Gérard Milmeister
  */
-public interface Plugin {
+public interface OldPlugin {
 
     /**
      * Initializes the plugin-in.

@@ -17,22 +17,22 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 
 import javax.swing.*;
 
-public abstract class RubetteProperty implements Comparable<RubetteProperty>, DeepCopyable<RubetteProperty> {
+public abstract class PluginProperty implements Comparable<PluginProperty>, DeepCopyable<PluginProperty> {
 
-    protected RubetteProperty(String key, String name) {
+    protected PluginProperty(String key, String name) {
         this.key = key;
         this.name = name;
         this.order = sequence++;
     }
     
     
-    protected RubetteProperty(RubetteProperty prop) {
+    protected PluginProperty(PluginProperty prop) {
         key = prop.key;
         name = prop.name;
         order = prop.order;
@@ -64,7 +64,7 @@ public abstract class RubetteProperty implements Comparable<RubetteProperty>, De
     }
     
     
-    public int compareTo(RubetteProperty obj) {
+    public int compareTo(PluginProperty obj) {
         return order-obj.order;
     }
     

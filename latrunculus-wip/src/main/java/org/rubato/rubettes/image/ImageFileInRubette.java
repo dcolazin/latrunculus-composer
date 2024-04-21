@@ -29,8 +29,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import org.vetronauta.latrunculus.client.properties.BooleanProperty;
-import org.vetronauta.latrunculus.client.properties.FileProperty;
+import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
+import org.vetronauta.latrunculus.plugin.properties.FileProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;

@@ -96,8 +96,8 @@ public class PluginManager {
                     if (obj instanceof Rubette) {
                         rubettes.add((Rubette)obj);
                     }
-                    else if (obj instanceof Plugin) {
-                        addPlugin((Plugin)obj);
+                    else if (obj instanceof OldPlugin) {
+                        addPlugin((OldPlugin)obj);
                     }
                     else {
                         setError(PluginMessages.getString("PluginManager.notaplugin"), fileName, className);
@@ -123,10 +123,10 @@ public class PluginManager {
     }
     
     
-    private void addPlugin(Plugin plugin) {
+    private void addPlugin(OldPlugin plugin) {
         plugins.add(plugin);
-        if (plugin instanceof ModuleMorphismPlugin) {
-            moduleMorphismPlugins.add((ModuleMorphismPlugin)plugin);
+        if (plugin instanceof ModuleMorphismOldPlugin) {
+            moduleMorphismPlugins.add((ModuleMorphismOldPlugin)plugin);
         }
     }
     
@@ -151,20 +151,20 @@ public class PluginManager {
     }
     
     
-    public List<Plugin> getPlugins() {
+    public List<OldPlugin> getPlugins() {
         return plugins;
     }
 
 
-    public List<ModuleMorphismPlugin> getModuleMorphismPlugins() {
+    public List<ModuleMorphismOldPlugin> getModuleMorphismPlugins() {
         return moduleMorphismPlugins;
     }
     
 
     private LinkedList<File>    searchPath = new LinkedList<File>();
     private LinkedList<Rubette> rubettes = new LinkedList<Rubette>();
-    private LinkedList<Plugin>  plugins = new LinkedList<Plugin>();
-    private LinkedList<ModuleMorphismPlugin>  moduleMorphismPlugins = new LinkedList<ModuleMorphismPlugin>();
+    private LinkedList<OldPlugin>  plugins = new LinkedList<OldPlugin>();
+    private LinkedList<ModuleMorphismOldPlugin>  moduleMorphismPlugins = new LinkedList<ModuleMorphismOldPlugin>();
     private LinkedList<String>  errors = new LinkedList<String>();
     
     private static final FilenameFilter jarFilter = new FilenameFilter() {

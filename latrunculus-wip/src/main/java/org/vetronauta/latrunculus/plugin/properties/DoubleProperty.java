@@ -17,11 +17,9 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
-import org.vetronauta.latrunculus.core.math.element.impl.Complex;
-import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -30,38 +28,62 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ComplexProperty extends RubetteProperty implements ActionListener, CaretListener {
+public class DoubleProperty
+        extends PluginProperty
+        implements ActionListener, CaretListener {
 
-    public ComplexProperty(String key, String name, Complex value) {
+    public DoubleProperty(String key, String name, double value, double min, double max) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
+        if (min > max) {
+            double t = min;
+            min = max;
+            max = t;
+        }
+        this.min = min;
+        this.max = max;
     }
     
-    public ComplexProperty(ComplexProperty prop) {
+    
+    public DoubleProperty(String key, String name, double value) {
+        this(key, name, value, Double.MIN_VALUE, Double.MAX_VALUE);
+    }
+    
+    
+    public DoubleProperty(DoubleProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
+        this.min = prop.min;
+        this.max = prop.max;
     }
-
+    
+    
     public Object getValue() {
         return value;
     }
     
     
     public void setValue(Object value) {
-        if (value instanceof Complex) {
-            setComplex((Complex) value);
+        if (value instanceof Double) {
+            setDouble((Double)value);
         }
     }
     
     
-    public Complex getComplex() {
+    public double getDouble() {
         return value; 
     }
     
     
-    public void setComplex(Complex value) {
+    public void setDouble(double value) {
+        if (value < min) {
+            value = min;
+        }
+        else if (value > max) {
+            value = max;
+        }
         this.value = value;
         this.tmpValue = value;
     }
@@ -69,7 +91,7 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
 
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(getComplex().toString());
+        textField.setText(Double.toString(getDouble()));
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -91,7 +113,11 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            tmpValue = ArithmeticParsingUtils.parseComplex(s);
+            double d = Double.parseDouble(s);
+            if (d >= min && d <= max) {
+                tmpValue = d;
+                return;
+            }
         }
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
@@ -99,27 +125,29 @@ public class ComplexProperty extends RubetteProperty implements ActionListener, 
     
     
     public void apply() {
-        setComplex(tmpValue);
+        setDouble(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(value.toString());
+        textField.setText(Double.toString(value));
     }
     
     @Override
-    public ComplexProperty deepCopy() {
-        return new ComplexProperty(this);
+    public DoubleProperty deepCopy() {
+        return new DoubleProperty(this);
     }
 
     public String toString() {
-        return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+        return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
     
-    private Complex value;
-    private Complex tmpValue;
+    private double value;
+    private double min;
+    private double max;
+    private double tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

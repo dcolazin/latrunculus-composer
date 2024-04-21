@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
 
@@ -28,16 +28,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DoubleProperty
-        extends RubetteProperty
+public class IntegerProperty
+        extends PluginProperty
         implements ActionListener, CaretListener {
 
-    public DoubleProperty(String key, String name, double value, double min, double max) {
+    public IntegerProperty(String key, String name, int value, int min, int max) {
         super(key, name);
         this.value = value;
         this.tmpValue = value;
         if (min > max) {
-            double t = min;
+            int t = min;
             min = max;
             max = t;
         }
@@ -46,12 +46,12 @@ public class DoubleProperty
     }
     
     
-    public DoubleProperty(String key, String name, double value) {
-        this(key, name, value, Double.MIN_VALUE, Double.MAX_VALUE);
+    public IntegerProperty(String key, String name, int value) {
+        this(key, name, value, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     
     
-    public DoubleProperty(DoubleProperty prop) {
+    public IntegerProperty(IntegerProperty prop) {
         super(prop);
         this.value = prop.value;
         this.tmpValue = prop.tmpValue;
@@ -66,18 +66,18 @@ public class DoubleProperty
     
     
     public void setValue(Object value) {
-        if (value instanceof Double) {
-            setDouble((Double)value);
+        if (value instanceof Integer) {
+            setInt((Integer)value);
         }
     }
     
     
-    public double getDouble() {
+    public int getInt() {
         return value; 
     }
     
     
-    public void setDouble(double value) {
+    public void setInt(int value) {
         if (value < min) {
             value = min;
         }
@@ -88,10 +88,10 @@ public class DoubleProperty
         this.tmpValue = value;
     }
     
-
+    
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(Double.toString(getDouble()));
+        textField.setText(Integer.toString(getInt()));
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -113,9 +113,9 @@ public class DoubleProperty
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            double d = Double.parseDouble(s);
-            if (d >= min && d <= max) {
-                tmpValue = d;
+            int i = Integer.parseInt(s);
+            if (i >= min && i <= max) {
+                tmpValue = i;
                 return;
             }
         }
@@ -125,29 +125,29 @@ public class DoubleProperty
     
     
     public void apply() {
-        setDouble(tmpValue);
+        setInt(tmpValue);
     }
     
     
     public void revert() {
         tmpValue = value;
-        textField.setText(Double.toString(value));
+        textField.setText(Integer.toString(value));
     }
     
     @Override
-    public DoubleProperty deepCopy() {
-        return new DoubleProperty(this);
+    public IntegerProperty deepCopy() {
+        return new IntegerProperty(this);
     }
-
+    
     public String toString() {
-        return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
+        return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
     
-    private double value;
-    private double min;
-    private double max;
-    private double tmpValue;
+    private int value;
+    private int min;
+    private int max;
+    private int tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

@@ -17,14 +17,14 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BooleanProperty extends RubetteProperty implements ActionListener {
+public class BooleanProperty extends PluginProperty implements ActionListener {
 	
 	private boolean value;
 	private boolean tmpValue;

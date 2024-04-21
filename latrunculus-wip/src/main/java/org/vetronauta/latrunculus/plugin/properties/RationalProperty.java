@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RationalProperty
-        extends RubetteProperty
+        extends PluginProperty
         implements ActionListener, CaretListener {
 
     public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {

@@ -39,8 +39,8 @@ import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
 
 import org.rubato.composer.network.NetworkModel;
-import org.vetronauta.latrunculus.client.properties.RubetteProperties;
-import org.vetronauta.latrunculus.client.properties.RubetteProperty;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
@@ -501,8 +501,8 @@ public class XMLWriter {
         networkWriter.toXML(r, this);
     }
 
-    public void writeRubetteProperties(RubetteProperties properties) {
-        for (RubetteProperty prop : properties.getProperties()) {
+    public void writeRubetteProperties(PluginProperties properties) {
+        for (PluginProperty prop : properties.getProperties()) {
             propertyWriter.toXML(prop, this);
         }
     }

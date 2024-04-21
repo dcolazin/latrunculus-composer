@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.properties;
+package org.vetronauta.latrunculus.plugin.properties;
 
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 
@@ -25,41 +25,41 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class RubetteProperties implements DeepCopyable<RubetteProperties> {
+public class PluginProperties implements DeepCopyable<PluginProperties> {
 
-    private final HashMap<String,RubetteProperty> properties;
+    private final HashMap<String, PluginProperty> properties;
 
-    public RubetteProperties() {
+    public PluginProperties() {
         properties = new HashMap<>();
     }
     
-    public void put(RubetteProperty prop) {
+    public void put(PluginProperty prop) {
         properties.put(prop.getKey(), prop);
     }
 
-    public RubetteProperty get(String key) {
+    public PluginProperty get(String key) {
         return properties.get(key);
     }
 
-    public Collection<RubetteProperty> getProperties() {
+    public Collection<PluginProperty> getProperties() {
         return properties.values();
     }
 
     public void apply() {
-        for (RubetteProperty prop : properties.values()) {
+        for (PluginProperty prop : properties.values()) {
             prop.apply();
         }
     }
 
     public void revert() {
-        for (RubetteProperty prop : properties.values()) {
+        for (PluginProperty prop : properties.values()) {
             prop.revert();
         }
     }
 
-    public RubetteProperties deepCopy() {
-        RubetteProperties newProp = new RubetteProperties();
-        for (Entry<String,RubetteProperty> entry : properties.entrySet()) {
+    public PluginProperties deepCopy() {
+        PluginProperties newProp = new PluginProperties();
+        for (Entry<String, PluginProperty> entry : properties.entrySet()) {
             newProp.properties.put(entry.getKey(), entry.getValue().deepCopy());
         }
         return newProp;
@@ -69,7 +69,7 @@ public class RubetteProperties implements DeepCopyable<RubetteProperties> {
     public String toString() {
         StringBuilder s;
         s = new StringBuilder("------------------------------------------------\n");
-        for (RubetteProperty prop : properties.values()) {
+        for (PluginProperty prop : properties.values()) {
             s.append(prop).append("\n");
         }
         s.append("------------------------------------------------\n");

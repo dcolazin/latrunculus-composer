@@ -1,11 +1,11 @@
 package org.vetronauta.latrunculus.plugin.xml.writer;
 
-import org.vetronauta.latrunculus.client.properties.BooleanProperty;
-import org.vetronauta.latrunculus.client.properties.DenotatorProperty;
-import org.vetronauta.latrunculus.client.properties.FileProperty;
-import org.vetronauta.latrunculus.client.properties.FormProperty;
-import org.vetronauta.latrunculus.client.properties.RubetteProperty;
-import org.vetronauta.latrunculus.client.properties.TextProperty;
+import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
+import org.vetronauta.latrunculus.plugin.properties.DenotatorProperty;
+import org.vetronauta.latrunculus.plugin.properties.FileProperty;
+import org.vetronauta.latrunculus.plugin.properties.FormProperty;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
+import org.vetronauta.latrunculus.plugin.properties.TextProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
@@ -17,10 +17,10 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
-public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<RubetteProperty> {
+public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProperty> {
 
     @Override
-    public void toXML(RubetteProperty property, XMLWriter writer) {
+    public void toXML(PluginProperty property, XMLWriter writer) {
         if (property instanceof BooleanProperty) {
             write((BooleanProperty) property, writer);
             return;
@@ -44,7 +44,7 @@ public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<RubettePro
         writeValue(property, writer);
     }
 
-    private void writeValue(RubetteProperty property, XMLWriter writer) {
+    private void writeValue(PluginProperty property, XMLWriter writer) {
         writer.empty(property.getKey(), VALUE_ATTR, property.getValue());
     }
 

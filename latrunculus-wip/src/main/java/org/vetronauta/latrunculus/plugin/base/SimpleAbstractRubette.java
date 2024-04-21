@@ -20,9 +20,9 @@
 package org.vetronauta.latrunculus.plugin.base;
 
 import lombok.Setter;
-import org.vetronauta.latrunculus.client.properties.JRubettePropertiesDialog;
-import org.vetronauta.latrunculus.client.properties.RubetteProperties;
-import org.vetronauta.latrunculus.client.properties.RubetteProperty;
+import org.vetronauta.latrunculus.plugin.properties.JRubettePropertiesDialog;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 
 import javax.swing.*;
 
@@ -33,9 +33,9 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     /**
      * Returns the rubette properties of this rubette.
      */
-    public final RubetteProperties getRubetteProperties() {
+    public final PluginProperties getRubetteProperties() {
         if (properties == null) {
-            properties = new RubetteProperties();
+            properties = new PluginProperties();
         }
         return properties;
     }
@@ -44,7 +44,7 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     /**
      * Sets a new property.
      */
-    public void putProperty(RubetteProperty prop) {
+    public void putProperty(PluginProperty prop) {
         getRubetteProperties().put(prop);
     }
     
@@ -53,7 +53,7 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
      * Returns the property of the given <code>key</code>.
      * Returns null, iff no property with this key exists.
      */
-    public RubetteProperty getProperty(String key) {
+    public PluginProperty getProperty(String key) {
         return getRubetteProperties().get(key);
     }
 
@@ -93,6 +93,6 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     }
 
     @Setter
-    private RubetteProperties properties = null;
+    private PluginProperties properties = null;
     private JRubettePropertiesDialog dialog = null;
 }

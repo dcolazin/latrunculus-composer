@@ -1,6 +1,6 @@
 package org.rubato.rubettes.texture;
 
-import org.vetronauta.latrunculus.client.properties.DoubleProperty;
+import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
