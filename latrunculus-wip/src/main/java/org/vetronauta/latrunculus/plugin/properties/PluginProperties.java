@@ -27,39 +27,39 @@ import java.util.Map.Entry;
 
 public class PluginProperties implements DeepCopyable<PluginProperties> {
 
-    private final HashMap<String, PluginProperty> properties;
+    private final HashMap<String, PluginProperty<?>> properties;
 
     public PluginProperties() {
         properties = new HashMap<>();
     }
     
-    public void put(PluginProperty prop) {
+    public void put(PluginProperty<?> prop) {
         properties.put(prop.getKey(), prop);
     }
 
-    public PluginProperty get(String key) {
+    public PluginProperty<?> get(String key) {
         return properties.get(key);
     }
 
-    public Collection<PluginProperty> getProperties() {
+    public Collection<PluginProperty<?>> getProperties() {
         return properties.values();
     }
 
     public void apply() {
-        for (PluginProperty prop : properties.values()) {
+        for (PluginProperty<?> prop : properties.values()) {
             prop.apply();
         }
     }
 
     public void revert() {
-        for (PluginProperty prop : properties.values()) {
+        for (PluginProperty<?> prop : properties.values()) {
             prop.revert();
         }
     }
 
     public PluginProperties deepCopy() {
         PluginProperties newProp = new PluginProperties();
-        for (Entry<String, PluginProperty> entry : properties.entrySet()) {
+        for (Entry<String, PluginProperty<?>> entry : properties.entrySet()) {
             newProp.properties.put(entry.getKey(), entry.getValue().deepCopy());
         }
         return newProp;
@@ -69,7 +69,7 @@ public class PluginProperties implements DeepCopyable<PluginProperties> {
     public String toString() {
         StringBuilder s;
         s = new StringBuilder("------------------------------------------------\n");
-        for (PluginProperty prop : properties.values()) {
+        for (PluginProperty<?> prop : properties.values()) {
             s.append(prop).append("\n");
         }
         s.append("------------------------------------------------\n");

@@ -28,14 +28,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DoubleProperty
-        extends PluginProperty
-        implements ActionListener, CaretListener {
+public class DoubleProperty extends PluginProperty<Double> implements ActionListener, CaretListener {
 
     public DoubleProperty(String key, String name, double value, double min, double max) {
-        super(key, name);
-        this.value = value;
-        this.tmpValue = value;
+        super(key, name, value);
         if (min > max) {
             double t = min;
             min = max;
@@ -44,54 +40,31 @@ public class DoubleProperty
         this.min = min;
         this.max = max;
     }
-    
-    
+
     public DoubleProperty(String key, String name, double value) {
         this(key, name, value, Double.MIN_VALUE, Double.MAX_VALUE);
     }
     
-    
     public DoubleProperty(DoubleProperty prop) {
         super(prop);
-        this.value = prop.value;
-        this.tmpValue = prop.tmpValue;
         this.min = prop.min;
         this.max = prop.max;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Double) {
-            setDouble((Double)value);
+
+    @Override
+    protected void internalSet(Double newValue) {
+        if (newValue < min) {
+            newValue = min;
+        } else if (newValue > max) {
+            newValue = max;
         }
+        this.value = newValue;
+        this.tmpValue = newValue;
     }
-    
-    
-    public double getDouble() {
-        return value; 
-    }
-    
-    
-    public void setDouble(double value) {
-        if (value < min) {
-            value = min;
-        }
-        else if (value > max) {
-            value = max;
-        }
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
 
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(Double.toString(getDouble()));
+        textField.setText(Double.toString(getValue()));
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -122,13 +95,7 @@ public class DoubleProperty
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
     }
-    
-    
-    public void apply() {
-        setDouble(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         textField.setText(Double.toString(value));
@@ -143,11 +110,8 @@ public class DoubleProperty
         return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    
-    private double value;
     private double min;
     private double max;
-    private double tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

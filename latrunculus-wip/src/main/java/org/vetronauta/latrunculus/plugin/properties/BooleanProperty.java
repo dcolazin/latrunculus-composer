@@ -24,79 +24,38 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BooleanProperty extends PluginProperty implements ActionListener {
-	
-	private boolean value;
-	private boolean tmpValue;
+public class BooleanProperty extends PluginProperty<Boolean> implements ActionListener {
+
 	private String[] allowedExtensions;
-	private JPanel propertyPanel;
-	private JCheckBox booleanCheckbox;
-	
-    
+    private JCheckBox booleanCheckbox;
+
     public BooleanProperty(String key, String name, boolean value) {
-        super(key, name);
-        this.value = value;
+        super(key, name, value);
     }
-    
-    
+
     public BooleanProperty(BooleanProperty property) {
         super(property);
         this.allowedExtensions = property.allowedExtensions;
-        this.value = property.value;
     }
-    
-    
-    public Object getValue() {
-        return this.value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Boolean) {
-            this.setBoolean((Boolean)value);
-        }
-    }
-    
-    
-    public boolean getBoolean() {
-        return this.value; 
-    }
-    
-    
-    public void setBoolean(boolean value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
-    
+
+    @Override
     public JComponent getJComponent() {
-    	this.propertyPanel = new JPanel();
-    	this.propertyPanel.setLayout(new BorderLayout(2, 0));        
-        /*if (this.getName() != null) {
-        	this.propertyPanel.setBorder(makeTitledBorder(this.getName()));
-        } else {
-        	this.propertyPanel.setBorder(makeTitledBorder("Boolean:"));
-        }*/
-        
+        JPanel propertyPanel = new JPanel();
+    	propertyPanel.setLayout(new BorderLayout(2, 0));
         this.booleanCheckbox = new JCheckBox();
         this.booleanCheckbox.setSelected(this.value);
         this.booleanCheckbox.addActionListener(this);
-        this.propertyPanel.add(this.booleanCheckbox, BorderLayout.CENTER);
+        propertyPanel.add(this.booleanCheckbox, BorderLayout.CENTER);
         
-        return this.propertyPanel;
+        return propertyPanel;
     }
 
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
         this.tmpValue = this.booleanCheckbox.isSelected();
     }
-    
-    
-    public void apply() {
-        this.setBoolean(this.tmpValue);
-    }
-    
-    
+
+    @Override
     public void revert() {
         this.tmpValue = value;
         this.booleanCheckbox.setSelected(this.tmpValue);
@@ -106,7 +65,8 @@ public class BooleanProperty extends PluginProperty implements ActionListener {
     public BooleanProperty deepCopy() {
         return new BooleanProperty(this);
     }
-    
+
+    @Override
     public String toString() {
         return "BooleanProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }

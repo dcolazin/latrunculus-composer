@@ -136,8 +136,8 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
 	@Override
 	public boolean applyProperties() {
         super.applyProperties();
-        this.imageFile = ((FileProperty)this.getProperty(this.imageFileKey)).getFile();
-        this.variableSizePixels = ((BooleanProperty)this.getProperty(this.variableSizePixelsKey)).getBoolean();
+        this.imageFile = ((FileProperty)this.getProperty(this.imageFileKey)).getValue();
+        this.variableSizePixels = ((BooleanProperty)this.getProperty(this.variableSizePixelsKey)).getValue();
         return true;
     }
 	

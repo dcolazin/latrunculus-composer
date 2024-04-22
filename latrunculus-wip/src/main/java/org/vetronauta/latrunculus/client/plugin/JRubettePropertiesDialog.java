@@ -17,7 +17,10 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin;
+
+import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 
 import java.awt.*;
 import java.util.ArrayList;

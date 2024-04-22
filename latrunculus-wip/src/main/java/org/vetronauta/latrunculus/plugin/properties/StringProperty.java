@@ -28,14 +28,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StringProperty
-        extends PluginProperty
-        implements ActionListener, CaretListener {
+public class StringProperty extends PluginProperty<String> implements ActionListener, CaretListener {
 
     public StringProperty(String key, String name, String value, int min, int max) {
-        super(key, name);
-        this.value = value;
-        this.tmpValue = value;
+        super(key, name, value);
         if (min > max) {
             int t = min;
             min = max;
@@ -64,25 +60,8 @@ public class StringProperty
         this.max = prop.max;
     }
     
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof String) {
-            setString((String)value);
-        }
-    }
-    
-    
-    public String getString() {
-        return value; 
-    }
-    
-    
-    public void setString(String value) {
+    @Override
+    protected void internalSet(String value) {
         if (value.length() < min) {
             value = fillStringToLength(value, min);
         }
@@ -92,7 +71,6 @@ public class StringProperty
         this.value = value;
         this.tmpValue = value;
     }
-
     
     private String fillStringToLength(String val, int minLength) {
         String res = val;
@@ -132,13 +110,7 @@ public class StringProperty
         }
         textField.setBackground(prefs.getEntryErrorColor());
     }
-    
-    
-    public void apply() {
-        setString(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         textField.setText(value);
@@ -154,10 +126,8 @@ public class StringProperty
     }
 
     
-    private String value;
     private int min;
     private int max;
-    private String tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

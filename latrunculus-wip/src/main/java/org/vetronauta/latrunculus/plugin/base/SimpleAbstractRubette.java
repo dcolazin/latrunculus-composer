@@ -20,7 +20,7 @@
 package org.vetronauta.latrunculus.plugin.base;
 
 import lombok.Setter;
-import org.vetronauta.latrunculus.plugin.properties.JRubettePropertiesDialog;
+import org.vetronauta.latrunculus.client.plugin.JRubettePropertiesDialog;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 

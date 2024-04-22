@@ -119,12 +119,12 @@ public class RhythmizeRubette extends SimpleAbstractRubette {
 	}
 	
 	private void readProperties() {
-    	this.numberOfNoteValues = ((IntegerProperty)this.getProperty(this.numberOfNoteValuesKey)).getInt();
-    	this.maxNoteValue = ((DoubleProperty)this.getProperty(this.maxNoteValueKey)).getDouble();
-    	this.timeBase = ((DoubleProperty)this.getProperty(this.timeBaseKey)).getDouble();
-    	this.emphasizingPeriod = ((DoubleProperty)this.getProperty(this.emphasizingPeriodKey)).getDouble();
-    	this.emphasizedLoudness = ((IntegerProperty)this.getProperty(this.emphasizedLoudnessKey)).getInt();
-    	this.unemphasizedLoudness = ((IntegerProperty)this.getProperty(this.unemphasizedLoudnessKey)).getInt();
+    	this.numberOfNoteValues = ((IntegerProperty)this.getProperty(this.numberOfNoteValuesKey)).getValue();
+    	this.maxNoteValue = ((DoubleProperty)this.getProperty(this.maxNoteValueKey)).getValue();
+    	this.timeBase = ((DoubleProperty)this.getProperty(this.timeBaseKey)).getValue();
+    	this.emphasizingPeriod = ((DoubleProperty)this.getProperty(this.emphasizingPeriodKey)).getValue();
+    	this.emphasizedLoudness = ((IntegerProperty)this.getProperty(this.emphasizedLoudnessKey)).getValue();
+    	this.unemphasizedLoudness = ((IntegerProperty)this.getProperty(this.unemphasizedLoudnessKey)).getValue();
     }
     
     public String getGroup() {

@@ -58,8 +58,8 @@ public class QuantizeRubette extends SimpleAbstractRubette {
     	if (input == null) {
             this.addError("Input denotator is null.");
     	} else if (input.hasForm(new SoundNoteGenerator().getScoreForm())) {
-    		double timeUnit = ((DoubleProperty)this.getProperty(this.timeUnitKey)).getDouble();
-        	double pitchUnit = ((DoubleProperty)this.getProperty(this.pitchUnitKey)).getDouble();
+    		double timeUnit = ((DoubleProperty)this.getProperty(this.timeUnitKey)).getValue();
+        	double pitchUnit = ((DoubleProperty)this.getProperty(this.pitchUnitKey)).getValue();
         	Quantizer quantizer = new Quantizer(timeUnit, pitchUnit);
     		this.setOutput(0, quantizer.getQuantizedScore((PowerDenotator)input, runInfo));
     	} else {

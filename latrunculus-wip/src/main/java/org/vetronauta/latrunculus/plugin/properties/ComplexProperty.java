@@ -30,63 +30,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ComplexProperty extends PluginProperty implements ActionListener, CaretListener {
+public class ComplexProperty extends PluginProperty<Complex> implements ActionListener, CaretListener {
+
+    private JTextField textField = null;
+    private Color bgColor = null;
+    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 
     public ComplexProperty(String key, String name, Complex value) {
-        super(key, name);
-        this.value = value;
-        this.tmpValue = value;
+        super(key, name, value);
     }
     
     public ComplexProperty(ComplexProperty prop) {
         super(prop);
-        this.value = prop.value;
-        this.tmpValue = prop.tmpValue;
     }
 
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Complex) {
-            setComplex((Complex) value);
-        }
-    }
-    
-    
-    public Complex getComplex() {
-        return value; 
-    }
-    
-    
-    public void setComplex(Complex value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
-
+    @Override
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(getComplex().toString());
+        textField.setText(getValue().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
         return textField;
     }
     
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
         update();
     }
     
-    
+    @Override
     public void caretUpdate(CaretEvent e) {
         update();
     }
-    
-    
+
     public void update() {
         textField.setBackground(bgColor);
         String s = textField.getText();
@@ -96,13 +73,8 @@ public class ComplexProperty extends PluginProperty implements ActionListener, C
         catch (NumberFormatException e) { /* do nothing */ }
         textField.setBackground(prefs.getEntryErrorColor());
     }
-    
-    
-    public void apply() {
-        setComplex(tmpValue);
-    }
-    
-    
+
+    @Override
     public void revert() {
         tmpValue = value;
         textField.setText(value.toString());
@@ -113,15 +85,9 @@ public class ComplexProperty extends PluginProperty implements ActionListener, C
         return new ComplexProperty(this);
     }
 
+    @Override
     public String toString() {
         return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
-    
-    private Complex value;
-    private Complex tmpValue;
-    private JTextField textField = null;
-    
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

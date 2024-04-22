@@ -27,44 +27,16 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormProperty
-        extends PluginProperty
-        implements ActionListener {
+public class FormProperty extends PluginProperty<Form> implements ActionListener {
 
     public FormProperty(String key, String name, Form value) {
-        super(key, name);
-        this.value = value;
+        super(key, name, value);
     }
     
     public FormProperty(FormProperty prop) {
         super(prop);
-        this.value = prop.value;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Form) {
-            setForm((Form)value);
-        }
-    }
-    
-    
-    public Form getForm() {
-        return value; 
-    }
-    
-    
-    public void setForm(Form value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
-    
+
     public JComponent getJComponent() {
         selectForm = new JSelectForm(rep);
         selectForm.disableBorder();
@@ -77,13 +49,7 @@ public class FormProperty
     public void actionPerformed(ActionEvent e) {
         tmpValue = selectForm.getForm();
     }
-    
-    
-    public void apply() {
-        setForm(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         selectForm.setForm(tmpValue);
@@ -98,9 +64,6 @@ public class FormProperty
         return "FormProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
-    
-    private Form value;
-    private Form tmpValue;
     private JSelectForm selectForm;
     
     private static Repository rep = Repository.systemRepository();

@@ -26,17 +26,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class FileProperty extends PluginProperty implements ActionListener {
-	
-	private File value;
-	private File tmpValue;
+public class FileProperty extends PluginProperty<File> implements ActionListener {
+
 	private String[] allowedExtensions;
 	private JSelectFile fileSelector;
 	private boolean saving;
 	
     
     public FileProperty(String key, String name, String[] allowedExtensions, boolean saving) {
-        super(key, name);
+        super(key, name, null);
         this.allowedExtensions = allowedExtensions;
         this.saving = saving;
     }
@@ -45,33 +43,8 @@ public class FileProperty extends PluginProperty implements ActionListener {
     public FileProperty(FileProperty property) {
         super(property);
         this.allowedExtensions = property.allowedExtensions;
-        this.value = property.value;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof File) {
-            this.setFile((File)value);
-        }
-    }
-    
-    
-    public File getFile() {
-        return value; 
-    }
-    
-    
-    public void setFile(File value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
-    
+
     public JComponent getJComponent() {
         this.fileSelector = new JSelectFile(this.allowedExtensions, this.saving);
         this.fileSelector.disableBorder();
@@ -84,13 +57,7 @@ public class FileProperty extends PluginProperty implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         this.tmpValue = this.fileSelector.getFile();
     }
-    
-    
-    public void apply() {
-        this.setFile(this.tmpValue);
-    }
-    
-    
+
     public void revert() {
         this.tmpValue = value;
         this.fileSelector.setFile(this.value);

@@ -27,42 +27,20 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DenotatorProperty extends PluginProperty implements ActionListener {
+public class DenotatorProperty extends PluginProperty<Denotator> implements ActionListener {
+
+    private JSelectDenotator selectDenotator;
+
+    private static Repository rep = Repository.systemRepository();
 
     public DenotatorProperty(String key, String name, Denotator value) {
-        super(key, name);
-        this.value = value;
+        super(key, name, value);
     }
 
     public DenotatorProperty(DenotatorProperty prop) {
         super(prop);
-        this.value = prop.value;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Denotator) {
-            setDenotator((Denotator)value);
-        }
-    }
-    
-    
-    public Denotator getDenotator() {
-        return value; 
-    }
-    
-    
-    public void setDenotator(Denotator value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
-    
-    
+
     public JComponent getJComponent() {
         selectDenotator = new JSelectDenotator(rep);
         selectDenotator.disableBorder();
@@ -70,18 +48,11 @@ public class DenotatorProperty extends PluginProperty implements ActionListener 
         selectDenotator.setDenotator(value);
         return selectDenotator;
     }
-
     
     public void actionPerformed(ActionEvent e) {
         tmpValue = selectDenotator.getDenotator();
     }
-    
-    
-    public void apply() {
-        setDenotator(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         selectDenotator.setDenotator(tmpValue);
@@ -96,10 +67,4 @@ public class DenotatorProperty extends PluginProperty implements ActionListener 
         return "DenotatorProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
     }
 
-    
-    private Denotator value;
-    private Denotator tmpValue;
-    private JSelectDenotator selectDenotator;
-    
-    private static Repository rep = Repository.systemRepository();
 }

@@ -19,69 +19,64 @@
 
 package org.vetronauta.latrunculus.plugin.properties;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 
 import javax.swing.*;
 
-public abstract class PluginProperty implements Comparable<PluginProperty>, DeepCopyable<PluginProperty> {
+@Getter
+@Setter
+public abstract class PluginProperty<T> implements Comparable<PluginProperty<?>>, DeepCopyable<PluginProperty<T>> {
 
-    protected PluginProperty(String key, String name) {
+    private static int sequence = 0;
+
+    private final int order;
+    private final String key;
+    private final String name;
+
+    protected T value;
+    protected T tmpValue;
+
+    protected PluginProperty(String key, String name, T value) {
         this.key = key;
         this.name = name;
+        this.value = value;
+        this.tmpValue = value;
         this.order = sequence++;
     }
     
-    
-    protected PluginProperty(PluginProperty prop) {
-        key = prop.key;
-        name = prop.name;
-        order = prop.order;
+    protected PluginProperty(PluginProperty<T> prop) {
+        this.key = prop.key;
+        this.name = prop.name;
+        this.value = prop.value;
+        this.tmpValue = prop.tmpValue;
+        this.order = prop.order;
     }
-    
-    
-    public String getKey() {
-        return key;
-    }
-    
-    
-    public void setKey(String key) {
-        this.key = key;
-    }
-    
-    
-    public String getName() {
-        return name;
-    }
-    
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    
-    public int getOrder() {
-        return order;
-    }
-    
-    
+
+    @Override
     public int compareTo(PluginProperty obj) {
-        return order-obj.order;
+        return order - obj.order;
     }
-    
-    
-    public abstract Object getValue(); //TODO generic
-    
-    public abstract void setValue(Object value);
+
+    public void setValue(T newValue) {
+        if (newValue != null) {
+            internalSet(newValue);
+        }
+    }
+
+    protected void internalSet(@NonNull T newValue) {
+        this.value = newValue;
+        this.tmpValue = newValue;
+    }
     
     public abstract JComponent getJComponent();
     
-    public abstract void apply();
+    public void apply() {
+        setValue(tmpValue);
+    }
     
     public abstract void revert();
 
-    private String key;
-    private String name;
-    private int order;
-    
-    private static int sequence = 0;
 }

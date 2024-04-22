@@ -23,14 +23,10 @@ import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-public class TextProperty
-        extends PluginProperty
-        implements CaretListener {
+public class TextProperty extends PluginProperty<String> implements CaretListener {
 
     public TextProperty(String key, String name, String value, int cols, int rows, boolean lineWrap, boolean wordWrap) {
-        super(key, name);
-        this.value = value;
-        this.tmpValue = value;
+        super(key, name, value);
         if (cols < 10) {
             cols = 10;
         }
@@ -57,36 +53,10 @@ public class TextProperty
     
     public TextProperty(TextProperty prop) {
         super(prop);
-        this.value = prop.value;
-        this.tmpValue = prop.tmpValue;
         this.cols = prop.cols;
         this.rows = prop.rows;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof String) {
-            setString((String)value);
-        }
-    }
-    
-    
-    public String getString() {
-        return value; 
-    }
-    
-    
-    public void setString(String value) {
-        this.value = value;
-        this.tmpValue = value;
-    }
 
-    
     public JComponent getJComponent() {
         textArea = new JTextArea(rows, cols);
         textArea.setText(value);
@@ -107,16 +77,9 @@ public class TextProperty
     
     
     public void update() {
-        String s = textArea.getText();
-        tmpValue = s;
+        tmpValue = textArea.getText();
     }
-    
-    
-    public void apply() {
-        setString(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         textArea.setText(value);
@@ -132,10 +95,8 @@ public class TextProperty
     }
 
     
-    private String value;
     private int cols;
     private int rows;
-    private String tmpValue;
     private JTextArea textArea = null;
     private boolean lineWrap = true;
     private boolean wordWrap = true;

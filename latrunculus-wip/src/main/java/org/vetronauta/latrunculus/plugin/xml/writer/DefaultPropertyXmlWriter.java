@@ -49,22 +49,22 @@ public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProp
     }
 
     private void write(BooleanProperty property, XMLWriter writer) {
-        writer.empty(property.getKey(), VALUE_ATTR, (boolean) property.getValue() ? TRUE_VALUE : FALSE_VALUE);
+        writer.empty(property.getKey(), VALUE_ATTR, property.getValue() ? TRUE_VALUE : FALSE_VALUE);
     }
 
     private void write(DenotatorProperty property, XMLWriter writer) {
         writer.openBlock(property.getKey());
         if (property.getValue() != null) {
-            writer.writeDenotator((Denotator) property.getValue());
+            writer.writeDenotator(property.getValue());
         }
         writer.closeBlock();
     }
 
     private void write(FileProperty property, XMLWriter writer) {
         String canonicalPath = "";
-        if (property.getFile() != null) {
+        if (property.getValue() != null) {
             try {
-                canonicalPath = property.getFile().getCanonicalPath();
+                canonicalPath = property.getValue().getCanonicalPath();
             } catch (IOException e) {
                 e.printStackTrace();
             }

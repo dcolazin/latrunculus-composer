@@ -274,7 +274,7 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
 	@Override
 	public boolean applyProperties() {
         super.applyProperties();
-        this.lilyPondFile = ((FileProperty)this.getProperty(this.lilyPondFileKey)).getFile();
+        this.lilyPondFile = ((FileProperty)this.getProperty(this.lilyPondFileKey)).getValue();
         return true;
     }
     

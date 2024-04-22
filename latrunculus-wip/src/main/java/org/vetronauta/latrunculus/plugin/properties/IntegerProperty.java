@@ -28,14 +28,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IntegerProperty
-        extends PluginProperty
-        implements ActionListener, CaretListener {
+public class IntegerProperty extends PluginProperty<Integer> implements ActionListener, CaretListener {
 
     public IntegerProperty(String key, String name, int value, int min, int max) {
-        super(key, name);
-        this.value = value;
-        this.tmpValue = value;
+        super(key, name, value);
         if (min > max) {
             int t = min;
             min = max;
@@ -53,31 +49,12 @@ public class IntegerProperty
     
     public IntegerProperty(IntegerProperty prop) {
         super(prop);
-        this.value = prop.value;
-        this.tmpValue = prop.tmpValue;
         this.min = prop.min;
         this.max = prop.max;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Integer) {
-            setInt((Integer)value);
-        }
-    }
-    
-    
-    public int getInt() {
-        return value; 
-    }
-    
-    
-    public void setInt(int value) {
+
+    @Override
+    protected void internalSet(Integer value) {
         if (value < min) {
             value = min;
         }
@@ -88,10 +65,9 @@ public class IntegerProperty
         this.tmpValue = value;
     }
     
-    
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(Integer.toString(getInt()));
+        textField.setText(Integer.toString(getValue()));
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -123,12 +99,6 @@ public class IntegerProperty
         textField.setBackground(prefs.getEntryErrorColor());
     }
     
-    
-    public void apply() {
-        setInt(tmpValue);
-    }
-    
-    
     public void revert() {
         tmpValue = value;
         textField.setText(Integer.toString(value));
@@ -144,10 +114,8 @@ public class IntegerProperty
     }
 
     
-    private int value;
     private int min;
     private int max;
-    private int tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;

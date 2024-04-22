@@ -30,12 +30,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RationalProperty
-        extends PluginProperty
-        implements ActionListener, CaretListener {
+public class RationalProperty extends PluginProperty<Rational> implements ActionListener, CaretListener {
 
     public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {
-        super(key, name);
+        super(key, name, value);
         this.value = value;
         this.tmpValue = value;
         if (min.compareTo(max) > 0) {
@@ -51,35 +49,15 @@ public class RationalProperty
     public RationalProperty(String key, String name, Rational value) {
         this(key, name, value, new Rational(Integer.MIN_VALUE), new Rational(Integer.MAX_VALUE));
     }
-    
-    
+
     public RationalProperty(RationalProperty prop) {
         super(prop);
-        this.value = prop.value;
-        this.tmpValue = prop.tmpValue;
         this.min = prop.min;
         this.max = prop.max;
     }
-    
-    
-    public Object getValue() {
-        return value;
-    }
-    
-    
-    public void setValue(Object value) {
-        if (value instanceof Rational) {
-            setRational((Rational)value);
-        }
-    }
-    
-    
-    public Rational getRational() {
-        return value; 
-    }
-    
-    
-    public void setRational(Rational value) {
+
+    @Override
+    public void setValue(Rational value) {
         if (value.compareTo(min) < 0) {
             value = min;
         }
@@ -89,11 +67,10 @@ public class RationalProperty
         this.value = value;
         this.tmpValue = value;
     }
-    
 
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(getRational().toString());
+        textField.setText(getValue().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -124,13 +101,7 @@ public class RationalProperty
         catch (NumberFormatException e) {}
         textField.setBackground(prefs.getEntryErrorColor());
     }
-    
-    
-    public void apply() {
-        setRational(tmpValue);
-    }
-    
-    
+
     public void revert() {
         tmpValue = value;
         textField.setText(value.toString());
@@ -145,11 +116,8 @@ public class RationalProperty
         return "RationalProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    
-    private Rational value;
     private Rational min;
     private Rational max;
-    private Rational tmpValue;
     private JTextField textField = null;
     
     private Color bgColor = null;
