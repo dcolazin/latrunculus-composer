@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.client.plugin;
+package org.vetronauta.latrunculus.client.plugin.prop;
 
 import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
