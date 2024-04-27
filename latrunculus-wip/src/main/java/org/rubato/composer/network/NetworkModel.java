@@ -21,8 +21,8 @@ package org.rubato.composer.network;
 
 import org.rubato.composer.JComposer;
 import org.rubato.composer.notes.NoteModel;
-import org.rubato.composer.rubette.Link;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.Link;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,17 +66,17 @@ public class NetworkModel {
     }
     
     
-    public void addRubette(RubetteModel rubette) {
+    public void addRubette(PluginNode rubette) {
         rubettes.add(rubette);
     }
     
     
-    public void removeRubette(RubetteModel rubette) {
+    public void removeRubette(PluginNode rubette) {
         rubettes.remove(rubette);
     }
     
     
-    public ArrayList<RubetteModel> getRubettes() {
+    public ArrayList<PluginNode> getRubettes() {
         return rubettes;
     }
     
@@ -88,7 +88,7 @@ public class NetworkModel {
     }
     
     
-    public ArrayList<RubetteModel> getDependents() {
+    public ArrayList<PluginNode> getDependents() {
         return dependents;
     }
     
@@ -96,7 +96,7 @@ public class NetworkModel {
     private void computeRootsAndCoroots() {
         roots.clear();
         coroots.clear();
-        for (RubetteModel rubette : rubettes) {
+        for (PluginNode rubette : rubettes) {
             if (rubette.getInLinkCount() == 0) {
                 roots.add(rubette);
             }
@@ -109,7 +109,7 @@ public class NetworkModel {
     
     private void computeDependents() {
         dependents.clear();
-        for (RubetteModel model : roots) {
+        for (PluginNode model : roots) {
             computeDependents(model, dependents);
             dependents.add(model);
         }
@@ -118,8 +118,8 @@ public class NetworkModel {
     }
     
     
-    private void computeDependents(RubetteModel model, ArrayList<RubetteModel> list) {
-        for (RubetteModel rmodel : model.getFirstDependents()) {
+    private void computeDependents(PluginNode model, ArrayList<PluginNode> list) {
+        for (PluginNode rmodel : model.getFirstDependents()) {
             computeDependents(rmodel, list);
             if (!(list.contains(rmodel))) {
                 list.add(rmodel);
@@ -130,7 +130,7 @@ public class NetworkModel {
     
     private void computeDependencies() {
         dependencies.clear();
-        for (RubetteModel model : coroots) {
+        for (PluginNode model : coroots) {
             computeDependencies(model, dependencies);
             dependencies.add(model);
         }
@@ -139,8 +139,8 @@ public class NetworkModel {
     }
     
     
-    private void computeDependencies(RubetteModel model, ArrayList<RubetteModel> list) {
-        for (RubetteModel rmodel : model.getFirstDependencies()) {
+    private void computeDependencies(PluginNode model, ArrayList<PluginNode> list) {
+        for (PluginNode rmodel : model.getFirstDependencies()) {
             computeDependencies(rmodel, list);
             if (!(list.contains(rmodel))) {
                 list.add(rmodel);
@@ -164,20 +164,20 @@ public class NetworkModel {
     }
 
     public NetworkModel newInstance() {
-        ArrayList<RubetteModel> newRubettes = new ArrayList<>(rubettes.size());
+        ArrayList<PluginNode> newRubettes = new ArrayList<>(rubettes.size());
         for (int i = 0; i < rubettes.size(); i++) {
-            RubetteModel rmodel = rubettes.get(i);
+            PluginNode rmodel = rubettes.get(i);
             rmodel.setSerial(i);
             newRubettes.add(rmodel.newInstance());
         }
-        for (RubetteModel rmodel : rubettes) {
+        for (PluginNode rmodel : rubettes) {
             for (int j = 0; j < rmodel.getInLinkCount(); j++) {
                 Link link = rmodel.getInLink(j);
                 int src = link.getSrcModel().getSerial();
-                RubetteModel srcModel = newRubettes.get(src);
+                PluginNode srcModel = newRubettes.get(src);
                 int srcPos = link.getSrcPos();
                 int dest = link.getDestModel().getSerial();
-                RubetteModel destModel = newRubettes.get(dest);
+                PluginNode destModel = newRubettes.get(dest);
                 int destPos = link.getDestPos();
                 Link newLink = new Link(srcModel, srcPos, destModel, destPos);
                 newLink.setType(link.getType());
@@ -218,7 +218,7 @@ public class NetworkModel {
         StringBuilder buf = new StringBuilder(30);
         buf.append("NetworkModel["); 
         buf.append(getName());
-        for (RubetteModel rubette : rubettes) {
+        for (PluginNode rubette : rubettes) {
             buf.append(","); 
             buf.append(rubette);
         }
@@ -230,10 +230,10 @@ public class NetworkModel {
     private JNetwork  jnetwork;
     private String    name;
     private String    info = ""; 
-    private ArrayList<RubetteModel> rubettes = new ArrayList<>();
-    private ArrayList<RubetteModel> roots = new ArrayList<>();
-    private ArrayList<RubetteModel> coroots = new ArrayList<>();
-    private ArrayList<RubetteModel> dependents = new ArrayList<>(100);
-    private ArrayList<RubetteModel> dependencies = new ArrayList<>(100);
+    private ArrayList<PluginNode> rubettes = new ArrayList<>();
+    private ArrayList<PluginNode> roots = new ArrayList<>();
+    private ArrayList<PluginNode> coroots = new ArrayList<>();
+    private ArrayList<PluginNode> dependents = new ArrayList<>(100);
+    private ArrayList<PluginNode> dependencies = new ArrayList<>(100);
     private ArrayList<NoteModel> notes = new ArrayList<>();
 }

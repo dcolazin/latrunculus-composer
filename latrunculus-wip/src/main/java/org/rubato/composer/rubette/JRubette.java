@@ -29,6 +29,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import org.vetronauta.latrunculus.plugin.base.Link;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.JComposer;
 import org.rubato.composer.JRubetteList;
@@ -47,16 +49,16 @@ public final class JRubette extends JPanel
 
 
     public JRubette(int x, int y, Rubette rubette, String name) {
-        this(x, y, new RubetteModel(rubette, name), name);        
+        this(x, y, new PluginNode(rubette, name), name);
     }
     
     
-    public JRubette(RubetteModel rubetteModel) {
+    public JRubette(PluginNode rubetteModel) {
         this(rubetteModel.getLocation().x, rubetteModel.getLocation().y, rubetteModel, rubetteModel.getName());
     }
     
     
-    public JRubette(int x, int y, RubetteModel rubetteModel, String name) {
+    public JRubette(int x, int y, PluginNode rubetteModel, String name) {
         model = rubetteModel;
         rubetteModel.setJRubette(this);
 
@@ -137,7 +139,7 @@ public final class JRubette extends JPanel
     }
 
 
-    public RubetteModel getModel() {
+    public PluginNode getModel() {
         return model;
     }
 
@@ -954,8 +956,8 @@ public final class JRubette extends JPanel
     }
 
     
-    private void computeDependents(RubetteModel rubetteModel, ArrayList<RubetteModel> list) {
-        for (RubetteModel rmodel : rubetteModel.getFirstDependents()) {
+    private void computeDependents(PluginNode rubetteModel, ArrayList<PluginNode> list) {
+        for (PluginNode rmodel : rubetteModel.getFirstDependents()) {
             computeDependents(rmodel, list);
             if (!(list.contains(rmodel))) {
                 list.add(rmodel);
@@ -997,7 +999,7 @@ public final class JRubette extends JPanel
     private boolean      selected     = false;
     private boolean      inselection  = false;
 
-    protected RubetteModel model            = null;
+    protected PluginNode model            = null;
     private JLabel         nameLabel        = null;
     private JLabel         infoLabel        = null;
     private JDialog        viewDialog       = null;
@@ -1009,7 +1011,7 @@ public final class JRubette extends JPanel
     private Connector    inConnectors[];
     private Connector    outConnectors[];
 
-    private ArrayList<RubetteModel> dependents = new ArrayList<RubetteModel>(100);
+    private ArrayList<PluginNode> dependents = new ArrayList<PluginNode>(100);
     
     // dimensions of box
     

@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import org.rubato.composer.icons.Icons;
 import org.rubato.composer.network.NetworkModel;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
@@ -47,7 +47,7 @@ public class MacroRubette extends AbstractRubette {
         
         for (int i = 0; i < networkModel.getDependents().size(); i++) {
             if (runInfo.stopped()) { break; }
-            RubetteModel model = networkModel.getDependents().get(i);
+            PluginNode model = networkModel.getDependents().get(i);
             Rubette rubette = model.getRubette();
             rubette.clearErrors();
             try {
@@ -74,7 +74,7 @@ public class MacroRubette extends AbstractRubette {
     
     public void setNetworkModel(NetworkModel model) {
         networkModel = model;
-        for (RubetteModel rmodel : model.getRubettes()) {
+        for (PluginNode rmodel : model.getRubettes()) {
             Rubette arubette = rmodel.getRubette();
             if (arubette instanceof MacroInputRubette) {
                 inputRubette = (MacroInputRubette)arubette;

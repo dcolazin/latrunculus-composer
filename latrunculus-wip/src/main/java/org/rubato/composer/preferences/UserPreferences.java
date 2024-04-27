@@ -19,6 +19,9 @@
 
 package org.rubato.composer.preferences;
 
+import org.apache.commons.lang3.EnumUtils;
+import org.vetronauta.latrunculus.plugin.base.LinkType;
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
@@ -83,8 +86,9 @@ public final class UserPreferences {
     }
     
 
-    public int getLinkType() {
-        return preferences.getInt(PREF_LINKS_ZIGZAG, 2);
+    public LinkType getLinkType() {
+        int linkType = preferences.getInt(PREF_LINKS_ZIGZAG, 2);
+        return LinkType.of(linkType);
     }
     
     

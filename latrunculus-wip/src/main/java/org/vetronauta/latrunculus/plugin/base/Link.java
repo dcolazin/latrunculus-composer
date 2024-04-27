@@ -19,17 +19,27 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
-import org.vetronauta.latrunculus.core.util.Stoppable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-/**
- * A RunInfo provides information about the current running network.
- * 
- * @author Gérard Milmeister
- */
-public interface RunInfo extends Stoppable {
-    
-    /**
-     * Adds a progress message for the specified rubette.
-     */
-    void addMessage(PluginNode rubette, String msg);
+@Getter
+@Setter
+@ToString(includeFieldNames = false)
+@RequiredArgsConstructor
+public class Link {
+
+    private final PluginNode srcModel;
+    private final int srcPos;
+    private final PluginNode destModel;
+    private final int destPos;
+
+    private LinkType type = LinkType.LINE;
+
+    public void detach() {
+        srcModel.removeOutLink(this);
+        destModel.removeInLink(this);
+    }
+
 }

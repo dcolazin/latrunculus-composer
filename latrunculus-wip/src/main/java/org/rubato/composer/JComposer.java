@@ -50,7 +50,7 @@ import org.rubato.composer.objectbrowser.ObjectBrowser;
 import org.rubato.composer.preferences.JPreferences;
 import org.rubato.composer.preferences.UserPreferences;
 import org.rubato.composer.rubette.JRubette;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.server.xml.XMLReader;
@@ -1112,7 +1112,7 @@ public class JComposer extends JFrame implements Observer {
      * Runs the rubettes in <code>runList</code> in the
      * given order.
      */
-    public void startPartialRun(ArrayList<RubetteModel> runList) {
+    public void startPartialRun(ArrayList<PluginNode> runList) {
         if (contRun) {
             JNetwork network = getCurrentJNetwork();
             if (network != null) {

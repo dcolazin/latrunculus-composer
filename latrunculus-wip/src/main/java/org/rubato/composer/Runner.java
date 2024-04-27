@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.network.NetworkModel;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
@@ -59,7 +59,7 @@ public class Runner implements Runnable {
     /**
      * Sets a list of rubettes to run in the given network.
      */
-    public void setList(NetworkModel network, ArrayList<RubetteModel> list) {
+    public void setList(NetworkModel network, ArrayList<PluginNode> list) {
         this.network = network;
         dependents = list;
     }
@@ -72,7 +72,7 @@ public class Runner implements Runnable {
         composer.resetProgressWindow(dependents.size());
         for (int i = 0; i < dependents.size(); i++) {
             if (runInfo.stopped()) { break; }
-            RubetteModel model = dependents.get(i);
+            PluginNode model = dependents.get(i);
             Rubette rubette = model.getRubette();
             rubette.clearErrors();
             try {
@@ -106,7 +106,7 @@ public class Runner implements Runnable {
      * @param msg the string describing the problem
      * @param model the RubetteModel where the problem occurred
      */
-    public void addProblem(String msg, RubetteModel model) {
+    public void addProblem(String msg, PluginNode model) {
         problems.add(new Problem(msg, network.getJNetwork(), model.getJRubette()));
     }
 
@@ -116,7 +116,7 @@ public class Runner implements Runnable {
      * @param msgs a list of the strings describing the problems
      * @param model the RubetteModel where the problems occurred
      */
-    public void addProblems(List<String> msgs, RubetteModel model) {
+    public void addProblems(List<String> msgs, PluginNode model) {
         for (String msg : msgs) {
             addProblem(msg, model);
         }
@@ -165,7 +165,7 @@ public class Runner implements Runnable {
     private JComposer     composer;
     private Thread        thread;
     private NetworkModel  network;
-    private ArrayList<RubetteModel> dependents;
+    private ArrayList<PluginNode> dependents;
     private LinkedList<Problem> problems;    
     private RunnerRunInfo runInfo;
     private int           nrClicked = 0;     
@@ -190,7 +190,7 @@ public class Runner implements Runnable {
             stop = false;
         }
         
-        public void addMessage(RubetteModel rubette, String msg) {
+        public void addMessage(PluginNode rubette, String msg) {
             jcomposer.addProgressMessage(rubette.getName()+": "+msg);
         }
         

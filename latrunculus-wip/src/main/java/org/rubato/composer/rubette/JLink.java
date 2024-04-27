@@ -19,6 +19,9 @@
 
 package org.rubato.composer.rubette;
 
+import org.vetronauta.latrunculus.plugin.base.Link;
+import org.vetronauta.latrunculus.plugin.base.LinkType;
+
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
@@ -86,14 +89,14 @@ public class JLink extends JPanel {
         int y = Math.min(srcPt.y, destPt.y);
         int w = Math.abs(destPt.x-srcPt.x);
         int h = Math.abs(destPt.y-srcPt.y);
-        if (type == LINE || type == ZIGZAG) {
+        if (type == LinkType.LINE || type == LinkType.ZIGZAG) {
             srcX = 5+((srcPt.x < destPt.x)?0:w);
             srcY = (srcPt.y < destPt.y)?0:h;
             destX = 5+((srcPt.x > destPt.x)?0:w);
             destY = (srcPt.y > destPt.y)?0:h;
             setBounds(x-5, y, w+10, h+1);
         }
-        else if (type == CURVE) {
+        else if (type == LinkType.CURVE) {
             int dy = Math.abs(srcPt.y-destPt.y);
             int curve_len = (dy > CURVE_LEN)?CURVE_LEN:CURVE_LEN-(CURVE_LEN-dy);
             y -= curve_len;
@@ -126,16 +129,16 @@ public class JLink extends JPanel {
     public boolean isNear(Point point) {
         int x = point.x-getX();
         int y = point.y-getY();
-        if (type == ZIGZAG) {
+        if (type == LinkType.ZIGZAG) {
             int midY = (srcY+destY)/2;
             return isNearLine(srcX, srcY, srcX, midY, x, y) ||
                    isNearLine(srcX, midY, destX, midY, x, y) ||
                    isNearLine(destX, midY, destX, destY, x, y);
         }
-        else if (type == LINE) {
+        else if (type == LinkType.LINE) {
             return isNearLine(srcX, srcY, destX, destY, x, y);
         }
-        else if (type == CURVE) {
+        else if (type == LinkType.CURVE) {
             return path.intersects(x-2, y-2, 4, 4);
         }
         else {
@@ -155,18 +158,12 @@ public class JLink extends JPanel {
     }
     
     
-    public int getType() {
+    public LinkType getType() {
         return type;
     }
     
 
-    public void setType(int t) {
-        if (t < LINE) {
-            t = LINE;
-        }
-        if (t > CURVE) {
-            t = CURVE;
-        }
+    public void setType(LinkType t) {
         type = t;
         if (link != null) {
             link.setType(t);
@@ -188,13 +185,13 @@ public class JLink extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                              RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
-        if (type == ZIGZAG) {
+        if (type == LinkType.ZIGZAG) {
             int midY = (srcY+destY)/2;
             g2d.drawLine(srcX, srcY, srcX, midY);
             g2d.drawLine(srcX, midY, destX, midY);
             g2d.drawLine(destX, midY, destX, destY);
         }
-        else if (type == LINE) {
+        else if (type == LinkType.LINE) {
             g2d.drawLine(srcX, srcY, destX, destY);
         }
         else {
@@ -224,9 +221,6 @@ public class JLink extends JPanel {
     private Stroke stroke = new BasicStroke(1);
     private int CURVE_LEN = 80;
         
-    private int type = CURVE;
-    
-    public static int LINE   = 0;
-    public static int ZIGZAG = 1;
-    public static int CURVE  = 2;
+    private LinkType type = LinkType.CURVE;
+
 }

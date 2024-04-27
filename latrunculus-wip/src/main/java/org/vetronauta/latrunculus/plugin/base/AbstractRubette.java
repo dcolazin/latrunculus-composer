@@ -21,8 +21,6 @@ package org.vetronauta.latrunculus.plugin.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vetronauta.latrunculus.server.exception.LatrunculusError;
-import org.rubato.composer.rubette.Link;
-import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 
@@ -45,7 +43,7 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractRubette implements Rubette {
 
-    private RubetteModel model;
+    private PluginNode model;
     private Denotator[] output;
     private int inCount = 1;
     private int outCount = 1;
@@ -221,7 +219,7 @@ public abstract class AbstractRubette implements Rubette {
      * never be used by a Rubette implementation.
      */
     //TODO is there a way to not have this public method?
-    public final void setModel(RubetteModel model) {
+    public final void setModel(PluginNode model) {
         this.model = model;
     }
 

@@ -19,7 +19,6 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
-import org.rubato.composer.rubette.RubetteModel;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import javax.swing.*;
@@ -33,23 +32,10 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 
-public interface Rubette {
+public interface Rubette extends Plugin {
 
     String INPUT_CONNECTOR_FORMAT = "Input #%d";
     String OUTPUT_CONNECTOR_FORMAT = "Output #%d";
-    
-    /**
-     * Runs the Rubette.
-     * This is the heart of the Rubette and implements the
-     * actual computation. Input values are retrieved with the
-     * getInput method and output values are stored using the
-     * setOutput method. The runInfo parameter object has a method
-     * stopped() which should be called regularly, and, in the case
-     * it returns false, the run() method should exit gracefully.
-     * @param runInfo contains information about the Runner that executes
-     *        the network
-     */
-    void run(RunInfo runInfo);
 
     /**
      * Returns the group this Rubette belongs to.
@@ -272,5 +258,5 @@ public interface Rubette {
      * This is called by the Composer, and should, in general,
      * never be used by a Rubette implementation.
      */
-    void setModel(RubetteModel model);
+    void setModel(PluginNode model);
 }

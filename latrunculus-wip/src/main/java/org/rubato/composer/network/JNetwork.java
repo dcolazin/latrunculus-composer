@@ -32,6 +32,9 @@ import java.util.LinkedList;
 
 import javax.swing.*;
 
+import org.vetronauta.latrunculus.plugin.base.Link;
+import org.vetronauta.latrunculus.plugin.base.LinkType;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.rubato.composer.*;
 import org.rubato.composer.components.JMenuTitleItem;
@@ -184,14 +187,14 @@ public class JNetwork extends JLayeredPane
     public void setModel(NetworkModel model) {
         dispose();
         this.model = model;
-        ArrayList<RubetteModel> rlist = model.getRubettes();
-        for (RubetteModel rmodel : rlist) {
+        ArrayList<PluginNode> rlist = model.getRubettes();
+        for (PluginNode rmodel : rlist) {
             JRubette jrubette = new JRubette(rmodel);
             rmodel.setJRubette(jrubette);
             jrubette.addMouseListener(this);
             rubettes.add(0, jrubette);
         }
-        for (RubetteModel rmodel : rlist) {
+        for (PluginNode rmodel : rlist) {
             for (JLink jlink : rmodel.getJRubette().makeLinks()) {
                 addLink(jlink);
             }
@@ -422,7 +425,7 @@ public class JNetwork extends JLayeredPane
 
     
     public void highlight(JRubette jrubette, boolean b) {
-        if (b == false) {
+        if (!b) {
             highlighted = null;
             jrubette.highlight(false);
         }
@@ -645,32 +648,16 @@ public class JNetwork extends JLayeredPane
     private JPopupMenu getLinkPopup(final JLink jlink) {
         JPopupMenu popup = new JPopupMenu();
         JMenuItem item = new JMenuItem(NetworkMessages.getString("JNetwork.removelink"));
-        item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    removeLink(jlink);
-                }
-            });
+        item.addActionListener(e -> removeLink(jlink));
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.diagonal"));
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                jlink.setType(JLink.LINE);
-            }
-        });        
+        item.addActionListener(e -> jlink.setType(LinkType.LINE));
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.zigzag"));
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                jlink.setType(JLink.ZIGZAG);
-            }
-        });        
+        item.addActionListener(e -> jlink.setType(LinkType.ZIGZAG));
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.curved"));
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                jlink.setType(JLink.CURVE);
-            }
-        });        
+        item.addActionListener(e -> jlink.setType(LinkType.CURVE));
         popup.add(item);
         return popup;
     }
@@ -683,32 +670,16 @@ public class JNetwork extends JLayeredPane
         popup.add(item);
         popup.addSeparator();
         item = new JMenuItem(NetworkMessages.getString("JNetwork.rename"));
-        item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    renameNetwork();
-                }
-            });
+        item.addActionListener(e -> renameNetwork());
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.discard"));
-        item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    removeNetwork();
-                }
-            });
+        item.addActionListener(e -> removeNetwork());
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.createnote"));
-        item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    createNote(x, y);
-                }
-            });
+        item.addActionListener(e -> createNote(x, y));
         popup.add(item);
         item = new JMenuItem(NetworkMessages.getString("JNetwork.createfromnet"));
-        item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    createRubette();
-                }
-            });
+        item.addActionListener(e -> createRubette());
         popup.add(item);
         return popup;
     }
@@ -739,14 +710,12 @@ public class JNetwork extends JLayeredPane
     
     
     protected void createNote(final int x, final int y) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JNote jnote = new JNote(x, y);
-                notes.add(jnote);
-                model.addNote(jnote.getModel());
-                setChanged();
-                refreshLayout();
-            }
+        SwingUtilities.invokeLater(() -> {
+            JNote jnote = new JNote(x, y);
+            notes.add(jnote);
+            model.addNote(jnote.getModel());
+            setChanged();
+            refreshLayout();
         });
     }
     
@@ -782,10 +751,10 @@ public class JNetwork extends JLayeredPane
         NetworkModel newNetworkModel = model.newInstance();
             
         // check network
-        ArrayList<RubetteModel> rbts = newNetworkModel.getRubettes();
+        ArrayList<PluginNode> rbts = newNetworkModel.getRubettes();
         int inCount = 0;
         int outCount = 0;
-        for (RubetteModel rmodel : rbts) {
+        for (PluginNode rmodel : rbts) {
             Rubette arubette = rmodel.getRubette();
             if (arubette instanceof MacroInputRubette) {
                 inCount++;
@@ -873,7 +842,7 @@ public class JNetwork extends JLayeredPane
     
     public void toggleSelection(JRubette rubette) {
         if (selection == null) {
-            selection = new ArrayList<JRubette>();
+            selection = new ArrayList<>();
         }
         if (selection.remove(rubette)) {
             rubette.setInSelection(false);
@@ -888,8 +857,8 @@ public class JNetwork extends JLayeredPane
     public class JSelectionRectangle extends JPanel {
         
         public void set(int x0, int y0, int x1, int y1) {
-            rect.x      = (x0 < x1)?x0:x1;
-            rect.y      = (y0 < y1)?y0:y1;
+            rect.x      = Math.min(x0, x1);
+            rect.y      = Math.min(y0, y1);
             rect.width  = Math.abs(x1-x0)+1;
             rect.height = Math.abs(y1-y0)+1;
             setBounds(rect);
@@ -916,11 +885,11 @@ public class JNetwork extends JLayeredPane
     protected NetworkModel      model        = null;
     // Link back to the containing JComposer
     private JComposer           jcomposer    = null;
-    private ArrayList<JRubette> rubettes     = new ArrayList<JRubette>();
-    private ArrayList<JLink>    links        = new ArrayList<JLink>();
+    private ArrayList<JRubette> rubettes     = new ArrayList<>();
+    private ArrayList<JLink>    links        = new ArrayList<>();
     private JLink               dragLink     = null;
     private Connector           srcConnector = null;
-    protected ArrayList<JNote>  notes        = new ArrayList<JNote>();
+    protected ArrayList<JNote>  notes        = new ArrayList<>();
 
     private   JRubette highlighted = null;
     protected JRubette selected    = null;

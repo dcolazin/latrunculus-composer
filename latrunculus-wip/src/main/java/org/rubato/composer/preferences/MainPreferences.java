@@ -36,7 +36,7 @@ public class MainPreferences extends JPreferencesPanel {
 
     protected void createLayout() {
         zigzagBox = new JComboBox(linkTypes);
-        zigzagBox.setSelectedIndex(userPrefs.getLinkType());
+        zigzagBox.setSelectedIndex(userPrefs.getLinkType().ordinal());
         addPreference(PreferencesMessages.getString("MainPreferences.defaultlink"), zigzagBox);
         
         saveGeometryButton = new JCheckBox();

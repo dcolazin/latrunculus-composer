@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.composer.rubette;
+package org.vetronauta.latrunculus.plugin.base;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -30,13 +30,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.vetronauta.latrunculus.plugin.base.Rubette;
+import org.rubato.composer.rubette.JRubette;
 import org.rubato.rubettes.builtin.MacroRubette;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 
 @Getter
 @Setter
-public class RubetteModel {
+public class PluginNode {
 
     private JRubette jRubette;
     private String name;
@@ -51,10 +51,10 @@ public class RubetteModel {
     private final Rubette rubette;
     private final List<Link> inLinks = new ArrayList<>();
     private final List<Link> outLinks = new ArrayList<>();
-    private final LinkedList<RubetteModel> dependencies = new LinkedList<>();
-    private final LinkedList<RubetteModel> dependents = new LinkedList<>();
+    private final LinkedList<PluginNode> dependencies = new LinkedList<>();
+    private final LinkedList<PluginNode> dependents = new LinkedList<>();
 
-    public RubetteModel(@NonNull Rubette rubette, String name) {
+    public PluginNode(@NonNull Rubette rubette, String name) {
         rubette.setModel(this);
         this.rubette = rubette;
         this.name = name;
@@ -166,59 +166,24 @@ public class RubetteModel {
         return outLinks.size();
     }
     
-    public List<RubetteModel> getFirstDependents() {
-        List<RubetteModel> alldependents = new LinkedList<>();
+    public List<PluginNode> getFirstDependents() {
+        List<PluginNode> alldependents = new LinkedList<>();
         for (Link link : outLinks) {
             alldependents.add(link.getDestModel());
         }
         return alldependents;
     }
     
-    
-    public List<RubetteModel> getDependencies() {
-        return dependencies;
-    }
-    
-    
-    public List<RubetteModel> getFirstDependencies() {
-        List<RubetteModel> alldependencies = new LinkedList<>();
+    public List<PluginNode> getFirstDependencies() {
+        List<PluginNode> alldependencies = new LinkedList<>();
         for (Link link : inLinks) {
             alldependencies.add(link.getSrcModel());
         }
         return alldependencies;
     }
-    
-    
-    public void computeDependents() {
-        dependents.clear();
-        for (Link link : outLinks) {
-            RubetteModel dest = link.getDestModel();
-            dependents.add(dest);
-            for (RubetteModel model : dest.getDependents()) {
-                if (!dependents.contains(model)) {
-                    dependents.add(model);
-                }
-            }
-        }
-    }
 
-    
-    public void computeDependencies() {
-        dependencies.clear();
-        for (Link link : inLinks) {
-            RubetteModel src = link.getSrcModel();
-            dependencies.add(src);
-            for (RubetteModel model : src.getDependencies()) {
-                if (!dependencies.contains(model)) {
-                    dependencies.add(model);
-                }
-            }
-        }
-    }
-    
-    
-    public RubetteModel duplicate() {
-        RubetteModel newModel = new RubetteModel(rubette.duplicate(), name);
+    public PluginNode duplicate() {
+        PluginNode newModel = new PluginNode(rubette.duplicate(), name);
         newModel.setLocation(getLocation());
         return newModel;
     }
@@ -246,7 +211,7 @@ public class RubetteModel {
     }
     
     
-    public RubetteModel newInstance() {
+    public PluginNode newInstance() {
         return duplicate();
     }
     

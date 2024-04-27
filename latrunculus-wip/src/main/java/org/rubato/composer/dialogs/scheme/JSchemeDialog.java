@@ -30,7 +30,7 @@ import javax.swing.*;
 
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.core.math.arith.NumberTheory;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
@@ -198,7 +198,7 @@ public class JSchemeDialog
             return stop;
         }
         public boolean stop = false;
-        public void addMessage(RubetteModel rubette, String msg) {}
+        public void addMessage(PluginNode rubette, String msg) {}
     }
     
     protected Evaluator evaluator;

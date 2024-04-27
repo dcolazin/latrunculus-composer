@@ -4,8 +4,8 @@ import org.rubato.composer.RubetteManager;
 import org.rubato.composer.network.NetworkMessages;
 import org.rubato.composer.network.NetworkModel;
 import org.rubato.composer.notes.NoteModel;
-import org.rubato.composer.rubette.Link;
-import org.rubato.composer.rubette.RubetteModel;
+import org.vetronauta.latrunculus.plugin.base.Link;
+import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.rubato.rubettes.alteration.AlterationRubette;
 import org.rubato.rubettes.alteration.JAlterationDimensionsTable;
 import org.rubato.rubettes.bigbang.BigBangRubette;
@@ -43,18 +43,16 @@ import org.rubato.rubettes.select2d.Select2DRubette;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.wallpaper.WallpaperRubette;
 import org.vetronauta.latrunculus.client.plugin.properties.BooleanClientProperty;
-import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.ClientPropertiesFactory;
 import org.vetronauta.latrunculus.client.plugin.properties.ComplexClientProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.DenotatorClientProperty;
-import org.vetronauta.latrunculus.client.plugin.properties.StringClientProperty;
+import org.vetronauta.latrunculus.plugin.base.LinkType;
 import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.FormClientProperty;
 import org.vetronauta.latrunculus.plugin.properties.IntegerProperty;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.RationalProperty;
-import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 import org.vetronauta.latrunculus.plugin.properties.StringProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.TextClientProperty;
@@ -174,7 +172,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         else {
             NetworkModel networkModel = new NetworkModel(name);
             RubetteManager manager = RubetteManager.getManager();
-            HashMap<Integer, RubetteModel> rubetteModelMap = new HashMap<Integer,RubetteModel>();
+            HashMap<Integer, PluginNode> rubetteModelMap = new HashMap<Integer, PluginNode>();
 
             // read rubettes
             Element child = XMLReader.getChild(networkElement, RUBETTE);
@@ -191,7 +189,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
                 else {
                     rubette = fromXML(child, rubette.getClass(), reader);
                     if (rubette != null) {
-                        RubetteModel rmodel = new RubetteModel(rubette, name);
+                        PluginNode rmodel = new PluginNode(rubette, name);
                         rmodel.setName(rubName);
                         rmodel.setLocation(new Point(x, y));
                         rubetteModelMap.put(serial, rmodel);
@@ -213,11 +211,11 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
                 int dest = XMLReader.getIntAttribute(child, DEST_ATTR, 0);
                 int destPos = XMLReader.getIntAttribute(child, DESTPOS_ATTR, 0);
                 int type = XMLReader.getIntAttribute(child, TYPE_ATTR, 0);
-                RubetteModel srcModel = rubetteModelMap.get(src);
-                RubetteModel destModel = rubetteModelMap.get(dest);
+                PluginNode srcModel = rubetteModelMap.get(src);
+                PluginNode destModel = rubetteModelMap.get(dest);
                 if (srcModel != null && destModel != null) {
                     Link link = new Link(srcModel, srcPos, destModel, destPos);
-                    link.setType(type);
+                    link.setType(LinkType.of(type));
                     srcModel.addOutLink(link);
                     destModel.setInLink(link);
                 }
