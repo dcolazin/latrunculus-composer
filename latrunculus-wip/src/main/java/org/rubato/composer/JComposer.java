@@ -120,7 +120,6 @@ public class JComposer extends JFrame implements Observer {
      * Adds the specified AbstractRubette to the JRubetteList.
      */
     public void addRubettePrototype(Rubette rubette) {
-        rubette.init();
         rubetteList.addRubette(rubette);
     }
     
@@ -579,9 +578,6 @@ public class JComposer extends JFrame implements Observer {
         networkContainer.clear();
         manager.clear();
         rep.initGlobalRepository();
-        for (Rubette rubette : manager.getRubettes()) {
-            rubette.init();
-        }
         currentFile = null;
         setChanged(false);
     }

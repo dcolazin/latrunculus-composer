@@ -77,8 +77,6 @@ public class MelodyRubette extends SimpleAbstractRubette {
         this.putProperty(new IntegerProperty(this.maxIntUpKey, "Maximum interval up", 6, 0, 1000000));
         //this.addRelation(this.minIntUpKey, this.maxIntUpKey, SimpleAbstractRubette.LEQ);
     }
-	
-	public void init() { }
 
     public void run(RunInfo runInfo) {
     	this.readProperties();

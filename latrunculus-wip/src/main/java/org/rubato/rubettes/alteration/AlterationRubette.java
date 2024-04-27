@@ -98,8 +98,6 @@ public class AlterationRubette extends AbstractRubette implements ActionListener
         return newInstance();
     }
 
-    public void init() {}
-
 	@Override
 	public void run(RunInfo arg0) {
 		PowerDenotator input0 = (PowerDenotator) this.getInput(0);

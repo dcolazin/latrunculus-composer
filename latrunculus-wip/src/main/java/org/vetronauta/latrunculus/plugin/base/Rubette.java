@@ -37,16 +37,7 @@ public interface Rubette {
 
     String INPUT_CONNECTOR_FORMAT = "Input #%d";
     String OUTPUT_CONNECTOR_FORMAT = "Output #%d";
-
-    /**
-     * Initializes Rubette.
-     * This method is called when a Rubette is instantiated
-     * as a prototype.
-     */
-    default void init() {
-        //do nothing
-    }
-
+    
     /**
      * Runs the Rubette.
      * This is the heart of the Rubette and implements the

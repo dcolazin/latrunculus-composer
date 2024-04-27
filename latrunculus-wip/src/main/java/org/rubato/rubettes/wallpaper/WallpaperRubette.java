@@ -66,17 +66,14 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 	private JButton morphismDownButton = null;
 	private JWallpaperDimensionsTable morphismsTable = null;
     private JStatusline statusline = null;
-    
-	/**
-	 * Defines one input and one output. Initializes instance variables.
-	 */
-    public void init() {
-        setInCount(1);
-        setOutCount(1);
-        this.morphismsTable = new JWallpaperDimensionsTable(this);
-        this.morphismsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.simpleFormFinder = new SimpleFormFinder(null);
-    }
+
+	public WallpaperRubette() {
+		setInCount(1);
+		setOutCount(1);
+		this.morphismsTable = new JWallpaperDimensionsTable(this);
+		this.morphismsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		this.simpleFormFinder = new SimpleFormFinder(null);
+	}
 
     /**
      * Called when the Rubette is run. Calculates and sets the output denotator, if there is an
@@ -181,9 +178,7 @@ public class WallpaperRubette extends AbstractRubette implements ActionListener 
 	 * Creates a standard instance of WallpaperRubette 
 	 */
     public Rubette newInstance() {
-        WallpaperRubette rubette = new WallpaperRubette();
-        rubette.init();
-        return rubette;
+        return new WallpaperRubette();
     }
 
     @Override

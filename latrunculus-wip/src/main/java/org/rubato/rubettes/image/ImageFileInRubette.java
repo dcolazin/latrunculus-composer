@@ -74,8 +74,6 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
         this.putProperty(new FileClientProperty(this.imageFileKey, "Image file", allowedExtensions, false));
         this.putProperty(new BooleanClientProperty(this.variableSizePixelsKey, "Variable size pixels", false));
     }
-	
-	public void init() { }
 
     public void run(RunInfo runInfo) {
     	if (this.imageFile == null) {

@@ -994,7 +994,6 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
 
     private Rubette readWallpaperRubette(XMLReader reader, Element element) {
         WallpaperRubette loadedRubette = new WallpaperRubette();
-        loadedRubette.init();
         Element child = XMLReader.getChild(element, FORM);
         loadedRubette.setInputForm((PowerForm)reader.parseAndResolveForm(child));
 

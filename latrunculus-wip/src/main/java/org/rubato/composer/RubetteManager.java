@@ -105,7 +105,7 @@ public class RubetteManager {
 
     
     public void clear() {
-        LinkedList<Rubette> toClear = new LinkedList<Rubette>();
+        LinkedList<Rubette> toClear = new LinkedList<>();
         for (Rubette arubette : nameMap.values()) {
             if (arubette instanceof MacroRubette) {
                 toClear.add(arubette);
@@ -138,7 +138,7 @@ public class RubetteManager {
     
     
     public List<Rubette> getRubettes() {
-        return new LinkedList<Rubette>(nameMap.values());
+        return new LinkedList<>(nameMap.values());
     }
     
     
@@ -149,8 +149,8 @@ public class RubetteManager {
     }
     
     
-    private HashMap<String,Rubette> classMap = new HashMap<String,Rubette>();
-    private HashMap<String,Rubette> nameMap =  new HashMap<String,Rubette>();
+    private HashMap<String,Rubette> classMap = new HashMap<>();
+    private HashMap<String,Rubette> nameMap =  new HashMap<>();
     
     private JComposer composer;
     private static RubetteManager manager;    

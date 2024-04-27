@@ -69,8 +69,6 @@ public class ImageFileOutRubette extends SimpleAbstractRubette {
         this.putProperty(new FileClientProperty(this.imageFileKey, "Image file", allowedExtensions, true));
         this.putProperty(new BooleanClientProperty(this.fillEmptyPixelsKey, "Fill empty pixels", false));
     }
-	
-	public void init() { }
 
     public void run(RunInfo runInfo) {
     	Denotator input = this.getInput(0);
