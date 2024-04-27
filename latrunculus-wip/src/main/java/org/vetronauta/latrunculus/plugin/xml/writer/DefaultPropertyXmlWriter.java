@@ -1,12 +1,12 @@
 package org.vetronauta.latrunculus.plugin.xml.writer;
 
-import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
-import org.vetronauta.latrunculus.plugin.properties.DenotatorProperty;
-import org.vetronauta.latrunculus.plugin.properties.FileProperty;
-import org.vetronauta.latrunculus.plugin.properties.FormProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.BooleanClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.DenotatorClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FormClientProperty;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
-import org.vetronauta.latrunculus.plugin.properties.TextProperty;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
+import org.vetronauta.latrunculus.client.plugin.properties.TextClientProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
@@ -17,42 +17,42 @@ import static org.vetronauta.latrunculus.server.xml.XMLConstants.FALSE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.TRUE_VALUE;
 import static org.vetronauta.latrunculus.server.xml.XMLConstants.VALUE_ATTR;
 
-public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProperty> {
+public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<ClientPluginProperty<?>> {
 
     @Override
-    public void toXML(PluginProperty property, XMLWriter writer) {
-        if (property instanceof BooleanProperty) {
-            write((BooleanProperty) property, writer);
+    public void toXML(ClientPluginProperty<?> property, XMLWriter writer) {
+        if (property instanceof BooleanClientProperty) {
+            write((BooleanClientProperty) property, writer);
             return;
         }
-        if (property instanceof DenotatorProperty) {
-            write((DenotatorProperty) property, writer);
+        if (property instanceof DenotatorClientProperty) {
+            write((DenotatorClientProperty) property, writer);
             return;
         }
-        if (property instanceof FileProperty) {
-            write((FileProperty) property, writer);
+        if (property instanceof FileClientProperty) {
+            write((FileClientProperty) property, writer);
             return;
         }
-        if (property instanceof FormProperty) {
-            write((FormProperty) property, writer);
+        if (property instanceof FormClientProperty) {
+            write((FormClientProperty) property, writer);
             return;
         }
-        if (property instanceof TextProperty) {
-            write((TextProperty) property, writer);
+        if (property instanceof TextClientProperty) {
+            write((TextClientProperty) property, writer);
             return;
         }
         writeValue(property, writer);
     }
 
-    private void writeValue(PluginProperty property, XMLWriter writer) {
+    private void writeValue(ClientPluginProperty<?> property, XMLWriter writer) {
         writer.empty(property.getKey(), VALUE_ATTR, property.getValue());
     }
 
-    private void write(BooleanProperty property, XMLWriter writer) {
+    private void write(BooleanClientProperty property, XMLWriter writer) {
         writer.empty(property.getKey(), VALUE_ATTR, property.getValue() ? TRUE_VALUE : FALSE_VALUE);
     }
 
-    private void write(DenotatorProperty property, XMLWriter writer) {
+    private void write(DenotatorClientProperty property, XMLWriter writer) {
         writer.openBlock(property.getKey());
         if (property.getValue() != null) {
             writer.writeDenotator(property.getValue());
@@ -60,7 +60,7 @@ public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProp
         writer.closeBlock();
     }
 
-    private void write(FileProperty property, XMLWriter writer) {
+    private void write(FileClientProperty property, XMLWriter writer) {
         String canonicalPath = "";
         if (property.getValue() != null) {
             try {
@@ -72,7 +72,7 @@ public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProp
         writer.empty(property.getKey(), VALUE_ATTR, writer.toRelativePath(canonicalPath));
     }
 
-    private void write(FormProperty property, XMLWriter writer) {
+    private void write(FormClientProperty property, XMLWriter writer) {
         writer.openBlock(property.getKey());
         if (property.getValue() != null) {
             writer.writeFormRef((Form) property.getValue());
@@ -80,7 +80,7 @@ public class DefaultPropertyXmlWriter implements LatrunculusXmlWriter<PluginProp
         writer.closeBlock();
     }
 
-    private void write(TextProperty property, XMLWriter writer) {
+    private void write(TextClientProperty property, XMLWriter writer) {
         writer.openBlock(property.getKey());
         writer.writeTextNode((String) property.getValue());
         writer.closeBlock();

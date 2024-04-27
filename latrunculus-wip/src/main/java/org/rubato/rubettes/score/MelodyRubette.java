@@ -95,15 +95,15 @@ public class MelodyRubette extends SimpleAbstractRubette {
     }
     
     private void readProperties() {
-    	this.numberOfNotes = ((IntegerProperty)this.getProperty(this.numberOfNotesKey)).getValue();
-    	this.startingPitch = ((IntegerProperty)this.getProperty(this.startingPitchKey)).getValue();
-    	this.maxPitch = ((IntegerProperty)this.getProperty(this.maxPitchKey)).getValue();
-    	this.minPitch = ((IntegerProperty)this.getProperty(this.minPitchKey)).getValue();
-    	this.step = ((DoubleProperty)this.getProperty(this.stepKey)).getValue();
-    	this.minIntervalDown = ((IntegerProperty)this.getProperty(this.minIntDownKey)).getValue();
-    	this.maxIntervalDown = ((IntegerProperty)this.getProperty(this.maxIntDownKey)).getValue();
-    	this.minIntervalUp = ((IntegerProperty)this.getProperty(this.minIntUpKey)).getValue();
-    	this.maxIntervalUp = ((IntegerProperty)this.getProperty(this.maxIntUpKey)).getValue();
+    	this.numberOfNotes = (Integer) this.getProperty(this.numberOfNotesKey).getValue();
+    	this.startingPitch = (Integer) this.getProperty(this.startingPitchKey).getValue();
+    	this.maxPitch = (Integer) this.getProperty(this.maxPitchKey).getValue();
+    	this.minPitch = (Integer) this.getProperty(this.minPitchKey).getValue();
+    	this.step = (Double) this.getProperty(this.stepKey).getValue();
+    	this.minIntervalDown = (Integer) this.getProperty(this.minIntDownKey).getValue();
+    	this.maxIntervalDown = (Integer) this.getProperty(this.maxIntDownKey).getValue();
+    	this.minIntervalUp = (Integer) this.getProperty(this.minIntUpKey).getValue();
+    	this.maxIntervalUp = (Integer) this.getProperty(this.maxIntUpKey).getValue();
     }
 	
 	private double getNextPitch(double currentPitch) {

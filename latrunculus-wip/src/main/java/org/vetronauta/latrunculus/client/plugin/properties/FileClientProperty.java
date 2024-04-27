@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin.properties;
 
 import org.rubato.composer.components.JSelectFile;
 
@@ -26,50 +26,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class FileProperty extends PluginProperty<File> implements ActionListener {
+public class FileClientProperty extends ClientPluginProperty<File> implements ActionListener {
 
-	private String[] allowedExtensions;
+	private final String[] allowedExtensions;
 	private JSelectFile fileSelector;
 	private boolean saving;
-	
-    
-    public FileProperty(String key, String name, String[] allowedExtensions, boolean saving) {
+
+    public FileClientProperty(String key, String name, String[] allowedExtensions, boolean saving) {
         super(key, name, null);
         this.allowedExtensions = allowedExtensions;
         this.saving = saving;
     }
     
-    
-    public FileProperty(FileProperty property) {
-        super(property);
+    public FileClientProperty(FileClientProperty property) {
+        super(property.pluginProperty);
         this.allowedExtensions = property.allowedExtensions;
     }
 
+    public FileClientProperty(String key, String name, File value) {
+        super(key, name, value);
+        allowedExtensions = null;
+    }
+
+    @Override
     public JComponent getJComponent() {
         this.fileSelector = new JSelectFile(this.allowedExtensions, this.saving);
         this.fileSelector.disableBorder();
         this.fileSelector.addActionListener(this);
-        this.fileSelector.setFile(this.value);
+        this.fileSelector.setFile(pluginProperty.getValue());
         return this.fileSelector;
     }
 
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
-        this.tmpValue = this.fileSelector.getFile();
+        pluginProperty.setTmpValue(fileSelector.getFile());
     }
 
+    @Override
     public void revert() {
-        this.tmpValue = value;
-        this.fileSelector.setFile(this.value);
+        pluginProperty.revert(fileSelector::setFile);
     }
     
     @Override
-    public FileProperty deepCopy() {
-        return new FileProperty(this);
-    }
-
-    public String toString() {
-        return "FileProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+    public FileClientProperty deepCopy() {
+        return new FileClientProperty(this);
     }
 
 }

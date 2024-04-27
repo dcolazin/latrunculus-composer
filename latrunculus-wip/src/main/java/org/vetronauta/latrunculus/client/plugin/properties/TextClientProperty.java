@@ -17,15 +17,21 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin.properties;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-public class TextProperty extends PluginProperty<String> implements CaretListener {
+public class TextClientProperty extends ClientPluginProperty<String> implements CaretListener {
 
-    public TextProperty(String key, String name, String value, int cols, int rows, boolean lineWrap, boolean wordWrap) {
+    private final int cols;
+    private final int rows;
+    private JTextArea textArea = null;
+    private boolean lineWrap = true;
+    private boolean wordWrap = true;
+
+    public TextClientProperty(String key, String name, String value, int cols, int rows, boolean lineWrap, boolean wordWrap) {
         super(key, name, value);
         if (cols < 10) {
             cols = 10;
@@ -44,22 +50,21 @@ public class TextProperty extends PluginProperty<String> implements CaretListene
         this.lineWrap = lineWrap;
         this.wordWrap = wordWrap;
     }
-    
-    
-    public TextProperty(String key, String name, String value) {
+
+    public TextClientProperty(String key, String name, String value) {
         this(key, name, value, 40, 5, true, true);
     }
-    
-    
-    public TextProperty(TextProperty prop) {
-        super(prop);
+
+    public TextClientProperty(TextClientProperty prop) {
+        super(prop.pluginProperty);
         this.cols = prop.cols;
         this.rows = prop.rows;
     }
 
+    @Override
     public JComponent getJComponent() {
         textArea = new JTextArea(rows, cols);
-        textArea.setText(value);
+        textArea.setText(pluginProperty.getValue());
         textArea.addCaretListener(this);
         textArea.setEditable(true);
         textArea.setLineWrap(lineWrap);
@@ -70,34 +75,26 @@ public class TextProperty extends PluginProperty<String> implements CaretListene
         return scrollPane;
     }
     
-    
+    @Override
     public void caretUpdate(CaretEvent e) {
         update();
     }
-    
-    
-    public void update() {
-        tmpValue = textArea.getText();
+
+    private void update() {
+        pluginProperty.setTmpValue(textArea.getText());
     }
 
     public void revert() {
-        tmpValue = value;
-        textArea.setText(value);
+        pluginProperty.revert(textArea::setText);
     }
     
     @Override
-    public TextProperty deepCopy() {
-        return new TextProperty(this);
+    public TextClientProperty deepCopy() {
+        return new TextClientProperty(this);
     }
 
     public String toString() {
-        return "TextProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+rows+","+cols+"]";
+        return "TextProperty["+pluginProperty.getOrder()+","+pluginProperty.getKey()+","+pluginProperty.getName()+","+pluginProperty.getValue()+","+rows+","+cols+"]";
     }
 
-    
-    private int cols;
-    private int rows;
-    private JTextArea textArea = null;
-    private boolean lineWrap = true;
-    private boolean wordWrap = true;
 }

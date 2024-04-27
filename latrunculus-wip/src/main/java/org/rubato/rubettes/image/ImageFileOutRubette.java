@@ -28,8 +28,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
-import org.vetronauta.latrunculus.plugin.properties.FileProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.BooleanClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
@@ -66,8 +66,8 @@ public class ImageFileOutRubette extends SimpleAbstractRubette {
         this.setOutCount(0);
         this.objectGenerator = new ObjectGenerator();
         String[] allowedExtensions = new String[]{".gif", ".png", ".jpg", ".bmp"};
-        this.putProperty(new FileProperty(this.imageFileKey, "Image file", allowedExtensions, true));
-        this.putProperty(new BooleanProperty(this.fillEmptyPixelsKey, "Fill empty pixels", false));
+        this.putProperty(new FileClientProperty(this.imageFileKey, "Image file", allowedExtensions, true));
+        this.putProperty(new BooleanClientProperty(this.fillEmptyPixelsKey, "Fill empty pixels", false));
     }
 	
 	public void init() { }
@@ -155,8 +155,8 @@ public class ImageFileOutRubette extends SimpleAbstractRubette {
 	@Override
 	public boolean applyProperties() {
         super.applyProperties();
-        this.imageFile = ((FileProperty)this.getProperty(this.imageFileKey)).getValue();
-        this.fillEmptyPixels = ((BooleanProperty)this.getProperty(this.fillEmptyPixelsKey)).getValue();
+        this.imageFile = ((FileClientProperty)this.getProperty(this.imageFileKey)).getValue();
+        this.fillEmptyPixels = ((BooleanClientProperty)this.getProperty(this.fillEmptyPixelsKey)).getValue();
         return true;
     }
 	

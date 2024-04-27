@@ -88,12 +88,8 @@ public class RubetteModel {
     
     public void resizeInputs() {
         Link[] newInputs = new Link[rubette.getInCount()];
-        for (int i = 0; i < Math.min(inputs.length, newInputs.length); i++) {
-            newInputs[i] = inputs[i];            
-        }
+        System.arraycopy(inputs, 0, newInputs, 0, Math.min(inputs.length, newInputs.length));
         inputs = newInputs;
-        //TODO test before change
-        //inputs = Arrays.copyOf(inputs, Math.min(inputs.length, rubette.getInCount()));
     }
 
     

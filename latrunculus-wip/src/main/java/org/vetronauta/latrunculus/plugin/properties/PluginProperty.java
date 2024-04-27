@@ -24,11 +24,11 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.vetronauta.latrunculus.core.util.DeepCopyable;
 
-import javax.swing.*;
+import java.util.function.Consumer;
 
 @Getter
 @Setter
-public abstract class PluginProperty<T> implements Comparable<PluginProperty<?>>, DeepCopyable<PluginProperty<T>> {
+public class PluginProperty<T> implements Comparable<PluginProperty<?>>, DeepCopyable<PluginProperty<T>> {
 
     private static int sequence = 0;
 
@@ -39,7 +39,7 @@ public abstract class PluginProperty<T> implements Comparable<PluginProperty<?>>
     protected T value;
     protected T tmpValue;
 
-    protected PluginProperty(String key, String name, T value) {
+    public PluginProperty(String key, String name, T value) {
         this.key = key;
         this.name = name;
         this.value = value;
@@ -47,7 +47,7 @@ public abstract class PluginProperty<T> implements Comparable<PluginProperty<?>>
         this.order = sequence++;
     }
     
-    protected PluginProperty(PluginProperty<T> prop) {
+    public PluginProperty(PluginProperty<T> prop) {
         this.key = prop.key;
         this.name = prop.name;
         this.value = prop.value;
@@ -70,13 +70,23 @@ public abstract class PluginProperty<T> implements Comparable<PluginProperty<?>>
         this.value = newValue;
         this.tmpValue = newValue;
     }
-    
-    public abstract JComponent getJComponent();
-    
+
     public void apply() {
         setValue(tmpValue);
     }
     
-    public abstract void revert();
+    public void revert(Consumer<T> revertAction) {
+        tmpValue = value;
+        revertAction.accept(tmpValue);
+    }
+
+    public boolean isAcceptable(T value) {
+        return true;
+    }
+
+    @Override
+    public PluginProperty<T> deepCopy() {
+        return new PluginProperty<>(this);
+    }
 
 }

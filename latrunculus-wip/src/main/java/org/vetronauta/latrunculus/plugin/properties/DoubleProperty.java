@@ -19,16 +19,10 @@
 
 package org.vetronauta.latrunculus.plugin.properties;
 
-import org.rubato.composer.preferences.UserPreferences;
+public class DoubleProperty extends PluginProperty<Double> {
 
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class DoubleProperty extends PluginProperty<Double> implements ActionListener, CaretListener {
+    private final double min;
+    private final double max;
 
     public DoubleProperty(String key, String name, double value, double min, double max) {
         super(key, name, value);
@@ -51,6 +45,10 @@ public class DoubleProperty extends PluginProperty<Double> implements ActionList
         this.max = prop.max;
     }
 
+    public boolean isAcceptable(Double newValue) {
+        return newValue != null && newValue >= min && newValue <= max;
+    }
+
     @Override
     protected void internalSet(Double newValue) {
         if (newValue < min) {
@@ -60,45 +58,6 @@ public class DoubleProperty extends PluginProperty<Double> implements ActionList
         }
         this.value = newValue;
         this.tmpValue = newValue;
-    }
-
-    public JComponent getJComponent() {
-        textField = new JTextField();
-        textField.setText(Double.toString(getValue()));
-        textField.addCaretListener(this);
-        textField.addActionListener(this);
-        bgColor = textField.getBackground(); 
-        return textField;
-    }
-    
-    
-    public void actionPerformed(ActionEvent e) {
-        update();
-    }
-    
-    
-    public void caretUpdate(CaretEvent e) {
-        update();
-    }
-    
-    
-    public void update() {
-        textField.setBackground(bgColor);
-        String s = textField.getText();
-        try {
-            double d = Double.parseDouble(s);
-            if (d >= min && d <= max) {
-                tmpValue = d;
-                return;
-            }
-        }
-        catch (NumberFormatException e) { /* do nothing */ }
-        textField.setBackground(prefs.getEntryErrorColor());
-    }
-
-    public void revert() {
-        tmpValue = value;
-        textField.setText(Double.toString(value));
     }
     
     @Override
@@ -110,10 +69,4 @@ public class DoubleProperty extends PluginProperty<Double> implements ActionList
         return "DoubleProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    private double min;
-    private double max;
-    private JTextField textField = null;
-    
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

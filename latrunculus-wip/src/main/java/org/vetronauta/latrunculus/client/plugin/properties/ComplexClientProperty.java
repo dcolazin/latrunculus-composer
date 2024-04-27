@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin.properties;
 
 import org.rubato.composer.preferences.UserPreferences;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -30,24 +30,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ComplexProperty extends PluginProperty<Complex> implements ActionListener, CaretListener {
+public class ComplexClientProperty extends ClientPluginProperty<Complex> implements ActionListener, CaretListener {
 
-    private JTextField textField = null;
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
+    private JTextField textField;
+    private Color bgColor;
 
-    public ComplexProperty(String key, String name, Complex value) {
+    public ComplexClientProperty(String key, String name, Complex value) {
         super(key, name, value);
     }
     
-    public ComplexProperty(ComplexProperty prop) {
-        super(prop);
+    public ComplexClientProperty(ComplexClientProperty prop) {
+        super(prop.pluginProperty);
     }
 
     @Override
     public JComponent getJComponent() {
         textField = new JTextField();
-        textField.setText(getValue().toString());
+        textField.setText(pluginProperty.getValue().toString());
         textField.addCaretListener(this);
         textField.addActionListener(this);
         bgColor = textField.getBackground(); 
@@ -64,30 +63,24 @@ public class ComplexProperty extends PluginProperty<Complex> implements ActionLi
         update();
     }
 
-    public void update() {
+    private void update() {
         textField.setBackground(bgColor);
         String s = textField.getText();
         try {
-            tmpValue = ArithmeticParsingUtils.parseComplex(s);
+            pluginProperty.setTmpValue(ArithmeticParsingUtils.parseComplex(s));
         }
         catch (NumberFormatException e) { /* do nothing */ }
-        textField.setBackground(prefs.getEntryErrorColor());
+        textField.setBackground(UserPreferences.getUserPreferences().getEntryErrorColor());
     }
 
     @Override
     public void revert() {
-        tmpValue = value;
-        textField.setText(value.toString());
+        pluginProperty.revert(c -> textField.setText(c.toString()));
     }
     
     @Override
-    public ComplexProperty deepCopy() {
-        return new ComplexProperty(this);
-    }
-
-    @Override
-    public String toString() {
-        return "ComplexProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+    public ComplexClientProperty deepCopy() {
+        return new ComplexClientProperty(this);
     }
 
 }

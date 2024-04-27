@@ -20,8 +20,10 @@
 package org.vetronauta.latrunculus.plugin.base;
 
 import lombok.Setter;
-import org.vetronauta.latrunculus.client.plugin.prop.JRubettePropertiesDialog;
-import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPropertiesFactory;
+import org.vetronauta.latrunculus.client.plugin.properties.JRubettePropertiesDialog;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 
 import javax.swing.*;
@@ -33,9 +35,9 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     /**
      * Returns the rubette properties of this rubette.
      */
-    public final PluginProperties getRubetteProperties() {
+    public final ClientPluginProperties getRubetteProperties() {
         if (properties == null) {
-            properties = new PluginProperties();
+            properties = new ClientPluginProperties();
         }
         return properties;
     }
@@ -44,8 +46,12 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     /**
      * Sets a new property.
      */
-    public void putProperty(PluginProperty prop) {
+    public void putProperty(ClientPluginProperty<?> prop) {
         getRubetteProperties().put(prop);
+    }
+
+    public void putProperty(PluginProperty<?> prop) {
+        getRubetteProperties().put(ClientPropertiesFactory.build(prop));
     }
     
 
@@ -53,7 +59,7 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
      * Returns the property of the given <code>key</code>.
      * Returns null, iff no property with this key exists.
      */
-    public PluginProperty getProperty(String key) {
+    public ClientPluginProperty<?> getProperty(String key) {
         return getRubetteProperties().get(key);
     }
 
@@ -93,6 +99,6 @@ public abstract class SimpleAbstractRubette extends AbstractRubette {
     }
 
     @Setter
-    private PluginProperties properties = null;
+    private ClientPluginProperties properties = null;
     private JRubettePropertiesDialog dialog = null;
 }

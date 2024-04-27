@@ -17,25 +17,23 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin.properties;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BooleanProperty extends PluginProperty<Boolean> implements ActionListener {
+public class BooleanClientProperty extends ClientPluginProperty<Boolean> implements ActionListener {
 
-	private String[] allowedExtensions;
     private JCheckBox booleanCheckbox;
 
-    public BooleanProperty(String key, String name, boolean value) {
+    public BooleanClientProperty(String key, String name, boolean value) {
         super(key, name, value);
     }
 
-    public BooleanProperty(BooleanProperty property) {
-        super(property);
-        this.allowedExtensions = property.allowedExtensions;
+    public BooleanClientProperty(BooleanClientProperty property) {
+        super(property.pluginProperty);
     }
 
     @Override
@@ -43,7 +41,7 @@ public class BooleanProperty extends PluginProperty<Boolean> implements ActionLi
         JPanel propertyPanel = new JPanel();
     	propertyPanel.setLayout(new BorderLayout(2, 0));
         this.booleanCheckbox = new JCheckBox();
-        this.booleanCheckbox.setSelected(this.value);
+        this.booleanCheckbox.setSelected(pluginProperty.getValue());
         this.booleanCheckbox.addActionListener(this);
         propertyPanel.add(this.booleanCheckbox, BorderLayout.CENTER);
         
@@ -52,23 +50,17 @@ public class BooleanProperty extends PluginProperty<Boolean> implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.tmpValue = this.booleanCheckbox.isSelected();
+        pluginProperty.setTmpValue(booleanCheckbox.isSelected());
     }
 
     @Override
     public void revert() {
-        this.tmpValue = value;
-        this.booleanCheckbox.setSelected(this.tmpValue);
+        pluginProperty.revert(booleanCheckbox::setSelected);
     }
     
     @Override
-    public BooleanProperty deepCopy() {
-        return new BooleanProperty(this);
-    }
-
-    @Override
-    public String toString() {
-        return "BooleanProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
+    public BooleanClientProperty deepCopy() {
+        return new BooleanClientProperty(this);
     }
 
 }

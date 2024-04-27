@@ -19,16 +19,12 @@
 
 package org.vetronauta.latrunculus.plugin.properties;
 
-import org.rubato.composer.preferences.UserPreferences;
+import com.google.common.base.Strings;
 
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+public class StringProperty extends PluginProperty<String> {
 
-public class StringProperty extends PluginProperty<String> implements ActionListener, CaretListener {
+    private final int min;
+    private final int max;
 
     public StringProperty(String key, String name, String value, int min, int max) {
         super(key, name, value);
@@ -40,18 +36,15 @@ public class StringProperty extends PluginProperty<String> implements ActionList
         this.min = min;
         this.max = max;
     }
-    
-    
+
     public StringProperty(String key, String name, String value, int min) {
         this(key, name, value, min, Integer.MAX_VALUE);
     }
-    
-    
+
     public StringProperty(String key, String name, String value) {
         this(key, name, value, 0);
     }
-    
-    
+
     public StringProperty(StringProperty prop) {
         super(prop);
         this.value = prop.value;
@@ -64,56 +57,23 @@ public class StringProperty extends PluginProperty<String> implements ActionList
     protected void internalSet(String value) {
         if (value.length() < min) {
             value = fillStringToLength(value, min);
-        }
-        else if (value.length() > max) {
+        } else if (value.length() > max) {
             value = value.substring(0, max);
         }
         this.value = value;
         this.tmpValue = value;
     }
+
+    @Override
+    public boolean isAcceptable(String s) {
+        return s != null && s.length() >= min && s.length() <= max;
+    }
     
     private String fillStringToLength(String val, int minLength) {
-        String res = val;
-        for (int i = val.length(); i < minLength; i++) {
-            res += "X"; 
+        if (val.length() >= minLength) {
+            return val;
         }
-        return res;
-    }
-    
-    
-    public JComponent getJComponent() {
-        textField = new JTextField();
-        textField.setText(value);
-        textField.addCaretListener(this);
-        textField.addActionListener(this);
-        bgColor = textField.getBackground(); 
-        return textField;
-    }
-    
-    
-    public void actionPerformed(ActionEvent e) {
-        update();
-    }
-    
-    
-    public void caretUpdate(CaretEvent e) {
-        update();
-    }
-    
-    
-    public void update() {
-        textField.setBackground(bgColor);
-        String s = textField.getText();
-        if (s.length() >= min && s.length() <= max) {
-            tmpValue = s;
-            return;
-        }
-        textField.setBackground(prefs.getEntryErrorColor());
-    }
-
-    public void revert() {
-        tmpValue = value;
-        textField.setText(value);
+        return val + Strings.repeat("X", minLength - val.length());
     }
     
     @Override
@@ -125,11 +85,4 @@ public class StringProperty extends PluginProperty<String> implements ActionList
         return "StringProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    
-    private int min;
-    private int max;
-    private JTextField textField = null;
-    
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

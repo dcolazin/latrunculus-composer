@@ -17,7 +17,7 @@
  *
  */
 
-package org.vetronauta.latrunculus.plugin.properties;
+package org.vetronauta.latrunculus.client.plugin.properties;
 
 import org.rubato.composer.components.JSelectDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -27,44 +27,40 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DenotatorProperty extends PluginProperty<Denotator> implements ActionListener {
+public class DenotatorClientProperty extends ClientPluginProperty<Denotator> implements ActionListener {
 
     private JSelectDenotator selectDenotator;
 
-    private static Repository rep = Repository.systemRepository();
-
-    public DenotatorProperty(String key, String name, Denotator value) {
+    public DenotatorClientProperty(String key, String name, Denotator value) {
         super(key, name, value);
     }
 
-    public DenotatorProperty(DenotatorProperty prop) {
-        super(prop);
+    public DenotatorClientProperty(DenotatorClientProperty prop) {
+        super(prop.pluginProperty);
     }
 
     public JComponent getJComponent() {
-        selectDenotator = new JSelectDenotator(rep);
+        selectDenotator = new JSelectDenotator(Repository.systemRepository());
         selectDenotator.disableBorder();
         selectDenotator.addActionListener(this);
-        selectDenotator.setDenotator(value);
+        selectDenotator.setDenotator(pluginProperty.getValue());
         return selectDenotator;
     }
-    
+
+    @Override
     public void actionPerformed(ActionEvent e) {
-        tmpValue = selectDenotator.getDenotator();
+        pluginProperty.setTmpValue(selectDenotator.getDenotator());
     }
 
+    @Override
     public void revert() {
-        tmpValue = value;
-        selectDenotator.setDenotator(tmpValue);
+        pluginProperty.revert(selectDenotator::setDenotator);
     }
     
     @Override
-    public DenotatorProperty deepCopy() {
-        return new DenotatorProperty(this);
+    public DenotatorClientProperty deepCopy() {
+        return new DenotatorClientProperty(this);
     }
 
-    public String toString() {
-        return "DenotatorProperty["+getOrder()+","+getKey()+","+getName()+","+value+"]";
-    }
 
 }

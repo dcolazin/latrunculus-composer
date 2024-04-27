@@ -19,16 +19,10 @@
 
 package org.vetronauta.latrunculus.plugin.properties;
 
-import org.rubato.composer.preferences.UserPreferences;
+public class IntegerProperty extends PluginProperty<Integer> {
 
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class IntegerProperty extends PluginProperty<Integer> implements ActionListener, CaretListener {
+    private final int min;
+    private final int max;
 
     public IntegerProperty(String key, String name, int value, int min, int max) {
         super(key, name, value);
@@ -40,12 +34,10 @@ public class IntegerProperty extends PluginProperty<Integer> implements ActionLi
         this.min = min;
         this.max = max;
     }
-    
-    
+
     public IntegerProperty(String key, String name, int value) {
         this(key, name, value, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
-    
     
     public IntegerProperty(IntegerProperty prop) {
         super(prop);
@@ -64,60 +56,20 @@ public class IntegerProperty extends PluginProperty<Integer> implements ActionLi
         this.value = value;
         this.tmpValue = value;
     }
-    
-    public JComponent getJComponent() {
-        textField = new JTextField();
-        textField.setText(Integer.toString(getValue()));
-        textField.addCaretListener(this);
-        textField.addActionListener(this);
-        bgColor = textField.getBackground(); 
-        return textField;
+
+    @Override
+    public boolean isAcceptable(Integer i) {
+        return i != null && i >= min && i <= max;
     }
-    
-    
-    public void actionPerformed(ActionEvent e) {
-        update();
-    }
-    
-    
-    public void caretUpdate(CaretEvent e) {
-        update();
-    }
-    
-    
-    public void update() {
-        textField.setBackground(bgColor);
-        String s = textField.getText();
-        try {
-            int i = Integer.parseInt(s);
-            if (i >= min && i <= max) {
-                tmpValue = i;
-                return;
-            }
-        }
-        catch (NumberFormatException e) { /* do nothing */ }
-        textField.setBackground(prefs.getEntryErrorColor());
-    }
-    
-    public void revert() {
-        tmpValue = value;
-        textField.setText(Integer.toString(value));
-    }
-    
+
     @Override
     public IntegerProperty deepCopy() {
         return new IntegerProperty(this);
     }
-    
+
+    @Override
     public String toString() {
         return "IntegerProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    
-    private int min;
-    private int max;
-    private JTextField textField = null;
-    
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

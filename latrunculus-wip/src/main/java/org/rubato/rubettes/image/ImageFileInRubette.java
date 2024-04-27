@@ -29,8 +29,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
-import org.vetronauta.latrunculus.plugin.properties.FileProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.BooleanClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.icons.Icons;
@@ -71,8 +71,8 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
         this.setOutCount(1);
         this.objectGenerator = new ObjectGenerator();
         String[] allowedExtensions = new String[]{".gif", ".png", ".jpg", ".bmp"};
-        this.putProperty(new FileProperty(this.imageFileKey, "Image file", allowedExtensions, false));
-        this.putProperty(new BooleanProperty(this.variableSizePixelsKey, "Variable size pixels", false));
+        this.putProperty(new FileClientProperty(this.imageFileKey, "Image file", allowedExtensions, false));
+        this.putProperty(new BooleanClientProperty(this.variableSizePixelsKey, "Variable size pixels", false));
     }
 	
 	public void init() { }
@@ -136,8 +136,8 @@ public class ImageFileInRubette extends SimpleAbstractRubette {
 	@Override
 	public boolean applyProperties() {
         super.applyProperties();
-        this.imageFile = ((FileProperty)this.getProperty(this.imageFileKey)).getValue();
-        this.variableSizePixels = ((BooleanProperty)this.getProperty(this.variableSizePixelsKey)).getValue();
+        this.imageFile = ((FileClientProperty)this.getProperty(this.imageFileKey)).getValue();
+        this.variableSizePixels = ((BooleanClientProperty)this.getProperty(this.variableSizePixelsKey)).getValue();
         return true;
     }
 	

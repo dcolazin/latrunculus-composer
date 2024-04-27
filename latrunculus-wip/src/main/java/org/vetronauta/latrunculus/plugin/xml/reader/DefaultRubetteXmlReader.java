@@ -42,18 +42,22 @@ import org.rubato.rubettes.select2d.Select2DPanel;
 import org.rubato.rubettes.select2d.Select2DRubette;
 import org.rubato.rubettes.util.CoolFormRegistrant;
 import org.rubato.rubettes.wallpaper.WallpaperRubette;
-import org.vetronauta.latrunculus.plugin.properties.BooleanProperty;
-import org.vetronauta.latrunculus.plugin.properties.ComplexProperty;
-import org.vetronauta.latrunculus.plugin.properties.DenotatorProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.BooleanClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPropertiesFactory;
+import org.vetronauta.latrunculus.client.plugin.properties.ComplexClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.DenotatorClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.StringClientProperty;
 import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
-import org.vetronauta.latrunculus.plugin.properties.FileProperty;
-import org.vetronauta.latrunculus.plugin.properties.FormProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FormClientProperty;
 import org.vetronauta.latrunculus.plugin.properties.IntegerProperty;
-import org.vetronauta.latrunculus.plugin.properties.RationalProperty;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperties;
+import org.vetronauta.latrunculus.plugin.properties.RationalProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.ClientPluginProperties;
 import org.vetronauta.latrunculus.plugin.properties.PluginProperty;
 import org.vetronauta.latrunculus.plugin.properties.StringProperty;
-import org.vetronauta.latrunculus.plugin.properties.TextProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.TextClientProperty;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
@@ -1028,7 +1032,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             reader.setError(e);
             return null;
         }
-        rubette.setProperties(newProp);
+        rubette.setProperties(ClientPropertiesFactory.build(newProp));
         //had to add this, Gerard's code was buggy
         rubette.applyProperties();
         return rubette;
@@ -1041,8 +1045,8 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element e = (Element)node;
                 String key = e.getTagName();
-                PluginProperty property = newProp.get(key); //TODO this cannot work... properties are empty!
-                if (property != null) {
+                PluginProperty<?> property = newProp.get(key);
+                if (property != null) { //TODO this cannot work, property is always null...
                     property = readRubetteProperty(reader, e, property.getClass(), key);
                     newProp.put(property);
                 }
@@ -1052,23 +1056,23 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return newProp;
     }
 
-    private PluginProperty readRubetteProperty(XMLReader reader, Element element, Class<? extends PluginProperty> clazz, String key) {
-        if (BooleanProperty.class.isAssignableFrom(clazz)) {
+    private PluginProperty<?> readRubetteProperty(XMLReader reader, Element element, Class<? extends PluginProperty> clazz, String key) {
+        if (BooleanClientProperty.class.isAssignableFrom(clazz)) {
             return readBooleanProperty(reader, element, key);
         }
-        if (ComplexProperty.class.isAssignableFrom(clazz)) {
+        if (ComplexClientProperty.class.isAssignableFrom(clazz)) {
             return readComplexProperty(reader, element, key);
         }
-        if (DenotatorProperty.class.isAssignableFrom(clazz)) {
+        if (DenotatorClientProperty.class.isAssignableFrom(clazz)) {
             return readDenotatorProperty(reader, element, key);
         }
         if (DoubleProperty.class.isAssignableFrom(clazz)) {
             return readDoubleProperty(reader, element, key);
         }
-        if (FileProperty.class.isAssignableFrom(clazz)) {
+        if (FileClientProperty.class.isAssignableFrom(clazz)) {
             return readFileProperty(reader, element, key);
         }
-        if (FormProperty.class.isAssignableFrom(clazz)) {
+        if (FormClientProperty.class.isAssignableFrom(clazz)) {
             return readFormProperty(reader, element, key);
         }
         if (IntegerProperty.class.isAssignableFrom(clazz)) {
@@ -1080,57 +1084,55 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         if (StringProperty.class.isAssignableFrom(clazz)) {
             return readStringProperty(reader, element, key);
         }
-        if (TextProperty.class.isAssignableFrom(clazz)) {
+        if (TextClientProperty.class.isAssignableFrom(clazz)) {
             return readTextProperty(reader, element, key);
         }
         return null;
     }
 
-    private PluginProperty readBooleanProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty<Boolean> readBooleanProperty(XMLReader reader, Element element, String key) {
         boolean value = XMLReader.getStringAttribute(element, VALUE_ATTR).equals(TRUE_VALUE);
-        return new BooleanProperty(key, key, value);
+        return new PluginProperty<>(key, key, value);
     }
 
-    private PluginProperty readComplexProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty<Complex> readComplexProperty(XMLReader reader, Element element, String key) {
         Complex complex;
         try {
             complex = ArithmeticParsingUtils.parseComplex(XMLReader.getStringAttribute(element, VALUE_ATTR));
         } catch (NumberFormatException e) {
             complex = new Complex();
         }
-        return new ComplexProperty(key, key, complex);
+        return new PluginProperty<>(key, key, complex);
     }
 
-    private PluginProperty readDenotatorProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty<Denotator> readDenotatorProperty(XMLReader reader, Element element, String key) {
         Element child = XMLReader.getChild(element, "Denotator");
         Denotator denotator = null;
         if (child != null) {
             denotator = reader.parseDenotator(child);
         }
-        return new DenotatorProperty(key, key, denotator);
+        return new PluginProperty<>(key, key, denotator);
     }
 
-    private PluginProperty readDoubleProperty(XMLReader reader, Element element, String key) {
+    private DoubleProperty readDoubleProperty(XMLReader reader, Element element, String key) {
         return new DoubleProperty(key, key, XMLReader.getRealAttribute(element, VALUE_ATTR, 0));
     }
 
-    private PluginProperty readFileProperty(XMLReader reader, Element element, String key) {
-        FileProperty property = new FileProperty(key, key, null, false);
-        property.setValue(new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
-        return property;
+    private PluginProperty<File> readFileProperty(XMLReader reader, Element element, String key) {
+        return new PluginProperty<>(key, key, new File(reader.toAbsolutePath(XMLReader.getStringAttribute(element, VALUE_ATTR))));
     }
 
-    private PluginProperty readFormProperty(XMLReader reader, Element element, String key) {
+    private PluginProperty<Form> readFormProperty(XMLReader reader, Element element, String key) {
         Element child = XMLReader.getChild(element, "Form");
         Form form = child != null ? reader.parseAndResolveForm(child) : null;
-        return new FormProperty(key, key, form);
+        return new PluginProperty<>(key, key, form);
     }
 
-    private PluginProperty readIntegerProperty(XMLReader reader, Element element, String key) {
+    private IntegerProperty readIntegerProperty(XMLReader reader, Element element, String key) {
         return new IntegerProperty(key, key, XMLReader.getIntAttribute(element, VALUE_ATTR, Integer.MIN_VALUE, Integer.MAX_VALUE, 0));
     }
 
-    private PluginProperty readRationalProperty(XMLReader reader, Element element, String key) {
+    private RationalProperty readRationalProperty(XMLReader reader, Element element, String key) {
         String s = XMLReader.getStringAttribute(element, VALUE_ATTR);
         Rational rational;
         try {
@@ -1141,12 +1143,12 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
         return new RationalProperty(key, key, rational);
     }
 
-    private PluginProperty readStringProperty(XMLReader reader, Element element, String key) {
+    private StringProperty readStringProperty(XMLReader reader, Element element, String key) {
         return new StringProperty(key, key, XMLReader.getStringAttribute(element, VALUE_ATTR));
     }
 
-    private PluginProperty readTextProperty(XMLReader reader, Element element, String key) {
-        return new TextProperty(key, key, XMLReader.getText(element).trim());
+    private PluginProperty<String> readTextProperty(XMLReader reader, Element element, String key) {
+        return new PluginProperty<>(key, key, XMLReader.getText(element).trim());
     }
 
 }

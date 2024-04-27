@@ -19,18 +19,12 @@
 
 package org.vetronauta.latrunculus.plugin.properties;
 
-import org.rubato.composer.preferences.UserPreferences;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;
-import org.vetronauta.latrunculus.server.parse.ArithmeticParsingUtils;
 
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+public class RationalProperty extends PluginProperty<Rational> {
 
-public class RationalProperty extends PluginProperty<Rational> implements ActionListener, CaretListener {
+    private final Rational min;
+    private final Rational max;
 
     public RationalProperty(String key, String name, Rational value, Rational min, Rational max) {
         super(key, name, value);
@@ -44,8 +38,7 @@ public class RationalProperty extends PluginProperty<Rational> implements Action
         this.min = min;
         this.max = max;
     }
-    
-    
+
     public RationalProperty(String key, String name, Rational value) {
         this(key, name, value, new Rational(Integer.MIN_VALUE), new Rational(Integer.MAX_VALUE));
     }
@@ -57,7 +50,7 @@ public class RationalProperty extends PluginProperty<Rational> implements Action
     }
 
     @Override
-    public void setValue(Rational value) {
+    protected void internalSet(Rational value) {
         if (value.compareTo(min) < 0) {
             value = min;
         }
@@ -68,58 +61,19 @@ public class RationalProperty extends PluginProperty<Rational> implements Action
         this.tmpValue = value;
     }
 
-    public JComponent getJComponent() {
-        textField = new JTextField();
-        textField.setText(getValue().toString());
-        textField.addCaretListener(this);
-        textField.addActionListener(this);
-        bgColor = textField.getBackground(); 
-        return textField;
-    }
-    
-    
-    public void actionPerformed(ActionEvent e) {
-        update();
-    }
-    
-    
-    public void caretUpdate(CaretEvent e) {
-        update();
-    }
-    
-    
-    public void update() {
-        textField.setBackground(bgColor);
-        String s = textField.getText();
-        try {
-            Rational d = ArithmeticParsingUtils.parseRational(s);
-            if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
-                tmpValue = d;
-                return;
-            }
-        }
-        catch (NumberFormatException e) {}
-        textField.setBackground(prefs.getEntryErrorColor());
+    @Override
+    public boolean isAcceptable(Rational newValue) {
+        return newValue != null && newValue.compareTo(min) >= 0 && newValue.compareTo(max) <= 0;
     }
 
-    public void revert() {
-        tmpValue = value;
-        textField.setText(value.toString());
-    }
-    
     @Override
     public RationalProperty deepCopy() {
         return new RationalProperty(this);
     }
 
+    @Override
     public String toString() {
         return "RationalProperty["+getOrder()+","+getKey()+","+getName()+","+value+","+min+","+max+"]";
     }
 
-    private Rational min;
-    private Rational max;
-    private JTextField textField = null;
-    
-    private Color bgColor = null;
-    private static final UserPreferences prefs = UserPreferences.getUserPreferences();
 }

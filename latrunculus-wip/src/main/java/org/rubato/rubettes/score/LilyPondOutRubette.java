@@ -34,7 +34,7 @@ import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
-import org.vetronauta.latrunculus.plugin.properties.FileProperty;
+import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
@@ -61,7 +61,7 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
     public LilyPondOutRubette() {
         this.setInCount(1);
         this.setOutCount(0);
-        this.putProperty(new FileProperty(this.lilyPondFileKey, "LilyPond file", new String[]{".ly"}, true));
+        this.putProperty(new FileClientProperty(this.lilyPondFileKey, "LilyPond file", new String[]{".ly"}, true));
         this.noteGenerator = new SoundNoteGenerator();
     }
 
@@ -274,7 +274,7 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
 	@Override
 	public boolean applyProperties() {
         super.applyProperties();
-        this.lilyPondFile = ((FileProperty)this.getProperty(this.lilyPondFileKey)).getValue();
+        this.lilyPondFile = ((FileClientProperty)this.getProperty(this.lilyPondFileKey)).getValue();
         return true;
     }
     

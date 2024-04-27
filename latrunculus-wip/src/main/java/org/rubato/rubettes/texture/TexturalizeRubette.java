@@ -35,7 +35,7 @@ public class TexturalizeRubette extends SimpleAbstractRubette {
 		Map<Double,Double> avgDurations = new TreeMap<>();
 		double maxOnset = 0;
 		double maxDuration = 0;
-		double rateFactor = ((DoubleProperty)this.getProperty("rateFactor")).getValue();
+		double rateFactor = (Double) this.getProperty("rateFactor").getValue();
 		
 		try {
 			for (Denotator currentNote : score.getFactors()) {
