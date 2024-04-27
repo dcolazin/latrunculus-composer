@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
@@ -297,12 +297,6 @@ public class StatRubette extends AbstractRubette {
         return s;
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getShortDescription() {
         return "Perform several statistical operations";
     }
@@ -371,8 +365,6 @@ public class StatRubette extends AbstractRubette {
     private JSelectForm selectForm = null;
     private JComboBox   opSelect   = null;
 
-    private static final ImageIcon icon;
-
     @Getter
     private int  op   = MIN;
     @Getter
@@ -396,8 +388,5 @@ public class StatRubette extends AbstractRubette {
     };
 
     public static final int STAT_OP_LENGTH = opNames.length;
-    
-    static {
-        icon = Icons.loadIcon(StatRubette.class, "/images/rubettes/builtin/staticon.png");
-    }
+
 }

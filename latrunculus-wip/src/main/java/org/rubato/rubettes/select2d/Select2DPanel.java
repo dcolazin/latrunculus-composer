@@ -34,7 +34,7 @@ import javax.swing.*;
 import org.rubato.composer.view2d.Point;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.rubato.composer.components.JFormTree;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.composer.view2d.*;
 import org.vetronauta.latrunculus.core.math.module.generic.Module;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;

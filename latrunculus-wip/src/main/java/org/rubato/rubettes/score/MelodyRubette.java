@@ -22,7 +22,7 @@ package org.rubato.rubettes.score;
 import javax.swing.*;
 
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
@@ -52,9 +52,7 @@ public class MelodyRubette extends SimpleAbstractRubette {
 	private final String maxIntDownKey = "maxDown";
 	private final String minIntUpKey = "minUp";
 	private final String maxIntUpKey = "maxUp";
-	
-	private static final ImageIcon icon = Icons.loadIcon(MelodyRubette.class, "/images/rubettes/score/melodyicon.png");
-	
+
 	/**
 	 * Creates a basic MelodyRubette.
 	 */
@@ -138,10 +136,6 @@ public class MelodyRubette extends SimpleAbstractRubette {
     
     public String getShortDescription() {
         return "Outputs a score denotator";
-    }
-    
-    public ImageIcon getIcon() {
-        return icon;
     }
 
     public String getLongDescription() {

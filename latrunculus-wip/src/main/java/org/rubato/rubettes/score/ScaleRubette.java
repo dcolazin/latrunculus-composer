@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.rubato.composer.Utilities;
 import org.rubato.composer.components.JStatusline;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.util.MacroNoteGenerator;
 import org.rubato.rubettes.util.NoteGenerator;
 import org.rubato.rubettes.util.ScaleMap;
@@ -74,9 +74,7 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
 	private JPanel intervalsPanel;
 	private JTextField[] intervalTextFields;
 	private JStatusline statusline;
-	
-	private static final ImageIcon icon = Icons.loadIcon(ScaleRubette.class, "/images/rubettes/score/scaleicon.png");
-	
+
 	public ScaleRubette() {
 		this.setInCount(0);
 		this.setOutCount(1);
@@ -388,10 +386,6 @@ public class ScaleRubette extends AbstractRubette implements ChangeListener, Act
     
     public String getOutTip(int i) {
         return "Output score denotator";
-    }
-    
-    public ImageIcon getIcon() {
-        return icon;
     }
 
 }

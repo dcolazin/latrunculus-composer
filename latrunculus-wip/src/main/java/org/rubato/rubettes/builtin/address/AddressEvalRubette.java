@@ -27,7 +27,7 @@ import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
@@ -502,12 +502,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
     }
     
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-    
     public boolean hasInfo() {
         return true;
     }
@@ -825,9 +819,4 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private static final String SIMPLE              = AddressMessages.getString("AddressEvalRubette.simple");
     private static final String LISTORPOWER         = AddressMessages.getString("AddressEvalRubette.listorpower");
 
-    private static final ImageIcon icon;
-
-    static {
-        icon = Icons.loadIcon(AddressEvalRubette.class, "/images/rubettes/builtin/address/addressicon.png"); 
-    }
 }

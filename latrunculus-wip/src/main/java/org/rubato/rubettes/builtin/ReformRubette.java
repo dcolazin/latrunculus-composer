@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.reform.Reformer;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -124,12 +124,6 @@ public class ReformRubette extends AbstractRubette {
         return "Reforms a denotator";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Reform Rubette cast its input denotator"+
                " to a denotator with a specified form.";
@@ -154,10 +148,5 @@ public class ReformRubette extends AbstractRubette {
     private JSelectForm selectForm = null;
     @Getter
     private Form        outputForm = null;
-    
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(ReformRubette.class, "/images/rubettes/builtin/reformicon.png"); 
-    }
 }

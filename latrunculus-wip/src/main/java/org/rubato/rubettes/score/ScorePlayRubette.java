@@ -22,7 +22,7 @@ package org.rubato.rubettes.score;
 import lombok.Getter;
 import lombok.Setter;
 import org.rubato.composer.Utilities;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -440,12 +440,6 @@ public final class ScorePlayRubette extends AbstractRubette implements
     public String getShortDescription() {
         return "Plays a denotator of form \"Score\"";
     }
-
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
     
     public String getLongDescription() {
         return "The ScorePlay Rubette plays " +
@@ -486,7 +480,6 @@ public final class ScorePlayRubette extends AbstractRubette implements
     private int[] voices = new int[1];
     private static final DecimalFormat format = new DecimalFormat("0.00");
     private static final Form scoreForm;
-    private static final ImageIcon icon;
     private static final ImageIcon playIcon;
     private static final ImageIcon pauseIcon;
     private static final ImageIcon stopIcon;
@@ -497,6 +490,5 @@ public final class ScorePlayRubette extends AbstractRubette implements
         playIcon  = Icons.loadIcon(ScorePlayRubette.class, "/images/rubettes/score/play.png");
         pauseIcon = Icons.loadIcon(ScorePlayRubette.class, "/images/rubettes/score/pause.png");
         stopIcon  = Icons.loadIcon(ScorePlayRubette.class, "/images/rubettes/score/stop.png");
-        icon      = Icons.loadIcon(ScorePlayRubette.class, "/images/rubettes/score/scoreplayicon.png");
     }
 }

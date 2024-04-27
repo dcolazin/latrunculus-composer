@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.select2d;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
@@ -99,12 +99,6 @@ public class Select2DRubette extends AbstractRubette {
         return "Select2D"; 
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
-    
     public boolean hasInfo() {
         return true;
     }
@@ -238,14 +232,9 @@ public class Select2DRubette extends AbstractRubette {
     // volatile data
     private Select2DDialog           select2DDialog = null;
     private ArrayList<Denotator>     denotators = null;
-    
-    private static final ImageIcon icon;
 
     private static final String INPUTNULL_ERROR  = Select2DRubetteMessages.getString("Select2DRubette.inputnullerror"); ;
     private static final String FORMNOTSET_ERROR = Select2DRubetteMessages.getString("Select2DRubette.formnotseterror"); ;
     private static final String FORMNOTSET_INFO  = Select2DRubetteMessages.getString("Select2DRubette.noformsetinfo"); ;
-    
-    static {
-        icon = Icons.loadIcon(Select2DRubette.class, "/images/rubettes/select2d/select2dicon.png"); 
-    }
+
 }

@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Sets;
@@ -387,12 +387,6 @@ public class SetRubette extends AbstractRubette {
         return "Performs a set operation on its input denotators"; 
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Set Rubette performs a set operation, e.g., "+ 
                "union or intersection, on its input denotators."; 
@@ -411,8 +405,6 @@ public class SetRubette extends AbstractRubette {
     private JPanel            properties = null;
     private JComboBox         opSelect = null;
     private JConnectorSliders inSlider = null;
-    
-    private static final ImageIcon icon;
 
     @Getter
     private int op = UNION;
@@ -438,7 +430,4 @@ public class SetRubette extends AbstractRubette {
 
     public static final int SET_OP_LENGTH = opNames.length;
 
-    static {
-       icon = Icons.loadIcon(SetRubette.class, "/images/rubettes/builtin/seticon.png"); 
-    }
 }

@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import lombok.Getter;
 import lombok.Setter;
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
@@ -178,12 +178,7 @@ public final class BooleanRubette extends AbstractRubette {
     public String getOutTip(int i) {
         return BuiltinMessages.getString("BooleanRubette.result");
     }
-    
 
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
     private JPanel       properties = null;
     private JTextArea    exprTextArea = null;
     private JLabel       infoLabel = null;
@@ -408,10 +403,8 @@ public final class BooleanRubette extends AbstractRubette {
     private static final Form      booleanForm; 
     private static final Denotator trueDeno; 
     private static final Denotator falseDeno;
-    private static final ImageIcon icon;
-    
+
     static {
-        icon = Icons.loadIcon(BooleanRubette.class, "/images/rubettes/builtin/logicicon.png"); 
         Repository rep = Repository.systemRepository();
         booleanForm = rep.getForm("Boolean"); 
         trueDeno = rep.getDenotator("True"); 

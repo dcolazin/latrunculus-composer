@@ -29,7 +29,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 
 class RubetteListModel extends DefaultListModel {
     

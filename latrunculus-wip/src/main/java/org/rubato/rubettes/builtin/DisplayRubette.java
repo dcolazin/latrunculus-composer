@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -149,12 +149,6 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
         }
     }
     
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
-    
     public String getShortDescription() {
         return "Shows a text representation of a denotator";
     }
@@ -186,12 +180,7 @@ public class DisplayRubette extends AbstractRubette implements ActionListener {
 
     @Getter @Setter
     private boolean isXML = false;
-    
-    private static final ImageIcon icon;
-    
+
     private static final Border textBorder = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
-    
-    static {
-        icon = Icons.loadIcon(DisplayRubette.class, "/images/rubettes/builtin/displayicon.png"); 
-    }
+
 }

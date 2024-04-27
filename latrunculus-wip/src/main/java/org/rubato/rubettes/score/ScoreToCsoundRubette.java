@@ -226,12 +226,6 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
         return "Converts a denotator with form \"Score\" to a Csound score file";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The ScoreToCsound Rubette converts"+
                " a denotator of form \"Score\" to a"+
@@ -361,11 +355,9 @@ public final class ScoreToCsoundRubette extends AbstractRubette {
     private static final Form scoreForm;
         
     protected JPanel properties = null;
-    private static final ImageIcon icon = null;
-    
+
     static {
         Repository rep = Repository.systemRepository();
         scoreForm = rep.getForm("Score");
-//        icon = Icons.loadIcon(Icons.class, "/images/rubettes/score/csound.png");
     }
 }

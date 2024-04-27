@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import lombok.Getter;
 import lombok.Setter;
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.module.impl.QRing;
 import org.vetronauta.latrunculus.core.math.module.impl.RRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
@@ -230,11 +230,6 @@ public class RealArithRubette extends AbstractRubette {
     public String getOutTip(int i) {
         return BuiltinMessages.getString("RealArithRubette.outtip");
     }
-    
-
-    public ImageIcon getIcon() {
-        return icon;
-    }
 
     public boolean compile(String expr, int nrArgs) {
         if (compiler == null) {
@@ -265,10 +260,8 @@ public class RealArithRubette extends AbstractRubette {
     private static final SimpleForm realForm; 
     private static final Denotator  trueDeno; 
     private static final Denotator  falseDeno;
-    private static final ImageIcon  icon;
-    
+
     static {
-        icon = Icons.loadIcon(RealArithRubette.class, "/images/rubettes/builtin/arithicon.png"); 
         Repository rep = Repository.systemRepository();
         realForm = (SimpleForm)rep.getForm("SReal"); 
         trueDeno = rep.getDenotator("True"); 

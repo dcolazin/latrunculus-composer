@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 import javax.swing.WindowConstants;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.composer.plugin.PluginManager;
 import org.rubato.composer.preferences.UserPreferences;
 import org.vetronauta.latrunculus.core.math.element.impl.Rational;

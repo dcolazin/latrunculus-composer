@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.NameDenotator;
 import org.vetronauta.latrunculus.core.repository.Repository;
@@ -135,12 +135,6 @@ public class RegisterRubette extends AbstractRubette {
         return "Registers its input denotator";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Register Rubette gives a name to its input denotator"+
                " and registers it with the system repository"+
@@ -160,10 +154,6 @@ public class RegisterRubette extends AbstractRubette {
     private JPanel     properties = null;
     private JTextField nameField = null;
     private String     denotatorName = null; // either null or of length > 0
-    private static final ImageIcon icon;
     private static Repository rep = Repository.systemRepository();
 
-    static {
-        icon = Icons.loadIcon(RegisterRubette.class, "/images/rubettes/builtin/registericon.png");
-    }
 }

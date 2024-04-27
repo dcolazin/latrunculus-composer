@@ -29,7 +29,7 @@ import java.util.List;
 import javax.swing.*;
 
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.util.ContrapuntalVoice;
 import org.rubato.rubettes.util.VoiceSplitter;
 import org.rubato.rubettes.util.Quantizer;
@@ -52,9 +52,7 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
 	private File lilyPondFile; 
 	private final String lilyPondFileKey = "lilyPondFile";
 	private SoundNoteGenerator noteGenerator; 
-	
-	private static final ImageIcon icon = Icons.loadIcon(LilyPondOutRubette.class, "/images/rubettes/score/lilypondouticon.png");
-	
+
 	/**
 	 * Creates a basic LilyPondOutRubette.
 	 */
@@ -299,10 +297,6 @@ public class LilyPondOutRubette extends SimpleAbstractRubette {
 	
     public String getShortDescription() {
         return "Generates a LilyPond file from a score denotator";
-    }
-    
-    public ImageIcon getIcon() {
-        return LilyPondOutRubette.icon;
     }
 
     public String getLongDescription() {

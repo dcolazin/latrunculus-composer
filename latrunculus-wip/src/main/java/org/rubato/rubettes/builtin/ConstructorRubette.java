@@ -20,7 +20,6 @@
 package org.rubato.rubettes.builtin;
 
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.ColimitDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -257,12 +256,6 @@ public class ConstructorRubette extends AbstractRubette {
         return "Creates a denotator of a given form";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Constructor Rubette creates a denotator"+
                " of the form specified in the properties"+
@@ -328,9 +321,5 @@ public class ConstructorRubette extends AbstractRubette {
     private Form        form = null;
     private String      formName = " "; 
     private String[]    inTip = null;
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(ConstructorRubette.class, "/images/rubettes/builtin/constricon.png"); 
-    }
 }

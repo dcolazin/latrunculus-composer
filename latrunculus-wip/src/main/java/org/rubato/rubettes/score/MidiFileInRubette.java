@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.score;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
@@ -247,12 +247,6 @@ public class MidiFileInRubette extends AbstractRubette {
         return "Converts a MIDI file to a denotator with form \"Score\"";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The MidiFileIn Rubette reads in a MIDI file"+
                " and converts it to a denotator of form \"Score\".";
@@ -368,9 +362,5 @@ public class MidiFileInRubette extends AbstractRubette {
     private boolean      storeDenotator   = true;
         
     protected JPanel properties = null;
-    private static final ImageIcon icon;
-    
-    static {
-        icon = Icons.loadIcon(Icons.class, "/images/composer/icons/midiin.png");
-    }
+
 }

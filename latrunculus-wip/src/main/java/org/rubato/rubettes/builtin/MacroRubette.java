@@ -19,7 +19,7 @@
 
 package org.rubato.rubettes.builtin;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.composer.network.NetworkModel;
 import org.vetronauta.latrunculus.plugin.base.PluginNode;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
@@ -167,12 +167,6 @@ public class MacroRubette extends AbstractRubette {
         return shortDesc;
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public void setLongDescription(String s) {
         longDesc = s;
     }
@@ -215,10 +209,5 @@ public class MacroRubette extends AbstractRubette {
     private NetworkModel       networkModel  = null;
     private MacroInputRubette  inputRubette  = null;
     private MacroOutputRubette outputRubette = null;
-    
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(MacroRubette.class, "/images/rubettes/builtin/neticon.png");
-    }
 }

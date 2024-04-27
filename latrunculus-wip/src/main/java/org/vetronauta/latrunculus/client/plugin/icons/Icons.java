@@ -17,7 +17,7 @@
  *
  */
 
-package org.rubato.composer.icons;
+package org.vetronauta.latrunculus.client.plugin.icons;
 
 import java.net.URL;
 
@@ -62,16 +62,11 @@ public class Icons {
     public final static ImageIcon pasteIcon;
 
     
-    public static ImageIcon loadIcon(Object obj, String name) {
-        URL imageURL;
-        imageURL = obj.getClass().getResource(name);
-        return new ImageIcon(imageURL);
-    }
-    
-    
     public static ImageIcon loadIcon(Class<?> cls, String name) {
-        URL imageURL;
-        imageURL = cls.getResource(name);
+        URL imageURL = cls.getResource(name);
+        if (imageURL == null) {
+            return null;
+        }
         return new ImageIcon(imageURL);
     }
 

@@ -22,7 +22,7 @@ package org.rubato.rubettes.builtin;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JSimpleEntry;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.DomainException;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
@@ -293,12 +293,6 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     public String getInfo() {
         return name;
     }
-
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
     
     public String getShortDescription() {
         return "Contains a simple denotator";
@@ -327,9 +321,5 @@ public class SimpleRubette extends AbstractRubette implements ActionListener {
     private String          name          = " ";
     private JTextField      nameField;
     private SimpleDenotator denotator     = null;
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(SimpleRubette.class, "/images/rubettes/builtin/simpleicon.png");
-    }
 }

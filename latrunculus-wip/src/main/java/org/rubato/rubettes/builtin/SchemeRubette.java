@@ -22,10 +22,6 @@ package org.rubato.rubettes.builtin;
 import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.car;
 import static org.vetronauta.latrunculus.core.scheme.expression.SExpr.cdr;
 import static org.vetronauta.latrunculus.core.scheme.expression.SVoid.SCHEME_VOID;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CODE;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.INPUTS;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.NUMBER_ATTR;
-import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.OUTPUTS;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,7 +35,7 @@ import lombok.Setter;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.scheme.expression.Env;
 import org.vetronauta.latrunculus.core.scheme.Evaluator;
@@ -52,8 +48,6 @@ import org.vetronauta.latrunculus.core.scheme.expression.SType;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
-import org.vetronauta.latrunculus.server.xml.XMLReader;
-import org.w3c.dom.Element;
 
 
 public class SchemeRubette extends AbstractRubette {
@@ -164,12 +158,6 @@ public class SchemeRubette extends AbstractRubette {
         return "Executes Scheme code on the input denotators";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Scheme rubette retrieves the input denotators"+
                " and executes the specified Scheme code.";
@@ -274,10 +262,6 @@ public class SchemeRubette extends AbstractRubette {
     @Setter
     private List<SExpr> sexprList = null;
     
-    private static final ImageIcon icon;
     private static final Repository rep = Repository.systemRepository();
 
-    static {
-        icon = Icons.loadIcon(SchemeRubette.class, "/images/rubettes/builtin/schemeicon.png"); 
-    }
 }

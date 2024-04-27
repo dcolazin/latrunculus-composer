@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
 import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.logeo.Select;
@@ -132,12 +132,6 @@ public class SelectFormRubette extends AbstractRubette {
         return "Selects all denotators of a given form";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The SelectForm Rubette selects all denotators "+
                "of a given form from the input denotators "+
@@ -185,5 +179,4 @@ public class SelectFormRubette extends AbstractRubette {
     @Getter
     private Form outputForm = null; 
     private Form baseForm = null;
-    private static final ImageIcon icon = Icons.emptyIcon;
 }

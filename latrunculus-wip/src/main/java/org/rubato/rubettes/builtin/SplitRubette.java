@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JSelectForm;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.LimitDenotator;
@@ -157,12 +157,6 @@ public class SplitRubette
         return "Splits the input denotator into its factors";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Split Rubette decomposes"+
                " its input denotator of type limit into"+
@@ -232,7 +226,6 @@ public class SplitRubette
     private LimitForm     form = null;
     private String        formName = " ";
     private String[]      outTip;
-    private static final  ImageIcon icon;
 
     protected class FormListModel extends DefaultListModel {
 
@@ -259,8 +252,5 @@ public class SplitRubette
         
         private Form[]    forms = null;
     }
-    
-    static {
-        icon = Icons.loadIcon(SplitRubette.class, "/images/rubettes/builtin/spliticon.png");
-    }
+
 }

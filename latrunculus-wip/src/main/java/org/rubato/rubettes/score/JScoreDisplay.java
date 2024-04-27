@@ -26,7 +26,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.PluginIcons;
 
 public class JScoreDisplay
         extends JPanel

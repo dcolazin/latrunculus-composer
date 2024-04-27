@@ -23,7 +23,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 
 
 /**

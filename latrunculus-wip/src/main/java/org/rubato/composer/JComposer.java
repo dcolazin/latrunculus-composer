@@ -44,7 +44,7 @@ import org.rubato.composer.dialogs.forms.JFormDialog;
 import org.rubato.composer.dialogs.morphisms.JMorphismDialog;
 import org.rubato.composer.dialogs.scheme.JSchemeDialog;
 import org.rubato.composer.dialogs.scheme.JSchemeEditor;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.composer.network.*;
 import org.rubato.composer.objectbrowser.ObjectBrowser;
 import org.rubato.composer.preferences.JPreferences;

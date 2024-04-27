@@ -21,7 +21,7 @@ package org.rubato.rubettes.builtin;
 
 import lombok.Getter;
 import org.rubato.composer.components.JSelectDenotator;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
@@ -122,12 +122,6 @@ public class SourceRubette extends AbstractRubette {
     public String getInfo() {
         return name;
     }
-
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
     
     public String getShortDescription() {
         return BuiltinMessages.getString("SourceRubette.containsdenotator");
@@ -172,10 +166,6 @@ public class SourceRubette extends AbstractRubette {
     private JCheckBox        refreshBox;
     private String           name = " "; 
     private boolean          refreshable = false;
-    private static final ImageIcon icon;
     private static final Repository rep = Repository.systemRepository();
 
-    static {
-        icon = Icons.loadIcon(SourceRubette.class, "/images/rubettes/builtin/sourceicon.png"); 
-    }
 }

@@ -20,7 +20,7 @@
 package org.rubato.rubettes.builtin;
 
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
@@ -120,12 +120,6 @@ public class MuxRubette extends AbstractRubette {
         return "Selects an input denotator";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Mux Rubette selects in input denotator"+
                " based on the integer at input #0.";
@@ -148,9 +142,5 @@ public class MuxRubette extends AbstractRubette {
     
     private JPanel properties = null;
     private JConnectorSliders inSlider = null;
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(MuxRubette.class, "/images/rubettes/builtin/muxicon.png"); 
-    }
 }

@@ -20,7 +20,7 @@
 package org.rubato.rubettes.builtin;
 
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -105,12 +105,6 @@ public class LatchRubette extends AbstractRubette {
         return "Stores an input denotator";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The Latch Rubette stores its input denotator"+
                " and provides it on its outputs the number of"+
@@ -129,9 +123,5 @@ public class LatchRubette extends AbstractRubette {
     
     private JPanel properties = null;
     private JConnectorSliders outSlider = null;
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(LatchRubette.class, "/images/rubettes/builtin/latchicon.png"); 
-    }
 }

@@ -33,7 +33,7 @@ import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
@@ -55,9 +55,7 @@ public class ImageFileOutRubette extends SimpleAbstractRubette {
 	private final String imageFileKey = "imageFile";
 	private final String fillEmptyPixelsKey = "fillEmptyPixels";
 	private ObjectGenerator objectGenerator;
-	
-	private static final ImageIcon icon = Icons.loadIcon(ImageFileInRubette.class, "/images/rubettes/image/imagefileouticon.png");
-	
+
 	/**
 	 * Creates a basic ImageFileInRubette.
 	 */
@@ -179,10 +177,6 @@ public class ImageFileOutRubette extends SimpleAbstractRubette {
     
     public String getShortDescription() {
         return "Exports an image denotator";
-    }
-    
-    public ImageIcon getIcon() {
-        return ImageFileOutRubette.icon;
     }
 
     public String getLongDescription() {

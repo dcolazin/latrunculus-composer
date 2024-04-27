@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.PluginIcons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 import javax.swing.*;
@@ -64,7 +66,8 @@ public interface Rubette extends Plugin {
      * Returns an icon for this Rubette.
      */
     default ImageIcon getIcon() {
-        return null;
+        ImageIcon icon = PluginIcons.get(this);
+        return icon != null ? icon : Icons.emptyIcon;
     }
 
     /**

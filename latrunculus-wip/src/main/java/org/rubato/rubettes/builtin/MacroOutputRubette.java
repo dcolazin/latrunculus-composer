@@ -20,7 +20,7 @@
 package org.rubato.rubettes.builtin;
 
 import org.rubato.composer.components.JConnectorSliders;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
@@ -133,12 +133,6 @@ public class MacroOutputRubette
         return "Sets outputs in a MacroRubette";
     }
 
-    
-    public ImageIcon getIcon() {
-        return icon;
-    }
-    
-
     public String getLongDescription() {
         return "The MacroOutput Rubette sets outputs in a "+
                "MacroRubette.";
@@ -202,9 +196,5 @@ public class MacroOutputRubette
     private JTextField[]      inTextFields = null;
     private Denotator[]       values;
     private String[]          labels;
-    private static final ImageIcon icon;
 
-    static {
-        icon = Icons.loadIcon(MacroOutputRubette.class, "/images/rubettes/builtin/outputicon.png");
-    }
 }

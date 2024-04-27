@@ -28,7 +28,8 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.EventListenerList;
 
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.PluginIcons;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
 
 

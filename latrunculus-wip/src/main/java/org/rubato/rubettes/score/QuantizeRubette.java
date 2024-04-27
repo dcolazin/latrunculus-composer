@@ -22,7 +22,7 @@ package org.rubato.rubettes.score;
 import javax.swing.*;
 
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
-import org.rubato.composer.icons.Icons;
+import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.util.Quantizer;
 import org.rubato.rubettes.util.SoundNoteGenerator;
 import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
@@ -40,9 +40,7 @@ public class QuantizeRubette extends SimpleAbstractRubette {
 	
 	private final String timeUnitKey = "timeUnit";
 	private final String pitchUnitKey = "pitchUnit";
-	
-	private static final ImageIcon icon = Icons.loadIcon(QuantizeRubette.class, "/images/rubettes/score/quantizeicon.png");
-	
+
 	/**
 	 * Creates a basic QuantizeRubette.
 	 */
@@ -77,10 +75,6 @@ public class QuantizeRubette extends SimpleAbstractRubette {
 	
     public String getShortDescription() {
         return "Quantizes a score denotator";
-    }
-    
-    public ImageIcon getIcon() {
-        return QuantizeRubette.icon;
     }
 
     public String getLongDescription() {
