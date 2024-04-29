@@ -64,7 +64,7 @@ public class JModuleElementList
     }
 
     
-    public void addElements(List<ModuleElement> elements) {
+    public void addElements(List<? extends ModuleElement> elements) {
         for (ModuleElement e : elements) {            
             listModel.addModuleElement(e);
         }

@@ -20,20 +20,15 @@
 package org.rubato.rubettes.builtin.address;
 
 import lombok.Getter;
-import org.apache.commons.collections4.CollectionUtils;
 import org.rubato.composer.components.JModuleElementEntry;
 import org.rubato.composer.components.JModuleElementList;
 import org.rubato.composer.components.JModuleEntry;
 import org.rubato.composer.components.JMorphismEntry;
 import org.rubato.composer.components.JSelectForm;
 import org.rubato.composer.components.JStatusline;
-import org.vetronauta.latrunculus.client.plugin.icons.Icons;
 import org.rubato.rubettes.builtin.address.JGraphSelect.QConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.RConfiguration;
 import org.rubato.rubettes.builtin.address.JGraphSelect.ZConfiguration;
-import org.vetronauta.latrunculus.core.exception.LatrunculusCheckedException;
-import org.vetronauta.latrunculus.core.exception.MappingException;
-import org.vetronauta.latrunculus.core.logeo.DenoFactory;
 import org.vetronauta.latrunculus.core.math.element.generic.ModuleElement;
 import org.vetronauta.latrunculus.core.math.element.generic.Vector;
 import org.vetronauta.latrunculus.core.math.element.impl.Complex;
@@ -54,20 +49,14 @@ import org.vetronauta.latrunculus.core.math.module.impl.ZRing;
 import org.vetronauta.latrunculus.core.math.module.impl.ZnRing;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.core.math.yoneda.FormDenotatorTypeEnum;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.FactorDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.ListDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.PowerDenotator;
-import org.vetronauta.latrunculus.core.math.yoneda.denotator.SimpleDenotator;
 import org.vetronauta.latrunculus.core.math.yoneda.form.Form;
-import org.vetronauta.latrunculus.core.math.yoneda.form.ListForm;
-import org.vetronauta.latrunculus.core.math.yoneda.form.PowerForm;
 import org.vetronauta.latrunculus.core.repository.Repository;
 import org.vetronauta.latrunculus.core.util.TextUtils;
 import org.vetronauta.latrunculus.plugin.base.AbstractRubette;
 import org.vetronauta.latrunculus.plugin.base.RubatoConstants;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.RunInfo;
+import org.vetronauta.latrunculus.plugin.impl.AddressEvalPlugin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,268 +77,71 @@ import static org.rubato.composer.Utilities.makeTitledBorder;
  */
 public final class AddressEvalRubette extends AbstractRubette implements ActionListener {
 
+    @Getter
+    private AddressEvalPlugin plugin; //TODO final
+
     public AddressEvalRubette() {
         setInCount(1);
         setOutCount(1);
+        this.plugin = new AddressEvalPlugin(AddressEvalPlugin.EvalType.NULL); //TODO for the instance method
     }
 
-    public AddressEvalRubette(int evalType) {
+    public AddressEvalRubette(AddressEvalPlugin.EvalType evalType) {
         this();
-        this.evalType = evalType;
+        this.plugin = new AddressEvalPlugin(evalType);
     }
 
-    public AddressEvalRubette(int evalType, ModuleElement moduleElement, Module module) {
-        this(evalType);
-        this.moduleElement = moduleElement;
-        this.module = module;
+    public AddressEvalRubette(AddressEvalPlugin.EvalType evalType, ModuleElement<?, ?> moduleElement, Module<?, ?> module) {
+        this();
+        this.plugin = new AddressEvalPlugin(evalType, moduleElement, module);
     }
 
-    public AddressEvalRubette(int evalType, Form form, List<ModuleElement> elements, Module module) {
-        this(evalType, form);
-        this.elements = elements;
-        this.module = module;
+    public AddressEvalRubette(AddressEvalPlugin.EvalType evalType, Form form) {
+        this();
+        this.plugin = new AddressEvalPlugin(evalType, form);
     }
 
-    public AddressEvalRubette(int evalType, ModuleMorphism morphism) {
-        this(evalType);
-        this.morphism = morphism;
+    public AddressEvalRubette(AddressEvalPlugin.EvalType evalType, Form form, List<? extends ModuleElement> elements, Module<?, ?> module) {
+        this();
+        this.plugin = new AddressEvalPlugin(evalType, form, elements, module);
     }
 
-    public AddressEvalRubette(int evalType, Form form) {
-        this(evalType);
-        this.outputForm = form;
+    public AddressEvalRubette(AddressEvalPlugin.EvalType evalType, ModuleMorphism<?, ?, ?, ?> morphism) {
+        this();
+        this.plugin = new AddressEvalPlugin(evalType, morphism);
     }
 
+    private AddressEvalRubette(AddressEvalPlugin plugin) {
+        this();
+        this.plugin = plugin;
+    }
+
+    @Override
     public void run(RunInfo runInfo)  {
-        Denotator input = getInput(0);
-        Denotator res = null;
-        if (input == null) {
-            addError(INPUT_NULL_ERROR);
-        }
-        else {
-            if (evalType == EVAL_TYPE_NULL) {
-                res = input.atNull();
-            }
-            else if (evalType == EVAL_TYPE_ELEMENT) {
-                res = runEvalTypeElement(input);
-            }
-            else if (evalType == EVAL_TYPE_LIST) {
-                res = runEvalTypeList(input);
-            }
-            else if (evalType == EVAL_TYPE_CHANGE) {
-                res = runEvalTypeChange(input);
-            }
-            else if (evalType == EVAL_TYPE_INPUT) {
-                res = runEvalTypeInput(input);
-            }
-        }
-        setOutput(0, res);
+        plugin.run(runInfo);
     }
 
-    
-    /**
-     * Evaluates denotator <code>input</code> at the
-     * configured module element.
-     */
-    private Denotator runEvalTypeElement(Denotator input) {
-        Denotator res = null;
-        if (moduleElement == null){
-            // element not configured
-            addError(ELEMENTNOTSET_ERROR);
-        }
-        else if (module == null) {
-            // module not configured
-            addError(MODULENOTSET_ERROR);
-        }
-        else if (!input.getAddress().equals(module)) {
-            // address of the input denotator must be the same
-            // as the configured module
-            addError(ADDRESSMODULE_ERROR, input.getAddress(), module);
-        }
-        else {
-            try {
-                res = input.at(moduleElement);
-            }
-            catch (MappingException e) {
-                addError(e);
-            }
-        }
-        return res;
-    }
-    
-
-    /**
-     * Evaluates denotator <code>input</code> at the configured
-     * list of elements. The result is a power or list denotator
-     * whose form hat been configured before. The input denotator
-     * must have the same form as the base form of the power
-     * or list form.
-     */
-    private Denotator runEvalTypeList(Denotator input) {
-        Denotator res = null;
-        if (elements == null) {
-            // not elements configured
-            addError(LISTNOTSET_ERROR);
-        }
-        else if (module == null) {
-            // module not configured
-            addError(MODULENOTSET_ERROR);
-        }
-        else if (!input.getAddress().equals(module)) {
-            // address of the input denotator must be the same
-            // as the configured module
-            addError(ADDRESSMODULE_ERROR, input.getAddress(), module);
-        }
-        else if (outputForm == null) {
-            // output form must be configured
-            addError(OUTPUTFORMNOTSET_ERROR);
-        }
-        else if (!input.hasForm(outputForm.getForm(0))) {
-            // input form has not the form required by the
-            // output power or list form
-            addError(INPUT_WRONG_FORM, input.getForm(), outputForm.getForm(0));
-        }
-        else {
-            try {
-                LinkedList<Denotator> denoList = new LinkedList<>();
-                for (ModuleElement e : elements) {
-                    denoList.add(input.at(e));
-                }
-                if (outputForm instanceof PowerForm) {
-                    res = new PowerDenotator(null, module.getNullModule(), (PowerForm)outputForm, denoList);
-                }
-                else if (outputForm instanceof ListForm) {
-                    res = new ListDenotator(null, module.getNullModule(), (ListForm)outputForm, denoList);
-                }
-            }
-            catch (MappingException e) {
-                addError(e);
-            }
-            catch (LatrunculusCheckedException e) {
-                addError(e);
-            }
-        }
-        return res;
-    }
-    
-
-    /**
-     * Changes address of the input denotator using the configured
-     * address changing morphism.
-     */
-    private Denotator runEvalTypeChange(Denotator input) {
-        Denotator res = null;
-        if (morphism == null) {
-            addError(MORPHISMNOTSET_ERROR);
-        }
-        else if (!input.getAddress().equals(morphism.getCodomain())) {
-            addError(ADDRESSMORPHISM_ERROR, input.getAddress(), morphism);
-        }
-        else {
-            res = input.changeAddress(morphism);
-        }
-        return res;
-    }
-
-    
-    /**
-     * Evaluates the input denotator at the element(s) in
-     * a second input denotator.
-     */
-    private Denotator runEvalTypeInput(Denotator input) {
-        Denotator res = null;
-        Denotator input2 = getInput(1);
-        if (input2 == null) {
-            addError(INPUT2NOTSET_ERROR);
-        }
-        else if (outputForm == null) {
-            // if no output form is configured
-            // 2nd input denotator must be of type simple
-            if (input2 instanceof SimpleDenotator) {
-                SimpleDenotator d = (SimpleDenotator)input2;
-                ModuleElement el = d.getElement();
-                try {
-                    res = input.at(el);
-                }
-                catch (MappingException e) {
-                    addError(INPUT2WRONGTYPE_ERROR);
-                }
-            }
-            else {
-                addError(INPUT2WRONGTYPE_ERROR);
-            }
-        }
-        else {
-            // if an output form is configured
-            // 2nd input denotator may be of type power or list
-            // containing denotators of type simple
-            if (input2 instanceof PowerDenotator ||
-                input2 instanceof ListDenotator) {
-                List<Denotator> list = null;
-                list = ((FactorDenotator)input2).getFactors();
-                if (CollectionUtils.isEmpty(list)) {
-                    res = DenoFactory.makeDenotator(outputForm);
-                }
-                else {
-                    if (list.get(0) instanceof SimpleDenotator) {
-                        try {
-                            LinkedList<Denotator> reslist = new LinkedList<>();
-                            for (Denotator d : list) {
-                                reslist.add(input.at(((SimpleDenotator)d).getElement()));
-                            }
-                            res = DenoFactory.makeDenotator(outputForm, reslist);
-                        }
-                        catch (MappingException e) {
-                            addError(INPUT2WRONGTYPE_ERROR);
-                        }
-                    }
-                    else {
-                        addError(INPUT2WRONGTYPE_ERROR);
-                    }
-                }
-            }
-            else if (input2 instanceof SimpleDenotator) {
-                res = input.changeAddress(((SimpleDenotator)input2).getModuleMorphism());
-                if (res == null) {
-                    addError(INPUT2WRONGTYPE_ERROR);
-                }
-            }
-            else {
-                addError(INPUT2WRONGTYPE_ERROR);
-            }
-        }
-        return res;
-    }
-    
-    
+    @Override
     public String getGroup() {
         return RubatoConstants.CORE_GROUP;
     }
 
-    
+    @Override
     public String getName() {
         return "AddressEval"; 
     }
 
-    
+    @Override
     public Rubette duplicate() {
-        AddressEvalRubette rubette = new AddressEvalRubette();
-        rubette.moduleElement = moduleElement;
-        if (elements != null) {
-            rubette.elements = new LinkedList<>(elements);
-        }
-        rubette.evalType = evalType;
-        rubette.outputForm = outputForm;
-        rubette.module = module;
-        return rubette;
+        return new AddressEvalRubette(plugin.duplicate());
     }
-    
-    
+
+    @Override
     public boolean hasProperties() {
         return true;
     }
     
-    
+    @Override
     public JComponent getProperties() {
         if (properties == null) {
             properties = new JPanel();
@@ -363,7 +155,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             evalTypeSelect = new JComboBox(evalTypes);
             evalTypeSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.evaltypetooltip"));
             evalTypeSelect.setEditable(false);
-            evalTypeSelect.setSelectedIndex(evalType);
+            evalTypeSelect.setSelectedIndex(plugin.getEvalType().ordinal());
             evalTypeSelect.addActionListener(this);
             evalTypeSelectPanel.add(evalTypeSelect, BorderLayout.CENTER);
             box.add(evalTypeSelectPanel);
@@ -372,7 +164,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             
             addressPanel = new JPanel();
             addressPanel.setLayout(new BorderLayout());                        
-            layoutAddressPanel(evalType);
+            layoutAddressPanel(plugin.getEvalType());
             
             properties.add(addressPanel, BorderLayout.CENTER);
             
@@ -385,90 +177,98 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         return properties;
     }
 
-    
+    @Override
     public boolean applyProperties() {
         statusline.clear();
-        int t = evalTypeSelect.getSelectedIndex();
-        if (t == EVAL_TYPE_ELEMENT) {
-            Module mod = elementEntry.getModule();
-            ModuleElement el = elementEntry.getModuleElement();
-            if (mod == null) {
-                statusline.setError(NOMODULE_ERROR);
-                return false;
-            }
-            if (el == null) {
-                statusline.setError(NOELEMENT_ERROR);
-                return false;
-            }
-            evalType   = t;
-            outputForm = null;
-            module     = mod;
-            moduleElement    = el;
+        AddressEvalPlugin.EvalType t = AddressEvalPlugin.EvalType.ofIndex(evalTypeSelect.getSelectedIndex());
+        if (t == null) {
+            return false;
         }
-        else if (t == EVAL_TYPE_LIST) {
-            Form oform = outputFormSelect.getForm();
-            Module mod = listModuleEntry.getModule();
-            List<ModuleElement> list = elementList.getElements();
+        switch (t) {
+            case ELEMENT:
+                return applyElement();
+            case LIST:
+                return applyList();
+            case CHANGE:
+                return applyChange();
+            case INPUT:
+                return applyInput();
+            case NULL:
+                this.plugin = new AddressEvalPlugin(AddressEvalPlugin.EvalType.NULL);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private boolean applyElement() {
+        Module mod = elementEntry.getModule();
+        ModuleElement el = elementEntry.getModuleElement();
+        if (mod == null) {
+            statusline.setError(NOMODULE_ERROR);
+            return false;
+        }
+        if (el == null) {
+            statusline.setError(NOELEMENT_ERROR);
+            return false;
+        }
+        this.plugin = new AddressEvalPlugin(AddressEvalPlugin.EvalType.ELEMENT, el, mod);
+        return true;
+    }
+
+    private boolean applyList() {
+        Form oform = outputFormSelect.getForm();
+        Module mod = listModuleEntry.getModule();
+        List<ModuleElement> list = elementList.getElements();
+        if (oform == null) {
+            statusline.setError(NOOUTPUTFORM_ERROR);
+            return false;
+        }
+        if (mod == null) {
+            statusline.setError(NOMODULE_ERROR);
+            return false;
+        }
+        if (list == null) {
+            statusline.setError(NOELEMENTS_ERROR);
+            return false;
+        }
+        this.plugin = new AddressEvalPlugin(AddressEvalPlugin.EvalType.LIST, oform, list, mod);
+        return true;
+    }
+
+    private boolean applyChange() {
+        ModuleMorphism m = morphismEntry.getMorphism();
+        if (m == null) {
+            statusline.setError(NOMORPHISM_ERROR);
+            return false;
+        }
+        this.plugin = new AddressEvalPlugin(AddressEvalPlugin.EvalType.CHANGE, m);
+        return true;
+    }
+
+    private boolean applyInput() {
+        Form oform = null;
+        if (listButton.isSelected()) {
+            oform = outputFormSelect.getForm();
             if (oform == null) {
                 statusline.setError(NOOUTPUTFORM_ERROR);
                 return false;
             }
-            if (mod == null) {
-                statusline.setError(NOMODULE_ERROR);
-                return false;
-            }
-            if (list == null) {
-                statusline.setError(NOELEMENTS_ERROR);
-                return false;
-            }
-            evalType   = t;
-            outputForm = oform;
-            module     = mod;
-            elements   = list;
         }
-        else if (t == EVAL_TYPE_CHANGE) {
-            ModuleMorphism m = morphismEntry.getMorphism();
-            if (m == null) {
-                statusline.setError(NOMORPHISM_ERROR);
-                return false;
-            }
-            evalType   = t;
-            outputForm = null;
-            morphism   = m;
-            elements   = null;
-        }
-        else if (t == EVAL_TYPE_INPUT) {
-            evalType   = t;
-            outputForm = null;
-            morphism   = null;
-            elements   = null;
-            if (listButton.isSelected()) {
-                Form oform = outputFormSelect.getForm();
-                if (oform == null) {
-                    statusline.setError(NOOUTPUTFORM_ERROR);
-                    return false;
-                }
-                outputForm = oform;
-            }
-            setInCount(2);
-        }
-        else {            
-            evalType   = EVAL_TYPE_NULL;
-            outputForm = null;
-            module     = null;
-            moduleElement    = null;
-        }
+        setInCount(2);
+        this.plugin = oform != null ?
+            new AddressEvalPlugin(AddressEvalPlugin.EvalType.INPUT, oform) : new AddressEvalPlugin(AddressEvalPlugin.EvalType.INPUT);
         return true;
     }
 
-    
+    @Override
     public void revertProperties() {
-        evalTypeSelect.setSelectedIndex(evalType);
-        layoutAddressPanel(evalType);
+        evalTypeSelect.setSelectedIndex(plugin.getEvalType().ordinal());
+        layoutAddressPanel(plugin.getEvalType());
         getJDialog(properties).pack();
     }
     
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
         if (src == evalTypeSelect) {
@@ -476,13 +276,13 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             getJDialog(properties).pack();
         }
         else if (src == listModuleEntry) {
-            module = listModuleEntry.getModule();
+            this.plugin.setModule(listModuleEntry.getModule());
             layoutAddressPanel(evalTypeSelect.getSelectedIndex());
             getJDialog(properties).pack();
         }
         else if (src == basisButton) {
-            if (module instanceof FreeModule) {
-                FreeModule m = (FreeModule)module;
+            if (this.plugin.getModule() instanceof FreeModule) {
+                FreeModule m = (FreeModule) this.plugin.getModule();
                 elementList.addElement(m.getZero());
                 for (int i = 0; i < m.getDimension(); i++) {
                     elementList.addElement(m.getUnitElement(i));                    
@@ -490,47 +290,44 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
             }
         }
         else if (src == listButton || src == simpleButton) {
-            if (simpleButton.isSelected()) {
-                outputFormSelect.setEnabled(false);
-            }
-            else {
-                outputFormSelect.setEnabled(true);
-            }
+            outputFormSelect.setEnabled(!simpleButton.isSelected());
         }
         else if (src == graphButton) {
             showGraphDialog();
         }
     }
-    
+
+    @Override
     public boolean hasInfo() {
         return true;
     }
     
-    
+    @Override
     public String getInfo() {
-        return evalTypes[evalType];
+        return evalTypes[plugin.getEvalType().ordinal()];
     }
     
-    
+    @Override
     public String getShortDescription() {
         return "Evaluates input denotator at a given address"; 
     }
     
-    
+    @Override
     public String getLongDescription() {
         return "The AddressEval Rubette evaluates the input "+ 
                "denotator at one or more addresses specified "+ 
                "in the properties."; 
     }
 
-    
+    @Override
     public String getInTip(int i) {
         if (i == 0) {
-           if (outputForm == null) {
+           if (plugin.getOutputForm() == null) {
                return AddressMessages.getString("AddressEvalRubette.inputdeno");
            }
            else {
-               return TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.inputdenotator"), outputForm.getForm(0).getNameString());
+               return TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.inputdenotator"),
+                   plugin.getOutputForm().getForm(0).getNameString());
            }
         }
         else {
@@ -538,110 +335,135 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
         }
     }
     
-    
+    @Override
     public String getOutTip(int i) {
         String name = AddressMessages.getString("AddressEvalRubette.outputdeno");
-        if (outputForm != null) {
-            name = TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.outputdenotator"), outputForm.getNameString());
+        if (plugin.getOutputForm() != null) {
+            name = TextUtils.replaceStrings(AddressMessages.getString("AddressEvalRubette.outputdenotator"),
+                plugin.getOutputForm().getNameString());
         }
         return name;
     }
 
-    private void layoutAddressPanel(int type) {
+    private void layoutAddressPanel(int i) {
+        layoutAddressPanel(AddressEvalPlugin.EvalType.ofIndex(i));
+    }
+
+    private void layoutAddressPanel(AddressEvalPlugin.EvalType type) {
         addressPanel.removeAll();
-        if (type == EVAL_TYPE_ELEMENT) {
-            Module m = (module == null)? ZRing.ring:module;
-            elementEntry = new JModuleElementEntry(m);
-            elementEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.moduleelement")));
-            elementEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.selectelement"));
-            if (moduleElement != null) {
-                elementEntry.setModuleElement(moduleElement);
-            }
-            addressPanel.add(elementEntry, BorderLayout.CENTER);
-        }
-        else if (type == EVAL_TYPE_LIST) {
-            Box box = Box.createVerticalBox();
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
-            outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
-            if (outputForm != null) {
-                outputFormSelect.setForm(outputForm);
-            }
-            box.add(outputFormSelect);
-            
-            Module m = (module == null)?ZRing.ring:module;
-            
-            listModuleEntry = new JModuleEntry();
-            listModuleEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementmodule")));
-            listModuleEntry.setModule(m);
-            listModuleEntry.addActionListener(this);
-            box.add(listModuleEntry);
-            
-            elementList = new JModuleElementList(m);
-            elementList.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementlist")));
-            elementList.setToolTipText(AddressMessages.getString("AddressEvalRubette.elementlisttooltip"));
-            if (elements != null) {
-                elementList.addElements(elements);
-            }
-            box.add(elementList, BorderLayout.CENTER);
-            addressPanel.add(box, BorderLayout.CENTER);
-            
-            box = Box.createHorizontalBox();
-            box.add(Box.createHorizontalGlue());
-            basisButton = new JButton(AddressMessages.getString("AddressEvalRubette.basisvectors"));
-            basisButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.basistooltip"));
-            basisButton.addActionListener(this);
-            basisButton.setEnabled(module instanceof FreeModule);                
-            box.add(basisButton);
-            box.add(Box.createHorizontalStrut(5));
-            graphButton = new JButton(AddressMessages.getString("AddressEvalRubette.graphical"));
-            graphButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.graphtooltip"));
-            graphButton.addActionListener(this);
-            box.add(graphButton);
-            box.add(Box.createHorizontalGlue());
-            graphButton.setEnabled(isGraphical(module));
-            
-            addressPanel.add(box, BorderLayout.SOUTH);
-        }
-        else if (type == EVAL_TYPE_CHANGE) {
-            morphismEntry = new JMorphismEntry(null, null);
-            if (morphism != null) {
-                morphismEntry.setMorphism(morphism);
-            }
-            morphismEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.changemorph")));
-            morphismEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.changemorphtooltip"));
-            addressPanel.add(morphismEntry, BorderLayout.CENTER);
-        }
-        else if (type == EVAL_TYPE_INPUT) {
-            Box box = Box.createVerticalBox();
-            JPanel typePanel = new JPanel();
-            typePanel.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.resulttype")));
-            ButtonGroup group = new ButtonGroup();
-            simpleButton = new JRadioButton(SIMPLE);
-            group.add(simpleButton);
-            listButton = new JRadioButton(LISTORPOWER);
-            group.add(listButton);
-            simpleButton.setSelected(outputForm == null);
-            listButton.setSelected(outputForm != null);
-            simpleButton.addActionListener(this);
-            listButton.addActionListener(this);
-            typePanel.add(simpleButton);
-            typePanel.add(listButton);
-            box.add(typePanel);            
-            
-            outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
-            outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
-            outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
-            if (outputForm != null) {
-                outputFormSelect.setForm(outputForm);
-            }
-            box.add(outputFormSelect);
-            
-            addressPanel.add(box);
+        switch (type) {
+            case ELEMENT:
+                layoutElement();
+                return;
+            case LIST:
+                layoutList();
+                return;
+            case CHANGE:
+                layoutChange();
+                return;
+            case INPUT:
+                layoutInput();
+                return;
         }
     }
 
-    
+    private void layoutElement() {
+        Module<?, ?> m = plugin.getModule();
+        if (m == null) {
+            m = ZRing.ring;
+        }
+        elementEntry = new JModuleElementEntry(m);
+        elementEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.moduleelement")));
+        elementEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.selectelement"));
+        if (plugin.getModuleElement() != null) {
+            elementEntry.setModuleElement(plugin.getModuleElement());
+        }
+        addressPanel.add(elementEntry, BorderLayout.CENTER);
+    }
+
+    private void layoutList() {
+        Box box = Box.createVerticalBox();
+        outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
+        outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
+        outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
+        if (plugin.getOutputForm() != null) {
+            outputFormSelect.setForm(plugin.getOutputForm());
+        }
+        box.add(outputFormSelect);
+
+        Module m = (plugin.getModule() == null) ? ZRing.ring : plugin.getModule();
+
+        listModuleEntry = new JModuleEntry();
+        listModuleEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementmodule")));
+        listModuleEntry.setModule(m);
+        listModuleEntry.addActionListener(this);
+        box.add(listModuleEntry);
+
+        elementList = new JModuleElementList(m);
+        elementList.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.elementlist")));
+        elementList.setToolTipText(AddressMessages.getString("AddressEvalRubette.elementlisttooltip"));
+        if (plugin.getElements() != null) {
+            elementList.addElements(plugin.getElements());
+        }
+        box.add(elementList, BorderLayout.CENTER);
+        addressPanel.add(box, BorderLayout.CENTER);
+
+        box = Box.createHorizontalBox();
+        box.add(Box.createHorizontalGlue());
+        basisButton = new JButton(AddressMessages.getString("AddressEvalRubette.basisvectors"));
+        basisButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.basistooltip"));
+        basisButton.addActionListener(this);
+        basisButton.setEnabled(plugin.getModule() instanceof FreeModule);
+        box.add(basisButton);
+        box.add(Box.createHorizontalStrut(5));
+        graphButton = new JButton(AddressMessages.getString("AddressEvalRubette.graphical"));
+        graphButton.setToolTipText(AddressMessages.getString("AddressEvalRubette.graphtooltip"));
+        graphButton.addActionListener(this);
+        box.add(graphButton);
+        box.add(Box.createHorizontalGlue());
+        graphButton.setEnabled(isGraphical(plugin.getModule()));
+
+        addressPanel.add(box, BorderLayout.SOUTH);
+    }
+
+    private void layoutChange() {
+        morphismEntry = new JMorphismEntry(null, null);
+        if (plugin.getMorphism() != null) {
+            morphismEntry.setMorphism(plugin.getMorphism());
+        }
+        morphismEntry.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.changemorph")));
+        morphismEntry.setToolTipText(AddressMessages.getString("AddressEvalRubette.changemorphtooltip"));
+        addressPanel.add(morphismEntry, BorderLayout.CENTER);
+    }
+
+    private void layoutInput() {
+        Box box = Box.createVerticalBox();
+        JPanel typePanel = new JPanel();
+        typePanel.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.resulttype")));
+        ButtonGroup group = new ButtonGroup();
+        simpleButton = new JRadioButton(SIMPLE);
+        group.add(simpleButton);
+        listButton = new JRadioButton(LISTORPOWER);
+        group.add(listButton);
+        simpleButton.setSelected(plugin.getOutputForm() == null);
+        listButton.setSelected(plugin.getOutputForm() != null);
+        simpleButton.addActionListener(this);
+        listButton.addActionListener(this);
+        typePanel.add(simpleButton);
+        typePanel.add(listButton);
+        box.add(typePanel);
+
+        outputFormSelect = new JSelectForm(Repository.systemRepository(), FormDenotatorTypeEnum.POWER, FormDenotatorTypeEnum.LIST);
+        outputFormSelect.setBorder(makeTitledBorder(AddressMessages.getString("AddressEvalRubette.outputform")));
+        outputFormSelect.setToolTipText(AddressMessages.getString("AddressEvalRubette.setoutputform"));
+        if (plugin.getOutputForm() != null) {
+            outputFormSelect.setForm(plugin.getOutputForm());
+        }
+        box.add(outputFormSelect);
+
+        addressPanel.add(box);
+    }
+
     private boolean isGraphical(Module module) {
         if (module == CRing.ring) {
             return true;
@@ -660,6 +482,7 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     }
     
     private void showGraphDialog() {
+        Module<?, ?> module = plugin.getModule();
         if (module instanceof CRing) {
             LinkedList<ModuleElement> elements0 = new LinkedList<>();
             for (ModuleElement m : elementList.getElements()) {
@@ -768,26 +591,6 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
     private JRadioButton        simpleButton    = null;
     private JRadioButton        listButton      = null;
 
-    @Getter
-    private Form          outputForm    = null;
-    @Getter
-    private Module        module        = null;
-    @Getter
-    private ModuleElement moduleElement = null;
-    @Getter
-    private int           evalType      = EVAL_TYPE_NULL;
-    @Getter
-    private List<ModuleElement> elements = null;
-    @Getter
-    private ModuleMorphism      morphism = null; 
-
-    //TODO enum
-    public static final int EVAL_TYPE_NULL    = 0;
-    public static final int EVAL_TYPE_ELEMENT = 1;
-    public static final int EVAL_TYPE_LIST    = 2;
-    public static final int EVAL_TYPE_CHANGE  = 3;
-    public static final int EVAL_TYPE_INPUT   = 4;
-
     private static final String[] evalTypes = {
         AddressMessages.getString("AddressEvalRubette.evalnull"),
         AddressMessages.getString("AddressEvalRubette.evalelement"),
@@ -798,24 +601,12 @@ public final class AddressEvalRubette extends AbstractRubette implements ActionL
 
     public static final int EVAL_TYPE_TYPE_LENGTH   = evalTypes.length;
 
-
     // Message strings
-    private static final String INPUT_NULL_ERROR    = AddressMessages.getString("AddressEvalRubette.inputnullerror");
-    private static final String INPUT_WRONG_FORM    = AddressMessages.getString("AddressEvalRubette.inputwrongform");
-    private static final String ELEMENTNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.elementnotset");
-    private static final String MODULENOTSET_ERROR  = AddressMessages.getString("AddressEvalRubette.modulenotset");
-    private static final String ADDRESSMODULE_ERROR = AddressMessages.getString("AddressEvalRubette.addressmoduleerror");
-    private static final String LISTNOTSET_ERROR    = AddressMessages.getString("AddressEvalRubette.listnotset");
-    private static final String OUTPUTFORMNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.outputformnotset");
-    private static final String MORPHISMNOTSET_ERROR = AddressMessages.getString("AddressEvalRubette.morphismnotset");
-    private static final String ADDRESSMORPHISM_ERROR = AddressMessages.getString("AddressEvalRubette.addressmorphismerror");
     private static final String NOMODULE_ERROR      = AddressMessages.getString("AddressEvalRubette.modnotset");
     private static final String NOELEMENT_ERROR     = AddressMessages.getString("AddressEvalRubette.modelnotset");
     private static final String NOOUTPUTFORM_ERROR  = AddressMessages.getString("AddressEvalRubette.oformnotset");
     private static final String NOELEMENTS_ERROR    = AddressMessages.getString("AddressEvalRubette.noellist");
     private static final String NOMORPHISM_ERROR    = AddressMessages.getString("AddressEvalRubette.modmorphnotset");
-    private static final String INPUT2WRONGTYPE_ERROR = AddressMessages.getString("AddressEvalRubette.secinputwrongtype");
-    private static final String INPUT2NOTSET_ERROR  = AddressMessages.getString("AddressEvalRubette.secinputnull");
     private static final String SIMPLE              = AddressMessages.getString("AddressEvalRubette.simple");
     private static final String LISTORPOWER         = AddressMessages.getString("AddressEvalRubette.listorpower");
 

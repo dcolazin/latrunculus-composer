@@ -19,6 +19,8 @@
 
 package org.vetronauta.latrunculus.plugin.base;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.vetronauta.latrunculus.server.exception.LatrunculusError;
 import org.vetronauta.latrunculus.core.math.yoneda.denotator.Denotator;
@@ -41,6 +43,7 @@ import java.util.List;
  * @author Gérard Milmeister
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractRubette implements Rubette {
 
     private PluginNode model;
@@ -60,14 +63,6 @@ public abstract class AbstractRubette implements Rubette {
         return AbstractRubetteMessages.getString("AbstractRubette.nodescription")+getName()+".";
     }
 
-    /**
-     * The default constructor must/should perform initializations specfic to
-     * each rubette instance, for example set the number of inputs and outputs, or
-     * initializing the rubette state. 
-     */
-    protected AbstractRubette() { /* default does nothing */ }
-    
-    
     // These methods cannot be overridden but can be used by a concrete rubette. 
 
     /**

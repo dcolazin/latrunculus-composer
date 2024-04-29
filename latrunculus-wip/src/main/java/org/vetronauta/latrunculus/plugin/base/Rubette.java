@@ -262,4 +262,9 @@ public interface Rubette extends Plugin {
      * never be used by a Rubette implementation.
      */
     void setModel(PluginNode model);
+
+    default Plugin getPlugin() {
+        return NoopPlugin.INSTANCE;
+    }
+
 }

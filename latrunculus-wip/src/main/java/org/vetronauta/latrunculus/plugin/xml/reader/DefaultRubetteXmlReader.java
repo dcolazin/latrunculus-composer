@@ -47,6 +47,7 @@ import org.vetronauta.latrunculus.client.plugin.properties.ClientPropertiesFacto
 import org.vetronauta.latrunculus.client.plugin.properties.ComplexClientProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.DenotatorClientProperty;
 import org.vetronauta.latrunculus.plugin.base.LinkType;
+import org.vetronauta.latrunculus.plugin.impl.AddressEvalPlugin;
 import org.vetronauta.latrunculus.plugin.properties.DoubleProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.FileClientProperty;
 import org.vetronauta.latrunculus.client.plugin.properties.FormClientProperty;
@@ -87,10 +88,6 @@ import java.util.List;
 import static org.rubato.rubettes.builtin.ListRubette.LIST_OP_LENGTH;
 import static org.rubato.rubettes.builtin.SetRubette.SET_OP_LENGTH;
 import static org.rubato.rubettes.builtin.StatRubette.STAT_OP_LENGTH;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_CHANGE;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_ELEMENT;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_INPUT;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_LIST;
 import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_TYPE_LENGTH;
 import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CODE;
 import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.COUNT_ATTR;
@@ -355,7 +352,6 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
     }
 
     private Rubette readAddressEvalRubette(XMLReader reader, Element element) {
-        int t = 0;
         AddressEvalRubette newRubette = null;
 
         Element child = XMLReader.getChild(element, EVALTYPE);
@@ -366,9 +362,10 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             return null;
         }
 
-        t = XMLReader.getIntAttribute(child, VALUE_ATTR, 0, EVAL_TYPE_TYPE_LENGTH - 1, 0);
+        AddressEvalPlugin.EvalType t = AddressEvalPlugin.EvalType.ofIndex(
+            XMLReader.getIntAttribute(child, VALUE_ATTR, 0, EVAL_TYPE_TYPE_LENGTH - 1, 0));
 
-        if (t == EVAL_TYPE_ELEMENT) {
+        if (t == AddressEvalPlugin.EvalType.ELEMENT) {
             // type evaluate at element
             child = XMLReader.getNextSibling(child, MODULE_ELEMENT);
             if (child != null) {
@@ -381,7 +378,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
                 reader.setError(AddressMessages.getString("AddressEvalRubette.missingelement"), MODULE_ELEMENT);
             }
         }
-        else if (t == EVAL_TYPE_LIST) {
+        else if (t == AddressEvalPlugin.EvalType.LIST) {
             // type evaluate at list of elements
             child = XMLReader.getNextSibling(child, FORM);
             if (child == null) {
@@ -419,7 +416,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             }
             newRubette = new AddressEvalRubette(t, oform, list, module0);
         }
-        else if (t == EVAL_TYPE_CHANGE) {
+        else if (t == AddressEvalPlugin.EvalType.CHANGE) {
             // type change address
             child = XMLReader.getNextSibling(child, MODULE_MORPHISM);
             if (child == null) {
@@ -434,7 +431,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             }
             newRubette = new AddressEvalRubette(t, morphism0);
         }
-        else if (t == EVAL_TYPE_INPUT) {
+        else if (t == AddressEvalPlugin.EvalType.INPUT) {
             // get output form if any
             Form oform = null;
             child = XMLReader.getNextSibling(child, FORM);
@@ -445,7 +442,7 @@ public class DefaultRubetteXmlReader implements LatrunculusXmlReader<Rubette> {
             newRubette.setInCount(2);
         }
         else {
-            newRubette = new AddressEvalRubette(0);
+            newRubette = new AddressEvalRubette(AddressEvalPlugin.EvalType.NULL);
         }
 
         return newRubette;

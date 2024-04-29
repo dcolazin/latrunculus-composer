@@ -42,6 +42,7 @@ import org.rubato.rubettes.wallpaper.WallpaperRubette;
 import org.vetronauta.latrunculus.core.math.morphism.ModuleMorphism;
 import org.vetronauta.latrunculus.plugin.base.Rubette;
 import org.vetronauta.latrunculus.plugin.base.SimpleAbstractRubette;
+import org.vetronauta.latrunculus.plugin.impl.AddressEvalPlugin;
 import org.vetronauta.latrunculus.server.xml.XMLConstants;
 import org.vetronauta.latrunculus.server.xml.XMLWriter;
 import org.vetronauta.latrunculus.server.xml.writer.LatrunculusXmlWriter;
@@ -51,10 +52,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_CHANGE;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_ELEMENT;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_INPUT;
-import static org.rubato.rubettes.builtin.address.AddressEvalRubette.EVAL_TYPE_LIST;
 import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CLASSNAME_ATTR;
 import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.CODE;
 import static org.vetronauta.latrunculus.plugin.xml.PluginXmlConstants.COUNT_ATTR;
@@ -122,7 +119,7 @@ public class DefaultRubetteXmlWriter implements LatrunculusXmlWriter<Rubette> {
             return;
         }
         if (object instanceof AddressEvalRubette) {
-            write((AddressEvalRubette) object, writer);
+            write(((AddressEvalRubette) object).getPlugin(), writer);
             return;
         }
         if (object instanceof AlterationRubette) {
@@ -246,23 +243,25 @@ public class DefaultRubetteXmlWriter implements LatrunculusXmlWriter<Rubette> {
         }
     }
 
-    private void write(AddressEvalRubette rubette, XMLWriter writer) {
-        writer.empty(EVALTYPE, VALUE_ATTR, rubette.getEvalType());
-        if (rubette.getEvalType() == EVAL_TYPE_ELEMENT) {
-            writer.writeModuleElement(rubette.getModuleElement());
-        }
-        else if (rubette.getEvalType() == EVAL_TYPE_LIST) {
-            if (rubette.getOutputForm() != null) {
-                writer.writeFormRef(rubette.getOutputForm());
-                writer.writeModule(rubette.getModule());
-                rubette.getElements().forEach(writer::writeModuleElement);
-            }
-        }
-        else if (rubette.getEvalType() == EVAL_TYPE_CHANGE) {
-            writer.writeModuleMorphism(rubette.getMorphism());
-        }
-        else if (rubette.getEvalType() == EVAL_TYPE_INPUT && (rubette.getOutputForm() != null)) {
-            writer.writeFormRef(rubette.getOutputForm());
+    private void write(AddressEvalPlugin plugin, XMLWriter writer) {
+        writer.empty(EVALTYPE, VALUE_ATTR, plugin.getEvalType());
+        switch (plugin.getEvalType()) {
+            case INPUT:
+                if (plugin.getOutputForm() != null) {
+                    writer.writeFormRef(plugin.getOutputForm());
+                }
+            case CHANGE:
+                writer.writeModuleMorphism(plugin.getMorphism());
+                return;
+            case LIST:
+                if (plugin.getOutputForm() != null) {
+                    writer.writeFormRef(plugin.getOutputForm());
+                    writer.writeModule(plugin.getModule());
+                    plugin.getElements().forEach(writer::writeModuleElement);
+                }
+                return;
+            case ELEMENT:
+                writer.writeModuleElement(plugin.getModuleElement());
         }
     }
 
